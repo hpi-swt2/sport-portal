@@ -5,30 +5,24 @@ ruby '2.4.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0'
 
-
-# Use Puma as the app server
-gem 'puma', '~> 3.0'
+# Use CoffeeScript for .coffee assets and views, is nessary for standard rails applications.
+gem 'coffee-rails', '~> 4.2'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+#gem 'jbuilder', '~> 2.5'
 # https://github.com/kossnocorp/jquery.turbolinks
 gem 'jquery-turbolinks'
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails' #TODO link + Comment
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 #gem 'jbuilder', '~> 2.0'
@@ -49,22 +43,17 @@ gem 'devise_openid_authenticatable'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
 #use Bootstrap Tooltips
-gem 'bootstrap-tooltip-rails'
+gem 'bootstrap-tooltip-rails' #TODO comment
 #gem 'bootstrap-datepicker-rails'
 
 # Select2 dropdown replacement featuring autocomplete
 #gem 'select2-rails'
 
-#performance management
-gem 'newrelic_rpm'
 # Exception Tracking
 gem 'airbrake'
 
 # to parse date parameters from ui
-gem "delocalize"
-# American style month/day/year parsing for ruby 1.9
-# https://github.com/jeremyevans/ruby-american_date
-gem "american_date"
+#gem "delocalize"
 
 # Continuation of CanCan (authoriation Gem for RoR)
 gem 'cancancan'
@@ -76,8 +65,6 @@ gem 'has_scope'
 gem 'rubocop'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
   gem 'rspec-rails'
   gem 'capybara'
   #gem 'database_cleaner'
@@ -89,25 +76,22 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
-  gem 'listen', '~> 3.0.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # Used for hot reload on the development server
+  gem 'listen', '~> 3.0.5'
 
-  gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'better_errors' #TODO
 
   # an IRB alternative and runtime developer console
-  gem 'pry'
+  gem 'pry' #TODO comment for uage
   gem 'pry-rails'
 
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
-
-  # opens sent emails in a new browser tab
-  #gem "letter_opener"
 end
 
 group :test do
@@ -121,8 +105,6 @@ end
 group :production do
   # Use Postgresql in production
   gem 'pg'
-  # https://devcenter.heroku.com/articles/rails4
-  gem 'rails_12factor'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

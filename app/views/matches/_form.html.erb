@@ -1,0 +1,69 @@
+<%= form_for @match, :html => { :class => "form-horizontal match" } do |f| %>
+
+  <% if @match.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@match.errors.count, "error") %> prohibited this match from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @match.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :date, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :date, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:date) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :place, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :place, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:place) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :team_home_id, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :team_home_id, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:team_home_id) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :team_away_id, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :team_away_id, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:team_away_id) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :score_home, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :score_home, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:score_home) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :score_away, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :score_away, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:score_away) %>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                matches_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>
