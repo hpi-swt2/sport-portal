@@ -3,14 +3,9 @@ require 'rails_helper'
 RSpec.describe "matches/new", type: :view do
   before(:each) do
     assign(:match, Match.new(
-      :place => "MyString",
-      :team_home => nil,
-      :team_away => nil,
-      :score_home => 1,
-      :score_away => 1
+      :place => "MyString"
     ))
   end
-
   it "renders new match form" do
     render
 

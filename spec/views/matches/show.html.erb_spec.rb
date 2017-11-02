@@ -2,13 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "matches/show", type: :view do
   before(:each) do
-    @match = assign(:match, Match.create!(
-      :place => "Place",
-      :team_home => nil,
-      :team_away => nil,
-      :score_home => 2,
-      :score_away => 3
-    ))
+    @match = assign(:match, FactoryGirl.create(:match))
   end
 
   it "renders attributes in <p>" do

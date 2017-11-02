@@ -2,13 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "matches/edit", type: :view do
   before(:each) do
-    @match = assign(:match, Match.create!(
-      :place => "MyString",
-      :team_home => nil,
-      :team_away => nil,
-      :score_home => 1,
-      :score_away => 1
-    ))
+    @match = assign(:match, FactoryGirl.create(:match))
   end
 
   it "renders the edit match form" do
