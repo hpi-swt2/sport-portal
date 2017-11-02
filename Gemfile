@@ -5,9 +5,6 @@ ruby '2.4.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0'
 
-# Use CoffeeScript for .coffee assets and views, is nessary for standard rails applications.
-gem 'coffee-rails', '~> 4.2'
-
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
