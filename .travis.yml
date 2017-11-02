@@ -1,3 +1,9 @@
 language: ruby
 rvm:
-  - 2.2.2
+  - 2.4.2
+cache: bundler
+git:
+  depth: 1000
+script:
+ - RAILS_ENV=test bundle exec rake db:migrate
+ - bundle exec rspec spec/
