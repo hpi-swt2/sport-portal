@@ -28,19 +28,25 @@
       <%= f.text_field :place, :class => 'form-control' %>
     </div>
     <%=f.error_span(:place) %>
-  </div>
+  </div>  
   <div class="form-group">
-    <%= f.label :team_home_id, :class => 'control-label col-lg-2' %>
+    <%= f.label "Team Home", for: "team_home_id", :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :team_home_id, :class => 'form-control' %>
-    </div>
+      <%= f.collection_select :team_home_id, Team.all, :id, :name,
+                              {selected: @match.team_home_id, include_blank: '(none)'},
+                               :class => 'form-control'  %>
+
+    </div>  
     <%=f.error_span(:team_home_id) %>
   </div>
   <div class="form-group">
-    <%= f.label :team_away_id, :class => 'control-label col-lg-2' %>
+    <%= f.label "Team Away", for: "team_away_id", :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :team_away_id, :class => 'form-control' %>
-    </div>
+      <%= f.collection_select :team_away_id, Team.all, :id, :name,
+                              {selected: @match.team_away_id, include_blank: '(none)'},
+                               :class => 'form-control'  %>
+
+    </div>  
     <%=f.error_span(:team_away_id) %>
   </div>
   <div class="form-group">

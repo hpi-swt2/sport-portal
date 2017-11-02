@@ -1,0 +1,3 @@
+rails g scaffold player first_name:string last_name:string --controller-specs true 
+rails g scaffold team name:string --controller-specs true 
+rails g scaffold match date:date place:string team_home:references team_away:references score_home:integer score_away:integer --controller-specs true ^
