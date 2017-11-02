@@ -7,6 +7,8 @@ gem 'rails', '~> 5.0.0'
 
 gem 'rails_12factor'
 
+gem 'coveralls', require: false
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
