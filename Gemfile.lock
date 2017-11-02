@@ -70,6 +70,12 @@ GEM
     coderay (1.1.2)
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
+    coveralls (0.7.1)
+      multi_json (~> 1.3)
+      rest-client
+      simplecov (>= 0.7)
+      term-ansicolor
+      thor
     crass (1.0.2)
     debug_inspector (0.0.3)
     devise (4.3.0)
@@ -84,6 +90,8 @@ GEM
       rack-openid (>= 1.2.0)
     diff-lcs (1.3)
     docile (1.1.5)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     easy_translate (0.5.0)
       json
       thread
@@ -103,6 +111,8 @@ GEM
       actionpack (>= 4.1, < 5.2)
       activesupport (>= 4.1, < 5.2)
     highline (1.7.8)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     i18n (0.9.0)
       concurrent-ruby (~> 1.0)
     i18n-tasks (0.9.19)
@@ -141,9 +151,14 @@ GEM
     mail (2.7.0)
       mini_mime (>= 0.1.1)
     method_source (0.9.0)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    multi_json (1.12.2)
+    netrc (0.11.0)
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
@@ -202,6 +217,10 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rspec-core (3.7.0)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -246,12 +265,15 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
+    term-ansicolor (1.6.0)
+      tins (~> 1.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     thor (0.20.0)
     thread (0.2.2)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    tins (1.15.0)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.3)
@@ -264,6 +286,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.4)
     unicode-display_width (1.3.0)
     warden (1.2.7)
       rack (>= 1.0)
@@ -289,6 +314,7 @@ DEPENDENCIES
   cancancan
   capybara
   codeclimate-test-reporter
+  coveralls
   devise
   devise-bootstrap-views
   devise_openid_authenticatable
