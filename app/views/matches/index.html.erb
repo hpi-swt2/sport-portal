@@ -22,8 +22,8 @@
         <td><%= link_to match.id, match_path(match) %></td>
         <td><%= match.date %></td>
         <td><%= match.place %></td>
-        <td><%= link_to @match.team_home.name, team_path(@match.team_home) %></td>
-        <td><%= link_to @match.team_away.name, team_path(@match.team_away) %></td>
+        <td><%= link_to match.team_home.name, team_path(match.team_home) %></td>
+        <td><%= link_to match.team_away.name, team_path(match.team_away) %></td>
         <td><%= match.score_home %></td>
         <td><%= match.score_away %></td>
         <td><%=l match.created_at %></td>

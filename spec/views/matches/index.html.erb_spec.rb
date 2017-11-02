@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "matches/index", type: :view do
   before(:each) do
     @matches = assign(:matches, [
-      FactoryGirl.create(:match),
-      FactoryGirl.create(:match)
+      FactoryBot.create(:match),
+      FactoryBot.create(:match)
     ])
   end
 

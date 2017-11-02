@@ -65,7 +65,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   #gem 'database_cleaner'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
 
   gem 'i18n-tasks'
 end
@@ -82,6 +82,7 @@ group :development do
   gem 'listen', '~> 3.0.5'
 
   gem 'better_errors' #TODO
+  gem 'binding_of_caller' #is required by better_errors
 
   # an IRB alternative and runtime developer console
   gem 'pry' #TODO comment for uage

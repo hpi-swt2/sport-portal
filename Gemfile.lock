@@ -51,6 +51,8 @@ GEM
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
     bindex (0.5.0)
+    binding_of_caller (0.7.3)
+      debug_inspector (>= 0.0.1)
     bootstrap-tooltip-rails (0.1)
       rails (>= 3.1)
       thor
@@ -69,6 +71,7 @@ GEM
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
+    debug_inspector (0.0.3)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -88,10 +91,10 @@ GEM
     erubi (1.7.0)
     erubis (2.7.0)
     execjs (2.7.0)
-    factory_girl (4.9.0)
+    factory_bot (4.8.2)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
+    factory_bot_rails (4.8.2)
+      factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
     ffi (1.9.18)
     globalid (0.4.1)
@@ -276,6 +279,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake
   better_errors
+  binding_of_caller
   bootstrap-tooltip-rails
   cancancan
   capybara
@@ -283,7 +287,7 @@ DEPENDENCIES
   devise
   devise-bootstrap-views
   devise_openid_authenticatable
-  factory_girl_rails
+  factory_bot_rails
   has_scope
   i18n-tasks
   jquery-rails

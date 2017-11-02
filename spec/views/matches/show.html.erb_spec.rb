@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "matches/show", type: :view do
   before(:each) do
-    @match = assign(:match, FactoryGirl.create(:match))
+    @match = assign(:match, FactoryBot.create(:match))
   end
 
   it "renders attributes in <p>" do

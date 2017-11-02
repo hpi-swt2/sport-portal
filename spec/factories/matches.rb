@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :match do
     date "2017-10-23"
     place "Place"
