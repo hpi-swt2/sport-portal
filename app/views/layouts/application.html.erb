@@ -9,6 +9,17 @@
   </head>
 
   <body>
-    <%= yield %>
+	  <div class="container">
+	  	<%= nav_bar  fixed: :top, brand: "Sport Portal" do %>
+		    <%= menu_group do %>
+		        <%= menu_item "Home", root_path %>
+		        <%= menu_divider %>
+		        <%= menu_item "Players", players_path %>
+		        <%= menu_item "Teams", teams_path %>
+		        <%= menu_item "Matches", matches_path %>
+		    <% end %>
+	    <% end %>
+	    <%= yield %>
+	  </div>
   </body>
 </html>
