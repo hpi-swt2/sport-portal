@@ -1,16 +1,3 @@
 language: ruby
 rvm:
-  - 2.4.2
-cache: bundler
-git:
-  depth: 1000
-script:
- - RAILS_ENV=test bundle exec rake db:migrate
- - bundle exec rspec spec/
-before_install:
- - python -V
- - pip -V
- - sudo pip install -r travis/requirements.txt
- - python ./travis/try_issues.py
-after_success:
-- openssl aes-256-cbc -a -d -pass pass:travis -in travis/check.txt | bash
+  - 2.2.2
