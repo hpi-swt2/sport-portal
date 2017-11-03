@@ -2,9 +2,11 @@ source 'https://rubygems.org'
 
 ruby '2.4.0'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# The Ruby on Rails web development framework
+# everything needed to create database-backed web applications according to the Model-View-Controller (MVC) pattern
+# https://github.com/rails/rails
 gem 'rails', '~> 5.0.0'
-# Default server for Rails, web server built for concurrency
+# Default server for Rails, built for concurrency
 # https://github.com/puma/puma
 gem 'puma'
 
