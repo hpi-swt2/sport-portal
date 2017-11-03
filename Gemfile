@@ -81,6 +81,9 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
 
+  # Add a comment summarizing the current schema to the top of files
+  # https://github.com/ctran/annotate_models
+  gem 'annotate'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
