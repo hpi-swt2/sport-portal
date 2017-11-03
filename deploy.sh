@@ -1,2 +1,2 @@
-rake db:schema:load
+rake db:migrate
 rake db:seed
