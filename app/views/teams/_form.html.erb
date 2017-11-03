@@ -1,19 +1,6 @@
 <%= form_for @team, :html => { :class => "form-horizontal team" } do |f| %>
 
-  <% if @team.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= t('errors.template.header', :model => Team.model_name.human, :count => @team.errors.count) %></h3>
-      </div>
-      <div class="panel-body">
-        <ul>
-        <% @team.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
+  <%= render partial: "application/validation_errors", locals: {model: @team} %>
 
   <div class="form-group">
     <%= f.label :name, :class => 'control-label col-lg-2' %>
