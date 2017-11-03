@@ -20,4 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 ---
 en:
-  hello: Hello world
+  welcome:
+    index:
+      lead: We offer amazing features to serve multiple use cases.

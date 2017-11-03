@@ -28,7 +28,7 @@
       <%= f.text_field :place, :class => 'form-control' %>
     </div>
     <%=f.error_span(:place) %>
-  </div>  
+  </div>
   <div class="form-group">
     <%= f.label "Team Home", for: "team_home_id", :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
@@ -36,7 +36,7 @@
                               {selected: @match.team_home_id, include_blank: '(none)'},
                                :class => 'form-control'  %>
 
-    </div>  
+    </div>
     <%=f.error_span(:team_home_id) %>
   </div>
   <div class="form-group">
@@ -46,7 +46,7 @@
                               {selected: @match.team_away_id, include_blank: '(none)'},
                                :class => 'form-control'  %>
 
-    </div>  
+    </div>
     <%=f.error_span(:team_away_id) %>
   </div>
   <div class="form-group">
