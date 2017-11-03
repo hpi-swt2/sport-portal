@@ -6,12 +6,9 @@ A Ruby on Rails app to manage sport matches
 
 
 
-Branch | Travis CI  | Code Analysis | Heroku Deploy | Errbit
-
+Branch | Travis CI  | Code Analysis | Heroku Deploy | Errbit 
 ------ | ---------- | ------------- | ------------- | ------
-
-master  |[![Build Status](https://travis-ci.org/hpi-swt2/sport-portal.svg?branch=master)](https://travis-ci.org/hpi-swt2/sport-portal) | [![Coverage Status](https://coveralls.io/repos/github/hpi-swt2/sport-portal/badge.svg?branch=master)](https://coveralls.io/github/hpi-swt2/sport-portal?branch=master) | [![Heroku](https://heroku-badge.herokuapp.com/?app=sport-portal)](http://sport-portal.herokuapp.com/) [[link]](http://sport-portal.herokuapp.com/) | [[link]](http://swt2-errbit-2017.herokuapp.com/)
-
+master  |[![Build Status](https://travis-ci.org/hpi-swt2/sport-portal.svg?branch=master)](https://travis-ci.org/hpi-swt2/sport-portal) | [![Coverage Status](https://coveralls.io/repos/github/hpi-swt2/sport-portal/badge.svg?branch=master)](https://coveralls.io/github/hpi-swt2/sport-portal?branch=master) | [![Heroku](https://heroku-badge.herokuapp.com/?app=sport-portal)](http://sport-portal.herokuapp.com/) [[link]](http://sport-portal.herokuapp.com/) | [[link]](http://swt2-errbit-2017.herokuapp.com/) 
 dev  |[![Build Status](https://travis-ci.org/hpi-swt2/sport-portal.svg?branch=dev)](https://travis-ci.org/hpi-swt2/sport-portal) | [![Coverage Status](https://coveralls.io/repos/github/hpi-swt2/sport-portal/badge.svg?branch=dev)](https://coveralls.io/github/hpi-swt2/sport-portal?branch=dev) | [![Heroku](https://heroku-badge.herokuapp.com/?app=sport-portal)](http://sport-portal.herokuapp.com/) [[link]](http://sport-portal.herokuapp.com/) | [[link]](http://swt2-errbit-2017.herokuapp.com/)
 
 
