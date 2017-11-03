@@ -19,7 +19,7 @@ FactoryBot.define do
     sequence(:place) { |n| "Place #{n}" }
     association :team_away, :factory => :team
     association :team_home, :factory => :team
-    score_home { rand(1..10) }
-    score_away { rand(1..10) }
+    score_home { rand(10..20) }
+    score_away { rand(1..9) }
   end
 end
