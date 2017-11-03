@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SportPortal</title>
+    <title><%= t('appname') %></title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -10,11 +10,11 @@
 
   <body>
 	  <div class="container">
-	  	<%= nav_bar  fixed: :top, brand: "Sport Portal" do %>
+	  	<%= nav_bar fixed: :top, brand: t('appname') do %>
 		    <%= menu_group do %>
-		        <%= menu_item "Players", players_path %>
-		        <%= menu_item "Teams", teams_path %>
-		        <%= menu_item "Matches", matches_path %>
+		        <%= menu_item Player.model_name.human(:count => :many).titleize, players_path %>
+		        <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path %>
+		        <%= menu_item Match.model_name.human(:count => :many).titleize, matches_path %>
 		    <% end %>
 	    <% end %>
 	    <%= yield %>
