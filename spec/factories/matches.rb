@@ -15,11 +15,11 @@
 
 FactoryBot.define do
   factory :match do
-    date "2017-10-23"
-    place "Place"
+    date Date.today
+    sequence(:place) { |n| "Place #{n}" }
     association :team_away, :factory => :team
     association :team_home, :factory => :team
-    score_home 12
-    score_away 13
+    score_home { rand(1..10) }
+    score_away { rand(1..10) }
   end
 end

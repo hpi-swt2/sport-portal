@@ -11,7 +11,7 @@
 
 FactoryBot.define do
   factory :player do
-    first_name "MyString"
-    last_name "MyString"
+    first_name "Player"
+    sequence(:last_name) { |n| "Name #{n}" }
   end
 end
