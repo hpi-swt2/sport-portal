@@ -15,14 +15,12 @@ ActiveRecord::Schema.define(version: 20171102141101) do
   create_table "matches", force: :cascade do |t|
     t.date     "date"
     t.string   "place"
-    t.integer  "team_home_id"
-    t.integer  "team_away_id"
     t.integer  "score_home"
     t.integer  "score_away"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["team_away_id"], name: "index_matches_on_team_away_id"
-    t.index ["team_home_id"], name: "index_matches_on_team_home_id"
+    t.integer  "team_home_id"
+    t.integer  "team_away_id"
   end
 
   create_table "players", force: :cascade do |t|
