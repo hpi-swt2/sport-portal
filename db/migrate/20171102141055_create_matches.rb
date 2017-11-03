@@ -9,7 +9,7 @@ class CreateMatches < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_column :matches, :team_home, :integer, index: true
-    add_column :matches, :team_away, :integer, index: true
+    add_column :matches, :team_home_id, :integer, index: true
+    add_column :matches, :team_away_id, :integer, index: true
   end
 end
