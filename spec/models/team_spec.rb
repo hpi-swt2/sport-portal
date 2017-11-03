@@ -11,5 +11,8 @@
 require 'rails_helper'
 
 RSpec.describe Team, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "is valid when produced by a factory" do
+    match = FactoryBot.build(:team)
+    expect(match).to be_valid
+  end
 end

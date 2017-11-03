@@ -2,13 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "teams/show", type: :view do
   before(:each) do
-    @team = assign(:team, Team.create!(
-      :name => "Name"
-    ))
+    @team = assign(:team, FactoryBot.create(:team))
   end
 
-  it "renders attributes in <p>" do
+  it "renders attributes" do
     render
-    expect(rendered).to match(/Name/)
+    expect(rendered).to have_content(@team.name, count: 1)
   end
 end

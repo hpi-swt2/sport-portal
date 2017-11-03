@@ -2,17 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "teams/new", type: :view do
   before(:each) do
-    assign(:team, Team.new(
-      :name => "MyString"
-    ))
+    assign(:team, FactoryBot.build(:team))
   end
 
   it "renders new team form" do
     render
-
-    assert_select "form[action=?][method=?]", teams_path, "post" do
-
-      assert_select "input#team_name[name=?]", "team[name]"
-    end
+    expect(rendered).to have_css("form[action='#{teams_path}'][method='post']", count: 1)
   end
 end

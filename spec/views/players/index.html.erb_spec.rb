@@ -2,21 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "players/index", type: :view do
   before(:each) do
-    assign(:players, [
-      Player.create!(
-        :first_name => "First Name",
-        :last_name => "Last Name"
-      ),
-      Player.create!(
-        :first_name => "First Name",
-        :last_name => "Last Name"
-      )
+    @players = assign(:players, [
+      FactoryBot.create(:player),
+      FactoryBot.create(:player)
     ])
   end
 
-  it "renders a list of players" do
+  it "renders a list of players last names" do
     render
-    assert_select "tr>td", :text => "First Name".to_s, :count => 2
-    assert_select "tr>td", :text => "Last Name".to_s, :count => 2
+
+    expect(rendered).to have_content(@players.first.last_name, count: 1)
+    expect(rendered).to have_content(@players.second.last_name, count: 1)
   end
 end

@@ -12,5 +12,8 @@
 require 'rails_helper'
 
 RSpec.describe Player, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "is valid when produced by a factory" do
+    match = FactoryBot.build(:player)
+    expect(match).to be_valid
+  end
 end

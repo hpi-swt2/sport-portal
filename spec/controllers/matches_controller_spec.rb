@@ -29,11 +29,11 @@ RSpec.describe MatchesController, type: :controller do
   # Match. As you add validations to Match, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryBot.build(:match).attributes
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryBot.build(:match, team_home: nil, team_away: nil).attributes
   }
 
   # This should return the minimal set of values that should be in the session
@@ -97,14 +97,14 @@ RSpec.describe MatchesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {"date" => valid_attributes["date"] + 1.day}
       }
 
       it "updates the requested match" do
         match = Match.create! valid_attributes
         put :update, params: {id: match.to_param, match: new_attributes}, session: valid_session
         match.reload
-        skip("Add assertions for updated state")
+        expect(match.date).to eq(new_attributes["date"])
       end
 
       it "redirects to the match" do

@@ -29,11 +29,11 @@ RSpec.describe PlayersController, type: :controller do
   # Player. As you add validations to Player, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryBot.build(:player).attributes
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryBot.build(:player, first_name: '').attributes
   }
 
   # This should return the minimal set of values that should be in the session
@@ -97,14 +97,14 @@ RSpec.describe PlayersController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {"first_name" => valid_attributes["first_name"] + "_new"}
       }
 
       it "updates the requested player" do
         player = Player.create! valid_attributes
         put :update, params: {id: player.to_param, player: new_attributes}, session: valid_session
         player.reload
-        skip("Add assertions for updated state")
+        expect(player.first_name).to eq(new_attributes["first_name"])
       end
 
       it "redirects to the player" do

@@ -2,18 +2,15 @@ require 'rails_helper'
 
 RSpec.describe "teams/index", type: :view do
   before(:each) do
-    assign(:teams, [
-      Team.create!(
-        :name => "Name"
-      ),
-      Team.create!(
-        :name => "Name"
-      )
+    @teams = assign(:teams, [
+      FactoryBot.create(:team),
+      FactoryBot.create(:team)
     ])
   end
 
   it "renders a list of teams" do
     render
-    assert_select "tr>td", :text => "Name".to_s, :count => 2
+    expect(rendered).to have_content(@teams.first.name, count: 1)
+    expect(rendered).to have_content(@teams.second.name, count: 1)
   end
 end

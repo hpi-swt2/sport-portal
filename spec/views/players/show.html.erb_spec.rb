@@ -2,15 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "players/show", type: :view do
   before(:each) do
-    @player = assign(:player, Player.create!(
-      :first_name => "First Name",
-      :last_name => "Last Name"
-    ))
+    @player = assign(:player, FactoryBot.create(:player))
   end
 
-  it "renders attributes in <p>" do
+  it "renders attributes" do
     render
-    expect(rendered).to match(/First Name/)
-    expect(rendered).to match(/Last Name/)
+    expect(rendered).to have_content(@player.first_name, count: 1)
+    expect(rendered).to have_content(@player.last_name, count: 1)
   end
 end
