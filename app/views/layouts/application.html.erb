@@ -10,7 +10,7 @@
 
   <body>
 	  <div class="container">
-	  	<%= nav_bar fixed: :top, brand: t('appname') do %>
+	  	<%= nav_bar brand: t('appname'), responsive: true do %>
 		    <%= menu_group do %>
 		        <%= menu_item Player.model_name.human(:count => :many).titleize, players_path %>
 		        <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path %>

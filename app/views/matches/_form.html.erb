@@ -6,49 +6,49 @@
     <%= f.label :date, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :date, :class => 'form-control' %>
+      <%= f.error_span(:date) %>
     </div>
-    <%=f.error_span(:date) %>
   </div>
   <div class="form-group">
     <%= f.label :place, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :place, :class => 'form-control' %>
+      <%= f.error_span(:place) %>
     </div>
-    <%=f.error_span(:place) %>
   </div>
   <div class="form-group">
     <%= f.label "Team Home", for: "team_home_id", :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.collection_select :team_home_id, Team.all, :id, :name,
-                              {selected: @match.team_home_id, include_blank: '(none)'},
+                              {selected: @match.team_home_id, include_blank: '---'},
                                :class => 'form-control'  %>
 
+      <%= f.error_span(:team_home) %>
     </div>
-    <%=f.error_span(:team_home_id) %>
   </div>
   <div class="form-group">
     <%= f.label "Team Away", for: "team_away_id", :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.collection_select :team_away_id, Team.all, :id, :name,
-                              {selected: @match.team_away_id, include_blank: '(none)'},
+                              {selected: @match.team_away_id, include_blank: '---'},
                                :class => 'form-control'  %>
 
+      <%= f.error_span(:team_away) %>
     </div>
-    <%=f.error_span(:team_away_id) %>
   </div>
   <div class="form-group">
     <%= f.label :score_home, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :score_home, :class => 'form-control' %>
+      <%= f.error_span(:score_home) %>
     </div>
-    <%=f.error_span(:score_home) %>
   </div>
   <div class="form-group">
     <%= f.label :score_away, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :score_away, :class => 'form-control' %>
+      <%= f.error_span(:score_away) %>
     </div>
-    <%=f.error_span(:score_away) %>
   </div>
 
   <div class="form-group">
