@@ -40,7 +40,7 @@ gem 'jquery-ui-rails' #TODO link + Comment
 # Authentication
 gem 'devise'
 # openID Authentication
-gem 'devise_openid_authenticatable'
+# gem 'devise_openid_authenticatable'
 
 # Use Bootstrap (app/assets/stylesheets)
 #gem 'therubyracer', '~> 0.12.2', platforms: :ruby
