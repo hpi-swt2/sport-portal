@@ -13,9 +13,6 @@ RSpec.describe "matches/index", type: :view do
 
     expect(rendered).to have_content(@matches.first.date.to_s, minimum: 1)
 
-    expect(rendered).to have_content(@matches.first.place, count: 1)
-    expect(rendered).to have_content(@matches.second.place, count: 1)
-
     expect(rendered).to have_content(@matches.first.score_home, minimum: 1)
     expect(rendered).to have_content(@matches.second.score_home, minimum: 1)
 
