@@ -29,11 +29,11 @@ en:
   activerecord:
     models:
       match:
-        one: "Match"
-        other: "Matches"
+        one: "match"
+        other: "matches"
       player:
-        one: "Player"
-        other: "Players"
+        one: "player"
+        other: "players"
       team:
-        one: "Team"
-        other: "Teams"
+        one: "team"
+        other: "teams"
