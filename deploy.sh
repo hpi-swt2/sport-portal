@@ -1,1 +1,2 @@
-rake db:reset
+rake db:schema:load
+rake db:seed
