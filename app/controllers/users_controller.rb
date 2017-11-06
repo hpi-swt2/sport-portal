@@ -12,10 +12,11 @@ class UsersController < Devise::RegistrationsController
   end
 
   # All other controller methods are handled by original `Devise::RegistrationsController`
+  # Views are located in `app/views/devise`
 
   private
 
-  # Overridden methods of `Devise::RegistrationsController` to permit additional params
+  # Overridden methods of `Devise::RegistrationsController` to permit additional model params
   def sign_up_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end

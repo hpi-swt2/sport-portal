@@ -12,7 +12,7 @@ require 'rails_helper'
 
 RSpec.describe Team, type: :model do
   it "is valid when produced by a factory" do
-    match = FactoryBot.build(:team)
-    expect(match).to be_valid
+    team = FactoryBot.build(:team)
+    expect(team).to be_valid
   end
 end
