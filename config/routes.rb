@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # Use custom registrations controller instead of the one provided by devise
+  devise_for :users, :controllers => { registrations: 'registrations' }
   root 'welcome#index'
 
   resources :teams
