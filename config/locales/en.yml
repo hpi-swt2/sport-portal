@@ -37,3 +37,6 @@ en:
       team:
         one: "team"
         other: "teams"
+      user:
+        one: "user"
+        other: "Users"
