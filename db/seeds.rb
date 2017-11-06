@@ -6,6 +6,5 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-FactoryBot.create(:player)
-FactoryBot.create(:player)
+FactoryBot.create(:user, first_name: 'admin', last_name: '', email: 'admin@example.com', password: '123456', password_confirmation: '123456')
 FactoryBot.create(:match)
