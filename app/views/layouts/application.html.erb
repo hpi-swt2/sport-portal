@@ -9,15 +9,17 @@
   </head>
 
   <body>
-	  <div class="container">
-	  	<%= nav_bar brand: t('appname'), responsive: true do %>
-		    <%= menu_group do %>
-		        <%= menu_item Player.model_name.human(:count => :many).titleize, players_path %>
-		        <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path %>
-		        <%= menu_item Match.model_name.human(:count => :many).titleize, matches_path %>
-		    <% end %>
-	    <% end %>
-	    <%= yield %>
-	  </div>
+    <div class="container">
+      <%= nav_bar brand: t('appname'), responsive: true do %>
+        <%= menu_group do %>
+            <%= menu_item Player.model_name.human(:count => :many).titleize, players_path %>
+            <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path %>
+            <%= menu_item Match.model_name.human(:count => :many).titleize, matches_path %>
+        <% end %>
+      <% end %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
   </body>
 </html>

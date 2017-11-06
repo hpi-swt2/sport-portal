@@ -39,13 +39,14 @@ gem 'jquery-ui-rails' #TODO link + Comment
 
 # Authentication
 gem 'devise'
-# openID Authentication
-# gem 'devise_openid_authenticatable'
-
-# Use Bootstrap (app/assets/stylesheets)
-#gem 'therubyracer', '~> 0.12.2', platforms: :ruby
-gem 'twitter-bootstrap-rails'
+# Bootstrap view for devise
 gem 'devise-bootstrap-views'
+# openID Authentication
+gem 'omniauth'
+
+#gem 'therubyracer', '~> 0.12.2', platforms: :ruby
+# Use Bootstrap (app/assets/stylesheets)
+gem 'twitter-bootstrap-rails'
 #use Bootstrap Tooltips
 gem 'bootstrap-tooltip-rails' #TODO comment
 #gem 'bootstrap-datepicker-rails'
