@@ -13,17 +13,12 @@ RSpec.describe UsersController, type: :controller do
     FactoryBot.attributes_for(:user)
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # UsersController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
   describe "GET #index" do
     it "returns a success response" do
       # https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-%28and-RSpec%29#mappings
       @request.env["devise.mapping"] = Devise.mappings[:user]
       user = User.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      get :index, params: {}
       expect(response).to be_success
     end
   end
@@ -32,7 +27,7 @@ RSpec.describe UsersController, type: :controller do
     it "returns a success response" do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       user = User.create! valid_attributes
-      get :show, params: {id: user.to_param}, session: valid_session
+      get :show, params: {id: user.to_param}
       expect(response).to be_success
     end
   end

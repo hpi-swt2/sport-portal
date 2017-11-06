@@ -17,15 +17,10 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: nil, team_away: nil).attributes
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # MatchesController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
   describe "GET #index" do
     it "returns a success response" do
       match = Match.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      get :index, params: {}
       expect(response).to be_success
     end
   end
@@ -33,14 +28,14 @@ RSpec.describe MatchesController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       match = Match.create! valid_attributes
-      get :show, params: {id: match.to_param}, session: valid_session
+      get :show, params: {id: match.to_param}
       expect(response).to be_success
     end
   end
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: {}
       expect(response).to be_success
     end
   end
@@ -48,7 +43,7 @@ RSpec.describe MatchesController, type: :controller do
   describe "GET #edit" do
     it "returns a success response" do
       match = Match.create! valid_attributes
-      get :edit, params: {id: match.to_param}, session: valid_session
+      get :edit, params: {id: match.to_param}
       expect(response).to be_success
     end
   end
@@ -57,19 +52,19 @@ RSpec.describe MatchesController, type: :controller do
     context "with valid params" do
       it "creates a new Match" do
         expect {
-          post :create, params: {match: valid_attributes}, session: valid_session
+          post :create, params: {match: valid_attributes}
         }.to change(Match, :count).by(1)
       end
 
       it "redirects to the created match" do
-        post :create, params: {match: valid_attributes}, session: valid_session
+        post :create, params: {match: valid_attributes}
         expect(response).to redirect_to(Match.last)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {match: invalid_attributes}, session: valid_session
+        post :create, params: {match: invalid_attributes}
         expect(response).to be_success
       end
     end
@@ -83,14 +78,14 @@ RSpec.describe MatchesController, type: :controller do
 
       it "updates the requested match" do
         match = Match.create! valid_attributes
-        put :update, params: {id: match.to_param, match: new_attributes}, session: valid_session
+        put :update, params: {id: match.to_param, match: new_attributes}
         match.reload
         expect(match.date).to eq(new_attributes["date"])
       end
 
       it "redirects to the match" do
         match = Match.create! valid_attributes
-        put :update, params: {id: match.to_param, match: valid_attributes}, session: valid_session
+        put :update, params: {id: match.to_param, match: valid_attributes}
         expect(response).to redirect_to(match)
       end
     end
@@ -98,7 +93,7 @@ RSpec.describe MatchesController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
         match = Match.create! valid_attributes
-        put :update, params: {id: match.to_param, match: invalid_attributes}, session: valid_session
+        put :update, params: {id: match.to_param, match: invalid_attributes}
         expect(response).to be_success
       end
     end
@@ -108,13 +103,13 @@ RSpec.describe MatchesController, type: :controller do
     it "destroys the requested match" do
       match = Match.create! valid_attributes
       expect {
-        delete :destroy, params: {id: match.to_param}, session: valid_session
+        delete :destroy, params: {id: match.to_param}
       }.to change(Match, :count).by(-1)
     end
 
     it "redirects to the matches list" do
       match = Match.create! valid_attributes
-      delete :destroy, params: {id: match.to_param}, session: valid_session
+      delete :destroy, params: {id: match.to_param}
       expect(response).to redirect_to(matches_url)
     end
   end

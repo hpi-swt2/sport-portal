@@ -17,15 +17,10 @@ RSpec.describe TeamsController, type: :controller do
     FactoryBot.build(:team, name: '').attributes
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # TeamsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
   describe "GET #index" do
     it "returns a success response" do
       team = Team.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      get :index, params: {}
       expect(response).to be_success
     end
   end
@@ -33,14 +28,14 @@ RSpec.describe TeamsController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       team = Team.create! valid_attributes
-      get :show, params: {id: team.to_param}, session: valid_session
+      get :show, params: {id: team.to_param}
       expect(response).to be_success
     end
   end
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: {}
       expect(response).to be_success
     end
   end
@@ -48,7 +43,7 @@ RSpec.describe TeamsController, type: :controller do
   describe "GET #edit" do
     it "returns a success response" do
       team = Team.create! valid_attributes
-      get :edit, params: {id: team.to_param}, session: valid_session
+      get :edit, params: {id: team.to_param}
       expect(response).to be_success
     end
   end
@@ -57,19 +52,19 @@ RSpec.describe TeamsController, type: :controller do
     context "with valid params" do
       it "creates a new Team" do
         expect {
-          post :create, params: {team: valid_attributes}, session: valid_session
+          post :create, params: {team: valid_attributes}
         }.to change(Team, :count).by(1)
       end
 
       it "redirects to the created team" do
-        post :create, params: {team: valid_attributes}, session: valid_session
+        post :create, params: {team: valid_attributes}
         expect(response).to redirect_to(Team.last)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {team: invalid_attributes}, session: valid_session
+        post :create, params: {team: invalid_attributes}
         expect(response).to be_success
       end
     end
@@ -83,14 +78,14 @@ RSpec.describe TeamsController, type: :controller do
 
       it "updates the requested team" do
         team = Team.create! valid_attributes
-        put :update, params: {id: team.to_param, team: new_attributes}, session: valid_session
+        put :update, params: {id: team.to_param, team: new_attributes}
         team.reload
         expect(team.name).to eq(new_attributes["name"])
       end
 
       it "redirects to the team" do
         team = Team.create! valid_attributes
-        put :update, params: {id: team.to_param, team: valid_attributes}, session: valid_session
+        put :update, params: {id: team.to_param, team: valid_attributes}
         expect(response).to redirect_to(team)
       end
     end
@@ -98,7 +93,7 @@ RSpec.describe TeamsController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
         team = Team.create! valid_attributes
-        put :update, params: {id: team.to_param, team: invalid_attributes}, session: valid_session
+        put :update, params: {id: team.to_param, team: invalid_attributes}
         expect(response).to be_success
       end
     end
@@ -108,13 +103,13 @@ RSpec.describe TeamsController, type: :controller do
     it "destroys the requested team" do
       team = Team.create! valid_attributes
       expect {
-        delete :destroy, params: {id: team.to_param}, session: valid_session
+        delete :destroy, params: {id: team.to_param}
       }.to change(Team, :count).by(-1)
     end
 
     it "redirects to the teams list" do
       team = Team.create! valid_attributes
-      delete :destroy, params: {id: team.to_param}, session: valid_session
+      delete :destroy, params: {id: team.to_param}
       expect(response).to redirect_to(teams_url)
     end
   end
