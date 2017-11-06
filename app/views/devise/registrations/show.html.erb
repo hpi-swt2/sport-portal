@@ -12,3 +12,7 @@
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
+<% if @user == current_user %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_user_registration_path(current_user), :class => 'btn btn-default' %>
+<% end %>
