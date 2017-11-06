@@ -35,5 +35,5 @@ en:
         one: "team"
         other: "teams"
       user:
-        one: "user"
-        other: "Users"
+        one: "player"
+        other: "players"
