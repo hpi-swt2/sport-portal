@@ -31,9 +31,6 @@ en:
       match:
         one: "match"
         other: "matches"
-      player:
-        one: "player"
-        other: "players"
       team:
         one: "team"
         other: "teams"

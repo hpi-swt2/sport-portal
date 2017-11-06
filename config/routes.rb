@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root 'welcome#index'
   resources :teams
   resources :matches
-  resources :players
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, :controllers => { registrations: 'users' }
