@@ -8,8 +8,8 @@
   <dd><%= @team.name %></dd>
 </dl>
 
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              teams_path, :class => 'btn btn-default'  %>
+<%# app/helpers/button_helper.rb %>
+<%= back_btn %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_team_path(@team), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
