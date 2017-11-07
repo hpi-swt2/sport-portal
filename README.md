@@ -12,10 +12,11 @@ Errors that occur while using the deployed master branch on Heroku are logged to
 
 ## Local Setup
 
-* See if the locally installed ruby version matches the one specified in the `.ruby_version` file.
+* Clone this repository
+* `cat .ruby-version && echo $(ruby --version)` See if locally installed ruby version matches the one specified in the `.ruby_version` file. 
 * _If the ruby version is different:_ Install the required version using [rbenv](https://github.com/rbenv/rbenv#installation) (recommended) or [RVM](https://rvm.io/rvm/install)
 * `gem install bundler` Install [bundler](http://bundler.io/) for managing Ruby gems 
-* `bundle install` Install the required Ruby gem dependencies defined in the project's [Gemfile](https://github.com/hpi-swt2/sport-portal/blob/master/Gemfile)
+* `bundle install` Install the required Ruby gem dependencies defined in the project's [Gemfile](http://bundler.io/gemfile.html)
 * `rake db:create db:migrate db:seed` Setup database, run migrations, seed the database with defaults
 * `rspec` Run all the tests (using the [RSpec](http://rspec.info/) test framework)
 * `rails s` Start the Rails development server (By default runs on `localhost:3000`)
