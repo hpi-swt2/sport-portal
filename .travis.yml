@@ -1,10 +1,20 @@
+# If the ruby version is not specified by the rvm key, Travis CI uses the version
+# specified in the .ruby-version file in the root of the repository if one is available.
 language: ruby
-rvm:
- - 2.4.0
-sudo: false
+# Cache gems for faster builds
+# https://docs.travis-ci.com/user/caching/#Bundler
 cache: bundler
+# Use PostgreSQL db for test on Travis
+# https://docs.travis-ci.com/user/database-setup/#PostgreSQL
+services:
+  - postgresql
+# Setup PostgreSQL db
+# https://docs.travis-ci.com/user/database-setup/#Using-PostgreSQL-in-your-Builds
 before_script:
-  - psql -c 'create database hpi_swt2_test;' -U postgres
+  - cp config/database.travis.yml config/database.yml
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - bundle exec rake db:create db:migrate
+# Commands to start test execution, default is `rake`
+# https://docs.travis-ci.com/user/languages/ruby/#Default-Build-Script
 script:
-  - bundle exec rake db:test:prepare
-  - xvfb-run bundle exec rspec spec/
+  - xvfb-run bundle exec rspec
