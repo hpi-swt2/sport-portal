@@ -13,7 +13,7 @@ services:
 before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database travis_ci_test;' -U postgres
-  - bundle exec rake db:create db:migrate
+  - bundle exec rake db:create db:migrate RAILS_ENV=test
 # Commands to start test execution, default is `rake`
 # https://docs.travis-ci.com/user/languages/ruby/#Default-Build-Script
 script:
