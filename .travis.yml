@@ -6,7 +6,7 @@ language: ruby
 cache: bundler
 # No need to install gems that are not needed for testing
 # https://docs.travis-ci.com/user/languages/ruby/#Speeding-up-your-build-by-excluding-non-essential-dependencies
-bundler_args: --without development:production
+bundler_args: --without development
 # Use PostgreSQL db for test on Travis
 # https://docs.travis-ci.com/user/database-setup/#PostgreSQL
 services:
@@ -19,5 +19,7 @@ before_script:
   - bundle exec rake db:create db:migrate RAILS_ENV=test
 # Commands to start test execution, default is `rake`
 # https://docs.travis-ci.com/user/languages/ruby/#Default-Build-Script
+# Use the 'xvfb' tool to run tests that require a GUI
+# https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 script:
-  - xvfb-run bundle exec rspec
+  - bundle exec rspec
