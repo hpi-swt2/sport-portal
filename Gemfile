@@ -101,6 +101,11 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   # https://github.com/rails/web-console
   gem 'web-console'
+  # feature rich debugger for Ruby
+  # https://github.com/deivid-rodriguez/byebug
+  # Start debugging by putting 'byebug' anywhere in the code
+  # http://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-byebug-gem
+  gem 'byebug'
   # Static code analysis for Ruby
   # https://github.com/bbatsov/rubocop
   gem 'rubocop', require: false
@@ -112,7 +117,7 @@ group :development do
   # https://github.com/rails/spring
   gem 'spring'
   # https://github.com/jonleighton/spring-watcher-listen
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-watcher-listen'
   # Replace standard Rails error page with more useful error page
   # https://github.com/charliesome/better_errors
   gem 'better_errors'
@@ -120,7 +125,7 @@ group :development do
   # https://github.com/banister/binding_of_caller
   gem 'binding_of_caller'
   # Alternative to the standard IRB shell for Ruby
-  # Start an interactive REPL session with 'binding.pry'
+  # Start an interactive REPL session with 'binding.pry' anywhere in the code
   # https://github.com/pry/pry
   gem 'pry'
   # Causes 'rails console' to open the pry console

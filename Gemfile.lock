@@ -57,6 +57,7 @@ GEM
     binding_of_caller (0.7.3)
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
+    byebug (9.1.0)
     cancancan (2.0.0)
     capybara (2.15.4)
       addressable
@@ -133,9 +134,10 @@ GEM
       sprockets (> 2, < 4)
       tilt
     libv8 (3.16.14.19)
-    listen (3.0.8)
+    listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+      ruby_dep (~> 1.2)
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -234,6 +236,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
+    ruby_dep (1.5.0)
     simplecov (0.13.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -301,6 +304,7 @@ DEPENDENCIES
   annotate
   better_errors
   binding_of_caller
+  byebug
   cancancan
   capybara
   coveralls
@@ -320,7 +324,7 @@ DEPENDENCIES
   rubocop
   simplecov
   spring
-  spring-watcher-listen (~> 2.0.0)
+  spring-watcher-listen
   sqlite3
   therubyracer
   turbolinks (~> 5)
