@@ -46,6 +46,8 @@ rails s -b 0 # start the rails server
 ## Important Development Commands
 * `bundle exec <command>` Run command within the context of the current gemset
 * `rspec spec/controller/expenses_controller_spec.rb` Specify a folder or test file to run
+* `bundle exec annotate` Add a comment summarizing the current schema to the top of files
+* `bundle exec rubocop` Run static code analysis for code smells based on `.rubocop.yml` config
 * `rails c` Run the Rails console
 * `rails c --sandbox` Test out some code without changing any data
 * `rails g migration DoSomething` Create migration _db/migrate/*_DoSomething.rb_.
