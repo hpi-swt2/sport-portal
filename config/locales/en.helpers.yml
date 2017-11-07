@@ -22,3 +22,13 @@ en:
       save: "Save %{model}"
       new: "New %{model}"
       delete: "Delete %{model}"
+    submit:
+      create: Create %{model}
+      submit: Save %{model}
+      update: Update %{model}
+    select:
+      prompt: Please select
+    flash:
+      created: "%{resource_name} was successfully created."
+      updated: "%{resource_name} was successfully updated."
+      destroyed: "%{resource_name} was successfully destroyed."

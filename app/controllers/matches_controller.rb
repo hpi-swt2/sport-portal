@@ -24,7 +24,7 @@ class MatchesController < ApplicationController
     @match = Match.new(match_params)
 
     if @match.save
-      redirect_to @match, notice: 'Match was successfully created.'
+      redirect_to @match, notice: I18n.t('helpers.flash.created', resource_name: Match.model_name.human).capitalize
     else
       render :new
     end
@@ -33,7 +33,7 @@ class MatchesController < ApplicationController
   # PATCH/PUT /matches/1
   def update
     if @match.update(match_params)
-      redirect_to @match, notice: 'Match was successfully updated.'
+      redirect_to @match, notice: I18n.t('helpers.flash.updated', resource_name: Match.model_name.human).capitalize
     else
       render :edit
     end
@@ -42,7 +42,7 @@ class MatchesController < ApplicationController
   # DELETE /matches/1
   def destroy
     @match.destroy
-    redirect_to matches_url, notice: 'Match was successfully destroyed.'
+    redirect_to matches_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
 
   private
