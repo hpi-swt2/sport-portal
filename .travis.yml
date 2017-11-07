@@ -4,6 +4,9 @@ language: ruby
 # Cache gems for faster builds
 # https://docs.travis-ci.com/user/caching/#Bundler
 cache: bundler
+# No need to install gems that are not needed for testing
+# https://docs.travis-ci.com/user/languages/ruby/#Speeding-up-your-build-by-excluding-non-essential-dependencies
+bundler_args: --without development:production
 # Use PostgreSQL db for test on Travis
 # https://docs.travis-ci.com/user/database-setup/#PostgreSQL
 services:
