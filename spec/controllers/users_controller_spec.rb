@@ -31,4 +31,31 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to be_success
     end
   end
+
+  describe "POST #create" do
+    it "creates a new user with valid params" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      expect {
+        post :create, params: {user: valid_attributes}
+      }.to change(User, :count).by(1)
+    end
+  end
+
+  describe "PUT #update" do
+    context "with valid params" do
+      let(:new_attributes) {
+        {first_name: valid_attributes[:first_name] + "_new", current_password: valid_attributes[:password]}
+      }
+
+      it "updates the requested user" do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        user = User.create! valid_attributes
+        sign_in user
+        put :update, params: {id: user.to_param, user: new_attributes}
+        user.reload
+        expect(user.first_name).to eq(new_attributes[:first_name])
+      end
+    end
+  end
+
 end
