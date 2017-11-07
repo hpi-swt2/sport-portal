@@ -69,11 +69,14 @@ gem 'has_scope'
 #Code analyzer
 gem 'rubocop'
 
+# fixture replacement, build objects using factories
+# https://github.com/thoughtbot/factory_bot_rails
+gem 'factory_bot_rails'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   #gem 'database_cleaner'
-  gem 'factory_bot_rails'
 
   gem 'i18n-tasks'
 end
