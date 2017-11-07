@@ -117,10 +117,6 @@ end
 group :production do
   # Use Postgresql in production
   gem 'pg'
-  # Enables serving assets in production and setting your logger to standard out,
-  # both of which are required to run a Rails application on a twelve-factor provider.
-  # https://github.com/heroku/rails_12factor
-  gem 'rails_12factor'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
