@@ -1,3 +1,7 @@
+require 'coveralls'
+Coveralls.wear!('rails')
+# https://coveralls.zendesk.com/hc/en-us/articles/201769485-Ruby-Rails
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
