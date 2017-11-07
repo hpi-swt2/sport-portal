@@ -1,2 +1,2 @@
-web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e ${RACK_ENV:-development}
+web: bundle exec puma -C config/puma.rb
 release: bundle exec rake db:schema:load DISABLE_DATABASE_ENVIRONMENT_CHECK=1 && bundle exec rake db:seed DISABLE_DATABASE_ENVIRONMENT_CHECK=1
