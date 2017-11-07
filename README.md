@@ -13,7 +13,6 @@ Errors that occur while using the deployed master branch on Heroku are logged to
 ## Local Setup
 
 * `bundle install` Install the required Ruby gem dependencies defined in the [Gemfile](https://github.com/hpi-swt2/workshop-portal/blob/production/Gemfile)
-* `cp database.sqlite.yml database.yml` Select database config (for development we recommend SQLite) 
 * `rake db:create db:migrate db:seed` Setup database, run migrations, seed the database with defaults
 * `rails s` Start the Rails development server (By default runs on _localhost:3000_)
 * `rspec` Run all the tests (using the [RSpec](http://rspec.info/) test framework)
