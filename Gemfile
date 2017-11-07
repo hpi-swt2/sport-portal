@@ -89,6 +89,9 @@ group :development, :test do
   # Manage translation and localization with static analysis, for Ruby i18n
   # https://github.com/glebm/i18n-tasks
   gem 'i18n-tasks'
+  # Code coverage for Ruby
+  # https://github.com/colszowka/simplecov
+  gem 'simplecov', require: false
   # Hosted code coverage on coveralls.io
   # https://docs.coveralls.io/ruby-on-rails
   gem 'coveralls', require: false
@@ -134,12 +137,6 @@ group :development do
   # Ruby bindings for the SQLite3 embedded database
   # https://github.com/sparklemotion/sqlite3-ruby
   gem 'sqlite3'
-end
-
-group :test do
-  # Code coverage for Ruby
-  # https://github.com/colszowka/simplecov
-  gem 'simplecov', require: false
 end
 
 group :production do
