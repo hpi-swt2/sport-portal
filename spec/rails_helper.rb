@@ -1,5 +1,11 @@
+require 'simplecov'
 require 'coveralls'
-Coveralls.wear!('rails')
+
+SimpleCov.formatters = [
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start('rails')
 # https://coveralls.zendesk.com/hc/en-us/articles/201769485-Ruby-Rails
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
