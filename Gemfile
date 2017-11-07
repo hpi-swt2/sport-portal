@@ -9,115 +9,136 @@ gem 'rails', '~> 5.1.4'
 # Default server for Rails, built for concurrency
 # https://github.com/puma/puma
 gem 'puma'
-
-gem 'coveralls', require: false
-
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+# Evaluate JavaScript from within Ruby, e.g. for the Rails Asset Pipeline
+# https://github.com/rails/execjs#readme for more supported runtimes
+gem 'therubyracer', platforms: :ruby
+# Turbolinks speeds up page loads using AJAX. No server-side cooperation necessary.
+# Automatically fetches the page, swaps in its <body>,
+# and merges its <head>, without incurring the cost of a full page load
+# https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-#gem 'jbuilder', '~> 2.5'
-# https://github.com/kossnocorp/jquery.turbolinks
-gem 'jquery-turbolinks'
-gem 'jquery-ui-rails' #TODO link + Comment
-
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-#gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-#gem 'sdoc', '~> 0.4.0', group: :doc
-
-# for Windows users
-#gem 'nokogiri', '1.6.7.rc3', platforms: [:mswin, :mingw, :x64_mingw]
-#gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
-
-# Authentication
+# Compressor for JavaScript assets
+# https://github.com/lautis/uglifier/
+gem 'uglifier', '>= 1.3.0'
+# Flexible authentication solution for Rails
+# https://github.com/plataformatec/devise
 gem 'devise'
-# Bootstrap view for devise
+# Bootstrap-themed views for devise
+# https://github.com/hisea/devise-bootstrap-views/
 gem 'devise-bootstrap-views'
-# openID Authentication
+# Useful for openID authentication
+# Library that provides standardizes multi-provider authentication
+# https://github.com/omniauth/omniauth
 gem 'omniauth'
-
-#gem 'therubyracer', '~> 0.12.2', platforms: :ruby
-# Use Bootstrap (app/assets/stylesheets)
-gem 'twitter-bootstrap-rails'
-#use Bootstrap Tooltips
-gem 'bootstrap-tooltip-rails' #TODO comment
-#gem 'bootstrap-datepicker-rails'
-
-# Select2 dropdown replacement featuring autocomplete
-#gem 'select2-rails'
-
-# Exception Tracking
-gem 'airbrake'
-
-# to parse date parameters from ui
-#gem "delocalize"
-
-# Continuation of CanCan (authoriation Gem for RoR)
+# Authorization library which restricts what resources a given user is allowed to access
+# All permissions are defined in a 'Ability' and not duplicated across controllers, views, and database queries.
+# https://github.com/CanCanCommunity/cancancan
 gem 'cancancan'
-
-# Create filters easily with scopes
-gem 'has_scope'
-
-#Code analyzer
-gem 'rubocop'
-
-# fixture replacement, build objects using factories
+# Fixture replacement, build objects using factories
+# Also Used in production in seeds.rb
 # https://github.com/thoughtbot/factory_bot_rails
 gem 'factory_bot_rails'
+# Bootstrap CSS toolkit for Rails Asset Pipeline
+# https://github.com/seyhunak/twitter-bootstrap-rails
+gem 'twitter-bootstrap-rails'
+# Map incoming controller parameters to named scopes in your resources
+# https://github.com/plataformatec/has_scope
+gem 'has_scope'
+# for Windows users
+# gem 'nokogiri', '1.6.7.rc3', platforms: [:mswin, :mingw, :x64_mingw]
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
+# https://github.com/jquery-ui-rails/jquery-ui-rails
+# gem 'jquery-ui-rails'
+
+# Use Bootstrap Tooltips
+# https://github.com/brandonhilkert/bootstrap-tooltip-rails
+# gem 'bootstrap-tooltip-rails'
+
+# Use Bootstrap datepicker
+# https://github.com/Nerian/bootstrap-datepicker-rails
+# gem 'bootstrap-datepicker-rails'
+
+# Package Select2 dropdown replacement featuring autocomplete
+# https://github.com/argerim/select2-rails
+# gem 'select2-rails'
+
+# Build JSON APIs with ease.
+# https://github.com/rails/jbuilder
+# gem 'jbuilder', '~> 2.5'
+
+# Documentation generator
+# https://github.com/zzak/sdoc/
+# gem 'sdoc', '~> 0.4.0', group: :doc
+
+# to parse date parameters from ui
+# https://github.com/clemens/delocalize
+# gem 'delocalize'
 
 group :development, :test do
+  # Testing framework for Rails
+  # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
+  # Acceptance test framework for web applications
+  # https://github.com/teamcapybara/capybara
   gem 'capybara'
-  #gem 'database_cleaner'
-
+  # Manage translation and localization with static analysis, for Ruby i18n
+  # https://github.com/glebm/i18n-tasks
   gem 'i18n-tasks'
+  # Hosted code coverage on coveralls.io
+  # https://docs.coveralls.io/ruby-on-rails
+  gem 'coveralls', require: false
 end
 
 group :development do
+  # Exception tracking in production, report to Errbit
+  # https://github.com/airbrake/airbrake
+  gem 'airbrake'
   # Access an IRB console on exception pages or by using <%= console %> in views
+  # https://github.com/rails/web-console
   gem 'web-console'
-
+  # Static code analysis for Ruby
+  # https://github.com/bbatsov/rubocop
+  gem 'rubocop', require: false
   # Add a comment summarizing the current schema to the top of files
+  # run with 'bundle exec annotate'
   # https://github.com/ctran/annotate_models
   gem 'annotate'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Rails application preloader
+  # https://github.com/rails/spring
   gem 'spring'
+  # https://github.com/jonleighton/spring-watcher-listen
   gem 'spring-watcher-listen', '~> 2.0.0'
-  # Used for hot reload on the development server
-  gem 'listen', '~> 3.0.5'
-
-  gem 'better_errors' #TODO
-  gem 'binding_of_caller' #is required by better_errors
-
-  # an IRB alternative and runtime developer console
-  gem 'pry' #TODO comment for uage
+  # Replace standard Rails error page with more useful error page
+  # https://github.com/charliesome/better_errors
+  gem 'better_errors'
+  # for use in better_errors
+  # https://github.com/banister/binding_of_caller
+  gem 'binding_of_caller'
+  # Alternative to the standard IRB shell for Ruby
+  # Start an interactive REPL session with 'binding.pry'
+  # https://github.com/pry/pry
+  gem 'pry'
+  # Causes 'rails console' to open the pry console
+  # https://github.com/rweng/pry-rails
   gem 'pry-rails'
-
-  # Use sqlite3 as the database for Active Record
+  # Ruby bindings for the SQLite3 embedded database
+  # https://github.com/sparklemotion/sqlite3-ruby
   gem 'sqlite3'
 end
 
 group :test do
-  gem "codeclimate-test-reporter", require: nil
-  # Coverage information
+  # Code coverage for Ruby
+  # https://github.com/colszowka/simplecov
   gem 'simplecov', require: false
-  # Stubbing external calls by blocking traffic with WebMock.disable_net_connect! or allow:
-  #gem 'webmock'
 end
 
 group :production do
-  # Use Postgresql in production
+  # Ruby interface to the PostgreSQL RDBMS
+  # https://github.com/ged/ruby-pg
   gem 'pg'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
