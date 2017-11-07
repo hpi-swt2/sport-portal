@@ -56,3 +56,5 @@ rails s -b 0 # start the rails server
 * `rails assets:precompile` Precompile the assets in app/assets to public/assets
 * `rake about` Show stats on current Rails installation, including version numbers
 * `rspec --profile` examine how much time individual tests take
+* Put `<%= console %>` anywhere in a view to render an interactive console session (provided by 'web-console' gem)
+* Put `byebug` anywhere in ruby code to start a debugging session (provided by 'byebug' gem)
