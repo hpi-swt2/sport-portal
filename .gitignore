@@ -43,3 +43,7 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Environment variable definition
+# https://devcenter.heroku.com/articles/getting-started-with-rails5#procfile
+.env
