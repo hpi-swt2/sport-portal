@@ -51,6 +51,10 @@ gem 'has_scope'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Exception tracking in production, report to Errbit
+# https://github.com/airbrake/airbrake
+gem 'airbrake'
+  
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
 # gem 'jquery-ui-rails'
@@ -98,9 +102,6 @@ group :development, :test do
 end
 
 group :development do
-  # Exception tracking in production, report to Errbit
-  # https://github.com/airbrake/airbrake
-  gem 'airbrake'
   # Access an IRB console on exception pages or by using <%= console %> in views
   # https://github.com/rails/web-console
   gem 'web-console'
