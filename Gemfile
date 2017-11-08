@@ -53,7 +53,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Exception tracking in production, report to Errbit
 # https://github.com/airbrake/airbrake
-gem 'airbrake'
+gem 'airbrake', '~> 5.0'
   
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
