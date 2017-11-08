@@ -1,0 +1,58 @@
+engines:
+  # Style and quality checks for Ruby code
+  # configuration via .rubocop.yml file
+  # https://docs.codeclimate.com/v1.0/docs/rubocop
+  rubocop:
+    enabled: true
+  # Static analysis tool which checks Ruby on Rails applications for security vulnerabilities
+  # https://docs.codeclimate.com/v1.0/docs/brakeman
+  brakeman:
+    enabled: true
+  # Find security vulnerabilities in your Ruby dependencies
+  # https://docs.codeclimate.com/v1.0/docs/bundler-audit
+  bundler-audit:
+    enabled: true
+  # Search for TODO, FIXME, HACK, XXX, and BUG
+  # https://docs.codeclimate.com/v1.0/docs/fixme
+  fixme:
+    enabled: true
+  # Measure the ABC complexity of Ruby methods
+  # https://docs.codeclimate.com/v1.0/docs/flog
+  flog:
+    enabled: true
+    config:
+      score_threshold: 20.0
+  # Code smell detector for Ruby
+  # https://docs.codeclimate.com/v1.0/docs/reek
+  reek:
+      enabled: true
+  # Enforce consistent conventions and avoid errors in your stylesheets
+  # https://docs.codeclimate.com/v1.0/docs/stylelint
+  stylelint:
+    enabled: true
+  # Reports issues when it finds similar code blocks over a configurable mass threshold
+  # https://docs.codeclimate.com/v1.0/docs/duplication
+  duplication:
+    enabled: true
+    config:
+      languages:
+        ruby:
+          mass_threshold: 20
+ratings:
+  paths:
+  # bundler-audit
+  - Gemfile.lock
+  # stylelint
+  - "**.css"
+  - "**.rb"
+exclude_paths:
+- spec/**/*
+- bin/**/*
+- config/**/*
+- coverage/**/*
+- db/**/*
+- lib/**/*
+- log/**/*
+- public/**/*
+- tmp/**/*
+- "**/vendor/**/*"
