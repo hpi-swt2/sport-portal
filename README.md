@@ -14,9 +14,9 @@ Errors that occur while using the deployed master branch on Heroku are logged to
 ## Local Setup
 
 * Clone this repository
-* `cat .ruby-version && echo $(ruby --version)` See if locally installed ruby version matches the one specified in the `.ruby_version` file. 
+* `cat .ruby-version && echo $(ruby --version)` See if locally installed ruby version matches the one specified in the `.ruby_version` file.
 * _If the ruby version is different:_ Install the required version using [rbenv](https://github.com/rbenv/rbenv#installation) (recommended) or [RVM](https://rvm.io/rvm/install)
-* `gem install bundler` Install [bundler](http://bundler.io/) for managing Ruby gems 
+* `gem install bundler` Install [bundler](http://bundler.io/) for managing Ruby gems
 * `bundle install` Install the required Ruby gem dependencies defined in the project's [Gemfile](http://bundler.io/gemfile.html)
 * `rake db:create db:migrate db:seed` Setup database, run migrations, seed the database with defaults
 * `rspec` Run all the tests (using the [RSpec](http://rspec.info/) test framework)
@@ -24,10 +24,15 @@ Errors that occur while using the deployed master branch on Heroku are logged to
 
 ## Setup using Vagrant (Virtual Machine)
 
-If you want to use a VM to setup the project (e.g. when on Windows), we recommend [Vagrant](https://www.vagrantup.com/).
+You may want to use a VM to setup the project (e.g. when on Windows).
 Please keep in mind that this method may lead to a loss in performance, due to the added abstraction layer.
 
+First, install a Virtual Machine provider, we recommend [VirtualBox](https://www.virtualbox.org/wiki/Downloads). Then install [vagrant](https://www.vagrantup.com/downloads.html) which makes setting up the VM easier.
+The Vagrantfile in this repo provides the configuration for the VM.
+
 ```
+git clone https://github.com/hpi-swt2/sport-portal.git
+cd sport-portal
 vagrant up # download and provision the VM
 vagrant ssh # login using SSH
 cd hpi-swt2
