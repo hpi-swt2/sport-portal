@@ -23,8 +23,17 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, host: 3000, guest: 3000
   config.vm.synced_folder ".", "/home/vagrant/hpi-swt2"
 
+  config.vm.provision "shell", inline: <<-SHELL    
+    sudo apt-add-repository -y ppa:rael-gc/rvm
+    sudo apt-get update
+    sudo apt-get install -y rvm
+    sudo rm -rf ~/.rbenv
+    exit
+  SHELL
   config.vm.provision "shell", inline: <<-SHELL
-    apt-get update
-    apt-get install -y phantomjs
+    rvmsudo rvm install 2.4.0
+    sudo apt-get install -y phantomjs
+    sudo chmod -R 777 /usr/share/rvm/
+    gem install bundle
   SHELL
 end
