@@ -1,8 +1,17 @@
+# Configure airbrake, error reporting to Errbit
+# https://github.com/airbrake/airbrake
 Airbrake.configure do |config|
   config.host = 'https://swt2-errbit-2017.herokuapp.com'
   config.project_id = 1 # required, but any positive integer works
-  config.project_key = ENV['ERRBIT_API_KEY']
+  config.project_key = ENV['ERRBIT_API_KEY'] || "dummy_val_for_prod_on_local_machine"
   config.environment = Rails.env
+end
+
+# If the Errbit API key is not set, ignore all errors
+# https://github.com/airbrake/airbrake/issues/546#issuecomment-217043735
+unless ENV['ERRBIT_API_KEY']
+  puts "[WARNING] ERRBIT_API_KEY env variable was not found, not sending any data to Errbit!"
+  Airbrake.add_filter(&:ignore!)
 end
 
 Rails.application.configure do
