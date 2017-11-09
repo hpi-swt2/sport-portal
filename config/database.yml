@@ -15,6 +15,13 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+# Configure SQLite to also be used in production mode
+# This can be helpful when trying production mode locally using
+# 'RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rake db:create db:schema:load db:seed assets:precompile'
+# 'SECRET_KEY_BASE=secret rails s -e production'
+# In Heroku, running in production, these settings are not used
+# https://devcenter.heroku.com/articles/rails-database-connection-behavior#rails-4-1-and-beyond
+# When using a different hoster, adapt this or create a new database config
 production:
   <<: *default
   database: db/production.sqlite3
