@@ -11,40 +11,38 @@ master  |[![Build Status](https://travis-ci.org/hpi-swt2/sport-portal.svg?branch
 When all tests succeed on Travis CI, the application is deployed to Heroku. Click the badges for detailed info. <br>
 Errors that occur while using the deployed master branch on Heroku are logged to the [Errbit](http://swt2-errbit-2017.herokuapp.com/) error catcher, you can sign in with your Github account.
 
-## Local Setup
+## Setup
+
+You can setup the project either locally, i.e. directly on your system, or using a VM (e.g. when on Windows). Please keep in mind that using a VM may lead to a loss in performance, due to the added abstraction layer.
+
+### Local
 
 * Clone this repository
 * `cat .ruby-version && echo $(ruby --version)` See if locally installed ruby version matches the one specified in the `.ruby_version` file.
 * _If the ruby version is different:_ Install the required version using [rbenv](https://github.com/rbenv/rbenv#installation) (recommended) or [RVM](https://rvm.io/rvm/install)
 * `gem install bundler` Install [bundler](http://bundler.io/) for managing Ruby gems
-* `bundle install` Install the required Ruby gem dependencies defined in the project's [Gemfile](http://bundler.io/gemfile.html)
+* `bundle install` Install the required Ruby gem dependencies defined in the [Gemfile](http://bundler.io/gemfile.html)
 (if there are any errors, ensure that the following packages are installed: `libpq-dev`, `libsqlite3-dev`, `g++`)
 * `rake db:create db:migrate db:seed` Setup database, run migrations, seed the database with defaults
 * `rspec` Run all the tests (using the [RSpec](http://rspec.info/) test framework)
-* `rails s` Start the Rails development server (By default runs on `localhost:3000`)
+* `rails s` Start the Rails development server (runs on `localhost:3000` by default)
 
-## Setup using Vagrant (Virtual Machine)
+### Using Vagrant (Virtual Machine)
 
-You may want to use a VM to setup the project (e.g. when on Windows).
-Please keep in mind that this method may lead to a loss in performance, due to the added abstraction layer.
-
-First, install a Virtual Machine provider, we recommend [VirtualBox](https://www.virtualbox.org/wiki/Downloads). Then install [vagrant](https://www.vagrantup.com/downloads.html) which makes setting up the VM easier.
-The Vagrantfile in this repo provides the configuration for the VM.
-
-```
-git clone https://github.com/hpi-swt2/sport-portal.git
-cd sport-portal
-vagrant up # download and provision the VM
-vagrant ssh # login using SSH
-cd hpi-swt2
-gem install bundler #  Install bundler for managing Ruby gems
-bundle install # install dependencies using bundler
-bundle exec rails s -b 0 # start the rails server
-# the -b part is necessary since the app is running in a VM and would
-# otherwise drop the requests coming from the host OS
-```
+* Install a Virtual Machine provider, we recommend [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+* Install [Vagrant](https://www.vagrantup.com/downloads.html) which makes setting up the VM easier. The Vagrantfile in this repo provides the configuration for the VM
+* Clone this repository and change to the created folder
+* `vagrant up` Download and provision the VM
+* `vagrant ssh` SSH into the VM
+* `cd hpi-swt2` Change into the repo folder, mounted from your local machine
+* `gem install bundler` Install bundler for managing Ruby gems (it is itself a gem)
+* `bundle install` Install the required Ruby gem dependencies defined in the [Gemfile](http://bundler.io/gemfile.html)
+* `bundle exec rails s -b 0` Start the rails server, don't drop non-local requests (-b)
+* Open `localhost:3000` on the host machine, port 3000 (the default server port) is forwarded from the VM
+* `vagrant suspend` issued from the host, suspends the VM (`halt` shuts down)
 
 ## Important Development Commands
+
 * `bundle exec <command>` Run command within the context of the current gemset
 * `rspec spec/controller/expenses_controller_spec.rb` Specify a folder or test file to run
 * `bundle exec annotate` Add a comment summarizing the current schema to the top of files
