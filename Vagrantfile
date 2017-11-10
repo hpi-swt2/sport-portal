@@ -4,7 +4,8 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "swt2-ruby24"
-  config.vm.box_url = "https://github.com/hpi-swt2/swt2-vagrant/releases/download/v0.3/swt2-ruby24.box"
+  config.vm.box_url = "https://owncloud.hpi.de/index.php/s/ZLvPorv5ZA162aM/download"
+  # config.vm.box_url = "https://github.com/hpi-swt2/swt2-vagrant/releases/download/v0.3/swt2-ruby24.box"
 
   # Try to use the following settings for better performance, disable if problems occur
   config.vm.provider :virtualbox do |vb|
