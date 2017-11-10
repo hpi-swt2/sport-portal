@@ -22,7 +22,7 @@ You can setup the project either locally, i.e. directly on your system, or using
 * _If the ruby version is different:_ Install the required version using [rbenv](https://github.com/rbenv/rbenv#installation) (recommended) or [RVM](https://rvm.io/rvm/install)
 * `gem install bundler` Install [bundler](http://bundler.io/) for managing Ruby gems
 * `bundle install` Install the required Ruby gem dependencies defined in the [Gemfile](http://bundler.io/gemfile.html)
-(if there are any errors, ensure that the following packages are installed: `libpq-dev`, `libsqlite3-dev`, `g++`)
+(if there are any errors, ensure that the following packages are installed: `libpq-dev`, `libsqlite3-dev`, `g++`, if you are on MacOS you run `bundle install --without production` to skip the `libpq-dev` dependency)
 * `rake db:create db:migrate db:seed` Setup database, run migrations, seed the database with defaults
 * `rspec` Run all the tests (using the [RSpec](http://rspec.info/) test framework)
 * `rails s` Start the Rails development server (runs on `localhost:3000` by default)
