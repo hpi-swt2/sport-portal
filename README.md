@@ -2,6 +2,8 @@
 
 A Ruby on Rails app to manage sport matches
 
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/hpi-swt2/sport-portal.svg?columns=all)](https://waffle.io/hpi-swt2/sport-portal) 
+
 Branch | Travis CI  | Code Coverage | Code Analysis | Heroku Deploy | Errbit
 ------ | ---------- | ------------- | ------------- | ------------- | ------
 dev (default) |[![Build Status](https://travis-ci.org/hpi-swt2/sport-portal.svg?branch=dev)](https://travis-ci.org/hpi-swt2/sport-portal) | [![Coverage Status](https://coveralls.io/repos/github/hpi-swt2/sport-portal/badge.svg?branch=dev)](https://coveralls.io/github/hpi-swt2/sport-portal?branch=dev) | [![Maintainability](https://api.codeclimate.com/v1/badges/dc7597d1a5e076edb3e4/maintainability)](https://codeclimate.com/github/hpi-swt2/sport-portal/maintainability) | [![Heroku](https://heroku-badge.herokuapp.com/?app=sport-portal-dev)](https://sport-portal-dev.herokuapp.com/) [[link]](https://sport-portal-dev.herokuapp.com/) | [[link]](https://swt2-errbit-2017.herokuapp.com/apps/5a031be36caee90014ce8531) |
