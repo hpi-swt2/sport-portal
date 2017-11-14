@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171106104345) do
+ActiveRecord::Schema.define(version: 20171114232449) do
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "discipline"
+    t.integer "player_type"
+    t.integer "max_teams"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "game_mode"
+    t.index ["game_mode"], name: "index_events_on_game_mode"
+    t.index ["player_type"], name: "index_events_on_player_type"
+  end
+
+  create_table "leagues", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "matches", force: :cascade do |t|
     t.date "date"
@@ -25,6 +43,11 @@ ActiveRecord::Schema.define(version: 20171106104345) do
 
   create_table "teams", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tournaments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -11,7 +11,7 @@ describe "Tournament model", type: :model do
 
         expect(tournament.name).to eq("Weitwurfmeisterschaften")
         expect(tournament.description).to eq("Throw! Throw! Record!")
-        expect(tournament.discipline).to eq("Throw! Throw! Record!")
+        expect(tournament.discipline).to eq("Kokosnussweitwurf")
         expect(tournament.player_type).to eq(Event.player_types[:single])
         expect(tournament.max_teams).to eq(8)
         expect(tournament.game_mode).to eq(Tournament.game_modes[:double_elimination])

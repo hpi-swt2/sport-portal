@@ -11,7 +11,7 @@ describe "League model", type: :model do
 
         expect(league.name).to eq("Weitwurfmeisterschaften")
         expect(league.description).to eq("Throw! Throw! Record!")
-        expect(league.discipline).to eq("Throw! Throw! Record!")
+        expect(league.discipline).to eq("Kokosnussweitwurf")
         expect(league.player_type).to eq(Event.player_types[:single])
         expect(league.max_teams).to eq(8)
         expect(league.game_mode).to eq(League.game_modes[:round_robin])
