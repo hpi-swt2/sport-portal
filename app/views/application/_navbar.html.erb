@@ -7,7 +7,7 @@
     <%= menu_item Match.model_name.human(:count => :many).titleize, matches_path %>
     <%= menu_divider %>
     <% if user_signed_in? %>
-      <%= menu_item "", user_path(current_user), class: "navbar-brand avatar" do %>
+      <%= menu_item nil, user_path(current_user), class: "navbar-brand avatar" do %>
         <%= image_tag current_user.avatar.url(:square) %>
       <% end %>
       <%= menu_divider %>
