@@ -7,13 +7,12 @@ class AvatarsController < ApplicationController
   end
 
   def destroy
-   @user.avatar = nil
-   @user.save!
-   redirect_to registration_path(@user)
+    @user.avatar = nil
+    @user.save!
+    redirect_to registration_path(@user)
   end
 
-  private 
-  
+  private
     def avatar_update_params
       params.require(:user).permit(:avatar)
     end
