@@ -59,3 +59,12 @@ You can setup the project either locally, i.e. directly on your system, or using
 * `rspec --profile` examine how much time individual tests take
 * Put `<%= console %>` anywhere in a view to render an interactive console session (provided by 'web-console' gem)
 * Put `byebug` anywhere in ruby code to start a debugging session (provided by 'byebug' gem)
+
+## Production Notes
+
+Required environment variables for file storage:
+
+* `S3_BUCKET_NAME` 
+* `AWS_ACCESS_KEY_ID` 
+* `AWS_SECRET_ACCESS_KEY`
+* `AWS_REGION`
