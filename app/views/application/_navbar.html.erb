@@ -7,7 +7,10 @@
     <%= menu_item Match.model_name.human(:count => :many).titleize, matches_path %>
     <%= menu_divider %>
     <% if user_signed_in? %>
-      <%= menu_item current_user.first_name, user_path(current_user) %>
+      <%= menu_item nil, user_path(current_user), class: "navbar-brand avatar" do %>
+        <%= current_user.first_name %>
+        <span><%= image_tag current_user.avatar.url(:square) %></span>
+      <% end %>
       <%= menu_divider %>
       <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete %>
     <% else %>

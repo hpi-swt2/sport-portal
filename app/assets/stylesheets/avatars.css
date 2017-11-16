@@ -1,0 +1,8 @@
+a.navbar-brand.avatar > span >img {
+	height: 50px;
+}
+
+.navbar-brand.avatar {
+	padding-top: 0;
+	padding-bottom: 0;
+}

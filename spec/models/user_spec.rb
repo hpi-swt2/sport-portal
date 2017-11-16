@@ -18,7 +18,19 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it "is valid when produced by a factory" do
-    user = FactoryBot.build(:user)
-    expect(user).to be_valid
+	user = FactoryBot.build(:user)
+	expect(user).to be_valid
+  end
+
+  it 'is valid with image as avatar' do
+
+  end
+
+  it 'is not valid with any other file type than image' do
+
+  end
+
+  it 'is not valid with an avatar of size >2mb' do
+	
   end
 end
