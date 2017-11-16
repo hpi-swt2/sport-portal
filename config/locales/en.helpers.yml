@@ -26,6 +26,7 @@ en:
       create: Create %{model}
       submit: Save %{model}
       update: Update %{model}
+      delete: Delete %{model}
     select:
       prompt: Please select
     flash:
