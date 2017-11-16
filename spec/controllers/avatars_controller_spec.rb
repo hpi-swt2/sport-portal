@@ -9,53 +9,68 @@ RSpec.describe AvatarsController, type: :controller do
     FactoryBot.build(:user).attributes
   }
 
-  let(:user) {
-    FactoryBot.create(:user)
-  }
-
   describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        { "avatar" => "" }
+      let(:user) {
+        FactoryBot.create(:user, avatar: nil)
       }
 
-      it "updates the requested user's avatar" do
-        put :update, params: { id: user.to_param, user: new_attributes }
-        user.reload
-        expect(user.avatar).to eq(new_attributes["avatar"])
+    context "when signed in" do
+      before(:each) { sign_in user }
+
+      context "with valid params" do
+        let(:new_attributes) {
+          { "avatar" => valid_attributes["avatar"] }
+        }
+
+        it "updates the requested user's avatar" do
+          put :update, params: { id: user.to_param, use_route: 'avatar', user: new_attributes }
+          user.reload
+          expect(user.avatar).to eq(new_attributes["avatar"])
+        end
+
+        it "redirects to the edit page" do
+          @request.env["devise.mapping"] = Devise.mappings[:user]
+          put :update, params: { id: user.to_param, user: valid_attributes }
+          expect(response).to redirect_to(registration_path(user))
+        end
       end
 
-      it "redirects to the edit page" do
-        put :update, params: { id: user.to_param, user: valid_attributes }
-        expect(response).to redirect_to(registration_path(user))
+      context "with invalid params" do
+        it "returns a success response (i.e. to display the 'edit' template)" do
+          put :update, params: { id: user.to_param, user: invalid_attributes }
+          expect(response).to_not be_success
+        end
       end
     end
 
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        put :update, params: { id: user.to_param, user: invalid_attributes }
-        expect(response).to be_success
-      end
-    end
-
-    context "with other user's authentication" do
+    context "when not signed in" do
 
     end
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested user's avatar" do
-      expect {
-        delete :destroy, params: { id: match.to_param }
-      }.to change(User, :avatar).to(nil)
+    let(:user) {
+      FactoryBot.create(:user)
+    }
+
+    context "when signed in" do
+      before(:each) { sign_in user }
+
+      it "destroys the requested user's avatar" do
+        expect {
+          delete :destroy, params: { id: user.to_param, use_route: :avatar }
+        }.to change(user, :avatar).to(nil)
+      end
+
+      it "redirects to the edit page" do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        delete :destroy, params: { id: user.to_param }
+        expect(response).to redirect_to(registration_path(user))
+      end
     end
 
-    it "redirects to the edit page" do
-      delete :destroy, params: { id: user.to_param }
-      expect(response).to redirect_to(registration_path(user))
+    context "when not signed in" do
+
     end
   end
 end
-
-# TODO: test image path if nil and if not
-# TODO: Show profile picture

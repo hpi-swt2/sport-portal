@@ -16,10 +16,11 @@
 
 FactoryBot.define do
   factory :user do
-    sequence(:first_name) { |n| "first_name#{n}" }
-    sequence(:last_name) { |n| "last_name#{n}" }
-    sequence(:email) { |n| "#{n}@example.com" }
-    sequence(:password) { |n| "password#{n}" }
-    sequence(:password_confirmation) { |n| "password#{n}" }
+	sequence(:first_name) { |n| "first_name#{n}" }
+	sequence(:last_name) { |n| "last_name#{n}" }
+	sequence(:email) { |n| "#{n}@example.com" }
+	sequence(:password) { |n| "password#{n}" }
+	sequence(:password_confirmation) { |n| "password#{n}" }
+	avatar { File.new("#{Rails.root}/spec/support/fixtures/valid_avatar.png") }
   end
 end
