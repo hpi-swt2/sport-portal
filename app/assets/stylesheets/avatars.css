@@ -1,4 +1,8 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+a.navbar-brand.avatar > img {
+	height: 50px;
+}
+
+.navbar-brand.avatar {
+	padding-top: 0;
+	padding-bottom: 0;
+}
