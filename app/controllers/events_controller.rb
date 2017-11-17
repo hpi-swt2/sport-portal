@@ -17,12 +17,10 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
-    logger.info "YEAHHHHHHHHHHHHHHHHHHHHHHHHH"
   end
 
   # POST /events
   def create
-
     @event = Event.new(event_params)
 
     if @event.save
@@ -34,7 +32,6 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
-
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
