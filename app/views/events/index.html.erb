@@ -8,7 +8,7 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <% [:name,:description,:gamemode,:sport,:teamsport,:playercount,:gamesystem,:deadline].each do |attribute| %>
+    <% [:name,:gamemode,:playercount,:gamesystem].each do |attribute| %>
       <th><%= model_class.human_attribute_name(attribute) %></th>
     <% end %>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -18,13 +18,9 @@
   <% @events.each do |event| %>
       <tr>
         <td><%= link_to event.name, event_path(event) %></td>
-        <td><%= event.description %></td>
         <td><%= event.gamemode %></td>
-        <td><%= event.sport %></td>
-        <td><%= event.teamsport %></td>
         <td><%= event.playercount %></td>
         <td><%= event.gamesystem %></td>
-        <td><%= event.deadline %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       event_path(event), :class => 'btn btn-default btn-xs' %>
