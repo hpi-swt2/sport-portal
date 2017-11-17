@@ -18,12 +18,12 @@ RSpec.describe Ability, type: :model do
   end
 
   it 'should not allow users to crud other users data' do
-    user1 = FactoryBot.build(:user)
-    user1.save
+    user = FactoryBot.build(:user)
+    user.save
     other_user = FactoryBot.build(:user)
     other_user.save
-    ability = Ability.new(user1)
+    ability = Ability.new(user)
 
-    ability.should_not be_able_to(:crud, User)
+    ability.should_not be_able_to(:manage, other_user)
   end
 end

@@ -21,5 +21,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable
 
+  has_many :created_events, class_name: 'Event', primary_key: 'id', foreign_key: 'creator'
+  has_many :created_teams, class_name: 'Team', primary_key: 'id', foreign_key: 'creator'
+
   validates :first_name, presence: true
 end
