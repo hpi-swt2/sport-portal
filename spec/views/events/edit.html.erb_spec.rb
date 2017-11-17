@@ -9,7 +9,8 @@ RSpec.describe "events/edit", type: :view do
       :sport => "MyString",
       :teamsport => false,
       :playercount => 1,
-      :gamesystem => "MyText"
+      :gamesystem => "MyText",
+      :creator => FactoryBot.build(:user)
     ))
   end
 

@@ -11,7 +11,8 @@ RSpec.describe "events/index", type: :view do
         :teamsport => false,
         :playercount => 2,
         :gamesystem => "Gamesystem",
-        :deadline => Date.new(2017,11,16)
+        :deadline => Date.new(2017,11,16),
+        :creator => FactoryBot.build(:user)
       ),
       Event.create!(
         :name => "Name",
@@ -21,7 +22,8 @@ RSpec.describe "events/index", type: :view do
         :teamsport => false,
         :playercount => 2,
         :gamesystem => "Gamesystem2",
-        :deadline => Date.new(2017,11,16)
+        :deadline => Date.new(2017,11,16),
+        :creator => FactoryBot.build(:user)
       )
     ])
   end

@@ -38,6 +38,7 @@ RSpec.describe UsersController, type: :controller do
       expect {
         post :create, params: { user: valid_attributes }
       }.to change(User, :count).by(1)
+      User.where(first_name: valid_attributes[:first_name])[0].destroy
     end
   end
 

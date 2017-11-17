@@ -28,9 +28,10 @@ class Ability
   def initialize(user)
     if user.present?
       can :manage, User, id: user.id
-      can :read, Event
-      can :create, Team
-      can :create, Match
+      can :manage, Event, creator_id: user.id
+      can :manage, Team, creator_id: user.id
+      can :create, :all
+      cannot :create, User
 
       if user.admin?
         can :manage, :all

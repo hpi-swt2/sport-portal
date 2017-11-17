@@ -8,5 +8,6 @@ FactoryBot.define do
     playercount 1
     gamesystem "Schweizer System"
     deadline "2017-11-16"
+    association :creator, factory: :user, strategy: :build
   end
 end
