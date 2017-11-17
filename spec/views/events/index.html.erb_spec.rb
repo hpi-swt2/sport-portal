@@ -39,4 +39,17 @@ RSpec.describe "events/index", type: :view do
     assert_select "tr>td", :text => "Gamesystem2".to_s, :count => 1
     assert_select "tr>td", :text => Date.new(2017,11,16).to_s, :count => 2
   end
+
+  it "renders styled buttons" do
+    render
+    expect(rendered).to have_css('a.btn.btn-default.btn-xs')
+    expect(rendered).to have_css('a.btn.btn-danger.btn-xs')
+    expect(rendered).to have_css('a.btn.btn-primary')
+  end
+
+  it "renders a striped table" do
+    render
+    expect(rendered).to have_css('table.table-striped')
+  end
+
 end
