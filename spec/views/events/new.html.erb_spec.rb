@@ -9,7 +9,8 @@ RSpec.describe "events/new", type: :view do
       :sport => "MyString",
       :teamsport => false,
       :playercount => 1,
-      :gamesystem => "MyText"
+      :gamesystem => "MyText",
+      :deadline => Date.new(2017,11,16)
     ))
   end
 
@@ -31,6 +32,9 @@ RSpec.describe "events/new", type: :view do
       assert_select "input[name=?]", "event[playercount]"
 
       assert_select "textarea[name=?]", "event[gamesystem]"
+
+      assert_select "input[name=?]", "event[deadline]"
     end
   end
+
 end
