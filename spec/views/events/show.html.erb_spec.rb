@@ -24,4 +24,10 @@ RSpec.describe "events/show", type: :view do
     expect(rendered).to match(/2/)
     expect(rendered).to match(/MyText/)
   end
+
+  it "renders styled buttons" do
+    render
+    expect(rendered).to have_css('a.btn.btn-default', :count => 2)
+    expect(rendered).to have_css('a.btn.btn-danger')
+  end
 end
