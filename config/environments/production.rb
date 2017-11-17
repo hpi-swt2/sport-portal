@@ -6,6 +6,12 @@ Airbrake.configure do |config|
   config.project_key = ENV['ERRBIT_API_KEY'] || "dummy_val_for_prod_on_local_machine"
   config.environment = Rails.env
 end
+#ignore error catcher for 404 page not found
+Airbrake.add_filter do |notice|
+    if notice[:errors].any? { |error| error[:type] == 'ActiveRecord::RecordNotFound' || error[:type] =='ActionController::RoutingError' }
+        notice.ignore!
+    end
+end
 
 # If the Errbit API key is not set, ignore all errors
 # https://github.com/airbrake/airbrake/issues/546#issuecomment-217043735

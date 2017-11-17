@@ -2,6 +2,8 @@
 
 A Ruby on Rails app to manage sport matches
 
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/hpi-swt2/sport-portal.svg?columns=all)](https://waffle.io/hpi-swt2/sport-portal) 
+
 Branch | Travis CI  | Code Coverage | Code Analysis | Heroku Deploy | Errbit
 ------ | ---------- | ------------- | ------------- | ------------- | ------
 dev (default) |[![Build Status](https://travis-ci.org/hpi-swt2/sport-portal.svg?branch=dev)](https://travis-ci.org/hpi-swt2/sport-portal) | [![Coverage Status](https://coveralls.io/repos/github/hpi-swt2/sport-portal/badge.svg?branch=dev)](https://coveralls.io/github/hpi-swt2/sport-portal?branch=dev) | [![Maintainability](https://api.codeclimate.com/v1/badges/dc7597d1a5e076edb3e4/maintainability)](https://codeclimate.com/github/hpi-swt2/sport-portal/maintainability) | [![Heroku](https://heroku-badge.herokuapp.com/?app=sport-portal-dev)](https://sport-portal-dev.herokuapp.com/) [[link]](https://sport-portal-dev.herokuapp.com/) | [[link]](https://swt2-errbit-2017.herokuapp.com/apps/5a031be36caee90014ce8531) |
@@ -22,7 +24,7 @@ You can setup the project either locally, i.e. directly on your system, or using
 * _If the ruby version is different:_ Install the required version using [rbenv](https://github.com/rbenv/rbenv#installation) (recommended) or [RVM](https://rvm.io/rvm/install)
 * `gem install bundler` Install [bundler](http://bundler.io/) for managing Ruby gems
 * `bundle install` Install the required Ruby gem dependencies defined in the [Gemfile](http://bundler.io/gemfile.html)
-(if there are any errors, ensure that the following packages are installed: `libpq-dev`, `libsqlite3-dev`, `g++`)
+(if there are any errors, ensure that the following packages are installed: `libpq-dev`, `libsqlite3-dev`, `g++`, if you are on MacOS you run `bundle install --without production` to skip the `libpq-dev` dependency)
 * `rake db:create db:migrate db:seed` Setup database, run migrations, seed the database with defaults
 * `rspec` Run all the tests (using the [RSpec](http://rspec.info/) test framework)
 * `rails s` Start the Rails development server (runs on `localhost:3000` by default)
@@ -40,6 +42,19 @@ You can setup the project either locally, i.e. directly on your system, or using
 * `bundle exec rails s -b 0` Start the rails server, don't drop non-local requests (-b)
 * Open `localhost:3000` on the host machine, port 3000 (the default server port) is forwarded from the VM
 * `vagrant suspend` issued from the host, suspends the VM (`halt` shuts down)
+
+## Employed Libraries
+
+All libraries employed in this project are listed in the project's `Gemfile`. Some potentially useful ones for the future are commented out. The most important ones currently used are:
+
+* `devise` ([docs](https://github.com/plataformatec/devise)) Authentication solution for Rails, responsible for session management, logging users in and out, etc.
+* `omniauth` ([docs](https://github.com/omniauth/omniauth)) Provides standardized multi-provider authentication, could be useful for openID authentication
+* `cancancan` ([docs](https://github.com/CanCanCommunity/cancancan)) Authorization library which restricts what resources a given user is allowed to access. All permissions are defined in an 'Ability' file (`app/models/ability.rb`) and do not have to be duplicated.
+* `factory_bot_rails` ([docs](https://github.com/thoughtbot/factory_bot_rails)) Fixture replacement, build objects using factories
+* `jquery-rails` ([docs](https://github.com/rails/jquery-rails)) Use jQuery as the JavaScript library
+* `twitter-bootstrap-rails` ([docs](https://github.com/seyhunak/twitter-bootstrap-rails)) Use Bootstrap CSS toolkit
+* `turbolinks` ([docs](https://github.com/turbolinks/turbolinks)) Turbolinks speeds up page loads using AJAX. No server-side cooperation necessary. It automatically fetches the page, swaps in its `<body>` and merges its `<head>`, without the cost of a full page load
+* `has_scope` ([docs](https://github.com/plataformatec/has_scope)) Map incoming controller parameters to named scopes in resources
 
 ## Important Development Commands
 
