@@ -61,7 +61,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Use Bootstrap datepicker
 # https://github.com/Nerian/bootstrap-datepicker-rails
-# gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-datepicker-rails', :require => 'bootstrap-datepicker-rails',
+                              :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 
 # Package Select2 dropdown replacement featuring autocomplete
 # https://github.com/argerim/select2-rails
