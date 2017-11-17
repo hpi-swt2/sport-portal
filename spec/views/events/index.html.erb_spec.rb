@@ -29,16 +29,11 @@ RSpec.describe "events/index", type: :view do
   it "renders a list of events" do
     render
     assert_select "tr>td", :text => "Name".to_s, :count => 2
-    assert_select "tr>td", :text => "MyText".to_s, :count => 2
     assert_select "tr>td", :text => "Gamemode".to_s, :count => 2
-    assert_select "tr>td", :text => "Sport".to_s, :count => 2
-    assert_select "tr>td", :text => false.to_s, :count => 2
     assert_select "tr>td", :text => 2.to_s, :count => 2
-    assert_select "tr>td", :text => "MyText".to_s, :count => 2
     assert_select "tr>td", :text => "Gamesystem".to_s, :count => 1
     assert_select "tr>td", :text => "Gamesystem2".to_s, :count => 1
-    assert_select "tr>td", :text => Date.new(2017,11,16).to_s, :count => 2
-  end
+   end
 
   it "renders styled buttons" do
     render
