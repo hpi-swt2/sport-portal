@@ -55,5 +55,4 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline)
     end
-
 end

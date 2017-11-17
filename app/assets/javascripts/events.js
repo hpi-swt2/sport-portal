@@ -1,9 +1,2 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-$(document).on "focus", "[data-behaviour~='datepicker']", (e) ->
- - $(this).datepicker
- - format: "dd/mm/yyyy"
- - weekStart: 1
- - autoclose: true
- - immediateUpdates: true
-
