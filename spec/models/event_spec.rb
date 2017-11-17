@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Event, type: :model do
   before(:context) do
-  	@event = FactoryBot.create :event
+    @event = FactoryBot.create :event
   end
 
   it "should have a attribute deadline" do
@@ -20,6 +20,6 @@ RSpec.describe Event, type: :model do
   end
 
   after(:context) do
-  	@event.destroy
+    @event.destroy
   end
 end
