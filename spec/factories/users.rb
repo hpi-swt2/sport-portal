@@ -12,6 +12,7 @@
 #  updated_at             :datetime         not null
 #  first_name             :string
 #  last_name              :string
+#  admin                  :boolean
 #
 
 FactoryBot.define do
@@ -21,5 +22,14 @@ FactoryBot.define do
     sequence(:email) { |n| "#{n}@example.com" }
     sequence(:password) { |n| "password#{n}" }
     sequence(:password_confirmation) { |n| "password#{n}" }
+  end
+
+  factory :admin, class: User do
+    sequence(:first_name) { |n| "first_name#{n}" }
+    sequence(:last_name) { |n| "last_name#{n}" }
+    sequence(:email) { |n| "#{n}@example.com" }
+    sequence(:password) { |n| "password#{n}" }
+    sequence(:password_confirmation) { |n| "password#{n}" }
+    admin true
   end
 end

@@ -21,4 +21,15 @@ RSpec.describe User, type: :model do
     user = FactoryBot.build(:user)
     expect(user).to be_valid
   end
+
+  it "has the admin attribute" do
+    user = FactoryBot.build(:user)
+    expect(user).to have_attributes(:admin => false)
+  end
+
+  it "has the admin attribute set to true, if it is an admin" do
+    admin = FactoryBot.build(:admin)
+    expect(admin.admin).to eq(true)
+  end
+
 end
