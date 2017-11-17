@@ -23,3 +23,4 @@ before_script:
 # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 script:
   - bundle exec rspec
+  - bundle exec cucumber
