@@ -47,6 +47,7 @@ en:
       sign_out: "Sign out"
       sign_in: "Sign in"
       sign_up: "Sign up"
+      sign_in_with_provider: "Sign in with %{provider}"
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."

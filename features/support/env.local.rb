@@ -3,6 +3,7 @@ module DataHelper
     @matches = []
     @teams = []
     @users = []
+    @accounts = []
     @named = {}
     @current_user = nil
   end
@@ -18,6 +19,12 @@ module DataHelper
     @named[name]
   end
 
+  def get_single_object(collection)
+    raise 'There is no such thing' if collection.count < 1
+    raise 'Statement is ambiguous, there is more than one' if collection.count > 1
+    collection.last
+  end
+
   def create_team(options = {})
     @teams << FactoryBot.create(:team, options)
     @teams.last
@@ -29,6 +36,10 @@ module DataHelper
 
   def team_named(name)
     get_named_object name, Team
+  end
+
+  def single_team
+    get_single_object(@teams)
   end
 
   def create_match(options = {})
@@ -44,6 +55,10 @@ module DataHelper
     get_named_object name, Match
   end
 
+  def single_match
+    get_single_object(@matches)
+  end
+
   def create_user(options = {})
     @users << FactoryBot.create(:user, options)
     @users.last
@@ -55,6 +70,29 @@ module DataHelper
 
   def user_named(name)
     get_named_object name, User
+  end
+
+  def single_user
+    get_single_object(@users)
+  end
+
+  def create_account(options = {})
+    provider = options.delete(:provider) || :hpiopenid
+    options[:uid] ||= '1234567890'
+    user_options = FactoryBot.attributes_for(:user)
+    options[:info] ||= {
+      email: user_options[:email]
+    }
+    @accounts << OmniAuth.config.add_mock(provider, options)
+    @accounts.last
+  end
+
+  def single_account
+    get_single_object(@accounts)
+  end
+
+  def authenticate_with(account, provider = :hpiopenid)
+    OmniAuth.config.mock_auth[provider] = account
   end
 
   def sign_in(user)

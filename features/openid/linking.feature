@@ -10,7 +10,7 @@ Feature: OpenID Linking
     Then there should be a 'Connect with OpenID' button
 
   Scenario: OpenID Unlink button
-    Given a User with a linked OpenID account
+    Given a user with a linked OpenID account
     And the user is logged in
     When the user views his account settings
     Then there should be a 'Disconnect from OpenID' button
@@ -25,12 +25,12 @@ Feature: OpenID Linking
     Then the user should be linked with the account
 
   Scenario: OpenID Unlinking
-    Given a User with a linked OpenID account
+    Given a user with a linked OpenID account
     When the user views his account settings
     And he clicks 'Disconnect from OpenID'
-    Then the user should not be linked with the account
+    Then the user should not be linked with any account
 
   Scenario: OpenID Sign in
-    Given a User with a linked OpenID account
+    Given a user with a linked OpenID account
     When the account is used to sign in
-    Then the user should be signed in
+    Then the sign in should have been successful

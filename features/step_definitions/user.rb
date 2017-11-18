@@ -1,4 +1,4 @@
-Given(/^(?:a|one) user/) do
+Given(/^(?:a|one) user$/) do
   create_user
 end
 
@@ -6,10 +6,13 @@ Given(/^a user (\w+)$/) do |name|
   create_user_named(name, first_name: name)
 end
 
+Given(/^a user with a linked OpenID account$/) do
+  account = create_account
+  create_user(provider: account[:provider], uid: account[:uid])
+end
+
 Given(/^the user is logged in$/) do
-  raise 'There is no user' if @users.count < 1
-  raise "'The user' is ambiguous." if @users.count > 1
-  sign_in @users.last
+  sign_in single_user
 end
 
 Given(/^(\w+) is logged in$/) do |name|
@@ -23,15 +26,26 @@ end
 
 
 Then(/^the user should be linked with the account$/) do
-  pending #TODO: User model migration
+  user = single_user
+  account = single_account
+  expect(user.uid).to eq(account[:uid])
+  expect(user.provider).to eq(account[:provider])
 end
 
 
 Then(/^the user should not be linked with the account$/) do
-  pending #TODO: User model migration
+  user = single_user
+  account = single_account
+  expect(user.uid).to_not eq(account[:uid])
+  expect(user.provider).to_not eq(account[:provider])
 end
 
+Then(/^the user should not be linked with any account$/) do
+  user = single_user
+  expect(user.uid).to be_nil
+  expect(user.provider).to be_nil
+end
 
-Then(/^the user should be signed in$/) do
-  pending #TODO: devise research
+Then(/^the sign in should have been successful$/) do
+  expect(page).to have_css('.alert-success')
 end
