@@ -4,7 +4,8 @@ Feature: OpenID Linking
   I want to connect my platform account with my OpenID account
 
   Scenario: OpenID Link button
-    Given a User
+    Given a user
+    And the user is logged in
     When the user views his account settings
     Then there should be a 'Connect with OpenID' button
 
@@ -17,13 +18,14 @@ Feature: OpenID Linking
     Given a User
     And an unlinked OpenID account
     When the user views his account settings
-    And links his OpenID account
+    And he clicks 'Connect with OpenID'
+    And the account is used to sign in
     Then the user should be linked with the account
 
   Scenario: OpenID Unlinking
     Given a User with a linked OpenID account
     When the user views his account settings
-    And he clicks on 'Disconnect from OpenID'
+    And he clicks 'Disconnect from OpenID'
     Then the user should not be linked with the account
 
   Scenario: OpenID Sign in

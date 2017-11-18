@@ -6,3 +6,8 @@ end
 Then(/^it should show the name of team (.*)$/) do |name|
   expect(page).to have_text(team_named(name).name)
 end
+
+
+Then(/^there should be a '(.*)' button$/) do |text|
+  expect(page).to have_button(text)
+end
