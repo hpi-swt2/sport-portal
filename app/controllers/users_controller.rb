@@ -14,17 +14,22 @@ class UsersController < Devise::RegistrationsController
     @user = User.find(params[:id])
   end
 
+  # GET /users/1/dashboard
+  # View: app/views/devise/registrations/dashboard.html.erb
+  def dashboard
+    @user = User.find(params[:id])
+  end
   # All other controller methods are handled by original `Devise::RegistrationsController`
   # Views are located in `app/views/devise`
 
   private
 
-    # Overridden methods of `Devise::RegistrationsController` to permit additional model params
-    def sign_up_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
-    end
+  # Overridden methods of `Devise::RegistrationsController` to permit additional model params
+  def sign_up_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+  end
 
-    def account_update_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
-    end
+  def account_update_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
+  end
 end
