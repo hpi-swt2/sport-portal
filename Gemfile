@@ -32,6 +32,8 @@ gem 'devise-bootstrap-views'
 # Library that provides standardizes multi-provider authentication
 # https://github.com/omniauth/omniauth
 gem 'omniauth'
+# Support for OpenID when authenticating
+gem 'omniauth-openid'
 # Authorization library which restricts what resources a given user is allowed to access
 # All permissions are defined in a 'Ability' and not duplicated across controllers, views, and database queries.
 # https://github.com/CanCanCommunity/cancancan
@@ -50,7 +52,7 @@ gem 'has_scope'
 # gem 'nokogiri', '1.6.7.rc3', platforms: [:mswin, :mingw, :x64_mingw]
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-  
+
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
 # gem 'jquery-ui-rails'
