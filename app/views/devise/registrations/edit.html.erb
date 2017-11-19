@@ -52,6 +52,20 @@
     </div>
   </div>
   <div class="form-group">
+    <%= f.label :openID, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <% if @user.provider.nil? %>
+          <%= link_to t('devise.registrations.link_provider', provider: 'OpenID'),
+                      link_user_path(@user),
+                      class: 'btn btn-link',
+                      role: 'button'
+          %>
+      <% else %>
+
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
