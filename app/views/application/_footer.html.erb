@@ -1,0 +1,9 @@
+<footer>
+  <%= nav_bar static: :bottom, brand: t('appname'), fluid: true do %>
+      <% menu_group pull: :right do %>
+          <%= menu_item "Impressum", static_page_path(:imprint) %>
+          <%= menu_divider %>
+          <%= menu_item "Hasso-Plattner-Institut", "https://hpi.de/", target: :blank %>
+      <% end %>
+  <% end %>
+</footer>

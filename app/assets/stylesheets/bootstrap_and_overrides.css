@@ -11,3 +11,7 @@
   border-left: 1px solid #F2F2F2;
   border-right: 1px solid #FFF;
 }
+
+footer > .navbar-static-bottom {
+    margin-top: 20px;
+}
