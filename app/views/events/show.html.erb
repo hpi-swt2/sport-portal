@@ -45,6 +45,17 @@
   <%= @event.startdate %>
 </p>
 
+<p>
+  <strong>Enddate:</strong>
+  <%= @event.enddate %>
+</p>
+
+<p>
+  <strong>Duration (in days):</strong>
+  <%= @event.duration %>
+</p>
+
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
+ 

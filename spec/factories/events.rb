@@ -9,5 +9,7 @@ FactoryBot.define do
     gamesystem "Schweizer System"
     deadline "2017-11-16"
     startdate "2017-12-01"
+    enddate "2017-12-05"
+    duration 5
   end
 end
