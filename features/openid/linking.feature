@@ -26,6 +26,7 @@ Feature: OpenID Linking
 
   Scenario: OpenID Unlinking
     Given a user with a linked OpenID account
+    And the user is logged in
     When the user views his account settings
     And he clicks 'Disconnect from OpenID'
     Then the user should not be linked with any account
