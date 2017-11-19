@@ -29,8 +29,6 @@ en:
     select:
       prompt: Please select
     flash:
-      link_success: "Successfully connected with %{provider}"
-      unlink_success: "Successfully disconnected from %{provider}"
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."
       destroyed: "%{resource_name} was successfully destroyed."
