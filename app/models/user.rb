@@ -27,6 +27,11 @@ class User < ApplicationRecord
     provider.present? && uid.present?
   end
 
+  def omniauth=(auth)
+    self.uid = auth.nil? ? nil : auth.uid
+    self.provider = auth.nil? ? nil : auth.provider
+  end
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first
   end
