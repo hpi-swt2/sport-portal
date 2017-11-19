@@ -1,5 +1,5 @@
 class AvatarsController < ApplicationController
-  load_and_authorize_resource :user
+  load_and_authorize_resource :user, :parent => false
 
   def update
     @user.update_attributes(avatar_update_params)
