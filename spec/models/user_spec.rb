@@ -63,10 +63,12 @@ RSpec.describe User, type: :model do
       expect(user.uid).to eq('1234567890')
       expect(user.provider).to eq('mock')
     end
+  end
 
-    it 'should reset the omniauth when given nil' do
+  describe '#reset_omniauth' do
+    it 'should reset the omniauth' do
       user = FactoryBot.create :user, provider: 'mock', uid: '1234567890'
-      user.omniauth = nil
+      user.reset_omniauth
       expect(user.uid).to be_nil
       expect(user.provider).to be_nil
     end
