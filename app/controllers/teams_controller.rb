@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
+  # before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /teams
   def index
@@ -24,6 +25,9 @@ class TeamsController < ApplicationController
     @team = Team.new(team_params)
 
     if @team.save
+      if user_signed_in?
+        @team.owners << current_user
+      end
       redirect_to @team, notice: I18n.t('helpers.flash.created', resource_name: Team.model_name.human).capitalize
     else
       render :new

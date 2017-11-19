@@ -56,6 +56,14 @@ RSpec.describe TeamsController, type: :controller do
         }.to change(Team, :count).by(1)
       end
 
+=begin
+      it "creates a new TeamOwner" do
+        expect {
+          post :create, params: { team: valid_attributes }
+        }.to change(TeamOwner, :count).by(1)
+      end
+=end
+
       it "redirects to the created team" do
         post :create, params: { team: valid_attributes }
         expect(response).to redirect_to(Team.last)
