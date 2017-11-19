@@ -52,4 +52,23 @@ RSpec.describe User, type: :model do
       expect(user.has_omniauth?).to be(false)
     end
   end
+
+  describe '#omniauth=' do
+    it 'should set the omniauth' do
+      auth = double()
+      expect(auth).to receive(:uid).and_return('1234567890')
+      expect(auth).to receive(:provider).and_return('mock')
+      user = FactoryBot.create :user
+      user.omniauth = auth
+      expect(user.uid).to eq('1234567890')
+      expect(user.provider).to eq('mock')
+    end
+
+    it 'should reset the omniauth when given nil' do
+      user = FactoryBot.create :user, provider: 'mock', uid: '1234567890'
+      user.omniauth = nil
+      expect(user.uid).to be_nil
+      expect(user.provider).to be_nil
+    end
+  end
 end
