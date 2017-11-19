@@ -63,7 +63,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Use Bootstrap datepicker
 # https://github.com/Nerian/bootstrap-datepicker-rails
-# gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-datepicker-rails'
 
 # Package Select2 dropdown replacement featuring autocomplete
 # https://github.com/argerim/select2-rails
@@ -97,7 +97,7 @@ group :development, :test do
   gem 'i18n-tasks'
   # Code coverage for Ruby
   # https://github.com/colszowka/simplecov
-  gem 'simplecov', require: false
+  gem 'simplecov', '~> 0.14.0', require: false
   # Hosted code coverage on coveralls.io
   # https://docs.coveralls.io/ruby-on-rails
   gem 'coveralls', require: false
