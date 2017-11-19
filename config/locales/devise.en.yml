@@ -30,7 +30,7 @@ en:
     omniauth_callbacks:
       user:
         link_success: "Successfully connected with %{provider}."
-        unlink_success: "Successfully disconnected from %{provider}."
+        link_failure: "Failed to connect with %{provider}, you are already using another provider."
         success: "Successfully authenticated with %{provider}."
         failure: "Could not authenticate with %{provider} because \"${reason}\"."
     passwords:
