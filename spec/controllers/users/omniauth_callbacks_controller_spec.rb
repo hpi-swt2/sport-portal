@@ -14,30 +14,48 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     end
 
     context 'given a linked user' do
-      it 'should return a success response' do
+      it 'should redirect to the user dashboard' do
         get :hpiopenid
-        expect(response).to be_success
+        expect(response).to redirect_to(dashboard_user_path(@user))
       end
     end
 
     context 'given an unlinked, logged in user' do
-      it 'should return a success response' do
+      it 'should link the accounts' do
         @user.uid = nil
         @user.provider = nil
         @user.save!
         sign_in @user
         get :hpiopenid
+        @user.reload
         expect(response).to redirect_to(user_path(@user))
+        expect(@user.uid).to eq(@autohash.uid)
+        expect(@user.provider).to eq(@autohash.provider)
+      end
+    end
+
+    context 'given an linked, logged in user' do
+      it 'should not change the users omniauth' do
+        sign_in @user
+        @request.env['omniauth.auth'] = OmniAuth::AuthHash.new(
+          provider: @user.provider + '*',
+          uid: @user.uid + '*',
+          info: { email: @user.email }
+        )
+        get :hpiopenid
+        expect(response).to redirect_to(user_path(@user))
+        expect(@user.uid).to eq(@autohash.uid)
+        expect(@user.provider).to eq(@autohash.provider)
       end
     end
 
     context 'given no (logged in or linked) user' do
-      it 'should return a failure' do
+      it 'should redirect to the root path' do
         @user.uid = nil
         @user.provider = nil
         @user.save!
         get :hpiopenid
-        expect(response).to have_http_status(:error)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
