@@ -22,6 +22,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         set_flash_message(:notice, :success, provider: :openid) if is_navigational_format?
       else
         redirect_to root_path
+        set_flash_message(:error, :failure, provider: 'OpenID') if is_navigational_format?
       end
     end
   end
