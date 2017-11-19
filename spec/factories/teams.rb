@@ -11,5 +11,8 @@
 FactoryBot.define do
   factory :team do
     sequence(:name) { |n| "Team #{n}" }
+    kindofsport "Football"
+    description "This team is awesome"
+    private false
   end
 end
