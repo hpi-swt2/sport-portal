@@ -12,6 +12,10 @@
 #  updated_at             :datetime         not null
 #  first_name             :string
 #  last_name              :string
+#  birthday               :date
+#  telephone_number       :string
+#  telegram_username      :string
+#  favourite_sports       :string
 #
 
 class User < ApplicationRecord
@@ -22,4 +26,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :omniauthable
 
   validates :first_name, presence: true
+  validates_each :birthday do |record, attribute, value|
+    record.errors.add(attribute, I18n.t('activerecord.models.user.errors.future_birthday')) if !value.nil? and value >= Time.now.to_date
+  end
+  validates_format_of :telephone_number, with: /\A\d+\z/, message: I18n.t('activerecord.models.user.errors.telephone_number_invalid'), allow_nil: true
 end

@@ -47,6 +47,9 @@ en:
       user:
         one: "player"
         other: "players"
+        errors:
+          future_birthday: "The birthday must not be a future date"
+          telephone_number_invalid: "Telephone number must consist of only numbers without spaces"
       event:
         one: "event"
         other: "events"
