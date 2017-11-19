@@ -15,7 +15,7 @@ RSpec.describe AvatarsController, type: :controller do
 
       context "with valid params" do
         let(:new_attributes) {
-          { "avatar" => File.new("#{Rails.root}/spec/support/fixtures/valid_avatar.png") }
+          { "avatar" => fixture_file_upload('valid_avatar.png', 'image/png', :binary) }
         }
 
         it "updates the requested user's avatar" do

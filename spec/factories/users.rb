@@ -21,6 +21,6 @@ FactoryBot.define do
 	sequence(:email) { |n| "#{n}@example.com" }
 	sequence(:password) { |n| "password#{n}" }
 	sequence(:password_confirmation) { |n| "password#{n}" }
-	avatar { File.new("#{Rails.root}/spec/support/fixtures/valid_avatar.png") }
+	avatar { File.new("#{Rails.root}/spec/fixtures/valid_avatar.png") }
   end
 end
