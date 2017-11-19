@@ -13,6 +13,7 @@
       <th>Playercount</th>
       <th>Gamesystem</th>
       <th>Deadline</th>
+      <th>Startdate</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -28,6 +29,7 @@
         <td><%= event.playercount %></td>
         <td><%= event.gamesystem %></td>
         <td><%= event.deadline %></td>
+        <td><%= event.startdate %></td>
         <td><%= link_to 'Show', event %></td>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>
         <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>

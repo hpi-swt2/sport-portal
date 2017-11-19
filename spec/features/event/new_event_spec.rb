@@ -18,4 +18,10 @@ describe "new event page", type: :feature do
 		expect(page).to have_content("2018-11-16")
 	end
 
+	it "should be possible to enter a start date for an event" do
+		visit new_event_path
+
+		expect(page).to have_field("Startdate")
+	end
+
 end

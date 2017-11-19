@@ -51,6 +51,10 @@
     <%= form.text_field :deadline, id: :event_deadline, :data => { :provide => 'datepicker', "date-format" => "dd/mm/yyyy" } %>
   </div> 
 
+  <div class="field">
+    <%= form.label :startdate %>
+    <%= form.text_field :startdate, id: :event_startdate, :data => {:provide => 'datepicker', "date-format" => "dd/mm/yyyy"} %>
+  </div>
 
   <div class="actions">
     <%= form.submit :event_submit => "Create event" %>
