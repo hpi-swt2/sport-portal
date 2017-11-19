@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   resources :users do
     get 'dashboard', on: :member
   end
+
+  get "/:static_page" => "static_pages#show", as: :static_page
 end
