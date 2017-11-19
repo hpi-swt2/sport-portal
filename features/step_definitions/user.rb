@@ -33,15 +33,6 @@ Then(/^the user should be linked with the account$/) do
   expect(user.provider).to eq(account[:provider])
 end
 
-
-Then(/^the user should not be linked with the account$/) do
-  user = single_user
-  account = single_account
-  user.reload
-  expect(user.uid).to_not eq(account[:uid])
-  expect(user.provider).to_not eq(account[:provider])
-end
-
 Then(/^the user should not be linked with any account$/) do
   user = single_user
   user.reload
