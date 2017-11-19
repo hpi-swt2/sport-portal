@@ -28,11 +28,5 @@ RSpec.describe User, type: :model do
       autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890')
       expect(User.from_omniauth(autohash).id).to eq(user.id)
     end
-
-    it 'should create a new user when a new autohash is given' do
-      autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890')
-      user = User.from_omniauth autohash
-      expect(user.persisted?).to eq(false)
-    end
   end
 end
