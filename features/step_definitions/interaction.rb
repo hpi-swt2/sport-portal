@@ -1,3 +1,3 @@
 When (/^he clicks '(.*)'$/) do |text|
-  click_button text
+  click_on text
 end
