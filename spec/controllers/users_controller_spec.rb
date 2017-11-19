@@ -75,8 +75,7 @@ RSpec.describe UsersController, type: :controller do
 
     context 'given no logged in user' do
       it 'should deny access' do
-        get :link, params: { id: @user.to_param }
-        expect(response).to have_http_status(:error)
+        expect { get :link, params: { id: @user.to_param } }.to raise_error(CanCan::AccessDenied)
       end
     end
   end
@@ -88,28 +87,30 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context 'given a logged in user with omniauth' do
-      it 'return a successful response' do
+      it 'should unlink the account' do
         @user.uid = '1234567890'
         @user.provider = 'mock'
         @user.save!
         sign_in @user
         get :unlink, params: { id: @user.to_param }
-        expect(response).to be_success
+        @user.reload
+        expect(response).to redirect_to(user_path(@user))
+        expect(@user.uid).to be_nil
+        expect(@user.provider).to be_nil
       end
     end
 
     context 'given a logged in user without omniauth' do
-      it 'return a successful response' do
+      it 'should redirect to the users page' do
         sign_in @user
         get :unlink, params: { id: @user.to_param }
-        expect(response).to have_http_status(:error)
+        expect(response).to redirect_to(user_path(@user))
       end
     end
 
     context 'given no logged in user' do
       it 'should deny access' do
-        get :unlink, params: { id: @user.to_param }
-        expect(response).to have_http_status(:error)
+        expect { get :unlink, params: { id: @user.to_param } }.to raise_error(CanCan::AccessDenied)
       end
     end
   end
