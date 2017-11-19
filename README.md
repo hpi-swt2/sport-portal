@@ -43,6 +43,19 @@ You can setup the project either locally, i.e. directly on your system, or using
 * Open `localhost:3000` on the host machine, port 3000 (the default server port) is forwarded from the VM
 * `vagrant suspend` issued from the host, suspends the VM (`halt` shuts down)
 
+## Employed Libraries
+
+All libraries employed in this project are listed in the project's `Gemfile`. Some potentially useful ones for the future are commented out. The most important ones currently used are:
+
+* `devise` ([docs](https://github.com/plataformatec/devise)) Authentication solution for Rails, responsible for session management, logging users in and out, etc.
+* `omniauth` ([docs](https://github.com/omniauth/omniauth)) Provides standardized multi-provider authentication, could be useful for openID authentication
+* `cancancan` ([docs](https://github.com/CanCanCommunity/cancancan)) Authorization library which restricts what resources a given user is allowed to access. All permissions are defined in an 'Ability' file (`app/models/ability.rb`) and do not have to be duplicated.
+* `factory_bot_rails` ([docs](https://github.com/thoughtbot/factory_bot_rails)) Fixture replacement, build objects using factories
+* `jquery-rails` ([docs](https://github.com/rails/jquery-rails)) Use jQuery as the JavaScript library
+* `twitter-bootstrap-rails` ([docs](https://github.com/seyhunak/twitter-bootstrap-rails)) Use Bootstrap CSS toolkit
+* `turbolinks` ([docs](https://github.com/turbolinks/turbolinks)) Turbolinks speeds up page loads using AJAX. No server-side cooperation necessary. It automatically fetches the page, swaps in its `<body>` and merges its `<head>`, without the cost of a full page load
+* `has_scope` ([docs](https://github.com/plataformatec/has_scope)) Map incoming controller parameters to named scopes in resources
+
 ## Important Development Commands
 
 * `bundle exec <command>` Run command within the context of the current gemset
