@@ -41,12 +41,4 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       end
     end
   end
-
-  describe 'GET #failure' do
-    it 'should redirect to the welcome page' do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      get :failure
-      expect(response).to redirect_to(root_path)
-    end
-  end
 end

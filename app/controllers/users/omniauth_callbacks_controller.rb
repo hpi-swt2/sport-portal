@@ -16,10 +16,4 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     end
   end
-
-  # Omniauth callback for authentication failure
-  def failure
-    set_flash_message :failure, :error
-    redirect_to root_path, error: 'NO LOGIN'
-  end
 end
