@@ -25,8 +25,7 @@ class UsersController < Devise::RegistrationsController
   def unlink
     authorize! :edit, @user
     if @user.has_omniauth?
-      @user.uid = nil
-      @user.provider = nil
+      @user.omniauth = nil
       @user.save!
       redirect_to user_path(@user), notice: I18n.t('devise.registrations.unlink_success')
     else
