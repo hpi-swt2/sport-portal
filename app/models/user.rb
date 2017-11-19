@@ -28,8 +28,13 @@ class User < ApplicationRecord
   end
 
   def omniauth=(auth)
-    self.uid = auth.nil? ? nil : auth.uid
-    self.provider = auth.nil? ? nil : auth.provider
+    self.uid = auth.uid
+    self.provider = auth.provider
+  end
+
+  def reset_omniauth
+    self.uid = nil
+    self.provider = nil
   end
 
   def self.from_omniauth(auth)
