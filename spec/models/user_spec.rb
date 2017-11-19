@@ -28,5 +28,11 @@ RSpec.describe User, type: :model do
       autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890')
       expect(User.from_omniauth(autohash).id).to eq(user.id)
     end
+
+    it 'should return nil without an existing user' do
+      user = FactoryBot.create :user
+      autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890')
+      expect(User.from_omniauth(autohash)).to be_nil
+    end
   end
 end
