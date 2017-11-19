@@ -24,7 +24,7 @@ class UsersController < Devise::RegistrationsController
   # GET /user/1/unlink
   def unlink
     authorize! :edit, @user
-    if @user.uid.present? && @user.provider.present?
+    if @user.has_omniauth?
       @user.uid = nil
       @user.provider = nil
       @user.save!

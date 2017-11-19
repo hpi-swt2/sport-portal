@@ -23,6 +23,10 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
 
+  def has_omniauth?
+    provider.present? && uid.present?
+  end
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first
   end
