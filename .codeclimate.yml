@@ -50,4 +50,4 @@ exclude_paths:
 - "**/vendor/**/*"
 - "spec/**"
 - "db/**"
-- "feature/**"
+- "features/**"
