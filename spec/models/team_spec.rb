@@ -28,11 +28,13 @@ RSpec.describe Team, type: :model do
 
   it "should be able to have team owners" do
     team = FactoryBot.create :team, :with_owners
+    expect(team.team_owners).to have(2).items
     expect(team.owners).to have(2).items
   end
 
   it "should be able to have team members" do
     team = FactoryBot.create :team, :with_members
+    expect(team.team_members).to have(5).items
     expect(team.members).to have(5).items
   end
 

@@ -11,7 +11,10 @@
 class Team < ApplicationRecord
   validates :name, presence: true
 
-  has_and_belongs_to_many(:owners, class_name: 'User', join_table: 'team_owners')
-  has_and_belongs_to_many(:members, class_name: 'User', join_table: 'team_members')
+  has_many :team_owners
+  has_many :owners, through: :team_owners, source: :user
+
+  has_many :team_members
+  has_many :members, through: :team_members, source: :user
 
 end
