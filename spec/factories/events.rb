@@ -1,9 +1,9 @@
 FactoryBot.define do
-  factory :event do
-    name "Weitwurfmeisterschaften"
-    description "Throw! Throw! Record!"
-    discipline "Kokosnussweitwurf"
-    player_type Event.player_types[:single]
-    max_teams 8
-  end
+    factory :event do
+        sequence(:name) { |n| "name#{n}" }
+        sequence(:description) { |n| "description#{n}" }
+        sequence(:discipline) { |n| "discipline#{n}" }
+        player_type Event.player_types[Event.player_types.keys.sample]
+        max_teams { rand(1..30) }
+    end
 end
