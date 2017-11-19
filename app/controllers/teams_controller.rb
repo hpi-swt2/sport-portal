@@ -73,7 +73,7 @@ class TeamsController < ApplicationController
     end
 
     # Checks whether the specified team member already has team ownership
-    unless @team.owners.exists?(team_member.id)
+    if @team.owners.exists?(team_member.id)
       return
     end
 
@@ -91,7 +91,7 @@ class TeamsController < ApplicationController
 
     # Checks whether the specified user already has team membership
     # TODO: Consider using a separate middleware for team membership
-    unless @team.members.exists?(user.id)
+    if @team.members.exists?(user.id)
       return
     end
 
