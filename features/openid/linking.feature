@@ -3,18 +3,6 @@ Feature: OpenID Linking
   As a registered user with an OpenID account
   I want to connect my platform account with my OpenID account
 
-  Scenario: OpenID Link button
-    Given a user
-    And the user is logged in
-    When the user views his account settings
-    Then there should be a 'Connect with OpenID' button
-
-  Scenario: OpenID Unlink button
-    Given a user with a linked OpenID account
-    And the user is logged in
-    When the user views his account settings
-    Then there should be a 'Disconnect from OpenID' button
-
   Scenario: OpenID Linking
     Given a user
     And the user is logged in
