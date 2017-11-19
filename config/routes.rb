@@ -16,10 +16,14 @@ Rails.application.routes.draw do
   devise_scope :user do
     resources :users, only: [:index, :show]
     get '/users/:id/dashboard', to: 'users#dashboard'
+    get '/users/:id/link', to: 'users#link'
+    get '/users/:id/unlink', to: 'users#unlink'
   end
 
   #Define route for user dashboard
   resources :users do
     get 'dashboard', on: :member
+    get 'link', to: 'users#unlink'
+    get 'unlink', to: 'users#unlink'
   end
 end

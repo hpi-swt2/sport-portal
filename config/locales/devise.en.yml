@@ -54,6 +54,8 @@ en:
       sign_in_with_provider: "Sign in with %{provider}"
       link_provider: "Connect with %{provider}"
       unlink_provider: "Disconnect from %{provider}"
+      unlink_success: "Successfully disconnected account."
+      no_link: "Your account is not linked with any provider."
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
