@@ -19,7 +19,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # https://github.com/plataformatec/devise
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :omniauthable
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid]
 
   validates :first_name, presence: true
 end
