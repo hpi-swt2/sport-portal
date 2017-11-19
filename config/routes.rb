@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   #Define route for user dashboard
   resources :users do
     get 'dashboard', on: :member
-    get 'link', to: 'users#unlink'
+    get 'link', to: 'users#link'
     get 'unlink', to: 'users#unlink'
   end
 end
