@@ -8,9 +8,11 @@
     <%= menu_item Event.model_name.human(:count => :many).titleize, events_path %>
     <%= menu_divider %>
     <% if user_signed_in? %>
-      <%= menu_item nil, user_path(current_user), class: "navbar-brand avatar" do %>
+      <%= menu_item user_path(current_user) do %>
         <%= current_user.first_name %>
-        <span><%= image_tag current_user.avatar.url(:square) %></span>
+        <span>
+          <%= image_tag current_user.avatar&.image_url || "", class: "avatar" %>
+        </span>
       <% end %>
       <%= menu_divider %>
       <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete %>

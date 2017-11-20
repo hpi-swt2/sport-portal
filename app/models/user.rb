@@ -23,11 +23,5 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
 
-  # Avatars
-  has_attached_file :avatar,
-    styles: { medium: "300x300>", thumb: "100x100>", square: "100x100" },
-    default_url: ":style/missing_avatar.png"
-  validates_attachment :avatar,
-    content_type: { content_type: /\Aimage\/.*\z/ },
-    size: { in: 0..2.megabytes }
+  has_one :avatar
 end

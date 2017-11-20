@@ -14,7 +14,8 @@ Rails.application.routes.draw do
 	resources :users, only: [:index, :show] do
 		patch 'avatar', on: :member, to: 'avatars#update'
 		put 'avatar', on: :member, to: 'avatars#update'
-		delete 'avatar', on: :member, to: 'avatars#destroy'
+    post 'avatar', on: :member, to: 'avatars#create'
+    delete 'avatar', on: :member, to: 'avatars#destroy'
 		get 'dashboard', on: :member, to: "users#dashboard"
 	end
   end

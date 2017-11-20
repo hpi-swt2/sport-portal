@@ -53,7 +53,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
   
 
 # Used for file uploaded
-gem 'paperclip', '~> 5.1'
+gem 'shrine', '~> 2.8.0'
 
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails

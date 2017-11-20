@@ -6,25 +6,27 @@
   <h1><%= t 'helpers.titles.edit', :model => model_class.model_name.human.titleize %></h1>
 </div>
 
-<%= form_for(@user, url: avatar_user_path(@user), html: { multipart: true, class: "form-horizontal user"}) do |f| %>
-  <div class="form-group">
-    <%= f.label :avatar, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= image_tag @user.avatar.url(:thumb) %>
-      <%= f.file_field :avatar, class: "form-control-file" %>
-      <%= f.error_span(:avatar) %>
+<h2>Avatar</h2>
+<%= form_for(@user.avatar || Avatar.new, url: avatar_user_path(@user), html: { class: "form-horizontal user" }) do |f| %>
+    <div class="form-group">
+      <%= f.label :image, :class => 'control-label col-lg-2'%>
+      <div class="col-lg-10">
+        <%= f.file_field :image, class: "form-control-file" %>
+        <p class="help-block">Max. size is 2 mb</p>
+      </div>
     </div>
-  </div>
-
-  <div class="form-group">
+    <div class="checkbox col-lg-offset-2 col-lg-10">
+      <label>
+        <%= f.check_box :remove_image %>Remove avatar
+      </label>
+    </div>
     <div class="col-lg-offset-2 col-lg-10">
+      <%= f.error_span :image %>
       <%= f.submit t('helpers.submit.update', model: 'avatar'), :class => 'btn btn-primary' %>
-      <%= link_to t('helpers.submit.delete', model: 'avatar'), avatar_user_path(@user), :class => 'btn btn-danger', data: { confirm: t('.are_you_sure', default: t("helpers.links.confirm")) }, method: :delete %>
     </div>
-  </div>
 <% end %>
 
-
+<h2>General</h2>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form-horizontal user", method: :put }) do |f| %>
   <div class="form-group">
     <%= f.label :first_name, :class => 'control-label col-lg-2' %>
