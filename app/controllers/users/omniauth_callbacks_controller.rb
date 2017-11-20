@@ -1,3 +1,4 @@
+# Controller that handles omniauth callbacks (e.g. OpenID)
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :hpiopenid
 
@@ -19,19 +20,19 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         sign_in_user user
       else
         redirect_to root_path
-        set_flash_message(:error, :failure, provider: 'OpenID') if is_navigational_format?
+        flash_if_navigational :error, :failure, provider: 'OpenID'
       end
     end
 
     def sign_in_user(user)
       sign_in_and_redirect user, event: :authentication #will throw if user is not activated
-      set_flash_message(:notice, :success, provider: 'OpenID') if is_navigational_format?
+      flash_if_navigational :notice, :success, provider: 'OpenID'
     end
 
     def attempt_link_with(auth)
       user = current_user
       if user.has_omniauth?
-        set_flash_message(:error, :link_failure, provider: 'OpenID') if is_navigational_format?
+        flash_if_navigational :error, :link_failure, provider: 'OpenID'
       else
         link_with user, auth
       end
@@ -41,6 +42,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def link_with(user, auth)
       user.omniauth = auth
       user.save!
-      set_flash_message(:notice, :link_success, provider: 'OpenID') if is_navigational_format?
+      flash_if_navigational :notice, :link_success, provider: 'OpenID'
+    end
+
+    def flash_if_navigational(key, kind, options = {})
+      set_flash_message(key, kind, options) if is_navigational_format?
     end
 end
