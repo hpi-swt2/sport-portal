@@ -5,11 +5,11 @@ RSpec.describe AvatarsController, type: :controller do
     FactoryBot.build(:user).attributes
   }
 
-  describe "PUT #update" do
-    let(:avatar) {
-      FactoryBot.create(:avatar)
-    }
+  let(:avatar) {
+    FactoryBot.create(:avatar)
+  }
 
+  describe "PUT #update" do
     context "when signed in" do
       before(:each) { sign_in avatar.user }
 
@@ -19,21 +19,21 @@ RSpec.describe AvatarsController, type: :controller do
         }
 
         it "updates the requested user's avatar" do
-          put :update, params: { id: user.to_param, user: new_attributes }
-          user.reload
+          put :update, params: { id: avatar.user.to_param, avatar: new_attributes }
+          avatar.reload
           expect(response).to_not be_success
           expect(user.avatar).to eq(new_attributes["avatar"])
         end
 
         it "redirects to the edit page" do
           put :update, params: { id: user.to_param, avatar: new_attributes }
-          expect(response).to redirect_to(registration_path(user))
+          expect(response).to redirect_to(registration_path(avatar.user))
         end
       end
 
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'edit' template)" do
-          put :update, params: { id: user.to_param, avatar: invalid_attributes }
+          put :update, params: { id: avatar.user.to_param, avatar: invalid_attributes }
           expect(response).to_not be_success
         end
       end
@@ -45,23 +45,19 @@ RSpec.describe AvatarsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    let(:user) {
-      FactoryBot.create(:user)
-    }
-
     context "when signed in" do
-      before(:each) { sign_in user }
+      before(:each) { sign_in avatar.user }
 
       it "destroys the requested user's avatar" do
         expect {
-          delete :destroy, params: { id: user.to_param }
-        }.to change(user, :avatar).to(nil)
+          delete :destroy, params: { id: avatar.user.to_param }
+        }.to change(avatar.user, :avatar).to(nil)
       end
 
       it "redirects to the edit page" do
         @request.env["devise.mapping"] = Devise.mappings[:user]
-        delete :destroy, params: { id: user.to_param }
-        expect(response).to redirect_to(registration_path(user))
+        delete :destroy, params: { id: avatar.user.to_param }
+        expect(response).to redirect_to(registration_path(avatar.user))
       end
     end
 
