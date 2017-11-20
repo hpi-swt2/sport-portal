@@ -44,7 +44,7 @@ class EventsController < ApplicationController
     @event.destroy
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
-  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event

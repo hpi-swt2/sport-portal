@@ -5,6 +5,5 @@ class ApplicationController < ActionController::Base
     dashboard_user_path(resource)
   end
   def createEvent
-
   end
 end
