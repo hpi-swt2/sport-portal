@@ -6,48 +6,31 @@ describe "new event page", type: :feature do
 		visit new_event_path
 	end
 
-	it "should be possible to create a deadline for an event" do
+	it "should be possible to create a date conditions for an event" do
 		visit new_event_path
 
-		fill_in "event_deadline", with: "2018/11/16" 
+		fill_in "event_deadline", with: "2018/11/16"
+		fill_in "event_startdate", with: "2017/12/01"
+		fill_in "event_enddate", with: "2017/12/05"
+		fill_in "event_duration", with: "5" 
 
 		click_button "Create Event"
 
 		visit events_path
 
 		expect(page).to have_content("2018-11-16")
+		expect(page).to have_content("2017-12-01")
+		expect(page).to have_content("2017-12-05")
+		expect(page).to have_content("5")
 	end
 
-	it "should be possible to enter a startdate for an event" do
+	it "should be possible to enter date conditions for an event" do
 		visit new_event_path
 
+		expect(page).to have_field("Deadline")
 		expect(page).to have_field("Startdate")
-	end
-
-	it "should be possible to enter a enddate for an event" do
-		visit new_event_path
-
 		expect(page).to have_field("Enddate")
-	end
-
-	it "should be possible to enter a duration for an event" do
-		visit new_event_path
-
 		expect(page).to have_field("Duration")
 	end
 
-	it "should be possible to store the date changes persistent" do
-		visit new_event_path
-
-		fill_in "event_startdate", with: "2018/12/01"
-		fill_in "event_enddate", with: "2018/12/05"
-		fill_in "event_duration", with: 5
-
-		click_button "Create Event"
-
-		expect(page).to have_content("2018-12-01")
-		expect(page).to have_content("2018-12-05")
-		expect(page).to have_content("5")
-
-	end
 end
