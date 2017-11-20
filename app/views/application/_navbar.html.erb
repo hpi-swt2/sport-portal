@@ -7,6 +7,8 @@
     <%= menu_item Match.model_name.human(:count => :many).titleize, matches_path %>
     <%= menu_item Event.model_name.human(:count => :many).titleize, events_path %>
     <%= menu_divider %>
+        <%= menu_item "Create Event", createEvent_path %>
+        <%= menu_divider %>
     <% if user_signed_in? %>
       <%= menu_item current_user.first_name, user_path(current_user) %>
       <%= menu_divider %>

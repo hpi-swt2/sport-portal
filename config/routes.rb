@@ -19,4 +19,7 @@ Rails.application.routes.draw do
   resources :users do
     get 'dashboard', on: :member
   end
+
+  #Define route for Create Event Button
+  get "/createEvent" , to: "application#createEvent" , as: "createEvent"
 end
