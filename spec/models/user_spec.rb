@@ -18,7 +18,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it "is valid when produced by a factory" do
-		user = FactoryBot.build(:user)
-		expect(user).to be_valid
+    user = FactoryBot.build(:user)
+    expect(user).to be_valid
   end
 end

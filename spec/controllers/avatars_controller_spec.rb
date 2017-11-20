@@ -6,12 +6,12 @@ RSpec.describe AvatarsController, type: :controller do
   }
 
   describe "PUT #update" do
-      let(:user) {
-        FactoryBot.create(:user, avatar: nil)
-      }
+    let(:avatar) {
+      FactoryBot.create(:avatar)
+    }
 
     context "when signed in" do
-      before(:each) { sign_in user }
+      before(:each) { sign_in avatar.user }
 
       context "with valid params" do
         let(:new_attributes) {
@@ -26,14 +26,14 @@ RSpec.describe AvatarsController, type: :controller do
         end
 
         it "redirects to the edit page" do
-          put :update, params: { id: user.to_param, user: new_attributes }
+          put :update, params: { id: user.to_param, avatar: new_attributes }
           expect(response).to redirect_to(registration_path(user))
         end
       end
 
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'edit' template)" do
-          put :update, params: { id: user.to_param, user: invalid_attributes }
+          put :update, params: { id: user.to_param, avatar: invalid_attributes }
           expect(response).to_not be_success
         end
       end
