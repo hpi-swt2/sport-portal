@@ -122,4 +122,22 @@ RSpec.describe TeamsController, type: :controller do
     end
   end
 
+  it "should let team owners assign team ownership" do
+    user = FactoryBot.create :user       
+    team = Team.create! valid_attributes
+    team.owners << user
+    session[:user_id] = user
+    
+    expect(team.owners).to include(user)
+    post :assign_ownership_to, params: { id: team.to_param, team_member: user}
+    expect(team.owners).to include(user)
+  end
+
+  it "should not let team member assign team ownership" do
+    user = FactoryBot.create :user    
+    team = Team.create! valid_attributes
+    post :assign_ownership_to, params: { id: team.to_param, team_member: user}
+    expect(team.owners).to include(user)
+  end
+
 end
