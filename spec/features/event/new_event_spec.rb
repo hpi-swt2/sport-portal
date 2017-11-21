@@ -23,10 +23,9 @@ describe "new event page", type: :feature do
 		fill_in "event_enddate", with: "2017/12/05"
 		fill_in "event_duration", with: "5" 
 
-		click_button "Create Event"
+		click_button "Create event"
 
-		visit events_path
-
+    expect(page).to have_current_path(/.*\/events\/\d+/)
 		expect(page).to have_content("2018-11-16")
 		expect(page).to have_content("2017-12-01")
 		expect(page).to have_content("2017-12-05")

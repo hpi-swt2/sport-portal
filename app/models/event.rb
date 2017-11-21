@@ -14,5 +14,5 @@ class Event < ApplicationRecord
         errors.add(:enddate, " must be after startdate.")
       end
     end
-
+  scope :active, -> { where('deadline >= ?', Date.current) }
 end
