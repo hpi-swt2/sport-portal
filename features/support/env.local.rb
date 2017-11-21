@@ -18,6 +18,28 @@ module DataHelper
     @named[name]
   end
 
+  def create_user(options = {})
+    @users << FactoryBot.create(:user, options)
+    @users.last
+  end
+
+  def build_user(options = {})
+    @users << FactoryBot.build(:user, options)
+    @users.last
+  end
+
+  def create_user_named(name, options = {})
+    add_named_object name, create_user(options)
+  end
+
+  def build_user_named(name, options = {})
+    add_named_object name, build_user(options)
+  end
+
+  def user_named(name)
+    get_named_object name, User
+  end
+
   def create_team(options = {})
     @teams << FactoryBot.create(:team, options)
     @teams.last
