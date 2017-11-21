@@ -19,4 +19,10 @@ Rails.application.routes.draw do
   resources :users do
     get 'dashboard', on: :member
   end
+
+  resources :teams do
+    member do
+      post :assign_ownership_to
+    end
+  end
 end
