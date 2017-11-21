@@ -1,6 +1,5 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
-
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :assign_ownership_to, :assign_membership_to]
 
   # GET /teams
@@ -25,15 +24,13 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
 
-    if user_signed_in?
+    if @team.save
+      # Assign team ownership and team membership to current signed in user who created the team
       @team.owners << current_user
       @team.members << current_user
-    end
 
-    if @team.save
       redirect_to @team, notice: I18n.t('helpers.flash.created', resource_name: Team.model_name.human).capitalize
     else
-      # TODO: Delete team ownership/membership created earlier, when saving the team failed
       render :new
     end
   end
@@ -49,7 +46,12 @@ class TeamsController < ApplicationController
 
   # DELETE /teams/1
   def destroy
+    # Destroy all team ownerships and team memberships associated with the team to destroy
+    # @team.team_owners.destroy_all
+    # @team.team_members.destroy_all
+
     @team.destroy
+
     redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
   end
 
