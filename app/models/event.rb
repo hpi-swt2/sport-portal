@@ -26,8 +26,6 @@ class Event < ApplicationRecord
     enddate - startdate + 1
   end
 
-  private
-
   def end_after_start
     return if enddate.blank? || startdate.blank?
     if enddate < startdate
