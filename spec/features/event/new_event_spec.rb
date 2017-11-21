@@ -6,7 +6,16 @@ describe "new event page", type: :feature do
 		visit new_event_path
 	end
 
-	it "should be possible to create a date conditions for an event" do
+	it "should be possible to enter date conditions for an event" do
+		visit new_event_path
+
+		expect(page).to have_field("Deadline")
+		expect(page).to have_field("Startdate")
+		expect(page).to have_field("Enddate")
+		expect(page).to have_field("Duration")
+  end
+
+  it "should be possible to create a date conditions for an event" do
 		visit new_event_path
 
 		fill_in "event_deadline", with: "2018/11/16"
@@ -21,16 +30,6 @@ describe "new event page", type: :feature do
 		expect(page).to have_content("2018-11-16")
 		expect(page).to have_content("2017-12-01")
 		expect(page).to have_content("2017-12-05")
-		expect(page).to have_content("5")
-	end
-
-	it "should be possible to enter date conditions for an event" do
-		visit new_event_path
-
-		expect(page).to have_field("Deadline")
-		expect(page).to have_field("Startdate")
-		expect(page).to have_field("Enddate")
-		expect(page).to have_field("Duration")
-	end
+  end
 
 end

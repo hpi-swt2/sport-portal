@@ -12,8 +12,7 @@ RSpec.describe "events/edit", type: :view do
       :gamesystem => "MyText",
       :deadline => Date.new(2017,11,16),
       :startdate => Date.new(2017,12,01),
-      :enddate => Date.new(2017,12,05),
-      :duration => 5
+      :enddate => Date.new(2017,12,05)
     ))
   end
 
@@ -42,7 +41,6 @@ RSpec.describe "events/edit", type: :view do
 
       assert_select "input[name=?]", "event[enddate]"
 
-      assert_select "input[name=?]", "event[duration]"
     end
   end
 end

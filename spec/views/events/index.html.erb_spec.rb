@@ -13,8 +13,7 @@ RSpec.describe "events/index", type: :view do
         :gamesystem => "Gamesystem",
         :deadline => Date.new(2017,11,16),
         :startdate => Date.new(2017,12,01),
-        :enddate => Date.new(2017,12,05),
-        :duration => 5
+        :enddate => Date.new(2017,12,05)
       ),
       Event.create!(
         :name => "Name",
@@ -26,8 +25,7 @@ RSpec.describe "events/index", type: :view do
         :gamesystem => "Gamesystem2",
         :deadline => Date.new(2017,11,16),
         :startdate => Date.new(2017,12,01),
-        :enddate => Date.new(2017,12,05),
-        :duration => 5
+        :enddate => Date.new(2017,12,05)
       )
     ])
   end
@@ -46,6 +44,5 @@ RSpec.describe "events/index", type: :view do
     assert_select "tr>td", :text => Date.new(2017,11,16).to_s, :count => 2
     assert_select "tr>td", :text => Date.new(2017,12,01).to_s, :count => 2
     assert_select "tr>td", :text => Date.new(2017,12,05).to_s, :count => 2
-    assert_select "tr>td", :text => 5.to_s, :count => 2
   end
 end

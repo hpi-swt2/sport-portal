@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20171119134028) do
     t.datetime "updated_at", null: false
     t.date "startdate"
     t.date "enddate"
-    t.integer "duration"
   end
 
   create_table "matches", force: :cascade do |t|
