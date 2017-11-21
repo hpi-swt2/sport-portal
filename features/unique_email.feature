@@ -7,7 +7,7 @@ I want to have only one user per e-mail address
     Given a user a with email test@test.com
     And a new user b with email test@test.com
     When b tries to sign up
-    Then b should not be able to sign-up
+    Then b should not be able to sign up
 
   Scenario: email addresses should be case insensitive
     Given a user a with email TEST@TesT.cOm
