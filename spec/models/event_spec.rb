@@ -49,10 +49,4 @@ it "should have an attribute deadline" do
     expect(Event.active).to_not include(@old_event)
     expect(Event.all).to include(@new_event, @old_event)
   end
-
-=begin
-  after(:context) do
-    @event.destroy
-  end
-=end
 end
