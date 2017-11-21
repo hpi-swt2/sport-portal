@@ -1,7 +1,7 @@
 Feature: Unique Emails
-In order to identify my users via e-mail addresses (for example during login processes)
-As an admin
-I want to have only one user per e-mail address
+  As an admin
+  In order to identify my users via e-mail addresses (for example during login processes)
+  I want to have only one user per e-mail address
 
   Scenario: Sign up with existing email address
     Given a user a with email test@test.com
