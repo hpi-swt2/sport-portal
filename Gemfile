@@ -83,6 +83,10 @@ group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
+  # Behaviour driven development library with a DSL close to natural language
+  # https://cucumber.io
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
   # Acceptance test framework for web applications
   # https://github.com/teamcapybara/capybara
   gem 'capybara'
@@ -95,6 +99,9 @@ group :development, :test do
   # Hosted code coverage on coveralls.io
   # https://docs.coveralls.io/ruby-on-rails
   gem 'coveralls', require: false
+  # Ruby bindings for the SQLite3 embedded database
+  # https://github.com/sparklemotion/sqlite3-ruby
+  gem 'sqlite3'
 end
 
 group :development do
@@ -131,9 +138,6 @@ group :development do
   # Causes 'rails console' to open the pry console
   # https://github.com/rweng/pry-rails
   gem 'pry-rails'
-  # Ruby bindings for the SQLite3 embedded database
-  # https://github.com/sparklemotion/sqlite3-ruby
-  gem 'sqlite3'
 end
 
 group :production do
