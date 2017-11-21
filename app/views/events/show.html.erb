@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
+
 <%- model_class = Event -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
 
 <dl class="dl-horizontal">
-  <% [:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline].each do |attribute| %>
+  <% [:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate].each do |attribute| %>
     <dt><strong><%= model_class.human_attribute_name(attribute) %>:</strong></dt>
     <dd><%= @event.send attribute %></dd>
   <% end %>
