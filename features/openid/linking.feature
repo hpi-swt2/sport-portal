@@ -1,6 +1,6 @@
 Feature: OpenID Linking
-  In order to simplify my login process
   As a registered user with an OpenID account
+  In order to simplify my login process
   I want to connect my platform account with my OpenID account
 
   Scenario: OpenID Linking

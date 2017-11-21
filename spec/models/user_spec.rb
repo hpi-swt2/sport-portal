@@ -54,7 +54,7 @@ RSpec.describe User, type: :model do
       expect(user.has_omniauth?).to be(true)
     end
 
-    it 'should return return false if the user does not have a provider or an uid' do
+    it 'should return return false if the user does not have a provider or a uid' do
       user = FactoryBot.create :user
       expect(user.has_omniauth?).to be(false)
       user.uid = '10'

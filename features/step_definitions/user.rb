@@ -7,7 +7,7 @@ Given(/^a user (\w+)$/) do |name|
 end
 
 Given(/^a user with a linked OpenID account$/) do
-  account = create_account
+  account = create_omniauth_account provider: :hpiopenid
   create_user(provider: account[:provider], uid: account[:uid])
 end
 
@@ -45,7 +45,6 @@ Then(/^(\w+) should not be linked with any account$/) do |name|
   expect(user.uid).to be_nil
   expect(user.provider).to be_nil
 end
-
 
 Then(/^the sign in should have been successful$/) do
   expect(page).to have_css('.alert-success')

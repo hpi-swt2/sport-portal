@@ -5,12 +5,12 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     before :each do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       @user = FactoryBot.create(:user, uid: '1234567890', provider: 'hpiopenid')
-      @autohash = OmniAuth::AuthHash.new(
+      @auth = OmniAuth::AuthHash.new(
         provider: @user.provider,
         uid: @user.uid,
         info: { email: @user.email }
       )
-      @request.env['omniauth.auth'] = @autohash
+      @request.env['omniauth.auth'] = @auth
     end
 
     context 'given a linked user' do
@@ -29,8 +29,8 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
         get :hpiopenid
         @user.reload
         expect(response).to redirect_to(user_path(@user))
-        expect(@user.uid).to eq(@autohash.uid)
-        expect(@user.provider).to eq(@autohash.provider)
+        expect(@user.uid).to eq(@auth.uid)
+        expect(@user.provider).to eq(@auth.provider)
       end
 
       it 'should not link the accounts when the omniauth is already used' do
@@ -44,7 +44,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       end
     end
 
-    context 'given an linked, logged in user' do
+    context 'given a linked, logged in user' do
       it 'should not change the users omniauth' do
         sign_in @user
         @request.env['omniauth.auth'] = OmniAuth::AuthHash.new(
@@ -54,8 +54,8 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
         )
         get :hpiopenid
         expect(response).to redirect_to(user_path(@user))
-        expect(@user.uid).to eq(@autohash.uid)
-        expect(@user.provider).to eq(@autohash.provider)
+        expect(@user.uid).to eq(@auth.uid)
+        expect(@user.provider).to eq(@auth.provider)
       end
     end
 

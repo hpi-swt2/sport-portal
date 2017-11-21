@@ -76,8 +76,8 @@ module DataHelper
     get_single_object(@users)
   end
 
-  def create_account(options = {})
-    provider = options.delete(:provider) || :hpiopenid
+  def create_omniauth_account(options = {})
+    provider = options.delete(:provider)
     options[:uid] ||= '1234567890'
     user_options = FactoryBot.attributes_for(:user)
     options[:info] ||= {
