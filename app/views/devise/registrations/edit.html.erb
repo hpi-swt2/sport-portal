@@ -54,16 +54,16 @@
   <div class="form-group">
     <label class="control-label col-lg-2">OpenID</label>
     <div class="col-lg-10">
-      <% if @user.provider.nil? %>
-          <%= link_to t('devise.registrations.link_provider', provider: 'OpenID'),
-                      link_user_path(@user),
-                      class: 'btn btn-info',
-                      role: 'button'
-          %>
-      <% else %>
+      <% if @user.has_omniauth? %>
           <%= link_to t('devise.registrations.unlink_provider', provider: 'OpenID'),
                       unlink_user_path(@user),
                       class: 'btn btn-warning',
+                      role: 'button'
+          %>
+      <% else %>
+          <%= link_to t('devise.registrations.link_provider', provider: 'OpenID'),
+                      link_user_path(@user),
+                      class: 'btn btn-info',
                       role: 'button'
           %>
       <% end %>
