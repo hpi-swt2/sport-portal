@@ -17,6 +17,11 @@ RSpec.describe TeamsController, type: :controller do
     FactoryBot.build(:team, name: '').attributes
   }
 
+  before(:each) do
+    user = FactoryBot.create(:user)
+    sign_in user
+  end
+
   describe "GET #index" do
     it "returns a success response" do
       team = Team.create! valid_attributes
