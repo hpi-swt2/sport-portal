@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20171121154832) do
     t.date "deadline"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "startdate"
+    t.date "enddate"
   end
 
   create_table "matches", force: :cascade do |t|
