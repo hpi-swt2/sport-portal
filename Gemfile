@@ -95,6 +95,7 @@ group :development, :test do
   # Hosted code coverage on coveralls.io
   # https://docs.coveralls.io/ruby-on-rails
   gem 'coveralls', require: false
+
 end
 
 group :development do
