@@ -22,6 +22,18 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
+  it 'is not valid when the omniauth is not unique' do
+    user1 = FactoryBot.create(:user, provider: 'mock', uid: '1234567890')
+    user2 = FactoryBot.build(:user, provider: 'mock', uid: '1234567890')
+    expect(user2).to_not be_valid
+  end
+
+  it 'is valid when the omniauth is nil' do
+    user1 = FactoryBot.create(:user)
+    user2 = FactoryBot.build(:user)
+    expect(user2).to be_valid
+  end
+
   describe 'self#from_omniauth' do
     it 'should return an existing user' do
       user = FactoryBot.create :user, provider: 'mock', uid: '1234567890'

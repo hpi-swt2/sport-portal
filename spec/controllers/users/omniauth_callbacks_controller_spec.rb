@@ -32,6 +32,16 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
         expect(@user.uid).to eq(@autohash.uid)
         expect(@user.provider).to eq(@autohash.provider)
       end
+
+      it 'should not link the accounts when the omniauth is already used' do
+        @user2 = FactoryBot.create(:user)
+        sign_in @user2
+        get :hpiopenid
+        @user.reload
+        expect(response).to redirect_to(user_path(@user2))
+        expect(@user2.uid).to be_nil
+        expect(@user2.provider).to be_nil
+      end
     end
 
     context 'given an linked, logged in user' do
