@@ -24,6 +24,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid]
 
   validates :first_name, presence: true
+  validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
   def has_omniauth?
     provider.present? && uid.present?
