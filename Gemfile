@@ -34,6 +34,8 @@ gem 'devise-bootstrap-views'
 gem 'omniauth'
 # Support for OpenID when authenticating
 gem 'omniauth-openid'
+# Provide current CA certificates for validating omniauth provider identity
+gem 'certified'
 # Authorization library which restricts what resources a given user is allowed to access
 # All permissions are defined in a 'Ability' and not duplicated across controllers, views, and database queries.
 # https://github.com/CanCanCommunity/cancancan

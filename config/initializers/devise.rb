@@ -261,7 +261,13 @@ Devise.setup do |config|
                   required: [OmniAuth::Strategies::OpenID::AX[:email]],
                   optional: []
 
+  require 'certified'
   require 'openid/fetchers'
+  # Create a temporary HTTP instance to have certified set the ca_file and use that CA file
+  # This is done to ensure secure connections with OpenID on every platform
+  n = Net::HTTP.new 'localhost'
+  n.use_ssl = true
+  OpenID.fetcher.ca_file = n.ca_file
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
