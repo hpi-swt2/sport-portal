@@ -20,6 +20,11 @@
         </div>
       <% end %>
       <%= f.submit  t('.sign_in', default: 'Sign in'), class: 'btn btn-primary' %>
+      <%= link_to t('devise.registrations.sign_in_with_provider', provider: 'OpenID'),
+                  omniauth_authorize_path(:user, :hpiopenid),
+                  class: 'btn btn-link',
+                  role: 'button'
+      %>
     <% end %>
   </div>
 </div>
