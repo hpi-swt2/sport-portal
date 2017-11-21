@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id           :integer          not null, primary key
+#  name         :string
+#  description  :text
+#  gamemode     :string
+#  sport        :string
+#  teamsport    :boolean
+#  playercount  :integer
+#  gamesystem   :text
+#  deadline     :date
+#  startdate    :date
+#  enddate      :date
+#
+
 class Event < ApplicationRecord
   validates :deadline, :startdate, :enddate, presence: true
   validate :end_after_start
