@@ -3,6 +3,8 @@ class UsersController < Devise::RegistrationsController
   load_and_authorize_resource only: [:edit, :update]
   load_resource only: [:link, :unlink]
 
+  attr_accessor :user
+
   # GET /users
   # View: app/views/devise/registrations/index.html.erb
   def index
@@ -17,19 +19,20 @@ class UsersController < Devise::RegistrationsController
 
   # GET /users/1/link
   def link
-    authorize! :edit, @user
+    authorize! :edit, user
     redirect_to user_hpiopenid_omniauth_authorize_path
   end
 
   # GET /user/1/unlink
   def unlink
-    authorize! :edit, @user
-    if @user.has_omniauth?
-      @user.reset_omniauth
-      @user.save!
-      redirect_to user_path(@user), notice: I18n.t('devise.registrations.unlink_success')
+    authorize! :edit, user
+    target_path = user_path(user)
+    if user.has_omniauth?
+      user.reset_omniauth
+      user.save!
+      redirect_to target_path, notice: I18n.t('devise.registrations.unlink_success')
     else
-      redirect_to user_path(@user), alert: I18n.t('devise.registrations.no_link')
+      redirect_to target_path, alert: I18n.t('devise.registrations.no_link')
     end
   end
 
