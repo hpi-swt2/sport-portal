@@ -39,6 +39,7 @@ it "should have an attribute deadline" do
 
   it "should be possible to get the duration in day of an event" do
     expect(@event.duration).to eq(5)
+  end
 
   it "should only show active events" do
     @new_event = FactoryBot.create(:event, deadline: Date.current)
@@ -49,7 +50,9 @@ it "should have an attribute deadline" do
     expect(Event.all).to include(@new_event, @old_event)
   end
 
+=begin
   after(:context) do
     @event.destroy
   end
+=end
 end

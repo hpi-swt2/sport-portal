@@ -68,8 +68,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    childprocess (0.8.0)
-      ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.2)
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
