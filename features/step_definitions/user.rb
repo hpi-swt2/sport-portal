@@ -19,11 +19,10 @@ Given(/^(\w+) is logged in$/) do |name|
   sign_in user_named name
 end
 
-When(/^the user views his account settings$/) do
+When(/^he views his account settings$/) do
   ensure_current_user!
   visit edit_user_registration_path
 end
-
 
 Then(/^the user should be linked with the account$/) do
   user = single_user
@@ -39,6 +38,14 @@ Then(/^the user should not be linked with any account$/) do
   expect(user.uid).to be_nil
   expect(user.provider).to be_nil
 end
+
+Then(/^(\w+) should not be linked with any account$/) do |name|
+  user = user_named(name)
+  user.reload
+  expect(user.uid).to be_nil
+  expect(user.provider).to be_nil
+end
+
 
 Then(/^the sign in should have been successful$/) do
   expect(page).to have_css('.alert-success')
