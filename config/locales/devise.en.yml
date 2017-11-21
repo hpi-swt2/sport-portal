@@ -31,6 +31,7 @@ en:
       user:
         link_success: "Successfully connected with %{provider}."
         link_failure: "Failed to connect with %{provider}, you are already using another provider."
+        link_taken: "Failed to connect with %{provider}, someone is already linked to that account."
         success: "Successfully authenticated with %{provider}."
         failure: "Could not authenticate with %{provider}, the account is not linked."
       failure: "Could not authenticate with %{provider} because \"${reason}\"."

@@ -41,8 +41,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     def link_with(user, auth)
       user.omniauth = auth
-      user.save!
-      flash_if_navigational :notice, :link_success, provider: 'OpenID'
+      if user.save
+        flash_if_navigational :notice, :link_success, provider: 'OpenID'
+      else
+        flash_if_navigational :error, :link_taken, provider: 'OpenID'
+      end
     end
 
     def flash_if_navigational(key, kind, options = {})
