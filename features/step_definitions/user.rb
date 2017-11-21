@@ -18,6 +18,6 @@ When(/^(.*) tries to sign up$/) do |username|
   click_button I18n.t('devise.registrations.sign_up')
 end
 
-Then(/^(.*) should not be able to sign\-up$/) do |username|
+Then(/^(.*) should not be able to sign up$/) do |username|
   expect(user_named(username).persisted?).to be_falsey
 end
