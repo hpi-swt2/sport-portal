@@ -17,8 +17,9 @@ RSpec.feature "User avatar in navbar", :type => :feature do
         user = FactoryBot.create(:user, avatar: nil)
         sign_in user
         visit root_path
+        image_path = ActionController::Base.helpers.asset_path("missing_avatar.png")
 
-        expect(page).to have_css(".navbar img[src='#{image_path('missing_avatar.png') }']")
+        expect(page).to have_css(".navbar img[src='#{image_path}']")
       end
     end
   end
