@@ -15,6 +15,10 @@ Given(/^a user (.*) with email (.*)$/) do |username, email|
   create_user_named(username, email: email)
 end
 
+Given(/^a new user$/) do
+  build_user
+end
+
 Given(/^a new user (.*) with email (.*)$/) do |username, email|
   build_user_named(username, email: email)
 end
