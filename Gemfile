@@ -32,6 +32,10 @@ gem 'devise-bootstrap-views'
 # Library that provides standardizes multi-provider authentication
 # https://github.com/omniauth/omniauth
 gem 'omniauth'
+# Support for OpenID when authenticating
+gem 'omniauth-openid'
+# Provide current CA certificates for validating omniauth provider identity
+gem 'certified'
 # Authorization library which restricts what resources a given user is allowed to access
 # All permissions are defined in a 'Ability' and not duplicated across controllers, views, and database queries.
 # https://github.com/CanCanCommunity/cancancan
@@ -50,7 +54,7 @@ gem 'has_scope'
 # gem 'nokogiri', '1.6.7.rc3', platforms: [:mswin, :mingw, :x64_mingw]
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-  
+
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
 # gem 'jquery-ui-rails'
@@ -83,6 +87,10 @@ group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
+  # Behaviour driven development library with a DSL close to natural language
+  # https://cucumber.io
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
   # Acceptance test framework for web applications
   # https://github.com/teamcapybara/capybara
   gem 'capybara'
@@ -95,6 +103,9 @@ group :development, :test do
   # Hosted code coverage on coveralls.io
   # https://docs.coveralls.io/ruby-on-rails
   gem 'coveralls', require: false
+  # Ruby bindings for the SQLite3 embedded database
+  # https://github.com/sparklemotion/sqlite3-ruby
+  gem 'sqlite3'
 end
 
 group :development do
@@ -131,9 +142,6 @@ group :development do
   # Causes 'rails console' to open the pry console
   # https://github.com/rweng/pry-rails
   gem 'pry-rails'
-  # Ruby bindings for the SQLite3 embedded database
-  # https://github.com/sparklemotion/sqlite3-ruby
-  gem 'sqlite3'
 end
 
 group :production do
