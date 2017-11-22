@@ -1,6 +1,6 @@
 Feature: OpenID Registration
   In order to simplify my login process
-  As a unregistered user with an OpenID Account
+  As an unregistered user with an OpenID Account
   I want to sign up with my OpenID Account
 
   Scenario: Sign up attempt
