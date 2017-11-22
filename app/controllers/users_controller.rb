@@ -17,11 +17,6 @@ class UsersController < Devise::RegistrationsController
     @user = User.find(params[:id])
   end
 
-  # POST /users
-  def create
-    super
-  end
-
   # GET /users/1/link
   def link
     authorize! :edit, user
