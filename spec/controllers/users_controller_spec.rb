@@ -32,6 +32,44 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'GET #new' do
+    before :each do
+      @auth_session = {
+        'provider' => 'mock',
+        'uid' => '1234567890',
+        'email' => 'test@potato.com',
+        'expires' => Time.current + 10.minutes
+      }
+    end
+
+    it 'should not set the email when no auth session is provided' do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      get :new
+      user = @controller.user
+      expect(response).to be_success
+      expect(user.email).to be_blank
+    end
+
+    it 'should set the email when an auth session is provided' do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      @request.session['omniauth.data'] = @auth_session
+      get :new
+      user = @controller.user
+      expect(response).to be_success
+      expect(user.email).to eq(@auth_session['email'])
+    end
+
+    it 'should not set the email when an expired auth session is provided' do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      @auth_session['expires'] = Time.current - 2.minutes
+      @request.session['omniauth.data'] = @auth_session
+      get :new
+      user = @controller.user
+      expect(response).to be_success
+      expect(user.email).to be_blank
+    end
+  end
+
   describe 'POST #create' do
     it 'creates a new user with valid params' do
       @request.env['devise.mapping'] = Devise.mappings[:user]
