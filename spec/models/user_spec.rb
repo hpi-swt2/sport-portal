@@ -43,7 +43,7 @@ RSpec.describe User, type: :model do
 
     it 'should return a new user without an existing user' do
       user = FactoryBot.create :user
-      autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890')
+      autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890', info: { email: 'test@test.com' })
       new_user = User.from_omniauth autohash
       expect(new_user).to_not be_nil
       expect(new_user.persisted?).to be false

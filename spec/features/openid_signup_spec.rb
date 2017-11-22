@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.feature 'User management', :type => :feature do
-  scenario 'User signs in and finds himself on his dashboard' do
+RSpec.feature 'OpenID signup', :type => :feature do
+  scenario 'A new user signs in with OpenID for the first time and signs up' do
     OmniAuth.config.test_mode = true
     user_attributes = FactoryBot.attributes_for(:user)
     options =  {
