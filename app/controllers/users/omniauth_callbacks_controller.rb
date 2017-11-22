@@ -16,17 +16,27 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     def attempt_sign_in_with(auth)
       user = User.from_omniauth(auth)
-      if user
+      if user.persisted?
         sign_in_user user
       else
-        redirect_to root_path
-        flash_if_navigational :error, :failure, provider: 'OpenID'
+        sign_up_user auth
       end
     end
 
     def sign_in_user(user)
       sign_in_and_redirect user, event: :authentication #will throw if user is not activated
       flash_if_navigational :notice, :success, provider: 'OpenID'
+    end
+
+    def sign_up_user(auth)
+      session['omniauth.data'] = {
+        uid: auth.uid,
+        provider: auth.provider,
+        email: auth.info.email,
+        expires: Time.current + 10.minutes
+      }
+      redirect_to new_user_registration_path
+      flash_if_navigational :notice, :create
     end
 
     def attempt_link_with(auth)

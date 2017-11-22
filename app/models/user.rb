@@ -40,7 +40,23 @@ class User < ApplicationRecord
     self.provider = nil
   end
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first
+  class << self
+    def new_with_session(params, session)
+      super.tap do |user|
+        if (data = session['omniauth.data'])
+          if data['expires'].to_time > Time.current
+            user.uid = data['uid']
+            user.provider = data['provider']
+            user.email = data['email'] if user.email.blank?
+          end
+        end
+      end
+    end
+
+    def from_omniauth(auth)
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+      end
+    end
   end
 end
