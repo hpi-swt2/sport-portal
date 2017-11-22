@@ -64,9 +64,24 @@ RSpec.describe User, type: :model do
       expect(user.uid).to eq(session['uid'])
     end
 
+    it 'should ignore expired auth data' do
+      session = {
+        'uid' => '1234567890',
+        'provider' => 'mock',
+        'email' => 'm@ex.com',
+        'expires' => Time.current - 2.minutes
+      }
+      user = User.new_with_session({}, { 'omniauth.data' => session })
+      expect(user.email).to_not eq('m@ex.com')
+      expect(user.provider).to_not eq(session['provider'])
+      expect(user.uid).to_not eq(session['uid'])
+    end
+
     it 'should ignore an empty session' do
       user = User.new_with_session({}, {})
       expect(user).to_not be_nil
+      expect(user.provider).to be_nil
+      expect(user.uid).to be_nil
     end
   end
 
