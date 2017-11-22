@@ -19,11 +19,15 @@ RSpec.describe TeamsController, type: :controller do
 
   before(:each) do
     @user = FactoryBot.create(:user)
-    sign_in @user
+    @other_user = FactoryBot.create(:user)
+    @admin = FactoryBot.create(:admin)
+    #sign_in @user
   end
 
   after(:each) do
     @user.destroy
+    @other_user.destroy
+    @admin.destroy
   end
 
   describe "GET #index" do
@@ -32,7 +36,13 @@ RSpec.describe TeamsController, type: :controller do
       get :index, params: {}
       expect(response).to be_success
     end
+
+  it "should allow normal user to view page" do
+    sign_in @user
+    get :index, params: {}
+    expect(response).to be_success
   end
+end
 
   describe "GET #show" do
     it "returns a success response" do
@@ -40,10 +50,23 @@ RSpec.describe TeamsController, type: :controller do
       get :show, params: { id: team.to_param }
       expect(response).to be_success
     end
+
+    it "should allow normal user to view page" do
+      sign_in @user
+      team = Team.create! valid_attributes
+      get :show, params: {id: team.to_param}
+      expect(response).to be_success
+    end
   end
 
   describe "GET #new" do
     it "returns a success response" do
+      get :new, params: {}
+      expect(response).to be_success
+    end
+
+    it "should allow normal user to view page" do
+      sign_in @user
       get :new, params: {}
       expect(response).to be_success
     end
@@ -55,18 +78,40 @@ RSpec.describe TeamsController, type: :controller do
       get :edit, params: { id: team.to_param }
       expect(response).to be_success
     end
+
+    it "should allow normal user to edit his created team" do
+      sign_in @user
+      team = Team.create(creator: @user, name: "generic name")
+      get :edit, params: {id: team.to_param}
+      expect(response).to be_success
+    end
+
+    it "should not allow normal user to edit others created team" do
+      sign_in @user
+      team = Team.create(creator: @other_user, name: "generic name")
+      get :edit, params: {id: team.to_param}
+      expect(response).to_not be_success
+    end
   end
 
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Team" do
+        sign_in @user
         expect {
           post :create, params: { team: valid_attributes }
         }.to change(Team, :count).by(1)
       end
 
       it "redirects to the created team" do
+        sign_in @user
         post :create, params: { team: valid_attributes }
+        expect(response).to redirect_to(Team.last)
+      end
+
+      it "should allow normal user to create an team" do
+        sign_in @user
+        post :create, params: {team: valid_attributes}
         expect(response).to redirect_to(Team.last)
       end
     end
@@ -97,6 +142,20 @@ RSpec.describe TeamsController, type: :controller do
         put :update, params: { id: team.to_param, team: valid_attributes }
         expect(response).to redirect_to(team)
       end
+
+      it "should allow normal user to update his created team" do
+        sign_in @user
+        team = Team.create(creator: @user, name: "generic name")
+        put :update, params: {id: team.to_param, team: valid_attributes}
+        expect(response).to redirect_to(team)
+      end
+
+      it "should not allow normal user to update others created teams" do
+        sign_in @user
+        team = Team.create(creator: @other_user, name: "generic name")
+        put :update, params: {id: team.to_param, team: valid_attributes}
+        expect(response).to_not be_success
+      end
     end
 
     context "with invalid params" do
@@ -111,14 +170,28 @@ RSpec.describe TeamsController, type: :controller do
   describe "DELETE #destroy" do
     it "destroys the requested team" do
       team = Team.create! valid_attributes
-      expect {
-        delete :destroy, params: { id: team.to_param }
-      }.to change(Team, :count).by(-1)
+      delete :destroy, params: { id: team.to_param }
+      expect(response).to be_forbidden
+      team.destroy
     end
 
     it "redirects to the teams list" do
       team = Team.create! valid_attributes
       delete :destroy, params: { id: team.to_param }
+      expect(response).to redirect_to(teams_url)
+    end
+
+    it "should not allow normal user to destroy teams created by others" do
+      sign_in @user
+      team = Team.create(creator: @other_user, name: "generic name")
+      delete :destroy, params: {id: team.to_param}
+      expect(response).to be_forbidden
+    end
+
+    it "should allow normal user to destroy his created team" do
+      sign_in @user
+      team = Team.create(creator: @user, name: "generic name")
+      delete :destroy, params: {id: team.to_param}
       expect(response).to redirect_to(teams_url)
     end
   end

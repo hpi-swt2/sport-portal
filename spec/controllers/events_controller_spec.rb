@@ -102,11 +102,18 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to be_success
     end
 
-    it "should allow normal user to view his created event" do
+    it "should allow normal user to edit his created event" do
       sign_in @user
       event = Event.create(creator: @user)
       get :edit, params: {id: event.to_param}
       expect(response).to be_success
+    end
+
+    it "should not allow normal user to edit others created event" do
+      sign_in @user
+      event = Event.create(creator: @other_user)
+      get :edit, params: {id: event.to_param}
+      expect(response).to_not be_success
     end
   end
 
@@ -120,6 +127,12 @@ RSpec.describe EventsController, type: :controller do
 
       it "redirects to the created event" do
         post :create, params: {event: valid_attributes}, session: valid_session
+        expect(response).to redirect_to(Event.last)
+      end
+
+      it "should allow normal user to create an event" do
+        sign_in @user
+        post :create, params: {event: valid_attributes}
         expect(response).to redirect_to(Event.last)
       end
     end
@@ -150,6 +163,20 @@ RSpec.describe EventsController, type: :controller do
         put :update, params: {id: event.to_param, event: valid_attributes}, session: valid_session
         expect(response).to redirect_to(event)
       end
+
+      it "should allow normal user to update his created event" do
+        sign_in @user
+        event = Event.create(creator: @user)
+        put :update, params: {id: event.to_param, event: valid_attributes}
+        expect(response).to redirect_to(event)
+      end
+
+      it "should not allow normal user to update others created events" do
+        sign_in @user
+        event = Event.create(creator: @other_user)
+        put :update, params: {id: event.to_param, event: valid_attributes}
+        expect(response).to_not be_success
+      end
     end
 
     context "with invalid params" do
@@ -164,14 +191,28 @@ RSpec.describe EventsController, type: :controller do
   describe "DELETE #destroy" do
     it "destroys the requested event" do
       event = Event.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: event.to_param}, session: valid_session
-      }.to change(Event, :count).by(-1)
+      delete :destroy, params: { id: event.to_param }
+      expect(response).to be_forbidden
+      event.destroy
     end
 
     it "redirects to the events list" do
       event = Event.create! valid_attributes
       delete :destroy, params: {id: event.to_param}, session: valid_session
+      expect(response).to redirect_to(events_url)
+    end
+
+    it "should not allow normal user to destroy events created by others" do
+      sign_in @user
+      event = Event.create(creator: @other_user)
+      delete :destroy, params: {id: event.to_param}
+      expect(response).to be_forbidden
+    end
+
+    it "should allow normal user to destroy his created event" do
+      sign_in @user
+      event = Event.create(creator: @user)
+      delete :destroy, params: {id: event.to_param}
       expect(response).to redirect_to(events_url)
     end
   end

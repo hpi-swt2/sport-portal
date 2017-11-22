@@ -24,12 +24,8 @@ FactoryBot.define do
     sequence(:password_confirmation) { |n| "password#{n}" }
   end
 
-  factory :admin, class: User do
-    sequence(:first_name) { |n| "first_name#{n}" }
-    sequence(:last_name) { |n| "last_name#{n}" }
-    sequence(:email) { |n| "#{n}@example.com" }
-    sequence(:password) { |n| "password#{n}" }
-    sequence(:password_confirmation) { |n| "password#{n}" }
+  factory :admin, class: User, parent: :user do
+    sequence(:email) { |n| "#{n}admin@example.com" }
     admin true
   end
 end
