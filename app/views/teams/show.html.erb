@@ -8,6 +8,10 @@
   <dd><%= @team.name %></dd>
 </dl>
 
+<% if can? :assign_ownership, @team %>
+    Test
+<% end %>
+
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
