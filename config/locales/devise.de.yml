@@ -1,0 +1,16 @@
+de:
+  devise:
+    omniauth_callbacks:
+      user:
+        link_success: "Erfolgreich mit %{provider} verbunden."
+        link_failure: "Fehler beim Verbinden mit %{provider}, du benutzt schon einen anderen Dienst."
+        link_taken: "Fehler beim Verbinden mit %{provider}, jemand anderes verwendet diesen Account bereits."
+        success: "Erfolgreich mit %{provider} angemeldet."
+        create: "Du hast noch keinen Account, aber du kannst einen erstellen, wenn du deine Daten einträgst."
+      failure: "Du konntest nicht mit %{provider} angemeldet werden aufgrund \"%{reason}\"."
+    registrations:
+      sign_in_with_provider: "Mit %{provider} anmelden"
+      link_provider: "Mit %{provider} verbinden"
+      unlink_provider: "Von %{provider} trennen"
+      unlink_success: "Der Account wurde erfolgreich getrennt."
+      no_link: "Dein Account ist mit keinem Dienst verbunden."
