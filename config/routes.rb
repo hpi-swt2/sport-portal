@@ -21,5 +21,5 @@ Rails.application.routes.draw do
   end
 
   #Define route for Create Event Button
-  get "/createEvent" , to: "application#createEvent" , as: "createEvent"
+  get "/createEvent" , to: "application#createEvent" , as: "create_Event"
 end
