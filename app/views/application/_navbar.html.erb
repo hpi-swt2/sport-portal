@@ -13,7 +13,7 @@
       <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete %>
     <% else %>
       <%= menu_item t('devise.registrations.sign_up'), new_user_registration_path %>
-      <%= menu_item t('devise.registrations.sign_in'), new_user_session_path %>
+      <%#<%= menu_item t('devise.registrations.sign_in'), new_user_session_path %>
     <% end %>
   <% end %>
 <% end %>
