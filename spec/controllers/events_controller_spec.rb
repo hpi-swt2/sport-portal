@@ -41,10 +41,28 @@ RSpec.describe EventsController, type: :controller do
   # EventsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  before(:each) do
+    @user = FactoryBot.create(:user)
+    @other_user = FactoryBot.create(:user)
+    @admin = FactoryBot.create(:admin)
+  end
+
+  after(:each) do
+    @user.destroy
+    @other_user.destroy
+    @admin.destroy
+  end
+
   describe "GET #index" do
     it "returns a success response" do
       event = Event.create! valid_attributes
       get :index, params: {}, session: valid_session
+      expect(response).to be_success
+    end
+
+    it "should allow normal user to view page" do
+      sign_in @user
+      get :index, params: {}
       expect(response).to be_success
     end
   end
@@ -55,11 +73,24 @@ RSpec.describe EventsController, type: :controller do
       get :show, params: {id: event.to_param}, session: valid_session
       expect(response).to be_success
     end
+
+    it "should allow normal user to view page" do
+      sign_in @user
+      event = Event.create! valid_attributes
+      get :show, params: {id: event.to_param}
+      expect(response).to be_success
+    end
   end
 
   describe "GET #new" do
     it "returns a success response" do
       get :new, params: {}, session: valid_session
+      expect(response).to be_success
+    end
+
+    it "should allow normal user to view page" do
+      sign_in @user
+      get :new, params: {}
       expect(response).to be_success
     end
   end
@@ -68,6 +99,13 @@ RSpec.describe EventsController, type: :controller do
     it "returns a success response" do
       event = Event.create! valid_attributes
       get :edit, params: {id: event.to_param}, session: valid_session
+      expect(response).to be_success
+    end
+
+    it "should allow normal user to view his created event" do
+      sign_in @user
+      event = Event.create(creator: @user)
+      get :edit, params: {id: event.to_param}
       expect(response).to be_success
     end
   end
@@ -137,5 +175,6 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
+
 
 end
