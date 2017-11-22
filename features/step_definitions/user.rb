@@ -72,3 +72,34 @@ end
 Then(/^(.*) should not be able to sign up$/) do |username|
   expect(user_named(username).persisted?).to be_falsey
 end
+
+
+When(/^(.+) visits the password recovery page$/) do |username|
+  visit new_user_password_path
+end
+
+And(/^(.+) inserts his email address$/) do |username|
+  user = user_named(username)
+  fill_in :user_email, with: user.email
+end
+
+And(/^submits$/) do
+  click_button I18n.t('devise.registrations.reset_password')
+end
+
+Then(/^(\w+) gets an Email with a recovery link$/) do |username|
+  expect(true).to eq(false) #TODO mock emails
+end
+
+When(/^(\w+) clicks a recovery link$/) do |username|
+  visit password_recovery_path
+end
+
+And(/^(\w+) enters a new password$/) do |username|
+  fill_in :user_password, with: '12345678_my_new_password'
+  click_button I18n.t('devise.registrations.confirm_new_password')
+end
+
+And(/^(\w+) tries to log in with his new password$/) do |username|
+  sign_in single_user
+end
