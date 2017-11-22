@@ -11,7 +11,7 @@
       <%= menu_item user_path(current_user) do %>
         <%= current_user.first_name %>
         <span>
-          <%= image_tag current_user.avatar&.image_url || "", class: "avatar" %>
+          <%= image_tag current_user.avatar&.image_url || image_path('missing_avatar.png'), class: "avatar" %>
         </span>
       <% end %>
       <%= menu_divider %>

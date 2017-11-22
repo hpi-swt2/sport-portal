@@ -1,4 +1,4 @@
-class ImageUploader < Shrine
+class AvatarUploader < Shrine
   plugin :validation_helpers
   plugin :remove_attachment
 

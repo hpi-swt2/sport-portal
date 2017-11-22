@@ -1,4 +1,4 @@
 class Avatar < ApplicationRecord
   belongs_to :user
-  include ImageUploader::Attachment.new(:image)
+  include AvatarUploader::Attachment.new(:image)
 end

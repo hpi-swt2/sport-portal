@@ -18,7 +18,7 @@ RSpec.feature "User avatar in navbar", :type => :feature do
         sign_in user
         visit root_path
 
-        expect(page).to have_css(".navbar img[src='#{user.avatar.image_url}']")
+        expect(page).to have_css(".navbar img[src='#{image_path('missing_avatar.png') }']")
       end
     end
   end
