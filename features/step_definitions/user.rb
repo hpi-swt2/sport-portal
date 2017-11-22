@@ -19,6 +19,18 @@ Given(/^a new user (.*) with email (.*)$/) do |username, email|
   build_user_named(username, email: email)
 end
 
+Given(/^a new user (.*) with a blank first name field$/) do |username|
+  build_user_named(username, first_name: '')
+end
+
+Given(/^a new user (.*) with a blank last name field$/) do |username|
+  build_user_named(username, last_name: '')
+end
+
+Given(/^a new user (.*) with password (.*)$/) do |username, password|
+  build_user_named(username, password: password)
+end
+
 Given(/^the user is logged in$/) do
   sign_in single_user
 end
@@ -70,5 +82,12 @@ Then(/^the sign in should have been successful$/) do
 end
 
 Then(/^(.*) should not be able to sign up$/) do |username|
-  expect(user_named(username).persisted?).to be_falsey
+  found_users = User.all.select do |user|
+    user.first_name.eql?(user_named(username).first_name) && user.last_name.eql?(user_named(username).last_name) && user.email.eql?(user_named(username).email)
+  end
+  expect(found_users.any?).to be_falsey
+end
+
+And(/^the page should show (.*)$/) do |message|
+  expect(page).to have_text(message)
 end

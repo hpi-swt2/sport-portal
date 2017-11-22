@@ -23,7 +23,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid]
 
-  validates :first_name, presence: true
+  validates :first_name, :last_name, presence: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
   def has_omniauth?
