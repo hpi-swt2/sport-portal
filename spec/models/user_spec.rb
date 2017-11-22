@@ -52,11 +52,15 @@ RSpec.describe User, type: :model do
 
   describe 'self#new_with_session' do
     it 'should copy parameters from the given omniauth' do
-      authhash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890', info: { email: 'm@ex.com' })
-      user = User.new_with_session({}, { 'omniauth.data' => authhash })
+      session = {
+        uid: '1234567890',
+        provider: 'mock',
+        email: 'm@ex.com'
+      }
+      user = User.new_with_session({}, { 'omniauth.data' => session })
       expect(user.email).to eq('m@ex.com')
-      expect(user.provider).to eq(authhash.provider)
-      expect(user.uid).to eq(authhash.uid)
+      expect(user.provider).to eq(session[:provider])
+      expect(user.uid).to eq(session[:uid])
     end
 
     it 'should ignore an empty session' do
