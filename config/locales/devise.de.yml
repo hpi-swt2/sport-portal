@@ -28,6 +28,7 @@ de:
         subject: "Anleitung um Deinen Account freizuschalten"
     omniauth_callbacks:
       user:
+        link_success: "Erfolgreich mit %{provider} verbunden."
         failure: "Du konntest nicht Deinem %{provider}-Account angemeldet werden, da der Account nicht verbunden ist."
       failure: "Du konntest nicht Deinem %{provider}-Account angemeldet werden, weil '%{reason}'."
       success: "Du hast Dich erfolgreich mit Deinem %{provider}-Account angemeldet."
@@ -49,6 +50,8 @@ de:
       sign_in: "Anmelden"
       sign_up: "Registrieren"
       sign_in_with_provider: "Mit %{provider} anmelden"
+      link_provider: "Mit %{provider} verbinden"
+      unlink_provider: "Verbindung mit %{provider} aufheben"
     sessions:
       signed_in: "Erfolgreich angemeldet."
       signed_out: "Erfolgreich abgemeldet."
