@@ -10,6 +10,7 @@ Feature: OpenID Registration
     Then the 'Email' input should be filled with 'test@test.com'
     And there should be an input 'First name'
     And there should be an input 'Last name'
+    And there should not be an input 'Password'
 
   Scenario: Sign up
     Given a new user

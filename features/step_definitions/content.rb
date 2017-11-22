@@ -21,3 +21,7 @@ end
 Then(/^there should be an input '(.*)'$/) do |name|
   expect(page).to have_field(name)
 end
+
+Then(/^there should not be an input '(.*)'$/) do |name|
+  expect(page).to_not have_field(name)
+end
