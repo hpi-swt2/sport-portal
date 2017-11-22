@@ -1,44 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+<%- model_class = Event -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <strong>Gamemode:</strong>
-  <%= @event.gamemode %>
-</p>
+<dl class="dl-horizontal">
+  <% [:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate].each do |attribute| %>
+    <dt><strong><%= model_class.human_attribute_name(attribute) %>:</strong></dt>
+    <dd><%= @event.send attribute %></dd>
+  <% end %>
+</dl>
 
-<p>
-  <strong>Sport:</strong>
-  <%= @event.sport %>
-</p>
-
-<p>
-  <strong>Teamsport:</strong>
-  <%= @event.teamsport %>
-</p>
-
-<p>
-  <strong>Playercount:</strong>
-  <%= @event.playercount %>
-</p>
-
-<p>
-  <strong>Gamesystem:</strong>
-  <%= @event.gamesystem %>
-</p>
-
-<p>
-  <strong>Deadline:</strong>
-  <%= @event.deadline %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<%# app/helpers/button_helper.rb %>
+<%= back_btn %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+            edit_event_path(@event), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+            event_path(@event),
+            :method => 'delete',
+            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
+            :class => 'btn btn-danger' %>
