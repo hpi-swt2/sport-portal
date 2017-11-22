@@ -43,12 +43,10 @@ class User < ApplicationRecord
   class << self
     def new_with_session(params, session)
       super.tap do |user|
-        if (data = session['omniauth.data'])
-          if data['expires'].to_time > Time.current
-            user.uid = data['uid']
-            user.provider = data['provider']
-            user.email = data['email'] if user.email.blank?
-          end
+        if (data = session['omniauth.data']) && data['expires'].to_time > Time.current
+          user.uid = data['uid']
+          user.provider = data['provider']
+          user.email = data['email'] if user.email.blank?
         end
       end
     end
