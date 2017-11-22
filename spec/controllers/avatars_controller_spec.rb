@@ -26,7 +26,7 @@ RSpec.describe AvatarsController, type: :controller do
         end
 
         it "redirects to the edit page" do
-          put :update, params: { id: user.to_param, avatar: new_attributes }
+          put :update, params: { id: avatar.user.to_param, avatar: new_attributes }
           expect(response).to redirect_to(registration_path(avatar.user))
         end
       end

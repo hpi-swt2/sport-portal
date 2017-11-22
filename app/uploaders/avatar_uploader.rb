@@ -1,6 +1,7 @@
 class AvatarUploader < Shrine
   plugin :validation_helpers
   plugin :remove_attachment
+  plugin :determine_mime_type
 
   Attacher.validate do
     validate_mime_type_inclusion %w[image/jpeg image/gif image/png]

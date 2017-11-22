@@ -4,11 +4,11 @@ RSpec.feature "User avatar in navbar", :type => :feature do
   context 'user is signed in' do
     context 'the user has uploaded an avatar' do
       scenario "User sees his avatar in navbar" do
-        user = FactoryBot.create(:avatar)
+        avatar = FactoryBot.create(:avatar)
         sign_in avatar.user
         visit root_path
 
-        expect(page).to have_css(".navbar img[src='#{user.avatar.image_url}']")
+        expect(page).to have_css(".navbar img[src='#{avatar.image_url}']")
       end
     end
 
