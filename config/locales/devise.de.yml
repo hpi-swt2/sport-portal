@@ -1,4 +1,6 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+# This is: https://gist.github.com/thomasklemm/6821669
+# Replaced {kind} with {provider} to match en locale
 
 de:
   devise:
@@ -25,8 +27,10 @@ de:
       unlock_instructions:
         subject: "Anleitung um Deinen Account freizuschalten"
     omniauth_callbacks:
-      failure: "Du konntest nicht Deinem %{kind}-Account angemeldet werden, weil '%{reason}'."
-      success: "Du hast Dich erfolgreich mit Deinem %{kind}-Account angemeldet."
+      user:
+        failure: "Du konntest nicht Deinem %{provider}-Account angemeldet werden, da der Account nicht verbunden ist."
+      failure: "Du konntest nicht Deinem %{provider}-Account angemeldet werden, weil '%{reason}'."
+      success: "Du hast Dich erfolgreich mit Deinem %{provider}-Account angemeldet."
     passwords:
       no_token: "Du kannst diese Seite nur von dem Link aus einer E-Mail zum Passwort-Zurücksetzen aufrufen. Wenn du einen solchen Link aufgerufen hast stelle bitte sicher, dass du die vollständige Adresse aufrufst."
       send_instructions: "Du erhältst in wenigen Minuten eine E-Mail mit der Anleitung, wie Du Dein Passwort zurücksetzen kannst."

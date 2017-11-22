@@ -1,3 +1,5 @@
+# Source: https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/de.yml
+
 ---
 de:
   activerecord:
