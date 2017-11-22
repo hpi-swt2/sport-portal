@@ -55,6 +55,13 @@ Then(/^the user should be linked with the account$/) do
   expect(user.provider).to eq(account[:provider])
 end
 
+Then(/^the new user should be linked with the account$/) do
+  account = single_account
+  user = User.find_by(email: account.info.email)
+  expect(user.uid).to eq(account[:uid])
+  expect(user.provider).to eq(account[:provider])
+end
+
 Then(/^the user should not be linked with any account$/) do
   user = single_user
   user.reload
