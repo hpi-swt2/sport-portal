@@ -15,4 +15,16 @@ FactoryBot.define do
     description "This team is awesome"
     private false
   end
+
+  trait :with_owners do
+    after(:create) do |team|
+      team.owners = build_list :user, 2
+    end
+  end
+
+  trait :with_members do
+    after(:create) do |team|
+      team.members = build_list :user, 5
+    end
+  end
 end

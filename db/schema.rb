@@ -38,6 +38,16 @@ ActiveRecord::Schema.define(version: 20171121154832) do
     t.integer "team_away_id"
   end
 
+  create_table "team_members", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+  end
+
+  create_table "team_owners", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
