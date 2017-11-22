@@ -19,7 +19,7 @@ RSpec.feature 'OpenID signup', :type => :feature do
       fill_in 'user[last_name]', with: user_attributes[:last_name]
       find('input[name="commit"]').click
     end
-    user = User.find(email: user_attributes[:email])
+    user = User.find_by(email: user_attributes[:email])
     expect(user.first_name).to eq(user_attributes[:first_name])
     expect(user.last_name).to eq(user_attributes[:last_name])
     expect(user.provider).to eq(auth.provider)
