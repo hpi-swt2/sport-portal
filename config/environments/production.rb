@@ -111,11 +111,16 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # File upload to S3
-  Shrine.storages[:store] = Shrine::Storage::S3.new(
-    bucket: ENV.fetch('S3_BUCKET_NAME'),
-    access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
-    secret_access_key: ENV.fetch('AWS_REGION'),
-  )
-}
+  # Configure Shrine file upload to use AWS S3 file storage
+  s3_options = {
+      bucket:            ENV.fetch("S3_BUCKET"),
+      region:            ENV.fetch("S3_REGION"),
+      access_key_id:     ENV.fetch("S3_ACCESS_KEY_ID"),
+      secret_access_key: ENV.fetch("S3_SECRET_ACCESS_KEY"),
+  }
+
+  Shrine.storages = {
+      cache: Shrine::Storage::S3.new(prefix: "cache", **s3_options),
+      store: Shrine::Storage::S3.new(prefix: "store", **s3_options),
+  }
 end
