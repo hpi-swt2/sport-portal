@@ -41,27 +41,29 @@ RSpec.describe User, type: :model do
       expect(User.from_omniauth(autohash).id).to eq(user.id)
     end
 
-    it 'should return nil without an existing user' do
+    it 'should return a new user without an existing user' do
       user = FactoryBot.create :user
       autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890')
-      expect(User.from_omniauth(autohash)).to be_nil
+      new_user = User.from_omniauth autohash
+      expect(new_user).to_not be_nil
+      expect(new_user.persisted?).to be false
     end
   end
 
   describe '#has_omniauth' do
     it 'should return return true iff the user has an omniauth provider and uid' do
       user = FactoryBot.create :user, provider: 'mock', uid: '1234567890'
-      expect(user.has_omniauth?).to be(true)
+      expect(user.has_omniauth?).to be true
     end
 
     it 'should return return false if the user does not have a provider or a uid' do
       user = FactoryBot.create :user
-      expect(user.has_omniauth?).to be(false)
+      expect(user.has_omniauth?).to be false
       user.uid = '10'
-      expect(user.has_omniauth?).to be(false)
+      expect(user.has_omniauth?).to be false
       user.uid = nil
       user.provider = 'mock'
-      expect(user.has_omniauth?).to be(false)
+      expect(user.has_omniauth?).to be false
     end
   end
 
