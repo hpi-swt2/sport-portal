@@ -37,16 +37,31 @@ RSpec.describe User, type: :model do
   describe 'self#from_omniauth' do
     it 'should return an existing user' do
       user = FactoryBot.create :user, provider: 'mock', uid: '1234567890'
-      autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890')
-      expect(User.from_omniauth(autohash).id).to eq(user.id)
+      authhash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890')
+      expect(User.from_omniauth(authhash).id).to eq(user.id)
     end
 
     it 'should return a new user without an existing user' do
       user = FactoryBot.create :user
-      autohash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890', info: { email: 'test@test.com' })
-      new_user = User.from_omniauth autohash
+      authhash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890', info: { email: 'test@test.com' })
+      new_user = User.from_omniauth authhash
       expect(new_user).to_not be_nil
       expect(new_user.persisted?).to be false
+    end
+  end
+
+  describe 'self#new_with_session' do
+    it 'should copy parameters from the given omniauth' do
+      authhash = OmniAuth::AuthHash.new(provider: 'mock', uid: '1234567890', info: { email: 'm@ex.com' })
+      user = User.new_with_session({}, { 'omniauth.data' => authhash })
+      expect(user.email).to eq('m@ex.com')
+      expect(user.provider).to eq(authhash.provider)
+      expect(user.uid).to eq(authhash.uid)
+    end
+
+    it 'should ignore an empty session' do
+      user = User.new_with_session({}, {})
+      expect(user).to_not be_nil
     end
   end
 
