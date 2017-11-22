@@ -57,7 +57,7 @@ en:
       unlink_provider: "Disconnect from %{provider}"
       unlink_success: "Successfully disconnected account."
       no_link: "Your account is not linked with any provider."
-      reset_password: "Send me reset password instructions trololol"
+      reset_password: "Send me reset password instructions"
       confirm_new_password: "Confirm your new password"
     sessions:
       signed_in: "Signed in successfully."
