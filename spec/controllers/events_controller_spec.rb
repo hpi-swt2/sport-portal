@@ -54,7 +54,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "GET #index" do
-    it "returns a success response" do
+    it "returns a unauthorized response if not signed in" do
       event = Event.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_success
@@ -83,9 +83,9 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "GET #new" do
-    it "returns a success response" do
+    it "returns a unauthorized response" do
       get :new, params: {}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_unauthorized
     end
 
     it "should allow normal user to view page" do
@@ -96,10 +96,10 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "GET #edit" do
-    it "returns a success response" do
+    it "returns a unauthorized response" do
       event = Event.create! valid_attributes
       get :edit, params: {id: event.to_param}, session: valid_session
-      expect(response).to be_success
+      expect(response).to be_unauthorized
     end
 
     it "should allow normal user to edit his created event" do
@@ -192,7 +192,7 @@ RSpec.describe EventsController, type: :controller do
     it "destroys the requested event" do
       event = Event.create! valid_attributes
       delete :destroy, params: { id: event.to_param }
-      expect(response).to be_forbidden
+      expect(response).to be_success
       event.destroy
     end
 

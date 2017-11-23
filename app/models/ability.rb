@@ -26,6 +26,8 @@ class Ability
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
   def initialize(user)
+    can :read, :all
+
     if user.present?
       can :manage, User, id: user.id
       can :manage, Event, creator_id: user.id
@@ -37,5 +39,6 @@ class Ability
         can :manage, :all
       end
     end
+
   end
 end

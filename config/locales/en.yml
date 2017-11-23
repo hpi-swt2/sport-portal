@@ -50,3 +50,10 @@ en:
       event:
         one: "event"
         other: "events"
+
+  unauthorized:
+      manage:
+        all: "Not authorized to %{action} %{subject}."
+        user: "Not allowed to manage other user accounts."
+      update:
+        project: "Not allowed to update this project."
