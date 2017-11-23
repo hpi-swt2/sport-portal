@@ -9,6 +9,7 @@ en:
       pages: "Pages"
   helpers:
     actions: "Actions"
+    name: "Name"
     links:
       back: "Back"
       cancel: "Cancel"
@@ -28,6 +29,10 @@ en:
       update: Update %{model}
     select:
       prompt: Please select
+    teams:
+      kind_of_sport: "Kind of sport"
+      description: "Description"
+      private: "Private"
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."
