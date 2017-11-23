@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Event, type: :model do
 
-before(:each) do
-  @event = FactoryBot.create :event
-end
+  before(:each) do
+    @event = FactoryBot.create :event
+  end
 
-it "should have an attribute deadline" do
+  it "should have an attribute deadline" do
     @date = Date.new(2017,11,16)
     expect(@event.deadline).to eq(@date)
 
@@ -48,5 +48,10 @@ it "should have an attribute deadline" do
     expect(Event.active).to include(@new_event)
     expect(Event.active).to_not include(@old_event)
     expect(Event.all).to include(@new_event, @old_event)
+  end
+
+  it "should be able to access all participants" do
+    @user = FactoryBot.create :user
+    expect(@event.users).to include(@user)
   end
 end
