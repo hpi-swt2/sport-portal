@@ -7,14 +7,14 @@ before(:each) do
 end
 
 it "should have an attribute deadline" do
-    @date = Date.new(2017,11,16)
+    @date = Date.tomorrow
     expect(@event.deadline).to eq(@date)
 
     @event.deadline = nil
     expect(@event).not_to be_valid
   end
   it "should have an attribute startdate" do
-    @date = Date.new(2017,12,01)
+    @date = Date.today + 2
     expect(@event.startdate).to eq(@date)
 
     expect(@event).to be_valid
@@ -23,7 +23,7 @@ it "should have an attribute deadline" do
   end
 
   it "should have an attribute enddate" do
-    @date = Date.new(2017,12,05)
+    @date = Date.today + 3
     expect(@event.enddate).to eq(@date)
 
     expect(@event).to be_valid
@@ -33,20 +33,25 @@ it "should have an attribute deadline" do
 
   it "should not be possible to have an enddate, that is before the startdate" do
     expect(@event).to be_valid
-    @event.enddate = Date.new(2017,11,30)
+    @event.enddate = Date.today
     expect(@event).not_to be_valid
   end
 
   it "should be possible to get the duration in day of an event" do
-    expect(@event.duration).to eq(5)
+    expect(@event.duration).to eq(2)
   end
 
   it "should only show active events" do
     @new_event = FactoryBot.create(:event, deadline: Date.current)
-    @old_event = FactoryBot.create(:event)
+    @old_event = FactoryBot.create(:event, deadline: Date.yesterday)
 
     expect(Event.active).to include(@new_event)
     expect(Event.active).to_not include(@old_event)
     expect(Event.all).to include(@new_event, @old_event)
+  end
+
+  it "should have an association participants" do
+    @event.teamsport = false
+    expect(@event.attributes).to include(:participants)
   end
 end

@@ -85,4 +85,9 @@ RSpec.describe User, type: :model do
       expect(user.provider).to be_nil
     end
   end
+
+  it "should have an attribute events" do
+    @user = FactoryBot.create :user
+    expect(@user.attributes).to include(:events)
+  end
 end
