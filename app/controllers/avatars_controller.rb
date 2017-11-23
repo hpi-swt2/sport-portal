@@ -1,6 +1,7 @@
 class AvatarsController < ApplicationController
-  load_and_authorize_resource :user
-  load_and_authorize_resource :avatar, :through => :user
+  before_action :set_user
+  before_action :set_avatar
+  authorize_resource
 
   def create
     @avatar = Avatar.new(avatar_params)
@@ -14,13 +15,17 @@ class AvatarsController < ApplicationController
     redirect_to registration_path(@user)
   end
 
-  def destroy
-    @user.avatar.destroy!
-    redirect_to registration_path(@user)
+  private
+
+  def set_user
+    @user = User.find(params[:id])
   end
 
-  private
-    def avatar_params
-      params.require(:avatar).permit!
-    end
+  def set_avatar
+    @avatar = @user.avatar
+  end
+
+  def avatar_params
+    params.require(:avatar).permit!
+  end
 end

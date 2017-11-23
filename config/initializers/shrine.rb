@@ -7,4 +7,3 @@ Shrine.storages = {
 }
 
 Shrine.plugin :activerecord
-Shrine.plugin :logging

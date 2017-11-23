@@ -37,6 +37,6 @@ class Ability
     user ||= User.new # guest user (not logged in)
     # All users can only update their own user attributes
     can :update, User, id: user.id
-    can :manage, Avatar, user_id: user.id
+    can :manage, Avatar, user: user
   end
 end
