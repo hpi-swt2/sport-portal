@@ -32,6 +32,11 @@
 de:
   appname: "Sport-Portal"
 
+  footer:
+    hpi: "Hasso-Plattner-Institut"
+
+  imprint: "Impressum"
+
   welcome:
     index:
       lead: "Wir bieten unglaubliche Lösungen für vielfältige Use Cases."
