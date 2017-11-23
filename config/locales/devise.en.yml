@@ -47,6 +47,7 @@ en:
       sign_out: "Sign out"
       sign_in: "Sign in"
       sign_up: "Sign up"
+      my_account: "My Account"
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
