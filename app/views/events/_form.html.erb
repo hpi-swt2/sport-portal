@@ -1,0 +1,72 @@
+<%= form_with(model: event, local: true) do |form| %>
+  <% if event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :event_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :event_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gamemode %>
+    <%= form.text_field :gamemode, id: :event_gamemode %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sport %>
+    <%= form.text_field :sport, id: :event_sport %>
+  </div>
+
+  <div class="field">
+    <%= form.label :teamsport %>
+    <%= form.check_box :teamsport, id: :event_teamsport %>
+  </div>
+
+  <div class="field">
+    <%= form.label :playercount %>
+    <%= form.number_field :playercount, id: :event_playercount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gamesystem %>
+    <%= form.text_area :gamesystem, id: :event_gamesystem %>
+  </div>
+
+  <div class="field">
+    <%= form.label :deadline %>
+    <%= form.text_field :deadline, id: :event_deadline, :data => { :provide => 'datepicker', "date-format" => "dd/mm/yyyy" } %>
+  </div> 
+
+  <div class="field">
+    <%= form.label :startdate %>
+    <%= form.text_field :startdate, id: :event_startdate, :data => {:provide => 'datepicker', "date-format" => "dd/mm/yyyy"} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :enddate %>
+    <%= form.text_field :enddate, id: :event_enddate, :data => {:provide => 'datepicker', "date-format" => "dd/mm/yyyy"} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :duration %> 
+      Number of days: <%= form.text_field :duration, id: :event_duration %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit :event_submit => "Create event" %>
+  </div>
+<% end %>

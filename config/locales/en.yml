@@ -47,3 +47,6 @@ en:
       user:
         one: "player"
         other: "players"
+      event:
+        one: "event"
+        other: "events"

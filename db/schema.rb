@@ -24,6 +24,9 @@ ActiveRecord::Schema.define(version: 20171114225155) do
     t.datetime "updated_at", null: false
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["player_type"], name: "index_events_on_player_type"
+    t.date "deadline"
+    t.date "startdate"
+    t.date "enddate"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -53,7 +56,10 @@ ActiveRecord::Schema.define(version: 20171114225155) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
