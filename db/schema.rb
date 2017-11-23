@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114225155) do
+ActiveRecord::Schema.define(version: 20171123150124) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -22,11 +22,11 @@ ActiveRecord::Schema.define(version: 20171114225155) do
     t.integer "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_mode"], name: "index_events_on_game_mode"
-    t.index ["player_type"], name: "index_events_on_player_type"
-    t.date "deadline"
     t.date "startdate"
     t.date "enddate"
+    t.date "deadline"
+    t.index ["game_mode"], name: "index_events_on_game_mode"
+    t.index ["player_type"], name: "index_events_on_player_type"
   end
 
   create_table "matches", force: :cascade do |t|
