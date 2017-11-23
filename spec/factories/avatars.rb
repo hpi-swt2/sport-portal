@@ -14,4 +14,9 @@ FactoryBot.define do
     image { File.open("#{Rails.root}/spec/fixtures/valid_avatar.png") }
     user
   end
+
+  factory :large_file_avatar, class: Avatar do
+    image { File.open("#{Rails.root}/spec/fixtures/some_file.bin") }
+    user
+  end
 end

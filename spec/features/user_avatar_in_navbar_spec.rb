@@ -26,8 +26,6 @@ RSpec.feature "User avatar in navbar", :type => :feature do
 
   context 'user is not signed in' do
     scenario 'User sees no avatar in navbar' do
-      user = FactoryBot.create(:user, avatar: nil)
-      sign_in user
       visit root_path
 
       expect(page).not_to have_css('.navbar img')
