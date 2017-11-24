@@ -9,6 +9,7 @@ de:
       pages: "Seiten"
   helpers:
     actions: "Aktionen"
+    name: "Name"
     links:
       back: "Zurück"
       cancel: "Abbrechen"
@@ -16,7 +17,7 @@ de:
       destroy: "Löschen"
       new: "Neu"
       edit: "Bearbeiten"
-      show: Show
+      show: "Anzeigen"
     titles:
       edit: "%{model} bearbeiten"
       save: "%{model} speichern"
@@ -28,6 +29,10 @@ de:
       update: Aktualisiere %{model}
     select:
       prompt: Bitte wähle
+    teams:
+      kind_of_sport: "Sportart"
+      description: "Beschreibung"
+      private: "Privat"
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
