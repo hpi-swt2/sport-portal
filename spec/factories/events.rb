@@ -7,6 +7,8 @@ FactoryBot.define do
     teamsport false
     playercount 1
     gamesystem "Schweizer System"
-    deadline "2017-11-16"
+    deadline Date.new(2017,11,16)
+    startdate Date.new(2017,12,01)
+    enddate Date.new(2017,12,05)
   end
 end
