@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe StaticPagesController, type: :controller do
 
-  describe "GET #show imprint" do
+  describe "GET #imprint" do
     it "returns http success" do
-      get :show, params: { static_page: :imprint }
+      get :imprint, params: {}
       expect(response).to have_http_status(:success)
     end
   end

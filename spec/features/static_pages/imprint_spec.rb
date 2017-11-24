@@ -3,7 +3,7 @@ require'rails_helper'
 describe "static imprint page", type: :feature do
 
   it "should render without an error" do
-    visit static_page_path :imprint
+    visit imprint_path
   end
 
 end
