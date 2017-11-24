@@ -1,9 +1,6 @@
 .navbar .dropdown:hover .dropdown-menu {
     display: block;
 }
-.navbar .dropdown {
-    margin-right: 15px;
-}
 .navbar .dropdown-menu li {
     text-align: center;
 }
