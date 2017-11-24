@@ -33,7 +33,7 @@ RSpec.describe "events/edit", type: :view do
 
       assert_select "input[name=?]", "event[playercount]"
 
-      assert_select "textarea[name=?]", "event[gamesystem]"
+      assert_select "input[name=?]", "event[gamesystem]"
 
       assert_select "input[name=?]", "event[deadline]"
 
