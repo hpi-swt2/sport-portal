@@ -11,26 +11,24 @@ describe "Event model", type: :model do
 
     it "should not validate without discipline" do
         league = FactoryBot.build(:league, discipline: nil)
-
         expect(league.valid?).to eq(false)
     end
 
     it "should not validate without game_mode" do
-        league = FactoryBot.build(:league, game_mode: nil)
-
-        expect(league.valid?).to eq(false)
+      league = FactoryBot.build(:league, game_mode: nil)
+      expect(league.valid?).to eq(false)
     end
 
     it "should have an attribute deadline" do
-      @date = Date.new(2017,11,16)
-      expect(event.deadline).to eq(@date)
+      date = Date.new(2017,11,16)
+      expect(event.deadline).to eq date
 
       event.deadline = nil
       expect(event).not_to be_valid
     end
     it "should have an attribute startdate" do
-      @date = Date.new(2017,12,01)
-      expect(event.startdate).to eq(@date)
+      date = Date.new(2017,12,01)
+      expect(event.startdate).to eq date
 
       expect(event).to be_valid
       event.startdate = nil
@@ -38,8 +36,8 @@ describe "Event model", type: :model do
     end
 
     it "should have an attribute enddate" do
-      @date = Date.new(2017,12,05)
-      expect(event.enddate).to eq(@date)
+      date = Date.new(2017,12,05)
+      expect(event.enddate).to eq date
 
       expect(event).to be_valid
       event.enddate = nil
