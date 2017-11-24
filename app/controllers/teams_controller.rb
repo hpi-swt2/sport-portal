@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  load_and_authorize_resource
+  
   
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   # TODO: Consider using before_action
@@ -59,6 +59,9 @@ class TeamsController < ApplicationController
   def assign_ownership
     team_member_id = params[:team_member]
     @team = Team.find(params[:id])
+    authorize! :assign_ownership, @team    
+
+
     # Checks whether the specified team member already has team ownership
     if @team.owners.exists?(team_member_id)
       return
@@ -68,11 +71,7 @@ class TeamsController < ApplicationController
   end
 
   # Assigns team membership to a specific user
-  def assign_membership_to(user)
-    # Checks whether the specified user is a valid instance of User
-    unless user.is_a?(User)
-      return
-    end
+  def assign_membership
 
     # TODO: Consider check whether the current signed in user has team ownership
 

@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :teams do
     member do
-      post :assign_ownership_to
+      post :assign_ownership
     end
   end
 end
