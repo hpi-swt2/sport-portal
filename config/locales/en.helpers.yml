@@ -14,6 +14,8 @@ en:
       cancel: "Cancel"
       confirm: "Are you sure?"
       destroy: "Delete"
+      assign_ownership: "Assign Ownership"
+      delete_ownership: "Delete Ownership"
       new: "New"
       edit: "Edit"
       show: Show

@@ -68,6 +68,7 @@ class TeamsController < ApplicationController
     end
 
     @team.owners << User.find(team_member_id)
+    redirect_to @team
   end
 
   def delete_ownership
@@ -83,6 +84,7 @@ class TeamsController < ApplicationController
 
 
     @team.owners.delete(User.find(team_member_id))
+    redirect_to @team
   end
 
 
