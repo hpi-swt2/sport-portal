@@ -2,42 +2,39 @@ require'rails_helper'
 
   describe "index event page", type: :feature do
     before(:each) do
-      @teamevent = FactoryBot.create :event
-      @teamevent.teamsport = true
-
+      @teamevent = FactoryBot.create(:event, teamsport: true)
       @user = FactoryBot.create(:user)
-
     end
 
-    it "should not be possible to join team event via join button" do
+    it "should not not display a join button for teamevents" do
       sign_in @user
       visit events_path
 
-      expect(page).not_to have_button("Join Event")
+      expect(page).not_to have_css('a#joinbutton.btn')
     end
 
-    it "should not be possible to join team event via join button" do
+    it "should display a button for single player events" do
       sign_in @user
       @singleevent = FactoryBot.create :event
       visit events_path
 
-      expect(page).to have_button("Join Event")
+      expect(page).to have_css('a#joinbutton.btn')
     end
 
     it "should be possible that label of join button changes to 'Leave Event' when user joins" do
       sign_in @user
       @singleevent = FactoryBot.create :event
       visit events_path
-      click_button("Join Event")
+      click_link("Join Event")
 
-      expect(page).to have_button("Leave Event")
+      expect(page).to have_css('a#leavebutton.btn')
     end
 
     it "should be possible for a user to see, which event he/she joined" do
       sign_in @user
       @singleevent = FactoryBot.create :event
       visit events_path
-      click_button("Join Event")
+      click_link_or_button("Join Event")
 
       expect(page).to have_content("Participating")
     end

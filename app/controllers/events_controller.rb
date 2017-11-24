@@ -51,7 +51,7 @@ class EventsController < ApplicationController
   def join
     #@event = Event.find(params[:id])
 
-    @event.users.new(user_id: current_user.id)
+    @event.users << current_user
 
     if @event.save
       flash[:success] = "Your have successfully joined #{@event.name}!"

@@ -10,11 +10,6 @@
   <% [:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate].each do |attribute| %>
     <dt><strong><%= model_class.human_attribute_name(attribute) %>:</strong></dt>
     <dd><%= @event.send attribute %></dd>
-      <%= @event.users.each do |user| %>
-        <p>
-          <%= user.name %>
-        </p>
-      <% end %>
   <% end %>
 </dl>
 
@@ -23,9 +18,12 @@
 
 <% if (user_signed_in? && @event.teamsport==false)%>
     <% if @event.users.where("user_id = ?", @user.id).exists? %>
-        <%= link_to 'Leave Event', join_event_path, :method => "post" %>
+        <%= link_to 'Leave Event', join_event_path, :method => "put",
+                    :class => 'btn btn-default', id: :leavebutton%>
+        Participating
     <% else %>
-        <%= link_to 'Join Event',join_event_path, :method => "put"%>
+        <%= link_to 'Join Event',join_event_path, :method => "put",
+                    :class => 'btn btn-default', id: :joinbutton%>
     <% end %>
 <% end %>
 

@@ -12,11 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20171124095557) do
 
-  create_table "Events_Users", id: false, force: :cascade do |t|
-    t.integer "Event_id", null: false
-    t.integer "User_id", null: false
-  end
-
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -30,6 +25,11 @@ ActiveRecord::Schema.define(version: 20171124095557) do
     t.datetime "updated_at", null: false
     t.date "startdate"
     t.date "enddate"
+  end
+
+  create_table "events_users", id: false, force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "user_id", null: false
   end
 
   create_table "matches", force: :cascade do |t|
