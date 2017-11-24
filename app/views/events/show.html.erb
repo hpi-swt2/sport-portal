@@ -7,7 +7,7 @@
 </div>
 
 <dl class="dl-horizontal">
-  <% [:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate].each do |attribute| %>
+  <% [:name, :description, :discipline, :game_mode, :deadline, :startdate, :enddate].each do |attribute| %>
     <dt><strong><%= model_class.human_attribute_name(attribute) %>:</strong></dt>
     <dd><%= @event.send attribute %></dd>
   <% end %>

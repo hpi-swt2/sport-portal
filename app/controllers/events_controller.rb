@@ -53,6 +53,6 @@ class EventsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def event_params
-      params.require(:event).permit(:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate)
+      params.require(:event).permit(:name, :discipline, :description, :game_mode, :deadline, :startdate, :enddate).merge({player_type: Event.types.first})
     end
 end

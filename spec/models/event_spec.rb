@@ -1,17 +1,16 @@
 require 'rails_helper'
 describe "Event model", type: :model do
 
-    let(:event) {FactoryBot.buiild(:league)}
+    let(:event) {FactoryBot.build(:event)}
 
     it "should not validate without name" do
-        league = FactoryBot.build(:league, name: nil)
-
-        expect(league.valid?).to eq(false)
+      league = FactoryBot.build(:league, name: nil)
+      expect(league.valid?).to eq(false)
     end
 
     it "should not validate without discipline" do
-        league = FactoryBot.build(:league, discipline: nil)
-        expect(league.valid?).to eq(false)
+      league = FactoryBot.build(:league, discipline: nil)
+      expect(league.valid?).to eq(false)
     end
 
     it "should not validate without game_mode" do
