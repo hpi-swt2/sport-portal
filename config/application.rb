@@ -12,6 +12,10 @@ module SportPortal
     config.load_defaults 5.1
 
   	config.generators.javascript_engine = :js
+
+    # Set default language to German
+    config.i18n.default_locale = :de
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
