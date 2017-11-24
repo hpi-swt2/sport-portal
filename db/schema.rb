@@ -12,13 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20171121154832) do
 
-  create_table "avatars", force: :cascade do |t|
-    t.text "image_data"
-    t.string "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -45,22 +38,12 @@ ActiveRecord::Schema.define(version: 20171121154832) do
     t.integer "team_away_id"
   end
 
-  create_table "team_members", id: false, force: :cascade do |t|
-    t.integer "team_id", null: false
-    t.integer "user_id", null: false
-  end
-
-  create_table "team_owners", id: false, force: :cascade do |t|
-    t.integer "team_id", null: false
-    t.integer "user_id", null: false
-  end
-
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
-    t.string "kind_of_sport", null: false
+    t.string "kind_of_sport"
     t.boolean "private"
   end
 
