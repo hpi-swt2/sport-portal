@@ -9,10 +9,10 @@ describe "new event page", type: :feature do
 	it "should be possible to enter date conditions for an event" do
 		visit new_event_path
 
-		expect(page).to have_field("Deadline")
-		expect(page).to have_field("Startdate")
-		expect(page).to have_field("Enddate")
-		expect(page).to have_field("Duration")
+		expect(page).to have_field(Event.human_attribute_name :deadline)
+		expect(page).to have_field(Event.human_attribute_name :startdate)
+		expect(page).to have_field(Event.human_attribute_name :enddate)
+		expect(page).to have_field(Event.human_attribute_name :duration)
   end
 
   it "should be possible to create a date conditions for an event" do
