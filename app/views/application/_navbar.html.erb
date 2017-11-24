@@ -9,7 +9,7 @@
     <% end %>
     <%= menu_group pull: :right do %>
         <% if user_signed_in? %>
-            <%= drop_down "Menu" do %>
+            <%= drop_down t('navbar.menu') do %>
                 <!--Fill in more drop down menu items-->
                 <%= drop_down_divider %>
                 <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete %>
