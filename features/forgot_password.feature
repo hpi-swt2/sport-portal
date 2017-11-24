@@ -3,14 +3,14 @@ Feature:
 
   Scenario: A User starts the "Forgot-Password" Routine
     Given a new user ulf with email ulf@ulf.de
+    And ulf is stored in the database
+
     When ulf visits the password recovery page
     And ulf inserts his email address
     And submits
     Then ulf gets an Email with a recovery link
 
-  Scenario: A User restores his password
-    Given a new user ulf with email ulf@ulf.de
-    When ulf clicks a recovery link
+    When ulf clicks the recovery link
     And ulf enters a new password
-    And ulf tries to log in with his new password
-    Then ulf is logged in
+    And he logs out
+    Then ulf is able to log in again

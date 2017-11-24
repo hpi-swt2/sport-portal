@@ -112,6 +112,11 @@ module DataHelper
     @current_user = user
   end
 
+  def sign_out
+    click_link I18n.t('devise.registrations.sign_out')
+    @current_user = nil
+  end
+
   def ensure_current_user!
     raise 'No user is logged in!' unless @current_user
   end

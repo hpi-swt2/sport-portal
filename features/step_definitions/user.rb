@@ -23,7 +23,7 @@ Given(/^the user is logged in$/) do
   sign_in single_user
 end
 
-Given(/^(\w+) is logged in$/) do |name|
+Given(/^(\w+) is (?:logged|able to log)? in (?:again)?$/) do |name|
   sign_in user_named name
 end
 
@@ -88,18 +88,35 @@ And(/^submits$/) do
 end
 
 Then(/^(\w+) gets an Email with a recovery link$/) do |username|
-  expect(true).to eq(false) #TODO mock emails
+  user = user_named(username)
+  reset_password_mail = ActionMailer::Base.deliveries.last
+  expect(reset_password_mail.subject).to have_content('password')
+  expect(reset_password_mail.to[0]).to eq(user.email)
+  expect(reset_password_mail.body.to_s).to have_css('a')
 end
 
-When(/^(\w+) clicks a recovery link$/) do |username|
-  visit password_recovery_path
+When(/^(\w+) clicks the recovery link$/) do |username|
+  reset_password_mail = ActionMailer::Base.deliveries.last
+  path_regex = /(?:"https?\:\/\/.*?)(\/.*?)(?:")/
+  path = reset_password_mail.body.match(path_regex)[1]
+  visit(path)
 end
 
 And(/^(\w+) enters a new password$/) do |username|
   fill_in :user_password, with: '12345678_my_new_password'
+  fill_in :user_password_confirmation, with: '12345678_my_new_password'
   click_button I18n.t('devise.registrations.confirm_new_password')
 end
 
 And(/^(\w+) tries to log in with his new password$/) do |username|
   sign_in single_user
+end
+
+When(/^(\w+) is stored in the database$/) do |username|
+  user = user_named username
+  user.save!
+end
+
+And(/^he logs out$/) do
+  sign_out
 end
