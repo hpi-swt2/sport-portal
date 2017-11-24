@@ -67,9 +67,9 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
-  def set_user
+    def set_user
       @user = current_user
-  end
+    end
 
     # Only allow a trusted parameter "white list" through.
     def event_params
