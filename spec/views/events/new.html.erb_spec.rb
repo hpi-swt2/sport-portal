@@ -2,21 +2,15 @@ require 'rails_helper'
 
 RSpec.describe "events/new", type: :view do
   before(:each) do
-    assign(:event, Event.new(
-      :name => "MyString",
-      :description => "MyText",
-      :gamemode => "MyString",
-      :sport => "MyString",
-      :teamsport => false,
-      :playercount => 1,
-      :gamesystem => "MyText",
-      :deadline => Date.new(2017,11,16),
-      :startdate => Date.new(2017,12,01),
-      :enddate => Date.new(2017,12,05)
-    ))
+    assign(:event, FactoryBot.build(:event))
   end
 
-  it "renders new event form" do
+  it "should render the events form" do
+    render
+    expect(rendered).to have_css("form[action='#{events_path}'][method='post']", count: 1)
+  end
+
+  it "has input for all attributes" do
     render
 
     assert_select "form[action=?][method=?]", events_path, "post" do
@@ -40,8 +34,6 @@ RSpec.describe "events/new", type: :view do
       assert_select "input[name=?]", "event[startdate]"
 
       assert_select "input[name=?]", "event[enddate]"
-
     end
   end
-
 end

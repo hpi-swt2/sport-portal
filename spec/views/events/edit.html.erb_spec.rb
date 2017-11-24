@@ -2,18 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "events/edit", type: :view do
   before(:each) do
-    @event = assign(:event, Event.create!(
-      :name => "MyString",
-      :description => "MyText",
-      :gamemode => "MyString",
-      :sport => "MyString",
-      :teamsport => false,
-      :playercount => 1,
-      :gamesystem => "MyText",
-      :deadline => Date.new(2017,11,16),
-      :startdate => Date.new(2017,12,01),
-      :enddate => Date.new(2017,12,05)
-    ))
+    @event = assign(:event, FactoryBot.create(:event))
   end
 
   it "renders the edit event form" do

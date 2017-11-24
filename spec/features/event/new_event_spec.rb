@@ -30,5 +30,4 @@ describe "new event page", type: :feature do
 		expect(page).to have_content("2017-12-01")
 		expect(page).to have_content("2017-12-05")
   end
-
 end
