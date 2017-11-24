@@ -15,23 +15,16 @@ describe "new event page", type: :feature do
 		expect(page).to have_field("Duration")
   end
 
-  it "should be possible to create a date conditions for an event" do
+  it "should have a dropdown menu for game modes" do
 		visit new_event_path
-    fill_in "event_name", with: "name"
-    fill_in "event_discipline", with: "soccer"
-    fill_in "event_game_mode", with: "test"
 
-		fill_in "event_deadline", with: "2018/11/16"
-		fill_in "event_startdate", with: "2017/12/01"
-		fill_in "event_enddate", with: "2017/12/05"
-		fill_in "event_duration", with: "5" 
+    expect(page).to have_select('event_game_mode', :options => ['Tournament', 'League'])
+  end
 
-		click_button "Create event"
+  it "should calculate the duration correctly" do
+    visit new_event_path
 
-    expect(page).to have_current_path(/.*\/events\/\d+/)
-		expect(page).to have_content("2018-11-16")
-		expect(page).to have_content("2017-12-01")
-		expect(page).to have_content("2017-12-05")
+
   end
 
 end

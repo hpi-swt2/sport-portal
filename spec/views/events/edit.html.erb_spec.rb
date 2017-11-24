@@ -5,7 +5,7 @@ RSpec.describe "events/edit", type: :view do
     @event = assign(:event, Event.create!(
       :name => "MyString",
       :description => "MyText",
-      :game_mode => "MyString",
+      :game_mode => Event.types.first,
       :player_type => Event.player_types[Event.player_types.keys.sample],
       :discipline => "MyString",
       :deadline => Date.new(2017,11,16),

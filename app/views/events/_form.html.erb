@@ -24,6 +24,14 @@
       </div>
     </div>
     <div class="form-group">
+      <%= f.label :player_type, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.collection_select :player_type, Event.player_types.keys, :to_s, :to_s,
+                                {selected: @event.player_type, include_blank: 'both'},
+                                :class => 'form-control'  %>
+      </div>
+    </div>
+    <div class="form-group">
       <%= f.label :discipline, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :discipline, id: :event_discipline, :class => 'form-control' %>
@@ -52,9 +60,9 @@
       </div>
     </div>
     <div class="form-group">
-      <%= f.label :duration, 'Number of days', :class => 'control-label col-lg-2' %>
+      <%= f.label :duration, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.text_field :duration, id: :event_duration, :class => 'form-control' %></div>
+        <%= f.text_field :duration, id: :event_duration, placeholder: 'Number of Days', :class => 'form-control' %></div>
     </div>
     <div class="form-group">
       <div class="col-lg-offset-2 col-lg-10">
