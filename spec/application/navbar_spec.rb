@@ -14,26 +14,14 @@ RSpec.feature "Page has navbar", :type => :feature do
 
     it "dropdown menu shows menu button" do
       visit root_path
-      expect(page).to have_css(".navbar .dropdown-toggle", :text => "Menu")
-    end
-
-    it "opens dropdown when hovered over" do
-      visit root_path
-      pending("hover test is not working yet")
-      find(".dropdown").hover
-      expect(page).to have_css(".navbar .dropdown-menu", :text => "Sign out")
+      expect(page).to have_css(".navbar .dropdown-toggle", text: "Menu")
     end
   end
 
-  context 'when the user logged out' do
+  context 'when the user is logged out' do
     it "doesn't have a dropdown menu" do
       visit root_path
       expect(page).not_to have_css(".navbar .dropdown")
-    end
-
-    it "has a login button" do
-      visit root_path
-      expect(page).to have_css(".navbar", :text => "Sign in")
     end
   end
 end
