@@ -42,5 +42,9 @@ class Ability
     can :assign_ownership, Team, Team do |team|
       team.owners.include? user
     end
+    can :delete_ownership, Team, Team do |team|
+      team.owners.include? user
+      team.owners.length > 1
+    end
   end
 end

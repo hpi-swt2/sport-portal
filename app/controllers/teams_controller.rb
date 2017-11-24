@@ -70,19 +70,21 @@ class TeamsController < ApplicationController
     @team.owners << User.find(team_member_id)
   end
 
-  # Assigns team membership to a specific user
-  def assign_membership
+  def delete_ownership
+    team_member_id = params[:team_member]
+    @team = Team.find(params[:id])
+    authorize! :delete_ownership, @team    
 
-    # TODO: Consider check whether the current signed in user has team ownership
 
-    # Checks whether the specified user already has team membership
-    # TODO: Consider using a separate middleware for team membership
-    if @team.members.exists?(user.id)
+    # Checks whether the specified team member does not have team ownership
+    if !@team.owners.exists?(team_member_id)
       return
     end
 
-    @team.members << user
+
+    @team.owners.delete(User.find(team_member_id))
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
