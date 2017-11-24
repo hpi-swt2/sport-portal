@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /events
   def index
@@ -8,6 +8,7 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
+
   end
 
   # GET /events/new
@@ -32,6 +33,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
+    print event_params
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -45,14 +47,43 @@ class EventsController < ApplicationController
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
+  # PATCH/PUT /events/1/join
+  def join
+    #@event = Event.find(params[:id])
+
+    @event.users.new(user_id: current_user.id)
+
+    if @event.save
+      flash[:success] = "Your have successfully joined #{@event.name}!"
+      redirect_to @event
+    else
+      flash[:error] = "There was an error."
+      render 'show'
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
     end
 
+  def set_user
+    @user = current_user
+  end
+
     # Only allow a trusted parameter "white list" through.
     def event_params
-      params.require(:event).permit(:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate)
+      params.require(:event).permit(:name,
+                                    :description,
+                                    :gamemode,
+                                    :sport,
+                                    :teamsport,
+                                    :playercount,
+                                    :gamesystem,
+                                    :deadline,
+                                    :startdate,
+                                    :enddate,
+                                    user_ids: [])
     end
 end

@@ -1,6 +1,15 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
-  resources :events
+
+  resources :events do
+    member do
+      put :join
+    end
+  end
+
+  # post '/events/:id/join', to: 'events#join'
+
+
   root 'welcome#index'
   resources :teams
   resources :matches
@@ -26,4 +35,6 @@ Rails.application.routes.draw do
     get 'link', on: :member
     get 'unlink', on: :member
   end
+
+
 end

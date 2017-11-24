@@ -87,7 +87,7 @@ RSpec.describe User, type: :model do
   end
 
   it "should have an attribute events" do
-    @user = FactoryBot.create :user
-    expect(@user.attributes).to include(:events)
+    @relation = User.reflect_on_association(:events)
+    expect(@relation.macro).to eq :has_and_belongs_to_many
   end
 end

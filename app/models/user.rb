@@ -26,6 +26,8 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
+  has_and_belongs_to_many :events
+
   def has_omniauth?
     provider.present? && uid.present?
   end

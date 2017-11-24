@@ -51,7 +51,7 @@ it "should have an attribute deadline" do
   end
 
   it "should have an association participants" do
-    @event.teamsport = false
-    expect(@event.attributes).to include(:participants)
+    @relation = Event.reflect_on_association(:users)
+    expect(@relation.macro).to eq :has_and_belongs_to_many
   end
 end
