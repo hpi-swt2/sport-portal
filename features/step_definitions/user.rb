@@ -23,7 +23,7 @@ Given(/^the user is logged in$/) do
   sign_in single_user
 end
 
-Given(/^(\w+) is (?:logged|able to log)? in (?:again)?$/) do |name|
+Given(/^(\w+) is (?:logged|able to log)? in(?: again)?$/) do |name|
   sign_in user_named name
 end
 
@@ -90,7 +90,7 @@ end
 Then(/^(\w+) gets an Email with a recovery link$/) do |username|
   user = user_named(username)
   reset_password_mail = ActionMailer::Base.deliveries.last
-  expect(reset_password_mail.subject).to have_content('password')
+  expect(reset_password_mail.subject).to have_content('asswor') # (P|p)asswor(d|t)
   expect(reset_password_mail.to[0]).to eq(user.email)
   expect(reset_password_mail.body.to_s).to have_css('a')
 end

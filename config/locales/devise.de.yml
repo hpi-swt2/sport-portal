@@ -52,6 +52,8 @@ de:
       sign_in_with_provider: "Mit %{provider} anmelden"
       link_provider: "Mit %{provider} verbinden"
       unlink_provider: "Verbindung mit %{provider} aufheben"
+      reset_password: "Anweisungen zum Zurücksetzen des Passworts senden"
+      confirm_new_password: "Neues Passwort bestätigen"
     sessions:
       signed_in: "Erfolgreich angemeldet."
       signed_out: "Erfolgreich abgemeldet."
