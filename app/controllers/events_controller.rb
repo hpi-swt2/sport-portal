@@ -8,7 +8,6 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
-
   end
 
   # GET /events/new
@@ -69,7 +68,7 @@ class EventsController < ApplicationController
     end
 
   def set_user
-    @user = current_user
+      @user = current_user
   end
 
     # Only allow a trusted parameter "white list" through.
