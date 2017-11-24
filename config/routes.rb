@@ -26,4 +26,6 @@ Rails.application.routes.draw do
     get 'link', on: :member
     get 'unlink', on: :member
   end
+
+  get 'imprint' => "static_pages#imprint"
 end
