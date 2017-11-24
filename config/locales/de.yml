@@ -50,3 +50,15 @@ de:
       event:
         one: "Event"
         other: "Events"
+    attributes:
+      event:
+        name: "Name"
+        description:  "Beschreibung"
+        gamemode: "Spielmodus"
+        sport:  "Sportart"
+        playercount: "Spieleranzahl"
+        gamesystem:  "Spielsystem"
+        deadline: "Eintragungsfrist"
+        startdate: "Beginndatum"
+        enddate: "Enddatum"
+        duration: "Eventdauer"
