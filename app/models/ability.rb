@@ -46,5 +46,9 @@ class Ability
       team.owners.include? user
       team.owners.length > 1
     end
+
+    can :delete_membership, Team, Team do |team|
+      team.owners.include? user
+    end
   end
 end

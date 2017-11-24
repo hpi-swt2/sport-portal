@@ -29,8 +29,14 @@
             <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
             assign_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' %>
             <% end%>
-            
-      </td>
+
+
+
+            <!-- <% if !@team.owners.include? member %> -->
+            <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
+            delete_membership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' %>
+            <!-- <% end%> -->
+                  </td>
       </tr>
     <% end %>
   </tbody>

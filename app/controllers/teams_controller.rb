@@ -87,6 +87,20 @@ class TeamsController < ApplicationController
     redirect_to @team
   end
 
+  def delete_membership
+    team_member_id = params[:team_member]
+    @team = Team.find(params[:id])
+    authorize! :delete_membership, @team
+
+    if @team.owners.exists?(team_member_id)
+      @team.owners.delete(User.find(team_member_id))
+    end
+
+    @team.members.delete(User.find(team_member_id))
+    redirect_to @team
+  end
+  
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
