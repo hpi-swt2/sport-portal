@@ -27,7 +27,21 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+  # actually send emails
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default charset: 'utf-8'
+  config.action_mailer.smtp_settings = {
+      address: 'mail.gmx.com',
+      port: 587,
+      domain: 'sport-portal@gmx.de',
+      authentication: 'plain',
+      enable_starttls_auto: true,
+      user_name: 'sport.portal@gmx.de',
+      password: 'swt2-2017' #TODO: extract to env variable
+  }
 
   config.action_mailer.perform_caching = false
 
