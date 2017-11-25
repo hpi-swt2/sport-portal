@@ -36,9 +36,6 @@ de:
     index:
       lead: "Wir bieten unglaubliche Lösungen für vielfältige Use Cases."
 
-  navbar:
-    menu: "Menu"
-
   activerecord:
     models:
       match:
