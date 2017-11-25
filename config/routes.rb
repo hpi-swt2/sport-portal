@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   devise_scope :user do
     resources :users, only: [:index, :show]
     get '/users/:id/dashboard', to: "users#dashboard"
+    
+    get '/users/:id/profile/edit', to: 'users#edit_profile', as: :user_profile_edit
+    match '/users/:id/profile', to: 'users#update_profile', as: :user_profile, via: [:patch, :put]
   end
 
   #Define route for user dashboard

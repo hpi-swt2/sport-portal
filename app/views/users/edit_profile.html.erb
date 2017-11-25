@@ -1,0 +1,37 @@
+<%= render partial: "application/validation_errors", locals: {model: @user} %>
+
+<div class="page-header">
+  <h1><%= t 'view.user.edit_profile' %></h1>
+</div>
+
+<%= form_for(@user, id: 'edit_profile', url: user_profile_path(@user), html: { class: "form-horizontal user", method: :patch }) do |f| %>
+  <div class="form-group row">
+    <%= f.label :birthday, class: 'col-lg-2 col-form-label' %>
+    <div class="col-lg-10">
+      <%= f.date_field :birthday, min: Date.today - 200.years, max: Date.today, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= f.label :telephone_number, class: 'col-lg-2 col-form-label' %>
+    <div class="col-lg-10">
+      <%= f.telephone_field :telephone_number, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= f.label :telegram_username, class: 'col-lg-2 col-form-label' %>
+    <div class="col-lg-10">
+      <%= f.text_field :telegram_username, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= f.label :favourite_sports, class: 'col-lg-2 col-form-label' %>
+    <div class="col-lg-10">
+      <%= f.text_field :favourite_sports, class: 'form-control', placeholder: 'Football, Volleyball, ...' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit t('view.user.update_profile'), class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

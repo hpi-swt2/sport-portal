@@ -42,5 +42,4 @@ RSpec.describe User, type: :model do
     expect(FactoryBot.build(:user, birthday: Date.new(1995, 8, 25))).to be_valid
     expect(FactoryBot.build(:user, birthday: Time.now.to_date.tomorrow)).not_to be_valid
   end
-    
 end
