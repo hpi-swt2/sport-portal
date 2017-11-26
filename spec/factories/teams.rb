@@ -19,6 +19,13 @@ FactoryBot.define do
     private false
   end
 
+  trait :with_owner do
+    after(:create) do |team|
+      team.owners = build_list :user, 1
+      team.members << team.owners
+    end
+  end
+
   trait :with_owners do
     after(:create) do |team|
       team.owners = build_list :user, 2
