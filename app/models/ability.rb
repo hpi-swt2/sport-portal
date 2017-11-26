@@ -25,7 +25,7 @@ class Ability
   # See the wiki for details:
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
-  def initialize(user)
+  def initialize(user, team_member = nil)
     # Define abilities for the passed in user here. For example:
     #   user ||= User.new # guest user (not logged in)
     #   if user.admin?
@@ -39,16 +39,36 @@ class Ability
     alias_action :create, :read, :update, :destroy, :to => :crud
     can :crud, Team
     can :update, User
+    
     can :assign_ownership, Team, Team do |team|
       team.owners.include? user
     end
+
     can :delete_ownership, Team, Team do |team|
       team.owners.include? user
       team.owners.length > 1
     end
 
     can :delete_membership, Team, Team do |team|
-      team.owners.include? user
+      
+      owners = num_owners(team, team_member)
+      Integer(user.id) == Integer(team_member) and owners > 0
+    end
+
+    can :delete_membership, Team, Team do |team| 
+      owners = num_owners(team, team_member)
+      team.owners.include? user  and owners > 0
     end
   end
+
+  def num_owners(team, team_member)
+    if team.owners.include? User.find(team_member)
+      owners_after_delete = team.owners - [(User.find(team_member))]
+    else  
+      owners_after_delete = team.owners
+    end
+    return owners_after_delete.length
+  end
+
+
 end

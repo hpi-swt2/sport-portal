@@ -100,7 +100,9 @@ class TeamsController < ApplicationController
     redirect_to @team
   end
   
-
+  def current_ability
+    @current_ability ||= Ability.new(current_user, params[:team_member])
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

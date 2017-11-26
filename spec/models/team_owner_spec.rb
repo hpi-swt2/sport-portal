@@ -34,21 +34,21 @@ RSpec.describe TeamOwner, type: :model do
     another_user = FactoryBot.create :user
 
 
-    ability = Ability.new(user)
+    ability = Ability.new(user, another_user.id)
 
     team.owners << user
 
-    assert ability.cannot?(:delete_member, team)
+    assert ability.can?(:delete_membership, team)
   end
 
   it "should not be able to delete himself from team if he's the only owner" do
     team = FactoryBot.create :team
     user = FactoryBot.create :user
 
-    ability = Ability.new(user)
+    ability = Ability.new(user, user.id)
 
     team.owners << user
 
-    assert ability.cannot?(:delete_member, team)
+    assert ability.cannot?(:delete_membership, team)
   end
 end
