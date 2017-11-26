@@ -37,3 +37,9 @@ en:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."
       destroyed: "%{resource_name} was successfully destroyed."
+    label:
+      user:
+        birthday: "Birthday"
+        telephone_number: "Telephone Number"
+        telegram_username: "Telegram Username"
+        favourite_sports: "Favourite Sports"

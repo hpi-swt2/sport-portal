@@ -57,10 +57,4 @@ en:
     user:
       edit_profile: "Edit Profile Properties"
       update_profile: "Update Profile"
-  helpers:
-    label:
-      user:
-        birthday: "Birthday"
-        telephone_number: "Telephone Number"
-        telegram_username: "Telegram Username"
-        favourite_sports: "Favourite Sports"
+      favourite_sports_placeholder: "Football, Basketball, Table football, ..."

@@ -52,6 +52,14 @@ de:
       user:
         one: "Spieler"
         other: "Spieler"
+        errors:
+          future_birthday: "Der Geburtstag darf nicht in der Zukunft liegen"
+          telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
       event:
         one: "Event"
         other: "Events"
+  view:
+    user:
+      edit_profile: "Profilinformationen bearbeiten"
+      update_profile: "Profil aktualisieren"
+      favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
