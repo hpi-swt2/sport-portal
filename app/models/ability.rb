@@ -37,5 +37,12 @@ class Ability
     user ||= User.new # guest user (not logged in)
     # All users can only update their own user attributes
     can :update, User, id: user.id
+
+    can :read, Team, private: false
+
+    if user.present?
+      can :read, Team, private: true, members: { id: user.id }
+      can :read, Team, private: true, owners: { id: user.id }
+    end
   end
 end
