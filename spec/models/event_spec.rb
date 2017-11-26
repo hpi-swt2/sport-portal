@@ -1,7 +1,7 @@
 require 'rails_helper'
 describe "Event model", type: :model do
 
-    let(:event) {FactoryBot.build(:event)}
+    let(:event) {FactoryBot.build(:league)}
 
     it "should not validate without name" do
       league = FactoryBot.build(:league, name: nil)
