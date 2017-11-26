@@ -26,7 +26,7 @@ RSpec.describe "events/index", type: :view do
         :creator => FactoryBot.build(:user)
       )
     ]
-    @user = FactoryBot.build(:user)
+    @user = FactoryBot.create(:user)
   end
 
   it "renders a list of events" do

@@ -12,6 +12,8 @@ RSpec.describe "events/show", type: :view do
       :gamesystem => "MyText",
       :creator => FactoryBot.build(:user)
     ))
+
+    @user = FactoryBot.create(:user)
   end
 
   it "renders attributes in <p>" do
@@ -26,6 +28,8 @@ RSpec.describe "events/show", type: :view do
   end
 
   it "renders styled buttons" do
+    sign_in @user
+    @event.creator = @user
     render
     expect(rendered).to have_css('a.btn.btn-default', :count => 2)
     expect(rendered).to have_css('a.btn.btn-danger')
@@ -49,6 +53,7 @@ RSpec.describe "events/show", type: :view do
 
   #signed in user
   it "render the new button when signed in" do
+    sign_in @user
     render
     expect(rendered).to have_selector(:link_or_button, 'New')
   end
@@ -66,14 +71,14 @@ RSpec.describe "events/show", type: :view do
 
   it "renders the edit button when the event belongs to the user" do
     sign_in @user
-    @events[1].creator = @user
+    @event.creator = @user
     render
     expect(rendered).to have_selector(:link_or_button, 'Edit')
   end
 
   it "renders the delete button when signed in and it's your team" do
     sign_in @user
-    @events[1].creator = @user
+    @event.creator = @user
     render
     expect(rendered).to have_selector(:link_or_button, 'Delete')
   end
