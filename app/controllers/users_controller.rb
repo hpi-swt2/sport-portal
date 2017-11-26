@@ -48,11 +48,6 @@ class UsersController < Devise::RegistrationsController
     else
       render :edit_profile
     end
-  #This should only be possible if someone modifies the parameters with circumventing the input forms
-  rescue NoMethodError
-    render edit_profile
-  rescue ArgumentError
-    render edit_profile
   end
 
   # All other controller methods are handled by original `Devise::RegistrationsController`
@@ -70,9 +65,7 @@ class UsersController < Devise::RegistrationsController
     end
 
     def profile_update_params
-      safe_params = params.require(:user).permit(:birthday, :telephone_number, :telegram_username, :favourite_sports)
-      safe_params[:birthday] = safe_params[:birthday].to_date
-      safe_params
+      params.require(:user).permit(:birthday, :telephone_number, :telegram_username, :favourite_sports)
     end
 
     def unlink_omniauth

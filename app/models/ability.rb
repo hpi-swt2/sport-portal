@@ -35,9 +35,10 @@ class Ability
     #   end
 
     user ||= User.new # guest user (not logged in)
+    id = user.id
     # All users can only update their own user attributes
-    can :update, User, id: user.id
-    can :edit_profile, User, id: user.id
-    can :update_profile, User, id: user.id
+    can :update, User, id: id
+    can :edit_profile, User, id: id
+    can :update_profile, User, id: id
   end
 end
