@@ -22,6 +22,7 @@ FactoryBot.define do
   trait :with_owners do
     after(:create) do |team|
       team.owners = build_list :user, 2
+      team.members << team.owners
     end
   end
 
