@@ -16,6 +16,8 @@
 #  telephone_number       :string
 #  telegram_username      :string
 #  favourite_sports       :string
+#  provider               :string
+#  uid                    :string
 #
 
 FactoryBot.define do

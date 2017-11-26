@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   resources :matches
 
   # Use custom user controller instead of the one provided by devise
-  devise_for :users, :controllers => { registrations: 'users' }
+  devise_for :users, controllers: {
+    registrations: 'users',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
   # Sets the devise scope to be used in the controller.
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
@@ -16,10 +19,17 @@ Rails.application.routes.draw do
     
     get '/users/:id/profile/edit', to: 'users#edit_profile', as: :user_profile_edit
     match '/users/:id/profile', to: 'users#update_profile', as: :user_profile, via: [:patch, :put]
+
+    get '/users/:id/link', to: 'users#link'
+    get '/users/:id/unlink', to: 'users#unlink'
   end
 
   #Define route for user dashboard
   resources :users do
     get 'dashboard', on: :member
+    get 'link', on: :member
+    get 'unlink', on: :member
   end
+
+  get 'imprint' => "static_pages#imprint"
 end
