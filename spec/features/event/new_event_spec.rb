@@ -15,10 +15,10 @@ describe "new event page", type: :feature do
 		expect(page).to have_field("Duration")
   end
 
-  it "should have a dropdown menu for game modes" do
+  it "should have a dropdown menu for type" do
 		visit new_event_path
 
-    expect(page).to have_select('event_game_mode', :options => ['Tournament', 'League'])
+    expect(page).to have_select('event_type', :options => ['----', 'Tournament', 'League'])
   end
 
   it "should calculate the duration correctly" do
