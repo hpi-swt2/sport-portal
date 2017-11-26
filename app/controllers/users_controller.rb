@@ -19,7 +19,7 @@ class UsersController < Devise::RegistrationsController
   def dashboard
     @user = User.find(params[:id])
   end
-  
+
   def edit_profile
   end
 

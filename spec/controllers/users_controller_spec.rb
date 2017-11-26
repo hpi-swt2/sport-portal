@@ -58,7 +58,7 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
-  
+
   describe "GET #edit_profile" do
     it "returns a success response" do
       @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -68,7 +68,7 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to be_success
     end
   end
-  
+
   describe "PATCH #update_profile" do
     context "with valid params" do
       let(:new_attributes) {
