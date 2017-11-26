@@ -19,7 +19,7 @@ RSpec.feature "Page has navbar", :type => :feature do
 
     it "the dropdown menu should have an item to get to the user dashboard" do
       visit root_path
-      expect(page).to have_link(I18n.t('user-dashboard.drop-down.dashboard'))
+      expect(page).to have_link(I18n.t('navbar.drop-down.dashboard'))
     end
 
   end
