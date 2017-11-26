@@ -7,9 +7,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # post '/events/:id/join', to: 'events#join'
-
-
   root 'welcome#index'
   resources :teams
   resources :matches
