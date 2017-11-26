@@ -8,7 +8,7 @@
 #  player_type                  :integer
 #  max_teams                    :integer
 #  game_mode                    :integer         not null
-#  type                         :integer
+#  type                         :string
 #  created_at                   :datetime        not null
 #  deadline                     :date
 #  startdate                    :date
