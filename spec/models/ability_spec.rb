@@ -9,21 +9,21 @@ RSpec.describe Ability, type: :model do
       let(:user){ nil }
 
       describe 'for public teams' do
-        let(:team){ FactoryBot.create :team }
+        let(:team){ FactoryBot.build :team }
         it { is_expected.to be_able_to(:read, team) }
       end
 
       describe 'for private teams' do
-        let(:team){ FactoryBot.create :team, :private }
+        let(:team){ FactoryBot.build :team, :private }
         it { is_expected.to_not be_able_to(:read, team) }
       end
     end
 
     describe 'when logged in' do
-      let(:user){ FactoryBot.create :user }
+      let(:user){ FactoryBot.build :user }
 
       describe 'for public teams' do
-        let(:team){ FactoryBot.create :team }
+        let(:team){ FactoryBot.build :team }
         it { is_expected.to be_able_to(:read, team) }
       end
 
