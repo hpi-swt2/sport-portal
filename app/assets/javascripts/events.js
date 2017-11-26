@@ -52,5 +52,23 @@ document.addEventListener("DOMContentLoaded", function() {
            var formattedDate = dd + '/' + mm + '/' + y;
            $("#event_enddate").val(formattedDate);
        }
-});
+    });
+
+    // Display Game Mode field conditionally in create events form
+    // TODO: refactor to something fancier
+    $("#event_type").change(function() {
+        var option = $(this).val();
+        var league = $("#league-game-mode");
+        var tournament = $("#tournament-game-mode");
+
+        if (option == "Tournament") {
+            $(league).css("display", "none");
+            $(tournament).css("display", "block");
+        }
+
+        if (option == "League") {
+            $(league).css("display", "block");
+            $(tournament).css("display", "none");
+        }
+    });
 });

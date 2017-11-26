@@ -24,7 +24,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      redirect_to @event, notice: '#{@event.type} was successfully created.'
+      redirect_to @event, notice: 'Event was successfully created.'
     else
       render :new
     end
@@ -33,16 +33,16 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      redirect_to @event, notice: '#{type} was successfully updated.'
+      redirect_to @event, notice: 'Event was successfully updated.'
     else
       render :edit
     end
   end
 
-  # DELETE /events/1asdbu
+  # DELETE /events/1
   def destroy
     @event.destroy
-    redirect_to events_url, notice: '#{type} was successfully destroyed.'
+    redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
   private
