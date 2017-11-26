@@ -8,7 +8,7 @@
 #  player_type                  :integer
 #  max_teams                    :integer
 #  game_mode                    :integer         not null
-#  type                         :integer
+#  type                         :string
 #  created_at                   :datetime        not null
 #  deadline                     :date
 #  startdate                    :date
@@ -20,8 +20,7 @@
 #
 
 class Event < ApplicationRecord
-  validates :name, :discipline, :game_mode, presence: true
-  validates :deadline, :startdate, :enddate, presence: true
+  validates :name, :discipline, :game_mode, :type, :deadline, :startdate, :enddate, presence: true
   validate :end_after_start
   enum player_types: [:single, :team]
 
