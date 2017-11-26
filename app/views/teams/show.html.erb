@@ -18,6 +18,33 @@
   <dd><%= @team.description %></dd>
 </dl>
 
+<table class="table table-striped">
+  <thead>
+    <tr>
+    </tr>
+  </thead>
+  <tbody>
+    <% @team.members.each do |member| %>
+      <tr>
+        <td>
+            <%= member.id%> <%= member.first_name%> <%= member.last_name%>
+            
+            <% if @team.owners.include? member %>
+            <%= link_to t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
+            delete_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' %>
+            <% end %>
+
+            <% if !@team.owners.include? member %>
+            <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
+            assign_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' %>
+            <% end%>
+            
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
@@ -28,3 +55,5 @@
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
               :class => 'btn btn-danger' %>
+
+

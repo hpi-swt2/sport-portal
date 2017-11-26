@@ -1,5 +1,9 @@
 class TeamsController < ApplicationController
+  
+  
   before_action :set_team, only: [:show, :edit, :update, :destroy]
+  # TODO: Consider using before_action
+  # before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :assign_ownership_to, :assign_membership_to]
 
   # GET /teams
   def index
@@ -23,9 +27,15 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
 
+    if user_signed_in?
+      @team.owners << current_user
+      @team.members << current_user
+    end
+
     if @team.save
       redirect_to @team, notice: I18n.t('helpers.flash.created', resource_name: Team.model_name.human).capitalize
     else
+      # TODO: Delete team ownership/membership created earlier, when saving the team failed
       render :new
     end
   end
@@ -44,6 +54,39 @@ class TeamsController < ApplicationController
     @team.destroy
     redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
   end
+
+  # Assigns team ownership to a specific team member
+  def assign_ownership
+    team_member_id = params[:team_member]
+    @team = Team.find(params[:id])
+    authorize! :assign_ownership, @team    
+
+
+    # Checks whether the specified team member already has team ownership
+    if @team.owners.exists?(team_member_id)
+      return
+    end
+
+    @team.owners << User.find(team_member_id)
+    redirect_to @team
+  end
+
+  def delete_ownership
+    team_member_id = params[:team_member]
+    @team = Team.find(params[:id])
+    authorize! :delete_ownership, @team    
+
+
+    # Checks whether the specified team member does not have team ownership
+    if !@team.owners.exists?(team_member_id)
+      return
+    end
+
+
+    @team.owners.delete(User.find(team_member_id))
+    redirect_to @team
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

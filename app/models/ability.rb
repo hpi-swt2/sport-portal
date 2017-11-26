@@ -34,8 +34,17 @@ class Ability
     #     can :read, :all
     #   end
 
-    user ||= User.new # guest user (not logged in)
+    user ||= User.new # guest user (not logged in)  
     # All users can only update their own user attributes
+    alias_action :create, :read, :update, :destroy, :to => :crud
+    can :crud, Team
     can :update, User, id: user.id
+    can :assign_ownership, Team, Team do |team|
+      team.owners.include? user
+    end
+    can :delete_ownership, Team, Team do |team|
+      team.owners.include? user
+      team.owners.length > 1
+    end
   end
 end

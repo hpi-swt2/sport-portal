@@ -27,5 +27,18 @@ Rails.application.routes.draw do
     get 'unlink', on: :member
   end
 
+  resources :teams do
+    member do
+      post :assign_ownership
+    end
+  end
+
+  resources :teams do
+    member do
+      post :delete_ownership
+    end 
+  end
+    
+
   get 'imprint' => "static_pages#imprint"
 end

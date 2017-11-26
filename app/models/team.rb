@@ -13,5 +13,15 @@
 
 class Team < ApplicationRecord
   validates :name, presence: true
+
+  has_many :team_owners
+  has_many :owners, through: :team_owners, source: :user
+
+  has_many :team_members
+  has_many :members, through: :team_members, source: :user
+
+  # validates :owners, :length => { :minimum => 1}
+  # validates :members, :length => { :minimum => 1}
+
   validates :private, inclusion:  [true, false]
 end
