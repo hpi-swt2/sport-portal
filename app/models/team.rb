@@ -2,10 +2,13 @@
 #
 # Table name: teams
 #
-#  id         :integer          not null, primary key
-#  name       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :integer          not null, primary key
+#  name        :string
+#  description :text
+#  kind_of_sport :string
+#  private     :boolean          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 
 class Team < ApplicationRecord
@@ -20,4 +23,5 @@ class Team < ApplicationRecord
   # validates :owners, :length => { :minimum => 1}
   # validates :members, :length => { :minimum => 1}
 
+  validates :private, inclusion:  [true, false]
 end

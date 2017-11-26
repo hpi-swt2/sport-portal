@@ -9,7 +9,10 @@ RSpec.describe "events/show", type: :view do
       :sport => "Sport",
       :teamsport => false,
       :playercount => 2,
-      :gamesystem => "MyText"
+      :gamesystem => "MyText",
+      :deadline => Date.new(2017,11,16),
+      :startdate => Date.new(2017,12,01),
+      :enddate => Date.new(2017,12,05)
     ))
   end
 
@@ -22,6 +25,9 @@ RSpec.describe "events/show", type: :view do
     expect(rendered).to match(/false/)
     expect(rendered).to match(/2/)
     expect(rendered).to match(/MyText/)
+    expect(rendered).to match(/2017-11-16/)
+    expect(rendered).to match(/2017-12-01/)
+    expect(rendered).to match(/2017-12-05/)
   end
 
   it "renders styled buttons" do
