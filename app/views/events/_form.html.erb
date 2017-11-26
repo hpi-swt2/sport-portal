@@ -18,7 +18,7 @@
     <div class="form-group">
       <%= f.label :game_mode, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.collection_select :game_mode, Event.types, :to_s, :to_s,
+        <%= f.collection_select :game_mode, Event.types, :to_i, :to_s,
                                 {selected: @event.game_mode},
                                 :class => 'form-control'  %>
       </div>

@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20171123150124) do
     t.integer "player_type", null: false
     t.integer "max_teams"
     t.integer "game_mode", null: false
-    t.integer "type"
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "startdate"

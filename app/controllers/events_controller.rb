@@ -24,7 +24,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      redirect_to @event, notice: 'Event was successfully created.'
+      redirect_to @event, notice: '#{type} was successfully created.'
     else
       render :new
     end
@@ -33,16 +33,16 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      redirect_to @event, notice: 'Event was successfully updated.'
+      redirect_to @event, notice: '#{type} was successfully updated.'
     else
       render :edit
     end
   end
 
-  # DELETE /events/1
+  # DELETE /events/1asdbu
   def destroy
     @event.destroy
-    redirect_to events_url, notice: 'Event was successfully destroyed.'
+    redirect_to events_url, notice: '#{type} was successfully destroyed.'
   end
 
   private
@@ -53,6 +53,6 @@ class EventsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def event_params
-      params.require(:event).permit(:name, :description, :game_mode, :discipline, :deadline, :startdate, :enddate).merge({player_type: Event.types.first})
+      params.require(:event).permit(:name, :description, :game_mode, :discipline, :deadline, :startdate, :enddate, :type).merge({player_type: Event.types.first})
     end
 end

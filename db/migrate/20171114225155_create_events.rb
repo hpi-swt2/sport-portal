@@ -7,7 +7,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.integer :player_type, null: false
       t.integer :max_teams
       t.integer :game_mode, null: false
-      t.integer :type
+      t.string :type
 
       t.timestamps
     end
