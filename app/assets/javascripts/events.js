@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Display Game Mode field conditionally in create events form
     // TODO: refactor to something fancier
-    $("#event_type").change(function() {
+    $("#event_type, #tournament_type, #league_type").change(function() {
         var option = $(this).val();
         var league = $("#league-game-mode");
         var tournament = $("#tournament-game-mode");
