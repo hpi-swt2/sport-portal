@@ -15,15 +15,17 @@
         <p class="help-block">Max. size is 2 mb</p>
       </div>
     </div>
-    <div class="checkbox col-lg-offset-2 col-lg-10">
-      <label>
-        <%= f.check_box :remove_image %>Remove avatar
-      </label>
-    </div>
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.error_span :image %>
       <%= f.submit t('helpers.submit.update', model: 'avatar'), :class => 'btn btn-primary' %>
     </div>
+     <% if @user.avatar!=nil %>
+      <div class="col-lg-offset-2 col-lg-10">
+      <%= button_to t('helpers.submit.delete', model: 'avatar'), avatar_user_path(@user), :method => "delete", :class => 'btn btn-danger' %>
+    </div>
+<% end %>
+    
+    
 <% end %>
 
 <h2>General</h2>

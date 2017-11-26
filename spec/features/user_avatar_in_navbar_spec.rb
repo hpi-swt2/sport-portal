@@ -10,6 +10,25 @@ RSpec.feature "User avatar in navbar", :type => :feature do
 
         expect(page).to have_css(".navbar img[src='#{avatar.image_url}']")
       end
+      scenario "User sees a delete button for his avatar" do
+        avatar = FactoryBot.create(:avatar)
+        sign_in avatar.user
+        visit edit_user_registration_path
+
+        
+        expect(page).to have_css("input[value='Delete avatar']", :visible => true)
+      end
+
+      scenario "Clicking delete resets avatar" do
+        avatar = FactoryBot.create(:avatar)
+        sign_in avatar.user
+        visit edit_user_registration_path
+        image_path = ActionController::Base.helpers.asset_path("missing_avatar.png")
+        click_on 'Delete avatar'
+        expect(page).to have_css(".navbar img[src='#{image_path}']")
+        
+        
+      end
     end
 
     context 'the user has no avatar' do
@@ -20,6 +39,15 @@ RSpec.feature "User avatar in navbar", :type => :feature do
         image_path = ActionController::Base.helpers.asset_path("missing_avatar.png")
 
         expect(page).to have_css(".navbar img[src='#{image_path}']")
+      end
+
+      scenario "User sees no delete button for his avatar" do
+        user = FactoryBot.create(:user, avatar: nil)
+        sign_in user
+        visit edit_user_registration_path
+
+        
+        expect(page).not_to have_css("input[value='Delete avatar']")
       end
     end
   end
