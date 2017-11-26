@@ -1,0 +1,42 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+de:
+  breadcrumbs:
+    application:
+      root: "Index"
+    pages:
+      pages: "Seiten"
+  helpers:
+    actions: "Aktionen"
+    name: "Name"
+    links:
+      back: "Zurück"
+      cancel: "Abbrechen"
+      confirm: "Bist du sicher?"
+      destroy: "Löschen"
+      new: "Neu"
+      edit: "Bearbeiten"
+      show: "Anzeigen"
+      assign_ownership: "Als Captain hinzufügen"
+      delete_ownership: "Als Captain löschen"
+      delete_membership: "Löschen"
+    titles:
+      edit: "%{model} bearbeiten"
+      save: "%{model} speichern"
+      new: "%{model} erstellen"
+      delete: "%{model} löschen"
+    submit:
+      create: Erstelle %{model}
+      submit: Speichere %{model}
+      update: Aktualisiere %{model}
+    select:
+      prompt: Bitte wähle
+    teams:
+      kind_of_sport: "Sportart"
+      description: "Beschreibung"
+      private: "Privat"
+    flash:
+      created: "%{resource_name} wurde erfolgreich erstellt."
+      updated: "%{resource_name} wurde erfolgreich aktualisiert."
+      destroyed: "%{resource_name} wurde erfolgreich entfernt."

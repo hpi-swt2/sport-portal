@@ -38,7 +38,7 @@ class Ability
     # All users can only update their own user attributes
     alias_action :create, :read, :update, :destroy, :to => :crud
     can :crud, Team
-    can :update, User
+    can :update, User, id: user.id
     
     can :assign_ownership, Team, Team do |team|
       team.owners.include? user
