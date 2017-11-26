@@ -1,9 +1,13 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
-  resources :events
+
   root 'welcome#index'
   resources :teams
   resources :matches
+
+  resources :events
+  resources :leagues, controller: 'events', type: 'League'
+  resources :tournaments, controller: 'events', type: 'Tournament'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, controllers: {
