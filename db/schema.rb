@@ -47,6 +47,9 @@ ActiveRecord::Schema.define(version: 20171124095557) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "kind_of_sport"
+    t.boolean "private"
   end
 
   create_table "users", force: :cascade do |t|
