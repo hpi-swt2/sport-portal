@@ -85,22 +85,10 @@ RSpec.describe UsersController, type: :controller do
         user.reload
         expect(user.first_name).to eq(new_attributes[:first_name])
       end
-
-      it "should not allow normal user to update other accounts" do
-        sign_in @user
-        put :update, params: {id: @other_user.to_param, user: valid_attributes}
-        expect(response).to be_forbidden
-      end
     end
   end
 
   describe "DELETE #destroy" do
-    it "should not allow normal user to destroy other users" do
-      sign_in @user
-      delete :destroy, params: {id: @other_user.to_param}
-      expect(response).to be_forbidden
-    end
-
     it "should allow normal users to destroy theirselves" do
       sign_in @user
       delete :destroy, params: {id: @user.to_param}
@@ -109,12 +97,6 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET #edit" do
-    it "should not allow normal user to edit other users" do
-      sign_in @user
-      get :edit, params: {id: @other_user.to_param}
-      expect(response).to be_forbidden
-    end
-
     it "should allow normal users to edit theirselves" do
       sign_in @user
       get :edit, params: {id: @user.to_param}

@@ -135,12 +135,6 @@ RSpec.describe EventsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {event: invalid_attributes}, session: valid_session
-        expect(response).to be_success
-      end
-    end
   end
 
   describe "PUT #update" do
@@ -173,21 +167,13 @@ RSpec.describe EventsController, type: :controller do
         expect(response).to_not be_success
       end
     end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        event = Event.create! valid_attributes
-        put :update, params: {id: event.to_param, event: invalid_attributes}, session: valid_session
-        expect(response).to be_success
-      end
-    end
   end
 
   describe "DELETE #destroy" do
     it "destroys the requested event" do
       event = Event.create! valid_attributes
       delete :destroy, params: { id: event.to_param }
-      expect(response).to be_success
+      expect(response).to be_redirect
       event.destroy
     end
 
