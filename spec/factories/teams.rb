@@ -24,14 +24,14 @@ FactoryBot.define do
     end
   end
 
-  trait :with_multiple_owners do
+  trait :with_two_owners do
     after(:build) do |team|
       team.owners = build_list :user, 2
       team.members = team.owners
     end
   end
 
-  trait :with_multiple_members do
+  trait :with_five_members do
     after(:build) do |team|
       team.members = build_list :user, 5
     end
