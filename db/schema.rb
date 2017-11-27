@@ -29,6 +29,11 @@ ActiveRecord::Schema.define(version: 20171124121138) do
     t.index ["player_type"], name: "index_events_on_player_type"
   end
 
+  create_table "events_users", id: false, force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "user_id", null: false
+  end
+
   create_table "matches", force: :cascade do |t|
     t.date "date"
     t.string "place"
