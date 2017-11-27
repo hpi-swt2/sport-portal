@@ -26,8 +26,7 @@ class TeamsController < ApplicationController
 
     if @team.save
       # Assign team ownership and team membership to current signed in user who created the team
-      @team.owners << current_user
-      @team.members << current_user
+      assign_user_as_owner_and_member
 
       redirect_to @team, notice: I18n.t('helpers.flash.created', resource_name: Team.model_name.human).capitalize
     else
@@ -65,5 +64,10 @@ class TeamsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def team_params
       params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members)
+    end
+
+    def assign_user_as_owner_and_member (user = current_user)
+      @team.owners << user
+      @team.members << user
     end
 end
