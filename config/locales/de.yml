@@ -46,6 +46,44 @@ de:
       dashboard: "Mein Dashboard"
 
   activerecord:
+    attributes:
+      team:
+        id: "ID"
+        name: "Name"
+        description: "Beschreibung"
+        kind_of_sport: "Sportart"
+        private: "Privassdt"
+        created_at: "Erstellt am"
+        updated_at: "Aktualisiert am"
+      match:
+        id: "ID"
+        date: "Datum"
+        place: "Ort"
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
+        created_at: "Erstellt am"
+        updated_at: "Aktualisiert am"
+        team_home_id: "Heim-Team"
+        team_away_id: "Auswärts-Team"
+      event:
+        name: "Name"
+        description: "Beschreibung"
+        discipline: "Disziplin"
+        player_type: "Spieltyp"
+        max_teams: "max. Anzahl Spieler"
+        game_mode: "Spielmodus"
+        type: "Typ"
+        created_at: "Erstellt am"
+        deadline: "Frist"
+        startdate: "Beginn"
+        enddate: "Ende"
+        updated_at: "Aktualisiert am"
+        duration_in_days: "Dauer in Tagen"
+      user:
+        id: "ID"
+        first_name: "Vorname"
+        last_name: "Nachname"
+        created_at: "Erstellt am"
     models:
       match:
         one: "Spiel"
@@ -59,3 +97,4 @@ de:
       event:
         one: "Event"
         other: "Events"
+        id: "ID"
