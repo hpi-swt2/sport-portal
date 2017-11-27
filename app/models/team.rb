@@ -23,5 +23,4 @@ class Team < ApplicationRecord
 
   # validates :owners, presence: true
   # validates :members, presence: true
-
 end
