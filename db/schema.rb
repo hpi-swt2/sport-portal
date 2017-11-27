@@ -15,16 +15,18 @@ ActiveRecord::Schema.define(version: 20171124121138) do
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "gamemode"
-    t.string "sport"
-    t.boolean "teamsport"
-    t.integer "playercount"
-    t.text "gamesystem"
-    t.date "deadline"
+    t.string "discipline"
+    t.integer "player_type", null: false
+    t.integer "max_teams"
+    t.integer "game_mode", null: false
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "startdate"
     t.date "enddate"
+    t.date "deadline"
+    t.index ["game_mode"], name: "index_events_on_game_mode"
+    t.index ["player_type"], name: "index_events_on_player_type"
   end
 
   create_table "matches", force: :cascade do |t|

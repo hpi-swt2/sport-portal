@@ -21,6 +21,9 @@ describe "new event page", type: :feature do
 
   it "should be possible to create a date conditions for an event" do
 		visit new_event_path
+    fill_in "event_name", with: "name"
+    fill_in "event_discipline", with: "soccer"
+    fill_in "event_game_mode", with: "test"
 
 		fill_in "event_deadline", with: "2018/11/16"
 		fill_in "event_startdate", with: "2017/12/01"
