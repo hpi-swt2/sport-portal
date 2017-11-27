@@ -59,3 +59,9 @@ de:
       event:
         one: "Event"
         other: "Events"
+
+  events:
+      create_event: "Veranstaltung erstellen"
+      choose_event_format: "Veranstaltungsart wählen"
+      new_league: "Neue Liga"
+      new_tournament: "Neues Tournier"
