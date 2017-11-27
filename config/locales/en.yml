@@ -50,6 +50,7 @@ en:
       event:
         one: "event"
         other: "events"
+
   events:
         create_event: "Create Event"
         choose_event_format: "Choose event format"
