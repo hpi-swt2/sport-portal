@@ -41,6 +41,10 @@ de:
     index:
       lead: "Wir bieten unglaubliche Lösungen für vielfältige Use Cases."
 
+  navbar:
+    drop-down:
+      dashboard: "Mein Dashboard"
+
   activerecord:
     models:
       match:

@@ -34,6 +34,9 @@ class User < ApplicationRecord
   validates_format_of :telephone_number, with: /\A\d+\z/, message: I18n.t('activerecord.models.user.errors.telephone_number_invalid'), allow_nil: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
+  has_many :organizers
+  has_many :organizing_events, :through => :organizers, :source => 'event'
+
   def has_omniauth?
     provider.present? && uid.present?
   end
