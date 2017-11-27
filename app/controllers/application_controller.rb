@@ -6,5 +6,4 @@ class ApplicationController < ActionController::Base
   end
   def create_event
   end
-
 end
