@@ -1,0 +1,6 @@
+.navbar .dropdown:hover .dropdown-menu {
+    display: block;
+}
+.navbar .dropdown-menu li {
+    text-align: center;
+}
