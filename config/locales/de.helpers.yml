@@ -18,6 +18,7 @@ de:
       new: "Neu"
       edit: "Bearbeiten"
       show: "Anzeigen"
+      email: "E-Mail senden"
       assign_ownership: "Als Captain hinzufügen"
       delete_ownership: "Als Captain löschen"
       delete_membership: "Löschen"
@@ -36,6 +37,7 @@ de:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
       private: "Privat"
+      apply_action: "Wende folgende Aktion auf Ausgewählte an:"
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."

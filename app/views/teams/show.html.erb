@@ -21,27 +21,59 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:first_name) %></th>
+      <th><%= model_class.human_attribute_name(:last_name) %></th>
+      <th><%= t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
-    <% @team.members.each do |member| %>
+      <%= render partial: "application/validation_errors", locals: {model: @team} %>
+
+      <% @team.members.each do |member| %>
+      <tr>
+        <td><%= check_box_tag "member_ids[]", member.id %></td>
+        <td><%= member.id %></td>
+        <td><%= member.first_name%></td>
+        <td><%= member.last_name%></td>
+        <td>
+          <%= link_to t('.email', :default => t("helpers.links.email")),
+                      team_path(@team),
+                      :method => 'get',
+                      :class => 'btn btn-default btn-xs' %>
+          <%= link_to_if ((@team.owners.include? member) and (can? :delete_ownership, @team)),
+                         t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
+                         delete_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' %>
+          <%= link_to_if ((!@team.owners.include? member) and (can? :assign_ownership, @team)),
+                         t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
+                         assign_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' %>
+        </td>
+      </tr>
+      <% end %>
+
       <tr>
         <td>
-            <%= member.id%> <%= member.first_name%> <%= member.last_name%>
-            
-            <% if @team.owners.include? member %>
-            <%= link_to t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
-            delete_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' %>
-            <% end %>
-
-            <% if !@team.owners.include? member %>
-            <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
-            assign_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' %>
-            <% end%>
-            
-      </td>
+          <%= t('.apply_action', :default => t("helpers.teams.apply_action")) %>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <%= link_to t('.email', :default => t("helpers.links.email")),
+                      team_path(@team),
+                      :method => 'get',
+                      :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
+                      team_path(@team),
+                      :method => 'get',
+                      :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
+                      team_path(@team),
+                      :method => 'get',
+                      :class => 'btn btn-default btn-xs' %>
+        </td>
       </tr>
-    <% end %>
   </tbody>
 </table>
 
@@ -55,5 +87,3 @@
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
               :class => 'btn btn-danger' %>
-
-

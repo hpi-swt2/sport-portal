@@ -15,6 +15,7 @@ en:
       cancel: "Cancel"
       confirm: "Are you sure?"
       destroy: "Delete"
+      email: "Send Email"
       assign_ownership: "Assign Ownership"
       delete_ownership: "Delete Ownership"
       new: "New"
@@ -35,6 +36,7 @@ en:
       kind_of_sport: "Kind of sport"
       description: "Description"
       private: "Private"
+      apply_action: "Apply action to selected:"
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."
