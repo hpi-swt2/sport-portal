@@ -47,8 +47,9 @@ class TeamsController < ApplicationController
   # DELETE /teams/1
   def destroy
     # Delete all team ownerships and team memberships associated with the team to destroy
-    TeamOwner.where(team_id: @team.id).delete_all
-    TeamMember.where(team_id: @team.id).delete_all
+    team_id = @team.id
+    TeamOwner.where(team_id: team_id).delete_all
+    TeamMember.where(team_id: team_id).delete_all
 
     @team.destroy
 
