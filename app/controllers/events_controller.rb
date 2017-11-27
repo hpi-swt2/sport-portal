@@ -60,6 +60,6 @@ class EventsController < ApplicationController
         params[:event] = params.delete :tournament
       end
 
-      params.require(:event).permit(:name, :description, :game_mode, :discipline, :deadline, :startdate, :enddate, :type).merge({player_type: Event.types.first})
+      params.require(:event).permit(:name, :description, :max_teams, :game_mode, :discipline, :deadline, :startdate, :enddate, :type).merge({player_type: Event.types.first})
     end
 end
