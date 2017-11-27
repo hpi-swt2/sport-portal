@@ -4,8 +4,8 @@ describe "detailled event page", type: :feature do
   before(:each) do
     @user = FactoryBot.create(:user)
 
-    @teamevent = FactoryBot.create(:event, teamsport: true)
-    @singleevent = FactoryBot.create :event
+    @teamevent = FactoryBot.create(:event, player_type: Event.player_types[:team])
+    @singleevent = FactoryBot.create :event, player_type: Event.player_types[:single]
   end
 
   it "should not display join button for team events" do

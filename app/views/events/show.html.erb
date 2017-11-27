@@ -7,7 +7,7 @@
 </div>
 
 <dl class="dl-horizontal">
-  <% [:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate].each do |attribute| %>
+  <% [:name, :description, :discipline, :game_mode, :max_teams, :deadline, :startdate, :enddate].each do |attribute| %>
     <dt><strong><%= model_class.human_attribute_name(attribute) %>:</strong></dt>
     <dd><%= @event.send attribute %></dd>
   <% end %>
@@ -17,7 +17,7 @@
 <%= back_btn %>
 
 <% if user_signed_in? %>
-  <% if @event.teamsport==false%>
+  <% if @event.player_type == Event.player_types[:single] %>
       <% if @event.users.where("user_id = ?", @user.id).exists? %>
           <%= link_to 'Leave Event', join_event_path(@event), :method => "put",
                       :class => 'btn btn-default', id: :leavebutton%>

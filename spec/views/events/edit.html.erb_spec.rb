@@ -7,11 +7,9 @@ RSpec.describe "events/edit", type: :view do
     @event = assign(:event, Event.create!(
       :name => "MyString",
       :description => "MyText",
-      :gamemode => "MyString",
-      :sport => "MyString",
-      :teamsport => false,
-      :playercount => 1,
-      :gamesystem => "MyText",
+      :game_mode => "MyString",
+      :player_type => Event.player_types[Event.player_types.keys.sample],
+      :discipline => "MyString",
       :deadline => Date.new(2017,11,16),
       :startdate => Date.new(2017,12,01),
       :enddate => Date.new(2017,12,05)
@@ -28,15 +26,9 @@ RSpec.describe "events/edit", type: :view do
 
       assert_select "textarea[name=?]", "event[description]"
 
-      assert_select "input[name=?]", "event[gamemode]"
+      assert_select "input[name=?]", "event[game_mode]"
 
-      assert_select "input[name=?]", "event[sport]"
-
-      assert_select "input[name=?]", "event[teamsport]"
-
-      assert_select "input[name=?]", "event[playercount]"
-
-      assert_select "textarea[name=?]", "event[gamesystem]"
+      assert_select "input[name=?]", "event[discipline]"
 
       assert_select "input[name=?]", "event[deadline]"
 
