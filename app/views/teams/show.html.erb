@@ -4,9 +4,20 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dt><strong><%=t '.name', :default => t("helpers.name") %>:</strong></dt>
   <dd><%= @team.name %></dd>
 </dl>
+
+<dl class="dl-horizontal">
+  <dt><strong><%=t '.kind_of_sport', :default => t("helpers.teams.kind_of_sport") %>:</strong></dt>
+  <dd><%= @team.kind_of_sport %></dd>
+</dl>
+
+<dl class="dl-horizontal">
+  <dt><strong><%=t '.description', :default => t("helpers.teams.description") %>:</strong></dt>
+  <dd><%= @team.description %></dd>
+</dl>
+
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>

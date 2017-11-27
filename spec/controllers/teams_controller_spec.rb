@@ -104,6 +104,18 @@ end
         }.to change(Team, :count).by(1)
       end
 
+      it "creates a new TeamOwner" do
+        expect {
+          post :create, params: { team: valid_attributes }
+        }.to change(TeamOwner, :count).by(1)
+      end
+
+      it "creates a new TeamMember" do
+        expect {
+          post :create, params: { team: valid_attributes }
+        }.to change(TeamMember, :count).by(1)
+      end
+
       it "redirects to the created team" do
         sign_in @user
         post :create, params: { team: valid_attributes }
@@ -176,6 +188,14 @@ end
       delete :destroy, params: { id: team.to_param }
       expect(response).to be_unauthorized
       team.destroy
+    end
+
+    it "deletes the associated team ownerships and team memberships" do
+      team = FactoryBot.create :team
+      expect {
+        delete :destroy, params: { id: team.to_param }
+      }.to change(TeamOwner, :count).by(-1)
+        .and change(TeamMember, :count).by(-1)
     end
 
     it "redirects to the teams list" do

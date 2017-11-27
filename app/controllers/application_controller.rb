@@ -8,4 +8,9 @@ class ApplicationController < ActionController::Base
       render :file => "#{Rails.root}/public/401.html", :status => 401, :layout => false
     end
   end
+
+  #Redirect to user dashboard after successfull login
+  def after_sign_in_path_for(resource)
+    dashboard_user_path(resource)
+  end
 end

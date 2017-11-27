@@ -29,10 +29,28 @@ RSpec.describe EventsController, type: :controller do
   # Event. As you add validations to Event, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    @event.attributes
+    {
+        name: "TT Event",
+        discipline: 0,
+        game_mode: 0,
+        player_type: Event.player_types[:single],
+        deadline: Date.current,
+        startdate: Date.current,
+        enddate: Date.current,
+        creator: @user
+    }
   }
 
   let(:invalid_attributes) {
+    {
+        name: "TT Event",
+        discipline: 0,
+        game_mode: 0,
+        player_type: Event.player_types[:single],
+        deadline: Date.new(2017, 11, 23),
+        startdate: Date.new(2017, 11, 23),
+        enddate: Date.new(2017, 10, 1)
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -135,19 +153,25 @@ RSpec.describe EventsController, type: :controller do
         expect(response).to redirect_to(Event.last)
       end
     end
-
   end
 
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        @event.attributes
+        {
+            deadline: Date.new(2017, 11, 20),
+            startdate: Date.new(2017, 11, 21),
+            enddate: Date.new(2017, 11, 22)
+        }
       }
 
       it "updates the requested event" do
         event = Event.create! valid_attributes
         put :update, params: {id: event.to_param, event: new_attributes}, session: valid_session
         event.reload
+        expect(event.deadline).to eq(Date.new(2017, 11, 20))
+        expect(event.startdate).to eq(Date.new(2017, 11, 21))
+        expect(event.enddate).to eq(Date.new(2017, 11, 22))
       end
 
       it "redirects to the event" do
@@ -196,6 +220,5 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
-
 
 end
