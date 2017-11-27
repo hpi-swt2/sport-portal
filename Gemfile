@@ -100,9 +100,13 @@ group :development, :test do
   # Code coverage for Ruby
   # https://github.com/colszowka/simplecov
   gem 'simplecov', '~> 0.14.0', require: false
+
   # Hosted code coverage on coveralls.io
   # https://docs.coveralls.io/ruby-on-rails
   gem 'coveralls', require: false
+  # Collection cardinality matchers, extracted from rspec-expectations
+  # https://github.com/rspec/rspec-collection_matchers
+  gem 'rspec-collection_matchers'
   # Ruby bindings for the SQLite3 embedded database
   # https://github.com/sparklemotion/sqlite3-ruby
   gem 'sqlite3'

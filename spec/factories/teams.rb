@@ -17,5 +17,23 @@ FactoryBot.define do
     kind_of_sport "Football"
     description "This team is awesome"
     private false
+
+    after(:build) do |team|
+      team.owners = build_list :user, 1
+      team.members = team.owners
+    end
+  end
+
+  trait :with_two_owners do
+    after(:build) do |team|
+      team.owners = build_list :user, 2
+      team.members = team.owners
+    end
+  end
+
+  trait :with_five_members do
+    after(:build) do |team|
+      team.members = team.members + build_list(:user, 5)
+    end
   end
 end
