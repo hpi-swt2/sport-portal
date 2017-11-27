@@ -75,28 +75,29 @@ class TeamsController < ApplicationController
     team_member_id = params[:team_member]
     @team = Team.find(params[:id])
     authorize! :delete_ownership, @team    
+    user = User.find(team_member_id)
 
 
     # Checks whether the specified team member does not have team ownership
-    if !@team.owners.exists?(team_member_id)
+    if !@team.owners.include?(user)
       return
     end
 
 
-    @team.owners.delete(User.find(team_member_id))
+    @team.owners.delete(user)
     redirect_to @team
   end
 
   def delete_membership
-    team_member_id = params[:team_member]
     @team = Team.find(params[:id])
     authorize! :delete_membership, @team
+    user = User.find(params[:team_member])
 
-    if @team.owners.exists?(team_member_id)
-      @team.owners.delete(User.find(team_member_id))
+    if @team.owners.include? (user)
+      @team.owners.delete(user)
     end
 
-    @team.members.delete(User.find(team_member_id))
+    @team.members.delete(user)
     redirect_to @team
   end
   

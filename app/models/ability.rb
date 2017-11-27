@@ -50,25 +50,19 @@ class Ability
     end
 
     can :delete_membership, Team, Team do |team|
-      
       owners = num_owners(team, team_member)
-      Integer(user.id) == Integer(team_member) and owners > 0
-    end
-
-    can :delete_membership, Team, Team do |team| 
-      owners = num_owners(team, team_member)
-      team.owners.include? user  and owners > 0
+      Integer(user.id) == Integer(team_member)
+      team.owners.include? user 
+      owners > 0
     end
   end
+end
 
-  def num_owners(team, team_member)
-    if team.owners.include? User.find(team_member)
-      owners_after_delete = team.owners - [(User.find(team_member))]
-    else  
-      owners_after_delete = team.owners
-    end
-    return owners_after_delete.length
+def num_owners(team, team_member)
+  if team.owners.include? User.find(team_member)
+    owners_after_delete = team.owners - [(User.find(team_member))]
+  else  
+    owners_after_delete = team.owners
   end
-
-
+  owners_after_delete.length
 end
