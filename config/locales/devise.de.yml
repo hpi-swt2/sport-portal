@@ -55,6 +55,7 @@ de:
       link_provider: "Mit %{provider} verbinden"
       unlink_provider: "Verbindung mit %{provider} aufheben"
       no_account_question: "Du hast noch keinen Account?"
+      my_account: "Mein Account"
     sessions:
       signed_in: "Erfolgreich angemeldet."
       signed_out: "Erfolgreich abgemeldet."
