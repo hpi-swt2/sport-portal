@@ -28,7 +28,7 @@ RSpec.describe Ability, type: :model do
       end
 
       describe 'for private teams' do
-        let(:team){ FactoryBot.create :team, :private, :with_owners, :with_members }
+        let(:team){ FactoryBot.create :team, :private, :with_members, :with_owners }
         it { is_expected.to_not be_able_to(:read, team) }
 
         context 'when is a member' do
