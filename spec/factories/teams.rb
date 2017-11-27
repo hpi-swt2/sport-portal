@@ -17,23 +17,19 @@ FactoryBot.define do
     kind_of_sport "Football"
     description "This team is awesome"
     private false
+
+    owners { build_list(:user, 1) }
+    members { build_list(:user, 1) }
   end
 
-  trait :with_owner do
-    after(:create) do |team|
-      team.owners = build_list :user, 1
-      team.members << team.owners
-    end
-  end
-
-  trait :with_owners do
+  trait :with_multiple_owners do
     after(:create) do |team|
       team.owners = build_list :user, 2
-      team.members << team.owners
+      team.members = team.owners
     end
   end
 
-  trait :with_members do
+  trait :with_multiple_members do
     after(:create) do |team|
       team.members = build_list :user, 5
     end

@@ -21,7 +21,7 @@ class Team < ApplicationRecord
   has_many :team_members
   has_many :members, through: :team_members, source: :user
 
-  # validates :owners, :length => { :minimum => 1}
-  # validates :members, :length => { :minimum => 1}
+  # validates :owners, presence: true
+  # validates :members, presence: true
 
 end

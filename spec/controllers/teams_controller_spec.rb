@@ -125,7 +125,7 @@ RSpec.describe TeamsController, type: :controller do
     end
 
     it "deletes the associated team ownerships and team memberships" do
-      team = FactoryBot.create(:team, :with_owner)
+      team = FactoryBot.create(:team)
       expect {
         delete :destroy, params: { id: team.to_param }
       }.to change(TeamOwner, :count).by(-1)
