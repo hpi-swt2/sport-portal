@@ -41,7 +41,6 @@ class Ability
     can :read, Team, private: false
 
     if user.present?
-      # can :create, Team
       can :create, Team
       can :read, Team, private: true, members: { id: user.id }
       can :update, Team, members: { id: user.id }
