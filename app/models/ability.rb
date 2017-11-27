@@ -42,12 +42,13 @@ class Ability
 
     if user.present?
       # can :create, Team
+      can :create, Team
       can :read, Team, private: true, members: { id: user.id }
-      # can :update, Team, members: { id: user.id }
-      # can :destroy, Team, owners: { id: user.id }
+      can :update, Team, members: { id: user.id }
+      can :destroy, Team, owners: { id: user.id }
 
-      # can :assign_ownership_to, Team, owners: { id: user.id }
-      # can :assign_membership_to, Team, members: { id: user.id }
+      can :assign_ownership_to, Team, owners: { id: user.id }
+      can :assign_membership_to, Team, members: { id: user.id }
     end
   end
 end
