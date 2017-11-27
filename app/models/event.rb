@@ -20,7 +20,7 @@
 #
 
 class Event < ApplicationRecord
-  validates :name, :discipline, :game_mode, :type, :deadline, :startdate, :enddate, presence: true
+  validates :name, :discipline, :game_mode, :deadline, :startdate, :enddate, presence: true
   validate :end_after_start
   enum player_types: [:single, :team]
 
