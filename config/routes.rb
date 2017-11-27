@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     get 'link', on: :member
     get 'unlink', on: :member
   end
-
+  
   #Define route for Create Event Button
   get "/createEvent" , to: "application#createEvent" , as: "create_Event"
 
