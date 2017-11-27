@@ -1,6 +1,10 @@
 require'rails_helper'
 
 describe "new event page", type: :feature do
+  before(:each) do
+    @user = FactoryBot.create :user
+    sign_in @user
+  end
 	
 	it "should render without an error" do
 		visit new_event_path

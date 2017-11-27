@@ -24,6 +24,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
+      @event.editors << current_user
       redirect_to @event, notice: 'Event was successfully created.'
     else
       render :new

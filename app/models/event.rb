@@ -29,6 +29,9 @@ class Event < ApplicationRecord
     %w(Tournament League)
   end
 
+  has_many :organizers
+  has_many :editors, :through => :organizers, :source => 'user'
+
   scope :active, -> { where('deadline >= ?', Date.current) }
 
   def duration
