@@ -6,7 +6,7 @@ class TeamsController < ApplicationController
   # GET /teams
   def index
     # Necessary because load_and_authorize_resource returns @teams = nil when there are not teams the user can read
-    if @teams == nil
+    unless @teams.respond_to?(:each)
       @teams = []
     end
   end
