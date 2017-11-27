@@ -11,12 +11,14 @@ RSpec.describe "events/show", type: :view do
       :sport => "Sport",
       :teamsport => false,
       :playercount => 2,
-      :gamesystem => "MyText",
-      :deadline => Date.new(2017,11,16),
-      :startdate => Date.new(2017,12,01),
-      :enddate => Date.new(2017,12,05)
+      :gamesystem => "Gamesystem",
+      :deadline => Date.tomorrow,
+      :startdate => Date.tomorrow+1,
+      :enddate => Date.tomorrow+3
     ))
+    helper.params = {:id => @user.id}
     @event.editors << @user
+
   end
 
   it "renders attributes in <p>" do
@@ -27,10 +29,10 @@ RSpec.describe "events/show", type: :view do
     expect(rendered).to match(/Sport/)
     expect(rendered).to match(/false/)
     expect(rendered).to match(/2/)
-    expect(rendered).to match(/MyText/)
-    expect(rendered).to match(/2017-11-16/)
-    expect(rendered).to match(/2017-12-01/)
-    expect(rendered).to match(/2017-12-05/)
+    expect(rendered).to match(/Gamesystem/)
+    expect(rendered).to match(Date.tomorrow.to_s)
+    expect(rendered).to match((Date.tomorrow+1).to_s)
+    expect(rendered).to match((Date.tomorrow+3).to_s)
   end
 
   it "renders styled buttons" do

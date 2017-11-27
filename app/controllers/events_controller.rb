@@ -48,7 +48,6 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1/join
   def join
-    #@event = Event.find(params[:id])
     @event.users << current_user
     if @event.save
       flash[:success] = "You have successfully joined #{@event.name}!"

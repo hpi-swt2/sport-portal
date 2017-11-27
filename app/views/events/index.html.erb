@@ -31,11 +31,11 @@
           <% if (user_signed_in? && event.teamsport==false)%>
               <% if event.users.where("user_id = ?", current_user.id).exists? %>
                   <%= link_to 'Leave Event', join_event_path(event), :method => "put",
-                              :class => 'btn btn-default', id: :leavebutton%>
+                              :class => 'btn btn-xs btn-default', id: :leavebutton%>
                   Participating
               <% else %>
                   <%= link_to 'Join Event',join_event_path(event), :method => "put",
-                              :class => 'btn btn-default', id: :joinbutton%>
+                              :class => 'btn btn-xs btn-default', id: :joinbutton%>
               <% end %>
           <% end %>
 
