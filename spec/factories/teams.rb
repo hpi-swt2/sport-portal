@@ -33,7 +33,7 @@ FactoryBot.define do
 
   trait :with_five_members do
     after(:build) do |team|
-      team.members = build_list :user, 5
+      team.members = team.members + build_list(:user, 5)
     end
   end
 end

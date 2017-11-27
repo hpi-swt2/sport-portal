@@ -38,8 +38,8 @@ RSpec.describe Team, type: :model do
 
   it "should be able to have multiple team members" do
     team = FactoryBot.build :team, :with_five_members
-    expect(team.team_members).to have(5).items
-    expect(team.members).to have(5).items
+    expect(team.team_members).to have_at_least(5).items
+    expect(team.members).to have_at_least(5).items
   end
 
 end
