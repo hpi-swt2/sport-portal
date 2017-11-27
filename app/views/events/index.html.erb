@@ -8,7 +8,7 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <% [:name,:gamemode,:playercount,:gamesystem, :deadline, :startdate, :enddate].each do |attribute| %>
+    <% [:name,:game_mode,:max_teams, :deadline, :startdate, :enddate].each do |attribute| %>
       <th><%= model_class.human_attribute_name(attribute) %></th>
     <% end %>
     <th><%=t '.actions', :default => t("helpers.actions") %></th>
