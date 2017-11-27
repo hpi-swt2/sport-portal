@@ -1,6 +1,10 @@
 <h1>Editing Event</h1>
 
-<%= render 'form', event: @event %>
+<% if user_signed_in? && current_user.organizing_events.include?(@event) %>
+  <%= render 'form', event: @event %>
+<% else %>
+  <p>No Permission to edit.</p>
+<% end %>
 
 <%= link_to 'Show', @event %> |
 <%= link_to 'Back', events_path %>
