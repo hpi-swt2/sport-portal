@@ -22,28 +22,18 @@
   </div>
 
   <div class="field">
-    <%= form.label :gamemode %>
-    <%= form.text_field :gamemode, id: :event_gamemode %>
+    <%= form.label :game_mode %>
+    <%= form.text_field :game_mode, id: :event_game_mode %>
   </div>
 
   <div class="field">
-    <%= form.label :sport %>
-    <%= form.text_field :sport, id: :event_sport %>
+    <%= form.label :max_teams %>
+    <%= form.text_field :max_teams, id: :max_teams %>
   </div>
 
   <div class="field">
-    <%= form.label :teamsport %>
-    <%= form.check_box :teamsport, id: :event_teamsport %>
-  </div>
-
-  <div class="field">
-    <%= form.label :playercount %>
-    <%= form.number_field :playercount, id: :event_playercount %>
-  </div>
-
-  <div class="field">
-    <%= form.label :gamesystem %>
-    <%= form.text_area :gamesystem, id: :event_gamesystem %>
+    <%= form.label :discipline %>
+    <%= form.text_field :discipline, id: :event_discipline %>
   </div>
 
   <div class="field">
@@ -51,6 +41,20 @@
     <%= form.text_field :deadline, id: :event_deadline, :data => { :provide => 'datepicker', "date-format" => "dd/mm/yyyy" } %>
   </div> 
 
+  <div class="field">
+    <%= form.label :startdate %>
+    <%= form.text_field :startdate, id: :event_startdate, :data => {:provide => 'datepicker', "date-format" => "dd/mm/yyyy"} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :enddate %>
+    <%= form.text_field :enddate, id: :event_enddate, :data => {:provide => 'datepicker', "date-format" => "dd/mm/yyyy"} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :duration %> 
+      Number of days: <%= form.text_field :duration, id: :event_duration %>
+  </div>
 
   <div class="actions">
     <%= form.submit :event_submit => "Create event" %>

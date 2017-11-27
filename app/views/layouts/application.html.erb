@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title><%= t('appname') %></title>
     <%= csrf_meta_tags %>
 
@@ -18,6 +20,8 @@
 
       <%# Render content of views %>
       <%= yield %>
+
+      <%= render partial: "application/footer"%>
     </div>
   </body>
 </html>

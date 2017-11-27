@@ -1,25 +1,65 @@
 require 'rails_helper'
+describe "Event model", type: :model do
 
-RSpec.describe Event, type: :model do
-  before(:context) do
-    @event = FactoryBot.create :event
-  end
+    let(:event) {FactoryBot.build(:league)}
 
-  it "should have a attribute deadline" do
-    @date = Date.new(2017,11,16)
-    expect(@event.deadline).to eq(@date)
-  end
+    it "should not validate without name" do
+      league = FactoryBot.build(:league, name: nil)
+      expect(league.valid?).to eq(false)
+    end
 
-  it "should only show active events" do
-    @new_event = FactoryBot.create(:event, deadline: Date.current)
-    @old_event = FactoryBot.create(:event)
+    it "should not validate without discipline" do
+      league = FactoryBot.build(:league, discipline: nil)
+      expect(league.valid?).to eq(false)
+    end
 
-    expect(Event.active).to include(@new_event)
-    expect(Event.active).to_not include(@old_event)
-    expect(Event.all).to include(@new_event, @old_event)
-  end
+    it "should not validate without game_mode" do
+      league = FactoryBot.build(:league, game_mode: nil)
+      expect(league.valid?).to eq(false)
+    end
 
-  after(:context) do
-    @event.destroy
-  end
+    it "should have an attribute deadline" do
+      date = Date.new(2017,11,16)
+      expect(event.deadline).to eq date
+
+      event.deadline = nil
+      expect(event).not_to be_valid
+    end
+    it "should have an attribute startdate" do
+      date = Date.new(2017,12,01)
+      expect(event.startdate).to eq date
+
+      expect(event).to be_valid
+      event.startdate = nil
+      expect(event).not_to be_valid
+    end
+
+    it "should have an attribute enddate" do
+      date = Date.new(2017,12,05)
+      expect(event.enddate).to eq date
+
+      expect(event).to be_valid
+      event.enddate = nil
+      expect(event).not_to be_valid
+    end
+
+    it "should not be possible to have an enddate, that is before the startdate" do
+      expect(event).to be_valid
+      event.enddate = Date.new(2017,11,30)
+      expect(event).not_to be_valid
+    end
+
+    it "should be possible to get the duration in day of an event" do
+      expect(event.duration).to eq(5)
+    end
+
+    it "should only show active events" do
+      @new_event = FactoryBot.create(:event, deadline: Date.current)
+      @old_event = FactoryBot.create(:event)
+
+      expect(Event.active).to include(@new_event)
+      expect(Event.active).to_not include(@old_event)
+      expect(Event.all).to include(@new_event, @old_event)
+    end
+
 end

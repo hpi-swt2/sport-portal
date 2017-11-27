@@ -10,19 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116134818) do
+ActiveRecord::Schema.define(version: 20171124121138) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "gamemode"
-    t.string "sport"
-    t.boolean "teamsport"
-    t.integer "playercount"
-    t.text "gamesystem"
-    t.date "deadline"
+    t.string "discipline"
+    t.integer "player_type", null: false
+    t.integer "max_teams"
+    t.integer "game_mode", null: false
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "startdate"
+    t.date "enddate"
+    t.date "deadline"
+    t.index ["game_mode"], name: "index_events_on_game_mode"
+    t.index ["player_type"], name: "index_events_on_player_type"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -36,10 +40,22 @@ ActiveRecord::Schema.define(version: 20171116134818) do
     t.integer "team_away_id"
   end
 
+  create_table "organizers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_organizers_on_event_id"
+    t.index ["user_id"], name: "index_organizers_on_user_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "kind_of_sport"
+    t.boolean "private"
   end
 
   create_table "users", force: :cascade do |t|
@@ -52,7 +68,10 @@ ActiveRecord::Schema.define(version: 20171116134818) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
