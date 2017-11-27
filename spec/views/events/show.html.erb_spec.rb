@@ -61,18 +61,4 @@ RSpec.describe "events/show", type: :view do
     sign_in @user
     expect(rendered).to_not have_selector(:link_or_button, 'Delete')
   end
-
-  it "renders the edit button when the event belongs to the user" do
-    sign_in @user
-    @event.creator = @user
-    render
-    expect(rendered).to have_selector(:link_or_button, 'Edit')
-  end
-
-  it "renders the delete button when signed in and it's your team" do
-    sign_in @user
-    @event.creator = @user
-    render
-    expect(rendered).to have_selector(:link_or_button, 'Delete')
-  end
 end

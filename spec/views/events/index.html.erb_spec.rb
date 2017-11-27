@@ -39,8 +39,7 @@ RSpec.describe "events/index", type: :view do
    end
 
   it "renders styled buttons" do
-    sign_in @user
-    Event.create(name: 'TEST', creator: @user, deadline: Date.today())
+    sign_in @events[0].creator
     render
     expect(rendered).to have_css('a.btn.btn-default.btn-xs')
     expect(rendered).to have_css('a.btn.btn-danger.btn-xs')

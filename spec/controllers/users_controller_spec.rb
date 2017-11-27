@@ -61,16 +61,6 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "POST #create" do
-    it "creates a new user with valid params" do
-      sign_in @admin
-      expect {
-        post :create, params: { user: valid_attributes }
-      }.to change(User, :count).by(1)
-      User.where(first_name: valid_attributes[:first_name])[0].destroy
-    end
-  end
-
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
