@@ -12,11 +12,8 @@ RSpec.describe "events/show", type: :view do
     render
     expect(rendered).to have_content(@event.name)
     expect(rendered).to have_content(@event.description)
-    expect(rendered).to have_content(@event.gamemode)
-    expect(rendered).to have_content(@event.sport)
-    expect(rendered).to have_content(@event.teamsport)
-    expect(rendered).to have_content(@event.playercount)
-    expect(rendered).to have_content(@event.gamesystem)
+    expect(rendered).to have_content(@event.game_mode)
+    expect(rendered).to have_content(@event.discipline)
     expect(rendered).to have_content(@event.deadline)
     expect(rendered).to have_content(@event.startdate)
     expect(rendered).to have_content(@event.enddate)
