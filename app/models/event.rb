@@ -34,6 +34,9 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
+
+  has_and_belongs_to_many :users
+
   def duration
     return if enddate.blank? || startdate.blank?
     enddate - startdate + 1

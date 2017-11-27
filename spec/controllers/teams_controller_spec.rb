@@ -17,6 +17,11 @@ RSpec.describe TeamsController, type: :controller do
     FactoryBot.build(:team, name: '').attributes
   }
 
+  before(:each) do
+    user = FactoryBot.create :user
+    sign_in user
+  end
+
   describe "GET #index" do
     it "returns a success response" do
       team = Team.create! valid_attributes
@@ -54,6 +59,18 @@ RSpec.describe TeamsController, type: :controller do
         expect {
           post :create, params: { team: valid_attributes }
         }.to change(Team, :count).by(1)
+      end
+
+      it "creates a new TeamOwner" do
+        expect {
+          post :create, params: { team: valid_attributes }
+        }.to change(TeamOwner, :count).by(1)
+      end
+
+      it "creates a new TeamMember" do
+        expect {
+          post :create, params: { team: valid_attributes }
+        }.to change(TeamMember, :count).by(1)
       end
 
       it "redirects to the created team" do
@@ -105,6 +122,14 @@ RSpec.describe TeamsController, type: :controller do
       expect {
         delete :destroy, params: { id: team.to_param }
       }.to change(Team, :count).by(-1)
+    end
+
+    it "deletes the associated team ownerships and team memberships" do
+      team = FactoryBot.create :team
+      expect {
+        delete :destroy, params: { id: team.to_param }
+      }.to change(TeamOwner, :count).by(-1)
+        .and change(TeamMember, :count).by(-1)
     end
 
     it "redirects to the teams list" do

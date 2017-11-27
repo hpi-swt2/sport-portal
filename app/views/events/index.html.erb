@@ -25,6 +25,18 @@
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       event_path(event), :class => 'btn btn-default btn-xs' %>
+
+          <% if (user_signed_in? && event.player_type == Event.player_types[:single])%>
+              <% if event.users.where("user_id = ?", current_user.id).exists? %>
+                  <%= link_to 'Leave Event', join_event_path(event), :method => "put",
+                              :class => 'btn btn-xs btn-default', id: :leavebutton%>
+                  Participating
+              <% else %>
+                  <%= link_to 'Join Event',join_event_path(event), :method => "put",
+                              :class => 'btn btn-xs btn-default', id: :joinbutton%>
+              <% end %>
+          <% end %>
+
           <% if user_signed_in? && current_user.organizing_events.include?(event) %>
             <%= link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_event_path(event), :class => 'btn btn-default btn-xs' %>
@@ -34,6 +46,8 @@
                         :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
                         :class => 'btn btn-xs btn-danger' %>
           <% end %>
+
+
         </td>
       </tr>
   <% end %>

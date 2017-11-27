@@ -29,6 +29,11 @@ ActiveRecord::Schema.define(version: 20171124121138) do
     t.index ["player_type"], name: "index_events_on_player_type"
   end
 
+  create_table "events_users", id: false, force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "user_id", null: false
+  end
+
   create_table "matches", force: :cascade do |t|
     t.date "date"
     t.string "place"
@@ -47,6 +52,18 @@ ActiveRecord::Schema.define(version: 20171124121138) do
     t.integer "event_id"
     t.index ["event_id"], name: "index_organizers_on_event_id"
     t.index ["user_id"], name: "index_organizers_on_user_id"
+  end
+
+  create_table "team_members", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_team_members_on_user_id_and_user_id"
+  end
+
+  create_table "team_owners", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_team_owners_on_user_id_and_user_id"
   end
 
   create_table "teams", force: :cascade do |t|

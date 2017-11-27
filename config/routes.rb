@@ -1,6 +1,12 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
-  resources :events
+
+  resources :events do
+    member do
+      put :join
+    end
+  end
+
   root 'welcome#index'
   resources :teams
   resources :matches
@@ -29,6 +35,7 @@ Rails.application.routes.draw do
 
   #Define route for Create Event Button
   get "/createEvent" , to: "application#createEvent" , as: "create_Event"
+
 
   get 'imprint' => "static_pages#imprint"
 end
