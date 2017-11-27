@@ -1,14 +1,10 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource :team
 
   # GET /teams
   def index
-    # Necessary because load_and_authorize_resource returns @teams = nil when there are not teams the user can read
-    unless @teams.respond_to?(:each)
-      @teams = []
-    end
   end
 
   # GET /teams/1
