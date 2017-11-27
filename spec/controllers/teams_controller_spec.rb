@@ -25,6 +25,7 @@ RSpec.describe TeamsController, type: :controller do
   end
 
   after(:each) do
+    Team.delete_all
     @user.destroy
     @other_user.destroy
     @admin.destroy

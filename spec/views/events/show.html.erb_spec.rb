@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "events/show", type: :view do
   before(:each) do
+    @user = FactoryBot.create(:user)
+
     @event = assign(:event, Event.create!(
       :name => "Name",
       :description => "MyText",
@@ -10,10 +12,8 @@ RSpec.describe "events/show", type: :view do
       :teamsport => false,
       :playercount => 2,
       :gamesystem => "MyText",
-      :creator => FactoryBot.build(:user)
+      :creator => FactoryBot.create(:user)
     ))
-
-    @user = FactoryBot.create(:user)
   end
 
   it "renders attributes in <p>" do
@@ -49,13 +49,6 @@ RSpec.describe "events/show", type: :view do
   it "doesn't render the delete button when not signed in" do
     render
     expect(rendered).to_not have_selector(:link_or_button, 'Delete')
-  end
-
-  #signed in user
-  it "render the new button when signed in" do
-    sign_in @user
-    render
-    expect(rendered).to have_selector(:link_or_button, 'New')
   end
 
   it "doesn't render the edit button when the event doesn´t belong to the user" do

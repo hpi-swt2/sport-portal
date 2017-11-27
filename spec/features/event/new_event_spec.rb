@@ -7,6 +7,7 @@ describe "new event page", type: :feature do
   end
 
   after(:each) do
+    Event.delete_all
     @user.destroy
   end
 
