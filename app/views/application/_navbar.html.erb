@@ -11,13 +11,12 @@
         <% if user_signed_in? %>
             <%= drop_down current_user.first_name do %>
                 <!--Fill in more drop down menu items-->
+                <%= menu_item t('navbar.drop-down.dashboard'), dashboard_user_path(current_user) %>
                 <%= drop_down_divider %>
                 <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete %>
             <% end %>
         <% else %>
-            <%= menu_item t('devise.registrations.sign_up'), new_user_registration_path %>
-            <%= menu_item t('devise.registrations.sign_in'), new_user_session_path %>
+            <%= menu_item t('devise.registrations.sign_in'), new_user_session_path , class: 'btn btn-default'%>
         <% end %>
-
     <% end %>
 <% end %>

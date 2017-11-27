@@ -7,7 +7,7 @@
 </div>
 
 <dl class="dl-horizontal">
-  <% [:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate].each do |attribute| %>
+  <% [:name, :description, :discipline, :game_mode, :max_teams, :deadline, :startdate, :enddate].each do |attribute| %>
     <dt><strong><%= model_class.human_attribute_name(attribute) %>:</strong></dt>
     <dd><%= @event.send attribute %></dd>
   <% end %>
@@ -15,6 +15,7 @@
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
+<% if user_signed_in? && current_user.organizing_events.include?(@event) %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
             edit_event_path(@event), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
@@ -22,3 +23,4 @@
             :method => 'delete',
             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
             :class => 'btn btn-danger' %>
+<% end %>
