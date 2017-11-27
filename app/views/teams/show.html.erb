@@ -29,9 +29,7 @@
     </tr>
   </thead>
   <tbody>
-      <%= render partial: "application/validation_errors", locals: {model: @team} %>
-
-      <% @team.members.each do |member| %>
+    <% @team.members.each do |member| %>
       <tr>
         <td><%= check_box_tag "member_ids[]", member.id %></td>
         <td><%= member.id %></td>
@@ -76,7 +74,6 @@
       </tr>
   </tbody>
 </table>
-
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>

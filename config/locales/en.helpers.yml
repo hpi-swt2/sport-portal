@@ -18,6 +18,7 @@ en:
       email: "Send Email"
       assign_ownership: "Assign Ownership"
       delete_ownership: "Delete Ownership"
+      delete_membership: "Delete Membership"
       new: "New"
       edit: "Edit"
       show: Show

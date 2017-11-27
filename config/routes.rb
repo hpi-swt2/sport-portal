@@ -38,7 +38,12 @@ Rails.application.routes.draw do
       post :delete_ownership
     end 
   end
-    
+
+  resources :teams do
+    member do
+      post :delete_membership
+    end
+  end
 
   get 'imprint' => "static_pages#imprint"
 end
