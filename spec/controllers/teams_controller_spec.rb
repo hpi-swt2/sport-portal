@@ -17,6 +17,11 @@ RSpec.describe TeamsController, type: :controller do
     FactoryBot.build(:team, name: '').attributes
   }
 
+  before(:each) do
+    user = FactoryBot.create :user
+    sign_in user
+  end
+
   describe "GET #index" do
     it "returns a success response" do
       team = Team.create! valid_attributes
@@ -119,6 +124,19 @@ RSpec.describe TeamsController, type: :controller do
       team = Team.create! valid_attributes
       delete :destroy, params: { id: team.to_param }
       expect(response).to redirect_to(teams_url)
+    end
+  end
+
+  describe 'POST #assign_ownership' do
+    it 'succeeds when called as a team owner' do
+      team = Team.create! valid_attributes
+      team.owners << subject.current_user
+      team.members = team.members + team.owners
+      anotherUser = FactoryBot.create :user
+
+      expect {
+        post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
+      }.to change(TeamOwner, :count).by(1)
     end
   end
 end
