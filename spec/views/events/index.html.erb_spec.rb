@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "events/index", type: :view do
   before(:each) do
-    assign(:events, [
+    @user = FactoryBot.create :user
+    sign_in @user
+    @events = assign(:events, [
       Event.create!(
         :name => "Name",
         :description => "MyText",
@@ -28,6 +30,8 @@ RSpec.describe "events/index", type: :view do
         :enddate => Date.new(2017,12,05)
       )
     ])
+    @events.first.editors << @user
+    @events.last.editors << @user
   end
 
   it "renders a list of events" do

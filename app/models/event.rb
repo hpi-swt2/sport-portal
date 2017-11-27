@@ -19,6 +19,9 @@ class Event < ApplicationRecord
   validates :deadline, :startdate, :enddate, presence: true
   validate :end_after_start
 
+  has_many :organizers
+  has_many :editors, :through => :organizers, :source => 'user'
+
   scope :active, -> { where('deadline >= ?', Date.current) }
 
   def duration

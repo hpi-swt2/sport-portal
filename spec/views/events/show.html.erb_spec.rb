@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "events/show", type: :view do
   before(:each) do
+    @user = FactoryBot.create :user
+    sign_in @user
     @event = assign(:event, Event.create!(
       :name => "Name",
       :description => "MyText",
@@ -14,6 +16,7 @@ RSpec.describe "events/show", type: :view do
       :startdate => Date.new(2017,12,01),
       :enddate => Date.new(2017,12,05)
     ))
+    @event.editors << @user
   end
 
   it "renders attributes in <p>" do
