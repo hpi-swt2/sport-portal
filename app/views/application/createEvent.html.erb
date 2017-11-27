@@ -1,4 +1,6 @@
 <h1><%= t 'events.choose_event_format' %></h1>
 
-<%= link_to '<button type="button">New league</button>'.html_safe, new_event_path %>
-<%= link_to '<button type="button">New tournament</button>'.html_safe, new_event_path %>
+<%= link_to t('.new', :default => t("events.new_league")),
+            new_event_path, :class => 'btn btn-default' %>
+<%= link_to t('.new', :default => t("events.new_tournament")),
+            new_event_path, :class => 'btn btn-default' %>
