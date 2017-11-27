@@ -50,6 +50,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   after(:each) do
+    Event.delete_all
     @user.destroy
     @other_user.destroy
     @admin.destroy
