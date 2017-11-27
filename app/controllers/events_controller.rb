@@ -24,6 +24,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
+      @event.editors << current_user
       redirect_to @event, notice: 'Event was successfully created.'
     else
       render :new
@@ -53,6 +54,6 @@ class EventsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def event_params
-      params.require(:event).permit(:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate)
+      params.require(:event).permit(:name, :discipline, :description, :game_mode, :deadline, :startdate, :max_teams, :enddate).merge(player_type: Event.types.first)
     end
 end

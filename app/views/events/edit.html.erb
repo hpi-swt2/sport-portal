@@ -4,4 +4,9 @@
   <h1><%=t '.title', :default => :'helpers.titles.new', :model => model_class.model_name.human.titleize %></h1>
 </div>
 
-<%= render 'form', back_path: event_path(@event) %>
+<% if user_signed_in? && current_user.organizing_events.include?(@event) %>
+    <%= render 'form', back_path: event_path(@event) %>
+<% else %>
+  <p>No Permission to edit.</p>
+<% end %>
+

@@ -19,21 +19,17 @@ RSpec.describe "events/new", type: :view do
 
       assert_select "textarea[name=?]", "event[description]"
 
-      assert_select "input[name=?]", "event[gamemode]"
+      assert_select "input[name=?]", "event[game_mode]"
 
-      assert_select "input[name=?]", "event[sport]"
-
-      assert_select "input[name=?]", "event[teamsport]"
-
-      assert_select "input[name=?]", "event[playercount]"
-
-      assert_select "input[name=?]", "event[gamesystem]"
+      assert_select "input[name=?]", "event[discipline]"
 
       assert_select "input[name=?]", "event[deadline]"
 
       assert_select "input[name=?]", "event[startdate]"
 
       assert_select "input[name=?]", "event[enddate]"
+
     end
   end
+
 end
