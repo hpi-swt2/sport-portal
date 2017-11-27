@@ -54,10 +54,15 @@ document.addEventListener("DOMContentLoaded", function() {
        }
     });
 
+    displayTypeField("#event_type, #tournament_type, #league_type");
+
     // Display Game Mode field conditionally in create events form
-    // TODO: refactor to something fancier
     $("#event_type, #tournament_type, #league_type").change(function() {
-        var option = $(this).val();
+        displayTypeField(this);
+    });
+
+    function displayTypeField(type) {
+        var option = $(type).val();
         var league = $("#league-game-mode");
         var tournament = $("#tournament-game-mode");
 
@@ -70,5 +75,5 @@ document.addEventListener("DOMContentLoaded", function() {
             $(league).css("display", "block");
             $(tournament).css("display", "none");
         }
-    });
+    }
 });
