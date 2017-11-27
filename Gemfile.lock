@@ -61,7 +61,7 @@ GEM
       railties (>= 3.0)
     builder (3.2.3)
     byebug (9.1.0)
-    cancancan (2.1.1)
+    cancancan (2.1.2)
     capybara (2.16.1)
       addressable
       mini_mime (>= 0.1.3)
