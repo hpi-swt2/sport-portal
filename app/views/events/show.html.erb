@@ -19,11 +19,11 @@
 <% if user_signed_in? %>
   <% if @event.teamsport==false%>
       <% if @event.users.where("user_id = ?", @user.id).exists? %>
-          <%= link_to 'Leave Event', join_event_path, :method => "put",
+          <%= link_to 'Leave Event', join_event_path(@event), :method => "put",
                       :class => 'btn btn-default', id: :leavebutton%>
           Participating
       <% else %>
-          <%= link_to 'Join Event',join_event_path, :method => "put",
+          <%= link_to 'Join Event',join_event_path(@event), :method => "put",
                       :class => 'btn btn-default', id: :joinbutton%>
       <% end %>
   <% end %>

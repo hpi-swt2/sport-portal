@@ -16,9 +16,8 @@ RSpec.describe "events/show", type: :view do
       :startdate => Date.tomorrow+1,
       :enddate => Date.tomorrow+3
     ))
-    helper.params = {:id => @user.id}
-    @event.editors << @user
 
+    @event.editors << @user
   end
 
   it "renders attributes in <p>" do
@@ -37,7 +36,7 @@ RSpec.describe "events/show", type: :view do
 
   it "renders styled buttons" do
     render
-    expect(rendered).to have_css('a.btn.btn-default', :count => 2)
+    expect(rendered).to have_css('a.btn.btn-default', :count => 3)
     expect(rendered).to have_css('a.btn.btn-danger')
   end
 end
