@@ -42,7 +42,7 @@ Rails.application.configure do
       authentication: 'plain',
       enable_starttls_auto: true,
       user_name: 'sport.portal@gmx.de',
-      password: 'swt2-2017' #TODO: extract to env variable
+      password: 'swt2-2017'
   }
 
   config.action_mailer.perform_caching = false
