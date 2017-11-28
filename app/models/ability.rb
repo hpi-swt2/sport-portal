@@ -29,10 +29,11 @@ class Ability
     can :read, :all
 
     if user.present?
-      can :manage, User, id: user.id
+      user_id = user.id
+      can :manage, User, id: user_id
       can :join, Event
-      can :manage, Event, creator_id: user.id
-      can :manage, Team, creator_id: user.id
+      can :manage, Event, creator_id: user_id
+      can :manage, Team, creator_id: user_id
       can :create, :all
       cannot :create, User
 
@@ -40,6 +41,5 @@ class Ability
         can :manage, :all
       end
     end
-
   end
 end
