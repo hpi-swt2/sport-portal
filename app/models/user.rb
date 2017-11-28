@@ -26,10 +26,20 @@ class User < ApplicationRecord
   validate :password_complexity
 
   def password_complexity
-    if password.present? and not password.match(/^(?!^\d+$)^.+$/)
+    if password.present?
+      not_only_numbers
+      four_different_characters
+    end
+  end
+
+  def not_only_numbers
+    unless password.match(/^(?!^\d+$)^.+$/)
       errors.add :password, I18n.t('validations.not_only_numbers')
     end
-    if password.present? and password.chars.uniq.count < 4
+  end
+
+  def four_different_characters
+    if password.chars.uniq.count < 4
       errors.add :password, I18n.t('validations.four_different_characters')
     end
   end
