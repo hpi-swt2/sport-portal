@@ -1,5 +1,5 @@
 require 'rails_helper'
-describe 'Event model', type: :model do
+describe Event, type: :model do
 
   let(:event) { FactoryBot.build(:league) }
 
