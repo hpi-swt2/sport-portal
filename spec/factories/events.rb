@@ -7,8 +7,8 @@ FactoryBot.define do
         # game mode is only defined for leagues atm change this and refactor tests once they are streamlined
         game_mode League.game_modes[League.game_modes.keys.sample]
         max_teams { rand(1..30) }
-        deadline Date.new(2017,11,16)
-        startdate Date.new(2017,12,01)
-        enddate Date.new(2017,12,05)
+        deadline Date.tomorrow
+        startdate Date.today + 2
+        enddate Date.today + 3
     end
 end

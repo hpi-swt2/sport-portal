@@ -46,10 +46,12 @@ div.actions {
   color: green;
 }
 
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
+.field_with_errors input,textarea,select {
+    border-color:#ee5f5b;
+}
+
+.field_with_errors input:focus,textarea:focus,select:focus {
+    border-color:#e9322d;
 }
 
 #error_explanation {
