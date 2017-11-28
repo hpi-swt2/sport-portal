@@ -12,4 +12,10 @@ RSpec.feature "User management", :type => :feature do
     end
       expect(page).to have_text("Dashboard for " + user[:first_name])
   end
+
+  scenario "User visits sign in page and can see link to sign up page" do
+    visit new_user_session_path
+
+    expect(page).to have_link(href: new_user_registration_path)
+  end
 end

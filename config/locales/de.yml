@@ -32,9 +32,18 @@
 de:
   appname: "Sport-Portal"
 
+  footer:
+    hpi: "Hasso-Plattner-Institut"
+
+  imprint: "Impressum"
+
   welcome:
     index:
       lead: "Wir bieten unglaubliche Lösungen für vielfältige Use Cases."
+
+  navbar:
+    drop-down:
+      dashboard: "Mein Dashboard"
 
   activerecord:
     models:
@@ -50,3 +59,9 @@ de:
       event:
         one: "Event"
         other: "Events"
+
+  events:
+      create_event: "Veranstaltung erstellen"
+      choose_event_format: "Veranstaltungsart wählen"
+      new_league: "Neue Liga"
+      new_tournament: "Neues Tournier"
