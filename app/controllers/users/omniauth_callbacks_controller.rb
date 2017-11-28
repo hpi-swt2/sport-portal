@@ -2,6 +2,8 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :hpiopenid
 
+  OMNIAUTH_SESSION_LIFETIME = 10.minutes
+
   # Omniauth callback for the provider 'hpiopenid'
   def hpiopenid
     auth = request.env['omniauth.auth']
@@ -33,7 +35,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         uid: auth.uid,
         provider: auth.provider,
         email: auth.info.email,
-        expires: Time.current + 10.minutes
+        expires: Time.current + OMNIAUTH_SESSION_LIFETIME
       }
       redirect_to new_user_registration_path
       flash_if_navigational :notice, :create

@@ -13,7 +13,7 @@ Then(/^there should be a '(.*)' button$/) do |text|
 end
 
 
-Then(/^the '(.*)' input should be filled with '(.*)'$/) do |name, text|
+Then(/^the '(.*)' input should already be filled with '(.*)'$/) do |name, text|
   expect(page).to have_field(name, with: text)
 end
 
