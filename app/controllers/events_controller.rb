@@ -3,10 +3,8 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    if params[:showAll].present?
-      if params[:showAll] == "on"
-        @events = Event.all
-      end
+    if get_showAll == "on"
+      @events = Event.all
     else
       @events = Event.active
     end
@@ -68,6 +66,10 @@ class EventsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+    end
+
+    def get_showAll
+      return params[:showAll]
     end
 
     def set_user

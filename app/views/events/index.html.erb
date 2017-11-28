@@ -53,13 +53,13 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_event_path,
-            :class => 'btn btn-primary' %>
 
+<%= link_to t('.new', :default => t("helpers.links.new")), new_event_path,
+  :class => 'btn btn-primary' %>
+<br>
 <form>
   <div>
     <input type="checkbox" id="shown_events" name="showAll">
     <label for="shown_events"> <%= t('events.show_events') %> </label>
-  </div>
+</div>
 </form>
