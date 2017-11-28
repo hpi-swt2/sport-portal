@@ -25,6 +25,6 @@ function init() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-      init();
-  });
+document.addEventListener("turbolinks:load", function() {
+  init();
+});
