@@ -27,7 +27,10 @@ class User < ApplicationRecord
 
   def password_complexity
     if password.present? and not password.match(/^(?!^\d+$)^.+$/)
-      errors.add :password, "Password should not only contain numbers"
+      errors.add :password, 'should not only contain numbers'
+    end
+    if password.present? and password.chars.uniq.count < 4
+      errors.add :password, 'should contain at least 4 different characters'
     end
   end
 

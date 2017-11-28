@@ -32,6 +32,11 @@ RSpec.describe User, type: :model do
     expect(user).not_to be_valid
   end
 
+  it 'is not valid if password has not four different characters' do
+    user = FactoryBot.build(:user, password: 'asdasdasd')
+    expect(user).not_to be_valid
+  end
+
   it 'is not valid when the omniauth is not unique' do
     user1 = FactoryBot.create(:user, provider: 'mock', uid: '1234567890')
     user2 = FactoryBot.build(:user, provider: 'mock', uid: '1234567890')

@@ -27,3 +27,9 @@ Feature: Sign up Input Validation
     Then b should not be able to sign up
     And the page should show Password should not only contain numbers
 
+  Scenario: Password has at least 4 different characters
+    Given a new user b with password asdasdasdasd
+    When b tries to sign up
+    Then b should not be able to sign up
+    And the page should show Password should contain at least 4 different characters
+
