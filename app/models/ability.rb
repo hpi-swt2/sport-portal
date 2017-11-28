@@ -30,6 +30,7 @@ class Ability
 
     if user.present?
       can :manage, User, id: user.id
+      can :join, Event
       can :manage, Event, creator_id: user.id
       can :manage, Team, creator_id: user.id
       can :create, :all

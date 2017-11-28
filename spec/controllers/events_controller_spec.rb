@@ -123,13 +123,15 @@ RSpec.describe EventsController, type: :controller do
     end
 
     it "should allow normal user to edit his created event" do
-      event = Event.create(creator: @user)
+      event = Event.create! valid_attributes
       get :edit, params: {id: event.to_param}
       expect(response).to be_success
     end
 
     it "should not allow normal user to edit others created event" do
-      event = Event.create(creator: @other_user)
+      sign_out @user
+      sign_in @other_user
+      event = Event.create! valid_attributes
       get :edit, params: {id: event.to_param}
       expect(response).to_not be_success
     end
@@ -181,13 +183,15 @@ RSpec.describe EventsController, type: :controller do
       end
 
       it "should allow normal user to update his created event" do
-        event = Event.create(creator: @user)
+        event = Event.create! valid_attributes
         put :update, params: {id: event.to_param, event: valid_attributes}
         expect(response).to redirect_to(event)
       end
 
       it "should not allow normal user to update others created events" do
-        event = Event.create(creator: @other_user)
+        sign_out @user
+        sign_in @other_user
+        event = Event.create! valid_attributes
         put :update, params: {id: event.to_param, event: valid_attributes}
         expect(response).to_not be_success
       end
@@ -209,13 +213,15 @@ RSpec.describe EventsController, type: :controller do
     end
 
     it "should not allow normal user to destroy events created by others" do
-      event = Event.create(creator: @other_user)
+      sign_out @user
+      sign_in @other_user
+      event = Event.create! valid_attributes
       delete :destroy, params: {id: event.to_param}
       expect(response).to be_forbidden
     end
 
     it "should allow normal user to destroy his created event" do
-      event = Event.create(creator: @user)
+      event = Event.create! valid_attributes
       delete :destroy, params: {id: event.to_param}
       expect(response).to redirect_to(events_url)
     end

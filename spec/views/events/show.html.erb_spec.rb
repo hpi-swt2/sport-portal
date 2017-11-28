@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "events/show", type: :view do
   before(:each) do
-    @event = assign(:event, FactoryBot.create(:event))
     @user = FactoryBot.create :user
+    @event = assign(:event, FactoryBot.create(:event))
     sign_in @user
     # @event = assign(:event, Event.create!(
     #   :name => "Name",
@@ -17,7 +17,6 @@ RSpec.describe "events/show", type: :view do
     #   :startdate => Date.tomorrow+1,
     #   :enddate => Date.tomorrow+3
     # ))
-    @event = FactoryBot.create :event, player_type: Event.player_types[:single]
 
     @event.editors << @user
     @event.creator = @user

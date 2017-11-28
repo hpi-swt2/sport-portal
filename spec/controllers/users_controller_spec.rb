@@ -106,7 +106,8 @@ RSpec.describe UsersController, type: :controller do
 
     context 'given no logged in user' do
       it 'should deny access' do
-        expect { get :link, params: { id: @user.to_param } }.to raise_error(CanCan::AccessDenied)
+        get :link, params: { id: @user.to_param }
+        expect(response).to be_unauthorized
       end
     end
   end
@@ -141,7 +142,8 @@ RSpec.describe UsersController, type: :controller do
 
     context 'given no logged in user' do
       it 'should deny access' do
-        expect { get :unlink, params: { id: @user.to_param } }.to raise_error(CanCan::AccessDenied)
+        get :unlink, params: { id: @user.to_param }
+        expect(response).to be_unauthorized
       end
     end
   end
