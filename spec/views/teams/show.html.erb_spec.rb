@@ -41,4 +41,10 @@ RSpec.describe "teams/show", type: :view do
     render
     rendered.should_not have_content('Als Captain hinzufügen')
   end
+
+  it "does show checkbox for each member" do
+    user FactoryBot.create :user
+    @team.members << user
+    render
+  end
 end
