@@ -34,13 +34,13 @@ class Ability
     #     can :read, :all
     #   end
 
-    user ||= User.new # guest user (not logged in)  
+    user ||= User.new # guest user (not logged in)
     id = user.id
     # All users can only update their own user attributes
     alias_action :create, :read, :update, :destroy, :to => :crud
     can :crud, Team
     can :update, User, id: id
-    
+
     can :assign_ownership, Team, Team do |team|
       team.owners.include? user
     end
@@ -51,11 +51,11 @@ class Ability
     end
 
     can :delete_membership, Team, Team do |team|
-      team.owners.include? user and num_owners(team, team_member) > 0      
+      team.owners.include? user and num_owners(team, team_member) > 0
     end
 
     can :delete_membership, Team, Team do |team|
-      num_owners(team, team_member) > 0 and Integer(id) == Integer(team_member)            
+      num_owners(team, team_member) > 0 and Integer(id) == Integer(team_member)         
     end
   end
 end
@@ -65,7 +65,7 @@ def num_owners(team, team_member)
   another_user = User.find(team_member)
   if owners.include? another_user
     owners_after_delete = owners - [another_user]
-  else  
+  else
     owners_after_delete = owners
   end
   owners_after_delete.length
