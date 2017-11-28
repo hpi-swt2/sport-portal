@@ -55,11 +55,41 @@ RSpec.describe UsersController, type: :controller do
       get :show, params: {id: @user.to_param}
       expect(response).to be_success
     end
+  end
 
-    it "should allow normal user to view the page of other users" do
-      sign_in @user
-      get :show, params: {id: @other_user.to_param}
+  describe 'GET #new' do
+    before :each do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      @auth_session = {
+          'provider' => 'mock',
+          'uid' => '1234567890',
+          'email' => 'test@potato.com',
+          'expires' => Time.current + 10.minutes
+      }
+    end
+
+    it 'should not set the email when no auth session is provided' do
+      get :new
+      user = @controller.user
       expect(response).to be_success
+      expect(user.email).to be_blank
+    end
+
+    it 'should set the email when an auth session is provided' do
+      @request.session['omniauth.data'] = @auth_session
+      get :new
+      user = @controller.user
+      expect(response).to be_success
+      expect(user.email).to eq(@auth_session['email'])
+    end
+
+    it 'should not set the email when an expired auth session is provided' do
+      @auth_session['expires'] = Time.current - 2.minutes
+      @request.session['omniauth.data'] = @auth_session
+      get :new
+      user = @controller.user
+      expect(response).to be_success
+      expect(user.email).to be_blank
     end
   end
 
@@ -70,12 +100,18 @@ RSpec.describe UsersController, type: :controller do
         post :create, params: {user: valid_attributes}
       }.to change(User, :count).by(1)
     end
+
+    it "should allow normal user to view the page of other users" do
+      sign_in @user
+      get :show, params: {id: @other_user.to_param}
+      expect(response).to be_success
+    end
   end
 
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) {
-        { first_name: valid_attributes[:first_name] + '_new',
+        {first_name: valid_attributes[:first_name] + '_new',
          current_password: valid_attributes[:password]}
       }
 
@@ -99,14 +135,14 @@ RSpec.describe UsersController, type: :controller do
     context 'given a logged in user' do
       it 'should redirect to OpenID' do
         sign_in @user
-        get :link, params: { id: @user.to_param }
+        get :link, params: {id: @user.to_param}
         expect(response).to redirect_to(user_hpiopenid_omniauth_authorize_path)
       end
     end
 
     context 'given no logged in user' do
       it 'should deny access' do
-        get :link, params: { id: @user.to_param }
+        get :link, params: {id: @user.to_param}
         expect(response).to be_unauthorized
       end
     end
@@ -124,7 +160,7 @@ RSpec.describe UsersController, type: :controller do
         @user.provider = 'mock'
         @user.save!
         sign_in @user
-        get :unlink, params: { id: @user.to_param }
+        get :unlink, params: {id: @user.to_param}
         @user.reload
         expect(response).to redirect_to(user_path(@user))
         expect(@user.uid).to be_nil
@@ -135,14 +171,14 @@ RSpec.describe UsersController, type: :controller do
     context 'given a logged in user without omniauth' do
       it 'should redirect to the users page' do
         sign_in @user
-        get :unlink, params: { id: @user.to_param }
+        get :unlink, params: {id: @user.to_param}
         expect(response).to redirect_to(user_path(@user))
       end
     end
 
     context 'given no logged in user' do
       it 'should deny access' do
-        get :unlink, params: { id: @user.to_param }
+        get :unlink, params: {id: @user.to_param}
         expect(response).to be_unauthorized
       end
     end

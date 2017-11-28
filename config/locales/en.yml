@@ -57,3 +57,9 @@ en:
         user: "Not allowed to manage other user accounts."
       update:
         project: "Not allowed to update this project."
+
+  events:
+        create_event: "Create Event"
+        choose_event_format: "Choose event format"
+        new_league: "New league"
+        new_tournament: "New tournament"
