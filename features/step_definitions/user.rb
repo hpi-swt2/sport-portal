@@ -15,6 +15,10 @@ Given(/^a user (.*) with email (.*)$/) do |username, email|
   create_user_named(username, email: email)
 end
 
+Given(/^a new user$/) do
+  build_user
+end
+
 Given(/^a new user (.*) with email (.*)$/) do |username, email|
   build_user_named(username, email: email)
 end
@@ -47,6 +51,13 @@ Then(/^the user should be linked with the account$/) do
   user = single_user
   account = single_account
   user.reload
+  expect(user.uid).to eq(account[:uid])
+  expect(user.provider).to eq(account[:provider])
+end
+
+Then(/^the new user should be linked with the account$/) do
+  account = single_account
+  user = User.find_by(email: account.info.email)
   expect(user.uid).to eq(account[:uid])
   expect(user.provider).to eq(account[:provider])
 end

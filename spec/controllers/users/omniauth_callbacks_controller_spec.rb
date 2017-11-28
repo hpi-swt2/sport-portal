@@ -60,12 +60,12 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     end
 
     context 'given no (logged in or linked) user' do
-      it 'should redirect to the root path' do
+      it 'should redirect to the registration from' do
         @user.uid = nil
         @user.provider = nil
         @user.save!
         get :hpiopenid
-        expect(response).to redirect_to(root_path)
+        expect(response).to redirect_to(new_user_registration_path)
       end
     end
   end
