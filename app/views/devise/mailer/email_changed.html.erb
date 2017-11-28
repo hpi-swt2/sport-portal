@@ -1,0 +1,4 @@
+<p><%= t('.greeting', name: @resource.first_name.capitalize) %></p>
+
+<% mail = @resource.try(:unconfirmed_email?) ? @resource.unconfirmed_email : @resource.email %>
+<p><%= t('.body', oldmail: @email, newmail: mail) %></p>
