@@ -29,7 +29,6 @@ de:
     omniauth_callbacks:
       user:
         link_success: "Erfolgreich mit %{provider} verbunden."
-        failure: "Du konntest nicht Deinem %{provider}-Account angemeldet werden, da der Account nicht verbunden ist."
         link_failure: "Fehler beim Verbinden mit %{provider}, du benutzt schon einen anderen Dienst."
         link_taken: "Fehler beim Verbinden mit %{provider}, jemand anderes verwendet diesen Account bereits."
         success: "Erfolgreich mit %{provider} angemeldet."

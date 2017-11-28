@@ -33,7 +33,6 @@ en:
         link_failure: "Failed to connect with %{provider}, you are already using another provider."
         link_taken: "Failed to connect with %{provider}, someone is already linked to that account."
         success: "Successfully authenticated with %{provider}."
-        failure: "Could not authenticate with %{provider}, the account is not linked."
         create: "You do not have an account yet, but you can create one by filling in the missing information."
       failure: "Could not authenticate with %{provider} because \"%{reason}\"."
     passwords:
