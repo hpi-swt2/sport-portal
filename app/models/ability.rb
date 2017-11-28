@@ -63,7 +63,7 @@ class Ability
 
   private
 
-   def self.num_owners(team, team_member)
+  def self.num_owners(team, team_member)
     owners = team.owners
     another_user = User.find(team_member)
       if owners.include? another_user
