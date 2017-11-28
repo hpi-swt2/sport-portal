@@ -13,6 +13,7 @@
 
 class Team < ApplicationRecord
   validates :name, presence: true
+  validates :private, inclusion:  [true, false]
 
   has_many :team_owners
   has_many :owners, through: :team_owners, source: :user
@@ -20,6 +21,6 @@ class Team < ApplicationRecord
   has_many :team_members
   has_many :members, through: :team_members, source: :user
 
-
-  validates :private, inclusion:  [true, false]
+  # validates :owners, presence: true
+  # validates :members, presence: true
 end

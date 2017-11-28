@@ -34,7 +34,6 @@ class Ability
     #     can :read, :all
     #   end
 
-
     user ||= User.new # guest user (not logged in)  
     id = user.id
     # All users can only update their own user attributes
@@ -52,19 +51,20 @@ class Ability
     end
 
     can :delete_membership, Team, Team do |team|
-      owners = num_owners(team, team_member)
-      Integer(id) == Integer(team_member)
-      team.owners.include? user 
-      owners > 0
+      team.owners.include? user and num_owners(team, team_member) > 0      
+    end
+
+    can :delete_membership, Team, Team do |team|
+      num_owners(team, team_member) > 0 and Integer(id) == Integer(team_member)            
     end
   end
 end
 
 def num_owners(team, team_member)
   owners = team.owners
-  user = User.find(team_member)
-  if owners.include? user
-    owners_after_delete = owners - [user]
+  another_user = User.find(team_member)
+  if owners.include? another_user
+    owners_after_delete = owners - [another_user]
   else  
     owners_after_delete = owners
   end
