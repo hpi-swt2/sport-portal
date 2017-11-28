@@ -20,7 +20,7 @@
 #
 
 class Event < ApplicationRecord
-  validates :name, :discipline, :game_mode, presence: true
+  validates :name, :discipline, :game_mode, :player_type, presence: true
   validates :deadline, :startdate, :enddate, presence: true
   validate :end_after_start
   enum player_types: [:single, :team]
@@ -30,7 +30,7 @@ class Event < ApplicationRecord
   end
 
   has_many :organizers
-  has_many :editors, :through => :organizers, :source => 'user'
+  has_many :editors, through: :organizers, source: 'user'
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
@@ -43,8 +43,6 @@ class Event < ApplicationRecord
 
   def end_after_start
     return if enddate.blank? || startdate.blank?
-    if enddate < startdate
-      errors.add(:enddate, "must be after startdate.")
-    end
+    errors.add(:enddate, 'must be after startdate.') if enddate < startdate
   end
 end
