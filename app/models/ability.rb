@@ -57,7 +57,7 @@ class Ability
     end
 
     can :delete_membership, Team, Team do |team|
-      Integer(id) == team_member and Ability.number_of_owners_after_delete(team, team_member) > 0 
+      Integer(id) == team_member and Ability.number_of_owners_after_delete(team, team_member) > 0
     end
   end
 

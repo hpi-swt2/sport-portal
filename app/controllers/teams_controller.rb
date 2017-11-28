@@ -56,7 +56,6 @@ class TeamsController < ApplicationController
 
   # Assigns team ownership to a specific team member
   def assign_ownership
-
     unless @team.owners.include? (User.find(params[:team_member]))
       @team.owners << User.find(params[:team_member])
       redirect_to @team
