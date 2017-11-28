@@ -64,8 +64,8 @@ class Ability
   private
 
    def self.num_owners(team, team_member)
-      owners = team.owners
-      another_user = User.find(team_member)
+    owners = team.owners
+    another_user = User.find(team_member)
       if owners.include? another_user
         owners_after_delete = owners - [another_user]
       else
@@ -73,5 +73,4 @@ class Ability
       end
       owners_after_delete.length
     end
-
 end
