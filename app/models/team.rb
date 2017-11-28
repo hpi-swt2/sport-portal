@@ -15,6 +15,8 @@ class Team < ApplicationRecord
   validates :name, presence: true
   validates :private, inclusion:  [true, false]
 
+  has_and_belongs_to_many :events
+
   has_many :team_owners
   has_many :owners, through: :team_owners, source: :user
 
