@@ -27,7 +27,7 @@ Given(/^the user is logged in$/) do
   sign_in single_user
 end
 
-Given(/^(\w+) is logged in$/) do |name|
+Given(/^(\w+) is (?:logged|able to log)? in(?: again)?$/) do |name|
   sign_in user_named name
 end
 
@@ -82,4 +82,44 @@ end
 
 Then(/^(.*) should not be able to sign up$/) do |username|
   expect(user_named(username).persisted?).to be_falsey
+end
+
+
+When(/^he visits the password recovery page$/) do
+  visit new_user_password_path
+end
+
+And(/^(.+) inserts his email address$/) do |username|
+  user = user_named(username)
+  fill_in :user_email, with: user.email
+end
+
+And(/^submits$/) do
+  click_button I18n.t('devise.registrations.reset_password')
+end
+
+Then(/^(\w+) gets an Email with a recovery link$/) do |username|
+  user = user_named(username)
+  open_email(user.email)
+  expect(current_email.subject).to have_content(I18n.t('devise.mailer.reset_password_instructions.subject'))
+  expect(current_email).to have_link(I18n.t('devise.mailer.reset_password_instructions.action'))
+end
+
+When(/^he clicks the recovery link$/) do
+  current_email.click_link I18n.t('devise.mailer.reset_password_instructions.action')
+end
+
+And(/^he enters a new password$/) do
+  fill_in :user_password, with: '12345678_my_new_password'
+  fill_in :user_password_confirmation, with: '12345678_my_new_password'
+  click_button I18n.t('devise.registrations.confirm_new_password')
+end
+
+When(/^(\w+) is stored in the database$/) do |username|
+  user = user_named username
+  user.save!
+end
+
+And(/^he logs out$/) do
+  sign_out
 end
