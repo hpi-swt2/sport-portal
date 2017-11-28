@@ -53,19 +53,18 @@ class Ability
     end
 
     can :delete_membership, Team, Team do |team|
-      team.owners.include? user and Ability.num_owners(team, team_member) > 0
+      team.owners.include? user and Ability.number_of_owners_after_delete(team, team_member) > 0
     end
 
     can :delete_membership, Team, Team do |team|
-      Ability.num_owners(team, team_member) > 0 and Integer(id) == Integer(team_member)
+      Integer(id) == team_member and Ability.number_of_owners_after_delete(team, team_member) > 0 
     end
   end
 
   private
-
-  def self.num_owners(team, team_member)
-    owners = team.owners
-    another_user = User.find(team_member)
+    def self.number_of_owners_after_delete(team, team_member)
+      owners = team.owners
+      another_user = User.find(team_member)
       if owners.include? another_user
         owners_after_delete = owners - [another_user]
       else

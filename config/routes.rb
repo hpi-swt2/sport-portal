@@ -36,19 +36,9 @@ Rails.application.routes.draw do
   resources :teams do
     member do
       post :assign_ownership
-    end
-  end
-
-  resources :teams do
-    member do
       post :delete_ownership
-    end 
-  end
-
-  resources :teams do
-    member do
       post :delete_membership
-    end 
+    end
   end
     
   #Define route for Create Event Button
