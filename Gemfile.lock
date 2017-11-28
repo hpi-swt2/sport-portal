@@ -69,6 +69,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-email (2.5.0)
+      capybara (~> 2.4)
+      mail
     certified (1.0.0)
     coderay (1.1.2)
     commonjs (0.2.7)
@@ -334,6 +337,7 @@ DEPENDENCIES
   byebug
   cancancan
   capybara
+  capybara-email
   certified
   coveralls
   cucumber-rails
