@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    if get_showAll == "on"
+    if get_shown_events_value == "on"
       @events = Event.all
     else
       @events = Event.active
@@ -68,8 +68,8 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
-    def get_showAll
-      return params[:showAll]
+    def get_shown_events_value
+      params[:showAll]
     end
 
     def set_user
