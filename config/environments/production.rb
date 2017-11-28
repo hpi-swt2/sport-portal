@@ -1,3 +1,5 @@
+ENV['HOST_URL'] = 'sport-portal-dev.herokuapp.com'
+
 # Configure airbrake, error reporting to Errbit
 # https://github.com/airbrake/airbrake
 Airbrake.configure do |config|
