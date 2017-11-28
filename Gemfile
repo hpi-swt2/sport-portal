@@ -94,6 +94,8 @@ group :development, :test do
   # Acceptance test framework for web applications
   # https://github.com/teamcapybara/capybara
   gem 'capybara'
+  # Mailer convenience methods
+  gem 'capybara-email'
   # Manage translation and localization with static analysis, for Ruby i18n
   # https://github.com/glebm/i18n-tasks
   gem 'i18n-tasks'

@@ -89,18 +89,13 @@ end
 
 Then(/^(\w+) gets an Email with a recovery link$/) do |username|
   user = user_named(username)
-  reset_password_mail = ActionMailer::Base.deliveries.last
-  expect(reset_password_mail.subject).to have_content(I18n.t('devise.mailer.reset_password_instructions.subject'))
-  expect(reset_password_mail.body.to_s).to have_content(I18n.t('devise.mailer.reset_password_instructions.action'))
-  expect(reset_password_mail.to[0]).to eq(user.email)
-  expect(reset_password_mail.body.to_s).to have_css('a')
+  open_email(user.email)
+  expect(current_email.subject).to have_content(I18n.t('devise.mailer.reset_password_instructions.subject'))
+  expect(current_email).to have_link(I18n.t('devise.mailer.reset_password_instructions.action'))
 end
 
 When(/^he clicks the recovery link$/) do
-  reset_password_mail = ActionMailer::Base.deliveries.last
-  path_regex = /(?:"https?\:\/\/.*?)(\/.*?)(?:")/
-  path = reset_password_mail.body.match(path_regex)[1]
-  visit(path)
+  current_email.click_link I18n.t('devise.mailer.reset_password_instructions.action')
 end
 
 And(/^he enters a new password$/) do
