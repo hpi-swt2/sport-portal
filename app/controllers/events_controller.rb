@@ -3,8 +3,10 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    if params[:showAll] == "on"
-      @events = Event.all
+    if params[:showAll].present?
+      if params[:showAll] == "on"
+        @events = Event.all
+      end
     else
       @events = Event.active
     end
