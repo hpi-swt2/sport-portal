@@ -21,7 +21,7 @@ RSpec.describe "teams/show", type: :view do
 
   it "does not show delete ownership button for mere members" do
     user = FactoryBot.create :user    
-    @team.members << user
+    @team.owners = []
     render
     rendered.should_not have_content('Als Captain löschen')
   end
