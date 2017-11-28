@@ -22,8 +22,6 @@ ActiveRecord::Schema.define(version: 20171124121138) do
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "startdate"
-    t.date "enddate"
     t.date "deadline"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["player_type"], name: "index_events_on_player_type"

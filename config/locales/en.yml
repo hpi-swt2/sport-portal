@@ -56,3 +56,6 @@ en:
         choose_event_format: "Choose event format"
         new_league: "New league"
         new_tournament: "New tournament"
+  validations:
+    not_only_numbers: "should not only contain numbers"
+    four_different_characters: "should contain at least 4 different characters"

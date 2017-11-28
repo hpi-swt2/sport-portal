@@ -59,9 +59,16 @@ de:
       event:
         one: "Event"
         other: "Events"
+    attributes:
+      user:
+        first_name: "Vorname"
+        last_name: "Nachname"
 
   events:
       create_event: "Veranstaltung erstellen"
       choose_event_format: "Veranstaltungsart wählen"
       new_league: "Neue Liga"
       new_tournament: "Neues Tournier"
+  validations:
+    not_only_numbers: "darf nicht nur aus Zahlen bestehen"
+    four_different_characters: "muss aus mindestens 4 verschiedenen Zeichen bestehen"

@@ -27,10 +27,10 @@ class User < ApplicationRecord
 
   def password_complexity
     if password.present? and not password.match(/^(?!^\d+$)^.+$/)
-      errors.add :password, 'should not only contain numbers'
+      errors.add :password, I18n.t('validations.not_only_numbers')
     end
     if password.present? and password.chars.uniq.count < 4
-      errors.add :password, 'should contain at least 4 different characters'
+      errors.add :password, I18n.t('validations.four_different_characters')
     end
   end
 
