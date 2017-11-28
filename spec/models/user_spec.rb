@@ -22,6 +22,16 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
+  it 'is not valid if password is shorter than 8 characters' do
+    user = FactoryBot.build(:user, password: '1D35r7')
+    expect(user).not_to be_valid
+  end
+
+  it 'is not valid if password is only numbers' do
+    user = FactoryBot.build(:user, password: '12345678')
+    expect(user).not_to be_valid
+  end
+
   it 'is not valid when the omniauth is not unique' do
     user1 = FactoryBot.create(:user, provider: 'mock', uid: '1234567890')
     user2 = FactoryBot.build(:user, provider: 'mock', uid: '1234567890')

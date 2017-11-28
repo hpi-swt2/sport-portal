@@ -21,7 +21,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # https://github.com/plataformatec/devise
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid]
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid], password_length: 8..128
+
+  validate :password_complexity
+
+  def password_complexity
+    if password.present? and not password.match(/^(?!^\d+$)^.+$/)
+      errors.add :password, "Password should not only contain numbers"
+    end
+  end
 
   validates :first_name, :last_name, presence: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
