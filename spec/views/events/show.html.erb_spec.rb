@@ -38,7 +38,7 @@ RSpec.describe "events/show", type: :view do
 
   it "renders styled buttons" do
     render
-    expect(rendered).to have_css('a.btn.btn-default', :count => 2)
+    expect(rendered).to have_css('a.btn.btn-default', :count => 3)
     expect(rendered).to have_css('a.btn.btn-danger')
   end
 
