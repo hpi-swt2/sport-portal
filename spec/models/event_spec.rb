@@ -28,7 +28,7 @@ describe "Event model", type: :model do
     end
 
     it "should have an attribute startdate" do
-      date = Date.tomorrow + 1
+      date = Date.today + 2
       expect(event.startdate).to eq date
 
       expect(event).to be_valid
@@ -37,7 +37,7 @@ describe "Event model", type: :model do
     end
 
     it "should have an attribute enddate" do
-      date = Date.tomorrow + 2
+      date = Date.today + 3
       expect(event.enddate).to eq date
 
       expect(event).to be_valid
