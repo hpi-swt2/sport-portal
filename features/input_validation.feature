@@ -1,5 +1,5 @@
 Feature: Sign up Input Validation
-  As a user that inserts data into plattform
+  As a user that inserts data into platform
   In order to know how to fill in the right data
   I want to have fill in support messages
 
