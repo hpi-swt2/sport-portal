@@ -57,8 +57,7 @@ class TeamsController < ApplicationController
   def assign_ownership
     team_member_id = params[:team_member]
     @team = Team.find(params[:id])
-    authorize! :assign_ownership, @team 
-
+    authorize! :assign_ownership, @team
 
     # Checks whether the specified team member already has team ownership
     if @team.owners.exists?(team_member_id)
@@ -75,12 +74,10 @@ class TeamsController < ApplicationController
     authorize! :delete_ownership, @team
     user = User.find(team_member_id)
 
-
     # Checks whether the specified team member does not have team ownership
     if !@team.owners.include?(user)
       return
     end
-
 
     @team.owners.delete(user)
     redirect_to @team
