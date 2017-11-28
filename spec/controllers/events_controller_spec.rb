@@ -34,27 +34,11 @@ RSpec.describe EventsController, type: :controller do
   # Event. As you add validations to Event, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {
-        name: "TT Event",
-        discipline: 0,
-        game_mode: 0,
-        player_type: Event.player_types[:single],
-        deadline: Date.current,
-        startdate: Date.current,
-        enddate: Date.current
-    }
+    FactoryBot.attributes_for(:event)
   }
 
   let(:invalid_attributes) {
-    {
-        name: "TT Event",
-        discipline: 0,
-        game_mode: 0,
-        player_type: Event.player_types[:single],
-        deadline: Date.new(2017, 11, 23),
-        startdate: Date.new(2017, 11, 23),
-        enddate: Date.new(2017, 10, 1)
-    }
+    {name: nil}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -118,20 +102,14 @@ RSpec.describe EventsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        {
-            deadline: Date.new(2017, 11, 20),
-            startdate: Date.new(2017, 11, 21),
-            enddate: Date.new(2017, 11, 22)
-        }
+        FactoryBot.attributes_for(:event)
       }
 
       it "updates the requested event" do
         event = Event.create! valid_attributes
         put :update, params: {id: event.to_param, event: new_attributes}, session: valid_session
         event.reload
-        expect(event.deadline).to eq(Date.new(2017, 11, 20))
-        expect(event.startdate).to eq(Date.new(2017, 11, 21))
-        expect(event.enddate).to eq(Date.new(2017, 11, 22))
+        expect(event.name).to_not eq valid_attributes[:name]
       end
 
       it "redirects to the event" do
@@ -162,6 +140,20 @@ RSpec.describe EventsController, type: :controller do
       event = Event.create! valid_attributes
       delete :destroy, params: {id: event.to_param}, session: valid_session
       expect(response).to redirect_to(events_url)
+    end
+  end
+
+  describe "GET #schedule" do
+    it "should generate schedule if not existing" do
+      event = Event.create! FactoryBot.build(:event, max_teams: 5).attributes
+      get :schedule, params: {id: event.to_param}, session: valid_session
+      expect(event.matches).not_to be_empty
+    end
+
+    it "returns a success response" do
+      event = Event.create! valid_attributes
+      get :schedule, params: {id: event.to_param}, session: valid_session
+      expect(response).to be_success
     end
   end
 
