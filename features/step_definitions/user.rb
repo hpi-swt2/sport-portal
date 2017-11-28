@@ -74,7 +74,7 @@ Then(/^(.*) should not be able to sign up$/) do |username|
 end
 
 
-When(/^(.+) visits the password recovery page$/) do |username|
+When(/^he visits the password recovery page$/) do
   visit new_user_password_path
 end
 
@@ -90,26 +90,23 @@ end
 Then(/^(\w+) gets an Email with a recovery link$/) do |username|
   user = user_named(username)
   reset_password_mail = ActionMailer::Base.deliveries.last
-  expect(reset_password_mail.subject).to have_content('asswor') # (P|p)asswor(d|t)
+  expect(reset_password_mail.subject).to have_content(I18n.t('devise.mailer.reset_password_instructions.subject'))
+  expect(reset_password_mail.body.to_s).to have_content(I18n.t('devise.mailer.reset_password_instructions.action'))
   expect(reset_password_mail.to[0]).to eq(user.email)
   expect(reset_password_mail.body.to_s).to have_css('a')
 end
 
-When(/^(\w+) clicks the recovery link$/) do |username|
+When(/^he clicks the recovery link$/) do
   reset_password_mail = ActionMailer::Base.deliveries.last
   path_regex = /(?:"https?\:\/\/.*?)(\/.*?)(?:")/
   path = reset_password_mail.body.match(path_regex)[1]
   visit(path)
 end
 
-And(/^(\w+) enters a new password$/) do |username|
+And(/^he enters a new password$/) do
   fill_in :user_password, with: '12345678_my_new_password'
   fill_in :user_password_confirmation, with: '12345678_my_new_password'
   click_button I18n.t('devise.registrations.confirm_new_password')
-end
-
-And(/^(\w+) tries to log in with his new password$/) do |username|
-  sign_in single_user
 end
 
 When(/^(\w+) is stored in the database$/) do |username|

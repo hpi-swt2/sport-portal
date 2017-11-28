@@ -113,7 +113,7 @@ module DataHelper
   end
 
   def sign_out
-    click_link I18n.t('devise.registrations.sign_out')
+    page.driver.submit :delete, destroy_user_session_path, {}
     @current_user = nil
   end
 
