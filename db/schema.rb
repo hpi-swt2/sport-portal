@@ -10,21 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171121154832) do
+ActiveRecord::Schema.define(version: 20171124121138) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "gamemode"
-    t.string "sport"
-    t.boolean "teamsport"
-    t.integer "playercount"
-    t.text "gamesystem"
-    t.date "deadline"
+    t.string "discipline"
+    t.integer "player_type", null: false
+    t.integer "max_teams"
+    t.integer "game_mode", null: false
+    t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "startdate"
     t.date "enddate"
+    t.date "deadline"
+    t.index ["game_mode"], name: "index_events_on_game_mode"
+    t.index ["player_type"], name: "index_events_on_player_type"
+  end
+
+  create_table "events_users", id: false, force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "user_id", null: false
   end
 
   create_table "matches", force: :cascade do |t|
@@ -38,10 +45,34 @@ ActiveRecord::Schema.define(version: 20171121154832) do
     t.integer "team_away_id"
   end
 
+  create_table "organizers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_organizers_on_event_id"
+    t.index ["user_id"], name: "index_organizers_on_user_id"
+  end
+
+  create_table "team_members", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_team_members_on_user_id_and_user_id"
+  end
+
+  create_table "team_owners", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_team_owners_on_user_id_and_user_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "kind_of_sport"
+    t.boolean "private"
   end
 
   create_table "users", force: :cascade do |t|

@@ -100,4 +100,9 @@ RSpec.describe User, type: :model do
       expect(user.provider).to be_nil
     end
   end
+
+  it "should have an attribute events" do
+    @relation = User.reflect_on_association(:events)
+    expect(@relation.macro).to eq :has_and_belongs_to_many
+  end
 end
