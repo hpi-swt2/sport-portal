@@ -56,3 +56,10 @@
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_event_path,
             :class => 'btn btn-primary' %>
+
+<form>
+  <div>
+    <input type="checkbox" id="shown_events" name="showAll">
+    <label for="shown_events"> <%= t('events.show_events') %> </label>
+  </div>
+</form>

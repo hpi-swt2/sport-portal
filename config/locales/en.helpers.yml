@@ -26,7 +26,7 @@ en:
     submit:
       create: Create %{model}
       submit: Save %{model}
-      update: Update %{model}
+      update: Update %{model} 
     select:
       prompt: Please select
     teams:

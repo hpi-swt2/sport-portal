@@ -3,7 +3,15 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.active
+    @showAll = params[:showAll]
+    
+    if @showAll == "on"
+      @events = Event.all
+    else
+      @events = Event.active
+    end
+
+
   end
 
   # GET /events/1
