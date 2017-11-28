@@ -36,12 +36,6 @@ RSpec.describe "events/show", type: :view do
     # expect(rendered).to match((Date.tomorrow+3).to_s)
   end
 
-  it "renders styled buttons" do
-    render
-    expect(rendered).to have_css('a.btn.btn-default', :count => 3)
-    expect(rendered).to have_css('a.btn.btn-danger')
-  end
-
   #not signed in user
   it "doesn't render the new button when not signed in" do
     render
