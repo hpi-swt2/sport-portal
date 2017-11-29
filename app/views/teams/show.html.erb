@@ -50,7 +50,7 @@
                           assign_ownership_team_path(@team, :team_member => member.id),
                           :method => 'post',
                           :class => 'btn btn-default btn-xs',
-                          :disabled => !((can? :assign_ownership, @team) and (member.id != current_user.id)) %>
+                          :disabled => !((can? :assign_ownership, @team) and (@team.owners.include? member.id)) %>
               <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
                           delete_membership_team_path(@team, :team_member => member.id),
                           :method => 'post',
