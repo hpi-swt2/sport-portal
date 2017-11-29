@@ -25,15 +25,28 @@ require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
 
+  before(:each) do
+    @user = FactoryBot.create :user
+    sign_in @user
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Event. As you add validations to Event, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
+<<<<<<< HEAD
     FactoryBot.build(:event).attributes
   }
 
   let(:invalid_attributes) {
     FactoryBot.build(:event, name: nil).attributes
+=======
+    FactoryBot.attributes_for(:event)
+  }
+
+  let(:invalid_attributes) {
+    {name: nil}
+>>>>>>> dev
   }
 
   # This should return the minimal set of values that should be in the session
@@ -97,14 +110,14 @@ RSpec.describe EventsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        FactoryBot.attributes_for(:event)
       }
 
       it "updates the requested event" do
         event = Event.create! valid_attributes
         put :update, params: {id: event.to_param, event: new_attributes}, session: valid_session
         event.reload
-        skip("Add assertions for updated state")
+        expect(event.name).to_not eq valid_attributes[:name]
       end
 
       it "redirects to the event" do
@@ -135,6 +148,20 @@ RSpec.describe EventsController, type: :controller do
       event = Event.create! valid_attributes
       delete :destroy, params: {id: event.to_param}, session: valid_session
       expect(response).to redirect_to(events_url)
+    end
+  end
+
+  describe "GET #schedule" do
+    it "should generate schedule if not existing" do
+      event = Event.create! FactoryBot.build(:event, max_teams: 5).attributes
+      get :schedule, params: {id: event.to_param}, session: valid_session
+      expect(event.matches).not_to be_empty
+    end
+
+    it "returns a success response" do
+      event = Event.create! valid_attributes
+      get :schedule, params: {id: event.to_param}, session: valid_session
+      expect(response).to be_success
     end
   end
 

@@ -1,9 +1,25 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
+<<<<<<< HEAD
+=======
+  resources :events do
+    member do
+      put :join
+    end
+  end
+
+>>>>>>> dev
   root 'welcome#index'
   resources :teams
-  resources :matches
+  resources :matches, except: [:index] do
+    member do
+      patch :update_points
+      put :update_points
+    end
+  end
+
+  get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
 
   resources :events
   resources :leagues, controller: 'events', type: 'League'
@@ -30,4 +46,9 @@ Rails.application.routes.draw do
     get 'link', on: :member
     get 'unlink', on: :member
   end
+
+  #Define route for Create Event Button
+  get "/createEvent" , to: "application#createEvent" , as: "create_Event"
+
+  get 'imprint' => "static_pages#imprint"
 end

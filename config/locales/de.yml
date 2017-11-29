@@ -73,6 +73,7 @@ de:
     new_tournament: "Neues Tournier"
     show:
       to_schedule: zum Spielplan
+<<<<<<< HEAD
     new:
       name: Name
       description: Beschreibung
@@ -85,6 +86,8 @@ de:
       startdate: Start
       enddate: Ende
       duration: Dauer
+=======
+>>>>>>> dev
     schedule:
       title: Spielplan
       gameday: Spieltag
