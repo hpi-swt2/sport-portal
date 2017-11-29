@@ -24,8 +24,22 @@ de:
         subject: "Anleitung zur Bestätigung Deines Accounts"
       reset_password_instructions:
         subject: "Anleitung um Dein Passwort zurückzusetzen"
+        greeting: "Hallo %{name}!"
+        instruction: "Über den folgenden Link kannst du dein Passwort ändern:"
+        action: "Mein Passwort ändern"
+        instruction_2: "Wenn du diese E-Mail nicht angefordert hast, dann ignoriere sie bitte."
+        instruction_3: "Dein Passwort wird sich nicht ändern, bis du auf den Link klickst und ein neues Passwort eingibst."
       unlock_instructions:
         subject: "Anleitung um Deinen Account freizuschalten"
+      email_changed:
+        subject: "Deine E-Mail wurde geändert."
+        greeting: "Hallo %{name}!"
+        body: "Deine E-Mail wurde von %{oldmail} zu %{newmail} geändert."
+        body2: "Wenn du das nicht selber gemacht hast, solltest du dein Passwort ändern."
+      password_change:
+        subject: "Passwort wurde geändert"
+        greeting: "Hallo %{name}!"
+        body: "Dein Passwort wurde geändert."
     omniauth_callbacks:
       user:
         link_success: "Erfolgreich mit %{provider} verbunden."
