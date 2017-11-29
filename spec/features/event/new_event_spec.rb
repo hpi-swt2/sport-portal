@@ -28,19 +28,20 @@ describe "new event page", type: :feature do
 		visit new_event_path
 
     expect(page).to have_select('event_type', :options => ['----', 'Tournament', 'League'])
-	end
+  end
+
   it "should be possible to create a date conditions for an event" do
 		visit new_event_path
     fill_in "event_name", with: "name"
     fill_in "event_discipline", with: "soccer"
-    fill_in "event_game_mode", with: "test"
-    fill_in "event_player_type", with: "0"
+    select "Tournament", :from => "event_type"
+    select "Ko", :from => "event_game_mode_tournament"
+    select "Single", :from => "event_player_type"
     fill_in "event_max_teams", with: "5"
 
 		fill_in "event_deadline", with: Date.tomorrow.to_s
 		fill_in "event_startdate", with: (Date.tomorrow + 2).to_s
 		fill_in "event_enddate", with: (Date.tomorrow + 3).to_s
-		fill_in "event_duration", with: "2"
 
 		find('input[type="submit"]').click
 
