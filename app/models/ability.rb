@@ -27,14 +27,18 @@ class Ability
 
   def initialize(user)
     can :read, :all
-
+    cannot :read, Team, private: true
     if user.present?
       user_id = user.id
       can :manage, User, id: user_id
       can :join, Event
       can :manage, Event, creator_id: user_id
       can :manage, Team, creator_id: user_id
+      can :read, Team, private: false
       can :create, :all
+      can :read, Team, private: true, members: { id: user_id }
+      can :update, Team, members: { id: user_id }
+      can :destroy, Team, owners: { id: user_id }
       cannot :create, User
 
       if user.admin?

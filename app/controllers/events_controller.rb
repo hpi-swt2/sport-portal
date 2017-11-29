@@ -48,6 +48,7 @@ class EventsController < ApplicationController
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
+
   # PATCH/PUT /events/1/join
   def join
     @event.users << current_user
@@ -58,6 +59,16 @@ class EventsController < ApplicationController
       flash[:error] = "There was an error."
       render 'show'
     end
+  end
+
+  # GET /events/1/schedule
+  def schedule
+    @event = Event.find(params[:id])
+    if @event.teams.empty?
+      @event.add_test_teams
+      @event.generate_schedule
+    end
+    @matches = @event.matches.order('gameday ASC')
   end
 
   private

@@ -37,7 +37,8 @@ RSpec.describe EventsController, type: :controller do
         deadline: Date.current,
         startdate: Date.current,
         enddate: Date.current,
-        creator: @user
+        creator: @user,
+        max_teams: 20
     }
   }
 
@@ -224,6 +225,20 @@ RSpec.describe EventsController, type: :controller do
       event = Event.create! valid_attributes
       delete :destroy, params: {id: event.to_param}
       expect(response).to redirect_to(events_url)
+    end
+  end
+
+  describe "GET #schedule" do
+    it "should generate schedule if not existing" do
+      event = Event.create! valid_attributes
+      get :schedule, params: {id: event.to_param}, session: valid_session
+      expect(event.matches).not_to be_empty
+    end
+
+    it "returns a success response" do
+      event = Event.create! valid_attributes
+      get :schedule, params: {id: event.to_param}, session: valid_session
+      expect(response).to be_success
     end
   end
 

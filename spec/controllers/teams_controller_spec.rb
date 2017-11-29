@@ -81,6 +81,13 @@ end
       expect(response).to be_unauthorized
     end
 
+    it "returns a success response if the user is a member" do
+      team = Team.create! valid_attributes
+      team.members << subject.current_user
+      get :edit, params: { id: team.to_param }
+      expect(response).to be_success
+    end
+
     it "should allow normal user to edit his created team" do
       team = Team.create! valid_attributes
       get :edit, params: {id: team.to_param}
@@ -142,6 +149,7 @@ end
 
       it "updates the requested team" do
         team = Team.create! valid_attributes
+        team.members << subject.current_user
         put :update, params: { id: team.to_param, team: new_attributes }
         team.reload
         expect(team.name).to eq(new_attributes["name"])
@@ -149,6 +157,7 @@ end
 
       it "redirects to the team" do
         team = Team.create! valid_attributes
+        team.members << subject.current_user
         put :update, params: { id: team.to_param, team: valid_attributes }
         expect(response).to redirect_to(team)
       end
@@ -170,6 +179,7 @@ end
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
         team = Team.create! valid_attributes
+        team.members << subject.current_user
         put :update, params: { id: team.to_param, team: invalid_attributes }
         expect(response).to be_success
       end
@@ -186,6 +196,9 @@ end
     end
 
     it "deletes the associated team ownerships and team memberships" do
+      team = Team.create! valid_attributes
+      team.owners << subject.current_user
+      team.members = team.members + team.owners
       team = FactoryBot.create(:team, creator: @user)
       expect {
         delete :destroy, params: { id: team.to_param }
@@ -195,6 +208,7 @@ end
 
     it "redirects to the teams list" do
       team = Team.create! valid_attributes
+      team.owners << subject.current_user
       delete :destroy, params: { id: team.to_param }
       expect(response).to redirect_to(teams_url)
     end

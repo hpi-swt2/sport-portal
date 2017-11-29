@@ -9,6 +9,7 @@ RSpec.describe "events/edit", type: :view do
       :description => "MyText",
       :creator => FactoryBot.build(:user),
       :game_mode => "MyString",
+      :max_teams => 20,
       :player_type => Event.player_types[Event.player_types.keys.sample],
       :discipline => "MyString",
       :deadline => Date.new(2017,11,16),

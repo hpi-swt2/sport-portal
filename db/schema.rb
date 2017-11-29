@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124121138) do
+ActiveRecord::Schema.define(version: 20171127175945) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -27,8 +27,16 @@ ActiveRecord::Schema.define(version: 20171124121138) do
     t.date "enddate"
     t.date "deadline"
     t.index ["creator_id"], name: "index_events_on_creator_id"
+    t.integer "gameday_duration"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["player_type"], name: "index_events_on_player_type"
+  end
+
+  create_table "events_teams", id: false, force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "team_id", null: false
+    t.index ["event_id", "team_id"], name: "index_events_teams_on_event_id_and_team_id"
+    t.index ["team_id", "event_id"], name: "index_events_teams_on_team_id_and_event_id"
   end
 
   create_table "events_users", id: false, force: :cascade do |t|
@@ -37,7 +45,6 @@ ActiveRecord::Schema.define(version: 20171124121138) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.date "date"
     t.string "place"
     t.integer "score_home"
     t.integer "score_away"
@@ -45,6 +52,11 @@ ActiveRecord::Schema.define(version: 20171124121138) do
     t.datetime "updated_at", null: false
     t.integer "team_home_id"
     t.integer "team_away_id"
+    t.integer "event_id"
+    t.integer "points_home"
+    t.integer "points_away"
+    t.integer "gameday"
+    t.index ["event_id"], name: "index_matches_on_event_id"
   end
 
   create_table "organizers", force: :cascade do |t|
