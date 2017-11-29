@@ -48,9 +48,16 @@ RSpec.describe Ability, type: :model do
   end
 
   it 'should allow admin to crud teams they created' do
+    team = Team.new(creator: @admin)
+
+    ability = Ability.new(@admin)
+    ability.should be_able_to(:manage, team)
+  end
+
+  it 'should allow admin to crud teams they did not create' do
     team = Team.new(creator: @user)
 
-    ability = Ability.new(@user)
+    ability = Ability.new(@admin)
     ability.should be_able_to(:manage, team)
   end
 

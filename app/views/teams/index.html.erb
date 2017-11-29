@@ -21,15 +21,15 @@
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       team_path(team), :class => 'btn btn-default btn-xs' %>
           <% if can? :edit, team %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_team_path(team), :class => 'btn btn-default btn-xs' %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_team_path(team), :class => 'btn btn-default btn-xs' %>
           <% end %>
           <% if can? :destroy, team %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      team_path(team),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
-                      :class => 'btn btn-xs btn-danger' %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        team_path(team),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
+                        :class => 'btn btn-xs btn-danger' %>
           <% end %>
         </td>
       </tr>
@@ -37,7 +37,7 @@
   </tbody>
 </table>
 <% if can? :create, Team %>
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_team_path,
-            :class => 'btn btn-primary' %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+              new_team_path,
+              :class => 'btn btn-primary' %>
 <% end %>

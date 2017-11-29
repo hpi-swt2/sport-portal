@@ -60,6 +60,11 @@ de:
         one: "Event"
         other: "Events"
 
+  unauthorized:
+        manage:
+          all: "Fehlende Berechtigung für %{action} %{subject}."
+          user: "Du bist icht berechtigt, Konten anderer Nutzer zu verändern."
+
   events:
       create_event: "Veranstaltung erstellen"
       choose_event_format: "Veranstaltungsart wählen"

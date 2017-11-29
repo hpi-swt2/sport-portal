@@ -138,4 +138,8 @@ RSpec.describe User, type: :model do
     expect(admin.admin).to eq(true)
   end
 
+  it "has the admin attribute set to false, if it is not an admin" do
+    user = FactoryBot.build(:user)
+    expect(user.admin).to eq(false)
+  end
 end

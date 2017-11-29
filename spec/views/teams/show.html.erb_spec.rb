@@ -17,22 +17,23 @@ RSpec.describe "teams/show", type: :view do
 
   it "doesn't render the edit button when not signed in" do
     render
-    expect(rendered).to_not have_selector(:link_or_button, 'Edit')
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
   end
 
   it "doesn't render the delete button when not signed in" do
     render
-    expect(rendered).to_not have_selector(:link_or_button, 'Delete')
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 
   it "doesn't render the edit button when it's not your team" do
     sign_in @user
     render
-    expect(rendered).to_not have_selector(:link_or_button, 'Edit')
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
   end
 
   it "doesn't render the delete button when it's not your team" do
     sign_in @user
-    expect(rendered).to_not have_selector(:link_or_button, 'Delete')
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 end

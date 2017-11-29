@@ -35,29 +35,29 @@ RSpec.describe "events/index", type: :view do
 
   it "doesn't render the new button when not signed in" do
     render
-    expect(rendered).to_not have_selector(:link_or_button, 'New')
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.new'))
   end
 
   it "doesn't render the edit button when not signed in" do
     render
-    expect(rendered).to_not have_selector(:link_or_button, 'Edit')
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
   end
 
   it "doesn't render the delete button when not signed in" do
     render
-    expect(rendered).to_not have_selector(:link_or_button, 'Delete')
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 
   it "doesn't render the edit button when signed in and you dont have a event" do
     sign_in @user
     render
-    expect(rendered).to_not have_selector(:link_or_button, 'Edit')
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
   end
 
   it "doesn't render the delete button when signed in and you dont have a event" do
     sign_in @user
     render
-    expect(rendered).to_not have_selector(:link_or_button, 'Delete')
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.delete'))
   end
 
   it "renders the new button when signed in" do

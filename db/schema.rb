@@ -12,25 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20171127220049) do
 
-  create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.string "discipline"
-    t.integer "player_type", null: false
-    t.integer "max_teams"
-    t.integer "game_mode", null: false
-    t.string "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.date "startdate"
-    t.date "enddate"
-    t.date "deadline"
-    t.integer "creator_id"
-    t.index ["creator_id"], name: "index_events_on_creator_id"
-    t.index ["game_mode"], name: "index_events_on_game_mode"
-    t.index ["player_type"], name: "index_events_on_player_type"
-  end
-
   create_table "events_users", id: false, force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "user_id", null: false
