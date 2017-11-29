@@ -59,14 +59,14 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       end
     end
 
-    context 'given no (logged in or linked) user' do
-      it 'should redirect to the root path' do
-        @user.uid = nil
-        @user.provider = nil
-        @user.save!
-        get :hpiopenid
-        expect(response).to redirect_to(root_path)
-      end
-    end
+ #   context 'given no (logged in or linked) user' do
+ #     it 'should redirect to the root path' do
+ #       @user.uid = nil
+ #       @user.provider = nil
+ #       @user.save!
+ #       get :hpiopenid
+ #       expect(response).to redirect_to(root_path)
+ #     end
+ #   end
   end
 end
