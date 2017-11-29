@@ -34,7 +34,7 @@ de:
       email_changed:
         subject: "Deine E-Mail wurde geändert."
         greeting: "Hallo %{name}!"
-        body: "Ihre E-Mail wurde von %{oldmail} zu %{newmail} geändert."
+        body: "Deine E-Mail wurde von %{oldmail} zu %{newmail} geändert."
       password_change:
         subject: "Passwort wurde geändert"
         greeting: "Hallo %{name}!"
