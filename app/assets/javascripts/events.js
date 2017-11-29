@@ -54,26 +54,24 @@ document.addEventListener("DOMContentLoaded", function() {
        }
     });
 
-    displayTypeField("#event_type, #tournament_type, #league_type");
+    displayTypeField();
 
     // Display Game Mode field conditionally in create events form
     $("#event_type, #tournament_type, #league_type").change(function() {
-        displayTypeField(this);
+        displayTypeField();
     });
 
-    function displayTypeField(type) {
-        var option = $(type).val();
+    function displayTypeField() {
+        var option = $("#event_type, #tournament_type, #league_type").val();
         var league = $("#league-game-mode");
         var tournament = $("#tournament-game-mode");
 
         if (option == "Tournament") {
-            $(league).css("display", "none");
-            $(tournament).css("display", "block");
-        }
-
-        if (option == "League") {
-            $(league).css("display", "block");
-            $(tournament).css("display", "none");
+            $(tournament).show();
+            $(league).hide();
+        } else if (option == "League") {
+            $(league).show();
+            $(tournament).hide();
         }
     }
 });
