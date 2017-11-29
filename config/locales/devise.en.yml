@@ -32,6 +32,7 @@ en:
         subject: "Your email has changed"
         greeting: "Hello %{name}!"
         body: "We're contacting you to notify you that your email was changed from %{oldmail} to %{newmail}."
+        body2: "If this wasn't you, you should probably change your password."
       password_change:
         subject: "Password Changed"
         greeting: "Hello %{name}!"

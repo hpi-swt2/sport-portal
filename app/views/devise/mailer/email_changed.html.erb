@@ -2,3 +2,4 @@
 
 <% mail = @resource.try(:unconfirmed_email?) ? @resource.unconfirmed_email : @resource.email %>
 <p><%= t('.body', oldmail: @email, newmail: mail) %></p>
+<p><%= t('.body2') %></p>
