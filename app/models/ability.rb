@@ -51,8 +51,8 @@ class Ability
     end
 
     can :delete_membership, Team, Team do |team|
-      owners_after_delete = Ability.number_of_owners_after_delete(team, team_member)
-      ((team.owners.include? user) && (owners_after_delete > 0)) || ((user_id == Integer(team_member)) && (owners_after_delete > 0))
+      exist_owners_after_delete = owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
+      ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)
     end
 
     can :read, Team, private: false
