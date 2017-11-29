@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "events/show", type: :view do
   before(:each) do
     @user = FactoryBot.create :user
+    @other_user = FactoryBot.create :user
     @event = assign(:event, FactoryBot.create(:event))
-    sign_in @user
     # @event = assign(:event, Event.create!(
     #   :name => "Name",
     #   :description => "MyText",
@@ -53,13 +53,13 @@ RSpec.describe "events/show", type: :view do
   end
 
   it "doesn't render the edit button when the event doesn´t belong to the user" do
-    sign_in @user
+    sign_in @other_user
     render
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
   end
 
   it "doesn't render the delete button when the event doesn´t belong to the user" do
-    sign_in @user
+    sign_in @other_user
     render
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end

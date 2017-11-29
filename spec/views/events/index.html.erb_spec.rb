@@ -7,7 +7,7 @@ RSpec.describe "events/index", type: :view do
       FactoryBot.create(:event)
       ])
     @user = FactoryBot.create :user
-    sign_in @user
+    @other_user = FactoryBot.create :user
 
     @events.first.editors << @user
     @events.first.creator = @user
@@ -49,30 +49,33 @@ RSpec.describe "events/index", type: :view do
   end
 
   it "doesn't render the edit button when signed in and you dont have a event" do
-    sign_in @user
+    sign_in @other_user
     render
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
   end
 
   it "doesn't render the delete button when signed in and you dont have a event" do
-    sign_in @user
+    sign_in @other_user
     render
-    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.delete'))
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 
   it "renders the new button when signed in" do
+    sign_in @user
     @events[1].creator = @user
     render
     expect(rendered).to have_selector(:link_or_button, t('helpers.links.new'))
   end
 
   it "renders the edit button when signed in" do
+    sign_in @user
     @events[1].creator = @user
     render
     expect(rendered).to have_selector(:link_or_button, t('helpers.links.edit'))
   end
 
   it "renders the delete button when signed in" do
+    sign_in @user
     @events[1].creator = @user
     render
     expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
