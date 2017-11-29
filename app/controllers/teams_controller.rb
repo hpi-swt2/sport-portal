@@ -63,7 +63,6 @@ class TeamsController < ApplicationController
   end
 
   def delete_ownership
-
     if @team_owners.include? @user
       @team_owners.delete @user
       redirect_to @team
@@ -71,7 +70,6 @@ class TeamsController < ApplicationController
   end
 
   def delete_membership
-
     if @team_owners.include? @user
       @team_owners.delete @user
     end
@@ -87,12 +85,12 @@ class TeamsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_team
-      @team = Team.find(params[:id])
-      @team_owners = @team.owners
+      @team ||= Team.find(params[:id])
+      @team_owners ||= @team.owners
     end
 
     def set_user
-      @user = User.find(params[:team_member])
+      @user ||= User.find(params[:team_member])
     end
 
     # Only allow a trusted parameter "white list" through.
