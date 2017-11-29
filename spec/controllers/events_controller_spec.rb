@@ -157,6 +157,12 @@ RSpec.describe EventsController, type: :controller do
         expect(response).to redirect_to(Event.last)
       end
     end
+    context "with invalid params" do
+      it "returns success" do
+        post :create, params: {event: invalid_attributes}, session: valid_session
+        expect(response).to be_success
+      end
+    end
   end
 
   describe "PUT #update" do
@@ -196,6 +202,13 @@ RSpec.describe EventsController, type: :controller do
         event = Event.create! valid_attributes
         put :update, params: {id: event.to_param, event: valid_attributes}
         expect(response).to_not be_success
+      end
+    end
+    context "with invalid params" do
+      it "returns success" do
+        event = Event.create! valid_attributes
+        put :update, params: {id: event.to_param, event: invalid_attributes}
+        expect(response).to be_success
       end
     end
   end
