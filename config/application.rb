@@ -11,11 +11,7 @@ module SportPortal
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-<<<<<<< HEAD
     config.generators.javascript_engine = :js
-=======
-  	config.generators.javascript_engine = :js
->>>>>>> dev
 
     # Set default language to German
     config.i18n.default_locale = :de

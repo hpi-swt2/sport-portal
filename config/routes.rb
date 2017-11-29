@@ -1,15 +1,14 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-<<<<<<< HEAD
-=======
   resources :events do
     member do
       put :join
     end
   end
+  resources :leagues, controller: 'events', type: 'League'
+  resources :tournaments, controller: 'events', type: 'Tournament'
 
->>>>>>> dev
   root 'welcome#index'
   resources :teams
   resources :matches, except: [:index] do
@@ -20,10 +19,6 @@ Rails.application.routes.draw do
   end
 
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
-
-  resources :events
-  resources :leagues, controller: 'events', type: 'League'
-  resources :tournaments, controller: 'events', type: 'Tournament'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, controllers: {

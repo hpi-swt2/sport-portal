@@ -37,8 +37,4 @@ de:
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
-<<<<<<< HEAD
       destroyed: "%{resource_name} wurde erfolgreich entfernt."
-=======
-      destroyed: "%{resource_name} wurde erfolgreich entfernt."
->>>>>>> dev

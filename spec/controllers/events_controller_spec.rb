@@ -34,19 +34,11 @@ RSpec.describe EventsController, type: :controller do
   # Event. As you add validations to Event, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-<<<<<<< HEAD
     FactoryBot.build(:event).attributes
   }
 
   let(:invalid_attributes) {
     FactoryBot.build(:event, name: nil).attributes
-=======
-    FactoryBot.attributes_for(:event)
-  }
-
-  let(:invalid_attributes) {
-    {name: nil}
->>>>>>> dev
   }
 
   # This should return the minimal set of values that should be in the session

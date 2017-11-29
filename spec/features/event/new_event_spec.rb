@@ -18,7 +18,6 @@ describe "new event page", type: :feature do
 		expect(page).to have_field('event_enddate')
   end
 
-<<<<<<< HEAD
   it "should have a disabled field for event duration" do
   	visit new_event_path
 
@@ -29,7 +28,7 @@ describe "new event page", type: :feature do
 		visit new_event_path
 
     expect(page).to have_select('event_type', :options => ['----', 'Tournament', 'League'])
-=======
+	end
   it "should be possible to create a date conditions for an event" do
 		visit new_event_path
     fill_in "event_name", with: "name"
@@ -49,7 +48,6 @@ describe "new event page", type: :feature do
 		expect(page).to have_content(Date.tomorrow.to_s)
 		expect(page).to have_content((Date.tomorrow + 2).to_s)
 		expect(page).to have_content((Date.tomorrow + 3).to_s)
->>>>>>> dev
   end
 
 end

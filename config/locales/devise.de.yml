@@ -93,8 +93,4 @@ de:
       not_locked: "ist nicht gesperrt"
       not_saved:
         one: "Konnte %{resource} nicht speichern: ein Fehler."
-<<<<<<< HEAD
         other: "Konnte %{resource} nicht speichern: %{count} Fehler."
-=======
-        other: "Konnte %{resource} nicht speichern: %{count} Fehler."
->>>>>>> dev
