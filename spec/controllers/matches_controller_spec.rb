@@ -17,14 +17,6 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: nil, team_away: nil).attributes
   }
 
-  describe "GET #index" do
-    it "returns a success response" do
-      match = Match.create! valid_attributes
-      get :index, params: {}
-      expect(response).to be_success
-    end
-  end
-
   describe "GET #show" do
     it "returns a success response" do
       match = Match.create! valid_attributes
@@ -73,14 +65,14 @@ RSpec.describe MatchesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        { "date" => valid_attributes["date"] + 1.day }
+        FactoryBot.build(:match).attributes
       }
 
       it "updates the requested match" do
         match = Match.create! valid_attributes
         put :update, params: { id: match.to_param, match: new_attributes }
         match.reload
-        expect(match.date).to eq(new_attributes["date"])
+        expect(match.place).to eq(new_attributes["place"])
       end
 
       it "redirects to the match" do
@@ -99,6 +91,46 @@ RSpec.describe MatchesController, type: :controller do
     end
   end
 
+  describe "PUT #update_points" do
+    context "with valid params" do
+      let(:new_attributes) {
+        {
+          "points_home" => 1,
+          "points_away" => 3,
+        }
+      }
+
+      it "updated the requested match" do
+        match = Match.create! valid_attributes
+        put :update_points, params: { id: match.to_param, match: new_attributes }
+        match.reload
+        expect(match.points_home).to eq(new_attributes["points_home"])
+        expect(match.points_away).to eq(new_attributes["points_away"])
+      end
+
+      it "redirects to its schedule" do
+        match = Match.create! valid_attributes
+        put :update_points, params: { id: match.to_param, match: valid_attributes }
+        expect(response).to redirect_to(event_schedule_url(match.event))
+      end
+    end
+
+    context "with invalid params" do
+      let(:invalid_attributes) {
+        {
+            "points_home" => nil,
+            "points_away" => nil,
+        }
+      }
+
+      it "redirect to its schedule" do
+        match = Match.create! valid_attributes
+        put :update_points, params: { id: match.to_param, match: invalid_attributes }
+        expect(response).to redirect_to(event_schedule_url(match.event))
+      end
+    end
+  end
+
   describe "DELETE #destroy" do
     it "destroys the requested match" do
       match = Match.create! valid_attributes
@@ -107,10 +139,10 @@ RSpec.describe MatchesController, type: :controller do
       }.to change(Match, :count).by(-1)
     end
 
-    it "redirects to the matches list" do
+    it "redirects to the event schedule page" do
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
-      expect(response).to redirect_to(matches_url)
+      expect(response).to redirect_to(event_schedule_url(match.event))
     end
   end
 

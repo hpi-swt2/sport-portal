@@ -60,9 +60,26 @@ de:
         one: "Event"
         other: "Events"
 
+  success:
+    updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
+
+  error:
+    update_match_points: Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut.
+
   events:
-      create_event: "Veranstaltung erstellen"
-      choose_event_format: "Veranstaltungsart wählen"
-      new_league: "Neue Liga"
-      new_tournament: "Neues Tournier"
-      show_events: "Alle Events anzeigen"
+    create_event: "Veranstaltung erstellen"
+    choose_event_format: "Veranstaltungsart wählen"
+    new_league: "Neue Liga"
+    new_tournament: "Neues Tournier"
+    show_events: "Alle Events anzeigen"
+    show:
+      to_schedule: zum Spielplan
+    schedule:
+      title: Spielplan
+      gameday: Spieltag
+      date: Datum
+      place: Ort
+      home: Team 1
+      away: Team 2
+      score: Ergebnis
+      points: Punkte
