@@ -4,7 +4,6 @@
     <%= menu_group do %>
         <%= menu_item User.model_name.human(:count => :many).titleize, users_path %>
         <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path %>
-        <%= menu_item Match.model_name.human(:count => :many).titleize, matches_path %>
         <%= menu_item Event.model_name.human(:count => :many).titleize, events_path %>
         <%= menu_divider %>
         <%= menu_item t('events.create_event'), create_Event_path %>
