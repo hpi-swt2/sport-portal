@@ -9,7 +9,14 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
   resources :teams
-  resources :matches
+  resources :matches, except: [:index] do
+    member do
+      patch :update_points
+      put :update_points
+    end
+  end
+
+  get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, controllers: {

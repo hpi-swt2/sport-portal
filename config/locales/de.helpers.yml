@@ -18,6 +18,7 @@ de:
       new: "Neu"
       edit: "Bearbeiten"
       show: "Anzeigen"
+      save: "Speichern"
       email: "E-Mail senden"
       assign_ownership: "Als Captain hinzufügen"
       delete_ownership: "Als Captain löschen"
@@ -28,11 +29,11 @@ de:
       new: "%{model} erstellen"
       delete: "%{model} löschen"
     submit:
-      create: Erstelle %{model}
-      submit: Speichere %{model}
-      update: Aktualisiere %{model}
+      create: "Erstelle %{model}"
+      submit: "Speichere %{model}"
+      update: "Aktualisiere %{model}"
     select:
-      prompt: Bitte wähle
+      prompt: "Bitte wähle"
     teams:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
