@@ -25,6 +25,7 @@ describe "new event page", type: :feature do
     fill_in "event_discipline", with: "soccer"
     fill_in "event_game_mode", with: "test"
     fill_in "event_player_type", with: "0"
+    fill_in "event_max_teams", with: "5"
 
 		fill_in "event_deadline", with: Date.tomorrow.to_s
 		fill_in "event_startdate", with: (Date.tomorrow + 2).to_s

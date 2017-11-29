@@ -10,5 +10,14 @@ FactoryBot.define do
         deadline Date.tomorrow
         startdate Date.today + 2
         enddate Date.today + 3
+
+        factory :event_with_teams do
+          transient do
+            teams_count 5
+          end
+          after(:create) do |event,evaluator|
+            FactoryBot.create_list(:team, evaluator.teams_count, events: [event])
+          end
+        end
     end
 end

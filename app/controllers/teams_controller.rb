@@ -5,7 +5,6 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
-    @teams = Team.all
   end
 
   # GET /teams/1

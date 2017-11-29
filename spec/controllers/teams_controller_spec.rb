@@ -48,6 +48,7 @@ RSpec.describe TeamsController, type: :controller do
   describe "GET #edit" do
     it "returns a success response" do
       team = Team.create! valid_attributes
+      team.members << subject.current_user
       get :edit, params: { id: team.to_param }
       expect(response).to be_success
     end
@@ -95,6 +96,7 @@ RSpec.describe TeamsController, type: :controller do
 
       it "updates the requested team" do
         team = Team.create! valid_attributes
+        team.members << subject.current_user
         put :update, params: { id: team.to_param, team: new_attributes }
         team.reload
         expect(team.name).to eq(new_attributes["name"])
@@ -102,6 +104,7 @@ RSpec.describe TeamsController, type: :controller do
 
       it "redirects to the team" do
         team = Team.create! valid_attributes
+        team.members << subject.current_user
         put :update, params: { id: team.to_param, team: valid_attributes }
         expect(response).to redirect_to(team)
       end
@@ -110,6 +113,7 @@ RSpec.describe TeamsController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
         team = Team.create! valid_attributes
+        team.members << subject.current_user
         put :update, params: { id: team.to_param, team: invalid_attributes }
         expect(response).to be_success
       end
@@ -119,13 +123,16 @@ RSpec.describe TeamsController, type: :controller do
   describe "DELETE #destroy" do
     it "destroys the requested team" do
       team = Team.create! valid_attributes
+      team.owners << subject.current_user
       expect {
         delete :destroy, params: { id: team.to_param }
       }.to change(Team, :count).by(-1)
     end
 
     it "deletes the associated team ownerships and team memberships" do
-      team = FactoryBot.create :team
+      team = Team.create! valid_attributes
+      team.owners << subject.current_user
+      team.members = team.members + team.owners
       expect {
         delete :destroy, params: { id: team.to_param }
       }.to change(TeamOwner, :count).by(-1)
@@ -134,6 +141,7 @@ RSpec.describe TeamsController, type: :controller do
 
     it "redirects to the teams list" do
       team = Team.create! valid_attributes
+      team.owners << subject.current_user
       delete :destroy, params: { id: team.to_param }
       expect(response).to redirect_to(teams_url)
     end

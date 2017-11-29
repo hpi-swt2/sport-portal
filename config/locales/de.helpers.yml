@@ -21,17 +21,18 @@ de:
       assign_ownership: "Als Captain hinzufügen"
       delete_ownership: "Als Captain löschen"
       delete_membership: "Aus dem Team entfernen"
+      save: "Speichern"
     titles:
       edit: "%{model} bearbeiten"
       save: "%{model} speichern"
       new: "%{model} erstellen"
       delete: "%{model} löschen"
     submit:
-      create: Erstelle %{model}
-      submit: Speichere %{model}
-      update: Aktualisiere %{model}
+      create: "Erstelle %{model}"
+      submit: "Speichere %{model}"
+      update: "Aktualisiere %{model}"
     select:
-      prompt: Bitte wähle
+      prompt: "Bitte wähle"
     teams:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
