@@ -21,7 +21,7 @@ de:
       email: "E-Mail senden"
       assign_ownership: "Als Captain hinzufügen"
       delete_ownership: "Als Captain löschen"
-      delete_membership: "Löschen"
+      delete_membership: "Aus dem Team entfernen"
     titles:
       edit: "%{model} bearbeiten"
       save: "%{model} speichern"

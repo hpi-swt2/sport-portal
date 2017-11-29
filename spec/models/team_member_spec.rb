@@ -1,45 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe TeamMember, type: :model do
-  it "should not be able to assign team ownership to users and delete it" do
-    team = FactoryBot.create :team
-    user = FactoryBot.create :user
 
-    ability = Ability.new(user)
+  describe 'when logged in' do
+    let(:user){ FactoryBot.create :user }
+    let(:team){ FactoryBot.create :team }
 
-    assert ability.cannot?(:assign_ownership, team)
-  end
+    it "should not be able to assign team ownership to users and delete it" do
+      ability = Ability.new(user)
+      assert ability.cannot?(:assign_ownership, team)
+    end
 
-  it "should not be able to delete team ownership" do
-    team = FactoryBot.create :team
-    user = FactoryBot.create :user
+    it "should not be able to delete team ownership" do
+      ability = Ability.new(user)
 
-    ability = Ability.new(user)
+      assert ability.cannot?(:delete_ownership, team)
+    end
 
-    assert ability.cannot?(:delete_ownership, team)
-  end
+    it "should not be able to delete team membership of other users" do
+      another_user = FactoryBot.create :user
+      team.members << user
+      team.members << another_user
 
-  it "should not be able to delete team membership of other users" do
-    team = FactoryBot.create :team
+      ability = Ability.new(another_user, user.id)
 
-    user = FactoryBot.create :user
-    another_user = FactoryBot.create :user
-    team.members << user
-    team.members << another_user
+      assert ability.cannot?(:delete_membership, team)
+    end
 
-    ability = Ability.new(another_user, user.id)
+    it "should be able to delete himself from team" do
+      another_user = FactoryBot.create :user
+      team.owners << another_user
 
-    assert ability.cannot?(:delete_membership, team)
-  end
-p
-  it "should be able to delete himself from team" do
-    team = FactoryBot.create :team
-    user = FactoryBot.create :user
-    another_user = FactoryBot.create :user
-    team.owners << another_user
+      ability = Ability.new(user, user.id)
 
-    ability = Ability.new(user, user.id)
-
-    assert ability.can?(:delete_membership, team)
+      assert ability.can?(:delete_membership, team)
+    end
   end
 end

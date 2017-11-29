@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  load_and_authorize_resource :team
 
   # GET /teams
   def index
@@ -55,37 +56,22 @@ class TeamsController < ApplicationController
 
   # Assigns team ownership to a specific team member
   def assign_ownership
-    team_member_id = params[:team_member]
-    @team = Team.find(params[:id])
-    authorize! :assign_ownership, @team
-
-    # Checks whether the specified team member already has team ownership
-    if @team.owners.exists?(team_member_id)
-      return
+    unless @team.owners.include? (User.find(params[:team_member]))
+      @team.owners << User.find(params[:team_member])
+      redirect_to @team
     end
-
-    @team.owners << User.find(team_member_id)
-    redirect_to @team
   end
 
   def delete_ownership
-    team_member_id = params[:team_member]
-    @team = Team.find(params[:id])
-    authorize! :delete_ownership, @team
-    user = User.find(team_member_id)
+    user = User.find(params[:team_member])
 
-    # Checks whether the specified team member does not have team ownership
-    if !@team.owners.include?(user)
-      return
+    if @team.owners.include?(user)
+      @team.owners.delete(user)
+      redirect_to @team
     end
-
-    @team.owners.delete(user)
-    redirect_to @team
   end
 
   def delete_membership
-    @team = Team.find(params[:id])
-    authorize! :delete_membership, @team
     user = User.find(params[:team_member])
 
     if @team.owners.include? (user)

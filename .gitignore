@@ -51,3 +51,5 @@ bower.json
 # Environment variable definition
 # https://devcenter.heroku.com/articles/getting-started-with-rails5#procfile
 .env
+
+.vscode/settings.json
