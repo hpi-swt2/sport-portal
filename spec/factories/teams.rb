@@ -36,4 +36,8 @@ FactoryBot.define do
       team.members = team.members + build_list(:user, 5)
     end
   end
+
+  trait :private do
+    private true
+  end
 end
