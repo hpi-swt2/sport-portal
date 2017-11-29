@@ -69,6 +69,7 @@ RSpec.describe EventsController, type: :controller do
   end
 
   after(:each) do
+    Match.delete_all
     Event.delete_all
     @user.destroy
     @other_user.destroy
