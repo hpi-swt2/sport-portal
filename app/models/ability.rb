@@ -45,16 +45,14 @@ class Ability
     end
 
     can :delete_ownership, Team, Team do |team|
-      team.owners.include? user
-      team.owners.length > 1
+      team_owners = team.owners
+      team_owners.include? user
+      team_owners.length > 1
     end
 
     can :delete_membership, Team, Team do |team|
-      team.owners.include? user and Ability.number_of_owners_after_delete(team, team_member) > 0
-    end
-
-    can :delete_membership, Team, Team do |team|
-      user_id == Integer(team_member) and Ability.number_of_owners_after_delete(team, team_member) > 0
+      owners_after_delete = Ability.number_of_owners_after_delete(team, team_member)
+      ((team.owners.include? user) && (owners_after_delete > 0)) || ((user_id == Integer(team_member)) && (owners_after_delete > 0))
     end
 
     can :read, Team, private: false

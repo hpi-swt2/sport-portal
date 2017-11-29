@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership]
+  before_action :set_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource :team
 
@@ -55,29 +56,27 @@ class TeamsController < ApplicationController
 
   # Assigns team ownership to a specific team member
   def assign_ownership
-    unless @team.owners.include? (User.find(params[:team_member]))
-      @team.owners << User.find(params[:team_member])
+    unless @team_owners.include? @user
+      @team_owners << @user
       redirect_to @team
     end
   end
 
   def delete_ownership
-    user = User.find(params[:team_member])
 
-    if @team.owners.include?(user)
-      @team.owners.delete(user)
+    if @team_owners.include? @user
+      @team_owners.delete @user
       redirect_to @team
     end
   end
 
   def delete_membership
-    user = User.find(params[:team_member])
 
-    if @team.owners.include? (user)
-      @team.owners.delete(user)
+    if @team_owners.include? @user
+      @team_owners.delete @user
     end
 
-    @team.members.delete(user)
+    @team.members.delete(@user)
     redirect_to @team
   end
 
@@ -89,6 +88,11 @@ class TeamsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = Team.find(params[:id])
+      @team_owners = @team.owners
+    end
+
+    def set_user
+      @user = User.find(params[:team_member])
     end
 
     # Only allow a trusted parameter "white list" through.
