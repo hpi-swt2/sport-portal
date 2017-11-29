@@ -45,11 +45,25 @@ class UsersController < Devise::RegistrationsController
 
     # Overridden methods of `Devise::RegistrationsController` to permit additional model params
     def sign_up_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+      generate_random_password if get_omniauth_data
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, event_ids: [])
     end
 
     def account_update_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, event_ids: [])
+    end
+
+    def generate_random_password
+      token = Devise.friendly_token 32
+      user_params = params[:user]
+      user_params[:password] = token
+      user_params[:password_confirmation] = token
+    end
+
+    def get_omniauth_data
+      if (data = session['omniauth.data'])
+        data if data['expires'].to_time > Time.current
+      end
     end
 
     def unlink_omniauth

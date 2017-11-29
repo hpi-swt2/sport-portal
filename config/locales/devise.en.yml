@@ -42,7 +42,7 @@ en:
         link_failure: "Failed to connect with %{provider}, you are already using another provider."
         link_taken: "Failed to connect with %{provider}, someone is already linked to that account."
         success: "Successfully authenticated with %{provider}."
-        failure: "Could not authenticate with %{provider}, the account is not linked."
+        create: "You do not have an account yet, but you can create one by filling in the missing information."
       failure: "Could not authenticate with %{provider} because \"%{reason}\"."
     passwords:
       no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."

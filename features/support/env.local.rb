@@ -1,3 +1,5 @@
+require 'capybara/email'
+
 module DataHelper
   def init_data_helper
     @matches = []
@@ -122,4 +124,4 @@ module DataHelper
   end
 end
 
-World(DataHelper)
+World(DataHelper, Capybara::Email::DSL)

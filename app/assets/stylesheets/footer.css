@@ -1,0 +1,7 @@
+footer > .navbar-static-bottom {
+    margin-top: 20px;
+}
+
+footer .navbar-nav {
+    display: inline-block
+}

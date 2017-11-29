@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /events
   def index
@@ -24,6 +24,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
+      @event.editors << current_user
       redirect_to @event, notice: 'Event was successfully created.'
     else
       render :new
@@ -45,14 +46,50 @@ class EventsController < ApplicationController
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
+
+  # PATCH/PUT /events/1/join
+  def join
+    @event.users << current_user
+    if @event.save
+      flash[:success] = "You have successfully joined #{@event.name}!"
+      redirect_to @event
+    else
+      flash[:error] = "There was an error."
+      render 'show'
+    end
+  end
+
+  # GET /events/1/schedule
+  def schedule
+    @event = Event.find(params[:id])
+    if @event.teams.empty?
+      @event.add_test_teams
+      @event.generate_schedule
+    end
+    @matches = @event.matches.order('gameday ASC')
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
     end
 
+    def set_user
+      @user = current_user
+    end
+
     # Only allow a trusted parameter "white list" through.
     def event_params
-      params.require(:event).permit(:name, :description, :gamemode, :sport, :teamsport, :playercount, :gamesystem, :deadline, :startdate, :enddate)
+      params.require(:event).permit(:name,
+                                    :description,
+                                    :discipline,
+                                    :game_mode,
+                                    :max_teams,
+                                    :player_type,
+                                    :deadline,
+                                    :startdate,
+                                    :enddate,
+                                    user_ids: [])
     end
 end
