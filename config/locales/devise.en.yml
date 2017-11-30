@@ -21,12 +21,22 @@ en:
         subject: "Confirmation instructions"
       reset_password_instructions:
         subject: "Reset password instructions"
+        greeting: "Hello %{name}!"
+        instruction: "Someone has requested a link to change your password, and you can do this through the link below."
+        action: "Change my password"
+        instruction_2: "If you didn't request this, please ignore this email."
+        instruction_3: "Your password won't change until you access the link above and create a new one."
       unlock_instructions:
         subject: "Unlock instructions"
       email_changed:
-        subject: "Email Changed"
+        subject: "Your email has changed"
+        greeting: "Hello %{name}!"
+        body: "We're contacting you to notify you that your email was changed from %{oldmail} to %{newmail}."
+        body2: "If this wasn't you, you should probably change your password."
       password_change:
         subject: "Password Changed"
+        greeting: "Hello %{name}!"
+        body: "We're contacting you to notify you that your password has been changed."
     omniauth_callbacks:
       user:
         link_success: "Successfully connected with %{provider}."
