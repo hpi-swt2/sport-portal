@@ -1,5 +1,7 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership]
+  # before_action :set_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
+  before_action :owners_include_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource :team
 
@@ -55,28 +57,19 @@ class TeamsController < ApplicationController
 
   # Assigns team ownership to a specific team member
   def assign_ownership
-    unless @team.owners.include? (User.find(params[:team_member]))
-      @team.owners << User.find(params[:team_member])
+    unless owners_include_user
+      team_owners << user
       redirect_to @team
     end
   end
 
   def delete_ownership
-    user = User.find(params[:team_member])
-
-    if @team.owners.include?(user)
-      @team.owners.delete(user)
-      redirect_to @team
-    end
+    delete_owner_if_existing
+    redirect_to @team
   end
 
   def delete_membership
-    user = User.find(params[:team_member])
-
-    if @team.owners.include? (user)
-      @team.owners.delete(user)
-    end
-
+    delete_owner_if_existing
     @team.members.delete(user)
     redirect_to @team
   end
@@ -86,9 +79,31 @@ class TeamsController < ApplicationController
   end
 
   private
+    def delete_owner_if_existing
+      if owners_include_user
+        team_owners.delete user
+      end
+    end
+
+    def team_owners
+      @team_owners ||= @team.owners
+    end
+
+    def user
+      @user ||= User.find(params[:team_member])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = Team.find(params[:id])
+    end
+
+    # def user
+    #   @user = User.find(params[:team_member])
+    # end
+
+    def owners_include_user
+      @user_in_owners ||= team_owners.include? user
     end
 
     # Only allow a trusted parameter "white list" through.
