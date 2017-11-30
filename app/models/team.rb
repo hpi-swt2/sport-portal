@@ -23,6 +23,12 @@ class Team < ApplicationRecord
   has_many :team_members
   has_many :members, through: :team_members, source: :user
 
+  has_many :teams_users
+  has_many :users, through: :teams_users, source: :user
+
+  has_many :owners, -> { where is_owner: true }, through: :team_users, source: :user
+  has_many :members, -> { where is_owner: false }, through: :team_users, source: :user
+
   # validates :owners, presence: true
   # validates :members, presence: true
 
