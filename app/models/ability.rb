@@ -57,40 +57,40 @@ class Ability
 
   private
 
-  def can_crud_team(user_id)
-    can :read, Team, private: true, members: { id: user_id }
-    can :update, Team, members: { id: user_id }
-    can :destroy, Team, owners: { id: user_id }
-  end
-
-  def can_assign_ownership(user)
-    can :assign_ownership, Team, Team do |team|
-      team.owners.include? user
+    def can_crud_team(user_id)
+      can :read, Team, private: true, members: { id: user_id }
+      can :update, Team, members: { id: user_id }
+      can :destroy, Team, owners: { id: user_id }
     end
-  end
 
-  def can_delete_membership(team_member, user)
-    can :delete_membership, Team, Team do |team|
-      user_id = user.id
-      exist_owners_after_delete = owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
-      ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)
+    def can_assign_ownership(user)
+      can :assign_ownership, Team, Team do |team|
+        team.owners.include? user
+      end
     end
-  end
 
-  def can_delete_ownership(user)
-    can :delete_ownership, Team, Team do |team|
-      (team.owners.include? user) && team.has_multiple_owners?
+    def can_delete_membership(team_member, user)
+      can :delete_membership, Team, Team do |team|
+        user_id = user.id
+        exist_owners_after_delete = owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
+        ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)
+      end
     end
-  end
 
-  def self.number_of_owners_after_delete(team, team_member)
-    owners = team.owners
-    another_user = User.find(team_member)
-    if owners.include? another_user
-      owners_after_delete = owners - [another_user]
-    else
-      owners_after_delete = owners
+    def can_delete_ownership(user)
+      can :delete_ownership, Team, Team do |team|
+        (team.owners.include? user) && team.has_multiple_owners?
+      end
     end
-    owners_after_delete.length
-  end
+
+    def self.number_of_owners_after_delete(team, team_member)
+      owners = team.owners
+      another_user = User.find(team_member)
+      if owners.include? another_user
+        owners_after_delete = owners - [another_user]
+      else
+        owners_after_delete = owners
+      end
+      owners_after_delete.length
+    end
 end
