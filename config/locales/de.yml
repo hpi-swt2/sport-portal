@@ -87,7 +87,6 @@ de:
       enddate: "Ende"
       duration: "Dauer"
     schedule:
-<<<<<<< HEAD
       title: "Spielplan"
       gameday: "Spieltag"
       date: "Datum"
@@ -96,14 +95,3 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
-=======
-      title: Spielplan
-      gameday: Spieltag
-      date: Datum
-      place: Ort
-      home: Team 1
-      away: Team 2
-      score: Ergebnis
-      points: Punkte
-
->>>>>>> dev
