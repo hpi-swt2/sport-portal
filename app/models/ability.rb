@@ -77,8 +77,8 @@ class Ability
     end
 
     def can_delete_ownership(user)
-      team_owners = team.owners
       can :delete_ownership, Team, Team do |team|
+        team_owners = team.owners
         (team_owners.include? user) && (team_owners.length > 1)
       end
     end
