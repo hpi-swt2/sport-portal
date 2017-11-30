@@ -89,6 +89,12 @@ class EventsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def event_params
+      if params.has_key? :league
+        params[:event] = params.delete :league
+      elsif params.has_key? :tournament
+        params[:event] = params.delete :tournament
+      end
+
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,
