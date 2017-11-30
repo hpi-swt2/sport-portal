@@ -16,8 +16,8 @@ class AvatarsController < ApplicationController
   end
 
   def destroy
-    @avatar.image = nil
-    @avatar.user = nil
+    
+    @avatar.update(image: nil)
     @avatar.destroy
     redirect_to user_registration_path
   end
