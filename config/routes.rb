@@ -36,6 +36,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :teams do
+    member do
+      post :assign_ownership
+      post :delete_ownership
+      post :delete_membership
+    end
+  end
+    
   #Define route for Create Event Button
   get "/createEvent" , to: "application#createEvent" , as: "create_Event"
 

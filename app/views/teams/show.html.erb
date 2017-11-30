@@ -18,6 +18,30 @@
   <dd><%= @team.description %></dd>
 </dl>
 
+<table class="table table-striped">
+  <tbody>
+    <% @team.members.each do |member| %>
+      <tr>
+        <td>
+          <%= member.id%> <%= member.first_name%> <%= member.last_name%>
+            
+          <% if can? :delete_ownership, @team %>
+            <%= link_to t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
+            delete_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' if @team.owners.include? member %>
+          <% end %>
+
+          <% if can? :assign_ownership, @team %>
+            <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
+            assign_ownership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-default btn-xs' if !@team.owners.include? member  %>
+          <% end %>
+
+          <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
+          delete_membership_team_path(@team, :team_member => member.id), :method => 'post', :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>

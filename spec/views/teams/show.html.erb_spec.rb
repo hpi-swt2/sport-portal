@@ -14,6 +14,21 @@ RSpec.describe "teams/show", type: :view do
     expect(rendered).to have_content(@team.description, count: 1)
   end
 
+  it "does not show delete ownership button for mere members" do
+    user = FactoryBot.create :user
+    @team.owners = []
+    render
+    rendered.should_not have_content(t("helpers.links.delete_ownership"))
+  end
+
+  it "does not show assign ownership button for owners" do
+    user = FactoryBot.create :user
+    @team.members << @user
+    @team.owners = @team.members
+    render
+    rendered.should_not have_content(t("helpers.links.assign_ownership"))
+  end
+
 
   it "doesn't render the edit button when not signed in" do
     render

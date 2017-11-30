@@ -52,3 +52,6 @@ bower.json
 # https://devcenter.heroku.com/articles/getting-started-with-rails5#procfile
 .env
 .idea/
+
+
+.vscode/settings.json
