@@ -12,10 +12,7 @@
     <% end %>
     <%= menu_group pull: :right do %>
         <% if user_signed_in? %>
-            <span>
-              <%= image_tag current_user.avatar&.image_url || image_path('missing_avatar.png'), class: "avatar" %>
-            </span>
-            <%= drop_down current_user.first_name do %>
+            <%= drop_down (image_tag current_user.avatar&.image_url || image_path('missing_avatar.png'), class: "avatar") + " #{current_user.first_name}" do %>
                 <!--Fill in more drop down menu items-->
                 <%= menu_item t('devise.registrations.my_account'), edit_user_registration_path(current_user) %>
                 <%= menu_item t('navbar.drop-down.dashboard'), dashboard_user_path(current_user) %>
