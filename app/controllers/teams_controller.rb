@@ -64,17 +64,12 @@ class TeamsController < ApplicationController
   end
 
   def delete_ownership
-    if @user_in_owners
-      team_owners.delete @user
-      redirect_to @team
-    end
+    delete_owner_if_existing
+    redirect_to @team
   end
 
   def delete_membership
-    if @user_in_owners
-      team_owners.delete @user
-    end
-
+    delete_owner_if_existing
     @team.members.delete(@user)
     redirect_to @team
   end
@@ -84,6 +79,12 @@ class TeamsController < ApplicationController
   end
 
   private
+    def delete_owner_if_existing
+      if @user_in_owners
+        team_owners.delete @user
+      end
+    end
+
     def team_owners
       @team_owners ||= @team.owners
     end

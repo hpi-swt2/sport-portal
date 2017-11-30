@@ -57,9 +57,9 @@ class Ability
     def can_crud_team(user)
       user_id = user.id
       can :create, Team
-      can :read, Team, private: true, members: {id: user_id}
-      can :update, Team, members: {id: user_id}
-      can :destroy, Team, owners: {id: user_id}
+      can :read, Team, private: true, members: { id: user_id }
+      can :update, Team, members: { id: user_id }
+      can :destroy, Team, owners: { id: user_id }
     end
 
     def can_assign_ownership(user)
