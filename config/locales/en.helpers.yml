@@ -17,18 +17,19 @@ en:
       destroy: "Delete"
       new: "New"
       edit: "Edit"
-      show: Show
+      show: "Show"
+      save: "Save"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
       new: "New %{model}"
       delete: "Delete %{model}"
     submit:
-      create: Create %{model}
-      submit: Save %{model}
-      update: Update %{model}
+      create: "Create %{model}"
+      submit: "Save %{model}"
+      update: "Update %{model}"
     select:
-      prompt: Please select
+      prompt: "Please select"
     teams:
       kind_of_sport: "Kind of sport"
       description: "Description"

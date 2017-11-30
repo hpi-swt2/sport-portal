@@ -34,8 +34,12 @@ class User < ApplicationRecord
   validates_format_of :telephone_number, with: /\A\d+\z/, message: I18n.t('activerecord.models.user.errors.telephone_number_invalid'), allow_nil: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
+
+  has_and_belongs_to_many :events
+
   has_many :organizers
   has_many :organizing_events, :through => :organizers, :source => 'event'
+
 
   def has_omniauth?
     provider.present? && uid.present?
@@ -51,7 +55,28 @@ class User < ApplicationRecord
     self.provider = nil
   end
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first
+  class << self
+    def new_with_session(_, session)
+      super.tap do |user|
+        if valid_omniauth_session? session
+          data = session['omniauth.data']
+          user.uid = data['uid']
+          user.provider = data['provider']
+          user.email = data['email'] if user.email.blank?
+        end
+      end
+    end
+
+    def valid_omniauth_session?(session)
+      data = session['omniauth.data']
+      return data['expires'].to_time > Time.current if data
+      false
+    end
+
+    def from_omniauth(auth)
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+      end
+    end
   end
 end

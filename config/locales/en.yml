@@ -58,3 +58,10 @@ en:
       edit_profile: "Edit Profile Properties"
       update_profile: "Update Profile"
       favourite_sports_placeholder: "Football, Basketball, Table football, ..."
+
+  events:
+        create_event: "Create Event"
+        choose_event_format: "Choose event format"
+        new_league: "New league"
+        new_tournament: "New tournament"
+        show_events: "Show all events"
