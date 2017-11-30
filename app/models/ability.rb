@@ -39,9 +39,7 @@ class Ability
 
       can :create, :all
 
-      can :read, Team, private: true, members: {id: user_id}
-      can :update, Team, members: {id: user_id}
-      can :destroy, Team, owners: {id: user_id}
+      can_crud_team(user)
 
       can_assign_ownership(user)
 
@@ -58,6 +56,12 @@ class Ability
   end
 
   private
+
+  def can_crud_team(user)
+    can :read, Team, private: true, members: { id: user_id }
+    can :update, Team, members: { id: user_id }
+    can :destroy, Team, owners: { id: user_id }
+  end
 
   def can_assign_ownership(user)
     can :assign_ownership, Team, Team do |team|
