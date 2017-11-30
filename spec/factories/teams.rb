@@ -20,14 +20,12 @@ FactoryBot.define do
 
     after(:build) do |team|
       team.owners = build_list :user, 1
-      team.members = team.owners
     end
   end
 
   trait :with_two_owners do
     after(:build) do |team|
       team.owners = build_list :user, 2
-      team.members = team.owners
     end
   end
 

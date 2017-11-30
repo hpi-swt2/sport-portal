@@ -28,7 +28,7 @@ class TeamsController < ApplicationController
 
     if @team.save
       # Assign team ownership and team membership to current signed in user who created the team
-      assign_user_as_owner_and_member
+      @team.owners << user
 
       redirect_to @team, notice: I18n.t('helpers.flash.created', resource_name: Team.model_name.human).capitalize
     else
@@ -49,8 +49,7 @@ class TeamsController < ApplicationController
   def destroy
     # Delete all team ownerships and team memberships associated with the team to destroy
     team_id = @team.id
-    TeamOwner.where(team_id: team_id).delete_all
-    TeamMember.where(team_id: team_id).delete_all
+    TeamUser.where(team_id: team_id).delete_all
     @team.destroy
     redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
   end
@@ -109,10 +108,5 @@ class TeamsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def team_params
       params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members)
-    end
-
-    def assign_user_as_owner_and_member (user = current_user)
-      @team.owners << user
-      @team.members << user
     end
 end

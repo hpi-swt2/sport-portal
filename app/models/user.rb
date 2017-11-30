@@ -32,8 +32,8 @@ class User < ApplicationRecord
   has_many :organizers
   has_many :organizing_events, :through => :organizers, :source => 'event'
 
-  has_many :teams_users
-  has_many :teams, through: :teams_users, source: :team
+  has_many :team_users
+  has_many :teams, through: :team_users, source: :team
 
 
   def has_omniauth?

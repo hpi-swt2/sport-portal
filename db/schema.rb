@@ -80,6 +80,13 @@ ActiveRecord::Schema.define(version: 20171130200433) do
     t.index ["user_id"], name: "index_team_owners_on_user_id_and_user_id"
   end
 
+  create_table "team_users", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "user_id", null: false
+    t.boolean "is_owner"
+    t.index ["user_id", "team_id"], name: "index_team_users_on_user_id_and_team_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -87,13 +94,6 @@ ActiveRecord::Schema.define(version: 20171130200433) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
-  end
-
-  create_table "teams_users", id: false, force: :cascade do |t|
-    t.integer "team_id", null: false
-    t.integer "user_id", null: false
-    t.boolean "is_owner"
-    t.index ["user_id", "team_id"], name: "index_teams_users_on_user_id_and_team_id"
   end
 
   create_table "users", force: :cascade do |t|
