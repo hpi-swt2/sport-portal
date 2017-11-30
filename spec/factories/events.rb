@@ -10,7 +10,7 @@ FactoryBot.define do
         deadline Date.tomorrow
         startdate Date.today + 2
         enddate Date.today + 3
-        association :creator, factory: :user, strategy: :build
+        association :owner, factory: :user, strategy: :build
 
         factory :event_with_teams do
           transient do

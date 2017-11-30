@@ -32,7 +32,7 @@ class Ability
       user_id = user.id
       can :manage, User, id: user_id
       can :join, Event
-      can :manage, Event, creator_id: user_id
+      can :manage, Event, owner_id: user_id
       can :read, Team, private: false
       can :create, :all
       can :read, Team, private: true, members: { id: user_id }

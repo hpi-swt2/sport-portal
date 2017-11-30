@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130083147) do
+ActiveRecord::Schema.define(version: 20171130123245) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -22,13 +22,13 @@ ActiveRecord::Schema.define(version: 20171130083147) do
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "creator_id"
     t.date "startdate"
     t.date "enddate"
     t.date "deadline"
     t.integer "gameday_duration"
-    t.index ["creator_id"], name: "index_events_on_creator_id"
+    t.integer "owner_id"
     t.index ["game_mode"], name: "index_events_on_game_mode"
+    t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
   end
 

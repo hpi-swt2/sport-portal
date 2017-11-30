@@ -37,7 +37,7 @@ RSpec.describe EventsController, type: :controller do
         deadline: Date.current,
         startdate: Date.current,
         enddate: Date.current,
-        creator: @user,
+        owner: @user,
         max_teams: 20
     }
   }
@@ -64,7 +64,7 @@ RSpec.describe EventsController, type: :controller do
     @other_user = FactoryBot.create(:user)
     @admin = FactoryBot.create(:admin)
     @event = FactoryBot.build(:event)
-    @event.creator = @user
+    @event.owner = @user
     sign_in @user
   end
 

@@ -23,7 +23,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.new(event_params)
-    @event.creator = current_user
+    @event.owner = current_user
 
     if @event.save
       @event.editors << current_user

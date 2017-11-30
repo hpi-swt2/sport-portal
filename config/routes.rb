@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
   devise_scope :user do
     resources :users, only: [:index, :show]
+    scope "/admin" do
+      resources :users, only: [:edit, :update, :destroy]
+    end
     get '/users/:id/dashboard', to: 'users#dashboard'
     get '/users/:id/link', to: 'users#link'
     get '/users/:id/unlink', to: 'users#unlink'

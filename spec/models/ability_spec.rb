@@ -76,7 +76,7 @@ RSpec.describe Ability, type: :model do
   end
 
   it 'should allow users to crud events they created' do
-    event = Event.new(creator: @user)
+    event = Event.new(owner: @user)
     ability = Ability.new(@user)
     ability.should be_able_to(:manage, event)
   end

@@ -7,7 +7,7 @@ RSpec.describe "events/edit", type: :view do
     @event = assign(:event, Event.create!(
       :name => "MyString",
       :description => "MyText",
-      :creator => FactoryBot.build(:user),
+      :owner => FactoryBot.build(:user),
       :game_mode => "MyString",
       :max_teams => 20,
       :player_type => Event.player_types[Event.player_types.keys.sample],

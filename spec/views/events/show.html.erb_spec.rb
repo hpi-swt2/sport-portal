@@ -18,7 +18,7 @@ RSpec.describe "events/show", type: :view do
     #   :enddate => Date.tomorrow+3
     # ))
     @event.editors << @user
-    @event.creator = @user
+    @event.owner = @user
   end
 
   it "renders attributes in <p>" do

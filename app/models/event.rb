@@ -20,7 +20,7 @@
 #
 
 class Event < ApplicationRecord
-  belongs_to :creator, class_name: 'User'
+  belongs_to :owner, class_name: 'User'
   has_many :matches, -> { order 'gameday ASC' }, dependent: :delete_all
   has_and_belongs_to_many :teams
   validates :name, :discipline, :game_mode, presence: true
