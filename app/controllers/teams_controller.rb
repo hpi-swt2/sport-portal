@@ -58,21 +58,21 @@ class TeamsController < ApplicationController
   # Assigns team ownership to a specific team member
   def assign_ownership
     unless @user_in_owners
-      @team_owners << @user
+      team_owners << @user
       redirect_to @team
     end
   end
 
   def delete_ownership
     if @user_in_owners
-      @team_owners.delete @user
+      team_owners.delete @user
       redirect_to @team
     end
   end
 
   def delete_membership
     if @user_in_owners
-      @team_owners.delete @user
+      team_owners.delete @user
     end
 
     @team.members.delete(@user)
@@ -84,10 +84,13 @@ class TeamsController < ApplicationController
   end
 
   private
+    def team_owners
+      @team_owners ||= @team.owners
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = Team.find(params[:id])
-      @team_owners = @team.owners
     end
 
     def set_user
@@ -95,7 +98,7 @@ class TeamsController < ApplicationController
     end
 
     def owners_include_user
-      @user_in_owners = @team_owners.include? @user
+      @user_in_owners = team_owners.include? @user
     end
 
     # Only allow a trusted parameter "white list" through.
