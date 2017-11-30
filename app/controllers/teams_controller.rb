@@ -24,7 +24,6 @@ class TeamsController < ApplicationController
   # POST /teams
   def create
     @team = Team.new(team_params)
-    @team.creator = current_user
 
     if @team.save
       # Assign team ownership and team membership to current signed in user who created the team

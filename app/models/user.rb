@@ -24,7 +24,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid]
 
   has_many :created_events, class_name: 'Event', primary_key: 'id', foreign_key: 'creator'
-  has_many :created_teams, class_name: 'Team', primary_key: 'id', foreign_key: 'creator'
 
   validates :first_name, presence: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }

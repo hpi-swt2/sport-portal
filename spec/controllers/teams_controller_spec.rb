@@ -10,9 +10,7 @@ RSpec.describe TeamsController, type: :controller do
   # Team. As you add validations to Team, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    team = FactoryBot.build(:team)
-    team.creator = @user
-    team.attributes
+    FactoryBot.attributes_for(:team)
   }
 
   let(:invalid_attributes) {
@@ -90,6 +88,8 @@ end
 
     it "should allow normal user to edit his created team" do
       team = Team.create! valid_attributes
+      team.owners << subject.current_user
+      team.members << subject.current_user
       get :edit, params: {id: team.to_param}
       expect(response).to be_success
     end
@@ -144,7 +144,7 @@ end
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        { "name" => valid_attributes["name"] + "_new" }
+        { :name => valid_attributes[:name] + "_new" }
       }
 
       it "updates the requested team" do
@@ -152,7 +152,7 @@ end
         team.members << subject.current_user
         put :update, params: { id: team.to_param, team: new_attributes }
         team.reload
-        expect(team.name).to eq(new_attributes["name"])
+        expect(team.name).to eq(new_attributes[:name])
       end
 
       it "redirects to the team" do
@@ -164,6 +164,8 @@ end
 
       it "should allow normal user to update his created team" do
         team = Team.create! valid_attributes
+        team.owners << subject.current_user
+        team.members << subject.current_user
         put :update, params: {id: team.to_param, team: valid_attributes}
         expect(response).to redirect_to(team)
       end
@@ -199,7 +201,6 @@ end
       team = Team.create! valid_attributes
       team.owners << subject.current_user
       team.members = team.members + team.owners
-      team = FactoryBot.create(:team, creator: @user)
       expect {
         delete :destroy, params: { id: team.to_param }
       }.to change(TeamOwner, :count).by(-1)
@@ -222,6 +223,7 @@ end
 
     it "should allow normal user to destroy his created team" do
       team = Team.create! valid_attributes
+      team.owners << subject.current_user
       delete :destroy, params: {id: team.to_param}
       expect(response).to redirect_to(teams_url)
     end

@@ -77,7 +77,6 @@ RSpec.describe Ability, type: :model do
 
   it 'should allow users to crud events they created' do
     event = Event.new(creator: @user)
-
     ability = Ability.new(@user)
     ability.should be_able_to(:manage, event)
   end
@@ -89,15 +88,9 @@ RSpec.describe Ability, type: :model do
     ability.should_not be_able_to(:manage, event)
   end
 
-  it 'should allow admin to crud teams they created' do
-    team = Team.new(creator: @admin)
-
-    ability = Ability.new(@admin)
-    ability.should be_able_to(:manage, team)
-  end
 
   it 'should allow admin to crud teams they did not create' do
-    team = Team.new(creator: @user)
+    team = Team.new()
 
     ability = Ability.new(@admin)
     ability.should be_able_to(:manage, team)
@@ -110,4 +103,3 @@ RSpec.describe Ability, type: :model do
     ability.should_not be_able_to(:manage, team)
   end
 end
-

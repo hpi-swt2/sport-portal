@@ -7,6 +7,7 @@ RSpec.describe "teams/index", type: :view do
       FactoryBot.create(:team)
     ])
     @user = FactoryBot.create(:user)
+    @admin = FactoryBot.create(:admin)
   end
 
   it "renders a list of teams" do
@@ -48,19 +49,17 @@ RSpec.describe "teams/index", type: :view do
     expect(rendered).to have_selector(:link_or_button, t('helpers.links.new'))
   end
 
-  it "renders the edit button when signed in and you have teams" do
-    sign_in @user
-    @teams[1].creator = @user
+  it "renders the edit button when signed in and you are an admin" do
+    sign_in @admin
     render
     expect(rendered).to have_selector(:link_or_button, t('helpers.links.edit'))
   end
 
-  it "renders the delete button when signed in and you have teams " do
-    sign_in @user
-    @teams[1].creator = @user
+  it "renders the delete button when signed in and you are an admin" do
+    sign_in @admin
     render
     expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
   end
-  
+
 
 end

@@ -16,7 +16,6 @@ FactoryBot.define do
     sequence(:name) { |n| "Team #{n}" }
     kind_of_sport "Football"
     description "This team is awesome"
-    association :creator, factory: :user
     private false
 
     after(:build) do |team|
