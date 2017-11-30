@@ -1,0 +1,11 @@
+!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1><%= t('.hello', firstname: @user.firstname) %></h1>
+<p><%= t('.next_game_info', name: @event.name, startdate: @event.startdate, participants: @event.teams, place: @match.place) %></p>
+<p><%= t('.have_fun') %></p>
+</body>
+</html>

@@ -38,3 +38,9 @@ de:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
       destroyed: "%{resource_name} wurde erfolgreich entfernt."
+  event_mailer:
+    event_notification:
+      hello: "Hallo %{firstname},"
+      next_game_info: "dein nächstes Spiel %{name} startet morgen um %{startdate} mit %{participants}. Ihr trefft euch am folgenden Ort: %{place}"
+      have_fun: "Viel Spaß beim Spiel!"
+      subject: "Ein Spiel startet morgen um %{startdate}"
