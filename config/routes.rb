@@ -28,13 +28,13 @@ Rails.application.routes.draw do
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
   devise_scope :user do
     resources :users do
-    # Avatar
       member do
-        patch 'avatar', on: :member, to: 'avatars#update'
-        put 'avatar', on: :member, to: 'avatars#update'
-        post 'avatar', on: :member, to: 'avatars#create'
-        delete 'avatar', on: :member, to: 'avatars#destroy'
+        patch 'avatar', to: 'avatars#update'
+        put 'avatar', to: 'avatars#update'
+        post 'avatar', to: 'avatars#create'
+        delete 'avatar', to: 'avatars#destroy'
       end
+    end
 
     resources :users, only: [:index, :show, :edit, :update] do
       member do
