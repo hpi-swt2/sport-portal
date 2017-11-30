@@ -9,7 +9,7 @@
   <thead>
   <tr>
     <% [:name, :game_mode, :deadline, :startdate, :enddate].each do |attribute| %>
-      <th><%= model_class.human_attribute_name(attribute) %></th>
+        <th><%= model_class.human_attribute_name(attribute) %></th>
     <% end %>
     <th><%= t '.actions', :default => t("helpers.actions") %></th>
   </tr>
@@ -37,20 +37,17 @@
               <% end %>
           <% end %>
 
-          <% if user_signed_in? && current_user.organizing_events.include?(event) %>
-              <% if can? :edit, event %>
-                  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                              edit_event_path(event), :class => 'btn btn-default btn-xs' %>
-              <% end %>
-              <% if can? :destroy, event %>
-                  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                              event_path(event),
-                              :method => :delete,
-                              :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
-                              :class => 'btn btn-xs btn-danger' %>
-              <% end %>
+          <% if can? :edit, event %>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_event_path(event), :class => 'btn btn-default btn-xs' %>
           <% end %>
-
+          <% if can? :destroy, event %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          event_path(event),
+                          :method => :delete,
+                          :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
+                          :class => 'btn btn-xs btn-danger' %>
+          <% end %>
         </td>
       </tr>
   <% end %>
@@ -62,3 +59,11 @@
                 new_event_path,
                 :class => 'btn btn-primary' %>
 <% end %>
+
+<br>
+<form>
+  <div>
+    <input type="checkbox" id="shown_events" name="showAll">
+    <label for="shown_events"> <%= t('events.show_events') %> </label>
+  </div>
+</form>

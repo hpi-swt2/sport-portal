@@ -54,4 +54,20 @@ require'rails_helper'
       visit events_path()
       expect(page).not_to have_button("Join Event")
     end
+
+    it "should be possible to see all events if corresp. checkbox is enabled" do
+      @oldevent = FactoryBot.create :event, deadline: Date.yesterday
+
+      visit "/events?showAll=on"
+
+      expect(page).to have_content(@oldevent.deadline.to_s)
+    end
+
+    it "should be possible to see active events only if corresp. checkbox is disabled" do
+      @oldevent = FactoryBot.create :event, deadline: Date.yesterday
+
+      visit "/events?"
+
+      expect(page).not_to have_content(@oldevent.deadline.to_s)     
+    end
   end

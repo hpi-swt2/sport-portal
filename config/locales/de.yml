@@ -76,6 +76,7 @@ de:
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Tournier"
+    show_events: "Alle Events anzeigen"
     show:
       to_schedule: zum Spielplan
     schedule:
@@ -87,3 +88,4 @@ de:
       away: Team 2
       score: Ergebnis
       points: Punkte
+

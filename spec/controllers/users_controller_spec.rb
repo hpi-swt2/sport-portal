@@ -93,6 +93,24 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'GET #edit' do
+    before :each do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      @user = User.create! valid_attributes
+    end
+
+    it 'should show the edit page when the user is logged in' do
+      sign_in @user
+      get :edit, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+
+    it 'should redirect to the sign in page when no user is logged in' do
+      get :edit, params: { id: @user.to_param }
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
+
   describe "POST #create" do
     it "creates a new user with valid params" do
       @request.env["devise.mapping"] = Devise.mappings[:user]

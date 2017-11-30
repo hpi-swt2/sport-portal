@@ -27,20 +27,13 @@ Rails.application.routes.draw do
   # Sets the devise scope to be used in the controller.
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
   devise_scope :user do
-    resources :users, only: [:index, :show]
-    scope "/admin" do
-      resources :users, only: [:edit, :update, :destroy]
+    resources :users, only: [:index, :show, :edit, :update] do
+      member do
+        get 'dashboard'
+        get 'link'
+        get 'unlink'
+      end
     end
-    get '/users/:id/dashboard', to: 'users#dashboard'
-    get '/users/:id/link', to: 'users#link'
-    get '/users/:id/unlink', to: 'users#unlink'
-  end
-
-  #Define route for user dashboard
-  resources :users do
-    get 'dashboard', on: :member
-    get 'link', on: :member
-    get 'unlink', on: :member
   end
 
   #Define route for Create Event Button

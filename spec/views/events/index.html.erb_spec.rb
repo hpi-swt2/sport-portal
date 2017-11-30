@@ -80,4 +80,8 @@ RSpec.describe "events/index", type: :view do
     render
     expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
   end
+  it "renders a checkbox to show all events" do
+    render
+    expect(rendered).to have_field('shown_events')
+  end
 end
