@@ -20,9 +20,10 @@
 #
 
 class Event < ApplicationRecord
+  belongs_to :owner, class_name: 'User'
   has_many :matches, -> { order 'gameday ASC' }, dependent: :delete_all
   has_and_belongs_to_many :teams
-
+  validates :name, :discipline, :game_mode, presence: true
   validates :name, :discipline, :game_mode, :player_type, presence: true
   validates :deadline, :startdate, :enddate, presence: true
   validates :max_teams, :numericality => { :greater_than_or_equal_to => 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
@@ -56,7 +57,7 @@ class Event < ApplicationRecord
 
   def add_test_teams
     max_teams.times do |index|
-      teams << Team.new(name: "Team #{index}", private: false)
+      teams << FactoryBot.build(:team)
     end
   end
 

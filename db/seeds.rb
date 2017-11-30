@@ -11,7 +11,8 @@ admin = FactoryBot.build(:user,
   last_name: '',
   email: 'admin@example.com',
   password: 'a',
-  password_confirmation: 'a')
+  password_confirmation: 'a',
+  admin: true)
 
 # Skip validations, so that e.g. a short password is possible
 admin.save(validate: false)

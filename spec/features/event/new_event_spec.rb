@@ -5,7 +5,12 @@ describe "new event page", type: :feature do
     @user = FactoryBot.create :user
     sign_in @user
   end
-	
+
+  after(:each) do
+    Event.delete_all
+    @user.destroy
+  end
+
 	it "should render without an error" do
 		visit new_event_path
 	end

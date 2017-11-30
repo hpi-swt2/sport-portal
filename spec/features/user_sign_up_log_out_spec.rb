@@ -1,6 +1,15 @@
 require "rails_helper"
 
 RSpec.feature "User management", :type => :feature do
+
+  before(:each) do
+    @user = FactoryBot.create(:user)
+  end
+
+  after(:each) do
+    @user.destroy
+  end
+
   scenario "User signs up" do
     attrs = FactoryBot.attributes_for(:user)
     visit new_user_registration_path
@@ -19,7 +28,7 @@ RSpec.feature "User management", :type => :feature do
   end
 
   scenario "User signs out from root page" do
-    sign_in FactoryBot.create(:user)
+    sign_in @user
     visit root_path
     find("a[href='#{destroy_user_session_path}']").click
 
