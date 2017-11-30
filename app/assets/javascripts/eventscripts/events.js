@@ -25,6 +25,7 @@ function init() {
   });
 }
 
+
 $( document ).on('turbolinks:load', function() {
       init();
   });

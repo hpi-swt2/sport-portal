@@ -24,7 +24,6 @@ $( document ).on('turbolinks:load', function() {
         var end = $("#event_enddate").val();
         if(start != "" && end != "") {
             diff = calcDateDiff(start,end);
-
             if (diff <= 0){
                 diff = "";
             }
