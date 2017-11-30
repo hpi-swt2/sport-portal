@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
 
   # Use custom user controller instead of the one provided by devise
-  devise_for :users, path_prefix: 'my', controllers: {
+  devise_for :users, controllers: {
     registrations: 'users',
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
@@ -27,7 +27,10 @@ Rails.application.routes.draw do
   # Sets the devise scope to be used in the controller.
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
   devise_scope :user do
-    resources :users, only: [:edit, :update, :destroy, :index, :show]
+    resources :users, only: [:index, :show]
+    scope "/admin" do
+      resources :users, only: [:edit, :update, :destroy]
+    end
     get '/users/:id/dashboard', to: 'users#dashboard'
     get '/users/:id/link', to: 'users#link'
     get '/users/:id/unlink', to: 'users#unlink'
