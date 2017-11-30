@@ -14,5 +14,5 @@
 <%= back_btn %>
 <% if can? :edit, @user %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_user_registration_path, :class => 'btn btn-default' %>
+              edit_user_path, :class => 'btn btn-default' %>
 <% end %>
