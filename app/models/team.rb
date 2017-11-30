@@ -27,10 +27,6 @@ class Team < ApplicationRecord
   # validates :owners, presence: true
   # validates :members, presence: true
 
-  def owners_include?(user)
-    owners.include? user
-  end
-
   def has_multiple_owners?
     owners.length > 1
   end
