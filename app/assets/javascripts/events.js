@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
     displayTypeField();
 
     // Display Game Mode field conditionally in create events form
-    $("#event_type, #tournament_type, #league_type").change(function() {
+    $("#event_type, #tournament_type, #league_type").on('change', function() {
         displayTypeField();
     });
 

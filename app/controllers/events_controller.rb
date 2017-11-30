@@ -90,6 +90,7 @@ class EventsController < ApplicationController
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,
+                                    :type,
                                     :game_mode,
                                     :max_teams,
                                     :player_type,

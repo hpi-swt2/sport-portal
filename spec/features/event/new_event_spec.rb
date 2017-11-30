@@ -45,7 +45,7 @@ describe "new event page", type: :feature do
 
 		find('input[type="submit"]').click
 
-    expect(page).to have_current_path(/.*\/events\/\d+/)
+    expect(page).to have_current_path(/.*\/(events|tournaments|leagues)\/\d+/)
 		expect(page).to have_content(Date.tomorrow.to_s)
 		expect(page).to have_content((Date.tomorrow + 2).to_s)
 		expect(page).to have_content((Date.tomorrow + 3).to_s)
