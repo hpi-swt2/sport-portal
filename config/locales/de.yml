@@ -71,6 +71,7 @@ de:
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Tournier"
+    show_events: "Alle Events anzeigen"
     show:
       to_schedule: zum Spielplan
     new:
@@ -86,6 +87,7 @@ de:
       enddate: "Ende"
       duration: "Dauer"
     schedule:
+<<<<<<< HEAD
       title: "Spielplan"
       gameday: "Spieltag"
       date: "Datum"
@@ -94,3 +96,14 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+=======
+      title: Spielplan
+      gameday: Spieltag
+      date: Datum
+      place: Ort
+      home: Team 1
+      away: Team 2
+      score: Ergebnis
+      points: Punkte
+
+>>>>>>> dev

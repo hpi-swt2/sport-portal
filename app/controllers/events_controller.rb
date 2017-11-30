@@ -3,7 +3,11 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.active
+    if get_shown_events_value == "on"
+      @events = Event.all
+    else
+      @events = Event.active
+    end
   end
 
   # GET /events/1
@@ -73,6 +77,10 @@ class EventsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+    end
+
+    def get_shown_events_value
+      params[:showAll]
     end
 
     def set_user

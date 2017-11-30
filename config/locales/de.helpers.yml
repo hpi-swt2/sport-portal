@@ -18,6 +18,9 @@ de:
       new: "Neu"
       edit: "Bearbeiten"
       show: "Anzeigen"
+      assign_ownership: "Als Captain hinzufügen"
+      delete_ownership: "Als Captain löschen"
+      delete_membership: "Aus dem Team entfernen"
       save: "Speichern"
     titles:
       edit: "%{model} bearbeiten"

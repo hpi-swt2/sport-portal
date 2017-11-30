@@ -52,6 +52,7 @@ en:
         other: "events"
 
   events:
+<<<<<<< HEAD
     create_event: "Create Event"
     choose_event_format: "Choose event format"
     new_league: "New league"
@@ -68,3 +69,10 @@ en:
       startdate: "Startdate"
       enddate: "Enddate"
       duration: "Duration"
+=======
+        create_event: "Create Event"
+        choose_event_format: "Choose event format"
+        new_league: "New league"
+        new_tournament: "New tournament"
+        show_events: "Show all events"
+>>>>>>> dev

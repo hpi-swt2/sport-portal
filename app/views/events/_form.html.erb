@@ -2,6 +2,7 @@
 
     <%= render partial: "application/validation_errors", locals: {model: @event} %>
 
+<<<<<<< HEAD
     <div class="form-group">
       <%= f.label t('events.new.name'), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
@@ -94,5 +95,37 @@
                     events_path, :class => 'btn btn-default' %>
       </div>
     </div>
+=======
+  <div class="field">
+    <%= form.label :player_type %>
+    <%= form.text_field :player_type, id: :event_player_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :deadline %>
+
+    <%= form.text_field :deadline, id: :event_deadline, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+
+  </div> 
+
+  <div class="field">
+    <%= form.label :startdate %>
+
+    <%= form.text_field :startdate, id: :event_startdate, :data => {:provide => 'datepicker', "date-format" => "yyyy-mm-dd"} %>
+
+  </div>
+
+  <div class="field">
+    <%= form.label :enddate %>
+
+    <%= form.text_field :enddate, id: :event_enddate, :data => {:provide => 'datepicker', "date-format" => "yyyy-mm-dd"} %>
+
+  </div>
+
+  <div class="field">
+    <%= form.label :duration %> 
+      Number of days: <%= form.text_field :duration, id: :event_duration %>
+  </div>
+>>>>>>> dev
 
 <% end %>
