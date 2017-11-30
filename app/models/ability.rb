@@ -57,7 +57,7 @@ class Ability
 
   private
 
-  def can_crud_team(user_id) 
+  def can_crud_team(user_id)
     can :read, Team, private: true, members: { id: user_id }
     can :update, Team, members: { id: user_id }
     can :destroy, Team, owners: { id: user_id }
