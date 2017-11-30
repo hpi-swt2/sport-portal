@@ -35,5 +35,8 @@ RSpec.describe EventsController, type: :routing do
       expect(:delete => "/events/1").to route_to("events#destroy", :id => "1")
     end
 
+    it "routes to #schedule" do
+      expect(:get => "/events/1/schedule").to route_to("events#schedule", :id => "1")
+    end
   end
 end

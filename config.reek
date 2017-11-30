@@ -1,0 +1,2 @@
+TooManyMethods:
+  max_methods: 20

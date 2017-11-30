@@ -77,6 +77,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-email (2.5.0)
+      capybara (~> 2.4)
+      mail
     certified (1.0.0)
     coderay (1.1.2)
     commonjs (0.2.7)
@@ -247,6 +250,8 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rspec-collection_matchers (1.1.3)
+      rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.7.0)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -345,6 +350,7 @@ DEPENDENCIES
   byebug
   cancancan
   capybara
+  capybara-email
   certified
   coveralls
   cucumber-rails
@@ -362,6 +368,7 @@ DEPENDENCIES
   pry-rails
   puma
   rails (~> 5.1.4)
+  rspec-collection_matchers
   rspec-rails
   rubocop
   shrine (~> 2.8.0)

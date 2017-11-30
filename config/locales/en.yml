@@ -50,3 +50,10 @@ en:
       event:
         one: "event"
         other: "events"
+
+  events:
+        create_event: "Create Event"
+        choose_event_format: "Choose event format"
+        new_league: "New league"
+        new_tournament: "New tournament"
+        show_events: "Show all events"

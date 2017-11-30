@@ -53,3 +53,5 @@ bower.json
 .env
 
 public/uploads
+
+.vscode/settings.json

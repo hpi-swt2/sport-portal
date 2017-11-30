@@ -97,15 +97,21 @@ group :development, :test do
   # Acceptance test framework for web applications
   # https://github.com/teamcapybara/capybara
   gem 'capybara'
+  # Mailer convenience methods
+  gem 'capybara-email'
   # Manage translation and localization with static analysis, for Ruby i18n
   # https://github.com/glebm/i18n-tasks
   gem 'i18n-tasks'
   # Code coverage for Ruby
   # https://github.com/colszowka/simplecov
   gem 'simplecov', '~> 0.14.0', require: false
+
   # Hosted code coverage on coveralls.io
   # https://docs.coveralls.io/ruby-on-rails
   gem 'coveralls', require: false
+  # Collection cardinality matchers, extracted from rspec-expectations
+  # https://github.com/rspec/rspec-collection_matchers
+  gem 'rspec-collection_matchers'
   # Ruby bindings for the SQLite3 embedded database
   # https://github.com/sparklemotion/sqlite3-ruby
   gem 'sqlite3'
