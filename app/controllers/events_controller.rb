@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /events
@@ -26,6 +27,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.new(event_params)
+    @event.owner = current_user
 
     if @event.save
       @event.editors << current_user
@@ -89,9 +91,16 @@ class EventsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def event_params
+      if params.has_key? :league
+        params[:event] = params.delete :league
+      elsif params.has_key? :tournament
+        params[:event] = params.delete :tournament
+      end
+
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,
+                                    :type,
                                     :game_mode,
                                     :max_teams,
                                     :player_type,

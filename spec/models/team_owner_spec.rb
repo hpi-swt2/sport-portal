@@ -16,7 +16,6 @@ RSpec.describe TeamOwner, type: :model do
     end
 
     it "should be not be able to delete his own ownership if he is the only owner" do
-      another_user = FactoryBot.create :user
       ability = Ability.new(user)
       assert ability.cannot?(:delete_ownership, team)
     end

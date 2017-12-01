@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 20171130200433) do
     t.date "enddate"
     t.date "deadline"
     t.integer "gameday_duration"
+    t.integer "owner_id"
     t.index ["game_mode"], name: "index_events_on_game_mode"
+    t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
   end
 
@@ -106,6 +108,7 @@ ActiveRecord::Schema.define(version: 20171130200433) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.boolean "admin", default: false
     t.string "provider"
     t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
