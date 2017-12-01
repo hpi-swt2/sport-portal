@@ -26,22 +26,22 @@ describe "new event page", type: :feature do
   it "should have a disabled field for event duration" do
     visit new_event_path
 
-    expect(page).to have_field('event_duration', :disabled => true)
+    expect(page).to have_field('event_duration', disabled: true)
   end
 
   it "should have a dropdown menu for type" do
     visit new_event_path
 
-    expect(page).to have_select('event_type', :options => [I18n.t('events.new.select_type'), 'Tournament', 'League'])
+    expect(page).to have_select('event_type', options: [I18n.t('events.new.select_type'), 'Tournament', 'League'])
   end
 
   it "should be possible to create a date conditions for an event" do
     visit new_event_path
     fill_in "event_name", with: "name"
     fill_in "event_discipline", with: "soccer"
-    select "Tournament", :from => "event_type"
-    select "Ko", :from => "event_game_mode_tournament"
-    select "Single", :from => "event_player_type"
+    select "Tournament", from: "event_type"
+    select "Ko", from: "event_game_mode_tournament"
+    select "Single", from: "event_player_type"
     fill_in "event_max_teams", with: "5"
 
     fill_in "event_deadline", with: Date.tomorrow.to_s

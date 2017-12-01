@@ -144,7 +144,7 @@ end
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        { :name => valid_attributes[:name] + "_new" }
+        { name: valid_attributes[:name] + "_new" }
       }
 
       it "updates the requested team" do

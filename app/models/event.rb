@@ -26,7 +26,7 @@ class Event < ApplicationRecord
   validates :name, :discipline, :game_mode, presence: true
   validates :name, :discipline, :game_mode, :player_type, presence: true
   validates :deadline, :startdate, :enddate, presence: true
-  validates :max_teams, :numericality => { :greater_than_or_equal_to => 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
   validate :end_after_start
   enum player_types: [:single, :team]
 
@@ -35,7 +35,7 @@ class Event < ApplicationRecord
   end
 
   has_many :organizers
-  has_many :editors, :through => :organizers, :source => 'user'
+  has_many :editors, through: :organizers, source: 'user'
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
