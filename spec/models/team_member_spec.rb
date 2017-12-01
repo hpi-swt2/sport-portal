@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe TeamMember, type: :model do
 
   describe 'when logged in' do
-    let(:user){ FactoryBot.create :user }
-    let(:team){ FactoryBot.create :team }
+    let(:user) { FactoryBot.create :user }
+    let(:team) { FactoryBot.create :team }
 
     it "should not be able to assign team ownership to users and delete it" do
       ability = Ability.new(user)
