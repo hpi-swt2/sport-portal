@@ -1,3 +1,5 @@
+# Class for members of teams. They can be owners with advanced rights.
+# By default, new TeamUsers are no owners.
 class TeamUser < ApplicationRecord
   belongs_to :team
   belongs_to :user
