@@ -1,4 +1,4 @@
-require'rails_helper'
+require 'rails_helper'
 
 describe "detailled event page", type: :feature do
   before(:each) do
