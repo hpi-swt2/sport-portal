@@ -32,11 +32,11 @@ RSpec.describe TeamsController, type: :controller do
   end
 
   describe "GET #index" do
-    it "returns a success response" do
-      team = Team.create! valid_attributes
-      get :index, params: {}
-      expect(response).to be_success
-    end
+  it "returns a success response" do
+    team = Team.create! valid_attributes
+    get :index, params: {}
+    expect(response).to be_success
+  end
 
   it "should allow normal user to view page" do
     get :index, params: {}
@@ -53,7 +53,7 @@ end
 
     it "should allow normal user to view page" do
       team = Team.create! valid_attributes
-      get :show, params: {id: team.to_param}
+      get :show, params: { id: team.to_param }
       expect(response).to be_success
     end
   end
@@ -90,14 +90,14 @@ end
       team = Team.create! valid_attributes
       team.owners << subject.current_user
       team.members << subject.current_user
-      get :edit, params: {id: team.to_param}
+      get :edit, params: { id: team.to_param }
       expect(response).to be_success
     end
 
     it "should not allow normal user to edit others created team" do
       sign_in @other_user
       team = Team.create! valid_attributes
-      get :edit, params: {id: team.to_param}
+      get :edit, params: { id: team.to_param }
       expect(response).to be_forbidden
     end
   end
@@ -122,7 +122,7 @@ end
       end
 
       it "should allow normal user to create an team" do
-        post :create, params: {team: valid_attributes}
+        post :create, params: { team: valid_attributes }
         expect(response).to redirect_to(Team.last)
       end
     end
@@ -138,7 +138,7 @@ end
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        { :name => valid_attributes[:name] + "_new" }
+        { name: valid_attributes[:name] + "_new" }
       }
 
       it "updates the requested team" do
@@ -160,14 +160,14 @@ end
         team = Team.create! valid_attributes
         team.owners << subject.current_user
         team.members << subject.current_user
-        put :update, params: {id: team.to_param, team: valid_attributes}
+        put :update, params: { id: team.to_param, team: valid_attributes }
         expect(response).to redirect_to(team)
       end
 
       it "should not allow normal user to update others created teams" do
         sign_in @other_user
         team = Team.create! valid_attributes
-        put :update, params: {id: team.to_param, team: valid_attributes}
+        put :update, params: { id: team.to_param, team: valid_attributes }
         expect(response).to_not be_success
       end
     end
@@ -210,19 +210,19 @@ end
     it "should not allow normal user to destroy teams created by others" do
       sign_in @other_user
       team = Team.create! valid_attributes
-      delete :destroy, params: {id: team.to_param}
+      delete :destroy, params: { id: team.to_param }
       expect(response).to be_forbidden
     end
 
     it "should allow normal user to destroy his created team" do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
-      delete :destroy, params: {id: team.to_param}
+      delete :destroy, params: { id: team.to_param }
       expect(response).to redirect_to(teams_url)
     end
   end
 
-  describe "POST #assign_ownershi" do
+  describe "POST #assign_ownership" do
     it "succeeds when called as a team owner" do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
@@ -263,7 +263,7 @@ end
       team.owners << subject.current_user
       team.owners << anotherUser
 
-      expect{
+      expect {
         post :delete_ownership, params: { id: team.id, team_member: anotherUser.id }
       }.to change(TeamUser, :count).by(-1)
     end

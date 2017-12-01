@@ -1,4 +1,4 @@
-require'rails_helper'
+require 'rails_helper'
 
 describe "static imprint page", type: :feature do
 
