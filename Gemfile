@@ -148,6 +148,7 @@ group :development do
   # Causes 'rails console' to open the pry console
   # https://github.com/rweng/pry-rails
   gem 'pry-rails'
+  gem 'pry-rescue'
 end
 
 group :production do

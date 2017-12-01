@@ -17,25 +17,25 @@ RSpec.describe Team, type: :model do
   end
 
   it "should have and belong to team owners" do
-    team = FactoryBot.build :team
+    team = FactoryBot.create :team
     # After building a team via FactoryBot an owner is created using the factory for users and assigned to the team
     expect(team.owners).to have(1).items
   end
 
   it "should have and belong to team members" do
     # After building a team via FactoryBot a member is created using the factory for users and assigned to the team
-    team = FactoryBot.build :team
+    team = FactoryBot.create :team
     expect(team.members).to have(1).items
   end
 
   it "should be able to have multiple team owners" do
-    team = FactoryBot.build :team, :with_two_owners
+    team = FactoryBot.create :team, :with_two_owners
     expect(team.owners).to have(2).items
     expect(team.members).to have(2).items
   end
 
   it "should be able to have multiple team members" do
-    team = FactoryBot.build :team, :with_five_members
+    team = FactoryBot.create :team, :with_five_members
     expect(team.members).to have_at_least(5).items
   end
 

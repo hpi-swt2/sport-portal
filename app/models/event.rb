@@ -57,7 +57,7 @@ class Event < ApplicationRecord
 
   def add_test_teams
     max_teams.times do |index|
-      teams << FactoryBot.build(:team)
+      teams << FactoryBot.create(:team)
     end
   end
 

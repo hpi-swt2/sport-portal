@@ -230,7 +230,7 @@ end
 
       expect {
         post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
-      }.to change(TeamOwner, :count).by(1)
+      }.to change(TeamUser, :count).by(1)
     end
 
 
@@ -251,7 +251,7 @@ end
 
       expect {
         post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
-      }.to change(TeamOwner, :count).by(0)
+      }.to change(TeamUser, :count).by(0)
     end
   end
 
@@ -265,7 +265,7 @@ end
 
       expect{
         post :delete_ownership, params: { id: team.id, team_member: anotherUser.id }
-      }.to change(TeamOwner, :count).by(-1)
+      }.to change(TeamUser, :count).by(-1)
     end
 
     it 'does not succeed when called as a team meber' do
@@ -289,7 +289,7 @@ end
 
       expect {
         post :delete_membership, params: { id: team.id, team_member: anotherUser.id }
-      }.to change(TeamMember, :count).by(-1)
+      }.to change(TeamUser, :count).by(-1)
     end
   end
 end
