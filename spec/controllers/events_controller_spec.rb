@@ -168,15 +168,15 @@ RSpec.describe EventsController, type: :controller do
       it "should delete league subclass param" do
         league = FactoryBot.build(:league)
 
-        post :create, params: {event: league.attributes}, session: valid_session
-        expect(controller.params[:league]).to be_nil
+        post :create, params: {league: league.attributes}, session: valid_session
+        expect(controller.params[:event]).to_not be_nil
       end
 
       it "should delete tournament subclass param" do
         tournament = FactoryBot.build(:tournament)
 
-        post :create, params: {event: tournament.attributes}, session: valid_session
-        expect(controller.params[:tournament]).to be_nil
+        post :create, params: {tournament: tournament.attributes}, session: valid_session
+        expect(controller.params[:event]).to_not be_nil
       end
     end
   end
