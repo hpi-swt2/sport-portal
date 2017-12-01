@@ -30,7 +30,7 @@ class TeamsController < ApplicationController
 
     if @team.save
       # Assign team ownership and team membership to current signed in user who created the team
-      @team.owners << user
+      @team.owners << current_user
 
       redirect_to @team, notice: I18n.t('helpers.flash.created', resource_name: Team.model_name.human).capitalize
     else
