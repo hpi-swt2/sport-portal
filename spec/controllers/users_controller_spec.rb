@@ -46,13 +46,13 @@ RSpec.describe UsersController, type: :controller do
     it 'returns a success response' do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       user = User.create! valid_attributes
-      get :show, params: {id: user.to_param}
+      get :show, params: { id: user.to_param }
       expect(response).to be_success
     end
 
     it "should allow normal user to view his page" do
       sign_in @user
-      get :show, params: {id: @user.to_param}
+      get :show, params: { id: @user.to_param }
       expect(response).to be_success
     end
   end
@@ -115,13 +115,13 @@ RSpec.describe UsersController, type: :controller do
     it "creates a new user with valid params" do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       expect {
-        post :create, params: {user: valid_attributes}
+        post :create, params: { user: valid_attributes }
       }.to change(User, :count).by(1)
     end
 
     it "should allow normal user to view the page of other users" do
       sign_in @user
-      get :show, params: {id: @other_user.to_param}
+      get :show, params: { id: @other_user.to_param }
       expect(response).to be_success
     end
   end
@@ -129,15 +129,15 @@ RSpec.describe UsersController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) {
-        {first_name: valid_attributes[:first_name] + '_new',
-         current_password: valid_attributes[:password]}
+        { first_name: valid_attributes[:first_name] + '_new',
+         current_password: valid_attributes[:password] }
       }
 
       it 'updates the requested user' do
         @request.env['devise.mapping'] = Devise.mappings[:user]
         user = User.create! valid_attributes
         sign_in user
-        put :update, params: {id: user.to_param, user: new_attributes}
+        put :update, params: { id: user.to_param, user: new_attributes }
         user.reload
         expect(user.first_name).to eq(new_attributes[:first_name])
       end
@@ -153,14 +153,14 @@ RSpec.describe UsersController, type: :controller do
     context 'given a logged in user' do
       it 'should redirect to OpenID' do
         sign_in @user
-        get :link, params: {id: @user.to_param}
+        get :link, params: { id: @user.to_param }
         expect(response).to redirect_to(user_hpiopenid_omniauth_authorize_path)
       end
     end
 
     context 'given no logged in user' do
       it 'should deny access' do
-        get :link, params: {id: @user.to_param}
+        get :link, params: { id: @user.to_param }
         expect(response).to be_unauthorized
       end
     end
@@ -178,7 +178,7 @@ RSpec.describe UsersController, type: :controller do
         @user.provider = 'mock'
         @user.save!
         sign_in @user
-        get :unlink, params: {id: @user.to_param}
+        get :unlink, params: { id: @user.to_param }
         @user.reload
         expect(response).to redirect_to(user_path(@user))
         expect(@user.uid).to be_nil
@@ -189,14 +189,14 @@ RSpec.describe UsersController, type: :controller do
     context 'given a logged in user without omniauth' do
       it 'should redirect to the users page' do
         sign_in @user
-        get :unlink, params: {id: @user.to_param}
+        get :unlink, params: { id: @user.to_param }
         expect(response).to redirect_to(user_path(@user))
       end
     end
 
     context 'given no logged in user' do
       it 'should deny access' do
-        get :unlink, params: {id: @user.to_param}
+        get :unlink, params: { id: @user.to_param }
         expect(response).to be_unauthorized
       end
     end
@@ -205,7 +205,7 @@ RSpec.describe UsersController, type: :controller do
   describe "DELETE #destroy" do
     it "should allow normal users to destroy theirselves" do
       sign_in @user
-      delete :destroy, params: {id: @user.to_param}
+      delete :destroy, params: { id: @user.to_param }
       expect(response).to redirect_to(root_url)
     end
   end
@@ -213,7 +213,7 @@ RSpec.describe UsersController, type: :controller do
   describe "GET #edit" do
     it "should allow normal users to edit theirselves" do
       sign_in @user
-      get :edit, params: {id: @user.to_param}
+      get :edit, params: { id: @user.to_param }
       expect(response).to be_success
     end
   end

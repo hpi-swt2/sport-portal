@@ -10,7 +10,7 @@ RSpec.feature "User management", :type => :feature do
       fill_in "user[password]", :with => '123456'
       find('input[type="submit"]').click
     end
-      expect(page).to have_text("Dashboard for " + user[:first_name])
+    expect(page).to have_text("Dashboard for " + user[:first_name])
   end
 
   scenario "User visits sign in page and can see link to sign up page" do
