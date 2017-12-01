@@ -3,15 +3,15 @@
 
 <%- model_class = Event -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human(:count => :many).titleize %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human(:count => :many).titleize %></h1>
 </div>
 <table class="table table-striped">
   <thead>
   <tr>
-    <% [:name,:game_mode,:max_teams, :deadline, :startdate, :enddate].each do |attribute| %>
-      <th><%= model_class.human_attribute_name(attribute) %></th>
+    <% [:name, :game_mode, :deadline, :startdate, :enddate].each do |attribute| %>
+        <th><%= model_class.human_attribute_name(attribute) %></th>
     <% end %>
-    <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    <th><%= t '.actions', :default => t("helpers.actions") %></th>
   </tr>
   </thead>
   <tbody>
@@ -19,6 +19,7 @@
       <tr>
         <td><%= link_to event.name, event_path(event) %></td>
         <td><%= event.game_mode %></td>
+        <td><%= event.max_teams %></td>
         <td><%= event.deadline %></td>
         <td><%= event.startdate %></td>
         <td><%= event.enddate %></td>
@@ -26,33 +27,44 @@
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       event_path(event), :class => 'btn btn-default btn-xs' %>
 
-          <% if (user_signed_in? && event.player_type == Event.player_types[:single])%>
+          <% if (user_signed_in? && event.player_type == Event.player_types[:single]) %>
               <% if event.users.where("user_id = ?", current_user.id).exists? %>
                   <%= link_to 'Leave Event', join_event_path(event), :method => "put",
-                              :class => 'btn btn-xs btn-default', id: :leavebutton%>
+                              :class => 'btn btn-xs btn-default', id: :leavebutton %>
                   Participating
               <% else %>
-                  <%= link_to 'Join Event',join_event_path(event), :method => "put",
-                              :class => 'btn btn-xs btn-default', id: :joinbutton%>
+                  <%= link_to 'Join Event', join_event_path(event), :method => "put",
+                              :class => 'btn btn-xs btn-default', id: :joinbutton %>
               <% end %>
           <% end %>
 
-          <% if user_signed_in? && current_user.organizing_events.include?(event) %>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_event_path(event), :class => 'btn btn-default btn-xs' %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                        event_path(event),
-                        :method => :delete,
-                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
-                        :class => 'btn btn-xs btn-danger' %>
+          <% if can? :edit, event %>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_event_path(event), :class => 'btn btn-default btn-xs' %>
           <% end %>
-
+          <% if can? :destroy, event %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          event_path(event),
+                          :method => :delete,
+                          :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
+                          :class => 'btn btn-xs btn-danger' %>
+          <% end %>
         </td>
       </tr>
   <% end %>
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_event_path,
-            :class => 'btn btn-primary' %>
+<% if can? :create, Event %>
+    <%= link_to t('.new', :default => t("helpers.links.new")),
+                new_event_path,
+                :class => 'btn btn-primary' %>
+<% end %>
+
+<br>
+<form>
+  <div>
+    <input type="checkbox" id="shown_events" name="showAll">
+    <label for="shown_events"> <%= t('events.show_events') %> </label>
+  </div>
+</form>

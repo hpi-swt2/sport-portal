@@ -35,5 +35,17 @@ RSpec.describe TeamsController, type: :routing do
       expect(:delete => "/teams/1").to route_to("teams#destroy", :id => "1")
     end
 
+    it "routes to #assign_ownership" do
+      expect(:post => "/teams/1/assign_ownership?team_member=1").to route_to("teams#assign_ownership", :id => "1", :team_member => "1")
+    end
+
+    it "routes to #delete_ownership" do
+      expect(:post => "/teams/1/delete_ownership?team_member=1").to route_to("teams#delete_ownership", :id => "1", :team_member => "1")
+    end
+
+    it "routes to #delete_membership" do
+      expect(:post => "/teams/1/delete_membership?team_member=1").to route_to("teams#delete_membership", :id => "1", :team_member => "1")
+    end
+
   end
 end
