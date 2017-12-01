@@ -26,7 +26,6 @@ require'rails_helper'
       @singleevent = FactoryBot.create :event, player_type: Event.player_types[:single]
       visit events_path
       click_link("Join Event")
-
       expect(page).to have_css('a#leavebutton.btn')
     end
 

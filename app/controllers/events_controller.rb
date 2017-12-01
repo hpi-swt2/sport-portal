@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /events
@@ -26,6 +27,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.new(event_params)
+    @event.owner = current_user
 
     if @event.save
       @event.editors << current_user

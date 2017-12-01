@@ -51,6 +51,11 @@ en:
         one: "event"
         other: "events"
 
+  unauthorized:
+      manage:
+        all: "Not authorized to %{action} %{subject}."
+        user: "Not allowed to manage other user accounts."
+
   events:
     create_event: "Create Event"
     choose_event_format: "Choose event format"
