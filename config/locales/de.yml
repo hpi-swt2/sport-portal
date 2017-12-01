@@ -46,6 +46,9 @@ de:
       dashboard: "Mein Dashboard"
       edit_profile: "Profil bearbeiten"
 
+  dashboard:
+    title: "Dashboard"
+
   activerecord:
     models:
       match:
