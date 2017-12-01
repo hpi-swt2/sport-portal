@@ -27,8 +27,8 @@
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       event_path(event), :class => 'btn btn-default btn-xs' %>
 
-          <% if (user_signed_in? && event.player_type == Event.player_types[:single]) %>
-              <% if event.users.where("user_id = ?", current_user.id).exists? %>
+          <% if can? :join, event %>
+              <% if event.users.include?(current_user) %>
                   <%= link_to t('.leave', :default => t("helpers.links.leave")),
                               join_event_path(event),
                               :method => :put,

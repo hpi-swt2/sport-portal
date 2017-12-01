@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /events
   def index
@@ -83,10 +83,6 @@ class EventsController < ApplicationController
 
     def get_shown_events_value
       params[:showAll]
-    end
-
-    def set_user
-      @user = current_user
     end
 
     # Only allow a trusted parameter "white list" through.

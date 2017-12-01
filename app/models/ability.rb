@@ -34,7 +34,7 @@ class Ability
 
       can :manage, User, id: user_id
 
-      can :join, Event
+      can :join, Event, player_type: Event.player_types[:single]
       can :manage, Event, owner_id: user_id
 
       can :create, :all
