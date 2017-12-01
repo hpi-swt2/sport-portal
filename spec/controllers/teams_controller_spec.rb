@@ -222,35 +222,35 @@ end
     end
   end
 
-  describe "POST #assign_ownership" do
-    it "succeeds when called as a team owner" do
+  describe 'POST #assign_ownership' do
+    it 'succeeds when called as a team owner' do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
       expect {
-        post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
+        post :assign_ownership, params: { id: team.id, team_member: another_user.id }
       }.to change(TeamUser, :count).by(1)
     end
 
 
-    it "fails when when not called as a team owner" do
+    it 'fails when when not called as a team owner' do
       team = Team.create! valid_attributes
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
-      post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
+      post :assign_ownership, params: { id: team.id, team_member: another_user.id }
       expect(response).to be_forbidden
     end
 
-    it "should not add a team owner twice" do
+    it 'should not add a team owner twice' do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
-      post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
+      post :assign_ownership, params: { id: team.id, team_member: another_user.id }
 
       expect {
-        post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
+        post :assign_ownership, params: { id: team.id, team_member: another_user.id }
       }.to change(TeamUser, :count).by(0)
     end
   end
@@ -258,23 +258,23 @@ end
   describe 'POST #delete_ownership' do
     it 'succeeds when called as a team owner' do
       team = Team.create! valid_attributes
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
       team.owners << subject.current_user
-      team.owners << anotherUser
+      team.owners << another_user
 
       expect {
-        post :delete_ownership, params: { id: team.id, team_member: anotherUser.id }
+        post :delete_ownership, params: { id: team.id, team_member: another_user.id }
       }.to change(TeamUser, :count).by(-1)
     end
 
     it 'does not succeed when called as a team meber' do
       team = Team.create! valid_attributes
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
-      team.owners << anotherUser
+      team.owners << another_user
 
-      post :delete_ownership, params: { id: team.id, team_member: anotherUser.id }
+      post :delete_ownership, params: { id: team.id, team_member: another_user.id }
       expect(response).to be_forbidden
     end
   end
@@ -282,13 +282,13 @@ end
   describe 'POST #delete_membership' do
     it 'succeeds when called as a team owner' do
       team = Team.create! valid_attributes
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
       team.owners << subject.current_user
-      team.owners << anotherUser
+      team.owners << another_user
 
       expect {
-        post :delete_membership, params: { id: team.id, team_member: anotherUser.id }
+        post :delete_membership, params: { id: team.id, team_member: another_user.id }
       }.to change(TeamUser, :count).by(-1)
     end
   end
