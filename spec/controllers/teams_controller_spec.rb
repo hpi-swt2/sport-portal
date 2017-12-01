@@ -194,11 +194,10 @@ end
     it "deletes the associated team ownerships and team memberships" do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
-      team.members = team.members + team.owners
+      number_of_members = team.members.length
       expect {
         delete :destroy, params: { id: team.to_param }
-      }.to change(TeamOwner, :count).by(-1)
-        .and change(TeamMember, :count).by(-1)
+      }.to change(TeamUser, :count).by(-number_of_members)
     end
 
     it "redirects to the teams list" do
