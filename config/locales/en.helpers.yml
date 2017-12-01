@@ -9,25 +9,34 @@ en:
       pages: "Pages"
   helpers:
     actions: "Actions"
+    name: "Name"
     links:
       back: "Back"
       cancel: "Cancel"
       confirm: "Are you sure?"
       destroy: "Delete"
+      assign_ownership: "Assign Ownership"
+      delete_ownership: "Delete Ownership"
+      delete_membership: "Delete Membership"
       new: "New"
       edit: "Edit"
-      show: Show
+      show: "Show"
+      save: "Save"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
       new: "New %{model}"
       delete: "Delete %{model}"
     submit:
-      create: Create %{model}
-      submit: Save %{model}
-      update: Update %{model}
+      create: "Create %{model}"
+      submit: "Save %{model}"
+      update: "Update %{model}"
     select:
-      prompt: Please select
+      prompt: "Please select"
+    teams:
+      kind_of_sport: "Kind of sport"
+      description: "Description"
+      private: "Private"
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."

@@ -15,13 +15,13 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'sport.portal@gmx.de'
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'Devise::Mailer'
 
   # Configure the parent class responsible to send e-mails.
-  # config.parent_mailer = 'ActionMailer::Base'
+  config.parent_mailer = 'ActionMailer::Base'
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -114,10 +114,10 @@ Devise.setup do |config|
   # config.pepper = 'ee520266cdb1f3f293d63889c18c45253e0f1eacb2d7efbf38328b7ed50640707d698ec277ebe5a24ec45c18d417fef49fb58bca0256c073a2504572c372c019'
 
   # Send a notification to the original email when the user's email is changed.
-  # config.send_email_changed_notification = false
+  config.send_email_changed_notification = true
 
   # Send a notification email when the user's password is changed.
-  # config.send_password_change_notification = false
+  config.send_password_change_notification = true
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -254,6 +254,20 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+
+  config.omniauth :openid,
+                  name: 'hpiopenid',
+                  identifier: 'https://openid.hpi.uni-potsdam.de/serve',
+                  required: [OmniAuth::Strategies::OpenID::AX[:email]],
+                  optional: []
+
+  require 'certified'
+  require 'openid/fetchers'
+  # Create a temporary HTTP instance to have certified set the ca_file and use that CA file
+  # This is done to ensure secure connections with OpenID on every platform
+  n = Net::HTTP.new 'localhost'
+  n.use_ssl = true
+  OpenID.fetcher.ca_file = n.ca_file
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

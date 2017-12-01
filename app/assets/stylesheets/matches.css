@@ -2,3 +2,8 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+.matches-table > tbody > tr.gameday {
+    background-color: #eeeeee;
+    border-bottom: 4px solid #ddd;
+}

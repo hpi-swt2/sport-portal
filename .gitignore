@@ -24,6 +24,9 @@ config/initializers/secret_token.rb
 # TODO Comment out this rule if environment variables can be committed
 .env
 
+#Jetbrains files
+.idea/
+
 ## Environment normalization:
 /.bundle
 /vendor/bundle
@@ -48,3 +51,7 @@ bower.json
 # Environment variable definition
 # https://devcenter.heroku.com/articles/getting-started-with-rails5#procfile
 .env
+.idea/
+
+
+.vscode/settings.json

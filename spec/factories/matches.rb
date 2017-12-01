@@ -11,15 +11,19 @@
 #  updated_at   :datetime         not null
 #  team_home_id :integer
 #  team_away_id :integer
-#
+#  points_away  :integer
+#  points_home  :integer
 
 FactoryBot.define do
   factory :match do
-    date Date.today
     sequence(:place) { |n| "Place #{n}" }
-    association :team_away, :factory => :team
-    association :team_home, :factory => :team
+    association :team_away, factory: :team
+    association :team_home, factory: :team
+    association :event, factory: :event
     score_home { rand(10..20) }
     score_away { rand(1..9) }
+    gameday 0
+    points_away 3
+    points_home 1
   end
 end
