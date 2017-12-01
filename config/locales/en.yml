@@ -68,4 +68,7 @@ en:
       startdate: "Startdate"
       enddate: "Enddate"
       duration: "Duration"
+      select_type: "Select type"
+      select_game_mode: "Select game mode"
+      select_player_type: "Spielertyp auswählen"
     show_events: "Show all events"

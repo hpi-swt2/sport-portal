@@ -19,15 +19,15 @@
       <%= f.label t('events.new.event_type'), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.collection_select :type, Event.types, :to_s, :to_s,
-                                {selected: @event.type, include_blank: '----'},
-                                :class => 'form-control' %>
+                                {selected: @event.type, include_blank: t('events.new.select_type')},
+                                :class => 'form-control', :id => 'event_type' %>
       </div>
     </div>
     <div class="form-group" id="league-game-mode">
       <%= f.label t('events.new.game_mode'), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
-                     {:include_blank => '----'},
+                     {:include_blank => t('events.new.select_game_mode')},
                      { :class => 'form-control', :id => 'event_game_mode_league'}) %>
       </div>
     </div>
@@ -35,7 +35,7 @@
       <%= f.label t('events.new.game_mode'), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.select(:game_mode, Tournament.game_modes.map {|k, v| [k.humanize, v]},
-                     {:include_blank => '----'},
+                     {:include_blank => t('events.new.select_game_mode')},
                      { :class => 'form-control', :id => 'event_game_mode_tournament'}) %>
       </div>
     </div>
@@ -43,7 +43,7 @@
       <%= f.label t('events.new.player_type'), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.select(:player_type, Event.player_types.map {|k, v| [k.humanize, v]},
-                     {:include_blank => '----'},
+                     {:include_blank => t('events.new.select_player_type')},
                      { :class => 'form-control'}) %>
       </div>
     </div>

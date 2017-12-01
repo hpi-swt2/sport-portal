@@ -27,7 +27,7 @@ describe "new event page", type: :feature do
   it "should have a dropdown menu for type" do
 		visit new_event_path
 
-    expect(page).to have_select('event_type', :options => ['----', 'Tournament', 'League'])
+    expect(page).to have_select('event_type', :options => [I18n.t('events.new.select_type'), 'Tournament', 'League'])
   end
 
   it "should be possible to create a date conditions for an event" do
