@@ -163,6 +163,22 @@ RSpec.describe EventsController, type: :controller do
         expect(response).to be_success
       end
     end
+
+    context "with subclass params" do
+      it "should delete league subclass param" do
+        league = FactoryBot.build(:league)
+
+        post :create, params: {league: league.attributes}, session: valid_session
+        expect(controller.params[:event]).to_not be_nil
+      end
+
+      it "should delete tournament subclass param" do
+        tournament = FactoryBot.build(:tournament)
+
+        post :create, params: {tournament: tournament.attributes}, session: valid_session
+        expect(controller.params[:event]).to_not be_nil
+      end
+    end
   end
 
   describe "PUT #update" do
@@ -210,6 +226,14 @@ RSpec.describe EventsController, type: :controller do
         put :update, params: {id: event.to_param, event: invalid_attributes}
         expect(response).to be_success
       end
+    end
+  end
+
+  describe "PUT #join" do
+    it "successfully joins an event" do
+      event = Event.create! valid_attributes
+      put :join, params: {id: event.to_param}, session: valid_session
+      expect(response).to redirect_to(event)
     end
   end
 

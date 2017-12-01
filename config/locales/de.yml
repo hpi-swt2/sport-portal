@@ -79,13 +79,27 @@ de:
     show_events: "Alle Events anzeigen"
     show:
       to_schedule: zum Spielplan
+    new:
+      name: "Name"
+      description: "Beschreibung"
+      event_type: "Eventtyp"
+      game_mode: "Spielsystem"
+      player_type: "Spielertyp"
+      max_teams: "Anzahl Teams"
+      discipline: "Sportart"
+      deadline: "Deadline"
+      startdate: "Start"
+      enddate: "Ende"
+      duration: "Dauer"
+      select_type: "Eventtyp auswählen"
+      select_game_mode: "Spieltyp auswählen"
+      select_player_type: "Spielertyp auswählen"
     schedule:
-      title: Spielplan
-      gameday: Spieltag
-      date: Datum
-      place: Ort
-      home: Team 1
-      away: Team 2
-      score: Ergebnis
-      points: Punkte
-
+      title: "Spielplan"
+      gameday: "Spieltag"
+      date: "Datum"
+      place: "Ort"
+      home: "Team 1"
+      away: "Team 2"
+      score: "Ergebnis"
+      points: "Punkte"
