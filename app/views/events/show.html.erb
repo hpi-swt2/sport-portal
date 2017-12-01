@@ -1,8 +1,25 @@
-<p id="notice"><%= notice %></p>
-
 <%- model_class = Event -%>
 <div class="page-header">
-  <h1><%= t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <h1>
+    <%=t '.title', :default => model_class.model_name.human.titleize %>
+    <% if user_signed_in? %>
+      <span class="pull-right">
+        <% if current_user.organizing_events.include?(@event) %>
+          <% if can? :edit, @event %>
+              <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                          edit_event_path(@event), :class => 'btn btn-default' %>
+          <% end %>
+          <% if can? :destroy, @event %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          event_path(@event),
+                          :method => 'delete',
+                          :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
+                          :class => 'btn btn-danger' %>
+          <% end %>
+        <% end %>
+      </span>
+    <% end %>
+  </h1>
 </div>
 
 <dl class="dl-horizontal">
@@ -17,8 +34,7 @@
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
-
-<% if user_signed_in? %>
+  <% if user_signed_in? %>
     <% if @event.player_type == Event.player_types[:single] %>
         <% if @event.users.where("user_id = ?", @user.id).exists? %>
             <%= link_to 'Leave Event', join_event_path(@event), :method => "put",
@@ -29,17 +45,4 @@
                         :class => 'btn btn-default', id: :joinbutton %>
         <% end %>
     <% end %>
-    <% if current_user.organizing_events.include?(@event) %>
-        <% if can? :edit, @event %>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_event_path(@event), :class => 'btn btn-default' %>
-        <% end %>
-        <% if can? :destroy, @event %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                        event_path(@event),
-                        :method => 'delete',
-                        :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
-                        :class => 'btn btn-danger' %>
-        <% end %>
-    <% end %>
-<% end %>
+   <% end %>

@@ -55,5 +55,4 @@ describe "new event page", type: :feature do
 		expect(page).to have_content((Date.tomorrow + 2).to_s)
 		expect(page).to have_content((Date.tomorrow + 3).to_s)
   end
-
 end
