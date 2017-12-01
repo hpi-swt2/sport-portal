@@ -24,7 +24,7 @@
 
 <dl class="dl-horizontal">
   <% [:name, :description, :discipline, :game_mode, :max_teams, :deadline, :startdate, :enddate].each do |attribute| %>
-      <dt><strong><%= model_class.human_attribute_name(attribute) %>:</strong></dt>
+      <dt><strong><%= t("events.new." + attribute.to_s) %>:</strong></dt>
       <dd><%= @event.send attribute %></dd>
   <% end %>
 </dl>
@@ -37,14 +37,14 @@
   <% if user_signed_in? %>
     <% if @event.player_type == Event.player_types[:single] %>
         <% if @event.users.where("user_id = ?", @user.id).exists? %>
-            <%= link_to t('.leave', :default => 'helpers.links.leave'),
+            <%= link_to t('.leave', :default => t("helpers.links.leave")),
                         join_event_path(@event),
                         :method => :put,
                         :class => 'btn btn-default',
                         id: :leave_event_button %>
             Participating
         <% else %>
-            <%= link_to t('.join', :default => 'helpers.links.join'),
+            <%= link_to t('.join', :default => t("helpers.links.join")),
                         join_event_path(@event),
                         :method => :put,
                         :class => 'btn btn-default',
