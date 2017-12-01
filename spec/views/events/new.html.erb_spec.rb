@@ -19,7 +19,9 @@ RSpec.describe "events/new", type: :view do
 
       assert_select "textarea[name=?]", "event[description]"
 
-      assert_select "input[name=?]", "event[game_mode]"
+      assert_select "select[name=?]", "event[type]"
+
+      assert_select "select[name=?]", "event[game_mode]"
 
       assert_select "input[name=?]", "event[discipline]"
 

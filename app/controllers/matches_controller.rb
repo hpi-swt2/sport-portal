@@ -1,10 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :destroy]
-
-  # GET /matches
-  def index
-    @matches = Match.all
-  end
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :destroy]
 
   # GET /matches/1
   def show
@@ -39,10 +34,20 @@ class MatchesController < ApplicationController
     end
   end
 
+  # PATCH/PUT /matches/1
+  def update_points
+    path = event_schedule_path(@match.event)
+    if @match.update(match_points_params)
+      redirect_to path, notice: t('success.updated_match_points')
+    else
+      redirect_to path, notice: t('error.update_match_points')
+    end
+  end
+
   # DELETE /matches/1
   def destroy
     @match.destroy
-    redirect_to matches_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
+    redirect_to event_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
 
   private
@@ -53,6 +58,10 @@ class MatchesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def match_params
-      params.require(:match).permit(:date, :place, :team_home_id, :team_away_id, :score_home, :score_away)
+      params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id)
+    end
+
+    def match_points_params
+      params.require(:match).permit(:points_home, :points_away)
     end
 end

@@ -21,19 +21,29 @@ en:
         subject: "Confirmation instructions"
       reset_password_instructions:
         subject: "Reset password instructions"
+        greeting: "Hello %{name}!"
+        instruction: "Someone has requested a link to change your password, and you can do this through the link below."
+        action: "Change my password"
+        instruction_2: "If you didn't request this, please ignore this email."
+        instruction_3: "Your password won't change until you access the link above and create a new one."
       unlock_instructions:
         subject: "Unlock instructions"
       email_changed:
-        subject: "Email Changed"
+        subject: "Your email has changed"
+        greeting: "Hello %{name}!"
+        body: "We're contacting you to notify you that your email was changed from %{oldmail} to %{newmail}."
+        body2: "If this wasn't you, you should probably change your password."
       password_change:
         subject: "Password Changed"
+        greeting: "Hello %{name}!"
+        body: "We're contacting you to notify you that your password has been changed."
     omniauth_callbacks:
       user:
         link_success: "Successfully connected with %{provider}."
         link_failure: "Failed to connect with %{provider}, you are already using another provider."
         link_taken: "Failed to connect with %{provider}, someone is already linked to that account."
         success: "Successfully authenticated with %{provider}."
-        failure: "Could not authenticate with %{provider}, the account is not linked."
+        create: "You do not have an account yet, but you can create one by filling in the missing information."
       failure: "Could not authenticate with %{provider} because \"%{reason}\"."
     passwords:
       no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
@@ -57,6 +67,8 @@ en:
       unlink_provider: "Disconnect from %{provider}"
       unlink_success: "Successfully disconnected account."
       no_link: "Your account is not linked with any provider."
+      reset_password: "Send me reset password instructions"
+      confirm_new_password: "Confirm your new password"
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."

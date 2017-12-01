@@ -1,9 +1,14 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
+  before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /events
   def index
-    @events = Event.active
+    if get_shown_events_value == "on"
+      @events = Event.all
+    else
+      @events = Event.active
+    end
   end
 
   # GET /events/1
@@ -22,6 +27,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.new(event_params)
+    @event.owner = current_user
 
     if @event.save
       @event.editors << current_user
@@ -46,14 +52,61 @@ class EventsController < ApplicationController
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
+
+  # PATCH/PUT /events/1/join
+  def join
+    @event.users << current_user
+    if @event.save
+      flash[:success] = "You have successfully joined #{@event.name}!"
+      redirect_to @event
+    else
+      flash[:error] = "There was an error."
+      render 'show'
+    end
+  end
+
+  # GET /events/1/schedule
+  def schedule
+    @event = Event.find(params[:id])
+    if @event.teams.empty?
+      @event.add_test_teams
+      @event.generate_schedule
+    end
+    @matches = @event.matches.order('gameday ASC')
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
     end
 
+    def get_shown_events_value
+      params[:showAll]
+    end
+
+    def set_user
+      @user = current_user
+    end
+
     # Only allow a trusted parameter "white list" through.
     def event_params
-      params.require(:event).permit(:name, :discipline, :description, :game_mode, :deadline, :startdate, :max_teams, :enddate).merge(player_type: Event.types.first)
+      if params.has_key? :league
+        params[:event] = params.delete :league
+      elsif params.has_key? :tournament
+        params[:event] = params.delete :tournament
+      end
+
+      params.require(:event).permit(:name,
+                                    :description,
+                                    :discipline,
+                                    :type,
+                                    :game_mode,
+                                    :max_teams,
+                                    :player_type,
+                                    :deadline,
+                                    :startdate,
+                                    :enddate,
+                                    user_ids: [])
     end
 end
