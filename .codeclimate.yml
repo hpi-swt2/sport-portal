@@ -25,7 +25,10 @@ engines:
   # Code smell detector for Ruby
   # https://docs.codeclimate.com/v1.0/docs/reek
   reek:
+    enabled: true
+    TooManyMethods:
       enabled: true
+      max_methods: 20
   # Enforce consistent conventions and avoid errors in your stylesheets
   # https://docs.codeclimate.com/v1.0/docs/stylelint
   stylelint:
