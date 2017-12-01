@@ -63,9 +63,7 @@ describe "index event page", type: :feature do
 
   it "should be possible to see active events only if corresp. checkbox is disabled" do
     @oldevent = FactoryBot.create :event, deadline: Date.yesterday
-
     visit "/events?"
-
     expect(page).not_to have_content(@oldevent.deadline.to_s)
   end
 end

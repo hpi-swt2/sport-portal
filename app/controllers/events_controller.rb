@@ -56,13 +56,8 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1/join
   def join
     @event.users << current_user
-    if @event.save
-      flash[:success] = "You have successfully joined #{@event.name}!"
-      redirect_to @event
-    else
-      flash[:error] = "There was an error."
-      render 'show'
-    end
+    flash[:success] = "You have successfully joined #{@event.name}!"
+    redirect_to @event
   end
 
   # GET /events/1/schedule

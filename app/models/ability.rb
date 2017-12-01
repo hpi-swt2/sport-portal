@@ -33,10 +33,8 @@ class Ability
       user_id = user.id
 
       can :manage, User, id: user_id
-
       can :join, Event, player_type: Event.player_types[:single]
       can :manage, Event, owner_id: user_id
-
       can :create, :all
 
       can_crud_team(user_id)
