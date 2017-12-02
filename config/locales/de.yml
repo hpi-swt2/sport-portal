@@ -87,3 +87,7 @@ de:
       score: Ergebnis
       points: Punkte
 
+  users:
+    avatar:
+      errors:
+        too_large: "is too large (max is 2 MB)"
