@@ -242,16 +242,16 @@ end
       expect(response).to be_forbidden
     end
 
-    it 'should not add a team owner twice' do
+    it "should not remove an owner's ownership when assigning the ownership again" do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
       another_user = FactoryBot.create :user
 
       post :assign_ownership, params: { id: team.id, team_member: another_user.id }
+      expect(team.owners).to include(another_user)
 
-      expect {
-        post :assign_ownership, params: { id: team.id, team_member: another_user.id }
-      }.to change(TeamUser, :count).by(0)
+      post :assign_ownership, params: { id: team.id, team_member: another_user.id }
+      expect(team.owners).to include(another_user)
     end
   end
 
