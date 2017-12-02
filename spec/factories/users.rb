@@ -24,4 +24,18 @@ FactoryBot.define do
     sequence(:password) { |n| "password#{n}" }
     sequence(:password_confirmation) { |n| "password#{n}" }
   end
+
+  trait :with_avatar do
+    after(:build) do |user|
+      user.image = File.open("#{Rails.root}/spec/fixtures/valid_avatar.png")
+    end
+  end
+
+  trait :with_large_avatar do
+    after(:build) do |user|
+      user.image = File.open("#{Rails.root}/spec/fixtures/some_file.bin") 
+    end
+  end
+
+
 end

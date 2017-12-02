@@ -56,6 +56,9 @@ de:
       user:
         one: "Spieler"
         other: "Spieler"
+      image:
+        one: "Bild"
+        other: "Bilder"
       event:
         one: "Event"
         other: "Events"

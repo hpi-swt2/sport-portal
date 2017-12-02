@@ -11,8 +11,11 @@ class AvatarsController < ApplicationController
   end
 
   def update
-    @user.avatar.update(avatar_params)
-    redirect_to registration_path(@user)
+    if @user.avatar.update(avatar_params)
+      redirect_to edit_registration_path(@user)
+    else
+      render 'devise/registrations/edit'
+    end
   end
 
   def destroy

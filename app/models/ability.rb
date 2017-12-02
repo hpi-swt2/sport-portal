@@ -40,8 +40,6 @@ class Ability
     # All users can only update their own user attributes
     can :update, User, id: user_id
 
-    can :manage, Avatar, user: user
-
     can_assign_ownership(user)
 
     can_delete_ownership(user)

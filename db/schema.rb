@@ -10,14 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127175945) do
-
-  create_table "avatars", force: :cascade do |t|
-    t.text "image_data"
-    t.string "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20171202143432) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -108,6 +101,7 @@ ActiveRecord::Schema.define(version: 20171127175945) do
     t.string "last_name"
     t.string "provider"
     t.string "uid"
+    t.text "image_data"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

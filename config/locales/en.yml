@@ -47,6 +47,9 @@ en:
       user:
         one: "player"
         other: "players"
+      image:
+        one: "image"
+        other: "images"
       event:
         one: "event"
         other: "events"

@@ -26,12 +26,13 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
-  has_one :avatar
 
   has_and_belongs_to_many :events
 
   has_many :organizers
   has_many :organizing_events, :through => :organizers, :source => 'event'
+
+  include AvatarUploader::Attachment.new(:image)
 
   def has_omniauth?
     provider.present? && uid.present?
@@ -46,6 +47,8 @@ class User < ApplicationRecord
     self.uid = nil
     self.provider = nil
   end
+
+
 
   class << self
     def new_with_session(_, session)
