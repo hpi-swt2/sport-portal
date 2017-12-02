@@ -192,9 +192,8 @@ end
       team.destroy
     end
 
-    it "deletes the associated team ownerships and team memberships" do
+    it "deletes the associated TeamUser entries" do
       team = Team.create! valid_attributes
-      team.owners << subject.current_user
       number_of_members = team.members.length
       expect {
         delete :destroy, params: { id: team.to_param }
