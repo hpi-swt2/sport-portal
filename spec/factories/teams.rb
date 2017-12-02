@@ -18,22 +18,20 @@ FactoryBot.define do
     description "This team is awesome"
     private false
 
-    after(:build) do |team|
-      team.owners = build_list :user, 1
-      team.members = team.owners
+    after(:create) do |team|
+      team.owners << create_list(:user, 1)
     end
   end
 
   trait :with_two_owners do
-    after(:build) do |team|
-      team.owners = build_list :user, 2
-      team.members = team.owners
+    after(:create) do |team|
+      team.owners << create_list(:user, 1)
     end
   end
 
   trait :with_five_members do
-    after(:build) do |team|
-      team.members = team.members + build_list(:user, 5)
+    after(:create) do |team|
+      team.members << create_list(:user, 4)
     end
   end
 
