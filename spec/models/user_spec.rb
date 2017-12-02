@@ -127,4 +127,19 @@ RSpec.describe User, type: :model do
     @relation = User.reflect_on_association(:events)
     expect(@relation.macro).to eq :has_and_belongs_to_many
   end
+
+  it "has the admin attribute" do
+    user = FactoryBot.build(:user)
+    expect(user).to have_attributes(admin: false)
+  end
+
+  it "has the admin attribute set to true, if it is an admin" do
+    admin = FactoryBot.build(:admin)
+    expect(admin.admin).to eq(true)
+  end
+
+  it "has the admin attribute set to false, if it is not an admin" do
+    user = FactoryBot.build(:user)
+    expect(user.admin).to eq(false)
+  end
 end

@@ -23,6 +23,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid]
 
+  has_many :created_events, class_name: 'Event', primary_key: 'id', foreign_key: 'owner'
+
   validates :first_name, presence: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
@@ -30,7 +32,7 @@ class User < ApplicationRecord
   has_and_belongs_to_many :events
 
   has_many :organizers
-  has_many :organizing_events, :through => :organizers, :source => 'event'
+  has_many :organizing_events, through: :organizers, source: 'event'
 
 
   def has_omniauth?
