@@ -27,13 +27,13 @@ FactoryBot.define do
 
   trait :with_avatar do
     after(:build) do |user|
-      user.image = File.open("#{Rails.root}/spec/fixtures/valid_avatar.png")
+      user.avatar = File.open("#{Rails.root}/spec/fixtures/valid_avatar.png")
     end
   end
 
   trait :with_large_avatar do
     after(:build) do |user|
-      user.image = File.open("#{Rails.root}/spec/fixtures/some_file.bin") 
+      user.avatar = File.open("#{Rails.root}/spec/fixtures/some_file.bin")
     end
   end
 

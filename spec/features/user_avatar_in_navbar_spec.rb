@@ -8,7 +8,7 @@ RSpec.feature "User avatar in navbar", :type => :feature do
         sign_in user
         visit root_path
 
-        expect(page).to have_css(".navbar img[src='#{user.image_url}']")
+        expect(page).to have_css(".navbar img[src='#{user.avatar_url}']")
       end
 
       scenario "User sees delete checkbox for his avatar" do
@@ -16,7 +16,6 @@ RSpec.feature "User avatar in navbar", :type => :feature do
         sign_in user
         visit edit_user_registration_path
 
-        
         expect(page).to have_css("input[id='user_remove_image']")
       end
       
@@ -37,7 +36,6 @@ RSpec.feature "User avatar in navbar", :type => :feature do
         sign_in user
         visit edit_user_registration_path
 
-        
         expect(page).not_to have_css("input[id='user_remove_image']")
       end
     end

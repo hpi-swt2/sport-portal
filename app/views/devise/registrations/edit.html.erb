@@ -6,48 +6,31 @@
   <h1><%= t 'helpers.titles.edit', model: model_class.model_name.human.titleize %></h1>
 </div>
 
-
-
-<h2>Avatar</h2>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal user', method: :put }) do |f| %>
   <div class="form-group">
-        <%= f.label :image, t('activerecord.models.image.one'), :class => 'control-label col-lg-2'%>
-
-        
-        <div class="col-lg-10">
-          <%= image_tag @user.image_url ||image_path('missing_avatar.png'), :id => "preview", :style => "max-width:100px; max-height:100px"%>
-          <%= f.file_field :image, class: "form-control-file" , :id => "image_upload_field" %>
-          <p class="help-block">Max. size is 2 mb</p>
-          <% if current_user.image!=nil %>
-          
-             <div class="field">
-                <%= t('helpers.submit.delete', model: t('activerecord.models.image.one'))+"  " %><%= f.check_box :remove_image %>
-            </div>
-
-            <% end %>
-            
-        
+    <%= f.label :avatar, t('activerecord.models.image.one'), :class => 'control-label col-lg-2'%>
+    <div class="col-lg-10">
+      <%= image_tag @user.avatar_url || image_path('missing_avatar.png'), :id => "preview", :style => "max-width:100px; max-height:100px"%>
+      <%= f.file_field :avatar, class: "form-control-file" , :id => "image_upload_field" %>
+      <p class="help-block">Max. size is 2 mb</p>
+      <% if current_user.avatar %>
+         <div class="field">
+            <%= t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %><%= f.check_box :remove_avatar %>
         </div>
-
-        
-
-
-        
+        <% end %>
+    </div>
   </div>
-      <script>
-          var imageInput=document.getElementById("image_upload_field");
-          imageInput.addEventListener("change", function() {
-            fr=new FileReader()
-            fr.onload= function(){
-                var preview=document.getElementById("preview");
-                preview.setAttribute("src", fr.result);
-            }
-            fr.readAsDataURL(this.files[0])
-          });
-      </script>
-    
-<h2>General</h2>
- 
+  <script>
+      var imageInput=document.getElementById("image_upload_field");
+      imageInput.addEventListener("change", function() {
+        fr=new FileReader()
+        fr.onload= function(){
+            var preview=document.getElementById("preview");
+            preview.setAttribute("src", fr.result);
+        }
+        fr.readAsDataURL(this.files[0])
+      });
+  </script>
 
   <div class="form-group">
     <%= f.label :first_name, class: 'control-label col-lg-2' %>

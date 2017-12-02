@@ -32,7 +32,7 @@ class User < ApplicationRecord
   has_many :organizers
   has_many :organizing_events, :through => :organizers, :source => 'event'
 
-  include AvatarUploader::Attachment.new(:image)
+  include AvatarUploader::Attachment.new(:avatar)
 
   def has_omniauth?
     provider.present? && uid.present?
