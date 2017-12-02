@@ -31,7 +31,7 @@ RSpec.describe TeamsController, type: :controller do
     @admin.destroy
   end
 
-  describe "GET #index" do
+  describe 'GET #index' do
   it "returns a success response" do
     team = Team.create! valid_attributes
     get :index, params: {}
