@@ -110,10 +110,11 @@ end
         }.to change(Team, :count).by(1)
       end
 
-      it "creates a new TeamUser" do
+      it "creates a new TeamUser and assigns him/her as an owner" do
         expect {
           post :create, params: { team: valid_attributes }
         }.to change(TeamUser, :count).by(1)
+        expect(Team.last.owners.length).to be 1
       end
 
       it "redirects to the created team" do
