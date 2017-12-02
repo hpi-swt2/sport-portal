@@ -131,12 +131,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default charset: 'utf-8'
   config.action_mailer.smtp_settings = {
-      address: 'mail.gmx.com',
-      port: 587,
-      domain: 'sport-portal@gmx.de',
-      authentication: 'plain',
+      address: ENV.fetch('SMTP_ADDRESS'),
+      port: ENV.fetch('SMTP_PORT').to_i,
+      domain: ENV.fetch('SMTP_DOMAIN'),
+      authentication: ENV.fetch('SMTP_AUTHENTICATION'),
       enable_starttls_auto: true,
-      user_name: 'sport.portal@gmx.de',
-      password: 'swt2-2017'
+      user_name: ENV.fetch('SMTP_USERNAME'),
+      password: ENV.fetch('SMTP_PASSWORD')
   }
 end

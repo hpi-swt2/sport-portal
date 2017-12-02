@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       put :join
     end
   end
+  resources :leagues, controller: 'events', type: 'League'
+  resources :tournaments, controller: 'events', type: 'Tournament'
 
   root 'welcome#index'
   resources :teams

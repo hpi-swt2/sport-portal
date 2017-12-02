@@ -5,7 +5,12 @@ RSpec.describe "events/new", type: :view do
     assign(:event, FactoryBot.build(:event))
   end
 
-  it "renders new event form" do
+  it "should render the events form" do
+    render
+    expect(rendered).to have_css("form[action='#{events_path}'][method='post']", count: 1)
+  end
+
+  it "has input for all attributes" do
     render
 
     assert_select "form[action=?][method=?]", events_path, "post" do
@@ -14,7 +19,9 @@ RSpec.describe "events/new", type: :view do
 
       assert_select "textarea[name=?]", "event[description]"
 
-      assert_select "input[name=?]", "event[game_mode]"
+      assert_select "select[name=?]", "event[type]"
+
+      assert_select "select[name=?]", "event[game_mode]"
 
       assert_select "input[name=?]", "event[discipline]"
 

@@ -13,6 +13,7 @@
 
 class Team < ApplicationRecord
   validates :name, presence: true
+
   validates :private, inclusion:  [true, false]
 
   has_and_belongs_to_many :events
@@ -25,10 +26,6 @@ class Team < ApplicationRecord
 
   # validates :owners, presence: true
   # validates :members, presence: true
-
-  def owners_include?(user)
-    owners.include? user
-  end
 
   def has_multiple_owners?
     owners.length > 1

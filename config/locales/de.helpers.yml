@@ -22,6 +22,8 @@ de:
       delete_ownership: "Als Captain löschen"
       delete_membership: "Aus dem Team entfernen"
       save: "Speichern"
+      join: "Beitreten"
+      leave: "Verlassen"
     titles:
       edit: "%{model} bearbeiten"
       save: "%{model} speichern"

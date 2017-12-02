@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe TeamOwner, type: :model do
   describe 'when logged in' do
-    let(:user){ FactoryBot.create :user }
-    let(:team){ FactoryBot.create :team }
+    let(:user) { FactoryBot.create :user }
+    let(:team) { FactoryBot.create :team }
 
-    
+
     it "should be able to assign team ownership to users and delete it" do
       another_user = FactoryBot.create :user
       ability = Ability.new(user)
@@ -16,7 +16,6 @@ RSpec.describe TeamOwner, type: :model do
     end
 
     it "should be not be able to delete his own ownership if he is the only owner" do
-      another_user = FactoryBot.create :user
       ability = Ability.new(user)
       assert ability.cannot?(:delete_ownership, team)
     end

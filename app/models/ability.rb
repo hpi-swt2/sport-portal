@@ -26,37 +26,36 @@ class Ability
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
   def initialize(user, team_member = nil)
-    # Define abilities for the passed in user here. For example:
-    #   user ||= User.new # guest user (not logged in)
-    #   if user.admin?
-    #     can :manage, :all
-    #   else
-    #     can :read, :all
-    #   end
-
-    user ||= User.new # guest user (not logged in)
-    user_id = user.id
-
-    # All users can only update their own user attributes
-    can :update, User, id: user_id
-
-    can_assign_ownership(user)
-
-    can_delete_ownership(user)
-
-    can_delete_membership(team_member, user)
-
-    can :read, Team, private: false
+    can :read, :all
+    cannot :read, Team, private: true
 
     if user.present?
-      can_crud_team(user)
+      user_id = user.id
+
+      can :manage, User, id: user_id
+      can :join, Event, player_type: Event.player_types[:single]
+      can :manage, Event, owner_id: user_id
+      can :create, :all
+
+      can_crud_team(user_id)
+
+      can_assign_ownership(user)
+
+      can_delete_ownership(user)
+
+      can_delete_membership(team_member, user)
+
+      cannot :create, User
+
+      if user.admin?
+        can :manage, :all
+      end
     end
   end
 
   private
-    def can_crud_team(user)
-      user_id = user.id
-      can :create, Team
+
+    def can_crud_team(user_id)
       can :read, Team, private: true, members: { id: user_id }
       can :update, Team, members: { id: user_id }
       can :destroy, Team, owners: { id: user_id }
@@ -78,7 +77,7 @@ class Ability
 
     def can_delete_ownership(user)
       can :delete_ownership, Team, Team do |team|
-        (team.owners_include? user) && team.has_multiple_owners?
+        (team.owners.include? user) && team.has_multiple_owners?
       end
     end
 

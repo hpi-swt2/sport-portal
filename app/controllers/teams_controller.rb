@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
   before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership]
   # before_action :set_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
   before_action :owners_include_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
@@ -51,7 +53,9 @@ class TeamsController < ApplicationController
     team_id = @team.id
     TeamOwner.where(team_id: team_id).delete_all
     TeamMember.where(team_id: team_id).delete_all
+
     @team.destroy
+
     redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
   end
 

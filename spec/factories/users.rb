@@ -14,6 +14,7 @@
 #  last_name              :string
 #  provider               :string
 #  uid                    :string
+#  admin                  :boolean
 #
 
 FactoryBot.define do
@@ -37,5 +38,8 @@ FactoryBot.define do
     end
   end
 
-
+  factory :admin, class: User, parent: :user do
+    sequence(:email) { |n| "#{n}admin@example.com" }
+    admin true
+  end
 end
