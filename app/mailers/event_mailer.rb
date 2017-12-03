@@ -1,8 +1,8 @@
 class EventMailer < ApplicationMailer
   # Notifies a user about an upcoming match
-  def event_notification(user, match)
+  def event_notification(user, event)
       @user = user
-      @match = match
+      @event = event
       locale = Rails.application.config.default_locale
       I18n.with_locale(locale) do
         mail(to: @user.email,
