@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: team_users
+#
+#  team_id  :integer          not null
+#  user_id  :integer          not null
+#  is_owner :boolean
+#
+
 require 'rails_helper'
 
 RSpec.describe TeamUser, type: :model do

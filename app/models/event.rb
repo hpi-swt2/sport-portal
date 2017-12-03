@@ -2,21 +2,21 @@
 #
 # Table name: events
 #
-#  name                         :string
-#  description                  :text
-#  discipline                   :string
-#  player_type                  :integer
-#  max_teams                    :integer
-#  game_mode                    :integer         not null
-#  type                         :string
-#  created_at                   :datetime        not null
-#  deadline                     :date
-#  startdate                    :date
-#  enddate                      :date
-#
-#  updated_at                   :datetime        not null
-#  index_events_on_game_mode    :index ["game_mode"]
-#  index_events_on_player_type  :index ["player_type"]
+#  id               :integer          not null, primary key
+#  name             :string
+#  description      :text
+#  discipline       :string
+#  player_type      :integer          not null
+#  max_teams        :integer
+#  game_mode        :integer          not null
+#  type             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  startdate        :date
+#  enddate          :date
+#  deadline         :date
+#  gameday_duration :integer
+#  owner_id         :integer
 #
 
 class Event < ApplicationRecord

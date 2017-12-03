@@ -1,6 +1,6 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
-  load_and_authorize_resource only: [:edit, :update]
+  load_and_authorize_resource :only => [:edit, :update, :edit_profile, :update_profile]
   load_resource only: [:link, :unlink]
 
   attr_reader :user
@@ -38,6 +38,18 @@ class UsersController < Devise::RegistrationsController
   def dashboard
     @user = User.find(params[:id])
   end
+
+  def edit_profile
+  end
+
+  def update_profile
+    if @user.update(profile_update_params)
+      redirect_to @user, notice: I18n.t('helpers.flash.updated', resource_name: User.model_name.human).capitalize
+    else
+      render :edit_profile
+    end
+  end
+
   # All other controller methods are handled by original `Devise::RegistrationsController`
   # Views are located in `app/views/devise`
 
@@ -64,6 +76,10 @@ class UsersController < Devise::RegistrationsController
       if (data = session['omniauth.data'])
         data if data['expires'].to_time > Time.current
       end
+    end
+
+    def profile_update_params
+      params.require(:user).permit(:birthday, :telephone_number, :telegram_username, :favourite_sports)
     end
 
     def unlink_omniauth
