@@ -43,6 +43,8 @@ class Ability
 
       can_delete_ownership(user)
 
+      can_assign_membership(user)
+
       can_delete_membership(team_member, user)
 
       cannot :create, User
@@ -59,6 +61,10 @@ class Ability
       can :read, Team, private: true, members: { id: user_id }
       can :update, Team, members: { id: user_id }
       can :destroy, Team, owners: { id: user_id }
+    end
+
+    def can_assign_membership(user)
+      can :assign_membership, Team, members: { id: user.id }
     end
 
     def can_assign_ownership(user)
