@@ -56,6 +56,7 @@ class EventsController < ApplicationController
     @event.users << current_user
     if @event.save
       flash[:success] = "You have successfully joined #{@event.name}!"
+      @event.add_Player_for_single_team(current_user)
       redirect_to @event
     else
       flash[:error] = "There was an error."
@@ -66,10 +67,8 @@ class EventsController < ApplicationController
   # GET /events/1/schedule
   def schedule
     @event = Event.find(params[:id])
-    if @event.teams.empty?
       @event.add_test_teams
       @event.generate_schedule
-    end
     @matches = @event.matches.order('gameday ASC')
   end
 
