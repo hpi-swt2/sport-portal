@@ -30,18 +30,26 @@ RSpec.describe "teams/show", type: :view do
   end
 
   describe 'invite user to team' do
-    describe 'button' do
+    describe 'button and modal' do
       it 'should be rendered for team members' do
         sign_in @user
         @team.members << @user
         render
         expect(rendered).to have_selector(:link_or_button, t('teams.show.invite_user_to_team'))
+        expect(rendered).to have_selector('#invite_user_by_email_modal')
+        within('#invite_user_by_email_modal') do
+          expect(rendered).to have_content(t('teams.invite_user_to_team.title'))
+          expect(rendered).to have_field(t('activerecord.attributes.user.email'))
+          expect(rendered).to have_selector(:link_or_button, t('helpers.links.cancel'))
+          expect(rendered).to have_selector(:link_or_button, t('helpers.links.send'))
+        end
       end
 
       it 'should not be rendered for users that are not members of the team' do
         sign_in @user
         render
         expect(rendered).to_not have_selector(:link_or_button, t('teams.show.invite_user_to_team'))
+        expect(rendered).to_not have_selector('#invite_user_by_email_modal')
       end
     end
   end
