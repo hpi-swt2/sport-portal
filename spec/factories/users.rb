@@ -18,6 +18,7 @@
 #  favourite_sports       :string
 #  provider               :string
 #  uid                    :string
+#  admin                  :boolean          default(FALSE)
 #
 
 FactoryBot.define do
@@ -31,5 +32,10 @@ FactoryBot.define do
     telephone_number "00491731117843"
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
     favourite_sports "Football, Basketball, Tennis"
+  end
+
+  factory :admin, class: User, parent: :user do
+    sequence(:email) { |n| "#{n}admin@example.com" }
+    admin true
   end
 end

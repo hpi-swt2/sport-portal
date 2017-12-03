@@ -2,28 +2,31 @@
 #
 # Table name: events
 #
-#  id          :integer          not null, primary key
-#  name        :string
-#  description :text
-#  gamemode    :string
-#  sport       :string
-#  teamsport   :boolean
-#  playercount :integer
-#  gamesystem  :text
-#  deadline    :date
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  startdate   :date
-#  enddate     :date
+#  id               :integer          not null, primary key
+#  name             :string
+#  description      :text
+#  discipline       :string
+#  player_type      :integer          not null
+#  max_teams        :integer
+#  game_mode        :integer          not null
+#  type             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  startdate        :date
+#  enddate          :date
+#  deadline         :date
+#  gameday_duration :integer
+#  owner_id         :integer
 #
 
 class Event < ApplicationRecord
+  belongs_to :owner, class_name: 'User'
   has_many :matches, -> { order 'gameday ASC' }, dependent: :delete_all
   has_and_belongs_to_many :teams
-
+  validates :name, :discipline, :game_mode, presence: true
   validates :name, :discipline, :game_mode, :player_type, presence: true
   validates :deadline, :startdate, :enddate, presence: true
-  validates :max_teams, :numericality => { :greater_than_or_equal_to => 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
   validate :end_after_start
   enum player_types: [:single, :team]
 
@@ -32,7 +35,7 @@ class Event < ApplicationRecord
   end
 
   has_many :organizers
-  has_many :editors, :through => :organizers, :source => 'user'
+  has_many :editors, through: :organizers, source: 'user'
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
@@ -54,7 +57,7 @@ class Event < ApplicationRecord
 
   def add_test_teams
     max_teams.times do |index|
-      teams << Team.new(name: "Team #{index}", private: false)
+      teams << FactoryBot.create(:team)
     end
   end
 
@@ -76,7 +79,7 @@ class Event < ApplicationRecord
       (team_len).times do |teamindex|
         team_1 = teams1[teamindex]
         team_2 = teams2[(gameday + teamindex) % team_len]
-        unless team_1 == team_2 or matched_teams.include? team_1 or matched_teams.include? team_2
+        unless (team_1 == team_2) || matched_teams.include?(team_1) || matched_teams.include?(team_2)
           matches << Match.new(team_home: team_1, team_away: team_2, gameday: gameday)
         end
         matched_teams << team_1

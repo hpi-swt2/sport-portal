@@ -151,6 +151,9 @@ group :development do
   # Causes 'rails console' to open the pry console
   # https://github.com/rweng/pry-rails
   gem 'pry-rails'
+  # Causes 'rescue rspec' to open a debugging session on the first failing test
+  # https://github.com/ConradIrwin/pry-rescue
+  gem 'pry-rescue'
 end
 
 group :production do

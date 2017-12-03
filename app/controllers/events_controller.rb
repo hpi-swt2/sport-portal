@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-  before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
+  load_and_authorize_resource
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join]
 
   # GET /events
   def index
@@ -26,6 +27,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.new(event_params)
+    @event.owner = current_user
 
     if @event.save
       @event.editors << current_user
@@ -54,13 +56,8 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1/join
   def join
     @event.users << current_user
-    if @event.save
-      flash[:success] = "You have successfully joined #{@event.name}!"
-      redirect_to @event
-    else
-      flash[:error] = "There was an error."
-      render 'show'
-    end
+    flash[:success] = "You have successfully joined #{@event.name}!"
+    redirect_to @event
   end
 
   # GET /events/1/schedule
@@ -83,15 +80,18 @@ class EventsController < ApplicationController
       params[:showAll]
     end
 
-    def set_user
-      @user = current_user
-    end
-
     # Only allow a trusted parameter "white list" through.
     def event_params
+      if params.has_key? :league
+        params[:event] = params.delete :league
+      elsif params.has_key? :tournament
+        params[:event] = params.delete :tournament
+      end
+
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,
+                                    :type,
                                     :game_mode,
                                     :max_teams,
                                     :player_type,

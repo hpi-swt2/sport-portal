@@ -18,6 +18,7 @@
 #  favourite_sports       :string
 #  provider               :string
 #  uid                    :string
+#  admin                  :boolean          default(FALSE)
 #
 
 class User < ApplicationRecord
@@ -26,6 +27,8 @@ class User < ApplicationRecord
   # https://github.com/plataformatec/devise
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid]
+
+  has_many :created_events, class_name: 'Event', primary_key: 'id', foreign_key: 'owner'
 
   validates :first_name, presence: true
   validates_each :birthday do |record, attribute, value|
@@ -38,7 +41,10 @@ class User < ApplicationRecord
   has_and_belongs_to_many :events
 
   has_many :organizers
-  has_many :organizing_events, :through => :organizers, :source => 'event'
+  has_many :organizing_events, through: :organizers, source: 'event'
+
+  has_many :team_users
+  has_many :teams, through: :team_users, source: :team
 
 
   def has_omniauth?
