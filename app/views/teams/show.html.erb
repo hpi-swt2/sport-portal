@@ -56,18 +56,18 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="<%= t('helpers.links.close') %>"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title"><%= t('teams.invite_user_to_team.title') %></h4>
         </div>
-        <div class="modal-body">
-          <form>
+        <form action="<%= assign_membership_by_email_team_path(@team) %>" method="post">
+          <div class="modal-body">
             <div class="form-group">
               <label for="invited-user-email" class="form-control-label"><%= t('activerecord.attributes.user.email') %></label>
-              <input type="email" class="form-control" id="invited-user-email">
+              <input type="email" class="form-control" id="invited-user-email" name="email">
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t('helpers.links.cancel') %></button>
-          <button type="button" class="btn btn-primary"><%= t('helpers.links.send') %></button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t('helpers.links.cancel') %></button>
+            <input type="submit" class="btn btn-primary" value="<%= t('helpers.links.send') %>" />
+          </div>
+        </form>
       </div>
     </div>
   </div>
