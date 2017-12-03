@@ -49,13 +49,13 @@ RSpec.describe "teams/show", type: :view do
         user = FactoryBot.create(:admin)
         sign_in user
         render
-        expect(rendered).to have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
+        expect(rendered).to have_selector(:link_or_button, t('teams.show.invite_user_to_team'))
       end
 
       it 'should not be rendered for users that are not members of the team' do
         sign_in @user
         render
-        expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
+        expect(rendered).to_not have_selector(:link_or_button, t('teams.show.invite_user_to_team'))
       end
     end
   end

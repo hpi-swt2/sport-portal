@@ -51,6 +51,10 @@ en:
         one: "event"
         other: "events"
 
+    attributes:
+      user:
+        email: "Email Address"
+
   unauthorized:
       manage:
         all: "Not authorized to %{action} %{subject}."
@@ -77,3 +81,9 @@ en:
       select_game_mode: "Select game mode"
       select_player_type: "Spielertyp auswählen"
     show_events: "Show all events"
+
+  teams:
+      show:
+        invite_user_to_team: "+"
+      invite_user_to_team:
+        title: "Invite new player"

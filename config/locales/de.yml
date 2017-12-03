@@ -61,6 +61,8 @@ de:
         other: "Events"
 
     attributes:
+      user:
+        email: "E-Mail-Adresse"
       event:
         name: "Name"
         description: "Beschreibung"
@@ -106,4 +108,10 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+
+  teams:
+    show:
+      invite_user_to_team: "+"
+    invite_user_to_team:
+      title: "Neuen Spieler einladen"
 
