@@ -48,6 +48,29 @@
               '#',
               data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
               class: 'btn btn-primary' %>
+
+  <div class="modal fade" id="invite_user_by_email_modal" tabindex="-1" role="dialog" aria-labelledby="<%= t('teams.invite_user_to_team.title') %>" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="<%= t('helpers.links.close') %>"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><%= t('teams.invite_user_to_team.title') %></h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="invited-user-email" class="form-control-label"><%= t('activerecord.attributes.user.email') %></label>
+              <input type="email" class="form-control" id="invited-user-email">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= t('helpers.links.cancel') %></button>
+          <button type="button" class="btn btn-primary"><%= t('helpers.links.send') %></button>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
 
 <%# app/helpers/button_helper.rb %>

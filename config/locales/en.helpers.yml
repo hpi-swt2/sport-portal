@@ -23,6 +23,7 @@ en:
       show: "Show"
       save: "Save"
       send: "Send"
+      close: "Close"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
