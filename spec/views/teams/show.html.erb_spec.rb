@@ -29,6 +29,34 @@ RSpec.describe "teams/show", type: :view do
     rendered.should_not have_content(t("helpers.links.assign_ownership"))
   end
 
+  describe 'invite user to team' do
+    describe 'button' do
+      it 'should be rendered for team members' do
+        @team.members << @user
+        render
+        expect(rendered).to have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
+      end
+
+      it 'should be rendered for team owners' do
+        @team.owners << @user
+        render
+        expect(rendered).to have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
+      end
+
+      it 'should be rendered for admins' do
+        @user = FactoryBot.build(:admin)
+        render
+        expect(rendered).to have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
+      end
+
+      it 'should not be rendered for users that are not members of the team' do
+        render
+        expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
+      end
+    end
+  end
+
+
 
   it "doesn't render the edit button when not signed in" do
     render

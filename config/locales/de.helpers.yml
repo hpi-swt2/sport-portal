@@ -21,6 +21,7 @@ de:
       assign_ownership: "Als Captain hinzufügen"
       delete_ownership: "Als Captain löschen"
       delete_membership: "Aus dem Team entfernen"
+      invite_user_to_team: "+"
       save: "Speichern"
       join: "Beitreten"
       leave: "Verlassen"
