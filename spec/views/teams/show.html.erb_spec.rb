@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "teams/show", type: :view do
   before(:each) do
     @team = assign(:team, FactoryBot.create(:team))
-    @user = FactoryBot.build(:user)
+    @user = FactoryBot.create(:user)
     FactoryBot.build(:user)
   end
 
@@ -32,24 +32,28 @@ RSpec.describe "teams/show", type: :view do
   describe 'invite user to team' do
     describe 'button' do
       it 'should be rendered for team members' do
+        sign_in @user
         @team.members << @user
         render
         expect(rendered).to have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
       end
 
       it 'should be rendered for team owners' do
+        sign_in @user
         @team.owners << @user
         render
         expect(rendered).to have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
       end
 
       it 'should be rendered for admins' do
-        @user = FactoryBot.build(:admin)
+        user = FactoryBot.create(:admin)
+        sign_in user
         render
         expect(rendered).to have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
       end
 
       it 'should not be rendered for users that are not members of the team' do
+        sign_in @user
         render
         expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.invite_user_to_team'))
       end
