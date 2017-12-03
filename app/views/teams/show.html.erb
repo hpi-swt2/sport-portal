@@ -43,6 +43,13 @@
   </tbody>
 </table>
 
+<% if can? :assign_membership, @team %>
+  <%= link_to t('helpers.links.invite_user_to_team'),
+              '#',
+              data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
+              class: 'btn btn-primary' %>
+<% end %>
+
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
 <% if can? :edit, @team %>
