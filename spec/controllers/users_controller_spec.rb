@@ -126,6 +126,17 @@ RSpec.describe UsersController, type: :controller do
         expect(user.favourite_sports).to eq(new_attributes[:favourite_sports])
       end
     end
+
+    context "with invalid params" do
+      it "rerenders the edit page with erors" do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        user = User.create! valid_attributes
+        sign_in user
+        new_attributes = { birthday: Date.today + 1.year }
+        patch :update_profile, params: {id: user.to_param, user: new_attributes }
+        expect(response).to render_template(:edit_profile)
+      end
+    end
   end
 
   describe 'GET #link' do

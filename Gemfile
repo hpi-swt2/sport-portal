@@ -87,6 +87,9 @@ group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
+  # For assigns and assert_template in controller tests
+  # https://github.com/rails/rails-controller-testing
+  gem 'rails-controller-testing'
   # Behaviour driven development library with a DSL close to natural language
   # https://cucumber.io
   gem 'cucumber-rails', require: false
