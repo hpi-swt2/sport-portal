@@ -47,11 +47,13 @@ RSpec.describe Ability, type: :model do
         context 'when is a member' do
           let(:user) { team.members[0] }
           it { is_expected.to be_able_to(:read, team) }
+          it { is_expected.to be_able_to(:assign_membership, team) }
         end
 
         context 'when is an owner' do
           let(:user) { team.owners[0] }
           it { is_expected.to be_able_to(:read, team) }
+          it { is_expected.to be_able_to(:assign_membership, team) }
         end
       end
     end
@@ -94,6 +96,7 @@ RSpec.describe Ability, type: :model do
 
     ability = Ability.new(@admin)
     ability.should be_able_to(:manage, team)
+    expect(ability).to be_able_to(:assign_membership, team)
   end
 
   it 'should not allow users to crud teams they did not create' do
