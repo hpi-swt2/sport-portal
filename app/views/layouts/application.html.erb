@@ -10,6 +10,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
+  <!--Display the background only when user signs in-->
   <% if action_name === "new" && controller_name == "sessions" %>
     <body class="background">
   <% else %>
