@@ -111,6 +111,48 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'GET #dashboard' do
+    it "should not show user's dashboard to not logged in user" do
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_unauthorized
+    end
+
+    it "should not show admin's dashboard to not logged in user" do
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_unauthorized
+    end
+
+    it 'should allow user to view their dashboard' do
+      sign_in @user
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+
+    it "should disallow user to view other user's dashboard" do
+      sign_in @user
+      get :dashboard, params: { id: @other_user.to_param }
+      expect(response).to be_forbidden
+    end
+
+    it "should disallow user to view admin's dashboard" do
+      sign_in @user
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_forbidden
+    end
+
+    it 'should allow admin to view their dashboard' do
+      sign_in @admin
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_success
+    end
+
+    it "should allow admin to view every user's dashboard" do
+      sign_in @admin
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+  end
+
   describe "POST #create" do
     it "creates a new user with valid params" do
       @request.env["devise.mapping"] = Devise.mappings[:user]
