@@ -5,33 +5,9 @@ describe "index event page", type: :feature do
     @user = FactoryBot.create(:user)
   end
 
-  context "for all events" do
+  context "for any event" do
     before(:each) do
-      @singleevent = FactoryBot.create :event, player_type: Event.player_types[:single]
-      @teamevent = FactoryBot.create(:event, player_type: Event.player_types[:team])
-    end
-
-    it "should change the join button to a leave button after the user joins" do
-      sign_in @user
-      visit events_path
-      click_link(:join_event_button)
-      expect(page).not_to have_link(:join_event_button)
-      expect(page).to have_link(:leave_event_button)
-    end
-
-    # it "should change the leave button to a join button after the user leaves" do
-    #   sign_in @user
-    #   visit events_path
-    #   click_link(:leave_event_button)
-    #   expect(page).not_to have_link(:leave_event_button)
-    #   expect(page).to have_link(:join_event_button)
-    # end
-
-    it "should show the user whether they joined" do
-      sign_in @user
-      visit events_path
-      click_link_or_button(:join_event_button)
-      expect(page).to have_content("Participating")
+      @event = FactoryBot.create :event
     end
 
     it "should not allow the user to join if they are not logged in" do
@@ -42,19 +18,57 @@ describe "index event page", type: :feature do
 
   context "for single player events" do
     before(:each) do
-      @singleevent = FactoryBot.create :event, player_type: Event.player_types[:single]
-    end
-
-    it "should have a join button" do
+      @event = FactoryBot.create(:single_player_event)
       sign_in @user
       visit events_path
-      expect(page).to have_link(:join_event_button)
+    end
+
+    context "which I participate in" do
+      before(:each) do
+        @event.addParticipant(@user)
+        visit events_path
+      end
+
+      it "should not have a join button" do
+        expect(page).not_to have_link(:join_event_button)
+      end
+
+      it "should redirect me to itself when clicking the leave button" do
+        expect(current_path).to eq(events_path)
+      end
+
+      it "should have a leave button" do
+        expect(page).to have_link(:leave_event_button)
+      end
+
+      it "should show that I am participating" do
+        expect(page).to have_content("Participating")
+      end
+    end
+
+    context "which I do not participate in" do
+      it "should have a join button" do
+        expect(page).to have_link(:join_event_button)
+      end
+
+      it "should redirect me to itself when clicking the join button" do
+        expect(current_path).to eq(events_path)
+      end
+
+      it "should let me leave after clicking the join button" do
+        click_link(:join_event_button)
+        expect(page).to have_link(:leave_event_button)
+      end
+
+      it "should not have a leave button" do
+        expect(page).not_to have_link(:leave_event_button)
+      end
     end
   end
 
   context "for team events" do
     before(:each) do
-      @teamevent = FactoryBot.create(:event, player_type: Event.player_types[:team])
+      @teamevent = FactoryBot.create(:team_event)
     end
 
     it "should not display a join button" do

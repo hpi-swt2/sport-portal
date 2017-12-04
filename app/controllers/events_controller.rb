@@ -55,16 +55,16 @@ class EventsController < ApplicationController
 
   # PUT /events/1/join
   def join
-    @event.users << current_user
+    @event.addParticipant(current_user)
     flash[:success] = "You have successfully joined #{@event.name}!"
-    redirect_to @event
+    redirect_back fallback_location: events_url
   end
 
   # PUT /events/1/leave
   def leave
-    @event.users.delete(current_user)
+    @event.removeParticipant(current_user)
     flash[:success] = "You have successfully left #{@event.name}!"
-    redirect_to @event
+    redirect_back fallback_location: events_url
   end
 
   # GET /events/1/schedule

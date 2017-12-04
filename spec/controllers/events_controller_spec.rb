@@ -230,18 +230,19 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "PUT #join" do
-    it "successfully joins an event" do
+    it "adds the user as participant to the event" do
       event = Event.create! valid_attributes
       put :join, params: { id: event.to_param }, session: valid_session
-      expect(response).to redirect_to(event)
+      expect(event).to have_participant(@user)
     end
   end
 
   describe "PUT #leave" do
-    it "successfully leaves an event" do
+    it "remove the user as participant of the event" do
       event = Event.create! valid_attributes
+      event.addParticipant(@user)
       put :leave, params: { id: event.to_param }, session: valid_session
-      expect(response).to redirect_to(event)
+      expect(event).not_to have_participant(@user)
     end
   end
 
