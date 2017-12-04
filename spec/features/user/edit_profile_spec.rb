@@ -1,9 +1,12 @@
 require "rails_helper"
 
 RSpec.feature "Edit profile", :type => :feature do
+  let(:user) { FactoryBot.create :user }
+
+  before(:each) { sign_in user }
+
   scenario "User edits profile informations" do
     user = FactoryBot.create :user
-    sign_in user
     visit user_profile_edit_path(user)
 
     new_params = FactoryBot.attributes_for(:user)
@@ -25,6 +28,20 @@ RSpec.feature "Edit profile", :type => :feature do
     expect(user.telephone_number).to eq(new_params[:telephone_number])
     expect(user.telegram_username).to eq(new_params[:telegram_username])
     expect(user.favourite_sports).to eq(new_params[:favourite_sports])
+  end
+
+  scenario "User sees delete checkbox for his avatar" do
+    user = FactoryBot.create :user, :with_avatar
+    sign_in user
+    visit user_profile_edit_path(user)
+
+    expect(page).to have_css("input[id='user_remove_image']")
+  end
+
+  scenario "User sees no delete checkbox for his avatar" do
+    visit user_profile_edit_path(user)
+
+    expect(page).not_to have_css("input[id='user_remove_image']")
   end
 
 end

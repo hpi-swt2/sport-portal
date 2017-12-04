@@ -12,13 +12,14 @@
 #  updated_at             :datetime         not null
 #  first_name             :string
 #  last_name              :string
+#  provider               :string
+#  uid                    :string
+#  admin                  :boolean          default(FALSE)
 #  birthday               :date
 #  telephone_number       :string
 #  telegram_username      :string
 #  favourite_sports       :string
-#  provider               :string
-#  uid                    :string
-#  admin                  :boolean          default(FALSE)
+#  avatar_data            :text
 #
 
 class User < ApplicationRecord
