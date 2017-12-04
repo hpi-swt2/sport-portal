@@ -45,7 +45,7 @@ class User < ApplicationRecord
   has_many :organizing_events, through: :organizers, source: 'event'
 
   include AvatarUploader::Attachment.new(:avatar)
-  
+
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
 
@@ -62,8 +62,6 @@ class User < ApplicationRecord
     self.uid = nil
     self.provider = nil
   end
-
-
 
   class << self
     def new_with_session(_, session)

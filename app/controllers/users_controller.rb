@@ -62,7 +62,7 @@ class UsersController < Devise::RegistrationsController
     end
 
     def account_update_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :image, :remove_image ,:current_password, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, event_ids: [])
     end
 
     def generate_random_password
@@ -87,9 +87,5 @@ class UsersController < Devise::RegistrationsController
       user.reset_omniauth
       user.save!
       redirect_to user_path(user), notice: I18n.t('devise.registrations.unlink_success')
-    end
-
-     def request_avatar_delete
-      @user.remove_image=true
     end
 end
