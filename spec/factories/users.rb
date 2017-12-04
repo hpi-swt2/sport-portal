@@ -12,9 +12,13 @@
 #  updated_at             :datetime         not null
 #  first_name             :string
 #  last_name              :string
+#  birthday               :date
+#  telephone_number       :string
+#  telegram_username      :string
+#  favourite_sports       :string
 #  provider               :string
 #  uid                    :string
-#  admin                  :boolean
+#  admin                  :boolean          default(FALSE)
 #
 
 FactoryBot.define do
@@ -24,6 +28,10 @@ FactoryBot.define do
     sequence(:email) { |n| "#{n}@example.com" }
     sequence(:password) { |n| "password#{n}" }
     sequence(:password_confirmation) { |n| "password#{n}" }
+    birthday Date.new(1995, 10, 20)
+    telephone_number "00491731117843"
+    sequence(:telegram_username) { |n| "telegram_user#{n}" }
+    favourite_sports "Football, Basketball, Tennis"
   end
 
   trait :with_avatar do

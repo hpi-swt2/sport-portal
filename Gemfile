@@ -90,6 +90,9 @@ group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
+  # For assigns and assert_template in controller tests
+  # https://github.com/rails/rails-controller-testing
+  gem 'rails-controller-testing'
   # Behaviour driven development library with a DSL close to natural language
   # https://cucumber.io
   gem 'cucumber-rails', require: false
@@ -151,6 +154,9 @@ group :development do
   # Causes 'rails console' to open the pry console
   # https://github.com/rweng/pry-rails
   gem 'pry-rails'
+  # Causes 'rescue rspec' to open a debugging session on the first failing test
+  # https://github.com/ConradIrwin/pry-rescue
+  gem 'pry-rescue'
 end
 
 group :production do

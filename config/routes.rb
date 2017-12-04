@@ -38,6 +38,9 @@ Rails.application.routes.draw do
         get 'unlink'
       end
     end
+
+    get '/users/:id/profile/edit', to: 'users#edit_profile', as: :user_profile_edit
+    match '/users/:id/profile', to: 'users#update_profile', as: :user_profile, via: [:patch, :put]
   end
 
   resources :teams do
