@@ -5,6 +5,6 @@ class AvatarUploader < Shrine
 
   Attacher.validate do
     validate_mime_type_inclusion %w[image/jpeg image/gif image/png]
-    validate_max_size 2.megabytes, message: t('users.avatar.errors.too_large')
+    validate_max_size 2.megabytes, message: I18n.t('users.avatar.errors.too_large')
   end
 end
