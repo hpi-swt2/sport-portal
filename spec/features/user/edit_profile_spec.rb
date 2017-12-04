@@ -6,7 +6,6 @@ RSpec.feature "Edit profile", :type => :feature do
   before(:each) { sign_in user }
 
   scenario "User edits profile informations" do
-    user = FactoryBot.create :user
     visit user_profile_edit_path(user)
 
     new_params = FactoryBot.attributes_for(:user)
@@ -14,7 +13,7 @@ RSpec.feature "Edit profile", :type => :feature do
     new_params[:telephone_number] = "01541567233"
     new_params[:telegram_username] = new_params[:telegram_username] + "_new"
     new_params[:favourite_sports] = new_params[:favourite_sports] + ", Baseball"
-
+    
     page.attach_file("user_avatar", "#{Rails.root}/spec/fixtures/valid_avatar.png")
     fill_in "user_birthday", :with => new_params[:birthday]
     fill_in "user_telephone_number", :with => new_params[:telephone_number]
@@ -35,13 +34,12 @@ RSpec.feature "Edit profile", :type => :feature do
     sign_in user
     visit user_profile_edit_path(user)
 
-    expect(page).to have_css("input[id='user_remove_image']")
+    expect(page).to have_css("input[id='user_remove_avatar']")
   end
 
   scenario "User sees no delete checkbox for his avatar" do
     visit user_profile_edit_path(user)
-
-    expect(page).not_to have_css("input[id='user_remove_image']")
+    expect(page).not_to have_css("input[id='user_remove_avatar']")
   end
 
 end
