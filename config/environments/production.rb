@@ -22,6 +22,8 @@ unless ENV['ERRBIT_API_KEY']
   Airbrake.add_filter(&:ignore!)
 end
 
+require "shrine/storage/s3"
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
