@@ -68,12 +68,12 @@ describe "index event page", type: :feature do
 
   context "for team events" do
     before(:each) do
-      @teamevent = FactoryBot.create(:team_event)
+      @event = FactoryBot.create(:team_event)
+      sign_in @user
+      visit events_path
     end
 
     it "should not display a join button" do
-      sign_in @user
-      visit events_path
       expect(page).not_to have_link(:join_event_button)
     end
   end
