@@ -356,7 +356,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake (~> 5.0)
   annotate
-  aws-sdk-s3 (~> 1.8.0)
+  aws-sdk-s3 (~> 1.2)
   better_errors
   binding_of_caller
   bootstrap-datepicker-rails
