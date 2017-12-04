@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1><%= t('.hello', firstname: @user.firstname) %></h1>
-<p><%= t('.next_game_info', name: @event.name, startdate: @event.startdate, participants: @event.teams, place: @match.place) %></p>
+<p><%= t('.next_game_info', name: @event.name, startdate: @event.startdate, participants: @participants.map&.firstname.join(', '), place: @place) %></p>
 <p><%= t('.have_fun') %></p>
 </body>
 </html>

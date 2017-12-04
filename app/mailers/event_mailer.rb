@@ -6,7 +6,7 @@ class EventMailer < ApplicationMailer
       locale = Rails.application.config.default_locale
       I18n.with_locale(locale) do
         mail(to: @user.email,
-             subject: I18n.t('event_mailer.event_notification.subject', startdata: @match.event.startdate)
+             subject: I18n.t('event_mailer.event_notification.subject', startdate: @event.startdate)
         )
       end
   end

@@ -2,8 +2,9 @@ require "rails_helper"
 
 RSpec.describe EventMailer, type: :mailer do
   describe 'event notification' do
-    let(:user) { mock_model User, name: 'Lucas', email: 'lucas@email.com' }
-    let(:mail) { described_class.instructions(user).deliver_now }
+    let(:user) { FactoryBot.create(:user) }
+    let(:event) { FactoryBot.create(:event) }
+    let(:mail) { EventMailer.event_notification(user, event).deliver_now }
 
     it 'renders the subject' do
       expect(mail.subject).to eq('Instructions')
@@ -17,8 +18,20 @@ RSpec.describe EventMailer, type: :mailer do
       expect(mail.from).to eq(['noreply@company.com'])
     end
 
-    it 'assigns @name' do
-      expect(mail.body.encoded).to match(user.name)
+    it 'assigns user\'s firstname' do
+      expect(mail.body.encoded).to match(user.firstname)
+    end
+
+    it 'assigns event\'s name' do
+      expect(mail.body.encoded).to match(event.name)
+    end
+
+    it 'assigns event\'s participants' do
+      expect(mail.body.encoded).to match({})
+    end
+
+    it 'assigns event\'s place' do
+      expect(mail.body.encoded).to match(event.place)
     end
 
     it 'assigns @confirmation_url' do
