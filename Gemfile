@@ -55,6 +55,9 @@ gem 'has_scope'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Used for file uploaded
+gem 'shrine', '~> 2.8.0'
+
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
 # gem 'jquery-ui-rails'
@@ -87,6 +90,9 @@ group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
+  # For assigns and assert_template in controller tests
+  # https://github.com/rails/rails-controller-testing
+  gem 'rails-controller-testing'
   # Behaviour driven development library with a DSL close to natural language
   # https://cucumber.io
   gem 'cucumber-rails', require: false
@@ -148,6 +154,9 @@ group :development do
   # Causes 'rails console' to open the pry console
   # https://github.com/rweng/pry-rails
   gem 'pry-rails'
+  # Causes 'rescue rspec' to open a debugging session on the first failing test
+  # https://github.com/ConradIrwin/pry-rescue
+  gem 'pry-rescue'
 end
 
 group :production do
@@ -158,4 +167,8 @@ group :production do
   # https://github.com/airbrake/airbrake
   # Errbit requires airbrake 5.0
   gem 'airbrake', '~> 5.0'
+
+  # S3 upload should only be used in production
+  gem 'aws-sdk-s3', '~> 1.2'
+
 end

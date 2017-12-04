@@ -14,6 +14,12 @@
 #  last_name              :string
 #  provider               :string
 #  uid                    :string
+#  admin                  :boolean          default(FALSE)
+#  birthday               :date
+#  telephone_number       :string
+#  telegram_username      :string
+#  favourite_sports       :string
+#  avatar_data            :text
 #
 
 class User < ApplicationRecord
@@ -26,6 +32,10 @@ class User < ApplicationRecord
   has_many :created_events, class_name: 'Event', primary_key: 'id', foreign_key: 'owner'
 
   validates :first_name, presence: true
+  validates_each :birthday do |record, attribute, value|
+    record.errors.add(attribute, I18n.t('activerecord.models.user.errors.future_birthday')) if !value.nil? && value >= Time.now.to_date
+  end
+  validates_format_of :telephone_number, with: /\A\d+\z/, message: I18n.t('activerecord.models.user.errors.telephone_number_invalid'), allow_nil: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
 
@@ -34,6 +44,10 @@ class User < ApplicationRecord
   has_many :organizers
   has_many :organizing_events, through: :organizers, source: 'event'
 
+  include AvatarUploader::Attachment.new(:avatar)
+
+  has_many :team_users
+  has_many :teams, through: :team_users, source: :team
 
   def has_omniauth?
     provider.present? && uid.present?

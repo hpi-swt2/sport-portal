@@ -12,6 +12,14 @@
 #  updated_at             :datetime         not null
 #  first_name             :string
 #  last_name              :string
+#  provider               :string
+#  uid                    :string
+#  admin                  :boolean          default(FALSE)
+#  birthday               :date
+#  telephone_number       :string
+#  telegram_username      :string
+#  favourite_sports       :string
+#  avatar_data            :text
 #
 
 require 'rails_helper'
@@ -20,6 +28,23 @@ RSpec.describe User, type: :model do
   it 'is valid when produced by a factory' do
     user = FactoryBot.build(:user)
     expect(user).to be_valid
+  end
+
+  it "is valid with only first name, email and password" do
+    user = User.new(first_name: "User", email: "user@example.com", password: "password")
+    expect(user).to be_valid
+  end
+
+  it "correctly validates telephone number" do
+    expect(FactoryBot.build(:user, telephone_number: "+00491766563")).not_to be_valid
+    expect(FactoryBot.build(:user, telephone_number: "0049 177 499 372")).not_to be_valid
+    expect(FactoryBot.build(:user, telephone_number: "0173XX17352")).not_to be_valid
+    expect(FactoryBot.build(:user, telephone_number: "01731557326")).to be_valid
+  end
+
+  it "correctly validates birthday" do
+    expect(FactoryBot.build(:user, birthday: Date.new(1995, 8, 25))).to be_valid
+    expect(FactoryBot.build(:user, birthday: Time.now.to_date.tomorrow)).not_to be_valid
   end
 
   it 'is not valid when the omniauth is not unique' do
@@ -126,6 +151,23 @@ RSpec.describe User, type: :model do
   it "should have an attribute events" do
     @relation = User.reflect_on_association(:events)
     expect(@relation.macro).to eq :has_and_belongs_to_many
+  end
+
+  it 'is valid with image as avatar' do
+    user = FactoryBot.build :user, :with_avatar
+    expect(user).to be_valid
+  end
+
+  it 'is not valid with any other file type than image' do
+    user = FactoryBot.build :user, :with_large_avatar
+    expect(user).not_to be_valid
+    expect(user.errors[:avatar]).to include('isn\'t of allowed type (allowed types: image/jpeg, image/gif, image/png)')
+  end
+
+  it 'is not valid with an avatar of size >2mb' do
+    user = FactoryBot.build :user, :with_large_avatar
+    expect(user).not_to be_valid
+    expect(user.errors[:avatar]).to include('is too large (max is 2 MB)')
   end
 
   it "has the admin attribute" do

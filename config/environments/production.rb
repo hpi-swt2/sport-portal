@@ -113,6 +113,19 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Configure Shrine file upload to use AWS S3 file storage
+  s3_options = {
+      bucket:            ENV.fetch("S3_BUCKET"),
+      region:            ENV.fetch("S3_REGION"),
+      access_key_id:     ENV.fetch("S3_ACCESS_KEY_ID"),
+      secret_access_key: ENV.fetch("S3_SECRET_ACCESS_KEY"),
+  }
+
+  Shrine.storages = {
+      cache: Shrine::Storage::S3.new(prefix: "cache", **s3_options),
+      store: Shrine::Storage::S3.new(prefix: "store", **s3_options),
+  }
+
   # Mailer setup
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
