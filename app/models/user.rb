@@ -12,13 +12,14 @@
 #  updated_at             :datetime         not null
 #  first_name             :string
 #  last_name              :string
+#  provider               :string
+#  uid                    :string
+#  admin                  :boolean          default(FALSE)
 #  birthday               :date
 #  telephone_number       :string
 #  telegram_username      :string
 #  favourite_sports       :string
-#  provider               :string
-#  uid                    :string
-#  admin                  :boolean          default(FALSE)
+#  avatar_data            :text
 #
 
 class User < ApplicationRecord
@@ -43,9 +44,10 @@ class User < ApplicationRecord
   has_many :organizers
   has_many :organizing_events, through: :organizers, source: 'event'
 
+  include AvatarUploader::Attachment.new(:avatar)
+
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
-
 
   def has_omniauth?
     provider.present? && uid.present?

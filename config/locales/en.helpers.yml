@@ -28,6 +28,7 @@ en:
       new: "New %{model}"
       delete: "Delete %{model}"
     submit:
+      delete: "Delete %{model}"
       create: "Create %{model}"
       submit: "Save %{model}"
       update: "Update %{model}"
