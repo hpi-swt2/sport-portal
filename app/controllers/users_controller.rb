@@ -80,7 +80,7 @@ class UsersController < Devise::RegistrationsController
     end
 
     def profile_update_params
-      params.require(:user).permit(:birthday, :telephone_number, :telegram_username, :favourite_sports)
+      params.require(:user).permit(:avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports)
     end
 
     def unlink_omniauth

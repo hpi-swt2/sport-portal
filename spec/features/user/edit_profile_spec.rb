@@ -12,6 +12,7 @@ RSpec.feature "Edit profile", :type => :feature do
     new_params[:telegram_username] = new_params[:telegram_username] + "_new"
     new_params[:favourite_sports] = new_params[:favourite_sports] + ", Baseball"
 
+    page.attach_file("user_avatar", "#{Rails.root}/spec/fixtures/valid_avatar.png")
     fill_in "user_birthday", :with => new_params[:birthday]
     fill_in "user_telephone_number", :with => new_params[:telephone_number]
     fill_in "user_telegram_username", :with => new_params[:telegram_username]
@@ -19,6 +20,7 @@ RSpec.feature "Edit profile", :type => :feature do
     find('input[type="submit"]').click
 
     user.reload
+    expect(user.avatar.metadata["filename"]).to eq("valid_avatar.png")
     expect(user.birthday).to eq(new_params[:birthday])
     expect(user.telephone_number).to eq(new_params[:telephone_number])
     expect(user.telegram_username).to eq(new_params[:telegram_username])
