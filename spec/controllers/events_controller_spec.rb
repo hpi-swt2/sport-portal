@@ -237,6 +237,14 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
+  describe "PUT #leave" do
+    it "successfully leaves an event" do
+      event = Event.create! valid_attributes
+      put :leave, params: { id: event.to_param }, session: valid_session
+      expect(response).to redirect_to(event)
+    end
+  end
+
   describe "DELETE #destroy" do
     it "destroys the requested event" do
       event = Event.create! valid_attributes

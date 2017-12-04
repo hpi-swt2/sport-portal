@@ -5,19 +5,27 @@ describe "index event page", type: :feature do
     @user = FactoryBot.create(:user)
   end
 
-  context "for all event types" do
+  context "for all events" do
     before(:each) do
       @singleevent = FactoryBot.create :event, player_type: Event.player_types[:single]
       @teamevent = FactoryBot.create(:event, player_type: Event.player_types[:team])
     end
 
-    it "should change the join button to a leave button after the user joins the event" do
+    it "should change the join button to a leave button after the user joins" do
       sign_in @user
       visit events_path
       click_link(:join_event_button)
       expect(page).not_to have_link(:join_event_button)
       expect(page).to have_link(:leave_event_button)
     end
+
+    # it "should change the leave button to a join button after the user leaves" do
+    #   sign_in @user
+    #   visit events_path
+    #   click_link(:leave_event_button)
+    #   expect(page).not_to have_link(:leave_event_button)
+    #   expect(page).to have_link(:join_event_button)
+    # end
 
     it "should show the user whether they joined" do
       sign_in @user
@@ -27,7 +35,7 @@ describe "index event page", type: :feature do
     end
 
     it "should not allow the user to join if they are not logged in" do
-      visit events_path()
+      visit events_path
       expect(page).not_to have_button(:join_event_button)
     end
   end

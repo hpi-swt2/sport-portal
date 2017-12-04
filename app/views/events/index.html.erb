@@ -30,7 +30,7 @@
           <% if can? :join, event %>
               <% if event.users.include?(current_user) %>
                   <%= link_to t('.leave', :default => t("helpers.links.leave")),
-                              join_event_path(event),
+                              leave_event_path(event),
                               :method => :put,
                               :class => 'btn btn-xs btn-default',
                               id: :leave_event_button %>
