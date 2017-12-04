@@ -63,11 +63,6 @@ de:
       event:
         one: "Event"
         other: "Events"
-  view:
-    user:
-      edit_profile: "Profilinformationen bearbeiten"
-      update_profile: "Profil aktualisieren"
-      favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
 
     attributes:
       event:
@@ -82,6 +77,15 @@ de:
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
+
+      user:
+        telephone_number: "Telefonnummer"
+
+  view:
+    user:
+      edit_profile: "Profilinformationen bearbeiten"
+      update_profile: "Profil aktualisieren"
+      favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
 
   unauthorized:
         manage:
