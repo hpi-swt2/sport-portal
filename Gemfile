@@ -169,5 +169,6 @@ group :production do
   gem 'airbrake', '~> 5.0'
 
   # S3 upload should only be used in production
-  gem 'aws-sdk-s3', '~> 1.8.0'
+  gem 'aws-sdk-s3', '~> 1.2'
+
 end
