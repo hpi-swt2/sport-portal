@@ -60,10 +60,24 @@ de:
         one: "Event"
         other: "Events"
 
+    attributes:
+      event:
+        name: "Name"
+        description: "Beschreibung"
+        event_type: "Eventtyp"
+        game_mode: "Spielsystem"
+        player_type: "Solo / Team"
+        max_teams: "Anzahl Teams"
+        discipline: "Sportart"
+        deadline: "Anmeldefrist"
+        startdate: "Beginn"
+        enddate: "Ende"
+        duration: "Dauer in Tagen"
+
   unauthorized:
         manage:
           all: "Fehlende Berechtigung für %{action} %{subject}."
-          user: "Du bist icht berechtigt, Konten anderer Nutzer zu verändern."
+          user: "Du bist nicht berechtigt, Konten anderer Nutzer zu verändern."
 
   success:
     updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
@@ -80,17 +94,6 @@ de:
     show:
       to_schedule: zum Spielplan
     new:
-      name: "Name"
-      description: "Beschreibung"
-      event_type: "Eventtyp"
-      game_mode: "Spielsystem"
-      player_type: "Spielertyp"
-      max_teams: "Anzahl Teams"
-      discipline: "Sportart"
-      deadline: "Deadline"
-      startdate: "Start"
-      enddate: "Ende"
-      duration: "Dauer"
       select_type: "Eventtyp auswählen"
       select_game_mode: "Spieltyp auswählen"
       select_player_type: "Spielertyp auswählen"
@@ -103,3 +106,4 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+

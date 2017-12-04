@@ -16,8 +16,8 @@ RSpec.describe "events/index", type: :view do
   end
 
   it "renders a list of events" do
-    render
-    #FIXME: to be implemented
+     render
+     #FIXME: to be implemented
    end
 
   it "renders styled buttons" do

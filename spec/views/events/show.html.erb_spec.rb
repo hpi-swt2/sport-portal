@@ -23,7 +23,17 @@ RSpec.describe "events/show", type: :view do
 
   it "renders attributes in <p>" do
     render
-    #FIXME: To be implemented
+    expect(rendered).to have_content(@event.name)
+    expect(rendered).to have_content(@event.description)
+    expect(rendered).to have_content(@event.game_mode)
+    expect(rendered).to have_content(@event.discipline)
+    expect(rendered).to have_content(@event.deadline)
+    expect(rendered).to have_content(@event.startdate)
+    expect(rendered).to have_content(@event.enddate)
+  end
+
+  it "renders an edit button for organizers" do
+    render
   end
 
   it "renders styled buttons" do
