@@ -12,7 +12,7 @@ describe "detailled event page", type: :feature do
     sign_in @user
     visit event_path(@teamevent)
     
-    expect(page).to have_css(:join_event_button)
+    expect(page).to have_css('a#join_event_button.btn')
   end  
 
   it "should not be possible for a user to join an event with his team, when it is already participating" do
@@ -22,8 +22,8 @@ describe "detailled event page", type: :feature do
     sign_in @user
     visit event_path(@teamevent)
 
-    expect(page).not_to have_css(:join_event_button)
-    expect(page).to have_css(:leave_event_button)
+    expect(page).not_to have_css('a#join_event_button.btn')
+    expect(page).to have_css('a#leave_event_button.btn')
   end
 
   it "should not be possible to join team event, if its deadline has expired" do
@@ -31,14 +31,14 @@ describe "detailled event page", type: :feature do
     sign_in @user
     visit event_path(@oldevent)
 
-    expect(page).not_to have_css(:join_event_button)
+    expect(page).not_to have_css('a#join_event_button.btn')
   end
 
   it "should be not possible to join a team event if the user is not logged in" do
      visit event_path(@teamevent)
 
-     expect(page).not_to have_css(:join_event_button)
-     expect(page).not_to have_css(:leave_event_button)     
+     expect(page).not_to have_css('a#join_event_button.btn')
+     expect(page).not_to have_css('a#leave_event_button.btn')
   end
 
   it "should be possible to join team event via join button" do

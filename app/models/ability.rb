@@ -33,7 +33,9 @@ class Ability
       user_id = user.id
 
       can :manage, User, id: user_id
-      can :join, Event, player_type: Event.player_types[:single]
+      can :join, Event do |event|
+        event.deadline >= Date.current
+      end
       can :manage, Event, owner_id: user_id
       can :create, :all
 
