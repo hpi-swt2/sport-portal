@@ -3,7 +3,6 @@
 # Table name: matches
 #
 #  id           :integer          not null, primary key
-#  date         :date
 #  place        :string
 #  score_home   :integer
 #  score_away   :integer
@@ -11,8 +10,11 @@
 #  updated_at   :datetime         not null
 #  team_home_id :integer
 #  team_away_id :integer
-#  points_away  :integer
+#  event_id     :integer
 #  points_home  :integer
+#  points_away  :integer
+#  gameday      :integer
+#
 
 FactoryBot.define do
   factory :match do

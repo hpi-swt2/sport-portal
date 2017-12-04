@@ -47,9 +47,17 @@ en:
       user:
         one: "player"
         other: "players"
+        errors:
+          future_birthday: "The birthday must not be a future date"
+          telephone_number_invalid: "Telephone number must consist of only numbers without spaces"
       event:
         one: "event"
         other: "events"
+  view:
+    user:
+      edit_profile: "Edit Profile Properties"
+      update_profile: "Update Profile"
+      favourite_sports_placeholder: "Football, Basketball, Table football, ..."
 
   unauthorized:
       manage:
@@ -77,3 +85,4 @@ en:
       select_game_mode: "Select game mode"
       select_player_type: "Spielertyp auswählen"
     show_events: "Show all events"
+
