@@ -6,12 +6,38 @@ describe "index event page", type: :feature do
     @user = FactoryBot.create(:user)
   end
 
-  it "should not display a join button for teamevents" do
+  it "should be possible for a user to join an event with his team, when it is not part of the event yet" do
     sign_in @user
     visit events_path
-    expect(page).not_to have_css('a#join_event_button.btn')
+    
+    expect(page).to have_css(:join_event_button)
+  end  
+
+  it "should not be possible for a user to join an event with his team, when it is already participating" do
+    @team = FactoryBot.create(:team, :with_five_members)
+    @team.owners << @user
+    @teamevent.teams << @team
+    sign_in @user
+    visit events_path
+
+    expect(page).not_to have_css(:join_event_button)
+    expect(page).to have_css(:leave_event_button)
   end
 
+  it "should not be possible to join a team event, that has an exceeded deadline" do
+    @oldevent = FactoryBot.create(:event, player_type: Event.player_types[:team], deadline: Date.yesterday)
+    sign_in @user
+    visit "/events?showAll=on"
+
+    expect(page).not_to have_css(:join_event_button)
+  end
+
+  it "should be not possible to join a team event if the user is not logged in" do
+     visit events_path
+
+     expect(page).not_to have_css(:join_event_button)
+     expect(page).not_to have_css(:leave_event_button)     
+  end
 
   it "should display a button for single player events" do
     sign_in @user
@@ -48,7 +74,7 @@ describe "index event page", type: :feature do
 
   it "should be not possible to join an event if the user is not logged in" do
      @singleevent = FactoryBot.create :event, player_type: Event.player_types[:single]
-     visit events_path()
+     visit events_path
      expect(page).not_to have_button(:join_event_button)
   end
 
