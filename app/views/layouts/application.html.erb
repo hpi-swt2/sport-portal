@@ -10,7 +10,11 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <% if action_name === "new" && controller_name == "sessions" %>
+    <body class="background">
+  <% else %>
+    <body>
+  <% end %>
     <div class="container">
       <%= render partial: "application/navbar" %>
 
