@@ -44,7 +44,7 @@ de:
   navbar:
     drop-down:
       dashboard: "Mein Dashboard"
-      edit_profile: "Profil bearbeiten"
+      edit_profile: "Mein Profil"
 
   activerecord:
     models:

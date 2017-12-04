@@ -83,6 +83,10 @@ gem 'bootstrap-datepicker-rails'
 # https://github.com/clemens/delocalize
 # gem 'delocalize'
 
+# Gem for many customizable scalable vector icons
+# https://github.com/bokmann/font-awesome-rails
+gem 'font-awesome-rails'
+
 group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
