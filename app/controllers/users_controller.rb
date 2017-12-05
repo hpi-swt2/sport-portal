@@ -103,8 +103,7 @@ class UsersController < Devise::RegistrationsController
       user_password = user_params[:password]
 
       if user_password.blank?
-        user_params.delete(:password)
-        user_params.delete(:password_confirmation)
+        remove_password(user_params)
       end
       params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
     end
@@ -139,5 +138,10 @@ class UsersController < Devise::RegistrationsController
       else
         redirect_to root_path
       end
+    end
+
+    def remove_password(user_params)
+      user_params.delete(:password)
+      user_params.delete(:password_confirmation)
     end
 end
