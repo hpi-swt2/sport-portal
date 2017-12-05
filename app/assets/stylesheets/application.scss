@@ -15,6 +15,11 @@
  *= require_self
  */
 
+/* Override colors of Materialize */
+@import "materialize/components/color";
+$primary-color: #01A8E8 !default;
+$secondary-color: #01A8E8 !default;
+
 @import "materialize";
 
 /* Load custom font families */
@@ -26,7 +31,7 @@
 }
 
 @font-face {
-  font-family: 'Proxima Nova-Bold';
+  font-family: 'Proxima Nova Bold';
   src: url('/assets/ProximaNova-Bold.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
@@ -36,14 +41,3 @@
 * {
   font-family: "Proxima Nova";
 }
-
-/* UI-Elements */
-.button {
-  font-family: ProximaNova-Bold;
-  font-size: 15px;
-  color: #FFFFFF;
-  letter-spacing: 0;
-  background: #1CA9E5;
-  border-radius: 100px;
-}
-
