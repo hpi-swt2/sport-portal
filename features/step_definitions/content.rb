@@ -13,6 +13,11 @@ Then(/^there should be a '(.*)' button$/) do |text|
 end
 
 
+Then(/^there should be a table$/) do
+  expect(page).to have_table
+end
+
+
 Then(/^the '(.*)' input should already be filled with '(.*)'$/) do |name, text|
   expect(page).to have_field(name, with: text)
 end

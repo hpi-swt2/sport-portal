@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     end
   end
   resources :leagues, controller: 'events', type: 'League'
-  resources :tournaments, controller: 'events', type: 'Tournament'
+  resources :tournaments, controller: 'events', type: 'Tournament' do
+    member do
+      get 'overview'
+    end
+  end
 
   root 'welcome#index'
   resources :teams
