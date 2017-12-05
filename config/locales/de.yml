@@ -44,7 +44,7 @@ de:
   navbar:
     drop-down:
       dashboard: "Mein Dashboard"
-      edit_profile: "Profil bearbeiten"
+      edit_profile: "Mein Profil"
 
   activerecord:
     models:
@@ -66,15 +66,6 @@ de:
       event:
         one: "Event"
         other: "Events"
-    attributes:
-      user:
-        first_name: "Vorname"
-        last_name: "Nachname"
-  view:
-    user:
-      edit_profile: "Profilinformationen bearbeiten"
-      update_profile: "Profil aktualisieren"
-      favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
 
     attributes:
       event:
@@ -89,6 +80,17 @@ de:
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
+
+      user:
+        first_name: "Vorname"
+        last_name: "Nachname"
+        telephone_number: "Telefonnummer"
+
+  view:
+    user:
+      edit_profile: "Profilinformationen bearbeiten"
+      update_profile: "Profil aktualisieren"
+      favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
 
   unauthorized:
         manage:

@@ -44,10 +44,9 @@ class UsersController < Devise::RegistrationsController
 
   def update_profile
     if @user.update(profile_update_params)
-      redirect_to @user, notice: I18n.t('helpers.flash.updated', resource_name: User.model_name.human).capitalize
-    else
-      render :edit_profile
+      flash.now.notice = I18n.t('helpers.flash.updated', resource_name: User.model_name.human).capitalize
     end
+    render :edit_profile
   end
 
   # All other controller methods are handled by original `Devise::RegistrationsController`
