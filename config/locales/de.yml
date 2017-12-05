@@ -60,6 +60,9 @@ de:
         errors:
           future_birthday: "Der Geburtstag darf nicht in der Zukunft liegen"
           telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
+      image:
+        one: "Bild"
+        other: "Bilder"      
       event:
         one: "Event"
         other: "Events"
@@ -116,3 +119,7 @@ de:
       score: "Ergebnis"
       points: "Punkte"
 
+  users:
+    avatar:
+      errors:
+        too_large: "is too large (max is 2 MB)"

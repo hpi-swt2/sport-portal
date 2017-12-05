@@ -55,6 +55,9 @@ gem 'has_scope'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Used for file uploaded
+gem 'shrine', '~> 2.8.0'
+
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
 # gem 'jquery-ui-rails'
@@ -164,4 +167,8 @@ group :production do
   # https://github.com/airbrake/airbrake
   # Errbit requires airbrake 5.0
   gem 'airbrake', '~> 5.0'
+
+  # S3 upload should only be used in production
+  gem 'aws-sdk-s3', '~> 1.2'
+
 end
