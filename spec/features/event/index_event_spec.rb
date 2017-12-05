@@ -34,6 +34,7 @@ describe "index event page", type: :feature do
       end
 
       it "should redirect me to itself when clicking the leave button" do
+        click_link(:leave_event_button)
         expect(current_path).to eq(events_path)
       end
 
@@ -42,7 +43,7 @@ describe "index event page", type: :feature do
       end
 
       it "should show that I am participating" do
-        expect(page).to have_content("Participating")
+        expect(page).to have_content I18n.t('events.participating')
       end
 
       it "should let me join again after clicking the leave button" do

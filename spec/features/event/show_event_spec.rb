@@ -42,7 +42,7 @@ describe "detailed event page", type: :feature do
       end
 
       it "should show that I am participating" do
-        expect(page).to have_content("Participating")
+        expect(page).to have_content I18n.t('events.participating')
       end
 
       it "should have a join button after clicking the leave button" do
