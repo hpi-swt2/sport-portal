@@ -100,7 +100,7 @@ class UsersController < Devise::RegistrationsController
 
     def admin_update_params
       user_params = params[:user]
-      user_password = params[:user][:password]
+      user_password = user_params[:password]
 
       if user_password.blank?
         user_params.delete(:password)
