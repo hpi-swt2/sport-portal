@@ -25,15 +25,17 @@ class Ability
   # See the wiki for details:
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
+
   def initialize(user, team_member = nil)
     can :read, :all
     cannot :read, Team, private: true
+    alias_action :join, :leave, :to => :participate
 
     if user.present?
       user_id = user.id
 
       can :manage, User, id: user_id
-      can :join, Event, player_type: Event.player_types[:single]
+      can :participate, Event, player_type: Event.player_types[:single]
       can :manage, Event, owner_id: user_id
       can :create, :all
 
