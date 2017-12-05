@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       put :join
     end
   end
+  resources :leagues, controller: 'events', type: 'League'
+  resources :tournaments, controller: 'events', type: 'Tournament'
 
   root 'welcome#index'
   resources :teams
@@ -34,6 +36,9 @@ Rails.application.routes.draw do
         get 'unlink'
       end
     end
+
+    get '/users/:id/profile/edit', to: 'users#edit_profile', as: :user_profile_edit
+    match '/users/:id/profile', to: 'users#update_profile', as: :user_profile, via: [:patch, :put]
   end
 
   resources :teams do
@@ -41,6 +46,7 @@ Rails.application.routes.draw do
       post :assign_ownership
       post :delete_ownership
       post :delete_membership
+      post :perform_action_on_multiple
     end
   end
 

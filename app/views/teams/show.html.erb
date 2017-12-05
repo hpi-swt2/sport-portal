@@ -1,8 +1,7 @@
 <%- model_class = Team -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
-
 <dl class="dl-horizontal">
   <dt><strong><%=t '.name', :default => t("helpers.name") %>:</strong></dt>
   <dd><%= @team.name %></dd>
@@ -18,8 +17,63 @@
   <dd><%= @team.description %></dd>
 </dl>
 
-<table class="table table-striped">
-  <thead>
+<%= form_tag perform_action_on_multiple_team_path do %>
+  <table class="table table-striped">
+    <tbody>
+    <% @team.members.each do |member| %>
+        <tr>
+          <td><%= check_box_tag "members[]", member.id %></td>
+          <td><%= member.id %></td>
+          <td><%= member.first_name%></td>
+          <td><%= member.last_name%></td>
+          <td>
+            <%= link_to t('.email', :default => t("helpers.links.email")),
+                        team_path(@team),
+                        :method => 'get',
+                        :class => 'btn btn-default btn-xs' %>
+            <% if (@team.owners.include? current_user) %>
+                <% if (@team.owners.include? member) %>
+                    <%= link_to t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
+                                delete_ownership_team_path(@team, :team_member => member.id),
+                                :method => 'post',
+                                :class => 'btn btn-default btn-xs',
+                                :disabled => !(can? :delete_ownership, @team) %>
+                <% else %>
+                    <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
+                                assign_ownership_team_path(@team, :team_member => member.id),
+                                :method => 'post',
+                                :class => 'btn btn-default btn-xs',
+                                :disabled => !(can? :assign_ownership, @team)%>
+                <% end %>
+                <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
+                            delete_membership_team_path(@team, :team_member => member.id),
+                            :method => 'post',
+                            :class => 'btn btn-xs btn-danger' %>
+
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+    <tr>
+      <td>
+        <%= t('.apply_action', :default => t("helpers.teams.apply_action")) %>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <%= link_to t('.email', :default => t("helpers.links.email")),
+                    team_path(@team),
+                    :method => 'get',
+                    :class => 'btn btn-default btn-xs' %>
+
+        <%= submit_tag "assign_ownership", name: "assign_ownership" %>
+        <%= submit_tag "delete_ownership", name: "delete_ownership" %>
+        <%= submit_tag "delete_membership", name: "delete_membership" %>
+      </td>
+    </tr>
+    </tbody>
+    <thead>
     <tr>
       <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
       <th><%= model_class.human_attribute_name(:id) %></th>
@@ -27,55 +81,9 @@
       <th><%= model_class.human_attribute_name(:last_name) %></th>
       <th><%= t '.actions', :default => t("helpers.actions") %></th>
     </tr>
-  </thead>
-  <tbody>
-    <% @team.members.each do |member| %>
-      <tr>
-        <td><%= check_box_tag "checkbox #{member.id}", member.id %></td>
-        <td><%= member.id %></td>
-        <td><%= member.first_name%></td>
-        <td><%= member.last_name%></td>
-        <td>
-          <%= link_to t('.email', :default => t("helpers.links.email")),
-                      team_path(@team),
-                      :method => 'get',
-                      :class => 'btn btn-default btn-xs' %>
-          <% if (@team.owners.include? current_user) %>
-              <%= link_to t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
-                          delete_ownership_team_path(@team, :team_member => member.id),
-                          :method => 'post',
-                          :class => 'btn btn-default btn-xs',
-                          :disabled => !(can? :delete_ownership, @team) %>
-              <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
-                          assign_ownership_team_path(@team, :team_member => member.id),
-                          :method => 'post',
-                          :class => 'btn btn-default btn-xs',
-                          :disabled => (!(can? :assign_ownership, @team) or (@team.owners.include? member)) %>
-              <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
-                          delete_membership_team_path(@team, :team_member => member.id),
-                          :method => 'post',
-                          :class => 'btn btn-xs btn-danger'%>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-
-      <tr>
-        <td>
-          <%= t('.apply_action', :default => t("helpers.teams.apply_action")) %>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-          <%= link_to t('.email', :default => t("helpers.links.email")),
-                      team_path(@team),
-                      :method => 'get',
-                      :class => 'btn btn-default btn-xs' %>
-        </td>
-      </tr>
-  </tbody>
-</table>
+    </thead>
+  </table>
+<% end %>
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>

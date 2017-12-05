@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+  before_action :set_team, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
   before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership]
   # before_action :set_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
   before_action :owners_include_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
@@ -28,7 +30,7 @@ class TeamsController < ApplicationController
 
     if @team.save
       # Assign team ownership and team membership to current signed in user who created the team
-      assign_user_as_owner_and_member
+      @team.owners << current_user
 
       redirect_to @team, notice: I18n.t('helpers.flash.created', resource_name: Team.model_name.human).capitalize
     else
@@ -49,16 +51,38 @@ class TeamsController < ApplicationController
   def destroy
     # Delete all team ownerships and team memberships associated with the team to destroy
     team_id = @team.id
-    TeamOwner.where(team_id: team_id).delete_all
-    TeamMember.where(team_id: team_id).delete_all
+    TeamUser.where(team_id: team_id).delete_all
     @team.destroy
+
     redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
   end
 
   # Assigns team ownership to a specific team member
   def assign_ownership
     unless owners_include_user
-      team_owners << user
+      team_member = @team.team_members.where(user_id: user).first
+      print(team_member.is_owner)
+      print("\n")
+      print("\n")
+      print("\n")
+      print("\n")
+      print("\n")
+      print("\n")
+      team_member.assign_ownership!
+      print(team_member.is_owner)
+      #TeamUser.where(:team_id => @team.id, :user_id => user).first.assign_ownership!
+      #print(TeamUser.find_by(team_id: @team.id, user_id: user).is_owner = true)
+      print("\n")
+      print("\n")
+      print("\n")
+      print("\n")
+      print("\n")
+      print("\n")
+      print("\n")
+      print("\n")
+
+      #@team.members.delete(user)
+      #@team.owners << user
       redirect_to @team
     end
   end
@@ -78,10 +102,37 @@ class TeamsController < ApplicationController
     @current_ability ||= Ability.new(current_user, params[:team_member])
   end
 
+  def perform_action_on_multiple
+    print(params)
+    if params[:assign_ownership]
+      params[:members].each do |member|
+        @user ||= User.find(member)
+
+        unless owners_include_user
+          team_owners << @user
+        end
+      end
+    end
+    if params[:delete_ownership]
+      params[:members].each do |member|
+        @user ||= User.find(member)
+        team_owners.delete @user
+      end
+    end
+    if params[:delete_membership]
+      params[:members].each do |member|
+        @user ||= User.find(member)
+        @team.members.delete @user
+      end
+    end
+    render @team
+  end
+
   private
     def delete_owner_if_existing
       if owners_include_user
         team_owners.delete user
+        @team.members << user
       end
     end
 
@@ -98,10 +149,6 @@ class TeamsController < ApplicationController
       @team = Team.find(params[:id])
     end
 
-    # def user
-    #   @user = User.find(params[:team_member])
-    # end
-
     def owners_include_user
       @user_in_owners ||= team_owners.include? user
     end
@@ -111,8 +158,5 @@ class TeamsController < ApplicationController
       params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members)
     end
 
-    def assign_user_as_owner_and_member (user = current_user)
-      @team.owners << user
-      @team.members << user
-    end
+
 end
