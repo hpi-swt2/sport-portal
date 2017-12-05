@@ -1,8 +1,6 @@
 <%= stylesheet_link_tag 'sign_in' %>
 <div>
-  <div class="anmelden">
-    <h1><%= t('.sign_in') %></h1>
-  </div>
+  <h1><%= t('.sign_in') %></h1>
   <div>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f| %>
       <div class="center">

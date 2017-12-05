@@ -1,13 +1,6 @@
-@font-face {
-    font-family: "ProximaNova";
-    src: url(/assets/ProximaNova-Black.otf) format("truetype");
-}
-.anmelden {
+h1 {
     color: #fffefe;
-    font-family: ProximaNova;
-    font-size: 69.0px;
-    font-style: normal;
-    font-stretch: normal;
+    font-size: 69px;
     font-weight: 400;
     text-align: center;
 }
@@ -25,11 +18,16 @@
 .checkBoxLabel{
     margin: auto;
     width: 50%;
-    font-family: ProximaNova;
+    /*font-family: ProximaNova;*/
 }
 .checkBox{
     border-radius: 100%;
 }
 .background{
-    background-image:url(background1.png);
+    background: url(background1.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: none;
 }

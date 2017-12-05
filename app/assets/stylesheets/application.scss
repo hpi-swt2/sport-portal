@@ -10,8 +10,40 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require bootstrap-datepicker3
  *= require_tree
  *= require_self
  */
 
 @import "materialize";
+
+/* Load custom font families */
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('/assets/ProximaNova-Reg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Proxima Nova-Bold';
+  src: url('/assets/ProximaNova-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Application wide style */
+* {
+  font-family: "Proxima Nova";
+}
+
+/* UI-Elements */
+.button {
+  font-family: ProximaNova-Bold;
+  font-size: 15px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  background: #1CA9E5;
+  border-radius: 100px;
+}
+
