@@ -45,8 +45,8 @@ RSpec.describe User, type: :model do
     expect(user).not_to be_valid
   end
 
-  it "is valid with only first name, email and password" do
-    user = User.new(first_name: "User", email: "user@example.com", password: "password")
+  it "is valid with only first name, last name, email and password" do
+    user = User.new(first_name: "User", last_name: "Name", email: "user@example.com", password: "password")
     expect(user).to be_valid
   end
 
