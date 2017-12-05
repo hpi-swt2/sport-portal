@@ -70,9 +70,9 @@ class EventsController < ApplicationController
     @matches = @event.matches.order('gameday ASC')
   end
 
-  #def overview
+  def overview
 
-  #end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

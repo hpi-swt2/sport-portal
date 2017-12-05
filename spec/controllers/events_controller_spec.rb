@@ -280,4 +280,18 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
+  describe "GET #overview" do
+    it "should generate overview if not existing" do
+      tournament = Tournament.create! valid_attributes
+      get :overview, params: { id: tournament.to_param }, session: valid_session
+      expect(tournament.teams).not_to be_empty
+    end
+
+    it "returns a success response" do
+      tournament = Tournament.create! valid_attributes
+      get :overview, params: { id: tournament.to_param }, session: valid_session
+      expect(response).to be_success
+    end
+  end
+
 end
