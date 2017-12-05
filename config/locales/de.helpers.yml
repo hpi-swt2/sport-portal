@@ -33,6 +33,7 @@ de:
       create: "Erstelle %{model}"
       submit: "Speichere %{model}"
       update: "Aktualisiere %{model}"
+      delete: "Lösche %{model}"
     select:
       prompt: "Bitte wähle"
     teams:

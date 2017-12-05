@@ -8,9 +8,9 @@ Feature: OpenID Registration
     And an unlinked OpenID account with email 'test@test.com'
     When the account is used to sign in
     Then the 'E-Mail' input should already be filled with 'test@test.com'
-    And there should be an input 'First name'
-    And there should be an input 'Last name'
-    And there should not be an input 'Password'
+    And there should be an input 'Vorname'
+    And there should be an input 'Nachname'
+    And there should not be an input 'Passwort'
 
   Scenario: Sign up
     Given a new user

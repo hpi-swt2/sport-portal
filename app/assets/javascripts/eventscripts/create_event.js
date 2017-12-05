@@ -1,5 +1,10 @@
 $( document ).on('turbolinks:load', function() {
-    $("#event_duration").val(calcDateDiff($("#event_startdate").val(),$("#event_enddate").val()));
+    $('#event_deadline').datepicker({ autoclose: true});
+    $('#event_startdate').datepicker({ autoclose: true});
+    $('#event_enddate').datepicker({ autoclose: true});
+
+    $("#event_duration").val("");
+  
 
     $("#event_startdate").datepicker({
        onSelect: function() {
