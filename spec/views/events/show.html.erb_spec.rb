@@ -2,37 +2,70 @@ require 'rails_helper'
 
 RSpec.describe "events/show", type: :view do
   before(:each) do
-    @event = assign(:event, Event.create!(
-      :name => "Name",
-      :description => "MyText",
-      :gamemode => "Gamemode",
-      :sport => "Sport",
-      :teamsport => false,
-      :playercount => 2,
-      :gamesystem => "MyText",
-      :deadline => Date.new(2017,11,16),
-      :startdate => Date.new(2017,12,01),
-      :enddate => Date.new(2017,12,05)
-    ))
+    @user = FactoryBot.create :user
+    @other_user = FactoryBot.create :user
+    @event = assign(:event, FactoryBot.create(:event))
+    # @event = assign(:event, Event.create!(
+    #   :name => "Name",
+    #   :description => "MyText",
+    #   :gamemode => "Gamemode",
+    #   :sport => "Sport",
+    #   :teamsport => false,
+    #   :playercount => 2,
+    #   :gamesystem => "Gamesystem",
+    #   :deadline => Date.tomorrow,
+    #   :startdate => Date.tomorrow+1,
+    #   :enddate => Date.tomorrow+3
+    # ))
+    @event.editors << @user
+    @event.owner = @user
   end
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(/Name/)
-    expect(rendered).to match(/MyText/)
-    expect(rendered).to match(/Gamemode/)
-    expect(rendered).to match(/Sport/)
-    expect(rendered).to match(/false/)
-    expect(rendered).to match(/2/)
-    expect(rendered).to match(/MyText/)
-    expect(rendered).to match(/2017-11-16/)
-    expect(rendered).to match(/2017-12-01/)
-    expect(rendered).to match(/2017-12-05/)
+    expect(rendered).to have_content(@event.name)
+    expect(rendered).to have_content(@event.description)
+    expect(rendered).to have_content(@event.game_mode)
+    expect(rendered).to have_content(@event.discipline)
+    expect(rendered).to have_content(@event.deadline)
+    expect(rendered).to have_content(@event.startdate)
+    expect(rendered).to have_content(@event.enddate)
+  end
+
+  it "renders an edit button for organizers" do
+    render
   end
 
   it "renders styled buttons" do
     render
-    expect(rendered).to have_css('a.btn.btn-default', :count => 2)
-    expect(rendered).to have_css('a.btn.btn-danger')
+    expect(rendered).to have_content(t('events.show.to_schedule'))
+  end
+
+  #not signed in user
+  it "doesn't render the new button when not signed in" do
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.new'))
+  end
+
+  it "doesn't render the edit button when not signed in" do
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
+  end
+
+  it "doesn't render the delete button when not signed in" do
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
+  end
+
+  it "doesn't render the edit button when the event doesn´t belong to the user" do
+    sign_in @other_user
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
+  end
+
+  it "doesn't render the delete button when the event doesn´t belong to the user" do
+    sign_in @other_user
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 end

@@ -1,3 +1,5 @@
+require 'capybara/email'
+
 module DataHelper
   def init_data_helper
     @matches = []
@@ -112,9 +114,14 @@ module DataHelper
     @current_user = user
   end
 
+  def sign_out
+    page.driver.submit :delete, destroy_user_session_path, {}
+    @current_user = nil
+  end
+
   def ensure_current_user!
     raise 'No user is logged in!' unless @current_user
   end
 end
 
-World(DataHelper)
+World(DataHelper, Capybara::Email::DSL)
