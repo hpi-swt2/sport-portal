@@ -44,7 +44,10 @@ de:
   navbar:
     drop-down:
       dashboard: "Mein Dashboard"
-      edit_profile: "Profil bearbeiten"
+      edit_profile: "Mein Profil"
+
+  dashboard:
+    title: "Dashboard für %{name}"
 
   activerecord:
     models:
@@ -62,15 +65,10 @@ de:
           telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
       image:
         one: "Bild"
-        other: "Bilder"      
+        other: "Bilder"
       event:
         one: "Event"
         other: "Events"
-  view:
-    user:
-      edit_profile: "Profilinformationen bearbeiten"
-      update_profile: "Profil aktualisieren"
-      favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
 
     attributes:
       event:
@@ -85,6 +83,17 @@ de:
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
+
+      user:
+        first_name: "Vorname"
+        last_name: "Nachname"
+        telephone_number: "Telefonnummer"
+
+  view:
+    user:
+      edit_profile: "Profilinformationen bearbeiten"
+      update_profile: "Profil aktualisieren"
+      favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
 
   unauthorized:
         manage:
@@ -104,6 +113,10 @@ de:
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Turnier"
+    create_event: "Veranstaltung erstellen"
+    choose_event_format: "Veranstaltungsart wählen"
+    new_league: "Neue Liga"
+    new_tournament: "Neues Tournier"
     show_events: "Alle Events anzeigen"
     participating: "Beigetreten"
     show:
@@ -121,6 +134,10 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+
+  validations:
+    not_only_numbers: "darf nicht nur aus Zahlen bestehen"
+    four_different_characters: "muss aus mindestens 4 verschiedenen Zeichen bestehen"
 
   users:
     avatar:

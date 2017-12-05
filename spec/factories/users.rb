@@ -28,7 +28,7 @@ FactoryBot.define do
     sequence(:last_name) { |n| "last_name#{n}" }
     sequence(:email) { |n| "#{n}@example.com" }
     sequence(:password) { |n| "password#{n}" }
-    sequence(:password_confirmation) { |n| "password#{n}" }
+    password_confirmation { password }
     birthday Date.new(1995, 10, 20)
     telephone_number "00491731117843"
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
