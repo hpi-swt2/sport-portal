@@ -88,55 +88,56 @@ class UsersController < Devise::RegistrationsController
 
   private
 
-  # Overridden methods of `Devise::RegistrationsController` to permit additional model params
-  def sign_up_params
-    generate_random_password if get_omniauth_data
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, event_ids: [])
-  end
-
-  def account_update_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, event_ids: [])
-  end
-
-  def admin_update_params
-    user_params = params[:user]
-
-    if user_params[:password].blank?
-      user_params.delete(:password)
-      user_params.delete(:password_confirmation)
+    # Overridden methods of `Devise::RegistrationsController` to permit additional model params
+    def sign_up_params
+      generate_random_password if get_omniauth_data
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, event_ids: [])
     end
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
-  end
 
-  def generate_random_password
-    token = Devise.friendly_token 32
-    user_params = params[:user]
-    user_params[:password] = token
-    user_params[:password_confirmation] = token
-  end
-
-
-  def get_omniauth_data
-    if (data = session['omniauth.data'])
-      data if data['expires'].to_time > Time.current
+    def account_update_params
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, event_ids: [])
     end
-  end
 
-  def profile_update_params
-    params.require(:user).permit(:avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports)
-  end
+    def admin_update_params
+      user_params = params[:user]
+      user_password = params[:user][:password]
 
-  def unlink_omniauth
-    user.reset_omniauth
-    user.save!
-    redirect_to user_path(user), notice: I18n.t('devise.registrations.unlink_success')
-  end
-
-  def redirect_to_users_or_root
-    if @user.present?
-      redirect_to users_path
-    else
-      redirect_to root_path
+      if user_password.blank?
+        user_params.delete(:password)
+        user_params.delete(:password_confirmation)
+      end
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
     end
-  end
+
+    def generate_random_password
+      token = Devise.friendly_token 32
+      user_params = params[:user]
+      user_params[:password] = token
+      user_params[:password_confirmation] = token
+    end
+
+
+    def get_omniauth_data
+      if (data = session['omniauth.data'])
+        data if data['expires'].to_time > Time.current
+      end
+    end
+
+    def profile_update_params
+      params.require(:user).permit(:avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports)
+    end
+
+    def unlink_omniauth
+      user.reset_omniauth
+      user.save!
+      redirect_to user_path(user), notice: I18n.t('devise.registrations.unlink_success')
+    end
+
+    def redirect_to_users_or_root
+      if @user.present?
+        redirect_to users_path
+      else
+        redirect_to root_path
+      end
+    end
 end
