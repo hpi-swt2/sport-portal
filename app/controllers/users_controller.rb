@@ -1,6 +1,6 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
-  load_and_authorize_resource :only => [:edit, :update, :edit_profile, :update_profile]
+  load_and_authorize_resource :only => [ :dashboard]
   load_resource only: [:link, :unlink]
 
   attr_reader :user
@@ -15,6 +15,41 @@ class UsersController < Devise::RegistrationsController
   # View: app/views/devise/registrations/show.html.erb
   def show
     @user = User.find(params[:id])
+  end
+
+  def edit
+    @user = User.find(params[:id])
+    authorize! :edit, @user
+  end
+
+  def update
+    @user = User.find(params[:id])
+    authorize! :update, @user
+
+
+    unless user.admin?
+      super
+    else
+      update_params = admin_update_params
+      if @user.update(update_params)
+        redirect_to @user, notice: I18n.t('helpers.flash.updated', resource_name: User.model_name.human).capitalize
+      else
+        render :edit
+      end
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    authorize! :destroy, @user
+
+    @user.destroy
+    set_flash_message! :notice, :destroyed
+    if @user.present?
+      redirect_to users_path
+    else
+      redirect_to root_path
+    end
   end
 
   # GET /users/1/link
@@ -40,9 +75,13 @@ class UsersController < Devise::RegistrationsController
   end
 
   def edit_profile
+    @user = User.find(params[:id])
+    authorize! :edit_profile, @user
   end
 
   def update_profile
+    @user = User.find(params[:id])
+    authorize! :edit_profile, @user
     if @user.update(profile_update_params)
       redirect_to @user, notice: I18n.t('helpers.flash.updated', resource_name: User.model_name.human).capitalize
     else
@@ -64,6 +103,14 @@ class UsersController < Devise::RegistrationsController
     def account_update_params
       params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, event_ids: [])
     end
+
+  def admin_update_params
+    if params[:user][:password].blank?
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+    end
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+  end
 
     def generate_random_password
       token = Devise.friendly_token 32

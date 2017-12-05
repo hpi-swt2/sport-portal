@@ -250,7 +250,7 @@ RSpec.describe UsersController, type: :controller do
     it "should allow normal users to destroy theirselves" do
       sign_in @user
       delete :destroy, params: { id: @user.to_param }
-      expect(response).to redirect_to(root_url)
+      expect(response).to redirect_to(users_url)
     end
   end
 

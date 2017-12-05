@@ -123,3 +123,12 @@ de:
     avatar:
       errors:
         too_large: "is too large (max is 2 MB)"
+
+    edit:
+      cancel_this_account: "Diesen Account löschen"
+      unhappy: "Unzufrieden"
+
+  devise:
+    registrations:
+      user:
+        destroyed: "Dieser Account wurde gelöscht"
