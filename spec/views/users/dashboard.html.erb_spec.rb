@@ -8,6 +8,9 @@ RSpec.describe "devise/registrations/dashboard", type: :view do
 
   it "renders headline" do
     render
-    expect(rendered).to have_css('h1', text: I18n.t('dashboard.title'))
+    expect(rendered).to have_css(
+      'h1',
+      text: I18n.t('dashboard.title', name: @user.first_name)
+    )
   end
 end

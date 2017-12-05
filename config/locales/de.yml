@@ -47,7 +47,7 @@ de:
       edit_profile: "Profil bearbeiten"
 
   dashboard:
-    title: "Dashboard"
+    title: "Dashboard für %{name}"
 
   activerecord:
     models:

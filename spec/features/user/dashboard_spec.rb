@@ -11,14 +11,18 @@ RSpec.feature "View Dashboard", type: :feature do
     click_on(text: user.first_name, class: 'dropdown-toggle')
     click_on I18n.t('navbar.drop-down.dashboard')
 
-    expect(page).to have_css('h1', text: I18n.t('dashboard.title'))
+    expect(page).to have_css(
+      'h1',
+      text: I18n.t('dashboard.title', name: user.first_name))
   end
 
   scenario "Admin can access any user's dashboard" do
     sign_in admin
     visit dashboard_user_path(user)
 
-    expect(page).to have_css('h1', text: I18n.t('dashboard.title'))
+    expect(page).to have_css(
+      'h1',
+      text: I18n.t('dashboard.title', name: user.first_name))
   end
 
 end
