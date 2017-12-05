@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   # Sets the devise scope to be used in the controller.
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
   devise_scope :user do
+    
+
     resources :users, only: [:index, :show, :edit, :update] do
       member do
         get 'dashboard'

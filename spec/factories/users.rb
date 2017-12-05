@@ -12,13 +12,14 @@
 #  updated_at             :datetime         not null
 #  first_name             :string
 #  last_name              :string
+#  provider               :string
+#  uid                    :string
+#  admin                  :boolean          default(FALSE)
 #  birthday               :date
 #  telephone_number       :string
 #  telegram_username      :string
 #  favourite_sports       :string
-#  provider               :string
-#  uid                    :string
-#  admin                  :boolean          default(FALSE)
+#  avatar_data            :text
 #
 
 FactoryBot.define do
@@ -32,6 +33,18 @@ FactoryBot.define do
     telephone_number "00491731117843"
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
     favourite_sports "Football, Basketball, Tennis"
+  end
+
+  trait :with_avatar do
+    after(:build) do |user|
+      user.avatar = File.open("#{Rails.root}/spec/fixtures/valid_avatar.png")
+    end
+  end
+
+  trait :with_large_avatar do
+    after(:build) do |user|
+      user.avatar = File.open("#{Rails.root}/spec/fixtures/some_file.bin")
+    end
   end
 
   factory :admin, class: User, parent: :user do
