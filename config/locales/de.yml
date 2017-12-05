@@ -65,10 +65,14 @@ de:
           telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
       image:
         one: "Bild"
-        other: "Bilder"      
+        other: "Bilder"
       event:
         one: "Event"
         other: "Events"
+    attributes:
+      user:
+        first_name: "Vorname"
+        last_name: "Nachname"
   view:
     user:
       edit_profile: "Profilinformationen bearbeiten"
@@ -105,6 +109,10 @@ de:
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Tournier"
+    create_event: "Veranstaltung erstellen"
+    choose_event_format: "Veranstaltungsart wählen"
+    new_league: "Neue Liga"
+    new_tournament: "Neues Tournier"
     show_events: "Alle Events anzeigen"
     show:
       to_schedule: zum Spielplan
@@ -121,6 +129,10 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+
+  validations:
+    not_only_numbers: "darf nicht nur aus Zahlen bestehen"
+    four_different_characters: "muss aus mindestens 4 verschiedenen Zeichen bestehen"
 
   users:
     avatar:
