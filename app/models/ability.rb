@@ -36,6 +36,7 @@ class Ability
       can :join, Event, player_type: Event.player_types[:single]
       can :manage, Event, owner_id: user_id
       can :create, :all
+      can :dashboard, User, id: user_id
 
       can_crud_team(user_id)
 
