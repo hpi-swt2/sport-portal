@@ -17,7 +17,7 @@
   <dd><%= @team.description %></dd>
 </dl>
 
-<%= form_tag perform_action_on_multiple_team_path do %>
+<%= form_tag perform_action_on_multiple_members_team_path do %>
   <table class="table table-striped">
     <tbody>
     <% @team.members.each do |member| %>
@@ -48,8 +48,8 @@
                 <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
                             delete_membership_team_path(@team, :team_member => member.id),
                             :method => 'post',
-                            :class => 'btn btn-xs btn-danger' %>
-
+                            :class => 'btn btn-xs btn-danger',
+                            :disabled => !(can? :delete_membership, @team, member.id)%>
             <% end %>
           </td>
         </tr>
@@ -67,9 +67,9 @@
                     :method => 'get',
                     :class => 'btn btn-default btn-xs' %>
 
-        <%= submit_tag "assign_ownership", name: "assign_ownership" %>
-        <%= submit_tag "delete_ownership", name: "delete_ownership" %>
-        <%= submit_tag "delete_membership", name: "delete_membership" %>
+        <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership" %>
+        <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership" %>
+        <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership" %>
       </td>
     </tr>
     </tbody>

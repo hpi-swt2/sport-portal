@@ -1,10 +1,10 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership]
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership, :perform_action_on_multiple_members]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  load_and_authorize_resource :team
 
   # GET /teams
   def index
+    @teams = Team.all
   end
 
   # GET /teams/1
@@ -55,59 +55,65 @@ class TeamsController < ApplicationController
 
   # Assigns team ownership to a specific team member
   def assign_ownership
-    @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
-    @member_to_become_owner.update_attribute(:is_owner, true)
+    assign_ownership_to_member
     redirect_to @team
   end
 
   def delete_ownership
-    @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
-    @member_to_become_owner.update_attribute(:is_owner, false)
+    delete_ownership_from_member
     redirect_to @team
   end
 
   def delete_membership
-    @team.members.delete(user)
+    delete_membership_from_member
     redirect_to @team
   end
 
-  def current_ability
-    @current_ability ||= Ability.new(current_user, params[:team_member])
-  end
-
-  def perform_action_on_multiple
-    print(params)
+  def perform_action_on_multiple_members
+    # choose action based on submit button that was pressed
     if params[:assign_ownership]
-      params[:members].each do |member|
-        @user ||= User.find(member)
+      @action = "assign_ownership_to_member"
+    elsif params[:delete_ownership]
+      @action = "delete_ownership_from_member"
+    elsif params[:delete_membership]
+      @action = "delete_membership_from_member"  
+    end
 
-        unless owners_include_user
-          team_owners << @user
-        end
+    params[:members].each do |member|
+      params[:team_member] = member          
+      begin
+        send(@action)   
+      rescue => ex
+        print ex.message
       end
     end
-    if params[:delete_ownership]
-      params[:members].each do |member|
-        @user ||= User.find(member)
-        team_owners.delete @user
-      end
-    end
-    if params[:delete_membership]
-      params[:members].each do |member|
-        @user ||= User.find(member)
-        @team.members.delete @user
-      end
-    end
-    render @team
+    redirect_to @team
   end
 
   private
+    def assign_ownership_to_member
+      authorize! :assign_ownership, @team      
+      @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
+      @member_to_become_owner.update_attribute(:is_owner, true)
+    end
+
+    def delete_ownership_from_member
+      authorize! :delete_ownership, @team  
+      @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
+      @member_to_become_owner.update_attribute(:is_owner, false)
+    end
+
+    def delete_membership_from_member
+      authorize! :delete_membership, @team, user.id
+      @team.members.delete(user)
+    end
+
     def team_owners
       @team_owners ||= @team.owners
     end
 
     def user
-      @user ||= User.find(params[:team_member])
+      @user = User.find(params[:team_member])
     end
 
     # Use callbacks to share common setup or constraints between actions.

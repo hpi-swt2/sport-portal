@@ -25,7 +25,7 @@ class Ability
   # See the wiki for details:
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
-  def initialize(user, team_member = nil)
+  def initialize(user)
     can :read, :all
     cannot :read, Team, private: true
 
@@ -43,7 +43,7 @@ class Ability
 
       can_delete_ownership(user)
 
-      can_delete_membership(team_member, user)
+      can_delete_membership(user)
 
       cannot :create, User
 
@@ -67,8 +67,8 @@ class Ability
       end
     end
 
-    def can_delete_membership(team_member, user)
-      can :delete_membership, Team, Team do |team|
+    def can_delete_membership(user)
+      can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
         exist_owners_after_delete = owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
         ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)

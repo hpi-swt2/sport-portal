@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       post :assign_ownership
       post :delete_ownership
       post :delete_membership
-      post :perform_action_on_multiple
+      post :perform_action_on_multiple_members
     end
   end
 
