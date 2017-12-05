@@ -89,20 +89,20 @@ class Event < ApplicationRecord
     self.save
   end
 
-  def addParticipant(user)
+  def add_participant(user)
     participants << user
   end
 
-  def removeParticipant(user)
+  def remove_participant(user)
     participants.delete(user)
   end
 
   def has_participant?(user)
-    return participants.include?(user)
+    participants.include?(user)
   end
 
   # aliasing to ease renaming in database
   def participants
-    return users
+    users
   end
 end

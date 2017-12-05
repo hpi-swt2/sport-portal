@@ -29,7 +29,7 @@ class Ability
   def initialize(user, team_member = nil)
     can :read, :all
     cannot :read, Team, private: true
-    alias_action :join, :leave, :to => :participate
+    alias_action :join, :leave, to: :participate
 
     if user.present?
       user_id = user.id

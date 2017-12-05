@@ -25,7 +25,7 @@ describe "index event page", type: :feature do
 
     context "which I participate in" do
       before(:each) do
-        @event.addParticipant(@user)
+        @event.add_participant(@user)
         visit events_path
       end
 

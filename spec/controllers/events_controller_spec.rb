@@ -240,7 +240,7 @@ RSpec.describe EventsController, type: :controller do
   describe "PUT #leave" do
     it "remove the user as participant of the event" do
       event = Event.create! valid_attributes
-      event.addParticipant(@user)
+      event.add_participant(@user)
       put :leave, params: { id: event.to_param }, session: valid_session
       expect(event).not_to have_participant(@user)
     end
