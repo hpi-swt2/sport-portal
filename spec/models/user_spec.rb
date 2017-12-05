@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
     expect(user).not_to be_valid
   end
 
-  it 'is not valid if password has not four different characters' do
+  it 'is not valid if password has less than four different characters' do
     user = FactoryBot.build(:user, password: 'asdasdasd')
     expect(user).not_to be_valid
   end

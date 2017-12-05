@@ -25,6 +25,9 @@ class User < ApplicationRecord
 
   validate :password_complexity
 
+  validates :first_name, :last_name, presence: true
+  validates :uid, uniqueness: { scope: :provider, allow_nil: true }
+
   def password_complexity
     if password.present?
       not_only_numbers
@@ -33,19 +36,12 @@ class User < ApplicationRecord
   end
 
   def not_only_numbers
-    unless password.match(/^(?!^\d+$)^.+$/)
-      errors.add :password, I18n.t('validations.not_only_numbers')
-    end
+    errors.add :password, I18n.t('validations.not_only_numbers') unless password.match(/^(?!^\d+$)^.+$/)
   end
 
   def four_different_characters
-    if password.chars.uniq.count < 4
-      errors.add :password, I18n.t('validations.four_different_characters')
-    end
+    errors.add :password, I18n.t('validations.four_different_characters') if password.chars.uniq.count < 4
   end
-
-  validates :first_name, :last_name, presence: true
-  validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
 
   has_and_belongs_to_many :events

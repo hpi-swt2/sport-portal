@@ -82,12 +82,10 @@ Then(/^the sign in should have been successful$/) do
 end
 
 Then(/^(.*) should not be able to sign up$/) do |username|
-  found_users = User.all.select do |user|
-    user.first_name.eql?(user_named(username).first_name) && user.last_name.eql?(user_named(username).last_name) && user.email.eql?(user_named(username).email)
-  end
-  expect(found_users.any?).to be_falsey
+  user = User.find_by(first_name: user_named(username).first_name, last_name: user_named(username).last_name, email: user_named(username).email)
+  expect(user).to be_nil
 end
 
-And(/^the page should show (.*)$/) do |message|
+And(/^the page should show '(.*)'$/) do |message|
   expect(page).to have_text(message)
 end
