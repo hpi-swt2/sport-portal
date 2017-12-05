@@ -14,6 +14,12 @@
 #  last_name              :string
 #  provider               :string
 #  uid                    :string
+#  admin                  :boolean          default(FALSE)
+#  birthday               :date
+#  telephone_number       :string
+#  telegram_username      :string
+#  favourite_sports       :string
+#  avatar_data            :text
 #
 
 FactoryBot.define do
@@ -23,5 +29,26 @@ FactoryBot.define do
     sequence(:email) { |n| "#{n}@example.com" }
     sequence(:password) { |n| "password#{n}" }
     password_confirmation { password }
+    birthday Date.new(1995, 10, 20)
+    telephone_number "00491731117843"
+    sequence(:telegram_username) { |n| "telegram_user#{n}" }
+    favourite_sports "Football, Basketball, Tennis"
+  end
+
+  trait :with_avatar do
+    after(:build) do |user|
+      user.avatar = File.open("#{Rails.root}/spec/fixtures/valid_avatar.png")
+    end
+  end
+
+  trait :with_large_avatar do
+    after(:build) do |user|
+      user.avatar = File.open("#{Rails.root}/spec/fixtures/some_file.bin")
+    end
+  end
+
+  factory :admin, class: User, parent: :user do
+    sequence(:email) { |n| "#{n}admin@example.com" }
+    admin true
   end
 end

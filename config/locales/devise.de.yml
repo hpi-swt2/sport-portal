@@ -24,12 +24,29 @@ de:
         subject: "Anleitung zur Bestätigung Deines Accounts"
       reset_password_instructions:
         subject: "Anleitung um Dein Passwort zurückzusetzen"
+        greeting: "Hallo %{name}!"
+        instruction: "Über den folgenden Link kannst du dein Passwort ändern:"
+        action: "Mein Passwort ändern"
+        instruction_2: "Wenn du diese E-Mail nicht angefordert hast, dann ignoriere sie bitte."
+        instruction_3: "Dein Passwort wird sich nicht ändern, bis du auf den Link klickst und ein neues Passwort eingibst."
       unlock_instructions:
         subject: "Anleitung um Deinen Account freizuschalten"
+      email_changed:
+        subject: "Deine E-Mail wurde geändert."
+        greeting: "Hallo %{name}!"
+        body: "Deine E-Mail wurde von %{oldmail} zu %{newmail} geändert."
+        body2: "Wenn du das nicht selber gemacht hast, solltest du dein Passwort ändern."
+      password_change:
+        subject: "Passwort wurde geändert"
+        greeting: "Hallo %{name}!"
+        body: "Dein Passwort wurde geändert."
     omniauth_callbacks:
       user:
         link_success: "Erfolgreich mit %{provider} verbunden."
-        failure: "Du konntest nicht Deinem %{provider}-Account angemeldet werden, da der Account nicht verbunden ist."
+        link_failure: "Fehler beim Verbinden mit %{provider}, du benutzt schon einen anderen Dienst."
+        link_taken: "Fehler beim Verbinden mit %{provider}, jemand anderes verwendet diesen Account bereits."
+        success: "Erfolgreich mit %{provider} angemeldet."
+        create: "Du hast noch keinen Account, aber du kannst einen erstellen, wenn du deine Daten einträgst."
       failure: "Du konntest nicht Deinem %{provider}-Account angemeldet werden, weil '%{reason}'."
       success: "Du hast Dich erfolgreich mit Deinem %{provider}-Account angemeldet."
     passwords:
@@ -54,7 +71,12 @@ de:
       sign_in_with_provider: "Mit %{provider} anmelden"
       link_provider: "Mit %{provider} verbinden"
       unlink_provider: "Verbindung mit %{provider} aufheben"
+      reset_password: "Anweisungen zum Zurücksetzen des Passworts senden"
+      confirm_new_password: "Neues Passwort bestätigen"
+      unlink_success: "Die Verbindung wurde erfolgreich aufgehoben."
+      no_link: "Dein Account ist mit keinem Dienst verbunden."
       no_account_question: "Du hast noch keinen Account?"
+      my_account: "Mein Account"
     sessions:
       signed_in: "Erfolgreich angemeldet."
       signed_out: "Erfolgreich abgemeldet."

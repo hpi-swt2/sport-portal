@@ -2,6 +2,10 @@ Given(/^an unlinked OpenID account$/) do
   create_omniauth_account provider: :hpiopenid
 end
 
+Given(/^an unlinked OpenID account with email '(.*)'$/) do |email|
+  create_omniauth_account provider: :hpiopenid, info: { email: email }
+end
+
 Given(/^the account is used for authentication$/) do
   authenticate_with single_account
 end
