@@ -86,7 +86,7 @@ describe "Event model", type: :model do
   end
 
   it "should have an association participants" do
-    relation = Event.reflect_on_association(:users)
+    relation = Event.reflect_on_association(:participants)
     expect(relation.macro).to eq :has_and_belongs_to_many
   end
 end

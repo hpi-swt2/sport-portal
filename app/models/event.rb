@@ -39,7 +39,7 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :participants, class_name: 'User'
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -99,10 +99,5 @@ class Event < ApplicationRecord
 
   def has_participant?(user)
     participants.include?(user)
-  end
-
-  # aliasing to ease renaming in database
-  def participants
-    users
   end
 end
