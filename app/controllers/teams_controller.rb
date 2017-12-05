@@ -1,9 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
   before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership]
-  # before_action :set_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
-  before_action :owners_include_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource :team
 
@@ -59,41 +55,18 @@ class TeamsController < ApplicationController
 
   # Assigns team ownership to a specific team member
   def assign_ownership
-    unless owners_include_user
-      team_member = @team.team_members.where(user_id: user).first
-      print(team_member.is_owner)
-      print("\n")
-      print("\n")
-      print("\n")
-      print("\n")
-      print("\n")
-      print("\n")
-      team_member.assign_ownership!
-      print(team_member.is_owner)
-      #TeamUser.where(:team_id => @team.id, :user_id => user).first.assign_ownership!
-      #print(TeamUser.find_by(team_id: @team.id, user_id: user).is_owner = true)
-      print("\n")
-      print("\n")
-      print("\n")
-      print("\n")
-      print("\n")
-      print("\n")
-      print("\n")
-      print("\n")
-
-      #@team.members.delete(user)
-      #@team.owners << user
-      redirect_to @team
-    end
+    @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
+    @member_to_become_owner.update_attribute(:is_owner, true)
+    redirect_to @team
   end
 
   def delete_ownership
-    delete_owner_if_existing
+    @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
+    @member_to_become_owner.update_attribute(:is_owner, false)
     redirect_to @team
   end
 
   def delete_membership
-    delete_owner_if_existing
     @team.members.delete(user)
     redirect_to @team
   end
@@ -129,13 +102,6 @@ class TeamsController < ApplicationController
   end
 
   private
-    def delete_owner_if_existing
-      if owners_include_user
-        team_owners.delete user
-        @team.members << user
-      end
-    end
-
     def team_owners
       @team_owners ||= @team.owners
     end
@@ -147,10 +113,6 @@ class TeamsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_team
       @team = Team.find(params[:id])
-    end
-
-    def owners_include_user
-      @user_in_owners ||= team_owners.include? user
     end
 
     # Only allow a trusted parameter "white list" through.
