@@ -127,6 +127,8 @@ de:
     edit:
       cancel_this_account: "Diesen Account löschen"
       unhappy: "Unzufrieden"
+      leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
+      we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
 
   devise:
     registrations:

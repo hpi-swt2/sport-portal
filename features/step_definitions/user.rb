@@ -16,7 +16,7 @@ Given(/^a user (.*) with email (.*)$/) do |username, email|
 end
 
 Given(/^a new user$/) do
-  build_user
+  create_user
 end
 
 Given(/^a new user (.*) with email (.*)$/) do |username, email|
@@ -33,7 +33,7 @@ end
 
 When(/^he views his account settings$/) do
   ensure_current_user!
-  visit edit_user_registration_path
+  visit edit_user_path(@users.last)
 end
 
 When(/^(.*) tries to sign up$/) do |username|
