@@ -44,6 +44,11 @@ describe "index event page", type: :feature do
       it "should show that I am participating" do
         expect(page).to have_content("Participating")
       end
+
+      it "should let me join again after clicking the leave button" do
+        click_link(:leave_event_button)
+        expect(page).to have_link(:join_event_button)
+      end
     end
 
     context "which I do not participate in" do
