@@ -1,7 +1,8 @@
-<%= form_for @event, html: { class: "form-horizontal event" } do |f| %>
+<%= form_for @event, as: :event, html: { class: "form-horizontal event" } do |f| %>
 
-  <%= render partial: "application/validation_errors", locals: {model: @event} %>
+  <%= render "application/validation_errors", model: @event %>
 
+  <%= f.hidden_field :type, value: @event.class.name %>
   <div class="form-group">
     <%= f.label :name, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
@@ -13,30 +14,6 @@
     <%= f.label :description, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_area :description, id: :event_description, class: 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :event_type, class: 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.collection_select :type, Event.types, :to_s, :to_s,
-                              {selected: @event.type, include_blank: t('events.new.select_type')},
-                              class: 'form-control', id: 'event_type' %>
-    </div>
-  </div>
-  <div class="form-group" id="league-game-mode">
-    <%= f.label :game_mode, class: 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
-                   {include_blank: t('events.new.select_game_mode')},
-                   {class: 'form-control', id: 'event_game_mode_league'}) %>
-    </div>
-  </div>
-  <div class="form-group" id="tournament-game-mode">
-    <%= f.label :game_mode, class: 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.select(:game_mode, Tournament.game_modes.map {|k, v| [k.humanize, v]},
-                   {include_blank: t('events.new.select_game_mode')},
-                   {class: 'form-control', id: 'event_game_mode_tournament'}) %>
     </div>
   </div>
   <div class="form-group">
@@ -87,6 +64,8 @@
     <div class="col-lg-10">
       <%= f.text_field :duration, id: :event_duration, class: 'form-control' %></div>
   </div>
+  <%# Rendering the correct template depending on the event type %>
+  <%= render @event.class.name.downcase, f: f %>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
