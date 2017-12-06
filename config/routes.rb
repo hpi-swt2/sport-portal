@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :events do
     member do
       put :join
+      put :leave
     end
   end
   resources :leagues, controller: 'events', type: 'League'
