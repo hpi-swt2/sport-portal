@@ -55,15 +55,22 @@ class Event < ApplicationRecord
   # Everything below this is leagues only code and will be moved to Leagues.rb once there is an actual option to create Leagues AND Tourneys, etc.
 
   def add_test_teams
-    (max_teams - 1).times do |index|
+    (max_teams - teams.length).times do |index|
       teams << Team.new(name: "Team #{index}", private: false)
     end
   end
 
+  #Joining a single Player for a single Player Event
   def add_Player_for_single_team(user)
-    teams << Team.new(name: user.first_name , private: false)
+    if teams.length < max_teams
+      teams << Team.new(name: "#{user.first_name} #{user.last_name}"  , private: false)
+      return [{ :success => "true" }]
+    end
   end
 
+  def delete_all_matches
+    matches.delete_all
+  end
   def generate_schedule
     calculate_gamedays
   end
