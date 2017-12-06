@@ -65,13 +65,13 @@ class Ability
 
     def can_join_event(user)
       can :join, Event do |event|
-        event.single_player? && (not event.has_participant?(user)) && (not event.deadline_has_passed?)
+        event.can_join?(user)
       end
     end
 
     def can_leave_event(user)
       can :leave, Event do |event|
-        event.single_player? && event.has_participant?(user)
+        event.can_leave?(user)
       end
     end
 

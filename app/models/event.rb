@@ -108,4 +108,12 @@ class Event < ApplicationRecord
   def has_participant?(user)
     participants.include?(user)
   end
+
+  def can_join?(user)
+    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+  end
+
+  def can_leave?(user)
+    single_player? && has_participant?(user)
+  end
 end
