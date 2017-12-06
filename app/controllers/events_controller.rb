@@ -26,7 +26,12 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    if (params[:type] == :league)
+      @event = League.new(event_params)
+    elsif params[:type] == :tournament
+      @event = Tournament.new(event_params)
+    end
+
     @event.owner = current_user
 
     if @event.save
@@ -82,12 +87,6 @@ class EventsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def event_params
-      if params.has_key? :league
-        params[:event] = params.delete :league
-      elsif params.has_key? :tournament
-        params[:event] = params.delete :tournament
-      end
-
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,

@@ -29,29 +29,11 @@ RSpec.describe EventsController, type: :controller do
   # Event. As you add validations to Event, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {
-        name: "TT Event",
-        discipline: 0,
-        game_mode: 0,
-        player_type: Event.player_types[:single],
-        deadline: Date.current,
-        startdate: Date.current,
-        enddate: Date.current,
-        owner: @user,
-        max_teams: 20
-    }
+    FactoryBot.build(:league, owner: @user, max_teams: 20).attributes
   }
 
   let(:invalid_attributes) {
-    {
-        name: "TT Event",
-        discipline: 0,
-        game_mode: 0,
-        player_type: Event.player_types[:single],
-        deadline: Date.new(2017, 11, 23),
-        startdate: Date.new(2017, 11, 23),
-        enddate: Date.new(2017, 10, 1)
-    }
+    FactoryBot.build(:league, name: nil).attributes
   }
 
   # This should return the minimal set of values that should be in the session
@@ -141,42 +123,40 @@ RSpec.describe EventsController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
+      let(:league_params) { {event: valid_attributes} }
+      let(:tournament_params) { {event: FactoryBot.build(:tournament, owner: @user).attributes} }
       it "creates a new Event" do
         expect {
-          post :create, params: { event: valid_attributes }
+          post :create, params: league_params
         }.to change(Event, :count).by(1)
       end
 
       it "redirects to the created event" do
-        post :create, params: { event: valid_attributes }, session: valid_session
+        post :create, params: league_params, session: valid_session
         expect(response).to redirect_to(Event.last)
       end
 
-      it "should allow normal user to create an event" do
-        post :create, params: { event: valid_attributes }
+      it "should allow normal user to create a league" do
+        post :create, params: league_params
+        expect(response).to redirect_to(Event.last)
+      end
+
+      it "should allow normal user to create a tournament" do
+        post :create, params: tournament_params
         expect(response).to redirect_to(Event.last)
       end
     end
     context "with invalid params" do
-      it "returns success" do
-        post :create, params: { event: invalid_attributes }, session: valid_session
+      let(:league_params) { {event: invalid_attributes} }
+      let(:tournament_params) { {event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes} }
+      it "returns success when creating a league" do
+        post :create, params: league_params, session: valid_session
         expect(response).to be_success
       end
-    end
 
-    context "with subclass params" do
-      it "should delete league subclass param" do
-        league = FactoryBot.build(:league)
-
-        post :create, params: { league: league.attributes }, session: valid_session
-        expect(controller.params[:event]).to_not be_nil
-      end
-
-      it "should delete tournament subclass param" do
-        tournament = FactoryBot.build(:tournament)
-
-        post :create, params: { tournament: tournament.attributes }, session: valid_session
-        expect(controller.params[:event]).to_not be_nil
+      it "returns success when creating a tournament" do
+        post :create, params: tournament_params, session: valid_session
+        expect(response).to be_success
       end
     end
   end
