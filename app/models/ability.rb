@@ -38,6 +38,7 @@ class Ability
 
       # all
       can :create, :all
+      can :dashboard, User, id: user_id
 
       # User
       can [:modify, :edit_profile, :update_profile], User, id: user_id

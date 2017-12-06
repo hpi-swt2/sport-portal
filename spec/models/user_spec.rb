@@ -30,8 +30,23 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
-  it "is valid with only first name, email and password" do
-    user = User.new(first_name: "User", email: "user@example.com", password: "password")
+  it 'is not valid if password is shorter than 8 characters' do
+    user = FactoryBot.build(:user, password: '1D35r7')
+    expect(user).not_to be_valid
+  end
+
+  it 'is not valid if password is only numbers' do
+    user = FactoryBot.build(:user, password: '12345678')
+    expect(user).not_to be_valid
+  end
+
+  it 'is not valid if password has less than four different characters' do
+    user = FactoryBot.build(:user, password: 'asdasdasd')
+    expect(user).not_to be_valid
+  end
+
+  it "is valid with only first name, last name, email and password" do
+    user = User.new(first_name: "User", last_name: "Name", email: "user@example.com", password: "password")
     expect(user).to be_valid
   end
 

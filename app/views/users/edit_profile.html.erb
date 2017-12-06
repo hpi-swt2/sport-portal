@@ -30,7 +30,12 @@
   <div class="form-group row">
     <%= f.label :telegram_username, class: 'col-lg-2 col-form-label' %>
     <div class="col-lg-10">
-      <%= f.text_field :telegram_username, class: 'form-control' %>
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-telegram fa-lg"></i>
+        </div>
+        <%= f.text_field :telegram_username, class: 'form-control' %>
+      </div>
     </div>
   </div>
   <div class="form-group row">

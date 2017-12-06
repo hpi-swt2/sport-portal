@@ -75,6 +75,18 @@ RSpec.describe Ability, type: :model do
     ability.should_not be_able_to(:manage, @other_user)
   end
 
+  it 'should allow users to view their user dashboard' do
+    ability = Ability.new(@user)
+
+    ability.should be_able_to(:dashboard, @user)
+  end
+
+  it "should not allow users to view other users' dashboard" do
+    ability = Ability.new(@user)
+
+    ability.should_not be_able_to(:dashboard, @other_user)
+  end
+
   it 'should allow users to crud events they created' do
     event = Event.new(owner: @user)
     ability = Ability.new(@user)
