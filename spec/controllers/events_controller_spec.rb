@@ -248,13 +248,13 @@ RSpec.describe EventsController, type: :controller do
 
   describe "GET #schedule" do
     it "should generate schedule if not existing" do
-      event = Event.create! valid_attributes
+      event = League.create! valid_attributes
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(event.matches).not_to be_empty
     end
 
     it "returns a success response" do
-      event = Event.create! valid_attributes
+      event = League.create! valid_attributes
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(response).to be_success
     end
