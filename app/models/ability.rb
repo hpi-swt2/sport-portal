@@ -38,20 +38,15 @@ class Ability
 
       # all
       can :create, :all
-      can :dashboard, User, id: user_id
 
       # User
-      can [:modify, :edit_profile, :update_profile], User, id: user_id
+      can [:modify, :edit_profile, :update_profile, :dashboard], User, id: user_id
       cannot :create, User
 
       # Event
       can :crud, Event, owner_id: user_id
-      can :join, Event do |event|
-        event.single_player? and not event.has_participant?(user) and not event.deadline_has_passed?
-      end
-      can :leave, Event do |event|
-        event.single_player? and event.has_participant?(user)
-      end
+      can_join_event(user)
+      can_leave_event(user)
       can :schedule, Event
 
       # Team
@@ -67,6 +62,18 @@ class Ability
   end
 
   private
+
+    def can_join_event(user)
+      can :join, Event do |event|
+        event.single_player? && (not event.has_participant?(user)) && (not event.deadline_has_passed?)
+      end
+    end
+
+    def can_leave_event(user)
+      can :leave, Event do |event|
+        event.single_player? && event.has_participant?(user)
+      end
+    end
 
     def can_crud_team(user_id)
       can :read, Team, private: true, members: { id: user_id }
