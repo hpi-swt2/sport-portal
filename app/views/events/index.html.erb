@@ -60,7 +60,7 @@
 
 <% if can? :create, Event %>
     <%= link_to t('helpers.links.new'),
-                new_event_path,
+                create_from_type_path,
                 :class => 'btn btn-primary' %>
 <% end %>
 

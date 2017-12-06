@@ -1,0 +1,9 @@
+
+<div class="form-group">
+  <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
+                 {:include_blank => t('events.new.select_game_mode')},
+                 { :class => 'form-control', :id => 'event_game_mode_league'}) %>
+  </div>
+</div>

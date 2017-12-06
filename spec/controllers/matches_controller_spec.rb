@@ -111,7 +111,7 @@ RSpec.describe MatchesController, type: :controller do
       it "redirects to its schedule" do
         match = Match.create! valid_attributes
         put :update_points, params: { id: match.to_param, match: valid_attributes }
-        expect(response).to redirect_to(event_schedule_url(match.event))
+        expect(response).to redirect_to(league_schedule_url(match.event))
       end
     end
 
@@ -126,7 +126,7 @@ RSpec.describe MatchesController, type: :controller do
       it "redirect to its schedule" do
         match = Match.create! valid_attributes
         put :update_points, params: { id: match.to_param, match: invalid_attributes }
-        expect(response).to redirect_to(event_schedule_url(match.event))
+        expect(response).to redirect_to(league_schedule_url(match.event))
       end
     end
   end
@@ -142,7 +142,7 @@ RSpec.describe MatchesController, type: :controller do
     it "redirects to the event schedule page" do
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
-      expect(response).to redirect_to(event_schedule_url(match.event))
+      expect(response).to redirect_to(league_schedule_url(match.event))
     end
   end
 
