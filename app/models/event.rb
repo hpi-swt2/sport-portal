@@ -53,6 +53,14 @@ class Event < ApplicationRecord
     end
   end
 
+  def deadline_has_passed?
+    deadline < Date.current
+  end
+
+  def single_player?
+    player_type == Event.player_types[:single]
+  end
+
   # Everything below this is leagues only code and will be moved to Leagues.rb once there is an actual option to create Leagues AND Tourneys, etc.
 
   def add_test_teams

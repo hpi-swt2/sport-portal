@@ -27,27 +27,37 @@ class Ability
 
 
   def initialize(user, team_member = nil)
+    alias_action :update, :destroy, to: :modify
+    alias_action :create, :read, :update, :destroy, to: :crud
+
     can :read, :all
     cannot :read, Team, private: true
-    alias_action :join, :leave, to: :participate
 
     if user.present?
       user_id = user.id
 
-      can :manage, User, id: user_id
-      can :participate, Event, player_type: Event.player_types[:single]
-      can :manage, Event, owner_id: user_id
+      # all
       can :create, :all
 
-      can_crud_team(user_id)
-
-      can_assign_ownership(user)
-
-      can_delete_ownership(user)
-
-      can_delete_membership(team_member, user)
-
+      # User
+      can [:modify, :edit_profile, :update_profile], User, id: user_id
       cannot :create, User
+
+      # Event
+      can :crud, Event, owner_id: user_id
+      can :join, Event do |event|
+        event.single_player? and not event.has_participant?(user) and not event.deadline_has_passed?
+      end
+      can :leave, Event do |event|
+        event.single_player? and event.has_participant?(user)
+      end
+      can :schedule, Event
+
+      # Team
+      can_crud_team(user_id)
+      can_assign_ownership(user)
+      can_delete_ownership(user)
+      can_delete_membership(team_member, user)
 
       if user.admin?
         can :manage, :all

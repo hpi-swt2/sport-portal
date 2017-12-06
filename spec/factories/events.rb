@@ -44,6 +44,10 @@ FactoryBot.define do
 
     factory :single_player_event do
       player_type Event.player_types[:single]
+
+      factory :passed_deadline_event do
+        deadline { Date.current - 1 }
+      end
     end
 
     factory :team_event do
