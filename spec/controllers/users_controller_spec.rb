@@ -111,6 +111,48 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'GET #dashboard' do
+    it "should not show user's dashboard to not logged in user" do
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_unauthorized
+    end
+
+    it "should not show admin's dashboard to not logged in user" do
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_unauthorized
+    end
+
+    it 'should allow user to view their dashboard' do
+      sign_in @user
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+
+    it "should disallow user to view other user's dashboard" do
+      sign_in @user
+      get :dashboard, params: { id: @other_user.to_param }
+      expect(response).to be_forbidden
+    end
+
+    it "should disallow user to view admin's dashboard" do
+      sign_in @user
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_forbidden
+    end
+
+    it 'should allow admin to view their dashboard' do
+      sign_in @admin
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_success
+    end
+
+    it "should allow admin to view every user's dashboard" do
+      sign_in @admin
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+  end
+
   describe "POST #create" do
     it "creates a new user with valid params" do
       @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -133,6 +175,10 @@ RSpec.describe UsersController, type: :controller do
          current_password: valid_attributes[:password] }
       }
 
+      let(:new_admin_attributes) {
+        { first_name: valid_attributes[:first_name] + '_new'}
+      }
+
       it 'updates the requested user' do
         @request.env['devise.mapping'] = Devise.mappings[:user]
         user = User.create! valid_attributes
@@ -140,6 +186,13 @@ RSpec.describe UsersController, type: :controller do
         put :update, params: { id: user.to_param, user: new_attributes }
         user.reload
         expect(user.first_name).to eq(new_attributes[:first_name])
+      end
+
+      it 'should allow admin to update other users' do
+        sign_in @admin
+        put :update, params: { id: @user.to_param, user: new_admin_attributes }
+        @user.reload
+        expect(@user.first_name).to eq(new_admin_attributes[:first_name])
       end
     end
   end
@@ -250,7 +303,7 @@ RSpec.describe UsersController, type: :controller do
     it "should allow normal users to destroy theirselves" do
       sign_in @user
       delete :destroy, params: { id: @user.to_param }
-      expect(response).to redirect_to(root_url)
+      expect(response).to redirect_to(users_url)
     end
   end
 
