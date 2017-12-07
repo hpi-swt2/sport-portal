@@ -15,6 +15,9 @@ en:
       cancel: "Cancel"
       confirm: "Are you sure?"
       destroy: "Delete"
+      assign_ownership: "Assign Ownership"
+      delete_ownership: "Delete Ownership"
+      delete_membership: "Delete Membership"
       new: "New"
       edit: "Edit"
       show: "Show"
@@ -38,3 +41,9 @@ en:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."
       destroyed: "%{resource_name} was successfully destroyed."
+    label:
+      user:
+        birthday: "Birthday"
+        telephone_number: "Telephone Number"
+        telegram_username: "Telegram Username"
+        favourite_sports: "Favourite Sports"

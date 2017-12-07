@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127175945) do
+ActiveRecord::Schema.define(version: 20171201132608) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -26,7 +26,9 @@ ActiveRecord::Schema.define(version: 20171127175945) do
     t.date "enddate"
     t.date "deadline"
     t.integer "gameday_duration"
+    t.integer "owner_id"
     t.index ["game_mode"], name: "index_events_on_game_mode"
+    t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
   end
 
@@ -66,16 +68,11 @@ ActiveRecord::Schema.define(version: 20171127175945) do
     t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
-  create_table "team_members", id: false, force: :cascade do |t|
+  create_table "team_users", id: false, force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_team_members_on_user_id_and_user_id"
-  end
-
-  create_table "team_owners", id: false, force: :cascade do |t|
-    t.integer "team_id", null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_team_owners_on_user_id_and_user_id"
+    t.boolean "is_owner"
+    t.index ["user_id", "team_id"], name: "index_team_users_on_user_id_and_team_id"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -97,8 +94,13 @@ ActiveRecord::Schema.define(version: 20171127175945) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.date "birthday"
+    t.string "telephone_number"
+    t.string "telegram_username"
+    t.string "favourite_sports"
     t.string "provider"
     t.string "uid"
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -1,73 +1,97 @@
-<%= form_with(model: event, local: true) do |form| %>
-  <% if event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+<%= form_for @event, :html => { :class => "form-horizontal event" } do |f| %>
 
-      <ul>
-      <% event.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <%= render partial: "application/validation_errors", locals: {model: @event} %>
+
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:name), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :name, id: :event_name, :class => 'form-control' %>
+        <%= f.error_span(:name) %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :event_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description, id: :event_description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :game_mode %>
-    <%= form.text_field :game_mode, id: :event_game_mode %>
-  </div>
-
-  <div class="field">
-    <%= form.label :max_teams %>
-    <%= form.text_field :max_teams, id: :event_max_teams %>
-  </div>
-
-  <div class="field">
-    <%= form.label :discipline %>
-    <%= form.text_field :discipline, id: :event_discipline %>
-  </div>
-
-  <div class="field">
-    <%= form.label :player_type %>
-    <%= form.text_field :player_type, id: :event_player_type %>
-  </div>
-
-  <div class="field">
-    <%= form.label :deadline %>
-
-    <%= form.text_field :deadline, id: :event_deadline, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
-
-  </div> 
-
-  <div class="field">
-    <%= form.label :startdate %>
-
-    <%= form.text_field :startdate, id: :event_startdate, :data => {:provide => 'datepicker', "date-format" => "yyyy-mm-dd"} %>
-
-  </div>
-
-  <div class="field">
-    <%= form.label :enddate %>
-
-    <%= form.text_field :enddate, id: :event_enddate, :data => {:provide => 'datepicker', "date-format" => "yyyy-mm-dd"} %>
-
-  </div>
-
-  <div class="field">
-    <%= form.label :duration %> 
-      Number of days: <%= form.text_field :duration, id: :event_duration %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit :event_submit => "Create event" %>
-  </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:description), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_area :description, id: :event_description, :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:event_type), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.collection_select :type, Event.types, :to_s, :to_s,
+                                {selected: @event.type, include_blank: t('events.new.select_type')},
+                                :class => 'form-control', :id => 'event_type' %>
+      </div>
+    </div>
+    <div class="form-group" id="league-game-mode">
+      <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
+                     {:include_blank => t('events.new.select_game_mode')},
+                     { :class => 'form-control', :id => 'event_game_mode_league'}) %>
+      </div>
+    </div>
+    <div class="form-group" id="tournament-game-mode">
+      <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.select(:game_mode, Tournament.game_modes.map {|k, v| [k.humanize, v]},
+                     {:include_blank => t('events.new.select_game_mode')},
+                     { :class => 'form-control', :id => 'event_game_mode_tournament'}) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:player_type), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.select(:player_type, Event.player_types.map {|k, v| [k.humanize, v]},
+                     {:include_blank => t('events.new.select_player_type')},
+                     { :class => 'form-control'}) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:max_teams), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :max_teams, id: :event_max_teams, :class => 'form-control' %>
+        <%= f.error_span(:max_teams) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:discipline), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :discipline, id: :event_discipline, :class => 'form-control' %>
+        <%= f.error_span(:discipline) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:deadline), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :deadline, id: :event_deadline, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+        <%= f.error_span(:deadline) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:startdate), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :startdate, id: :event_startdate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+        <%= f.error_span(:startdate) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:enddate), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :enddate, id: :event_enddate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+        <%= f.error_span(:enddate) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label Event.human_attribute_name(:duration), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :duration, id: :event_duration, :disabled => true, :class => 'form-control' %></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-offset-2 col-lg-10">
+        <%= f.submit t('events.create_event'), :class => 'btn btn-primary' %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                    back_path, :class => 'btn btn-default' %>
+      </div>
+    </div>
 <% end %>
