@@ -85,6 +85,10 @@ class Event < ApplicationRecord
     save
   end
 
+  def calculate_double_round_robin
+
+  end
+
   # creates a twodimensional array of round robin pairings (one array per gameday) the inner array consists of the pairings
   def round_robin_pairings(teams_array)
     teams_array.push nil if teams_array.size.odd?
