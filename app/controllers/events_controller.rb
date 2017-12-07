@@ -63,7 +63,6 @@ class EventsController < ApplicationController
   # GET /events/1/schedule
   def schedule
     @event = Event.find(params[:id])
-    @event.delete_all_matches
     if @event.matches.empty?
       @event.generate_schedule
     end

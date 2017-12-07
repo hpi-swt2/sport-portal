@@ -62,16 +62,19 @@ class Event < ApplicationRecord
   end
 
   #Joining a single Player for a single Player Event
-  def add_Player_for_single_team(user)
+  # Once we have 
+  def add_single_player_team(user)
+    invalidate_schedule
     if teams.length < max_teams
       teams << Team.new(name: "#{user.first_name} #{user.last_name}"  , private: false)
       return [{ :success => "true" }]
     end
   end
 
-  def delete_all_matches
+  def invalidate_schedule
     matches.delete_all
   end
+
   def generate_schedule
     calculate_gamedays
   end
