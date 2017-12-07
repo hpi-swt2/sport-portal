@@ -20,6 +20,7 @@ class TeamUser < ApplicationRecord
 
   def assign_ownership
     self.is_owner = true
+    self.save
   end
 
   def delete_ownership

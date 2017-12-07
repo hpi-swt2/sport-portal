@@ -17,8 +17,17 @@
   <dd><%= @team.description %></dd>
 </dl>
 
-<%= form_tag perform_action_on_multiple_members_team_path do %>
+<%= form_tag perform_action_on_multiple_members_team_path(@team) do %>
   <table class="table table-striped">
+      <thead>
+          <tr>
+            <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
+            <th><%= model_class.human_attribute_name(:id) %></th>
+            <th><%= model_class.human_attribute_name(:first_name) %></th>
+            <th><%= model_class.human_attribute_name(:last_name) %></th>
+            <th><%= t '.actions', :default => t("helpers.actions") %></th>
+          </tr>
+          </thead>
     <tbody>
     <% @team.members.each do |member| %>
         <tr>
@@ -37,19 +46,19 @@
                                 delete_ownership_team_path(@team, :team_member => member.id),
                                 :method => 'post',
                                 :class => 'btn btn-default btn-xs',
-                                :disabled => !(can? :delete_ownership, @team) %>
+                                :disabled => (cannot? :delete_ownership, @team) %>
                 <% else %>
                     <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
                                 assign_ownership_team_path(@team, :team_member => member.id),
                                 :method => 'post',
                                 :class => 'btn btn-default btn-xs',
-                                :disabled => !(can? :assign_ownership, @team)%>
+                                :disabled => (cannot? :assign_ownership, @team)%>
                 <% end %>
                 <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
                             delete_membership_team_path(@team, :team_member => member.id),
                             :method => 'post',
                             :class => 'btn btn-xs btn-danger',
-                            :disabled => !(can? :delete_membership, @team, member.id)%>
+                            :disabled => (cannot? :delete_membership, @team, member.id)%>
             <% end %>
           </td>
         </tr>
@@ -73,24 +82,19 @@
       </td>
     </tr>
     </tbody>
-    <thead>
-    <tr>
-      <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:first_name) %></th>
-      <th><%= model_class.human_attribute_name(:last_name) %></th>
-      <th><%= t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-    </thead>
   </table>
 <% end %>
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
+<% if can? :edit, @team %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_team_path(@team), :class => 'btn btn-default' %>
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+<% end %>
+<% if can? :destroy, @team %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               team_path(@team),
               :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
+              :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
               :class => 'btn btn-danger' %>
+<% end %> 

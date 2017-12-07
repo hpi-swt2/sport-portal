@@ -95,15 +95,15 @@ class TeamsController < ApplicationController
       authorize! :assign_ownership, @team      
       @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
       unless @member_to_become_owner.nil?
-        @member_to_become_owner.update_attribute(:is_owner, true)
+        @member_to_become_owner.assign_ownership
       end
     end
 
     def delete_ownership_from_member
-      authorize! :delete_ownership, @team  
+      authorize! :delete_ownership, Team.find(params[:id])  
       @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
       unless @member_to_become_owner.nil?
-        @member_to_become_owner.update_attribute(:is_owner, false)
+        @member_to_become_owner.delete_ownership
       end
     end
 
