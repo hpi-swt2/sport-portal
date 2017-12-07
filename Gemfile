@@ -55,6 +55,9 @@ gem 'has_scope'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Used for file uploaded
+gem 'shrine', '~> 2.8.0'
+
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
 # gem 'jquery-ui-rails'
@@ -82,6 +85,10 @@ gem 'bootstrap-datepicker-rails'
 # to parse date parameters from ui
 # https://github.com/clemens/delocalize
 # gem 'delocalize'
+
+# Gem for many customizable scalable vector icons
+# https://github.com/bokmann/font-awesome-rails
+gem 'font-awesome-rails'
 
 group :development, :test do
   # Testing framework for Rails
@@ -164,4 +171,8 @@ group :production do
   # https://github.com/airbrake/airbrake
   # Errbit requires airbrake 5.0
   gem 'airbrake', '~> 5.0'
+
+  # S3 upload should only be used in production
+  gem 'aws-sdk-s3', '~> 1.2'
+
 end

@@ -50,6 +50,9 @@ en:
         errors:
           future_birthday: "The birthday must not be a future date"
           telephone_number_invalid: "Telephone number must consist of only numbers without spaces"
+      image:
+        one: "image"
+        other: "images"
       event:
         one: "event"
         other: "events"
@@ -86,3 +89,6 @@ en:
       select_player_type: "Spielertyp auswählen"
     show_events: "Show all events"
 
+  validations:
+    not_only_numbers: "should not only contain numbers"
+    four_different_characters: "should contain at least 4 different characters"
