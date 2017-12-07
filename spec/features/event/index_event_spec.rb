@@ -79,8 +79,18 @@ describe "index event page", type: :feature do
       visit events_path
     end
 
-    it "should not display a join button" do
+    it "should be possible for a user to join an event with his team, when it is not part of the event yet" do
+      expect(page).to have_link(:join_event_button)
+    end  
+
+    it "should not be possible for a user to join an event with his team, when it is already participating" do
+      @team = FactoryBot.create(:team, :with_five_members)
+      @team.owners << @user
+      @event.teams << @team
+      visit events_path
+
       expect(page).not_to have_link(:join_event_button)
+      expect(page).to have_link(:leave_event_button)
     end
   end
 

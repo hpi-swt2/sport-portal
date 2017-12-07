@@ -83,7 +83,30 @@ describe "detailed event page", type: :feature do
       visit event_path(@teamevent)
     end
 
-    it "should not have a join button" do
+    it "should be possible for a user to join an event with his team, when it is not part of the event yet" do
+     expect(page).to have_link(:join_event_button)
+    end  
+
+    it "should not be possible for a user to join an event with his team, when it is already participating" do
+      @team = FactoryBot.create(:team, :with_five_members)
+      @team.owners << @user
+      @teamevent.teams << @team
+      visit event_path(@teamevent)
+
+      expect(page).not_to have_link(:join_event_button)
+      expect(page).to have_link(:leave_event_button)
+    end
+  end
+
+  context "for events whose deadline has passed" do
+    before(:each) do
+      @oldevent = FactoryBot.create :event, deadline: Date.yesterday
+      sign_in @user
+      visit event_path(@oldevent)
+    end
+
+    it "should not display a join button" do
+      
       expect(page).not_to have_link(:join_event_button)
     end
   end
