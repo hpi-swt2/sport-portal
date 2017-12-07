@@ -4,8 +4,8 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-<h1><%= t('.hello', firstname: @user.firstname) %></h1>
-<p><%= t('.next_game_info', name: @event.name, startdate: @event.startdate, participants: @participants.map&.firstname.join(', '), place: @place) %></p>
+<h1><%= t('.hello', firstname: @user.first_name) %></h1>
+<p><%= t('.next_game_info', name: @event.name, startdate: @event.startdate, participants: @participants.map&.first_name.join(', '), place: @place) %></p>
 <p><%= t('.have_fun') %></p>
 </body>
 </html>
