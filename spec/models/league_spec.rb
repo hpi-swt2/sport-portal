@@ -38,9 +38,11 @@ describe "League model", type: :model do
     #The following line creates a hash in this matter {team=> occurrences of team} i.e. {Team:1 => 2, Team:2 =>2, etc.}
     let(:all_teams_with_occurrences) { Hash[(home_teams + away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
     subject { matches }
+
     it "has correct amount of teams" do
       expect(league.teams.length).to be 5
     end
+
     it "does create matches" do
       expect(matches.length).to be > 0
     end
@@ -48,6 +50,7 @@ describe "League model", type: :model do
     it "does create 10 matches" do
       expect(matches.length).to be 10
     end
+
     it "incorporates all teams into the schedule" do
       expect(all_teams_with_occurrences.length).to be 5
     end
@@ -58,12 +61,20 @@ describe "League model", type: :model do
       end
     end
     
-      it "does only let half as many matches as teams play per gameday" do
-        5.times do |gameday|
-          gameday+=1 #gamedays are from 1 to 5 not 0 to 4
-          gameday_matches = matches.select{|match| match.gameday==gameday}
-          expect(gameday_matches.length).to be 2
-        end
+    it "does only let half as many matches as teams play per gameday" do
+      5.times do |gameday|
+        gameday+=1 #gamedays are from 1 to 5 not 0 to 4
+        gameday_matches = matches.select{|match| match.gameday==gameday}
+        expect(gameday_matches.length).to be 2
       end
+    end
+
+    it "double round robin has double the gamedays as normal round robin" do
+      new_league = FactoryBot.create(:league_with_teams)
+      new_league.calculate_double_round_robin
+      new_matches = new_league.matches
+
+      expect(new_matches.length).to be new_league.teams.length * (new_league.teams.length - 1)
+    end
   end
 end
