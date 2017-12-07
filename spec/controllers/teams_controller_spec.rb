@@ -234,7 +234,7 @@ end
 
       expect {
         post :assign_ownership, params: { id: team.id, team_member: another_user.id }
-      }.to change(TeamUser, :count).by(1)
+      }.to change(TeamUser, :count).by(0)
     end
 
 
@@ -250,6 +250,7 @@ end
       team = Team.create! valid_attributes
       team.owners << subject.current_user
       another_user = FactoryBot.create :user
+      team.members << another_user
 
       post :assign_ownership, params: { id: team.id, team_member: another_user.id }
       expect(team.owners).to include(another_user)
@@ -269,7 +270,7 @@ end
 
       expect {
         post :delete_ownership, params: { id: team.id, team_member: another_user.id }
-      }.to change(TeamUser, :count).by(-1)
+      }.to change(TeamUser, :count).by(0)
     end
 
     it 'does not succeed when called as a team meber' do
