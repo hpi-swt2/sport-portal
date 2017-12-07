@@ -175,6 +175,10 @@ RSpec.describe UsersController, type: :controller do
          current_password: valid_attributes[:password] }
       }
 
+      let(:new_admin_attributes) {
+        { first_name: valid_attributes[:first_name] + '_new'}
+      }
+
       it 'updates the requested user' do
         @request.env['devise.mapping'] = Devise.mappings[:user]
         user = User.create! valid_attributes
@@ -182,6 +186,13 @@ RSpec.describe UsersController, type: :controller do
         put :update, params: { id: user.to_param, user: new_attributes }
         user.reload
         expect(user.first_name).to eq(new_attributes[:first_name])
+      end
+
+      it 'should allow admin to update other users' do
+        sign_in @admin
+        put :update, params: { id: @user.to_param, user: new_admin_attributes }
+        @user.reload
+        expect(@user.first_name).to eq(new_admin_attributes[:first_name])
       end
     end
   end

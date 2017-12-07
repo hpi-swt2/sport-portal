@@ -26,7 +26,7 @@ class UsersController < Devise::RegistrationsController
     @user = User.find(params[:id])
     authorize! :update, @user
 
-    unless user.admin?
+    unless current_user.admin?
       super
     else
       if @user.update(admin_update_params)
@@ -103,7 +103,8 @@ class UsersController < Devise::RegistrationsController
       user_password = user_params[:password]
 
       if user_password.blank?
-        remove_password(user_params)
+        user_params.delete(:password)
+        user_params.delete(:password_confirmation)
       end
       params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
     end
@@ -140,8 +141,7 @@ class UsersController < Devise::RegistrationsController
       end
     end
 
-    def remove_password(user_params)
-      user_params.delete(:password)
-      user_params.delete(:password_confirmation)
+    def remove_password
+
     end
 end
