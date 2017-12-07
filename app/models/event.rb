@@ -73,7 +73,6 @@ class Event < ApplicationRecord
     calculate_round_robin
   end
 
-  # game_mode parameter should be replaced with the actual value of the game mode later (round robin or double round robin)
   def calculate_round_robin
     pairings_per_day = round_robin_pairings( teams.to_a)
     pairings_per_day.each_with_index do |day, gameday|
