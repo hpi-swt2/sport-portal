@@ -70,7 +70,7 @@ class Event < ApplicationRecord
   end
 
   def generate_schedule
-    calculate_round_robin
+    calculate_double_round_robin
   end
 
   def calculate_round_robin
@@ -86,7 +86,20 @@ class Event < ApplicationRecord
   end
 
   def calculate_double_round_robin
+    pairings_per_day = double_round_robin_pairings teams.to_a
+    pairings_per_day.each_with_index do |day, gameday|
+      day.each do |pairing|
+        # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
+        # the other team will have to wait for this day
 
+        if gameday < (teams.to_a.size / 2)
+          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? or pairing[1].nil?
+        else
+          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1) unless pairing[0].nil? or pairing[1].nil?
+        end
+      end
+    end
+    save
   end
 
   # creates a twodimensional array of round robin pairings (one array per gameday) the inner array consists of the pairings
@@ -95,6 +108,17 @@ class Event < ApplicationRecord
     n = teams_array.size
     pivot = teams_array.pop
     games = (n - 1).times.map do
+      teams_array.rotate!
+      [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
+    end
+    games
+  end
+
+  def double_round_robin_pairings(teams_array)
+    teams_array.push nil if teams_array.size.odd?
+    n = teams_array.size
+    pivot = teams_array.pop
+    games = ((n - 1) * 2).times.map do
       teams_array.rotate!
       [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
     end
