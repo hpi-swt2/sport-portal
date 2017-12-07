@@ -1,6 +1,6 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
-  load_and_authorize_resource only: [:edit, :update]
+  load_and_authorize_resource only: [:dashboard, :edit, :update, :edit_profile, :update_profile]
   load_resource only: [:link, :unlink]
 
   attr_reader :user
@@ -38,6 +38,17 @@ class UsersController < Devise::RegistrationsController
   def dashboard
     @user = User.find(params[:id])
   end
+
+  def edit_profile
+  end
+
+  def update_profile
+    if @user.update(profile_update_params)
+      flash.now.notice = I18n.t('helpers.flash.updated', resource_name: User.model_name.human).capitalize
+    end
+    render :edit_profile
+  end
+
   # All other controller methods are handled by original `Devise::RegistrationsController`
   # Views are located in `app/views/devise`
 
@@ -46,7 +57,7 @@ class UsersController < Devise::RegistrationsController
     # Overridden methods of `Devise::RegistrationsController` to permit additional model params
     def sign_up_params
       generate_random_password if get_omniauth_data
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image , :password_confirmation, event_ids: [])
     end
 
     def account_update_params
@@ -60,10 +71,15 @@ class UsersController < Devise::RegistrationsController
       user_params[:password_confirmation] = token
     end
 
+
     def get_omniauth_data
       if (data = session['omniauth.data'])
         data if data['expires'].to_time > Time.current
       end
+    end
+
+    def profile_update_params
+      params.require(:user).permit(:avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports)
     end
 
     def unlink_omniauth
