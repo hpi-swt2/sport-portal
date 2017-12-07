@@ -80,22 +80,32 @@ describe "detailed event page", type: :feature do
     before(:each) do
       @teamevent = FactoryBot.create :team_event
       sign_in @user
-      visit event_path(@teamevent)
     end
 
-    it "should be possible for a user to join an event with his team, when it is not part of the event yet" do
-     expect(page).to have_link(:join_event_button)
-    end  
+    context "which I do not participate in" do
+      before(:each) do
+        visit event_path(@teamevent)
+      end
 
-    it "should not be possible for a user to join an event with his team, when it is already participating" do
-      @team = FactoryBot.create(:team, :with_five_members)
-      @team.owners << @user
-      @teamevent.teams << @team
-      visit event_path(@teamevent)
-
-      expect(page).not_to have_link(:join_event_button)
-      expect(page).to have_link(:leave_event_button)
+      it "should be possible for a user to join an event with his team, when it is not part of the event yet" do
+       expect(page).to have_link(:join_event_button)
+      end  
     end
+
+    context "which I participate in" do
+      before(:each) do
+        @team = FactoryBot.create(:team, :with_five_members)
+        @team.owners << @user
+        @teamevent.add_team(@team)
+        visit event_path(@teamevent)
+      end
+
+      it "should not be possible for a user to join an event with his team, when it is already participating" do
+        expect(page).not_to have_link(:join_event_button)
+        expect(page).to have_link(:leave_event_button)
+      end
+    end
+
   end
 
   context "for events whose deadline has passed" do
