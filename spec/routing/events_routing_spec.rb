@@ -38,5 +38,13 @@ RSpec.describe EventsController, type: :routing do
     it "routes to #schedule" do
       expect(get: "/events/1/schedule").to route_to("events#schedule", id: "1")
     end
+
+    it "routes to #join" do
+      expect(put: "/events/1/join").to route_to("events#join", id: "1")
+    end
+
+    it "routes to #leave" do
+      expect(put: "/events/1/leave").to route_to("events#leave", id: "1")
+    end
   end
 end
