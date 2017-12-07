@@ -62,21 +62,22 @@ end
     it "returns a unauthorized response" do
       sign_out @user
       get :new, params: {}
-      expect(response).to be_unauthorized
+
+      expect(response).to redirect_to(new_user_session_url)
     end
 
-    it "should allow normal user to view page" do
+    it "should allow normal user to view new page" do
       get :new, params: {}
       expect(response).to be_success
     end
   end
 
   describe "GET #edit" do
-    it "returns a unauthorized response" do
+    it "redirects to sign_in page when not signed in" do
       sign_out @user
       team = Team.create! valid_attributes
       get :edit, params: { id: team.to_param }
-      expect(response).to be_unauthorized
+      expect(response).to redirect_to(new_user_session_url)
     end
 
     it "returns a success response if the user is a member" do
@@ -97,8 +98,11 @@ end
     it "should not allow normal user to edit others created team" do
       sign_in @other_user
       team = Team.create! valid_attributes
-      get :edit, params: { id: team.to_param }
-      expect(response).to be_forbidden
+      bypass_rescue
+      expect{
+        get :edit, params: { id: team.to_param }
+      }.to raise_error(CanCan::AccessDenied)
+
     end
   end
 
@@ -184,11 +188,11 @@ end
   end
 
   describe "DELETE #destroy" do
-    it "returns an unauthorized response when not signed in" do
+    it "redirects to sign_in page when not signed in" do
       sign_out @user
       team = Team.create! valid_attributes
       delete :destroy, params: { id: team.to_param }
-      expect(response).to be_unauthorized
+      expect(response).to redirect_to(new_user_session_url)
       team.destroy
     end
 

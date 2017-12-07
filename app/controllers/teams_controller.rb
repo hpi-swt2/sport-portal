@@ -1,10 +1,10 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership, :perform_action_on_multiple_members]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  load_and_authorize_resource :team
 
   # GET /teams
   def index
-    @teams = Team.all
   end
 
   # GET /teams/1
@@ -94,13 +94,17 @@ class TeamsController < ApplicationController
     def assign_ownership_to_member
       authorize! :assign_ownership, @team      
       @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
-      @member_to_become_owner.update_attribute(:is_owner, true)
+      unless @member_to_become_owner.nil?
+        @member_to_become_owner.update_attribute(:is_owner, true)
+      end
     end
 
     def delete_ownership_from_member
       authorize! :delete_ownership, @team  
       @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
-      @member_to_become_owner.update_attribute(:is_owner, false)
+      unless @member_to_become_owner.nil?
+        @member_to_become_owner.update_attribute(:is_owner, false)
+      end
     end
 
     def delete_membership_from_member
