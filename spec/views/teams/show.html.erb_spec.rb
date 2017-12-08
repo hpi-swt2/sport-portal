@@ -60,4 +60,21 @@ RSpec.describe "teams/show", type: :view do
     render
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
+
+  it "shows the leave team button when user is team member" do
+    another_user = FactoryBot.create :user
+    @team.owners << another_user
+    @team.members << @user
+    sign_in @user
+    render
+    expect(rendered).to have_selector(:link_or_button, t('helpers.links.leave_team'))
+  end
+
+  it "doesn't render the leave team button when user is no team member" do
+    another_user = FactoryBot.create :user
+    @team.owners << another_user
+    sign_in @user
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.leave_team'))
+  end
 end

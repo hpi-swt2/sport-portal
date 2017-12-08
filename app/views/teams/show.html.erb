@@ -76,9 +76,9 @@
                     :method => 'get',
                     :class => 'btn btn-default btn-xs' %>
 
-        <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership" %>
-        <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership" %>
-        <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership" %>
+        <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership", class: "btn btn-default btn-xs"%>
+        <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership", class: "btn btn-default btn-xs" %>
+        <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-default btn-xs" %>
       </td>
     </tr>
     </tbody>
@@ -97,4 +97,14 @@
               :method => 'delete',
               :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
               :class => 'btn btn-danger' %>
-<% end %> 
+<% end %>
+
+<% if user_signed_in? %>
+  <% if can? :delete_membership, @team, current_user.id %>
+    <%= link_to t('.delete_membership', :default => t("helpers.links.leave_team")),
+                delete_membership_team_path(@team, :team_member => current_user.id),
+                :method => 'post',
+                :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
+                :class => 'btn btn-danger' %>
+  <% end %>
+<% end %>
