@@ -5,4 +5,4 @@
   <h1><%=t '.title', :default => :'helpers.titles.new', :model => model_class.model_name.human.titleize %></h1>
 </div>
 
-<%= render 'form', back_path: events_path %>
+<%= render 'form', default_startdate: true, back_path: events_path %>
