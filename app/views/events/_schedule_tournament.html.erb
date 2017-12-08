@@ -28,6 +28,7 @@
 
     <tr>
       <td><%= match.place %></td>
+      <% #TODO: continue here with "Gewinner von Spiel 4" %>
       <td><%= match.team_home ? link_to(match.team_home.name, team_path(match.team_home)) : '---' %></td>
       <td><%= match.team_away ? link_to(match.team_away.name, team_path(match.team_away)) : '---' %></td>
       <td>
