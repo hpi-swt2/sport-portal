@@ -38,16 +38,43 @@ describe "new event page", type: :feature do
                                           I18n.t('events.League'),
                                           I18n.t('events.Rankinglist')])
   end
-  #event_game_mode_tournament
-  #t('event.gamemodes.ko')
-  #t('activerecord.attributes.event.player_types.single')
 
+  context "for ranking lists" do
+    before :each do
+      visit new_event_path
+      select I18n.t('events.Rankinglist'), from: "event_type"
+    end
+
+    it "should show a field for choosing the ranking metric" do
+        expect(page).to have_field(I18n.t('events.metric'))
+    end
+
+    it "should show a field for choosing the initial value of the ranking metric" do
+      expect(page).to have_field(I18n.t('events.metric_initial_value'))
+    end
+
+    it "should not show a field for defining a deadline" do
+      expect(page).not_to have_field('event_deadline')
+    end
+
+    it "should not show a field for defining a enddate " do
+      expect(page).not_to have_field('event_enddate')
+    end
+
+    it "should not show a field for defining a startdate" do
+      expect(page).not_to have_field('event_startdate')
+    end
+
+    it "should not show a field for defining whether its a team or single player sport" do
+      expect(page).not_to have_field('event_player_type')
+    end
+  end
   it "should be possible to create a date conditions for an event" do
     visit new_event_path
     fill_in "event_name", with: "name"
     fill_in "event_discipline", with: "soccer"
     select I18n.t('events.Tournament'), from: "event_type"
-    select I18n.t('event.gamemode.ko'), from: "event_game_mode_tournament"
+    select I18n.t('events.gamemode.ko'), from: "event_game_mode_tournament"
     select I18n.t('activerecord.attributes.event.player_types.single'), from: "event_player_type"
     fill_in "event_max_teams", with: "5"
 

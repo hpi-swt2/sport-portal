@@ -83,6 +83,11 @@ $( document ).on('turbolinks:load', function() {
             $(league).show();
             $(tournament).hide();
             $(tournament).find("select").attr("disabled", "disabled");
+        } else {
+            $(league).find("select").attr("disabled", "disabled");
+            $(league).hide();
+            $(tournament).find("select").attr("disabled", "disabled");
+            $(tournament).hide();
         }
     }
 });

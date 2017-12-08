@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
   resources :leagues, controller: 'events', type: 'League'
   resources :tournaments, controller: 'events', type: 'Tournament'
+  resources :rankinglists, controller: 'events', type: 'Rankinglist'
 
   root 'welcome#index'
   resources :teams

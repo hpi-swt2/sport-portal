@@ -125,6 +125,7 @@ de:
     Rankinglist: "Rangliste"
     show_events: "Alle Events anzeigen"
     participating: "Beigetreten"
+    metric: "Metrik"
     show:
       to_schedule: zum Spielplan
     new:
