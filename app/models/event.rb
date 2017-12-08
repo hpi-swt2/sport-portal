@@ -62,19 +62,11 @@ class Event < ApplicationRecord
   end
 
   # Everything below this is leagues only code and will be moved to Leagues.rb once there is an actual option to create Leagues AND Tourneys, etc.
-
-  def add_test_teams
-    max_teams.times do |index|
-      teams << FactoryBot.create(:team)
-    end
-  end
-
   # Joining a single Player for a single Player Event
   # This method is only temporary until we have a working teams-infrastructure
   def add_single_player_team(user)
     if teams.length < max_teams
       teams << Team.new(name: "#{user.first_name} #{user.last_name}"  , private: false)
-      return [{ :success => "true" }]
     end
   end
 
