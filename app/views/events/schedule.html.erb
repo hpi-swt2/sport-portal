@@ -11,6 +11,7 @@
       <th><%= t '.away' %></th>
       <th><%= t '.score' %></th>
       <th><%= t '.points' %></th>
+      <th><%= t '.date' %></th>
       <th><%= t '.actions', default: t('helpers.actions') %></th>
     </tr>
   </thead>
@@ -43,6 +44,9 @@
               <%= f.text_field :points_home, class: 'input-sm', style: 'width: 50px' %>
               <%= f.submit t('helpers.links.save'), :class => 'btn btn-default btn-xs' %>
           <% end %>
+        </td>
+        <td>
+          <%= match.event.startdate+match.gameday-1 %>
         </td>
         <td>
           <%= link_to t('.show', default: t('helpers.links.show')),
