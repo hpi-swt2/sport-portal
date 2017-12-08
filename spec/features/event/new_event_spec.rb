@@ -32,16 +32,23 @@ describe "new event page", type: :feature do
   it "should have a dropdown menu for type" do
     visit new_event_path
 
-    expect(page).to have_select('event_type', options: [I18n.t('events.new.select_type'), 'Tournament', 'League'])
+    expect(page).to have_select('event_type',
+                                options: [I18n.t('events.new.select_type'),
+                                          I18n.t('events.Tournament'),
+                                          I18n.t('events.League'),
+                                          I18n.t('events.Rankinglist')])
   end
+  #event_game_mode_tournament
+  #t('event.gamemodes.ko')
+  #t('activerecord.attributes.event.player_types.single')
 
   it "should be possible to create a date conditions for an event" do
     visit new_event_path
     fill_in "event_name", with: "name"
     fill_in "event_discipline", with: "soccer"
-    select "Tournament", from: "event_type"
-    select "Ko", from: "event_game_mode_tournament"
-    select "Single", from: "event_player_type"
+    select I18n.t('events.Tournament'), from: "event_type"
+    select I18n.t('event.gamemode.ko'), from: "event_game_mode_tournament"
+    select I18n.t('activerecord.attributes.event.player_types.single'), from: "event_player_type"
     fill_in "event_max_teams", with: "5"
 
     fill_in "event_deadline", with: Date.tomorrow.to_s

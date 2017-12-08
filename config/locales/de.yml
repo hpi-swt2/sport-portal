@@ -77,6 +77,9 @@ de:
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Solo / Team"
+        player_types:
+          single: "Einzel"
+          team: "Team"
         max_teams: "Anzahl Teams"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
@@ -116,7 +119,10 @@ de:
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
-    new_tournament: "Neues Tournier"
+    new_tournament: "Neues Turnier"
+    Tournament: "Turnier"
+    League: "Liga"
+    Rankinglist: "Rangliste"
     show_events: "Alle Events anzeigen"
     participating: "Beigetreten"
     show:
@@ -134,6 +140,14 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+    gamemode:
+      ko: "KO"
+      ko_group: "Gruppen-KO"
+      double_elimination: "Doppel-KO-System"
+      round_robin: "Runder Robin"
+      two_halfs: "Zwei Halbe"
+      swiss: "Schweizer System"
+      danish: "Dänisches System"
 
   validations:
     not_only_numbers: "darf nicht nur aus Zahlen bestehen"

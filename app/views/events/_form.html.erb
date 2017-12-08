@@ -18,7 +18,7 @@
     <div class="form-group">
       <%= f.label Event.human_attribute_name(:event_type), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.collection_select :type, Event.types, :to_s, :to_s,
+        <%= f.collection_select :type, event_types_enum_localize, :first, :second,
                                 {selected: @event.type, include_blank: t('events.new.select_type')},
                                 :class => 'form-control', :id => 'event_type' %>
       </div>
@@ -26,25 +26,27 @@
     <div class="form-group" id="league-game-mode">
       <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
-                     {:include_blank => t('events.new.select_game_mode')},
-                     { :class => 'form-control', :id => 'event_game_mode_league'}) %>
+        <%= f.collection_select :game_mode, league_gamemodes_localize, :first, :second,
+                     {selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
+                     { :class => 'form-control', :id => 'event_game_mode_league'} %>
       </div>
+
     </div>
     <div class="form-group" id="tournament-game-mode">
       <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.select(:game_mode, Tournament.game_modes.map {|k, v| [k.humanize, v]},
-                     {:include_blank => t('events.new.select_game_mode')},
-                     { :class => 'form-control', :id => 'event_game_mode_tournament'}) %>
+        <%= f.collection_select :game_mode, tournament_gamemodes_localize, :first, :second,
+                                {selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
+                     { :class => 'form-control', :id => 'event_game_mode_tournament'}%>
       </div>
+
     </div>
     <div class="form-group">
       <%= f.label Event.human_attribute_name(:player_type), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.select(:player_type, Event.player_types.map {|k, v| [k.humanize, v]},
-                     {:include_blank => t('events.new.select_player_type')},
-                     { :class => 'form-control'}) %>
+        <%= f.collection_select :player_type, event_player_types_localize, :first, :second,
+                                {selected: @event.player_type, include_blank: t('events.new.select_player_type')},
+                                { :class => 'form-control', :id => 'event_player_type'}%>
       </div>
     </div>
     <div class="form-group">

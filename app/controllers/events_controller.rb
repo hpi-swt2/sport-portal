@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  helper EventsHelper
   load_and_authorize_resource
   before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule]
 
