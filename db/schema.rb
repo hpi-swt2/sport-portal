@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171202115049) do
+ActiveRecord::Schema.define(version: 20171205103643) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 20171202115049) do
   create_table "events_users", id: false, force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "user_id", null: false
+    t.index ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id"
+    t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -68,7 +70,7 @@ ActiveRecord::Schema.define(version: 20171202115049) do
     t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
-  create_table "team_users", id: false, force: :cascade do |t|
+  create_table "team_users", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
     t.boolean "is_owner"
@@ -95,12 +97,12 @@ ActiveRecord::Schema.define(version: 20171202115049) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "admin", default: false
-    t.string "provider"
-    t.string "uid"
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
+    t.string "provider"
+    t.string "uid"
     t.text "avatar_data"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true

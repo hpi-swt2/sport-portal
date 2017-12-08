@@ -25,7 +25,6 @@ class Ability
   # See the wiki for details:
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
-
   def initialize(user, team_member = nil)
     alias_action :update, :destroy, to: :modify
     alias_action :create, :read, :update, :destroy, to: :crud
@@ -53,7 +52,7 @@ class Ability
       can_crud_team(user_id)
       can_assign_ownership(user)
       can_delete_ownership(user)
-      can_delete_membership(team_member, user)
+      can_delete_membership(user)
 
       if user.admin?
         can :manage, :all
@@ -87,8 +86,8 @@ class Ability
       end
     end
 
-    def can_delete_membership(team_member, user)
-      can :delete_membership, Team, Team do |team|
+    def can_delete_membership(user)
+      can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
         exist_owners_after_delete = owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
         ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)
