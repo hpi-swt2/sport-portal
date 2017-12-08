@@ -70,21 +70,14 @@ class TeamsController < ApplicationController
   end
 
   def perform_action_on_multiple_members
-    # choose action based on submit button that was pressed
-    if params[:assign_ownership]
-      @action = "assign_ownership_to_member"
-    elsif params[:delete_ownership]
-      @action = "delete_ownership_from_member"
-    elsif params[:delete_membership]
-      @action = "delete_membership_from_member"  
-    end
-
     params[:members].each do |member|
-      params[:team_member] = member          
-      begin
-        send(@action)   
-      rescue => ex
-        print ex.message
+      params[:team_member] = member
+      if params[:assign_ownership]
+        assign_ownership_to_member
+      elsif params[:delete_ownership]
+        delete_ownership_from_member
+      elsif params[:delete_membership]
+        delete_membership_from_member
       end
     end
     redirect_to @team
@@ -92,18 +85,18 @@ class TeamsController < ApplicationController
 
   private
     def assign_ownership_to_member
-      authorize! :assign_ownership, @team      
-      @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
-      unless @member_to_become_owner.nil?
-        @member_to_become_owner.assign_ownership
+      authorize! :assign_ownership, @team
+      member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
+      unless member_to_become_owner.nil?
+        member_to_become_owner.assign_ownership
       end
     end
 
     def delete_ownership_from_member
-      authorize! :delete_ownership, Team.find(params[:id])  
-      @member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
-      unless @member_to_become_owner.nil?
-        @member_to_become_owner.delete_ownership
+      authorize! :delete_ownership, Team.find(params[:id])
+      member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
+      unless member_to_become_owner.nil?
+        member_to_become_owner.delete_ownership
       end
     end
 
@@ -129,6 +122,4 @@ class TeamsController < ApplicationController
     def team_params
       params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members)
     end
-
-
 end

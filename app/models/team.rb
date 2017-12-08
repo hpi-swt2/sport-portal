@@ -30,6 +30,4 @@ class Team < ApplicationRecord
   def has_multiple_owners?
     owners.length > 1
   end
-
-
 end

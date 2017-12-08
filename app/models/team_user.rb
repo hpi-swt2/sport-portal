@@ -27,5 +27,4 @@ class TeamUser < ApplicationRecord
     self.is_owner = false
     self.save
   end
-
 end
