@@ -34,3 +34,8 @@ end
 Then(/^there should not be an input '(.*)'$/) do |name|
   expect(page).to_not have_field(name)
 end
+
+
+And(/^the table should have (\d+) rows$/) do |arg|
+  expect(page).to have_xpath("//table/tbody/tr", count: arg)
+end

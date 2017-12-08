@@ -10,5 +10,12 @@
     <th><%= model_class.human_attribute_name(:platzierung) %></th>
   </tr>
   </thead>
-
+  <tbody>
+  <% @event.teams.each do |team| %>
+      <tr>
+        <td><%= link_to team.name, team_path(team) %></td>
+        <td>Gewinner</td>
+      </tr>
+  <% end %>
+  </tbody>
 </table>
