@@ -14,7 +14,7 @@
   <% @event.teams.each do |team| %>
       <tr>
         <td><%= link_to team.name, team_path(team) %></td>
-        <td>Gewinner</td>
+        <td><%= @event.standingOf team %></td>
       </tr>
   <% end %>
   </tbody>

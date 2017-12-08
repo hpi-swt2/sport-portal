@@ -88,4 +88,8 @@ class Event < ApplicationRecord
     end
     self.save
   end
+
+  def standingOf(team)
+    'Gewinner ' + team.id.to_s
+  end
 end
