@@ -22,10 +22,10 @@ RSpec.describe "teams/show", type: :view do
   end
 
   it "shows delete ownership button for owners" do
-    sign_in @user
     @team.owners << @user
     another_user = FactoryBot.create :user
     @team.owners << another_user
+    sign_in @user
     render
     rendered.should have_content(t("helpers.links.delete_ownership"))
   end
