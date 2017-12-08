@@ -7,8 +7,8 @@ $( document ).on('turbolinks:load', function() {
       var state = localStorage.getItem('checked');
 
       checkbox.addEventListener('click', function() {
-          localStorage.setItem('checked',checkbox.checked);
-          $("form").submit();
+        localStorage.setItem('checked',checkbox.checked);
+        $("form").submit();
       });
 
       if(state == 'true')
