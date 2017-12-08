@@ -47,6 +47,7 @@
         </td>
         <td>
           <%= match.event.startdate+match.gameday-1 %>
+          <%= link_to "Neuen Termin vorschlagen", edit_match_path(match), :class => 'btn btn-default btn-xs' %>
         </td>
         <td>
           <%= link_to t('.show', default: t('helpers.links.show')),
