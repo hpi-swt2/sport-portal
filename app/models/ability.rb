@@ -26,10 +26,9 @@ class Ability
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
   def initialize(user, team_member = nil)
+    alias_action :schedule, :overview, to: :read
     can :read, :all
     cannot :read, Team, private: true
-    can :schedule, Event
-    can :overview, Event
 
     if user.present?
       user_id = user.id
