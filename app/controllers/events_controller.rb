@@ -71,7 +71,6 @@ class EventsController < ApplicationController
   end
 
   def overview
-
   end
 
   private
