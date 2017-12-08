@@ -34,8 +34,9 @@ a:link, a:visited, a:hover, a:active {
     border-radius: 100px;
 }
 
-.input-field:focus {
-    border: 2px solid #1CA9E5;
+.input-field:focus-within {
+    border: 1px solid #1ba9e5;
+    color: white;
 }
 
 [type="checkbox"].filled-in + label:after {
