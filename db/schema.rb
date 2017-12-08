@@ -42,8 +42,6 @@ ActiveRecord::Schema.define(version: 20171202115049) do
   create_table "events_users", id: false, force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "user_id", null: false
-    t.index ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id"
-    t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -96,9 +94,9 @@ ActiveRecord::Schema.define(version: 20171202115049) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.boolean "admin", default: false
     t.string "provider"
     t.string "uid"
-    t.boolean "admin", default: false
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
