@@ -67,27 +67,72 @@ $( document ).on('turbolinks:load', function() {
         displayTypeField();
     });
 
+    function disableField(field){
+        $(field).find("select").attr("disabled", "disabled");
+        $(field).hide();
+    }
+
+    function enableField(field){
+        $(field).find("select").removeAttr("disabled");
+        $(field).show();
+    }
+
+    function enableDates(){
+        var enddatefield = $("#event_enddate_div");
+        var startdatefield = $("#event_startdate_div");
+        var durationfield = $("#event_duration_div");
+        var deadlinefield = $("#event_deadline_div");
+
+        enableField(enddatefield);
+        enableField(startdatefield);
+        enableField(durationfield);
+        enableField(deadlinefield);
+    }
+
+    function disableDates(){
+        var enddatefield = $("#event_enddate_div");
+        var startdatefield = $("#event_startdate_div");
+        var durationfield = $("#event_duration_div");
+        var deadlinefield = $("#event_deadline_div");
+
+        disableField(enddatefield);
+        disableField(startdatefield);
+        disableField(durationfield);
+        disableField(deadlinefield);
+    }
+
     function displayTypeField() {
         var option = $("#event_type").val();
         var league = $("#league-game-mode");
         var tournament = $("#tournament-game-mode");
+        var playertypes = $("#event_player_types");
+        var metric = $("#event_metric_div");
+        var initialvalue = $("#event_initial_value_div");
 
         if (option == "Tournament") {
-            $(tournament).find("select").removeAttr("disabled");
-            $(tournament).show();
-            $(league).hide();
-            $(league).find("select").attr("disabled", "disabled");
+            enableField(tournament);
+            enableDates();
+            enableField(playertypes);
+            disableField(metric);
+            disableField(initialvalue);
+
+            disableField(league);
 
         } else if (option == "League") {
-            $(league).find("select").removeAttr("disabled");
-            $(league).show();
-            $(tournament).hide();
-            $(tournament).find("select").attr("disabled", "disabled");
+            enableField(league);
+            enableDates();
+            enableField(playertypes);
+
+            disableField(metric);
+            disableField(initialvalue);
+            disableField(tournament)
         } else {
-            $(league).find("select").attr("disabled", "disabled");
-            $(league).hide();
-            $(tournament).find("select").attr("disabled", "disabled");
-            $(tournament).hide();
+            disableField(league);
+            disableField(tournament);
+            disableField(playertypes);
+            enableField(metric);
+            enableField(initialvalue);
+            disableDates();
         }
     }
 });

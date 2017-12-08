@@ -31,15 +31,21 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
-  validates :name, :discipline, :game_mode, presence: true
-  validates :name, :discipline, :game_mode, :player_type, presence: true
-  validates :deadline, :startdate, :enddate, presence: true
+  validates :name, :discipline,  presence: true
+  validates :deadline, :startdate,:game_mode, :player_type, :enddate,
+            presence: true,
+            if: :validate_not_rankinglist?
 
   validates :max_teams, numericality: { greater_than_or_equal_to: 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
   validate :end_after_start
 
   enum player_types: [:single, :team]
-  enum metric: [:elo, :win_loss, :true_skill]
+  enum metrics: [:elo, :win_loss, :true_skill]
+
+
+  def validate_not_rankinglist?
+    self.class.name == "Event"
+  end
 
   def self.types
     %w(Tournament League Rankinglist)

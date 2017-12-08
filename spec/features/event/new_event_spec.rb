@@ -46,28 +46,33 @@ describe "new event page", type: :feature do
     end
 
     it "should show a field for choosing the ranking metric" do
-        expect(page).to have_field(I18n.t('events.metric'))
+        expect(page).to have_field('event_metric')
     end
 
     it "should show a field for choosing the initial value of the ranking metric" do
-      expect(page).to have_field(I18n.t('events.metric_initial_value'))
+      expect(page).to have_field('event_initial_value')
     end
 
     it "should not show a field for defining a deadline" do
-      expect(page).not_to have_field('event_deadline')
+      expect(page).to have_field('event_deadline', disabled: 'disabled')
     end
 
     it "should not show a field for defining a enddate " do
-      expect(page).not_to have_field('event_enddate')
+      expect(page).to have_field('event_enddate', disabled: 'disabled')
     end
 
     it "should not show a field for defining a startdate" do
-      expect(page).not_to have_field('event_startdate')
+      expect(page).to have_field('event_startdate', disabled: 'disabled')
     end
 
     it "should not show a field for defining whether its a team or single player sport" do
-      expect(page).not_to have_field('event_player_type')
+      expect(page).to have_field('event_player_type', disabled: 'disabled')
     end
+
+    it "should not show a field for the duration" do
+      expect(page).to have_field('event_duration', disabled: 'disabled')
+    end
+
   end
   it "should be possible to create a date conditions for an event" do
     visit new_event_path

@@ -86,6 +86,8 @@ de:
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
+        metric: "Metrik"
+        initial_value: "Anfangswert"
 
       user:
         first_name: "Vorname"
@@ -132,6 +134,7 @@ de:
       select_type: "Eventtyp auswählen"
       select_game_mode: "Spieltyp auswählen"
       select_player_type: "Spielertyp auswählen"
+      select_metric: "Metrik auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"
@@ -141,6 +144,10 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+    metric:
+      elo: "ELO"
+      win_loss: "Gewinne-Niederlagen"
+      true_skill: "Wahres Können"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"

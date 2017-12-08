@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" id="event_player_types">
       <%= f.label Event.human_attribute_name(:player_type), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.collection_select :player_type, event_player_types_localize, :first, :second,
@@ -63,32 +63,49 @@
         <%= f.error_span(:discipline) %>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="event_deadline_div">
       <%= f.label Event.human_attribute_name(:deadline), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :deadline, id: :event_deadline, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
         <%= f.error_span(:deadline) %>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="event_startdate_div">
       <%= f.label Event.human_attribute_name(:startdate), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :startdate, id: :event_startdate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
         <%= f.error_span(:startdate) %>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="event_enddate_div">
       <%= f.label Event.human_attribute_name(:enddate), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :enddate, id: :event_enddate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
         <%= f.error_span(:enddate) %>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="event_duration_div">
       <%= f.label Event.human_attribute_name(:duration), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :duration, id: :event_duration, :class => 'form-control' %></div>
     </div>
+
+    <div class="form-group" id="event_metric_div">
+      <%= f.label Event.human_attribute_name(:metrics), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.collection_select :metrics, event_metric_localize, :first, :second,
+                                {selected: @event.metric, include_blank: t('events.new.select_metric')},
+                                { :class => 'form-control', :id => 'event_metric'}%>
+      </div>
+    </div>
+
+    <div class="form-group" id="initial_value_div">
+      <%= f.label Event.human_attribute_name(:initial_value), :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :initial_value, id: :event_initial_value, :class => 'form-control' %>
+      </div>
+    </div>
+
     <div class="form-group">
       <div class="col-lg-offset-2 col-lg-10">
         <%= f.submit t('events.create_event'), :class => 'btn btn-primary' %>

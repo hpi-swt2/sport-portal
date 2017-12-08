@@ -105,6 +105,8 @@ class EventsController < ApplicationController
                                     :deadline,
                                     :startdate,
                                     :enddate,
+                                    :metric,
+                                    :initial_value,
                                     user_ids: [])
     end
 end
