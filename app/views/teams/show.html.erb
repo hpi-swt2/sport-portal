@@ -1,4 +1,18 @@
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $('#check_all').on("click", function() {
+            var cbxs = $('input[type="checkbox"]');
+            cbxs.prop("checked", true);
+        })
+        $('#uncheck_all').on("click", function() {
+            var cbxs = $('input[type="checkbox"]');
+            cbxs.prop("checked", false);
+        })
+    });
+</script>
+
 <%- model_class = Team -%>
+
 <div class="page-header">
   <h1><%= t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
@@ -65,11 +79,16 @@
     <% end %>
     <tr>
       <td>
-        <button type="button" id="check_all" class="btw"><%="Check all/Uncheck all"%></button>
-
+        <button type="button" id="check_all" class="btw">
+          <%=t('.select_all', :default => t("helpers.teams.select_all"))%>
+        </button>
+        <button type="button" id="uncheck_all" class="btw">
+          <%=t('.deselect_all', :default => t("helpers.teams.deselect_all"))%>
+        </button>
+      </td>
+      <td>
         <%= t('.apply_action', :default => t("helpers.teams.apply_action")) %>
       </td>
-      <td></td>
       <td></td>
       <td></td>
       <td>

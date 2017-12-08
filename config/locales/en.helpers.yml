@@ -35,6 +35,8 @@ en:
     select:
       prompt: "Please select"
     teams:
+      select_all: "Select all"
+      deselect_all: "Deselect all"
       kind_of_sport: "Kind of sport"
       description: "Description"
       private: "Private"
