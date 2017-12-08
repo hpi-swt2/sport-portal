@@ -275,18 +275,23 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  #describe "GET #schedule" do
-   # it "should generate schedule if not existing" do
-     # event = Event.create! FactoryBot.build(:event, max_teams: 5).attributes
-     # get :schedule, params: {id: event.to_param}, session: valid_session
-     # expect(event.matches).not_to be_empty
-    #end
+  describe "GET #schedule" do
+    it "should generate schedule if not existing" do
+      event = Event.create! valid_attributes
+      event.add_participant(@user)
+      event.add_participant(@other_user)
+      event.generate_schedule
+      get :schedule, params: {id: event.to_param}, session: valid_session
+      puts "Matches:"
+      puts event.matches
+      expect(event.matches).not_to be_empty
+    end
 
-   # it "returns a success response" do
-   #   event = Event.create! valid_attributes
-   #   get :schedule, params: {id: event.to_param}, session: valid_session
-   #   expect(response).to be_success
-   # end
-  #end
+    it "returns a success response" do
+      event = Event.create! valid_attributes
+      get :schedule, params: {id: event.to_param}, session: valid_session
+      expect(response).to be_success
+    end
+  end
 
 end
