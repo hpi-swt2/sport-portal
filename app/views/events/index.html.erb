@@ -31,17 +31,24 @@
             <%= link_to t('.leave', :default => t("helpers.links.leave")),
                         leave_event_path(event),
                         :method => :put,
-                        :class => 'btn btn-xs btn-default',
+                          :class => 'btn btn-xs btn-default',
                         id: :leave_event_button %>
-            <%= t('events.participating') %>
+            <span class="label label-success"><%= t('events.participating') %></span>
           <% end %>
 
           <% if can? :join, event%>
-            <%= link_to t('.join', :default => t("helpers.links.join")),
-                        join_event_path(event),
-                        :method => :put,
-                        :class => 'btn btn-xs btn-default',
-                        id: :join_event_button %>
+            <% if event.single_player? %>
+              <%= link_to t('.join', :default => t("helpers.links.join")),
+                          join_event_path(event),
+                          :method => :put,
+                          :class => 'btn btn-xs btn-default',
+                          id: :join_event_button %>
+            <% else %>
+              <%= link_to t('.join', :default => t("helpers.links.join")),
+                          '#teamEventModal', 'data-toggle' => "modal", 'data-target' => "#teamEventModal", 'data-whatever' => event.id,
+                          :class => 'btn btn-xs btn-default',
+                          id: :join_event_button %>
+            <% end %>
           <% end %>
 
           <% if can? :edit, event %>
@@ -74,3 +81,39 @@
     <label for="shown_events"> <%= t('events.show_events') %> </label>
   </div>
 </form>
+
+<div class="modal fade" id="teamEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Join as Team
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button></h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="form-control-label">Team</label>
+            <select type="text" class="form-control" id="recipient-name">
+              <option>Modal in eine Extra template</option>
+              <option>dieses template dann hier aufrufen und im show.html</option>
+              <option>Form schicker machen (z.B als Liste oder so, "keine Teams"-Fall abdecken)</option>
+              <option>Unterscheidung von singleplayer und team schicker machen</option>
+              <option>Testen bis zu abwinken</option>
+              <option>eventuell noch mehr</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= link_to t('.join', :default => t("helpers.links.join")),
+                    events_path,
+                    :method => :put,
+                    :class => 'btn btn-info',
+                    id: :join_teamevent_button %>
+      </div>
+    </div>
+  </div>
+</div>
