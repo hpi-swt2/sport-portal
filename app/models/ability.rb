@@ -28,6 +28,8 @@ class Ability
   def initialize(user, team_member = nil)
     can :read, :all
     cannot :read, Team, private: true
+    can :schedule, Event
+    can :overview, Event
 
     if user.present?
       user_id = user.id

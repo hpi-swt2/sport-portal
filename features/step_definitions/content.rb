@@ -17,6 +17,10 @@ Then(/^there should be a table$/) do
   expect(page).to have_table
 end
 
+And(/^the table should have a column named '(.*)'$/) do |name|
+  key = I18n.t name
+  expect(page).to have_xpath("//table/thead/tr/th[contains(.,'" + key + "')]")
+end
 
 Then(/^the '(.*)' input should already be filled with '(.*)'$/) do |name, text|
   expect(page).to have_field(name, with: text)

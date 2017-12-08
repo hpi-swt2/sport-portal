@@ -3,5 +3,5 @@ Given(/^a tournament (.*)$/) do |tournamentName|
 end
 
 When(/^the tournament overview page for (.*) is visited$/) do |tournamentName|
-  visit overview_tournament_path (tournament_named tournamentName)
+  visit event_overview_path (tournament_named tournamentName)
 end

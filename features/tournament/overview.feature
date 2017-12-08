@@ -7,4 +7,5 @@ Feature: Tournament Overview Page
     Given a tournament t
     When the tournament overview page for t is visited
     Then there should be a table
-    #And the table should have column names 'team_name' and 'standing'
+    And the table should have a column named 'events.overview.teamColumn'
+    And the table should have a column named 'events.overview.standingColumn'
