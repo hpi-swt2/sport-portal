@@ -4,3 +4,33 @@
 .navbar .dropdown-menu li {
     text-align: center;
 }
+.navbar-default {
+    background-color: transparent;
+    border-color: transparent;
+    width: 100%;
+}
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #1ba9e5;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #1ba9e5;
+}
+.btn {
+    font-family: Proxima Nova Bold;
+    font-size: 15px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    background: #1CA9E5;
+    border-radius: 100px;
+}

@@ -12,9 +12,9 @@
 
   <!--Display the background only when user signs in-->
   <% if action_name === "new" && controller_name == "sessions" %>
-    <body class="background">
+    <body class="background navbar-overlap">
   <% else %>
-    <body>
+    <body class=" navbar-overlap">
   <% end %>
     <div class="container">
       <%= render partial: "application/navbar" %>
