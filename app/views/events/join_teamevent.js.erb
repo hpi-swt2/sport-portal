@@ -1,0 +1,5 @@
+$( document ).on('turbolinks:load', function() {
+    console.log("hi");
+    $("#modal-window").find(".modal-content").html("<%= j (render 'join_teamevent') %>");
+    $("#modal-window").modal();
+});

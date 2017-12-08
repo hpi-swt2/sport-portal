@@ -48,7 +48,7 @@ class Ability
       can_join_event(user)
       can_leave_event(user)
       can :schedule, Event
-
+      can :join_teamevent, Event
       # Team
       can_crud_team(user_id)
       can_assign_ownership(user)

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/events/:id/join_teamevent" => 'events#join_teamevent', :as => :join_teamevent
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
 
   # Use custom user controller instead of the one provided by devise

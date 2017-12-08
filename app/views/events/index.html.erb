@@ -46,10 +46,10 @@
                           id: :join_event_button %>
             <% else %>
               <%= link_to t('.join', :default => t("helpers.links.join")),
-                          '#teamEventModal', 'data-toggle' => "modal", 'data-target' => "#teamEventModal", 'data-whatever' => event.id,
+                          join_teamevent_path(event), :remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window',
                           :class => 'btn btn-xs btn-default',
                           id: :join_event_button %>
-            <% end %>
+             <% end %>
           <% end %>
 
 
@@ -83,32 +83,10 @@
     <label for="shown_events"> <%= t('events.show_events') %> </label>
   </div>
 </form>
-
-<div class="modal fade" id="teamEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">Join as Team
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>  </h4>
-      </div>
-      <div class="modal-body">
-        <% if current_user.owned_teams.present? %>
-            <%= select("post", "event_id", current_user.owned_teams.collect {|t| [ t.name, t.id ] }, { :include_blank => "Choose team" }) %>
-        <% else %>
-            <div> Sorry your are not owner of any team! You need to be owner of one to join.
-            </div> <br> <br>
-            <div>
-              <% if can? :create, Team %>
-                <%= link_to t('.new', :default => t("helpers.links.new")),
-                  new_team_path,
-                  :class => 'btn btn-primary' %>
-              <% end %>
-            </div>
-        <% end %>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
+    <div class="modal-content"></div>
   </div>
+</div>
+<div class="modal fade" id="join_teamevent" tabindex="-1" role="dialog" aria-labelledby="teamEventModalLabel" aria-hidden="true">
 </div>

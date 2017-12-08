@@ -52,6 +52,13 @@ class EventsController < ApplicationController
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
+  def join_teamevent
+    @event = Event.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
 
   # PUT /events/1/join
   def join 
