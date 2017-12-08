@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :team_join]
 
   # GET /events
   def index
@@ -58,6 +58,14 @@ class EventsController < ApplicationController
     @event.add_participant(current_user)
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
+  end
+
+  # GET /events/1/team_join
+  def team_join
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # PUT /events/1/leave

@@ -55,6 +55,12 @@
                           :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
                           :class => 'btn btn-xs btn-danger' %>
           <% end %>
+          <%= link_to 'Join as Team',
+                      team_join_path(event),
+                      remote: true,
+                      'data-toggle': "modal",
+                      'data-target': "#modal-window",
+                      class: 'btn btn-xs btn-default'%>
         </td>
       </tr>
   <% end %>
@@ -74,3 +80,13 @@
     <label for="shown_events"> <%= t('events.show_events') %> </label>
   </div>
 </form>
+
+<div type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-window">Launch demo modal</div>
+
+<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    </div>
+  </div>
+</div>
