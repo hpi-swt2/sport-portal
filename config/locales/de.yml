@@ -102,6 +102,8 @@ de:
 
   success:
     updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
+    join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
+    leave_event: "Du hast das Event %{event} erfolgreich verlassen."
 
   error:
     update_match_points: Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut.
@@ -110,12 +112,13 @@ de:
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
-    new_tournament: "Neues Tournier"
+    new_tournament: "Neues Turnier"
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Tournier"
     show_events: "Alle Events anzeigen"
+    participating: "Beigetreten"
     show:
       to_schedule: zum Spielplan
     new:
@@ -140,3 +143,14 @@ de:
     avatar:
       errors:
         too_large: "is too large (max is 2 MB)"
+
+    edit:
+      cancel_this_account: "Diesen Account löschen"
+      unhappy: "Unzufrieden"
+      leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
+      we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+
+  devise:
+    registrations:
+      user:
+        destroyed: "Dieser Account wurde gelöscht"
