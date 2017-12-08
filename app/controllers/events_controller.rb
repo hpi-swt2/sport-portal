@@ -54,10 +54,14 @@ class EventsController < ApplicationController
 
 
   # PUT /events/1/join
-  def join
-    @event.add_participant(current_user)
-    flash[:success] = t('success.join_event', event: @event.name)
-    redirect_back fallback_location: events_url
+  def join 
+    if @event.single_player?
+      @event.add_participant(current_user)
+      flash[:success] = t('success.join_event', event: @event.name)
+      redirect_back fallback_location: events_url
+    else
+      render root
+    end
   end
 
   # PUT /events/1/leave

@@ -25,7 +25,8 @@
         <td><%= event.enddate %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
-                      event_path(event), :class => 'btn btn-default btn-xs' %>
+                      event_path(event),
+                      :class => 'btn btn-default btn-xs' %>
 
           <% if can? :leave, event %>
             <%= link_to t('.leave', :default => t("helpers.links.leave")),
@@ -50,6 +51,7 @@
                           id: :join_event_button %>
             <% end %>
           <% end %>
+
 
           <% if can? :edit, event %>
               <%= link_to t('.edit', :default => t("helpers.links.edit")),
@@ -89,30 +91,23 @@
         <h4 class="modal-title" id="exampleModalLabel">Join as Team
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button></h4>
+        </button>  </h4>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="form-control-label">Team</label>
-            <select type="text" class="form-control" id="recipient-name">
-              <option>Modal in eine Extra template</option>
-              <option>dieses template dann hier aufrufen und im show.html</option>
-              <option>Form schicker machen (z.B als Liste oder so, "keine Teams"-Fall abdecken)</option>
-              <option>Unterscheidung von singleplayer und team schicker machen</option>
-              <option>Testen bis zu abwinken</option>
-              <option>eventuell noch mehr</option>
-            </select>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <%= link_to t('.join', :default => t("helpers.links.join")),
-                    events_path,
-                    :method => :put,
-                    :class => 'btn btn-info',
-                    id: :join_teamevent_button %>
+        <% if current_user.owned_teams.present? %>
+            <%= select("post", "event_id", current_user.owned_teams.collect {|t| [ t.name, t.id ] }, { :include_blank => "Choose team" }) %>
+        <% else %>
+            <div> Sorry your are not owner of any team! You need to be owner of one to join.
+            </div> <br> <br>
+            <div>
+              <% if can? :create, Team %>
+                <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_team_path,
+                  :class => 'btn btn-primary' %>
+              <% end %>
+            </div>
+        <% end %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
