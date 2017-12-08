@@ -70,7 +70,13 @@ class TeamsController < ApplicationController
   end
 
   def perform_action_on_multiple_members
-    params[:members].each do |member|
+
+    target_members = params[:members]
+    if target_members.include? current_user.id.to_s
+      target_members = (target_members - [current_user.id.to_s]) + [current_user.id.to_s]
+    end
+
+    target_members.each do |member|
       params[:team_member] = member
       if params[:assign_ownership]
         assign_ownership_to_member

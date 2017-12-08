@@ -70,7 +70,7 @@ class Ability
     def can_delete_membership(user)
       can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
-        exist_owners_after_delete = owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
+        exist_owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
         ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)
       end
     end

@@ -325,5 +325,23 @@ end
         post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, subject.current_user.id], delete_ownership: "delete_ownership"}
       }.to change(team.owners, :count).by(-1)
     end
+
+    it 'does not remove the last remaining owner of a team' do
+      team = Team.create! valid_attributes
+      team.owners << subject.current_user
+
+      another_owner = FactoryBot.create (:user)
+      team.owners << another_owner
+
+      expect(team.owners.length).to eq(2)
+
+      member = FactoryBot.create (:user)
+      team.members << member
+
+      post :perform_action_on_multiple_members, params: { id: team.id, members: [subject.current_user.id, member.id], delete_ownership: "delete_ownership" }
+
+      expect(team.owners.length).to eq(1)
+      expect(team.owners.first).to equal(another_owner)
+    end
   end    
 end
