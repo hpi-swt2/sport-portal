@@ -105,11 +105,10 @@ describe "index event page", type: :feature do
         expect(page).not_to have_link(:join_event_button)
       end
 
-      #Not yet implemented
-      #it "should redirect me to itself when clicking the leave button" do
-      #  click_link(:leave_event_button)
-      #  expect(current_path).to eq(events_path)
-      #end
+      it "should redirect me to itself when clicking the leave button" do
+        click_link(:leave_event_button)
+        expect(current_path).to eq(events_path)
+      end
 
       it "should have a leave button" do
         expect(page).to have_link(:leave_event_button)
@@ -119,11 +118,10 @@ describe "index event page", type: :feature do
         expect(page).to have_content I18n.t('events.participating')
       end
 
-      #Not yet implemented
-      #it "should let me join again after clicking the leave button" do
-      #  click_link(:leave_event_button)
-      #  expect(page).to have_link(:join_event_button)
-      #end
+      it "should let me join again after clicking the leave button" do
+        click_link(:leave_event_button)
+        expect(page).to have_link(:join_event_button)
+      end
     end
   end
 

@@ -10,7 +10,8 @@
         <div class="col-lg-10">
           <%= f.collection_select :teams, current_user.owned_teams, :id, :name,
                                   {include_blank: "Choose team" },
-                                  :class => 'form-control', :id => 'event_team' %>
+                                  :class => 'form-control', :id => 'event_team',
+                                  :required => true %>
         </div>
       <% else %>
         <p class="text-center is-large"><%= t("error.no_valid_team") %></p>

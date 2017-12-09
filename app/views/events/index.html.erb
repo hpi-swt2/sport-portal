@@ -34,7 +34,7 @@
             <%= t('events.participating') %>
           <% end %>
 
-          <% if can? :join, event%>
+          <% if can? :join, event %>
             <% if event.single_player? %>
               <%= link_to t('.join', :default => t("helpers.links.join")),
                           join_event_path(event),

@@ -103,8 +103,9 @@ de:
   success:
     updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
-    join_team_event: "Du bist mit deinem Team %{team} der Event %{event} erfolgreich beigetreten."
+    join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
+    leave_team_event: "Du hast das Event %{event} erfolgreich  mit deinem Team %{team} verlassen."
 
   error:
     update_match_points: Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut.

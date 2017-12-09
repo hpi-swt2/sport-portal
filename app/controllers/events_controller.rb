@@ -69,7 +69,7 @@ class EventsController < ApplicationController
     else
       team = Team.find(event_params[:teams])
       @event.add_team(team)
-      flash[:success] = t('success.join_team_event', event: @event.name, team: team)
+      flash[:success] = t('success.join_team_event', event: @event.name, team: team.name)
     end
     redirect_back fallback_location: events_url
   end
@@ -86,10 +86,12 @@ class EventsController < ApplicationController
   def leave
     if @event.single_player?
       @event.remove_participant(current_user)
+      flash[:success] = t('success.leave_event', event: @event.name)
     else
-      @event.remove_team()
+      team = Team.find((current_user.owned_teams & @event.teams)[0].id)
+      @event.remove_team(team)
+      flash[:success] = t('success.leave_team_event', event: @event.name, team: team.name)
     end
-    flash[:success] = t('success.leave_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
 

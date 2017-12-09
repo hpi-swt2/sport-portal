@@ -87,9 +87,13 @@ describe "detailed event page", type: :feature do
         visit event_path(@teamevent)
       end
 
-      it "should be possible for a user to join an event with his team, when it is not part of the event yet" do
-       expect(page).to have_link(:join_event_button)
-      end  
+      it "should have a join button" do
+        expect(page).to have_link(:join_event_button)
+      end
+
+      it "should not have a leave button" do
+        expect(page).not_to have_link(:leave_event_button)
+      end
     end
 
     context "which I participate in" do
@@ -100,9 +104,26 @@ describe "detailed event page", type: :feature do
         visit event_path(@teamevent)
       end
 
-      it "should not be possible for a user to join an event with his team, when it is already participating" do
-        expect(page).not_to have_link(:join_event_button)
+      it "should have a leave button" do
         expect(page).to have_link(:leave_event_button)
+      end
+
+      it "should redirect me to itself when clicking the leave button" do
+        click_link(:leave_event_button)
+        expect(current_path).to eq(event_path(@teamevent))
+      end
+
+      it "should not have a join button" do
+        expect(page).not_to have_link(:join_event_button)
+      end
+
+      it "should show that I am participating" do
+        expect(page).to have_content I18n.t('events.participating')
+      end
+
+      it "should have a join button after clicking the leave button" do
+        click_link(:leave_event_button)
+        expect(page).to have_link(:join_event_button)
       end
     end
 
