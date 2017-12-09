@@ -86,10 +86,13 @@ describe "index event page", type: :feature do
         expect(page).to have_link(:join_event_button)
       end
 
-      it "should render the team_join modal when clicking the join button" do
-        click_link(:join_event_button)
-        expect(page).to respond_to(:js)
-      end
+      #it "should render the team_join modal when clicking the join button" do
+        pending "Add corresponding test for modal-testing here"
+      #end
+
+      #it "should let me leave after clicking the join button" do
+        pending "Add corresponding test for button-testing inside the modal here"
+      #end
 
       it "should not have a leave button" do
         expect(page).not_to have_link(:leave_event_button)

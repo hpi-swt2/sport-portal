@@ -94,6 +94,14 @@ describe "detailed event page", type: :feature do
       it "should not have a leave button" do
         expect(page).not_to have_link(:leave_event_button)
       end
+
+      #it "should render the team_join modal when clicking the join button" do
+      pending "Add corresponding test for modal-testing here"
+      #end
+
+      #it "should let me leave after clicking the join button" do
+      pending "Add corresponding test for button-testing inside the modal here"
+      #end
     end
 
     context "which I participate in" do
