@@ -75,22 +75,55 @@ describe "index event page", type: :feature do
   context "for team events" do
     before(:each) do
       @event = FactoryBot.create(:team_event)
+      @team = FactoryBot.create(:team, :with_five_members)
+      @team.owners << @user
       sign_in @user
       visit events_path
     end
 
-    it "should be possible for a user to join an event with his team, when it is not part of the event yet" do
-      expect(page).to have_link(:join_event_button)
-    end  
+    context "which I do not participate in" do
+      it "should have a join button" do
+        expect(page).to have_link(:join_event_button)
+      end
 
-    it "should not be possible for a user to join an event with his team, when it is already participating" do
-      @team = FactoryBot.create(:team, :with_five_members)
-      @team.owners << @user
-      @event.teams << @team
-      visit events_path
+      it "should redirect me to itself when clicking the join button" do
+        expect(current_path).to eq(events_path)
+      end
 
-      expect(page).not_to have_link(:join_event_button)
-      expect(page).to have_link(:leave_event_button)
+      it "should not have a leave button" do
+        expect(page).not_to have_link(:leave_event_button)
+      end
+    end
+
+    context "which I participate in" do
+      before(:each) do
+        @event.add_team(@team)
+        visit events_path
+      end
+
+      it "should not have a join button" do
+        expect(page).not_to have_link(:join_event_button)
+      end
+
+      #Not yet implemented
+      #it "should redirect me to itself when clicking the leave button" do
+      #  click_link(:leave_event_button)
+      #  expect(current_path).to eq(events_path)
+      #end
+
+      it "should have a leave button" do
+        expect(page).to have_link(:leave_event_button)
+      end
+
+      it "should show that I am participating" do
+        expect(page).to have_content I18n.t('events.participating')
+      end
+
+      #Not yet implemented
+      #it "should let me join again after clicking the leave button" do
+      #  click_link(:leave_event_button)
+      #  expect(page).to have_link(:join_event_button)
+      #end
     end
   end
 
@@ -112,7 +145,8 @@ describe "index event page", type: :feature do
     it "should not display a join button" do
       sign_in @user
       visit "/events?showAll=on"
-      expect(page).not_to have_button(:join_event_button)
+      expect(page).not_to have_link(:join_event_button)
     end
   end
 end
+

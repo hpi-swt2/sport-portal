@@ -67,6 +67,11 @@ en:
         all: "Not authorized to %{action} %{subject}."
         user: "Not allowed to manage other user accounts."
 
+  success:
+      join_event: "You've joined the event %{event} successfully."
+      join_team_event: "You and your team %{team} have joined the event %{event} successfully."
+      leave_event: "You've left the event %{event} successfully."
+
   events:
     create_event: "Create Event"
     choose_event_format: "Choose event format"
@@ -88,6 +93,7 @@ en:
       select_game_mode: "Select game mode"
       select_player_type: "Spielertyp auswählen"
     show_events: "Show all events"
+    join_team_event: "Join event %{event} as a team"
 
   validations:
     not_only_numbers: "should not only contain numbers"

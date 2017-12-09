@@ -1,13 +1,32 @@
-<div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Modal header</h3>
-</div>
-<div class="modal-body">
-  <% @event.participants.each do |participant| %>
-    <%= participant.first_name %>
-  <% end %>
-</div>
-<div class="modal-footer">
-  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-  <button class="btn btn-primary">Save changes</button>
-</div>
+<%= form_for @event, url: {action: "join"}, :method => :put, :html => { :class => "form-horizontal event" } do |f| %>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3 id="myModalLabel"><%= t('events.join_team_event', event: @event.name) %></h3>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <% if current_user.owned_teams.present? %>
+        <%= f.label :teams, :class => 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= f.collection_select :teams, current_user.owned_teams, :id, :name,
+                                  {include_blank: "Choose team" },
+                                  :class => 'form-control', :id => 'event_team' %>
+        </div>
+      <% else %>
+        <p class="text-center is-large"><%= t("error.no_valid_team") %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                events_path, data:{dismiss: "modal"}, :class => 'btn btn-default' %>
+
+    <% if current_user.owned_teams.present? %>
+          <%= f.submit t('helpers.links.join'), :class => 'btn btn-primary' %>
+    <% else %>
+      <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_team_path,
+                  :class => 'btn btn-primary pull-left' %>
+    <% end %>
+  </div>
+<% end %>

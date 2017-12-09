@@ -31,6 +31,7 @@
             <%= link_to t('.leave', :default => t("helpers.links.leave")),
                         leave_event_path(event),
                         :method => :put,
+                        disabled: current_user.ownes_participating_teams?(event),
                         :class => 'btn btn-xs btn-default',
                         id: :leave_event_button %>
             <%= t('events.participating') %>
@@ -44,12 +45,11 @@
                           :class => 'btn btn-xs btn-default',
                           id: :join_event_button %>
             <% else %>
-              <%= link_to 'Join as Team',
+              <%= link_to t('.join', :default => t("helpers.links.join")),
                           team_join_path(event),
-                          remote: true,
-                          'data-toggle': "modal",
-                  'data-target': "#modal-window",
-                  class: 'btn btn-xs btn-default'%>
+                          remote: true, data: {toggle: "modal", target: "modal-window"},
+                          class: 'btn btn-xs btn-default',
+                          id: :join_event_button %>
              <% end %>
           <% end %>
 
@@ -87,7 +87,6 @@
 <div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
     </div>
   </div>
 </div>
