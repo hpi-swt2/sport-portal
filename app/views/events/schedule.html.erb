@@ -47,7 +47,9 @@
         </td>
         <td>
           <%= date = match.event.startdate+match.gameday-1 %>
-          <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">Neuen Termin vorschlagen</button>
+          <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">
+            <%= t 'events.schedule.propose_new_appointment' %>
+          </button>
           <!-- Modal -->
           <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -55,21 +57,31 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Wähle einen neuen Termin</h4>
+                  <h4 class="modal-title">
+                    <%= t 'events.schedule.propose_new_appointment' %>
+                  </h4>
                 </div>
                 <div class="modal-body">
-                  <p>Datum</p>
+                  <p>
+                    <%= t '.date' %>
+                  </p>
                   <%= form_for match, html: {method: "put"} do |f| %>
-                    <%= f.text_field :date, :value => date %>
+                    <%= f.text_field :date, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
                   <% end %>
-                  <p>Ort</p>
+                  <p>
+                    <%= t '.place' %>
+                  </p>
                   <%= form_for match, html: {method: "put"} do |f| %>
-                    <%= f.text_field :place, :value => match.place %>
+                    <%= f.text_field :place, :class => 'form-control', :value => match.place %>
                   <% end %>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Speichern</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                  <button type="button" class="btn btn-primary">
+                    <%= t('helpers.links.save') %>
+                  </button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <%= t('helpers.links.cancel') %>
+                  </button>
                 </div>
               </div>
             </div>

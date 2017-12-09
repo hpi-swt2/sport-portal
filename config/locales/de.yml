@@ -134,6 +134,7 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      propose_new_appointment: "Neuen Termin vorschlagen"
 
   validations:
     not_only_numbers: "darf nicht nur aus Zahlen bestehen"
