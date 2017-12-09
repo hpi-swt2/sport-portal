@@ -122,6 +122,7 @@ de:
     new_tournament: "Neues Tournier"
     show_events: "Alle Events anzeigen"
     join_team_event: "Event %{event} mit einem Team beitreten"
+    choose_team: "Ein Team auswählen"
     participating: "Beigetreten"
     show:
       to_schedule: zum Spielplan

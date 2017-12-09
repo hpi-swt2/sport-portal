@@ -86,8 +86,9 @@ describe "index event page", type: :feature do
         expect(page).to have_link(:join_event_button)
       end
 
-      it "should redirect me to itself when clicking the join button" do
-        expect(current_path).to eq(events_path)
+      it "should render the team_join modal when clicking the join button" do
+        click_link(:join_event_button)
+        expect(page).to respond_to(:js)
       end
 
       it "should not have a leave button" do

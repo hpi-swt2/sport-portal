@@ -74,6 +74,7 @@ en:
 
   events:
     create_event: "Create Event"
+    choose_team: "Choose a team"
     choose_event_format: "Choose event format"
     new_league: "New league"
     new_tournament: "New tournament"
