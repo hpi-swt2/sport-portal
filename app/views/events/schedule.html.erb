@@ -46,7 +46,7 @@
           <% end %>
         </td>
         <td>
-          <%= match.event.startdate+match.gameday-1 %>
+          <%= date = match.event.startdate+match.gameday-1 %>
           <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">Neuen Termin vorschlagen</button>
           <!-- Modal -->
           <div id="myModal" class="modal fade" role="dialog">
@@ -58,7 +58,14 @@
                   <h4 class="modal-title">Wähle einen neuen Termin</h4>
                 </div>
                 <div class="modal-body">
-                  <p>Test</p>
+                  <p>Datum</p>
+                  <%= form_for match, html: {method: "put"} do |f| %>
+                    <%= f.text_field :date, :value => date %>
+                  <% end %>
+                  <p>Ort</p>
+                  <%= form_for match, html: {method: "put"} do |f| %>
+                    <%= f.text_field :place, :value => match.place %>
+                  <% end %>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary">Speichern</button>
