@@ -22,6 +22,8 @@ describe 'rake match_notification:send_match_notification', type: :task do
 
     it 'should not send a match notification' do
       task.execute
+
+      expect(ActionMailer::Base.deliveries.last).to be_empty
     end
   end
 end

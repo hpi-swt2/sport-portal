@@ -5,7 +5,7 @@ class MatchMailer < ApplicationMailer
     @match = match
     I18n.with_locale( I18n.default_locale) do
       mail(to: @user.email,
-           subject: I18n.t('match_mailer.match_notification.subject', startdate: @match.event.startdate)
+           subject: I18n.t('match_mailer.match_notification.subject', startdate: I18n.localize(@match.event.startdate))
       )
     end
   end
