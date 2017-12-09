@@ -87,3 +87,6 @@ en:
         invite_user_to_team: "+"
       invite_user_to_team:
         title: "Invite new player"
+        no_user_for_mail: 'No user matching the given email address.'
+        user_already_in_team: 'User is already part of this team.'
+        assignment_successful: 'User has been added successfully to this Team.'

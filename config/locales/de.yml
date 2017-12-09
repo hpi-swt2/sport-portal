@@ -114,4 +114,6 @@ de:
       invite_user_to_team: "+"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
-
+      no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
+      user_already_in_team: 'Der Nutzer ist bereits Mitglied in diesem Team.'
+      assignment_successful: 'Der Nutzer wurde erfolgreich zu diesem Team hinzugefügt.'

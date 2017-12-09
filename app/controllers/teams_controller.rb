@@ -81,7 +81,7 @@ class TeamsController < ApplicationController
     if user
       assign_membership_to_user user
     else
-      flash[:error] = 'No user for specified mail!'
+      flash[:error] = I18n.t('teams.invite_user_to_team.no_user_for_mail')
     end
     redirect_to @team
   end
@@ -92,13 +92,12 @@ class TeamsController < ApplicationController
 
   private
     def assign_membership_to_user (new_member)
-      puts new_member.first_name
       unless @team.members.include? new_member
         @team.members << new_member
         # todo: send mail
-        flash[:success] = 'Assigned membership!'
+        flash[:success] = I18n.t('teams.invite_user_to_team.assignment_successful')
       else
-        flash[:error] = 'User already member of team!'
+        flash[:error] = I18n.t('teams.invite_user_to_team.user_already_in_team')
       end
     end
 
