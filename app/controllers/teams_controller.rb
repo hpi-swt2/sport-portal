@@ -92,8 +92,9 @@ class TeamsController < ApplicationController
 
   private
     def assign_membership_to_user (new_member)
-      unless @team.members.include? new_member
-        @team.members << new_member
+      team_members = @team.members
+      unless team_members.include? new_member
+        team_members << new_member
         # todo: send mail
         flash[:success] = I18n.t('teams.invite_user_to_team.assignment_successful')
       else

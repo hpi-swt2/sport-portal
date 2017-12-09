@@ -64,7 +64,7 @@ class Ability
     end
 
     def can_assign_membership_by_email(user)
-      can :assign_membership_by_email, Team, members: {id: user.id }
+      can :assign_membership_by_email, Team, members: { id: user.id }
     end
 
     def can_assign_ownership(user)
