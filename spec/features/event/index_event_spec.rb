@@ -76,7 +76,7 @@ describe "index event page", type: :feature do
     before(:each) do
       @event = FactoryBot.create(:team_event)
       @team = FactoryBot.create(:team, :with_five_members)
-      @team.owners << @user
+      @team.members << @user
       sign_in @user
       visit events_path
     end
@@ -109,11 +109,6 @@ describe "index event page", type: :feature do
         expect(page).not_to have_link(:join_event_button)
       end
 
-      it "should redirect me to itself when clicking the leave button" do
-        click_link(:leave_event_button)
-        expect(current_path).to eq(events_path)
-      end
-
       it "should have a leave button" do
         expect(page).to have_link(:leave_event_button)
       end
@@ -122,9 +117,33 @@ describe "index event page", type: :feature do
         expect(page).to have_content I18n.t('events.participating')
       end
 
-      it "should let me join again after clicking the leave button" do
-        click_link(:leave_event_button)
-        expect(page).to have_link(:join_event_button)
+      context "with a team I own" do
+        before(:each) do
+          @team.owners << @user
+          visit events_path
+        end
+
+        it "should have a clickable leave button" do
+          leave_button = page.find_link(:leave_event_button)
+          expect(leave_button[:disabled]).to eq nil
+        end
+
+        it "should redirect me to itself when clicking the leave button" do
+          click_link(:leave_event_button)
+          expect(current_path).to eq(events_path)
+        end
+
+        it "should let me join again after clicking the leave button" do
+          click_link(:leave_event_button)
+          expect(page).to have_link(:join_event_button)
+        end
+      end
+
+      context "with a team I don't own" do
+        it "should have a leave button that is disabled" do
+          leave_button = page.find_link(:leave_event_button)
+          expect(leave_button[:disabled]).to eq 'disabled'
+        end
       end
     end
   end

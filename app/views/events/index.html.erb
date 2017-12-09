@@ -28,7 +28,7 @@
             <%= link_to t('.leave', :default => t("helpers.links.leave")),
                         leave_event_path(event),
                         :method => :put,
-                        disabled: current_user.ownes_participating_teams?(event),
+                        disabled: (not event.has_participating_teams?(current_user)),
                         :class => 'btn btn-xs btn-default',
                         id: :leave_event_button %>
             <%= t('events.participating') %>

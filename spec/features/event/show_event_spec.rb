@@ -79,14 +79,13 @@ describe "detailed event page", type: :feature do
   context "for team events" do
     before(:each) do
       @teamevent = FactoryBot.create :team_event
+      @team = FactoryBot.create(:team, :with_five_members)
+      @team.members << @user
       sign_in @user
+      visit event_path(@teamevent)
     end
 
     context "which I do not participate in" do
-      before(:each) do
-        visit event_path(@teamevent)
-      end
-
       it "should have a join button" do
         expect(page).to have_link(:join_event_button)
       end
@@ -106,35 +105,50 @@ describe "detailed event page", type: :feature do
 
     context "which I participate in" do
       before(:each) do
-        @team = FactoryBot.create(:team, :with_five_members)
-        @team.owners << @user
         @teamevent.add_team(@team)
         visit event_path(@teamevent)
+      end
+      it "should not have a join button" do
+        expect(page).not_to have_link(:join_event_button)
       end
 
       it "should have a leave button" do
         expect(page).to have_link(:leave_event_button)
       end
 
-      it "should redirect me to itself when clicking the leave button" do
-        click_link(:leave_event_button)
-        expect(current_path).to eq(event_path(@teamevent))
-      end
-
-      it "should not have a join button" do
-        expect(page).not_to have_link(:join_event_button)
-      end
-
       it "should show that I am participating" do
         expect(page).to have_content I18n.t('events.participating')
       end
 
-      it "should have a join button after clicking the leave button" do
-        click_link(:leave_event_button)
-        expect(page).to have_link(:join_event_button)
+      context "with a team I own" do
+        before(:each) do
+          @team.owners << @user
+          visit event_path(@teamevent)
+        end
+
+        it "should have a clickable leave button" do
+          leave_button = page.find_link(:leave_event_button)
+          expect(leave_button[:disabled]).to eq nil
+        end
+
+        it "should redirect me to itself when clicking the leave button" do
+          click_link(:leave_event_button)
+          expect(current_path).to eq(event_path(@teamevent))
+        end
+
+        it "should let me join again after clicking the leave button" do
+          click_link(:leave_event_button)
+          expect(page).to have_link(:join_event_button)
+        end
+      end
+
+      context "with a team I don't own" do
+        it "should have a leave button that is disabled" do
+          leave_button = page.find_link(:leave_event_button)
+          expect(leave_button[:disabled]).to eq 'disabled'
+        end
       end
     end
-
   end
 
   context "for events whose deadline has passed" do
@@ -145,7 +159,6 @@ describe "detailed event page", type: :feature do
     end
 
     it "should not display a join button" do
-      
       expect(page).not_to have_link(:join_event_button)
     end
   end

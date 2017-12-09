@@ -109,8 +109,7 @@ class Event < ApplicationRecord
     participants.include?(user)
   end
 
-  def add_team(teamid)
-    team = Team.find(teamid)
+  def add_team(team)
     teams << team
   end
 
@@ -127,8 +126,16 @@ class Event < ApplicationRecord
     end
   end
 
+  def has_participating_teams?(user)
+    if single_player?
+      has_participant?(user)
+    else
+      (user.owned_teams & teams).present?
+    end
+  end
+
   def has_team_member?(user)
-    (teams & (user.teams)).present?
+    (teams & user.teams).present?
   end
 
 

@@ -69,13 +69,6 @@ class User < ApplicationRecord
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
   has_many :owned_teams, through: :team_owners, source: :team
 
-  def ownes_participating_teams?(event)
-    if event.single_player?
-      false
-    else
-      not (owned_teams & event.teams).present?
-    end
-  end
 
   def has_omniauth?
     provider.present? && uid.present?
