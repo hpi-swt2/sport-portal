@@ -6,6 +6,9 @@ class TeamsController < ApplicationController
   before_action :owners_include_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource :team
+  # fixme: fix security (probably by adding hidden field in form / add csrf meta field) instead of disabling it:
+  # fixme: https://stackoverflow.com/questions/3364492/actioncontrollerinvalidauthenticitytoken
+  skip_before_action :verify_authenticity_token, :only => [:assign_membership_by_email]
 
   # GET /teams
   def index
@@ -76,6 +79,25 @@ class TeamsController < ApplicationController
     redirect_to @team
   end
 
+  # fixme: maybe rename into assign_membership?
+  def assign_membership_by_email
+    user = User.find_by_email params[:email]
+    if user
+      puts user.first_name
+      # fixme: create team_user association and compare
+      unless @team.members.include? user
+        @team.members << user
+        # todo: send mail
+        puts 'assign membership by mail!'
+      else
+        puts 'user already member of team'
+      end
+    else
+      puts 'No user for specified mail!'
+    end
+    redirect_to @team
+  end
+
   def current_ability
     @current_ability ||= Ability.new(current_user, params[:team_member])
   end
@@ -110,6 +132,7 @@ class TeamsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def team_params
-      params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members)
+      # fixme: :email necessary here?
+      params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members, :email)
     end
 end

@@ -43,7 +43,7 @@
   </tbody>
 </table>
 
-<% if can? :assign_membership, @team %>
+<% if can? :assign_membership_by_email, @team %>
   <%= link_to t('teams.show.invite_user_to_team'),
               '#',
               data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
