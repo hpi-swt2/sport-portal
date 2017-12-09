@@ -30,7 +30,7 @@ class Ability
     alias_action :schedule, :overview, to: :read
     alias_action :update, :destroy, to: :modify
     alias_action :create, :read, :update, :destroy, to: :crud
-    
+
     can :read, :all
     cannot :read, Team, private: true
 
