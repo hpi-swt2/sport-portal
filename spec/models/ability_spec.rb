@@ -105,4 +105,11 @@ RSpec.describe Ability, type: :model do
     ability = Ability.new(@user)
     ability.should_not be_able_to(:manage, team)
   end
+
+  it 'should not allow users to invite user to teams they are no member of' do
+    team = Team.new
+
+    ability = Ability.new(@user)
+    ability.should_not be_able_to(:assign_membership_by_email, team)
+  end
 end

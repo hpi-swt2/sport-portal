@@ -292,4 +292,36 @@ end
       }.to change(TeamUser, :count).by(-1)
     end
   end
+
+  describe 'POST #assign_membership_by_email' do
+    it 'succeeds when called as a team member' do
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+
+      team.members << subject.current_user
+
+      expect {
+        post :assign_membership_by_email, params: { id: team.id, email: another_user.email }
+      }.to change(team.members, :count).by(1)
+    end
+
+    it 'does not change members count when new user already member of team' do
+      team = Team.create! valid_attributes
+
+      team.members << subject.current_user
+
+      expect {
+        post :assign_membership_by_email, params: { id: team.id, email: subject.current_user.email }
+      }.to_not change(team.members, :count)
+    end
+
+    it 'does not succeed when email matches no member' do
+      team = Team.create! valid_attributes
+
+      team.members << subject.current_user
+
+      post :assign_membership_by_email, params: { id: team.id, email: nil }
+      expect(response).to_not be_success
+    end
+  end
 end
