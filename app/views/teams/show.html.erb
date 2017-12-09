@@ -57,6 +57,7 @@
           <h4 class="modal-title"><%= t('teams.invite_user_to_team.title') %></h4>
         </div>
         <form action="<%= assign_membership_by_email_team_path(@team) %>" method="post">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
           <div class="modal-body">
             <div class="form-group">
               <label for="invited-user-email" class="form-control-label"><%= t('activerecord.attributes.user.email') %></label>

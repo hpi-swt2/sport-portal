@@ -6,9 +6,6 @@ class TeamsController < ApplicationController
   before_action :owners_include_user, only: [:assign_ownership, :delete_membership, :delete_ownership]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource :team
-  # fixme: fix security (probably by adding hidden field in form / add csrf meta field) instead of disabling it:
-  # fixme: https://stackoverflow.com/questions/3364492/actioncontrollerinvalidauthenticitytoken
-  skip_before_action :verify_authenticity_token, :only => [:assign_membership_by_email]
 
   # GET /teams
   def index
