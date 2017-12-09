@@ -40,6 +40,7 @@
               leave_event_path(@event),
               :method => :put,
               :class => 'btn btn-default',
+              disabled: current_user.ownes_participating_teams?(event),
               id: :leave_event_button %>
   <%= t('events.participating') %>
 <% end %>

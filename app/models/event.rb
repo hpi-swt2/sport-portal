@@ -109,12 +109,22 @@ class Event < ApplicationRecord
     participants.include?(user)
   end
 
-  def add_team(team)
+  def add_team(teamid)
+    team = Team.find(teamid)
     teams << team
   end
 
   def remove_team(team)
     teams.delete(team)
+  end
+
+  def remove(user)
+    if single_player?
+      remove_participant(user)
+    else
+      team = Team.find((user.owned_teams & teams)[0].id)
+      remove_team(team)
+    end
   end
 
   def has_team_member?(user)
@@ -123,12 +133,12 @@ class Event < ApplicationRecord
 
 
   def can_join?(user)
+    active = (not deadline_has_passed?)
     if single_player?
-      (not has_participant?(user)) && (not deadline_has_passed?)
+      (not has_participant?(user)) && active
     else
-      (not has_team_member?(user)) && (not deadline_has_passed?)
+      (not has_team_member?(user)) && active
     end
-  
   end
 
   def can_leave?(user)

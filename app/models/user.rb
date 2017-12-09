@@ -70,7 +70,11 @@ class User < ApplicationRecord
   has_many :owned_teams, through: :team_owners, source: :team
 
   def ownes_participating_teams?(event)
-    not (owned_teams & event.teams).present?
+    if event.single_player?
+      false
+    else
+      not (owned_teams & event.teams).present?
+    end
   end
 
   def has_omniauth?

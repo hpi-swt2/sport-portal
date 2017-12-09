@@ -71,6 +71,8 @@ en:
       join_event: "You've joined the event %{event} successfully."
       join_team_event: "You and your team %{team} have joined the event %{event} successfully."
       leave_event: "You've left the event %{event} successfully."
+      leave_team_event: "You and your team %{team} have left the event %{event} successfully."
+
 
   events:
     create_event: "Create Event"
