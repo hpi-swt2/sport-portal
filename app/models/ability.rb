@@ -27,6 +27,7 @@ class Ability
 
 
   def initialize(user, team_member = nil)
+    alias_action :schedule, :overview, to: :read
     alias_action :update, :destroy, to: :modify
     alias_action :create, :read, :update, :destroy, to: :crud
 
