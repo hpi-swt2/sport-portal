@@ -76,21 +76,12 @@ class TeamsController < ApplicationController
     redirect_to @team
   end
 
-  # fixme: maybe rename into assign_membership?
   def assign_membership_by_email
     user = User.find_by_email params[:email]
     if user
-      puts user.first_name
-      # fixme: create team_user association and compare
-      unless @team.members.include? user
-        @team.members << user
-        # todo: send mail
-        puts 'assign membership by mail!'
-      else
-        puts 'user already member of team'
-      end
+      assign_membership_to_user user
     else
-      puts 'No user for specified mail!'
+      flash[:error] = 'No user for specified mail!'
     end
     redirect_to @team
   end
@@ -100,6 +91,17 @@ class TeamsController < ApplicationController
   end
 
   private
+    def assign_membership_to_user (new_member)
+      puts new_member.first_name
+      unless @team.members.include? new_member
+        @team.members << new_member
+        # todo: send mail
+        flash[:success] = 'Assigned membership!'
+      else
+        flash[:error] = 'User already member of team!'
+      end
+    end
+
     def delete_owner_if_existing
       if owners_include_user
         team_owners.delete user
