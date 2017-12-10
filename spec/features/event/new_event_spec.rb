@@ -23,10 +23,10 @@ describe "new event page", type: :feature do
     expect(page).to have_field('event_enddate')
   end
 
-  it "should have a disabled field for event duration" do
+  it "should have a field for event duration" do
     visit new_event_path
 
-    expect(page).to have_field('event_duration', disabled: true)
+    expect(page).to have_field('event_duration')
   end
 
   it "should have a dropdown menu for type" do

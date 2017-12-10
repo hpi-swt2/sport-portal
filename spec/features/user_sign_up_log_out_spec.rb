@@ -18,6 +18,7 @@ RSpec.feature "User management", type: :feature do
       # fill_in can also locate input fields by their 'name' attribute
       # http://www.rubydoc.info/github/jnicklas/capybara/Capybara/Node/Actions:fill_in
       fill_in "user[first_name]", with: attrs[:first_name]
+      fill_in "user[last_name]", :with => attrs[:last_name]
       fill_in "user[email]", with: attrs[:email]
       fill_in "user[password]", with: attrs[:password]
       fill_in "user[password_confirmation]", with: attrs[:password_confirmation]

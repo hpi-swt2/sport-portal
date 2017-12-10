@@ -26,26 +26,35 @@ class Ability
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
   def initialize(user)
+
+    alias_action :schedule, :overview, to: :read
+    alias_action :update, :destroy, to: :modify
+    alias_action :create, :read, :update, :destroy, to: :crud
+
     can :read, :all
     cannot :read, Team, private: true
 
     if user.present?
       user_id = user.id
 
-      can :manage, User, id: user_id
-      can :join, Event, player_type: Event.player_types[:single]
-      can :manage, Event, owner_id: user_id
+      # all
       can :create, :all
 
-      can_crud_team(user_id)
-
-      can_assign_ownership(user)
-
-      can_delete_ownership(user)
-
-      can_delete_membership(user)
-
+      # User
+      can [:modify, :edit_profile, :update_profile, :dashboard], User, id: user_id
       cannot :create, User
+
+      # Event
+      can :crud, Event, owner_id: user_id
+      can_join_event(user)
+      can_leave_event(user)
+      can :schedule, Event
+
+      # Team
+      can_crud_team(user_id)
+      can_assign_ownership(user)
+      can_delete_ownership(user)
+      can_delete_membership(user)
 
       if user.admin?
         can :manage, :all
@@ -54,6 +63,18 @@ class Ability
   end
 
   private
+
+    def can_join_event(user)
+      can :join, Event do |event|
+        event.can_join?(user)
+      end
+    end
+
+    def can_leave_event(user)
+      can :leave, Event do |event|
+        event.can_leave?(user)
+      end
+    end
 
     def can_crud_team(user_id)
       can :read, Team, private: true, members: { id: user_id }

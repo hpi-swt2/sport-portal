@@ -5,7 +5,17 @@
 </div>
 
 <%= form_for(@user, id: 'edit_profile', url: user_profile_path(@user), html: { class: "form-horizontal user", method: :patch }) do |f| %>
-  <div class="form-group row">
+    <div class="form-group row">
+      <%= f.label :avatar, t('activerecord.models.image.one'), :class => 'col-form-label col-lg-2'%>
+      <div class="col-lg-10">
+        <%= image_tag @user.avatar_url || image_path('missing_avatar.png'), :id => "preview", :style => "max-width:100px; max-height:100px"%>
+        <%= f.file_field :avatar, class: "form-control-file" %>
+        <% if current_user.avatar %>
+            <%= t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %><%= f.check_box :remove_avatar %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group row">
     <%= f.label :birthday, class: 'col-lg-2 col-form-label' %>
     <div class="col-lg-10">
       <%= f.date_field :birthday, min: Date.today - 200.years, max: Date.today, class: 'form-control' %>
@@ -20,7 +30,12 @@
   <div class="form-group row">
     <%= f.label :telegram_username, class: 'col-lg-2 col-form-label' %>
     <div class="col-lg-10">
-      <%= f.text_field :telegram_username, class: 'form-control' %>
+      <div class="input-group">
+        <div class="input-group-addon">
+          <i class="fa fa-telegram fa-lg"></i>
+        </div>
+        <%= f.text_field :telegram_username, class: 'form-control' %>
+      </div>
     </div>
   </div>
   <div class="form-group row">
