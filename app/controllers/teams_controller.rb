@@ -46,11 +46,16 @@ class TeamsController < ApplicationController
   # DELETE /teams/1
   def destroy
     # Delete all team ownerships and team memberships associated with the team to destroy
-    team_id = @team.id
-    TeamUser.where(team_id: team_id).delete_all
-    @team.destroy
 
-    redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
+    if not @team.in_event?
+      team_id = @team.id
+      TeamUser.where(team_id: team_id).delete_all
+      @team.destroy
+      redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
+    else
+      redirect_to teams_url, notice: I18n.t('helpers.teams.cant_destroy', resource_name: Team.model_name.human).capitalize
+    end
+
   end
 
   # Assigns team ownership to a specific team member

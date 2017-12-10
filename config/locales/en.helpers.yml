@@ -43,6 +43,7 @@ en:
       private: "Private"
       apply_action: "Apply action to selected:"
       multiple_confirmation: "You could perform the action on user: "
+      cant_destroy: "%{resource_name} kann nicht gelöscht werden, da es noch an Events teilnimmt."
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."
