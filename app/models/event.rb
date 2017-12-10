@@ -84,8 +84,6 @@ class Event < ApplicationRecord
   end
 
   def calculate_round_robin
-    puts "hello"
-    puts teams
     pairings_per_day = round_robin_pairings teams.to_a
     pairings_per_day.each_with_index do |day, gameday|
       day.each do |pairing|
@@ -94,7 +92,7 @@ class Event < ApplicationRecord
         matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? or pairing[1].nil?
       end
     end
-    self.save
+    save
   end
 
   # creates a twodimensional array of round robin pairings (one array per gameday) the inner array consists of the pairings
