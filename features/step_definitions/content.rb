@@ -26,6 +26,10 @@ Then(/^the '(.*)' input should already be filled with '(.*)'$/) do |name, text|
   expect(page).to have_field(name, with: text)
 end
 
+Then /^there should be a dropdown '(.*)' with options '(.*)'$/ do |name, options|
+  expect(page).to have_select(name)#, with_options: options.split(','))
+end
+
 
 Then(/^there should be an input '(.*)'$/) do |name|
   expect(page).to have_field(name)
