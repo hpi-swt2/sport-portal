@@ -30,27 +30,27 @@ RSpec.describe EventsController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_attributes) {
     {
-        name: "TT Event",
-        discipline: 0,
-        game_mode: 0,
-        player_type: Event.player_types[:single],
-        deadline: Date.current,
-        startdate: Date.current,
-        enddate: Date.current,
-        owner: @user,
-        max_teams: 20
+      name: "TT Event",
+      discipline: 0,
+      game_mode: 0,
+      player_type: Event.player_types[:single],
+      deadline: Date.current,
+      startdate: Date.current,
+      enddate: Date.current,
+      owner: @user,
+      max_teams: 20
     }
   }
 
   let(:invalid_attributes) {
     {
-        name: "TT Event",
-        discipline: 0,
-        game_mode: 0,
-        player_type: Event.player_types[:single],
-        deadline: Date.new(2017, 11, 23),
-        startdate: Date.new(2017, 11, 23),
-        enddate: Date.new(2017, 10, 1)
+      name: "TT Event",
+      discipline: 0,
+      game_mode: 0,
+      player_type: Event.player_types[:single],
+      deadline: Date.new(2017, 11, 23),
+      startdate: Date.new(2017, 11, 23),
+      enddate: Date.new(2017, 10, 1)
     }
   }
 
@@ -185,9 +185,9 @@ RSpec.describe EventsController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {
-            deadline: Date.new(2017, 11, 20),
-            startdate: Date.new(2017, 11, 21),
-            enddate: Date.new(2017, 11, 22)
+          deadline: Date.new(2017, 11, 20),
+          startdate: Date.new(2017, 11, 21),
+          enddate: Date.new(2017, 11, 22)
         }
       }
 
@@ -290,6 +290,14 @@ RSpec.describe EventsController, type: :controller do
     it "returns a success response" do
       event = Event.create! valid_attributes
       get :schedule, params: {id: event.to_param}, session: valid_session
+      expect(response).to be_success
+    end
+  end
+
+  describe "GET #overview" do
+    it "returns a success response" do
+      tournament = Tournament.create! valid_attributes
+      get :overview, params: { id: tournament.to_param }, session: valid_session
       expect(response).to be_success
     end
   end

@@ -18,8 +18,23 @@ describe "detailed event page", type: :feature do
 
   context "for single player events" do
     before(:each) do
-      @event = FactoryBot.create :single_player_event
       sign_in @user
+      @event = FactoryBot.create :single_player_event, owner_id: @user.id
+    end
+
+    context "participants" do
+      before(:each) do
+        @event.add_participant @user
+        visit event_path(@event)
+      end
+
+      it "should show a list of participants" do
+        expect(page).to have_content I18n.t('events.show.participants')
+      end
+
+      it "should show name of joined users" do
+        expect(page).to have_content @user.name
+      end
     end
 
     context "which I participate in" do
@@ -78,13 +93,31 @@ describe "detailed event page", type: :feature do
 
   context "for team events" do
     before(:each) do
-      @teamevent = FactoryBot.create :team_event
       sign_in @user
+      @teamevent = FactoryBot.create :team_event
       visit event_path(@teamevent)
     end
 
     it "should not have a join button" do
       expect(page).not_to have_link(:join_event_button)
     end
+
+    context "participants" do
+      before(:each) do
+        @team = FactoryBot.create :team
+        @teamevent.teams << @team
+        visit event_path(@teamevent)
+      end
+
+      it "should show a list of participating teams" do
+        expect(page).to have_content I18n.t('events.show.participants')
+      end
+
+      it "should show name of joined teams" do
+        expect(page).to have_link @team.name
+      end
+    end
+
+
   end
 end
