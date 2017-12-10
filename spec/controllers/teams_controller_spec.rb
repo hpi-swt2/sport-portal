@@ -339,9 +339,9 @@ end
       team.members << member
 
       post :perform_action_on_multiple_members, params: { id: team.id, members: [subject.current_user.id, member.id], delete_ownership: "delete_ownership" }
-
+      team.reload
       expect(team.owners.length).to eq(1)
-      expect(team.owners.first).to equal(another_owner)
+      expect(team.owners.first).to eq(another_owner)
     end
   end    
 end
