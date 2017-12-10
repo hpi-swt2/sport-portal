@@ -70,10 +70,10 @@ class TeamsController < ApplicationController
   end
 
   def perform_action_on_multiple_members
-
     target_members = params[:members]
-    if target_members.include? current_user.id.to_s
-      target_members = (target_members - [current_user.id.to_s]) + [current_user.id.to_s]
+    current_user_id_string = current_user.id.to_s
+    if target_members.include? current_user_id_string
+      target_members = (target_members - [current_user_id_string]) + [current_user_id_string]
     end
 
     affected_users = target_members
@@ -88,12 +88,11 @@ class TeamsController < ApplicationController
         elsif params[:delete_membership]
           delete_membership_from_member
         end
-      rescue => e
+      rescue
         affected_users = affected_users - [member]
-        print e.message
       end
     end
-    affected_users_names = affected_users.map {|user| User.find(user).first_name}
+    affected_users_names = affected_users.map { |user| User.find(user).first_name }
     redirect_to @team, notice: I18n.t('helpers.teams.multiple_confirmation') + "#{affected_users_names.join(", ")}"
   end
 
@@ -101,7 +100,7 @@ class TeamsController < ApplicationController
     def assign_ownership_to_member
       authorize! :assign_ownership, @team
       member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
-      unless member_to_become_owner.nil?
+      if member_to_become_owner
         member_to_become_owner.assign_ownership
       end
     end
@@ -109,7 +108,7 @@ class TeamsController < ApplicationController
     def delete_ownership_from_member
       authorize! :delete_ownership, Team.find(params[:id])
       member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
-      unless member_to_become_owner.nil?
+      if member_to_become_owner
         member_to_become_owner.delete_ownership
       end
     end
