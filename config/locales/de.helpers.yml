@@ -22,6 +22,8 @@ de:
       delete_ownership: "Als Captain löschen"
       delete_membership: "Aus dem Team entfernen"
       save: "Speichern"
+      join: "Beitreten"
+      leave: "Verlassen"
     titles:
       edit: "%{model} bearbeiten"
       save: "%{model} speichern"
@@ -31,6 +33,7 @@ de:
       create: "Erstelle %{model}"
       submit: "Speichere %{model}"
       update: "Aktualisiere %{model}"
+      delete: "Lösche %{model}"
     select:
       prompt: "Bitte wähle"
     teams:
@@ -41,3 +44,9 @@ de:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
       destroyed: "%{resource_name} wurde erfolgreich entfernt."
+    label:
+      user:
+        birthday: "Geburtstag"
+        telephone_number: "Telefonnummer"
+        telegram_username: "Telegram Benutzername"
+        favourite_sports: "Lieblingssportarten"

@@ -29,20 +29,48 @@
   <% end %>
 </dl>
 
+<div class="table-responsive">
+  <h3><%= t("events.show.participants") %></h3>
+  <table class="table">
+    <% if @event.single_player? %>
+      <thead><tr><th><%=t '.title', :default => User.model_name.human.titleize %></th></tr></thead>
+      <tbody>
+        <% @event.participants.each do |participant| %>
+          <td><%= participant.name %></td>
+        <% end %>
+      </tbody>
+    <% else %>
+      <thead><tr><%=t '.title', :default => Team.model_name.human.titleize %></tr></thead>
+      <tbody>
+        <% @event.teams.each do |team| %>
+          <tr><td><%= link_to team.name, team_path(team), id: team.name %></td></tr>
+        <% end %>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+
 <%= link_to t('.to_schedule'),
-            event_schedule_path(@event), :class => 'btn btn-default' %>
+            event_schedule_path(@event),
+            :class => 'btn btn-default' %>
+
+<%= link_to t('.to_overview'),
+            event_overview_path(@event), :class => 'btn btn-default' %>
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
-  <% if user_signed_in? %>
-    <% if @event.player_type == Event.player_types[:single] %>
-        <% if @event.users.where("user_id = ?", @user.id).exists? %>
-            <%= link_to 'Leave Event', join_event_path(@event), :method => "put",
-                        :class => 'btn btn-default', id: :leavebutton %>
-            Participating
-        <% else %>
-            <%= link_to 'Join Event', join_event_path(@event), :method => "put",
-                        :class => 'btn btn-default', id: :joinbutton %>
-        <% end %>
-    <% end %>
-   <% end %>
+<% if can? :leave, @event %>
+  <%= link_to t('.leave', :default => t("helpers.links.leave")),
+              leave_event_path(@event),
+              :method => :put,
+              :class => 'btn btn-default',
+              id: :leave_event_button %>
+  <%= t('events.participating') %>
+<% end %>
+<% if can? :join, @event %>
+  <%= link_to t('.join', :default => t("helpers.links.join")),
+              join_event_path(@event),
+              :method => :put,
+              :class => 'btn btn-default',
+              id: :join_event_button %>
+<% end %>

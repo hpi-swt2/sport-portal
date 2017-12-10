@@ -44,6 +44,10 @@ de:
   navbar:
     drop-down:
       dashboard: "Mein Dashboard"
+      edit_profile: "Mein Profil"
+
+  dashboard:
+    title: "Dashboard für %{name}"
 
   activerecord:
     models:
@@ -56,16 +60,50 @@ de:
       user:
         one: "Spieler"
         other: "Spieler"
+        errors:
+          future_birthday: "Der Geburtstag darf nicht in der Zukunft liegen"
+          telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
+      image:
+        one: "Bild"
+        other: "Bilder"
       event:
         one: "Event"
         other: "Events"
+
+    attributes:
+      event:
+        name: "Name"
+        description: "Beschreibung"
+        event_type: "Eventtyp"
+        game_mode: "Spielsystem"
+        player_type: "Solo / Team"
+        max_teams: "Anzahl Teams"
+        discipline: "Sportart"
+        deadline: "Anmeldefrist"
+        startdate: "Beginn"
+        enddate: "Ende"
+        duration: "Dauer in Tagen"
+
+      user:
+        first_name: "Vorname"
+        last_name: "Nachname"
+        telephone_number: "Telefonnummer"
+
+  view:
+    user:
+      edit_profile: "Profilinformationen bearbeiten"
+      update_profile: "Profil aktualisieren"
+      favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
+
   unauthorized:
         manage:
           all: "Fehlende Berechtigung für %{action} %{subject}."
-          user: "Du bist icht berechtigt, Konten anderer Nutzer zu verändern."
+          user: "Du bist nicht berechtigt, Konten anderer Nutzer zu verändern."
 
   success:
     updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
+    join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
+    leave_event: "Du hast das Event %{event} erfolgreich verlassen."
 
   error:
     update_match_points: Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut.
@@ -74,22 +112,18 @@ de:
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
+    new_tournament: "Neues Turnier"
+    create_event: "Veranstaltung erstellen"
+    choose_event_format: "Veranstaltungsart wählen"
+    new_league: "Neue Liga"
     new_tournament: "Neues Tournier"
     show_events: "Alle Events anzeigen"
+    participating: "Beigetreten"
     show:
-      to_schedule: zum Spielplan
+      to_schedule: "zum Spielplan"
+      to_overview: "zur Übersicht"
+      participants: "Teilnehmer"
     new:
-      name: "Name"
-      description: "Beschreibung"
-      event_type: "Eventtyp"
-      game_mode: "Spielsystem"
-      player_type: "Spielertyp"
-      max_teams: "Anzahl Teams"
-      discipline: "Sportart"
-      deadline: "Deadline"
-      startdate: "Start"
-      enddate: "Ende"
-      duration: "Dauer"
       select_type: "Eventtyp auswählen"
       select_game_mode: "Spieltyp auswählen"
       select_player_type: "Spielertyp auswählen"
@@ -102,4 +136,27 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+    overview:
+      title: "Übersicht"
+      teamColumn: "Team"
+      standingColumn: "Platzierung"
 
+  validations:
+    not_only_numbers: "darf nicht nur aus Zahlen bestehen"
+    four_different_characters: "muss aus mindestens 4 verschiedenen Zeichen bestehen"
+
+  users:
+    avatar:
+      errors:
+        too_large: "is too large (max is 2 MB)"
+
+    edit:
+      cancel_this_account: "Diesen Account löschen"
+      unhappy: "Unzufrieden"
+      leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
+      we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+
+  devise:
+    registrations:
+      user:
+        destroyed: "Dieser Account wurde gelöscht"
