@@ -61,28 +61,26 @@
                     <%= t 'events.schedule.propose_new_appointment' %>
                   </h4>
                 </div>
-                <div class="modal-body">
+                <%= form_for match, html: {method: "put"} do |f| %>
+                  <div class="modal-body">
                   <p>
                     <%= t '.date' %>
                   </p>
-                  <%= form_for match, html: {method: "put"} do |f| %>
-                    <%= f.text_field :date, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
-                  <% end %>
+                  <%= f.text_field :date, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
                   <p>
                     <%= t '.place' %>
                   </p>
-                  <%= form_for match, html: {method: "put"} do |f| %>
-                    <%= f.text_field :place, :class => 'form-control', :value => match.place %>
-                  <% end %>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">
-                    <%= t('helpers.links.save') %>
-                  </button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <%= t('helpers.links.cancel') %>
-                  </button>
-                </div>
+                  <%= f.text_field :place, :class => 'form-control', :value => match.place %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class='btn btn-success btn-xs'>
+                      <%= f.submit t('helpers.links.save'), :class => 'btn btn-success btn-sm' %>
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                      <%= t('helpers.links.cancel') %>
+                    </button>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>
