@@ -10,9 +10,10 @@ describe 'rake match_notification:send_match_notification', type: :task do
   end
 
   context 'exists match in next 24 hours' do
-    let(:match) { FactoryBot.create(:match) }
+    let(:event) { FactoryBot.create(:event, startdate: Date.current + 1.day) }
+    let(:match) { FactoryBot.create(:match, event: event) }
 
-    it 'should send a match notification to all partipants' do
+    it 'should send a match notification to all participants' do
       task.execute
     end
   end

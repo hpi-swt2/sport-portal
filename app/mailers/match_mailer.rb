@@ -3,7 +3,7 @@ class MatchMailer < ApplicationMailer
   def match_notification(user, match)
     @user = user
     @match = match
-    I18n.with_locale( I18n.default_locale) do
+    I18n.with_locale(I18n.default_locale) do
       mail(to: @user.email,
            subject: I18n.t('match_mailer.match_notification.subject', startdate: I18n.localize(@match.event.startdate))
       )
