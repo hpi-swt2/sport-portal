@@ -78,6 +78,9 @@ class EventsController < ApplicationController
     @schedule_type = @event.type.downcase!
   end
 
+  def overview
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
