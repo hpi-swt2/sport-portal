@@ -66,13 +66,13 @@ class Event < ApplicationRecord
   # This method is only temporary until we have a working teams-infrastructure
   def add_single_player_team(user)
     if teams.length < max_teams
-      teams << Team.new(name: "#{user.first_name} #{user.last_name}"  , private: false)
+      teams << Team.new(name: "#{user.email}"  , private: false)
     end
   end
 
   # This method is only temporary until we have a working teams-infrastructure
   def remove_single_player_team(user)
-    teams.where(name: "#{user.first_name} #{user.last_name}").destroy_all
+    teams.where(name: "#{user.email}").destroy_all
   end
 
   def invalidate_schedule
