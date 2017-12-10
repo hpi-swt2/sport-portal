@@ -76,17 +76,25 @@ class TeamsController < ApplicationController
       target_members = (target_members - [current_user.id.to_s]) + [current_user.id.to_s]
     end
 
+    affected_users = target_members
     target_members.each do |member|
-      params[:team_member] = member
-      if params[:assign_ownership]
-        assign_ownership_to_member
-      elsif params[:delete_ownership]
-        delete_ownership_from_member
-      elsif params[:delete_membership]
-        delete_membership_from_member
+      @team.reload
+      begin
+        params[:team_member] = member
+        if params[:assign_ownership]
+          assign_ownership_to_member
+        elsif params[:delete_ownership]
+          delete_ownership_from_member
+        elsif params[:delete_membership]
+          delete_membership_from_member
+        end
+      rescue => e
+        affected_users = affected_users - [member]
+        print e.message
       end
     end
-    redirect_to @team
+    affected_users_names = affected_users.map {|user| User.find(user).first_name}
+    redirect_to @team, notice: I18n.t('helpers.teams.multiple_confirmation') + "#{affected_users_names.join(", ")}"
   end
 
   private

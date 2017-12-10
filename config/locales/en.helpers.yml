@@ -41,6 +41,7 @@ en:
       description: "Description"
       private: "Private"
       apply_action: "Apply action to selected:"
+      multiple_confirmation: "You could perform the action on user: "
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."

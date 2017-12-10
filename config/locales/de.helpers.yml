@@ -44,6 +44,7 @@ de:
       description: "Beschreibung"
       private: "Privat"
       apply_action: "Wende folgende Aktion auf Ausgewählte an:"
+      multiple_confirmation: "Du konntest die Aktion auf den folgenden Nutzern ausführen: "
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."

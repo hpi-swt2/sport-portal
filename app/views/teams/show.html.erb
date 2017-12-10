@@ -96,10 +96,11 @@
                     team_path(@team),
                     :method => 'get',
                     :class => 'btn btn-default btn-xs' %>
-
-        <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership" %>
-        <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership" %>
-        <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership" %>
+        <% if (@team.owners.include? current_user) %>
+          <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership" %>
+          <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership" %>
+          <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership" %>
+        <% end %>
       </td>
     </tr>
     </tbody>
