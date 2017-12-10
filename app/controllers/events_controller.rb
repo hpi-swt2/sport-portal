@@ -13,11 +13,12 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
+    @events = nil
   end
 
   # GET /events/new
   def new
-    @event = Event.new
+    @event = event_type.new
   end
 
   # GET /events/1/edit
@@ -26,7 +27,7 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    @event = event_type.new(event_params)
     @event.owner = current_user
 
     if @event.save
@@ -83,6 +84,11 @@ class EventsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+    end
+
+    # Get the type of event that should be created
+    def event_type
+      params[:type] || Event
     end
 
     def get_shown_events_value
