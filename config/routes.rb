@@ -7,8 +7,8 @@ Rails.application.routes.draw do
       put :leave
     end
   end
-  resources :leagues, controller: 'events', type: 'League'
-  resources :tournaments, controller: 'events', type: 'Tournament'
+  resources :leagues, controller: 'events', type: League
+  resources :tournaments, controller: 'events', type: Tournament
 
   root 'welcome#index'
   resources :teams
@@ -51,9 +51,9 @@ Rails.application.routes.draw do
       post :delete_membership
     end
   end
-    
+
   #Define route for Create Event Button
-  get "/createEvent" , to: "application#createEvent" , as: "create_Event"
+  get '/create_event' , to: 'application#create_event' , as: 'create_event'
 
   get 'imprint' => "static_pages#imprint"
 end
