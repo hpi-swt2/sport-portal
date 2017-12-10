@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id               :integer          not null, primary key
+#  name             :string
+#  description      :text
+#  discipline       :string
+#  player_type      :integer          not null
+#  max_teams        :integer
+#  game_mode        :integer          not null
+#  type             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  startdate        :date
+#  enddate          :date
+#  deadline         :date
+#  gameday_duration :integer
+#  owner_id         :integer
+#
+
 require 'rails_helper'
 
 describe "Event model", type: :model do
@@ -65,7 +86,17 @@ describe "Event model", type: :model do
   end
 
   it "should have an association participants" do
-    relation = Event.reflect_on_association(:users)
+    relation = Event.reflect_on_association(:participants)
     expect(relation.macro).to eq :has_and_belongs_to_many
+  end
+
+  it "should know if it is for single players" do
+    single_player_event = FactoryBot.build :single_player_event
+    expect(single_player_event).to be_single_player
+  end
+
+  it "should know if its deadline has passed" do
+    passed_deadline_event = FactoryBot.build(:passed_deadline_event)
+    expect(passed_deadline_event.deadline_has_passed?).to be true
   end
 end

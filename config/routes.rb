@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :events do
     member do
       put :join
+      put :leave
     end
   end
   resources :leagues, controller: 'events', type: 'League'
@@ -19,9 +20,10 @@ Rails.application.routes.draw do
   end
 
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
+  get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
 
   # Use custom user controller instead of the one provided by devise
-  devise_for :users, controllers: {
+  devise_for :users, path_prefix: 'my', controllers: {
     registrations: 'users',
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
@@ -29,13 +31,17 @@ Rails.application.routes.draw do
   # Sets the devise scope to be used in the controller.
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
   devise_scope :user do
-    resources :users, only: [:index, :show, :edit, :update] do
+
+    resources :users, except: [:new, :create] do
       member do
         get 'dashboard'
         get 'link'
         get 'unlink'
       end
     end
+
+    get '/users/:id/profile/edit', to: 'users#edit_profile', as: :user_profile_edit
+    match '/users/:id/profile', to: 'users#update_profile', as: :user_profile, via: [:patch, :put]
   end
 
   resources :teams do

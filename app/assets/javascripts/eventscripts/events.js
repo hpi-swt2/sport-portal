@@ -1,31 +1,24 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-function App() {}
-
-App.prototype.setState = function(state) {
-  localStorage.setItem('checked', state);
-}
-
-App.prototype.getState = function() {
-  return localStorage.getItem('checked');
-}
-
-function init() {
-  var app = new App();
-  var state = app.getState();
+$( document ).on('turbolinks:load', function() {
+  var location = window.location.pathname;
+  var param = window.location.search.slice(1);
   var checkbox = document.querySelector('#shown_events');
-
-  if (state == 'true') {
-    checkbox.checked = true;
-  }
+  var state = localStorage.getItem('checked');
 
   checkbox.addEventListener('click', function() {
-    app.setState(checkbox.checked);
+    localStorage.setItem('checked',checkbox.checked);
     $("form").submit();
   });
-}
 
+  if(state == 'true')
+  {
+    checkbox.checked = true;
 
-$( document ).on('turbolinks:load', function() {
-      init();
-  });
+    if(location == "/events" && param != "showAll=on")
+    {
+      checkbox.checked = false;
+      localStorage.setItem('checked',checkbox.checked);
+    }
+  }
+});

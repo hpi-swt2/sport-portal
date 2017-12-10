@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule]
 
   # GET /events
   def index
@@ -53,21 +53,30 @@ class EventsController < ApplicationController
   end
 
 
-  # PATCH/PUT /events/1/join
+  # PUT /events/1/join
   def join
-    @event.users << current_user
-    flash[:success] = "You have successfully joined #{@event.name}!"
-    redirect_to @event
+    @event.add_participant(current_user)
+    flash[:success] = t('success.join_event', event: @event.name)
+    redirect_back fallback_location: events_url
+  end
+
+  # PUT /events/1/leave
+  def leave
+    @event.remove_participant(current_user)
+    flash[:success] = t('success.leave_event', event: @event.name)
+    redirect_back fallback_location: events_url
   end
 
   # GET /events/1/schedule
   def schedule
-    @event = Event.find(params[:id])
     if @event.teams.empty?
       @event.add_test_teams
       @event.generate_schedule
     end
     @matches = @event.matches.order('gameday ASC')
+  end
+
+  def overview
   end
 
   private
