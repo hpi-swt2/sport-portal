@@ -13,7 +13,7 @@ RSpec.describe 'events/new', type: :view do
   it 'has input for all attributes' do
     render
 
-    assert_select 'form[action=?][method=?]', events_path, "post" do
+    assert_select 'form[action=?][method=?]', events_path, 'post' do
       assert_select 'input[name=?]', 'event[name]'
       assert_select 'textarea[name=?]', 'event[description]'
       assert_select 'input[name=?]', 'event[discipline]'
