@@ -224,6 +224,14 @@ end
       delete :destroy, params: { id: team.to_param }
       expect(response).to redirect_to(teams_url)
     end
+
+    it "should not allow to delete a team if it participates in an event" do
+      team = Team.create! valid_attributes
+      team.owners << subject.current_user
+      team.events << FactoryBot.create(:event)
+      delete :destroy, params: { id: team.to_param }
+      expect(response).to redirect_to(team)
+    end
   end
 
   describe 'POST #assign_ownership' do
