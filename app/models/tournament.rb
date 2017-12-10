@@ -31,7 +31,7 @@ class Tournament < Event
       filled_teams.insert(insert_index, nil)
       insert_index += 2
     end
-    finale = build_matches(teams, (Math.log teams.length, 2).to_i - 1)
+    build_matches teams, (Math.log teams.length, 2).to_i - 1
   end
 
   def build_matches(team_array, depth)
@@ -42,19 +42,24 @@ class Tournament < Event
       elsif team_array[1] == nil
         return team_array[0]
       end
-      match = nil #TODO here new Match(team_array[0], team_array[1], depth)
-      match
+      return create_match team_array[0], team_array[1], depth
     end
 
     left_half = team_array[0..(team_count / 2 - 1)]
     right_half = team_array[(team_count / 2)..(team_count - 1)]
     match1 = build_matches(left_half, depth - 1)
     match2 = build_matches(right_half, depth - 1)
-    match = nil #TODO: use match model here new Match(match1, match2, depth)
-    match
+
+    create_match match1, match2, depth
   end
 
   def is_power_of_two?(number)
     number.to_s(2).count('1') == 1
+  end
+
+  def create_match(team1, team2, depth)
+    match = Match.new(team_home: team1, team_away: team2, gameday: depth)
+    match.save!
+    match
   end
 end
