@@ -31,15 +31,15 @@ describe 'new event page', type: :feature do
 
   it 'should be possible to create a date conditions for an event' do
     visit new_tournament_path
-    fill_in 'event_name', with: 'name'
-    fill_in 'event_discipline', with: 'soccer'
+    fill_in Event.human_attribute_name(:name), with: 'name'
+    fill_in Event.human_attribute_name(:discipline), with: 'soccer'
     select 'Ko', from: Event.human_attribute_name(:game_mode)
     select 'Single', from: Event.human_attribute_name(:player_type)
-    fill_in 'event_max_teams', with: '5'
+    fill_in Event.human_attribute_name(:max_teams), with: '5'
 
-    fill_in 'event_deadline', with: Date.tomorrow.to_s
-    fill_in 'event_startdate', with: (Date.tomorrow + 2).to_s
-    fill_in 'event_enddate', with: (Date.tomorrow + 3).to_s
+    fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
+    fill_in Event.human_attribute_name(:startdate), with: (Date.tomorrow + 2).to_s
+    fill_in Event.human_attribute_name(:enddate), with: (Date.tomorrow + 3).to_s
 
     find('input[type="submit"]').click
 
