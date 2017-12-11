@@ -18,6 +18,7 @@ RSpec.describe Ability, type: :model do
   describe 'User' do
 
     subject(:ability) { Ability.new(user) }
+
     describe 'when not logged in' do
       let(:user) { nil }
 
@@ -40,21 +41,66 @@ RSpec.describe Ability, type: :model do
         it { is_expected.to be_able_to(:read, team) }
       end
 
-      describe 'for private teams' do
-        let(:team) { FactoryBot.create :team, :private, :with_five_members, :with_two_owners }
+      describe 'for private teams with two owners and five members' do
+        let(:team) { FactoryBot.create :team, :private }
         it { is_expected.to_not be_able_to(:read, team) }
 
-        context 'when is a member' do
+        describe 'when is a member' do
           let(:user) { team.members[0] }
           it { is_expected.to be_able_to(:read, team) }
         end
 
-        context 'when is an owner' do
+        describe 'when is an owner' do
           let(:user) { team.owners[0] }
           it { is_expected.to be_able_to(:read, team) }
         end
       end
     end
+  end
+
+  it 'should allow team owners to delete their ownership & membership having multiple team owners left' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private
+    team.owners << @user
+
+    ability.should be_able_to(:delete_ownership, team, @user.id)
+    ability.should be_able_to(:delete_membership, team, @user.id)
+  end
+
+  it 'should not allow team owners to delete their ownership & membership having only one team owner left' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private
+    team.owners = [@user]
+
+    ability.should_not be_able_to(:delete_ownership, team, @user.id)
+    ability.should_not be_able_to(:delete_membership, team, @user.id)
+  end
+
+  it 'should allow team owners to delete the ownership & membership of onother team owner having multiple team owners left' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private
+    team.owners = [@user, @other_user]
+
+    ability.should be_able_to(:delete_ownership, team, @other_user.id)
+    ability.should be_able_to(:delete_membership, team, @other_user.id)
+  end
+
+  it 'should allow team members to delete their ownership & membership having at least one team owner left' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private
+    team.members << @user
+
+    ability.should be_able_to(:delete_membership, team, @user.id)
+  end
+
+  it 'should not allow team members to delete the ownership & membership of a team owner having only one team owner left' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private
+    team.members = [@user, @other_user]
+    team.owners = [@other_user]
+
+    ability.should_not be_able_to(:delete_ownership, team, @other_user.id)
+    ability.should_not be_able_to(:delete_membership, team, @other_user.id)
   end
 
   it 'should have admin permissions, if the user is admin' do
@@ -102,7 +148,7 @@ RSpec.describe Ability, type: :model do
 
 
   it 'should allow admin to crud teams they did not create' do
-    team = Team.new()
+    team = Team.new
 
     ability = Ability.new(@admin)
     ability.should be_able_to(:manage, team)
