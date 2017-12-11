@@ -36,13 +36,15 @@ en:
     select:
       prompt: "Please select"
     teams:
-      select_all: "Select all"
-      deselect_all: "Deselect all"
       kind_of_sport: "Kind of sport"
       description: "Description"
       private: "Private"
-      apply_action: "Apply action to selected:"
-      multiple_confirmation: "You could perform the action on user: "
+      multiple_actions:
+        apply_action: "Apply action to selected:"
+        select_all: "Select all"
+        deselect_all: "Deselect all"
+        confirmation: "Action successful"
+        failure_on: "Action successful. %{user_names} could not be changed."
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."

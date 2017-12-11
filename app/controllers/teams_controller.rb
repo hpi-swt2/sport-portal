@@ -55,75 +55,82 @@ class TeamsController < ApplicationController
 
   # Assigns team ownership to a specific team member
   def assign_ownership
-    assign_ownership_to_member
+    assign_ownership_to_member User.find(params[:team_member])
     redirect_to @team
   end
 
   def delete_ownership
-    delete_ownership_from_member
+    delete_ownership_from_member User.find(params[:team_member])
     redirect_to @team
   end
 
   def delete_membership
-    delete_membership_from_member
+    delete_membership_from_member User.find(params[:team_member])
     redirect_to @team
   end
 
   def perform_action_on_multiple_members
-    target_members = params[:members]
+    target_members = ensure_current_user_is_last params[:members]
+    unaffected_users = []
+    target_members.each do |member|
+      @team.reload
+      begin
+        if params[:assign_ownership]
+          assign_ownership_to_member member
+        elsif params[:delete_ownership]
+          delete_ownership_from_member member
+        elsif params[:delete_membership]
+          delete_membership_from_member member
+        end
+      rescue
+        unaffected_users << member
+      end
+    end
+    inform_about_unaffected_users unaffected_users
+    redirect_to @team
+  end
+
+  def ensure_current_user_is_last (target_members)
     current_user_id_string = current_user.id.to_s
     if target_members.include? current_user_id_string
       target_members = (target_members - [current_user_id_string]) + [current_user_id_string]
     end
+    target_members
+  end
 
-    affected_users = target_members
-    target_members.each do |member|
-      @team.reload
-      begin
-        params[:team_member] = member
-        if params[:assign_ownership]
-          assign_ownership_to_member
-        elsif params[:delete_ownership]
-          delete_ownership_from_member
-        elsif params[:delete_membership]
-          delete_membership_from_member
-        end
-      rescue
-        affected_users = affected_users - [member]
-      end
+  def inform_about_unaffected_users (unaffected_users)
+    unaffected_users_names = unaffected_users.map { |user| User.find(user).first_name }
+    if unaffected_users_names.empty?
+      flash[:success] = I18n.t('helpers.teams.multiple_actions.confirmation')
+    else
+      flash[:error] = I18n.t('helpers.teams.multiple_actions.failure_on', user_names: unaffected_users_names.join(", "))
     end
-    affected_users_names = affected_users.map { |user| User.find(user).first_name }
-    redirect_to @team, notice: I18n.t('helpers.teams.multiple_confirmation') + "#{affected_users_names.join(", ")}"
   end
 
   private
-    def assign_ownership_to_member
+    def assign_ownership_to_member(member)
       authorize! :assign_ownership, @team
-      member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
+      member_to_become_owner = TeamUser.find_by(user_id: member, team_id: @team.id)
       unless member_to_become_owner.nil?
         member_to_become_owner.assign_ownership
       end
     end
 
-    def delete_ownership_from_member
+    def delete_ownership_from_member(member)
       authorize! :delete_ownership, Team.find(params[:id])
-      member_to_become_owner = TeamUser.find_by(user_id: user, team_id: @team.id)
+      member_to_become_owner = TeamUser.find_by(user_id: member, team_id: @team.id)
       unless member_to_become_owner.nil?
         member_to_become_owner.delete_ownership
       end
     end
 
-    def delete_membership_from_member
-      authorize! :delete_membership, @team, user.id
-      @team.members.delete(user)
+    def delete_membership_from_member(member)
+      authorize! :delete_membership, @team, member.id
+      @team.members.delete(member)
     end
 
     def team_owners
       @team_owners ||= @team.owners
-    end
-
-    def user
-      @user = User.find(params[:team_member])
     end
 
     # Use callbacks to share common setup or constraints between actions.
