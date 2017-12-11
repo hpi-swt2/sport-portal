@@ -137,12 +137,6 @@ class TeamsController < ApplicationController
       end
     end
 
-    def delete_owner_if_existing
-      if owners_include_user
-        team_owners.delete user
-      end
-    end
-
     def delete_ownership_from_member(member_id)
       authorize! :delete_ownership, Team.find(params[:id])
       member_to_become_owner = TeamUser.find_by(user_id: member_id, team_id: @team.id)
@@ -155,10 +149,6 @@ class TeamsController < ApplicationController
       authorize! :delete_membership, @team, member_id
       member = User.find(member_id)
       @team.members.delete(member)
-    end
-
-    def team_owners
-      @team_owners ||= @team.owners
     end
 
     # Use callbacks to share common setup or constraints between actions.
