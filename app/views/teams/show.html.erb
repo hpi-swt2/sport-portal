@@ -79,10 +79,10 @@
     <% end %>
     <tr>
       <td>
-        <button type="button" id="check_all" class="btw">
+        <button type="button" id="check_all" class="btn btn-xs btn-default btw">
           <%=t('.select_all', :default => t("helpers.teams.select_all"))%>
         </button>
-        <button type="button" id="uncheck_all" class="btw">
+        <button type="button" id="uncheck_all" class="btn btn-xs btn-default btw">
           <%=t('.deselect_all', :default => t("helpers.teams.deselect_all"))%>
         </button>
       </td>
@@ -97,9 +97,9 @@
                     :method => 'get',
                     :class => 'btn btn-default btn-xs' %>
         <% if (@team.owners.include? current_user) %>
-          <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership" %>
-          <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership" %>
-          <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership" %>
+          <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership", class: "btn btn-xs btn-default" %>
+          <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership", class: "btn btn-xs btn-default" %>
+          <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-xs btn-default" %>
         <% end %>
       </td>
     </tr>
