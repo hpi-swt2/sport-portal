@@ -56,10 +56,6 @@ en:
       event:
         one: "event"
         other: "events"
-
-    attributes:
-      user:
-        email: "Email Address"
   view:
     user:
       edit_profile: "Edit Profile Properties"

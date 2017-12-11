@@ -71,8 +71,6 @@ de:
         other: "Events"
 
     attributes:
-      user:
-        email: "E-Mail-Adresse"
       event:
         name: "Name"
         description: "Beschreibung"

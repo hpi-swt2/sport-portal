@@ -52,12 +52,10 @@ RSpec.describe "teams/show", type: :view do
         @team.members << @user
         render
         expect(rendered).to have_selector('#invite_user_by_email_modal')
-        within('#invite_user_by_email_modal') do
-          expect(rendered).to have_content(t('teams.invite_user_to_team.title'))
-          expect(rendered).to have_field(t('activerecord.attributes.user.email'))
-          expect(rendered).to have_selector(:link_or_button, t('helpers.links.cancel'))
-          expect(rendered).to have_selector(:link_or_button, t('helpers.links.send'))
-        end
+        expect(rendered).to have_content(t('teams.invite_user_to_team.title'))
+        expect(rendered).to have_field(User.human_attribute_name(:email))
+        expect(rendered).to have_selector(:link_or_button, t('helpers.links.cancel'))
+        expect(rendered).to have_selector(:link_or_button, t('helpers.links.send'))
       end
 
       it 'should not be rendered for users that are not members of the team' do
