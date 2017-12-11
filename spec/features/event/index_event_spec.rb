@@ -87,11 +87,11 @@ describe "index event page", type: :feature do
       end
 
       #it "should render the team_join modal when clicking the join button" do
-        pending "Add corresponding test for modal-testing here"
+      pending "Add corresponding test for modal-testing here"
       #end
 
       #it "should let me leave after clicking the join button" do
-        pending "Add corresponding test for button-testing inside the modal here"
+      pending "Add corresponding test for button-testing inside the modal here"
       #end
 
       it "should not have a leave button" do
@@ -170,4 +170,3 @@ describe "index event page", type: :feature do
     end
   end
 end
-

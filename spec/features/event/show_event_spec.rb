@@ -164,18 +164,6 @@ describe "detailed event page", type: :feature do
         end
       end
     end
-  end
-
-  context "for events whose deadline has passed" do
-    before(:each) do
-      @oldevent = FactoryBot.create :event, deadline: Date.yesterday
-      sign_in @user
-      visit event_path(@oldevent)
-    end
-
-    it "should not display a join button" do
-      expect(page).not_to have_link(:join_event_button)
-    end
 
     context "participants" do
       before(:each) do
@@ -192,7 +180,17 @@ describe "detailed event page", type: :feature do
         expect(page).to have_link @team.name
       end
     end
+  end
 
+  context "for events whose deadline has passed" do
+    before(:each) do
+      @oldevent = FactoryBot.create :event, deadline: Date.yesterday
+      sign_in @user
+      visit event_path(@oldevent)
+    end
 
+    it "should not display a join button" do
+      expect(page).not_to have_link(:join_event_button)
+    end
   end
 end

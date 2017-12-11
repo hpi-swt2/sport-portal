@@ -73,7 +73,12 @@ class EventsController < ApplicationController
 
   # PUT /events/1/leave
   def leave
-    @event.remove(current_user)
+    if @event.single_player?
+      @event.remove_participant(current_user)
+    else
+      team = Team.find((current_user.owned_teams & @event.teams)[0].id)
+      @event.remove_team(team)
+    end
     flash[:success] = t('success.leave_event', event: @event.name)
     redirect_back fallback_location: events_url
   end

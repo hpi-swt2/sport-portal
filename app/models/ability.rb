@@ -66,7 +66,7 @@ class Ability
   private
 
     def can_join_event(user)
-      can :join, Event do |event|
+      can :join, Event.active do |event|
         event.can_join?(user)
       end
     end

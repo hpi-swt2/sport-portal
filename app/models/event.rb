@@ -117,21 +117,8 @@ class Event < ApplicationRecord
     teams.delete(team)
   end
 
-  def remove(user)
-    if single_player?
-      remove_participant(user)
-    else
-      team = Team.find((user.owned_teams & teams)[0].id)
-      remove_team(team)
-    end
-  end
-
-  def has_participating_teams?(user)
-    if single_player?
-      has_participant?(user)
-    else
-      (user.owned_teams & teams).present?
-    end
+  def ownes_participating_teams?(user)
+    (user.owned_teams & teams).present?
   end
 
   def has_team_member?(user)
@@ -140,11 +127,10 @@ class Event < ApplicationRecord
 
 
   def can_join?(user)
-    active = (not deadline_has_passed?)
     if single_player?
-      (not has_participant?(user)) && active
+      (not has_participant?(user))
     else
-      (not has_team_member?(user)) && active
+      (not has_team_member?(user))
     end
   end
 
