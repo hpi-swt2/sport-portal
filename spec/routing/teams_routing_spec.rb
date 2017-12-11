@@ -47,5 +47,9 @@ RSpec.describe TeamsController, type: :routing do
       expect(post: "/teams/1/delete_membership?team_member=1").to route_to("teams#delete_membership", id: "1", team_member: "1")
     end
 
+    it "routes to #assign_membership_by_email" do
+      expect(post: "/teams/1/assign_membership_by_email").to route_to("teams#assign_membership_by_email", id: "1")
+    end
+
   end
 end

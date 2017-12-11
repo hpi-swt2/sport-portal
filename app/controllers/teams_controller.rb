@@ -76,11 +76,32 @@ class TeamsController < ApplicationController
     redirect_to @team
   end
 
+  def assign_membership_by_email
+    user = User.find_by_email params[:email]
+    if user
+      assign_membership_to_user user
+    else
+      flash[:error] = I18n.t('teams.invite_user_to_team.no_user_for_mail')
+    end
+    redirect_to @team
+  end
+
   def current_ability
     @current_ability ||= Ability.new(current_user, params[:team_member])
   end
 
   private
+    def assign_membership_to_user (new_member)
+      team_members = @team.members
+      unless team_members.include? new_member
+        team_members << new_member
+        # todo: send mail
+        flash[:success] = I18n.t('teams.invite_user_to_team.assignment_successful')
+      else
+        flash[:error] = I18n.t('teams.invite_user_to_team.user_already_in_team')
+      end
+    end
+
     def delete_owner_if_existing
       if owners_include_user
         team_owners.delete user

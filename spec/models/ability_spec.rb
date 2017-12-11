@@ -47,11 +47,13 @@ RSpec.describe Ability, type: :model do
         context 'when is a member' do
           let(:user) { team.members[0] }
           it { is_expected.to be_able_to(:read, team) }
+          it { is_expected.to be_able_to(:assign_membership_by_email, team) }
         end
 
         context 'when is an owner' do
           let(:user) { team.owners[0] }
           it { is_expected.to be_able_to(:read, team) }
+          it { is_expected.to be_able_to(:assign_membership_by_email, team) }
         end
       end
     end
@@ -106,6 +108,7 @@ RSpec.describe Ability, type: :model do
 
     ability = Ability.new(@admin)
     ability.should be_able_to(:manage, team)
+    expect(ability).to be_able_to(:assign_membership_by_email, team)
   end
 
   it 'should not allow users to crud teams they did not create' do
@@ -113,6 +116,13 @@ RSpec.describe Ability, type: :model do
 
     ability = Ability.new(@user)
     ability.should_not be_able_to(:manage, team)
+  end
+
+  it 'should not allow users to invite user to teams they are no member of' do
+    team = Team.new
+
+    ability = Ability.new(@user)
+    ability.should_not be_able_to(:assign_membership_by_email, team)
   end
 
   it 'should not allow users to join events after their deadline has passed' do

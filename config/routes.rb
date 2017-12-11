@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       post :assign_ownership
       post :delete_ownership
       post :delete_membership
+      post :assign_membership_by_email
     end
   end
     

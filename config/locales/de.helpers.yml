@@ -25,6 +25,8 @@ de:
       save: "Speichern"
       join: "Beitreten"
       leave: "Verlassen"
+      send: "Senden"
+      close: "Schließen"
     titles:
       edit: "%{model} bearbeiten"
       save: "%{model} speichern"
