@@ -343,5 +343,37 @@ end
       expect(team.owners.length).to eq(1)
       expect(team.owners.first).to eq(another_owner)
     end
-  end    
+
+    it 'can delete membership' do
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+      still_another_user = FactoryBot.create :user
+      team.members << another_user
+      team.members << still_another_user
+
+      team.owners << subject.current_user
+      expect(team.members.length).to eq(3)
+
+      post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_membership: "delete_membership"}
+      team.reload
+      expect(team.members.length).to eq(1)
+    end
+
+    it 'can assign ownership' do
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+      still_another_user = FactoryBot.create :user
+
+      team.members << another_user
+      team.members << still_another_user
+
+      team.owners << subject.current_user
+
+      expect(team.owners.length).to eq(1)
+
+      post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], assign_ownership: "assign_ownership"}
+      team.reload
+      expect(team.owners.length).to eq(3)
+    end
+  end
 end
