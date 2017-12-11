@@ -53,7 +53,7 @@ class TeamsController < ApplicationController
       @team.destroy
       redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
     else
-      redirect_to @team, notice: I18n.t('helpers.teams.cant_destroy', resource_name: Team.model_name.human).capitalize
+      redirect_to @team, alert: I18n.t('helpers.teams.cant_destroy', resource_name: Team.model_name.human).capitalize
     end
 
   end
