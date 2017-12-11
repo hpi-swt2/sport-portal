@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "teams/show", type: :view do
   before(:each) do
     @team = assign(:team, FactoryBot.create(:team))
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.build :user
     FactoryBot.build(:user)
   end
 
@@ -50,6 +50,7 @@ RSpec.describe "teams/show", type: :view do
 
   describe 'invite user to team' do
     before(:each) do
+      @user = FactoryBot.create :user
       sign_in @user
     end
 
@@ -109,7 +110,7 @@ RSpec.describe "teams/show", type: :view do
   end
 
   it "doesn't render the leave button when user is not allowed to leave team" do
-    another_user = FactoryBot.create :user
+    another_user = FactoryBot.build :user
     @team.owners << another_user
     # User has no team membership, therefore unable to delete his membership, according to ability :delete_membership
     sign_in @user
