@@ -54,6 +54,7 @@ class Ability
       can_assign_ownership(user)
       can_delete_ownership(user)
       can_delete_membership(user)
+      can_assign_membership_by_email(user)
 
       if user.admin?
         can :manage, :all
@@ -79,6 +80,10 @@ class Ability
       can :read, Team, private: true, members: { id: user_id }
       can :update, Team, members: { id: user_id }
       can :destroy, Team, owners: { id: user_id }
+    end
+
+    def can_assign_membership_by_email(user)
+      can :assign_membership_by_email, Team, members: { id: user.id }
     end
 
     def can_assign_ownership(user)

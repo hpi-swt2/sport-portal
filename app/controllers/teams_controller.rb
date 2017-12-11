@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership, :perform_action_on_multiple_members]
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership, :perform_action_on_multiple_members, :assign_membership_by_email]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource :team, only: [:index, :show, :new, :edit, :create, :update, :destroy]
 
@@ -90,29 +90,56 @@ class TeamsController < ApplicationController
     redirect_to @team
   end
 
-  def ensure_current_user_is_last (target_members)
-    current_user_id_string = current_user.id.to_s
-    if target_members.include? current_user_id_string
-      target_members = (target_members - [current_user_id_string]) + [current_user_id_string]
-    end
-    target_members
-  end
-
-  def inform_about_unaffected_users (unaffected_users)
-    unaffected_users_names = unaffected_users.map { |user| User.find(user).first_name }
-    if unaffected_users_names.empty?
-      flash[:success] = I18n.t('helpers.teams.multiple_actions.confirmation')
+  def assign_membership_by_email
+    user = User.find_by_email params[:email]
+    if user
+      assign_membership_to_user user
     else
-      flash[:error] = I18n.t('helpers.teams.multiple_actions.failure_on', user_names: unaffected_users_names.join(", "))
+      flash[:error] = I18n.t('teams.invite_user_to_team.no_user_for_mail')
     end
+    redirect_to @team
   end
 
   private
+    def ensure_current_user_is_last (target_members)
+      current_user_id_string = current_user.id.to_s
+      if target_members.include? current_user_id_string
+        target_members = (target_members - [current_user_id_string]) + [current_user_id_string]
+      end
+      target_members
+    end
+
+    def inform_about_unaffected_users (unaffected_users)
+      unaffected_users_names = unaffected_users.map { |user| User.find(user).first_name }
+      if unaffected_users_names.empty?
+        flash[:success] = I18n.t('helpers.teams.multiple_actions.confirmation')
+      else
+        flash[:error] = I18n.t('helpers.teams.multiple_actions.failure_on', user_names: unaffected_users_names.join(", "))
+      end
+    end
+
     def assign_ownership_to_member(member_id)
       authorize! :assign_ownership, @team
       member_to_become_owner = TeamUser.find_by(user_id: member_id, team_id: @team.id)
       unless member_to_become_owner.nil?
         member_to_become_owner.assign_ownership
+      end
+    end
+
+    def assign_membership_to_user (new_member)
+      team_members = @team.members
+      unless team_members.include? new_member
+        team_members << new_member
+        # todo: send mail
+        flash[:success] = I18n.t('teams.invite_user_to_team.assignment_successful')
+      else
+        flash[:error] = I18n.t('teams.invite_user_to_team.user_already_in_team')
+      end
+    end
+
+    def delete_owner_if_existing
+      if owners_include_user
+        team_owners.delete user
       end
     end
 
