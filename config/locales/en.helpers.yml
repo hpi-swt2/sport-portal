@@ -41,6 +41,7 @@ en:
       kind_of_sport: "Kind of sport"
       description: "Description"
       private: "Private"
+      cant_destroy: "%{resource_name} can't be deleted, because it still participates in events."
       multiple_actions:
         apply_action: "Apply action to selected:"
         select_all: "Select all"
