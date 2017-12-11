@@ -127,4 +127,14 @@
               :method => 'delete',
               :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
               :class => 'btn btn-danger' %>
-<% end %> 
+<% end %>
+
+<% if user_signed_in? %>
+  <% if can? :delete_membership, @team, current_user.id %>
+    <%= link_to t('.delete_membership', :default => t("helpers.links.leave_team")),
+                delete_membership_team_path(@team, :team_member => current_user.id),
+                :method => 'post',
+                :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm_leave_team"))},
+                :class => 'btn btn-danger' %>
+  <% end %>
+<% end %>

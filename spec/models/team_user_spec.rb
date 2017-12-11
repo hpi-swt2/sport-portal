@@ -36,6 +36,7 @@ RSpec.describe TeamUser, type: :model do
 
     it "should be able to delete himself from team" do
       ability = Ability.new(user)
+      team.members << user
       assert ability.can?(:delete_membership, team, user.id)
     end
 
