@@ -55,35 +55,35 @@ class TeamsController < ApplicationController
 
   # Assigns team ownership to a specific team member
   def assign_ownership
-    assign_ownership_to_member User.find(params[:team_member])
+    assign_ownership_to_member params[:team_member]
     redirect_to @team
   end
 
   def delete_ownership
-    delete_ownership_from_member User.find(params[:team_member])
+    delete_ownership_from_member params[:team_member]
     redirect_to @team
   end
 
   def delete_membership
-    delete_membership_from_member User.find(params[:team_member])
+    delete_membership_from_member params[:team_member]
     redirect_to @team
   end
 
   def perform_action_on_multiple_members
     target_members = ensure_current_user_is_last params[:members]
     unaffected_users = []
-    target_members.each do |member|
+    target_members.each do |member_id|
       @team.reload
       begin
         if params[:assign_ownership]
-          assign_ownership_to_member member
+          assign_ownership_to_member member_id
         elsif params[:delete_ownership]
-          delete_ownership_from_member member
+          delete_ownership_from_member member_id
         elsif params[:delete_membership]
-          delete_membership_from_member member
+          delete_membership_from_member member_id
         end
-      rescue
-        unaffected_users << member
+      rescue => error
+        unaffected_users << member_id
       end
     end
     inform_about_unaffected_users unaffected_users
@@ -108,24 +108,25 @@ class TeamsController < ApplicationController
   end
 
   private
-    def assign_ownership_to_member(member)
+    def assign_ownership_to_member(member_id)
       authorize! :assign_ownership, @team
-      member_to_become_owner = TeamUser.find_by(user_id: member, team_id: @team.id)
+      member_to_become_owner = TeamUser.find_by(user_id: member_id, team_id: @team.id)
       unless member_to_become_owner.nil?
         member_to_become_owner.assign_ownership
       end
     end
 
-    def delete_ownership_from_member(member)
+    def delete_ownership_from_member(member_id)
       authorize! :delete_ownership, Team.find(params[:id])
-      member_to_become_owner = TeamUser.find_by(user_id: member, team_id: @team.id)
+      member_to_become_owner = TeamUser.find_by(user_id: member_id, team_id: @team.id)
       unless member_to_become_owner.nil?
         member_to_become_owner.delete_ownership
       end
     end
 
-    def delete_membership_from_member(member)
-      authorize! :delete_membership, @team, member.id
+    def delete_membership_from_member(member_id)
+      authorize! :delete_membership, @team, member_id
+      member = User.find(member_id)
       @team.members.delete(member)
     end
 

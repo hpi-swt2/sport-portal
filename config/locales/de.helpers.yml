@@ -47,7 +47,7 @@ de:
         select_all: "Alle auswählen"
         deselect_all: "Alle abwählen"
         confirmation: "Aktion erfolgreich ausgeführt."
-        failure_on: "Aktion erfolgreich. %{user_names} konnten nicht bearbeitet werden."
+        failure_on: "Aktion erfolgreich ausgeführt, außer auf: %{user_names}"
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
