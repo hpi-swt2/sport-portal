@@ -5,7 +5,7 @@
 </div>
 
 <% if user_signed_in? && current_user.organizing_events.include?(@event) %>
-    <%= render 'form', back_path: event_path(@event) %>
+  <%= render 'form', submit_label: t('helpers.links.save'), back_path: event_path(@event) %>
 <% else %>
   <p>No Permission to edit.</p>
 <% end %>

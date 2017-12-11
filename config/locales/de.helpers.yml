@@ -16,6 +16,7 @@ de:
       confirm: "Bist du sicher?"
       destroy: "Löschen"
       new: "Neu"
+      create: "Erstellen"
       edit: "Bearbeiten"
       show: "Anzeigen"
       save: "Speichern"
