@@ -29,6 +29,8 @@ de:
       save: "Speichern"
       join: "Beitreten"
       leave: "Verlassen"
+      send: "Senden"
+      close: "Schließen"
     titles:
       edit: "%{model} bearbeiten"
       save: "%{model} speichern"
@@ -45,7 +47,13 @@ de:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
       private: "Privat"
-      apply_action: "Wende folgende Aktion auf Ausgewählte an:"
+      cant_destroy: "%{resource_name} kann nicht gelöscht werden, da es noch an Events teilnimmt."
+      multiple_actions:
+        apply_action: "Wende folgende Aktion auf Ausgewählte an:"
+        select_all: "Alle auswählen"
+        deselect_all: "Alle abwählen"
+        confirmation: "Aktion erfolgreich ausgeführt."
+        failure_on: "Aktion erfolgreich ausgeführt, außer auf: %{user_names}"
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."

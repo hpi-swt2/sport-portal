@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       post :delete_ownership
       post :delete_membership
       post :perform_action_on_multiple_members
+      post :assign_membership_by_email
     end
   end
 

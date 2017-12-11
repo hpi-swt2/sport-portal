@@ -1,4 +1,17 @@
 <%- model_class = Team -%>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#check_all').on("click", function() {
+        var cbxs = $('input[type="checkbox"]');
+        cbxs.prop("checked", true);
+    })
+    $('#uncheck_all').on("click", function() {
+        var cbxs = $('input[type="checkbox"]');
+        cbxs.prop("checked", false);
+    })
+});
+</script>
+
 <div class="page-header">
   <h1><%= t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
@@ -65,9 +78,16 @@
     <% end %>
     <tr>
       <td>
-        <%= t('.apply_action', :default => t("helpers.teams.apply_action")) %>
+        <button type="button" id="check_all" class="btn btn-xs btn-default btw">
+          <%=t('.select_all', :default => t("helpers.teams.multiple_actions.select_all"))%>
+        </button>
+        <button type="button" id="uncheck_all" class="btn btn-xs btn-default btw">
+          <%=t('.deselect_all', :default => t("helpers.teams.multiple_actions.deselect_all"))%>
+        </button>
       </td>
-      <td></td>
+      <td>
+        <%= t('.apply_action', :default => t("helpers.teams.multiple_actions.apply_action")) %>
+      </td>
       <td></td>
       <td></td>
       <td>
@@ -75,14 +95,24 @@
                     team_path(@team),
                     :method => 'get',
                     :class => 'btn btn-default btn-xs' %>
-
-        <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership", class: "btn btn-default btn-xs"%>
-        <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership", class: "btn btn-default btn-xs" %>
-        <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-default btn-xs" %>
+        <% if (@team.owners.include? current_user) %>
+          <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership", class: "btn btn-xs btn-default" %>
+          <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership", class: "btn btn-xs btn-default" %>
+          <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-xs btn-default" %>
+        <% end %>
       </td>
     </tr>
     </tbody>
   </table>
+<% end %>
+
+<% if can? :assign_membership_by_email, @team %>
+  <%= link_to t('teams.show.invite_user_to_team'),
+              '#',
+              data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
+              class: 'btn btn-primary' %>
+
+  <%= render :partial => 'invite_user_by_email_modal' %>
 <% end %>
 
 <%# app/helpers/button_helper.rb %>

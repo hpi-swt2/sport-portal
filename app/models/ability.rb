@@ -25,7 +25,7 @@ class Ability
   # See the wiki for details:
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
-  def initialize(user, team_member = nil)
+  def initialize(user)
     alias_action :schedule, :overview, to: :read
     alias_action :update, :destroy, to: :modify
     alias_action :create, :read, :update, :destroy, to: :crud
@@ -54,6 +54,7 @@ class Ability
       can_assign_ownership(user)
       can_delete_ownership(user)
       can_delete_membership(user)
+      can_assign_membership_by_email(user)
 
       if user.admin?
         can :manage, :all
@@ -81,6 +82,10 @@ class Ability
       can :destroy, Team, owners: { id: user_id }
     end
 
+    def can_assign_membership_by_email(user)
+      can :assign_membership_by_email, Team, members: { id: user.id }
+    end
+
     def can_assign_ownership(user)
       can :assign_ownership, Team, Team do |team|
         team.owners.include? user
@@ -90,8 +95,8 @@ class Ability
     def can_delete_membership(user)
       can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
-        exist_owners_after_delete = owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
-        ((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete)
+        exist_owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
+        ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)
       end
     end
 

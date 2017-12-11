@@ -37,5 +37,7 @@ class Team < ApplicationRecord
     owners.length > 1
   end
 
-
+  def in_event?
+    events.exists?
+  end
 end
