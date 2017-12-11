@@ -19,9 +19,9 @@ Rails.application.routes.draw do
     end
   end
 
-  get "/events/:id/join_teamevent" => 'events#join_teamevent', :as => :join_teamevent
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
   get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
+  get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {

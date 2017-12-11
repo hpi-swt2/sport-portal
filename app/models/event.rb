@@ -155,4 +155,8 @@ class Event < ApplicationRecord
       has_team_member?(user)
     end
   end
+
+  def standing_of(team)
+    'Gewinner ' + team.id.to_s
+  end
 end

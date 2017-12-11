@@ -29,9 +29,33 @@
   <% end %>
 </dl>
 
+<div class="table-responsive">
+  <h3><%= t("events.show.participants") %></h3>
+  <table class="table">
+    <% if @event.single_player? %>
+      <thead><tr><th><%=t '.title', :default => User.model_name.human.titleize %></th></tr></thead>
+      <tbody>
+        <% @event.participants.each do |participant| %>
+          <td><%= participant.name %></td>
+        <% end %>
+      </tbody>
+    <% else %>
+      <thead><tr><%=t '.title', :default => Team.model_name.human.titleize %></tr></thead>
+      <tbody>
+        <% @event.teams.each do |team| %>
+          <tr><td><%= link_to team.name, team_path(team), id: team.name %></td></tr>
+        <% end %>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+
 <%= link_to t('.to_schedule'),
             event_schedule_path(@event),
             :class => 'btn btn-default' %>
+
+<%= link_to t('.to_overview'),
+            event_overview_path(@event), :class => 'btn btn-default' %>
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
