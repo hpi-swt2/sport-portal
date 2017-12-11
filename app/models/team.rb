@@ -23,6 +23,12 @@ class Team < ApplicationRecord
 
   has_many :members, through: :team_members, source: :user
   has_many :owners, through: :team_owners, source: :user
+  has_many :home_matches, as: :team_home, class_name: 'Match'
+  has_many :away_matches, as: :team_away, class_name: 'Match'
+
+  def matches
+    home_matches.or away_matches
+  end
 
   # validates :owners, presence: true
   # validates :members, presence: true

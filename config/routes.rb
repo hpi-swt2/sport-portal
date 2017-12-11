@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   end
 
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
+  get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {

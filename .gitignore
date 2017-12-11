@@ -56,4 +56,4 @@ bower.json
 
 public/uploads
 
-.vscode/settings.json
+.vscode/*

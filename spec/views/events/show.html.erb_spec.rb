@@ -39,6 +39,7 @@ RSpec.describe "events/show", type: :view do
   it "renders styled buttons" do
     render
     expect(rendered).to have_content(t('events.show.to_schedule'))
+    expect(rendered).to have_content(t('events.show.to_overview'))
   end
 
   #not signed in user

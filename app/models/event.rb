@@ -116,4 +116,8 @@ class Event < ApplicationRecord
   def can_leave?(user)
     single_player? && has_participant?(user)
   end
+
+  def standing_of(team)
+    'Gewinner ' + team.id.to_s
+  end
 end
