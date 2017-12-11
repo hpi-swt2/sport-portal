@@ -55,7 +55,6 @@ class TeamsController < ApplicationController
     else
       redirect_to @team, alert: I18n.t('helpers.teams.cant_destroy', resource_name: Team.model_name.human).capitalize
     end
-
   end
 
   # Assigns team ownership to a specific team member

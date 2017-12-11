@@ -40,5 +40,4 @@ class Team < ApplicationRecord
   def in_event?
     events.exists?
   end
-
 end

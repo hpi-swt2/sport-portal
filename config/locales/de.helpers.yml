@@ -42,8 +42,6 @@ de:
     select:
       prompt: "Bitte wähle"
     teams:
-      select_all: "Alle auswählen"
-      deselect_all: "Alle abwählen"
       kind_of_sport: "Sportart"
       description: "Beschreibung"
       private: "Privat"
