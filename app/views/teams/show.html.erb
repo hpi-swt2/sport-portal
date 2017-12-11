@@ -1,17 +1,5 @@
-<script type='text/javascript'>
-    $(document).ready(function(){
-        $('#check_all').on("click", function() {
-            var cbxs = $('input[type="checkbox"]');
-            cbxs.prop("checked", true);
-        })
-        $('#uncheck_all').on("click", function() {
-            var cbxs = $('input[type="checkbox"]');
-            cbxs.prop("checked", false);
-        })
-    });
-</script>
-
 <%- model_class = Team -%>
+<script src="show_team.js"></script>
 
 <div class="page-header">
   <h1><%= t '.title', :default => model_class.model_name.human.titleize %></h1>
