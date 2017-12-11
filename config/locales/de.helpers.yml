@@ -19,6 +19,8 @@ de:
       create: "Erstellen"
       edit: "Bearbeiten"
       show: "Anzeigen"
+      save: "Speichern"
+      email: "E-Mail senden"
       assign_ownership: "Als Captain hinzufügen"
       delete_ownership: "Als Captain löschen"
       delete_membership: "Aus dem Team entfernen"
@@ -43,6 +45,12 @@ de:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
       private: "Privat"
+      multiple_actions:
+        apply_action: "Wende folgende Aktion auf Ausgewählte an:"
+        select_all: "Alle auswählen"
+        deselect_all: "Alle abwählen"
+        confirmation: "Aktion erfolgreich ausgeführt."
+        failure_on: "Aktion erfolgreich ausgeführt, außer auf: %{user_names}"
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
