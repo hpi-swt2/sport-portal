@@ -46,7 +46,7 @@
           <% end %>
         </td>
         <td>
-          <%= date = match.event.startdate+match.gameday-1 %>
+          <%= date = match.event.created_at+((match.gameday-1)*86400) %>
           <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">
             <%= t 'events.schedule.propose_new_appointment' %>
           </button>
