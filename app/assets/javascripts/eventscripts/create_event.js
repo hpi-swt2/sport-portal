@@ -115,8 +115,8 @@ $( document ).on('turbolinks:load', function() {
     function enableMetricAndInitialValue() {
         var metric = $("#event_metric_div");
         var initialvalue = $("#event_initial_value_div");
-        disableField(metric);
-        disableField(initialvalue);
+        enableField(metric);
+        enableField(initialvalue);
     }
 
     function displayTypeField() {

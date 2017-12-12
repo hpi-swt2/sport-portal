@@ -46,7 +46,7 @@ describe "new event page", type: :feature do
     end
 
     it "should show a field for choosing the ranking metric" do
-        expect(page).to have_field('event_metric')
+      expect(page).to have_field('event_metric')
     end
 
     it "should show a field for choosing the initial value of the ranking metric" do

@@ -76,7 +76,7 @@ de:
         description: "Beschreibung"
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
-        player_type: "Solo / Team"
+        player_type: "Einzel / Team"
         player_types:
           single: "Einzel"
           team: "Team"
