@@ -58,9 +58,9 @@ describe 'new event page', type: :feature do
     it 'should be possible to enter date conditions' do
       visit new_path
 
-      expect(page).to have_field Event.human_attribute_name :deadline
-      expect(page).to have_field Event.human_attribute_name :startdate
-      expect(page).to have_field Event.human_attribute_name :enddate
+      expect(page).to have_field(Event.human_attribute_name :deadline)
+      expect(page).to have_field(Event.human_attribute_name :startdate)
+      expect(page).to have_field(Event.human_attribute_name :enddate)
     end
 
     it 'should have a field for league duration' do
