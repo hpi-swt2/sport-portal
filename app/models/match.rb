@@ -27,6 +27,18 @@ class Match < ApplicationRecord
   belongs_to :event, dependent: :delete
 
   def name
-    '(' + team_home.name + ' | ' + team_away.name + ')'
+    round
+  end
+
+  def depth
+    event.max_match_level - gameday
+  end
+
+  def round
+    round = { 0 => 'Finalspiel', 1 => 'Halbfinalspiel', 2 => 'Viertelfinalspiel', 3 => 'Achtelfinalspiel' }[depth]
+    if round == nil
+      round = 'Vorrunde ' + (gameday + 1).to_s + ' - Spiel'
+    end
+    round + ' ' + index.to_s
   end
 end

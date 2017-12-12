@@ -18,7 +18,7 @@
         <% elsif this_level_matches.length == 8 %>
           Achtelfinale
         <% else %>
-          Runde <%= (level + 1).to_s %>
+          Vorrunde <%= (level + 1).to_s %>
         <% end %>
       </b>
     </th>
@@ -29,8 +29,8 @@
     <tr>
       <td><%= match.place %> <%= match.index %></td>
       <% #TODO: continue here with "Gewinner von Spiel 4" %>
-      <td><%= match.team_home_type == 'Match' ? link_to('Gewinner ' + (match.team_home.index).to_s, match_path(match.team_home)) : link_to(match.team_home.name, team_path(match.team_home)) %></td>
-      <td><%= match.team_away_type == 'Match' ? link_to('Gewinner ' + (match.team_away.index).to_s, match_path(match.team_away)) : link_to(match.team_away.name, team_path(match.team_away)) %></td>
+      <td><%= match.team_home_type == 'Match' ? link_to('Gewinner ' + match.team_home.name, match_path(match.team_home)) : link_to(match.team_home.name, team_path(match.team_home)) %></td>
+      <td><%= match.team_away_type == 'Match' ? link_to('Gewinner ' + match.team_away.name, match_path(match.team_away)) : link_to(match.team_away.name, team_path(match.team_away)) %></td>
       <td>
         <%= match.score_home ? match.score_home : '-' %>
         :
@@ -51,8 +51,6 @@
                     edit_match_path(match), :class => 'btn btn-default btn-xs' %>
       </td>
     </tr>
-
-    <% match.index += 1 %>
   <% end %>
 
   <% level += 1 %>
