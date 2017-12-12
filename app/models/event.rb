@@ -37,10 +37,6 @@ class Event < ApplicationRecord
 
   enum player_types: [:single, :team]
 
-  def self.types
-    %w(Tournament League)
-  end
-
   def duration
     return if enddate.blank? || startdate.blank?
     enddate - startdate + 1
