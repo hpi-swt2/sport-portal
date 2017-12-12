@@ -32,7 +32,7 @@ class Event < ApplicationRecord
   scope :active, -> { where('deadline >= ?', Date.current) }
 
   validates :name, :discipline,  presence: true
-  validates :deadline, :startdate,:game_mode, :player_type, :enddate,
+  validates :deadline, :startdate, :game_mode, :player_type, :enddate,
             presence: true,
             if: :validate_not_rankinglist?
 

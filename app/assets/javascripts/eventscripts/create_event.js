@@ -108,21 +108,17 @@ $( document ).on('turbolinks:load', function() {
         var playertypes = $("#event_player_types");
         var metric = $("#event_metric_div");
         var initialvalue = $("#event_initial_value_div");
-
         if (option == "Tournament") {
             enableField(tournament);
             enableDates();
             enableField(playertypes);
             disableField(metric);
             disableField(initialvalue);
-
             disableField(league);
-
         } else if (option == "League") {
             enableField(league);
             enableDates();
             enableField(playertypes);
-
             disableField(metric);
             disableField(initialvalue);
             disableField(tournament)
