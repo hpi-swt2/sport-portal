@@ -71,11 +71,7 @@
     <div class="form-group">
       <%= f.label Event.human_attribute_name(:startdate), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <% if local_assigns[:default_startdate] %>
-            <%= f.text_field :startdate, id: :event_startdate, :class => 'form-control', :value => Date.today+7, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
-        <% else %>
-            <%= f.text_field :startdate, id: :event_startdate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
-        <% end %>
+        <%= f.text_field :startdate, id: :event_startdate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
         <%= f.error_span(:startdate) %>
       </div>
     </div>
