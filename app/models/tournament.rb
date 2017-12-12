@@ -23,7 +23,33 @@ class Tournament < Event
   enum game_modes: [:ko, :ko_group, :double_elimination]
 
   def standing_of(team)
-    'Konnte nicht berechnet werden'
+    find_standing_of team, finale
+  end
+
+  def find_standing_of(team, match)
+    <<<[]{}()#TODO: continue here
+    if match.team_home == team || match.team_away == team || match.winner == team
+      return match
+    end
+    result = nil
+    if match.team_home_type == 'Match'
+      result = find_standing_of team, match.team_home
+    end
+    if result == nil && match.team_away_type == 'Match'
+      result = find_standing_of team, match.team_home
+    end
+    result
+  end
+
+  def finale
+    finale = nil
+    matches.each do |match|
+      if match.depth == 0
+        finale = match
+      end
+    end
+    #TODO: keep care of 3rd place match
+    finale
   end
 
   def generate_schedule

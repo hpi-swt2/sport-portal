@@ -41,4 +41,24 @@ class Match < ApplicationRecord
     end
     round
   end
+
+  def winner
+    if points_home != nil && points_away != nil && points_home != points_away
+      winner_team_or_match = points_home > points_away ? team_home : team_away
+      if winner_team_or_match.is_a? Team
+        return winner_team_or_match
+      end
+      winner_team_or_match.winner
+    end
+  end
+
+  def loser
+    if points_home != nil && points_away != nil && points_home != points_away
+      loser_team_or_match = points_home < points_away ? team_home : team_away
+      if loser_team_or_match.is_a? Team
+        return loser_team_or_match
+      end
+      loser_team_or_match.loser
+    end
+  end
 end
