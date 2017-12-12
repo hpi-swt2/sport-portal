@@ -11,7 +11,7 @@
   </head>
 
   <!--Display the background only when user signs in-->
-  <% if action_name === "new" && controller_name == "sessions" %>
+  <% if action_name === "new" && (controller_name == "sessions" or controller_name === "users") %>
     <body class="background navbar-overlap">
   <% else %>
     <body class=" navbar-overlap">
