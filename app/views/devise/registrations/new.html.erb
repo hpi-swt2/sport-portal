@@ -44,25 +44,11 @@
 </div>
 <div class="row" style="margin-top: 10px">
   <div class="center white-text hide-on-small-only">
-    <%= t('devise.passwords.forgotten_question') %>
-    <%= link_to t('devise.passwords.reset')+ '.',
-                new_password_path(resource_name)%>
-  </div>
-  <div class="center white-text hide-on-small-only">
-    <%= t('devise.registrations.have_account_question')%>
-    <%= link_to t('devise.registrations.sign_in')+ '!',
-                new_session_path(resource_name)%>
+    <%= render 'devise/shared/links' %>
   </div>
 
   <!-- mobile version -->
   <div class="center hide-on-med-and-up">
-    <%= t('devise.passwords.forgotten_question') %>
-    <%= link_to t('devise.passwords.reset')+ '.',
-                new_password_path(resource_name)%>
-  </div>
-  <div class="center hide-on-med-and-up">
-    <%= t('devise.registrations.have_account_question')%>
-    <%= link_to t('devise.registrations.sign_in')+ '!',
-                new_session_path(resource_name)%>
+    <%= render 'devise/shared/links' %>
   </div>
 </div>
