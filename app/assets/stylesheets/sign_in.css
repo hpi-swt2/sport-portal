@@ -1,7 +1,5 @@
 h1 {
     font-family: Proxima Nova Bold;
-    color: #fffefe;
-    font-size: 69px;
     text-align: center;
 }
 
@@ -36,7 +34,6 @@ a:link, a:visited, a:hover, a:active {
 
 .input-field:focus-within {
     border: 1px solid #1ba9e5;
-    color: white;
 }
 
 [type="checkbox"].filled-in + label:after {
@@ -55,13 +52,42 @@ a:link, a:visited, a:hover, a:active {
 .center {
     margin: auto;
     width: 35%;
+    min-width: 250px;
 }
 
-.background{
-    background: url(https://user-images.githubusercontent.com/15203334/33734461-b3e7ba3a-db8c-11e7-97e8-1b1e86b5040f.png) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-repeat: none;
+/* Mobile/desktop dependent: */
+
+@media screen and (min-width: 480px) {
+    .background{
+        background: url(https://user-images.githubusercontent.com/15203334/33734461-b3e7ba3a-db8c-11e7-97e8-1b1e86b5040f.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-repeat: none;
+    }
+
+    h1 {
+        color: #fffefe;
+        font-size: 69px;
+    }
+
+    .input-field:focus-within {
+        color: white;
+    }
+
+    .text {
+        color: white;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    h1 {
+        color: #1CA9E5;
+        font-size: 45px;
+    }
+
+    .input-field:focus-within {
+        color: #343e41;
+    }
 }
