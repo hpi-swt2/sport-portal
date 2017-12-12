@@ -282,8 +282,6 @@ RSpec.describe EventsController, type: :controller do
       event.add_participant(@other_user)
       event.generate_schedule
       get :schedule, params: {id: event.to_param}, session: valid_session
-      puts "Matches:"
-      puts event.matches
       expect(event.matches).not_to be_empty
     end
 
