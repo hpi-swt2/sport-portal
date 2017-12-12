@@ -116,7 +116,7 @@ de:
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
-    new_tournament: "Neues Tournier"
+    new_tournament: "Neues Turnier"
     show_events: "Alle Events anzeigen"
     participating: "Beigetreten"
     show:
@@ -152,6 +152,15 @@ de:
     quarterfinale_game: "Viertelfinalspiel %{gameid}"
     eighthfinale_game: "Achtelfinalspiel %{gameid}"
     preliminaries_game: "Vorrunde %{round} - Spiel %{gameid}"
+
+  teams:
+    show:
+      invite_user_to_team: "+"
+    invite_user_to_team:
+      title: "Neuen Spieler einladen"
+      no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
+      user_already_in_team: 'Der Nutzer ist bereits Mitglied in diesem Team.'
+      assignment_successful: 'Der Nutzer wurde erfolgreich zu diesem Team hinzugefügt.'
 
   validations:
     not_only_numbers: "darf nicht nur aus Zahlen bestehen"

@@ -59,8 +59,8 @@
 </table>
 
 <% if can? :create, Event %>
-    <%= link_to t('.new', :default => t("helpers.links.new")),
-                new_event_path,
+    <%= link_to t('helpers.links.new'),
+                create_event_from_type_path,
                 :class => 'btn btn-primary' %>
 <% end %>
 
