@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208151635) do
+ActiveRecord::Schema.define(version: 20171212084905) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.string "discipline"
-    t.integer "player_type", null: false
+    t.integer "player_type"
     t.integer "max_teams"
-    t.integer "game_mode", null: false
+    t.integer "game_mode"
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -44,7 +44,7 @@ class Event < ApplicationRecord
 
 
   def validate_not_rankinglist?
-    self.class.name == "Event"
+    self.class.name != "Rankinglist"
   end
 
   def self.types
