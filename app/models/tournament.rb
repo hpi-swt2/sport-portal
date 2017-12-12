@@ -25,13 +25,13 @@ class Tournament < Event
   def generate_schedule
     filled_teams = []
     teams.each { |team| filled_teams << team }
-    filled_teams.shuffle!
+    filled_teams = filled_teams.shuffle!
     insert_index = 0
     until is_power_of_two? filled_teams.length
       filled_teams.insert(insert_index, nil)
       insert_index += 2
     end
-    build_matches teams, max_match_level
+    build_matches filled_teams, max_match_level
 
     last_gameday = nil
     index = 1

@@ -35,10 +35,10 @@ class Match < ApplicationRecord
   end
 
   def round
-    round = { 0 => 'Finalspiel', 1 => 'Halbfinalspiel', 2 => 'Viertelfinalspiel', 3 => 'Achtelfinalspiel' }[depth]
+    round = { 0 => I18n.t('matches.finale_game', gameid: index.to_s), 1 => I18n.t('matches.semifinale_game', gameid: index.to_s), 2 => I18n.t('matches.quarterfinale_game', gameid: index.to_s), 3 => I18n.t('matches.eighthfinale_game', gameid: index.to_s) }[depth]
     if round == nil
-      round = 'Vorrunde ' + (gameday + 1).to_s + ' - Spiel'
+      round = I18n.t('matches.preliminaries_game', round: (gameday + 1).to_s, gameid: index.to_s)
     end
-    round + ' ' + index.to_s
+    round
   end
 end

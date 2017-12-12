@@ -136,10 +136,22 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      finale: "Finale"
+      semifinale: "Halbfinale"
+      quarterfinale: "Viertelfinale"
+      eighthfinale: "Achtelfinale"
+      preliminaries: "Vorrunde %{round}"
     overview:
       title: "Übersicht"
       teamColumn: "Team"
       standingColumn: "Platzierung"
+
+  matches:
+    finale_game: "Finalspiel %{gameid}"
+    semifinale_game: "Halbfinalspiel %{gameid}"
+    quarterfinale_game: "Viertelfinalspiel %{gameid}"
+    eighthfinale_game: "Achtelfinalspiel %{gameid}"
+    preliminaries_game: "Vorrunde %{round} - Spiel %{gameid}"
 
   validations:
     not_only_numbers: "darf nicht nur aus Zahlen bestehen"

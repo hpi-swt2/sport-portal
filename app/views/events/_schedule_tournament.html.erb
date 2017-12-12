@@ -9,16 +9,16 @@
   <tr class="gameday">
     <th colspan="6">
       <b>
-        <% if this_level_matches.length == 1 %>
-          Finale
-        <% elsif this_level_matches.length == 2 %>
-          Halbfinale
-        <% elsif this_level_matches.length == 4 %>
-          Viertelfinale
-        <% elsif this_level_matches.length == 8 %>
-          Achtelfinale
+        <% if this_level_matches[0].depth == 0 %>
+          <%= t('events.schedule.finale') %>
+        <% elsif this_level_matches[0].depth == 1 %>
+          <%= t('events.schedule.semifinale') %>
+        <% elsif this_level_matches[0].depth == 2 %>
+          <%= t('events.schedule.quarterfinale') %>
+        <% elsif this_level_matches[0].depth == 3 %>
+          <%= t('events.schedule.eighthfinale') %>
         <% else %>
-          Vorrunde <%= (level + 1).to_s %>
+          <%= t('events.schedule.preliminaries', round: (level + 1).to_s) %>
         <% end %>
       </b>
     </th>
