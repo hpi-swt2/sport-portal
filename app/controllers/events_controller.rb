@@ -13,7 +13,6 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
-    @events = nil
   end
 
   # GET /events/new
