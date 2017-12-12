@@ -45,6 +45,7 @@ class Ability
 
       # Event
       can :crud, Event, owner_id: user_id
+      can :create_from_type, Event
       can_join_event(user)
       can_leave_event(user)
       can :schedule, Event
