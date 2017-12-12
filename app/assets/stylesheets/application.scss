@@ -44,6 +44,17 @@ $secondary-color: #01A8E8 !default;
 * {
   font-family: "Proxima Nova";
 }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 .navbar-overlap {
   padding-top: 50px;
 }
+
