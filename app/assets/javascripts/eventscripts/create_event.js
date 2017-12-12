@@ -77,58 +77,72 @@ $( document ).on('turbolinks:load', function() {
         $(field).show();
     }
 
-    function enableDates(){
+    function enableDatesAndPlayerTypes(){
         var enddatefield = $("#event_enddate_div");
         var startdatefield = $("#event_startdate_div");
         var durationfield = $("#event_duration_div");
         var deadlinefield = $("#event_deadline_div");
+        var playertypes = $("#event_player_types");
 
         enableField(enddatefield);
         enableField(startdatefield);
         enableField(durationfield);
         enableField(deadlinefield);
+        enableField(playertypes);
     }
 
-    function disableDates(){
+    function disableDatesAndPlayerTypes(){
         var enddatefield = $("#event_enddate_div");
         var startdatefield = $("#event_startdate_div");
         var durationfield = $("#event_duration_div");
         var deadlinefield = $("#event_deadline_div");
+        var playertypes = $("#event_player_types");
 
         disableField(enddatefield);
         disableField(startdatefield);
         disableField(durationfield);
         disableField(deadlinefield);
+        disableField(playertypes);
+    }
+
+    function disableMetricAndInitialValue() {
+        var metric = $("#event_metric_div");
+        var initialvalue = $("#event_initial_value_div");
+        disableField(metric);
+        disableField(initialvalue);
+    }
+
+    function enableMetricAndInitialValue() {
+        var metric = $("#event_metric_div");
+        var initialvalue = $("#event_initial_value_div");
+        disableField(metric);
+        disableField(initialvalue);
     }
 
     function displayTypeField() {
         var option = $("#event_type").val();
         var league = $("#league-game-mode");
         var tournament = $("#tournament-game-mode");
-        var playertypes = $("#event_player_types");
-        var metric = $("#event_metric_div");
-        var initialvalue = $("#event_initial_value_div");
+
         if (option == "Tournament") {
             enableField(tournament);
-            enableDates();
-            enableField(playertypes);
-            disableField(metric);
-            disableField(initialvalue);
+            enableDatesAndPlayerTypes();
+
+            disableMetricAndInitialValue()
             disableField(league);
         } else if (option == "League") {
             enableField(league);
-            enableDates();
-            enableField(playertypes);
-            disableField(metric);
-            disableField(initialvalue);
+            enableDatesAndPlayerTypes();
+
+            disableMetricAndInitialValue()
             disableField(tournament)
         } else {
             disableField(league);
             disableField(tournament);
-            disableField(playertypes);
-            enableField(metric);
-            enableField(initialvalue);
-            disableDates();
+            disableDatesAndPlayerTypes();
+
+            enableMetricAndInitialValue()
+
         }
     }
 });
