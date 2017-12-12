@@ -66,7 +66,11 @@
                   <p>
                     <%= t '.date' %>
                   </p>
-                  <%= f.text_field :date, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+                  <%= f.text_field :start_time, :class => 'form-control', :value => date.to_date, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+                  <p>
+                    <%= t '.time'%>
+                  </p>
+                  <%= f.text_field :start_time, :class => 'form-control', :value => date.to_time, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
                   <p>
                     <%= t '.place' %>
                   </p>
