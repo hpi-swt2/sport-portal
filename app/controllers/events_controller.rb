@@ -18,10 +18,10 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     case params[:type]
-      when 'league'
-        @event = League.new
-      when 'tournament'
-        @event = Tournament.new
+    when 'league'
+      @event = League.new
+    when 'tournament'
+      @event = Tournament.new
     end
   end
 
