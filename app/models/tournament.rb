@@ -22,6 +22,10 @@
 class Tournament < Event
   enum game_modes: [:ko, :ko_group, :double_elimination]
 
+  def standing_of(team)
+    'Konnte nicht berechnet werden'
+  end
+
   def generate_schedule
     filled_teams = []
     teams.each { |team| filled_teams << team }

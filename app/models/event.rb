@@ -78,6 +78,6 @@ class Event < ApplicationRecord
   end
 
   def standing_of(team)
-    'Gewinner ' + team.id.to_s #TODO: insert real standing here
+    'Gewinner ' + team.id.to_s
   end
 end

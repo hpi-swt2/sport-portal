@@ -3,15 +3,29 @@
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
 
+<%
+def participant_link(participant, participant_type)
+  if participant
+    if participant_type == 'Match'
+      return link_to('Gewinner ' + participant.name, match_path(participant))
+    else
+      return link_to(participant.name, team_path(participant))
+    end
+  else
+    return '---'
+  end
+end
+%>
+
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:gameday) %>:</strong></dt>
   <dd><%= @match.gameday %></dd>
   <dt><strong><%= model_class.human_attribute_name(:place) %>:</strong></dt>
   <dd><%= @match.place %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team_home_id) %>:</strong></dt>
-  <dd><%= @match.team_home ? link_to(@match.team_home.name, team_path(@match.team_home)) : '---' %></dd>
+  <dd><%= participant_link @match.team_home, @match.team_home_type %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team_away_id) %>:</strong></dt>
-  <dd><%= @match.team_away ? link_to(@match.team_away.name, team_path(@match.team_away)) : '---' %></dd>
+  <dd><%= participant_link @match.team_away, @match.team_away_type %></dd>
   <dt><strong><%= model_class.human_attribute_name(:score_home) %>:</strong></dt>
   <dd><%= @match.score_home %></dd>
   <dt><strong><%= model_class.human_attribute_name(:score_away) %>:</strong></dt>
