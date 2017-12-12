@@ -1,5 +1,4 @@
 <%= form_for @event, html: { class: 'form-horizontal event' } do |f| %>
-
   <%= render partial: 'application/validation_errors', locals: {model: @event} %>
 
     <div class="form-group">
@@ -18,19 +17,19 @@
     <div class="form-group">
       <% case @event.type %>
       <% when 'League' %>
-          <%= f.label :game_mode, class: 'control-label col-lg-2' %>
-          <div class="col-lg-10">
-            <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
-                         { include_blank: t('events.new.select_game_mode')},
-                         { class: 'form-control'}) %>
-          </div>
+        <%= f.label :game_mode, class: 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
+                       { include_blank: t('events.new.select_game_mode')},
+                       { class: 'form-control'}) %>
+        </div>
       <% when 'Tournament' %>
-          <%= f.label :game_mode, class: 'control-label col-lg-2' %>
-          <div class="col-lg-10">
-            <%= f.select(:game_mode, Tournament.game_modes.map {|k, v| [k.humanize, v]},
-                         { include_blank: t('events.new.select_game_mode') },
-                         { class: 'form-control' }) %>
-          </div>
+        <%= f.label :game_mode, class: 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= f.select(:game_mode, Tournament.game_modes.map {|k, v| [k.humanize, v]},
+                       { include_blank: t('events.new.select_game_mode') },
+                       { class: 'form-control' }) %>
+        </div>
       <% end %>
     </div>
     <div class="form-group">
