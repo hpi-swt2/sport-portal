@@ -1,9 +1,7 @@
 <%= render partial: "application/validation_errors", locals: {model: resource} %>
 <%= stylesheet_link_tag 'sign_in' %>
 
-<div class="page-header">
-  <h1><%= t('.sign_up') %></h1>
-</div>
+<h1><%= t('.sign_up') %></h1>
 <div class="row">
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal user', role: 'form' }) do |f| %>
     <div class="row">
@@ -42,7 +40,29 @@
         <%= f.submit t('.sign_up'), class: 'btn btn-primary' %>
       </div>
     </div>
-
   <% end %>
-  <%= render 'devise/shared/links' %>
+</div>
+<div class="row" style="margin-top: 10px">
+  <div class="center white-text hide-on-small-only">
+    <%= t('devise.passwords.forgotten_question') %>
+    <%= link_to t('devise.passwords.reset')+ '.',
+                new_password_path(resource_name)%>
+  </div>
+  <div class="center white-text hide-on-small-only">
+    <%= t('devise.registrations.have_account_question')%>
+    <%= link_to t('devise.registrations.sign_in')+ '!',
+                new_session_path(resource_name)%>
+  </div>
+
+  <!-- mobile version -->
+  <div class="center hide-on-med-and-up">
+    <%= t('devise.passwords.forgotten_question') %>
+    <%= link_to t('devise.passwords.reset')+ '.',
+                new_password_path(resource_name)%>
+  </div>
+  <div class="center hide-on-med-and-up">
+    <%= t('devise.registrations.have_account_question')%>
+    <%= link_to t('devise.registrations.sign_in')+ '!',
+                new_session_path(resource_name)%>
+  </div>
 </div>
