@@ -36,7 +36,7 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1
   def update_points
-    path = league_schedule_path(@match.event)
+    path = event_schedule_path(@match.event)
     if @match.update(match_points_params)
       redirect_to path, notice: t('success.updated_match_points')
     else
@@ -47,7 +47,7 @@ class MatchesController < ApplicationController
   # DELETE /matches/1
   def destroy
     @match.destroy
-    redirect_to league_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
+    redirect_to event_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
 
   private
