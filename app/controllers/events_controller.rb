@@ -17,7 +17,11 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = event_type.new
+    if event_type
+      @event = event_type.new
+    else
+      render :create_from_type
+    end
   end
 
   # GET /events/1/edit
@@ -87,7 +91,9 @@ class EventsController < ApplicationController
 
     # Get the type of event that should be created
     def event_type
-      params[:type] || Event
+      return League if params[:type] == 'League'
+      return Tournament if params[:type] == 'Tournament'
+      params[:type]
     end
 
     def get_shown_events_value

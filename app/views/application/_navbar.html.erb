@@ -7,7 +7,7 @@
         <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path %>
         <%= menu_item Event.model_name.human(:count => :many).titleize, events_path %>
         <%= menu_divider %>
-        <%= menu_item t('events.create_event'), create_event_from_type_path %>
+        <%= menu_item t('events.create_event'), new_event_path %>
         <%= menu_divider %>
     <% end %>
     <%= menu_group pull: :right do %>

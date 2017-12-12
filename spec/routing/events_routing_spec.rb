@@ -20,7 +20,9 @@ RSpec.describe EventsController, type: :routing do
     end
 
     it "routes to #create" do
-      expect(post: "/events").to route_to("events#create")
+      expect(post: "/events").to_not be_routable
+      expect(post: "/tournaments").to route_to("events#create", type: Tournament)
+      expect(post: "/leagues").to route_to("events#create", type: League)
     end
 
     it "routes to #update via PUT" do
