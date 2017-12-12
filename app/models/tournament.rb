@@ -27,14 +27,14 @@ class Tournament < Event
     teams.each { |team| filled_teams << team }
     filled_teams.shuffle!
     insert_index = 0
-    until is_power_of_two? teams.length
+    until is_power_of_two? filled_teams.length
       filled_teams.insert(insert_index, nil)
       insert_index += 2
     end
-    build_matches teams, (Math.log teams.length, 2).to_i - 1
+    build_matches teams, (Math.log teams.length, 2).ceil - 1, 0
   end
 
-  def build_matches(team_array, depth)
+  def build_matches(team_array, depth, index)
     team_count = team_array.length
     if team_count <= 2
       if team_array[0] == nil
@@ -42,23 +42,24 @@ class Tournament < Event
       elsif team_array[1] == nil
         return team_array[0]
       end
-      return create_match team_array[0], team_array[1], depth
+      return create_match team_array[0], team_array[1], depth, index
     end
 
-    left_half = team_array[0..(team_count / 2 - 1)]
-    right_half = team_array[(team_count / 2)..(team_count - 1)]
-    match1 = build_matches(left_half, depth - 1)
-    match2 = build_matches(right_half, depth - 1)
+    half_team_count = team_count / 2
+    left_half = team_array[0 .. (half_team_count - 1)]
+    right_half = team_array[half_team_count .. (team_count - 1)]
+    match1 = build_matches(left_half, depth - 1, 2 * index)
+    match2 = build_matches(right_half, depth - 1, 2 * index + 1)
 
-    create_match match1, match2, depth
+    create_match match1, match2, depth, index
   end
 
   def is_power_of_two?(number)
     number.to_s(2).count('1') == 1
   end
 
-  def create_match(team1, team2, depth)
-    match = Match.new(team_home: team1, team_away: team2, gameday: depth)
+  def create_match(team1, team2, depth, index)
+    match = Match.new(team_home: team1, team_away: team2, gameday: depth, event: self, index: index + 1)
     match.save!
     match
   end

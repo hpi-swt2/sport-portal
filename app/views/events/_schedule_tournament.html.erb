@@ -1,6 +1,6 @@
 <% level = 0 %>
 <% while true %>
-  <% this_level_matches = @matches.select { |match| match.level = level } %>
+  <% this_level_matches = @matches.select { |match| match.gameday == level } %>
   <% if this_level_matches.length == 0 %>
     <% break %>
   <% end %>
@@ -27,10 +27,10 @@
   <% this_level_matches.each do |match| %>
 
     <tr>
-      <td><%= match.place %></td>
+      <td><%= match.place %> <%= match.index %></td>
       <% #TODO: continue here with "Gewinner von Spiel 4" %>
-      <td><%= match.team_home ? link_to(match.team_home.name, team_path(match.team_home)) : '---' %></td>
-      <td><%= match.team_away ? link_to(match.team_away.name, team_path(match.team_away)) : '---' %></td>
+      <td><%= match.team_home_type == 'Match' ? link_to('Gewinner ' + (match.team_home.index).to_s, match_path(match.team_home)) : link_to(match.team_home.name, team_path(match.team_home)) %></td>
+      <td><%= match.team_away_type == 'Match' ? link_to('Gewinner ' + (match.team_away.index).to_s, match_path(match.team_away)) : link_to(match.team_away.name, team_path(match.team_away)) %></td>
       <td>
         <%= match.score_home ? match.score_home : '-' %>
         :
@@ -49,15 +49,12 @@
                     match_path(match), :class => 'btn btn-default btn-xs' %>
         <%= link_to t('.edit', default: t('helpers.links.edit')),
                     edit_match_path(match), :class => 'btn btn-default btn-xs' %>
-        <%= link_to t('.destroy', default: t('helpers.links.destroy')),
-                    match_path(match),
-                    :method => :delete,
-                    :data => { :confirm => t('.confirm', default: t('helpers.links.confirm')) },
-                    :class => 'btn btn-xs btn-danger' %>
       </td>
     </tr>
 
+    <% match.index += 1 %>
   <% end %>
 
   <% level += 1 %>
 <% end %>
+<%= console %>

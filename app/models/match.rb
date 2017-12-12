@@ -25,4 +25,8 @@ class Match < ApplicationRecord
   belongs_to :team_home, polymorphic: true
   belongs_to :team_away, polymorphic: true
   belongs_to :event, dependent: :delete
+
+  def name
+    '(' + team_home.name + ' | ' + team_away.name + ')'
+  end
 end
