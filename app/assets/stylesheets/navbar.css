@@ -16,7 +16,13 @@
 .navbar-default .navbar-nav > li > a {
     color: white;
 }
-
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: white;
+    background-color: transparent;
+    border-style: none;
+}
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #1ba9e5;
@@ -26,6 +32,7 @@
 .navbar-default .navbar-brand:focus {
     color: #1ba9e5;
 }
+
 .btn {
     font-family: Proxima Nova Bold;
     font-size: 15px;
