@@ -2,7 +2,7 @@
 Rails.application.routes.draw do
 
 
-  get '/events/create-from-type', to: 'events#create_from_type', as: 'events_create_from_type'
+  get '/events/create-from-type', to: 'events#create_from_type', as: 'create_event_from_type'
 
   resources :events do
     member do
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
-  get '/leagues/:id/schedule', to: 'events#schedule', as: 'league_schedule'
+  get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {

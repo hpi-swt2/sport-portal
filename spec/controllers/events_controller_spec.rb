@@ -37,6 +37,14 @@ RSpec.describe EventsController, type: :controller do
     FactoryBot.build(:event, name: nil).attributes
   }
 
+  let(:valid_tournament_attributes) {
+    FactoryBot.build(:tournament, owner: @user, max_teams: 20).attributes
+  }
+
+  let(:invalid_tournament_attributes) {
+    FactoryBot.build(:tournament, name: nil).attributes
+  }
+
   let(:valid_league_attributes) {
     FactoryBot.build(:league, owner: @user, max_teams: 20).attributes
   }
@@ -219,16 +227,18 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "PUT #join" do
+    let(:attributes_single_player_team){FactoryBot.build(:event,owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes}
     it "adds the user as participant to the event" do
-      event = Event.create! valid_event_attributes
+      event = Event.create! attributes_single_player_team
       put :join, params: { id: event.to_param }, session: valid_session
       expect(event).to have_participant(@user)
     end
   end
 
   describe "PUT #leave" do
+    let(:attributes_single_player_team){FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes}
     it "remove the user as participant of the event" do
-      event = Event.create! valid_event_attributes
+      event = Event.create! attributes_single_player_team
       event.add_participant(@user)
       put :leave, params: { id: event.to_param }, session: valid_session
       expect(event).not_to have_participant(@user)
@@ -280,7 +290,7 @@ RSpec.describe EventsController, type: :controller do
 
   describe "GET #overview" do
     it "returns a success response" do
-      tournament = Tournament.create! valid_attributes
+      tournament = Tournament.create! valid_tournament_attributes
       get :overview, params: { id: tournament.to_param }, session: valid_session
       expect(response).to be_success
     end

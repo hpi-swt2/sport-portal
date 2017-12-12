@@ -53,7 +53,7 @@
 <%# Only rendering the schedule if the event is a league (schedule generation isn't defined for any other event type yet)%>
 <%= if @event.is_a? League
       link_to t('.to_schedule'),
-              league_schedule_path(@event),
+              event_schedule_path(@event),
               :class => 'btn btn-default'
     end%>
 
