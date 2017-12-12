@@ -1,20 +1,20 @@
-<%= form_for @event, :html => { :class => "form-horizontal event" } do |f| %>
+<%= form_for @event, html: { class: "form-horizontal event" } do |f| %>
 
-    <%= render partial: "application/validation_errors", locals: {model: @event} %>
+  <%= render partial: "application/validation_errors", locals: {model: @event} %>
 
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:name), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :name, id: :event_name, :class => 'form-control' %>
-        <%= f.error_span(:name) %>
-      </div>
+  <div class="form-group">
+    <%= f.label :name, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, id: :event_name, class: 'form-control' %>
+      <%= f.error_span(:name) %>
     </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:description), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_area :description, id: :event_description, :class => 'form-control' %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :description, id: :event_description, class: 'form-control' %>
     </div>
+
     <div class="form-group">
       <%= f.label Event.human_attribute_name(:event_type), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
@@ -48,50 +48,52 @@
                                 {selected: @event.player_type, include_blank: t('events.new.select_player_type')},
                                 { :class => 'form-control', :id => 'event_player_type'}%>
       </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :max_teams, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :max_teams, id: :event_max_teams, class: 'form-control' %>
+      <%= f.error_span(:max_teams) %>
     </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:max_teams), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :max_teams, id: :event_max_teams, :class => 'form-control' %>
-        <%= f.error_span(:max_teams) %>
-      </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :discipline, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :discipline, id: :event_discipline, class: 'form-control' %>
+      <%= f.error_span(:discipline) %>
     </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:discipline), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :discipline, id: :event_discipline, :class => 'form-control' %>
-        <%= f.error_span(:discipline) %>
-      </div>
-    </div>
+
     <div class="form-group" id="event_deadline_div">
-      <%= f.label Event.human_attribute_name(:deadline), :class => 'control-label col-lg-2' %>
+      <%= f.label :deadline, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :deadline, id: :event_deadline, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
         <%= f.error_span(:deadline) %>
       </div>
     </div>
+
     <div class="form-group" id="event_startdate_div">
-      <%= f.label Event.human_attribute_name(:startdate), :class => 'control-label col-lg-2' %>
+      <%= f.label :startdate, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :startdate, id: :event_startdate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
         <%= f.error_span(:startdate) %>
       </div>
     </div>
     <div class="form-group" id="event_enddate_div">
-      <%= f.label Event.human_attribute_name(:enddate), :class => 'control-label col-lg-2' %>
+      <%= f.label :enddate, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :enddate, id: :event_enddate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
         <%= f.error_span(:enddate) %>
       </div>
     </div>
     <div class="form-group" id="event_duration_div">
-      <%= f.label Event.human_attribute_name(:duration), :class => 'control-label col-lg-2' %>
+      <%= f.label :duration, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :duration, id: :event_duration, :class => 'form-control' %></div>
     </div>
 
     <div class="form-group" id="event_metric_div">
-      <%= f.label Event.human_attribute_name(:metrics), :class => 'control-label col-lg-2' %>
+      <%= f.label :metrics, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.collection_select :metrics, event_metric_localize, :first, :second,
                                 {selected: @event.metric, include_blank: t('events.new.select_metric')},
@@ -100,17 +102,19 @@
     </div>
 
     <div class="form-group" id="initial_value_div">
-      <%= f.label Event.human_attribute_name(:initial_value), :class => 'control-label col-lg-2' %>
+      <%= f.label :initial_value, :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.text_field :initial_value, id: :event_initial_value, :class => 'form-control' %>
       </div>
     </div>
 
-    <div class="form-group">
-      <div class="col-lg-offset-2 col-lg-10">
-        <%= f.submit t('events.create_event'), :class => 'btn btn-primary' %>
-        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                    back_path, :class => 'btn btn-default' %>
-      </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit submit_label,
+                   class: 'btn btn-primary' %>
+      <%= link_to t('helpers.links.cancel'),
+                  back_path,
+                  class: 'btn btn-default' %>
     </div>
+  </div>
 <% end %>
