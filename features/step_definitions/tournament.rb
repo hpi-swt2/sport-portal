@@ -38,6 +38,13 @@ When(/^the Spielplan page for (.*) is visited$/) do |tournamentName|
   visit event_schedule_path(tournament_named tournamentName)
 end
 
+And(/^the texts? (.+) (?:are|is) there\.$/) do |texts_raw|
+  texts = texts_raw.split ', '
+  texts.each do |text|
+    expect(page).to have_text(text)
+  end
+end
+
 Then(/^there should be several rounds$/) do
   expect(page).to have_content('Finale')
   expect(page).to have_content('Halbfinale')
@@ -49,8 +56,16 @@ And(/^there should be exactly (\d+) matches and (\d+) rounds$/) do |numberOfMatc
 end
 
 def find_match_on_page(match_num)
-  *unused_rest, match_id = all('table#matches-table form')[match_num - 1][:id].split '_'
+  *_, match_id = all('table#matches-table form')[match_num - 1][:id].split '_'
   Match.find match_id.to_i
+end
+
+def find_team_of_match(match_num, home_or_away)
+  match = find_match_on_page match_num
+  {
+      home: match.team_home_recursive,
+      away: match.team_away_recursive
+  }[home_or_away.to_sym]
 end
 
 And(/^the results for match (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_id, points_home, points_away|
@@ -61,18 +76,12 @@ And(/^the results for match (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_id
 end
 
 Then(/^the (home|away) team of match (\d+) comes to the next round$/) do |home_or_away, match_id|
-  match = find_match_on_page match_id
-  team = nil
-  case home_or_away
-  when 'home' then team = match.team_home
-  when 'away' then team = match.team_away
-  end
+  team = find_team_of_match match_id, home_or_away
   all('a[href="' + team_path(team) + '"]').count == 2
 end
 
-And(/^the texts? (.+) (?:are|is) there\.$/) do |texts_raw|
-  texts = texts_raw.split ', '
-  texts.each do |text|
-    expect(page).to have_text(text)
-  end
+Then(/^the (home|away) team of match (\d+) (is|isn't) in match (\d+)$/) do |home_or_away, match_id, is_or_isnt, target_match_num|
+  team = find_team_of_match match_id, home_or_away
+  target_match = find_match_on_page target_match_num
+  expect(target_match.is_team_recursive? team).to be(is_or_isnt == 'is')
 end
