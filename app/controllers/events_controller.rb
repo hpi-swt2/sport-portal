@@ -17,11 +17,10 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    case params[:type]
-    when 'league'
-      @event = League.new
-    when 'tournament'
-      @event = Tournament.new
+    if event_type
+      @event = event_type.new
+    else
+      render :create_from_type
     end
   end
 
@@ -31,12 +30,7 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    if params[:type] == 'league'
-      @event = League.new event_params
-    elsif params[:type] == 'tournament'
-      @event = Tournament.new event_params
-    end
-
+    @event = event_type.new(event_params)
     @event.owner = current_user
 
     if @event.save
@@ -77,9 +71,6 @@ class EventsController < ApplicationController
     redirect_back fallback_location: events_url
   end
 
-  def create_from_type
-  end
-
   # GET /events/1/schedule
   def schedule
     if @event.teams.empty?
@@ -98,12 +89,25 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
+    # Get the type of event that should be created
+    def event_type
+      return League if params[:type] == 'League'
+      return Tournament if params[:type] == 'Tournament'
+      params[:type]
+    end
+
     def get_shown_events_value
       params[:showAll]
     end
 
     # Only allow a trusted parameter "white list" through.
     def event_params
+      if params.has_key? :league
+        params[:event] = params.delete :league
+      elsif params.has_key? :tournament
+        params[:event] = params.delete :tournament
+      end
+
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,
