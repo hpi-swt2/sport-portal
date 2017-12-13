@@ -86,15 +86,14 @@ class Tournament < Event
     end
 
     def build_matches(team_array, depth)
-      team_count = team_array.length
-      if team_count <= 2
+      if team_array.length <= 2
         return build_leaf_match *team_array, depth
       end
 
       left_half, right_half = split_teams_array team_array
       child_depth = depth - 1
-      match_left = build_matches(left_half, child_depth)
-      match_right = build_matches(right_half, child_depth)
+      match_left = build_matches left_half, child_depth
+      match_right = build_matches right_half, child_depth
 
       create_match match_left, match_right, depth
     end
