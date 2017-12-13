@@ -98,6 +98,15 @@ en:
     show_events: "Show all events"
     join_team_event: "Join event %{event} as a team"
 
+  teams:
+      show:
+        invite_user_to_team: "+"
+      invite_user_to_team:
+        title: "Invite new player"
+        no_user_for_mail: 'No user matching the given email address.'
+        user_already_in_team: 'User is already part of this team.'
+        assignment_successful: 'User has been added successfully to this Team.'
+
   validations:
     not_only_numbers: "should not only contain numbers"
     four_different_characters: "should contain at least 4 different characters"

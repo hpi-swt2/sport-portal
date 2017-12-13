@@ -119,7 +119,7 @@ de:
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
     new_league: "Neue Liga"
-    new_tournament: "Neues Tournier"
+    new_tournament: "Neues Turnier"
     show_events: "Alle Events anzeigen"
     join_team_event: "Event %{event} mit einem Team beitreten"
     choose_team: "Ein Team auswählen"
@@ -146,6 +146,14 @@ de:
       teamColumn: "Team"
       standingColumn: "Platzierung"
 
+  teams:
+    show:
+      invite_user_to_team: "+"
+    invite_user_to_team:
+      title: "Neuen Spieler einladen"
+      no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
+      user_already_in_team: 'Der Nutzer ist bereits Mitglied in diesem Team.'
+      assignment_successful: 'Der Nutzer wurde erfolgreich zu diesem Team hinzugefügt.'
   validations:
     not_only_numbers: "darf nicht nur aus Zahlen bestehen"
     four_different_characters: "muss aus mindestens 4 verschiedenen Zeichen bestehen"
