@@ -140,8 +140,18 @@ RSpec.describe EventsController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
-      let(:league_params) { {event: valid_league_attributes} }
-      let(:tournament_params) { {event: FactoryBot.build(:tournament, owner: @user).attributes} }
+      let(:league_params) {
+        {
+          event: valid_league_attributes,
+          type: League
+        }
+      }
+      let(:tournament_params) {
+        {
+          event: FactoryBot.build(:tournament, owner: @user).attributes,
+          type: Tournament
+        }
+      }
       it "creates a new Event" do
         expect {
           post :create, params: league_params
@@ -164,8 +174,18 @@ RSpec.describe EventsController, type: :controller do
       end
     end
     context "with invalid params" do
-      let(:league_params) { {event: invalid_league_attributes} }
-      let(:tournament_params) { {event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes} }
+      let(:league_params) {
+        {
+          event: invalid_league_attributes,
+          type: League
+        }
+      }
+      let(:tournament_params) {
+        {
+          event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
+          type: Tournament
+        }
+      }
       it "returns success when creating a league" do
         post :create, params: league_params, session: valid_session
         expect(response).to be_success

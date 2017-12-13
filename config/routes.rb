@@ -1,17 +1,14 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-
-  get '/events/create-from-type', to: 'events#create_from_type', as: 'create_event_from_type'
-
-  resources :events do
+  resources :events, except: [:create] do
     member do
       put :join
       put :leave
     end
   end
-  resources :leagues, controller: 'events', type: 'league'
-  resources :tournaments, controller: 'events', type: 'tournament'
+  resources :leagues, controller: 'events', only: [:show, :new, :create, :update], type: League
+  resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
 
   root 'welcome#index'
   resources :teams
