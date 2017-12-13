@@ -308,19 +308,18 @@ end
 
   describe 'POST #perform_action_on_multiple_members' do
     it 'can delete ownership' do
-        team = Team.create! valid_attributes
-        another_user = FactoryBot.create :user
-        still_another_user = FactoryBot.create :user
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+      still_another_user = FactoryBot.create :user
 
-        team.owners << subject.current_user
-        team.owners << another_user
-        team.owners << still_another_user
+      team.owners << subject.current_user
+      team.owners << another_user
+      team.owners << still_another_user
 
-        expect {
-          post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_ownership: "delete_ownership" }
-        }.to change(team.owners, :count).by(-2)
-      end
-
+      expect {
+        post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_ownership: "delete_ownership" }
+      }.to change(team.owners, :count).by(-2)
+    end
 
     it 'does not allow unauthorized access' do
       team = Team.create! valid_attributes
