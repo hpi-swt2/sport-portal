@@ -6,6 +6,7 @@ Given(/^a tournament (.*) with (\d+) teams$/) do |tournamentName, numTeams|
   for each in 1..numTeams do
     tournament.teams << create_team
   end
+  tournament.generate_schedule
 end
 
 Given(/^a tournament (.*)\.$/) do |tournamentName|
@@ -22,7 +23,7 @@ When(/^the event page for (.*) is visited$/) do |tournamentName|
 end
 
 And(/^it should link to tournament Spielplan for (.*)$/) do |tournamentName|
-  click_button 'zum Spielplan'
+  click_link 'zum Spielplan'
   expect(page).to have_current_path(event_schedule_path(tournament_named tournamentName), only_path: true)
 end
 

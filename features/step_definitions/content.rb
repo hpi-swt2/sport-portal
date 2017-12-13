@@ -12,6 +12,10 @@ Then(/^there should be a '(.*)' button$/) do |text|
   expect(page).to have_button(text)
 end
 
+Then(/^there should be a '(.*)' link/) do |text|
+  expect(page).to have_link(text)
+end
+
 
 Then(/^there should be a table$/) do
   expect(page).to have_table

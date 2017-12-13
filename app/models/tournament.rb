@@ -27,18 +27,25 @@ class Tournament < Event
   end
 
   def find_standing_of(team, match)
-    <<<[]{}()#TODO: continue here
-    if match.team_home == team || match.team_away == team || match.winner == team
-      return match
+    if match.team_home_recursive == team || match.team_away_recursive == team
+      if match.loser == team
+        return I18n.t 'events.overview.out', match_name: match.round
+      end
+      return I18n.t 'events.overview.in', match_name: match.round
     end
-    result = nil
+
     if match.team_home_type == 'Match'
       result = find_standing_of team, match.team_home
+      if result != nil
+        return result
+      end
     end
-    if result == nil && match.team_away_type == 'Match'
-      result = find_standing_of team, match.team_home
+    if match.team_away_type == 'Match'
+      result = find_standing_of team, match.team_away
+      if result != nil
+        return result
+      end
     end
-    result
   end
 
   def finale

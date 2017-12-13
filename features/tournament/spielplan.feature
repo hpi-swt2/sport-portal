@@ -8,7 +8,7 @@ Feature: Spielplan for tournament
 
   Scenario: Spielplan should be linked from tournament overview page
     When the event page for t is visited
-    Then there should be a 'zum Spielplan' button
+    Then there should be a 'zum Spielplan' link
     And it should link to tournament Spielplan for t
 
   Scenario: Spielplan should have several rounds for ko tournament

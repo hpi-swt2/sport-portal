@@ -27,6 +27,10 @@ class Match < ApplicationRecord
   belongs_to :event, dependent: :delete
 
   def name
+    winner_team = winner
+    if winner_team != nil
+      return winner_team.name
+    end
     round
   end
 
@@ -44,21 +48,29 @@ class Match < ApplicationRecord
 
   def winner
     if points_home != nil && points_away != nil && points_home != points_away
-      winner_team_or_match = points_home > points_away ? team_home : team_away
-      if winner_team_or_match.is_a? Team
-        return winner_team_or_match
-      end
-      winner_team_or_match.winner
+      points_home > points_away ? team_home_recursive : team_away_recursive
     end
   end
 
   def loser
     if points_home != nil && points_away != nil && points_home != points_away
-      loser_team_or_match = points_home < points_away ? team_home : team_away
-      if loser_team_or_match.is_a? Team
-        return loser_team_or_match
-      end
-      loser_team_or_match.loser
+      points_home < points_away ? team_home_recursive : team_away_recursive
     end
+  end
+
+  def team_home_recursive
+    home_team_or_match = team_home
+    if home_team_or_match.is_a? Team
+      return home_team_or_match
+    end
+    home_team_or_match.winner
+  end
+
+  def team_away_recursive
+    away_team_or_match = team_away
+    if away_team_or_match.is_a? Team
+      return away_team_or_match
+    end
+    away_team_or_match.winner
   end
 end

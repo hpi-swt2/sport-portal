@@ -40,4 +40,9 @@ class Team < ApplicationRecord
   def in_event?
     events.exists?
   end
+
+  def winner
+    # allows teams to be treated like matches. see Match#winner
+    self
+  end
 end

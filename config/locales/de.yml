@@ -145,6 +145,8 @@ de:
       title: "Übersicht"
       teamColumn: "Team"
       standingColumn: "Platzierung"
+      out: "In %{match_name} ausgeschieden"
+      in: "In %{match_name}"
 
   matches:
     finale_game: "Finalspiel %{gameid}"
