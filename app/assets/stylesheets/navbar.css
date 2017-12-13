@@ -42,3 +42,8 @@
     color: #1ba9e5;
 }
 
+img.avatar {
+    height: 20px;
+    width: 20px;
+    object-fit: cover;
+}

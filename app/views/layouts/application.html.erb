@@ -24,11 +24,7 @@
     <body class="navbar-overlap">
   <% end %>
     <div class="container">
-      <% if (action_name === "new" && controller_name == "sessions" or controller_name === "users" && action_name == "new" or controller_name === "users" && action_name == "create") %>
       <%= render partial: "application/navbar" %>
-      <% else %>
-          <%= render partial: "application/navbar_old" %>
-      <% end %>
 
       <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
       <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
