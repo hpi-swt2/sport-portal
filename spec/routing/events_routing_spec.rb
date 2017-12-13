@@ -9,6 +9,8 @@ RSpec.describe EventsController, type: :routing do
 
     it "routes to #new" do
       expect(get: "/events/new").to route_to("events#new")
+      expect(get: "/tournaments/new").to route_to("events#new", type: Tournament)
+      expect(get: "/leagues/new").to route_to("events#new", type: League)
     end
 
     it "routes to #show" do
