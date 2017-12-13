@@ -50,12 +50,12 @@ class Tournament < Event
 
     def get_standing_of(team, match)
       if match.is_team_recursive? team
-        return standing_of_string team, match
+        return standing_string team, match
       end
-      standing_of_recursion_step(team, match.team_home) || standing_of_recursion_step(team, match.team_away)
+      standing_recursion_step(team, match.team_home) || standing_recursion_step(team, match.team_away)
     end
 
-    def standing_of_string(team, match)
+    def standing_string(team, match)
       match_name = match.round
       if match.loser == team
         return I18n.t 'events.overview.out', match_name: match_name
@@ -63,7 +63,7 @@ class Tournament < Event
       I18n.t 'events.overview.in', match_name: match_name
     end
 
-    def standing_of_recursion_step(team, child)
+    def standing_recursion_step(team, child)
       if child.is_a? Match
         get_standing_of team, child
       end
