@@ -15,6 +15,7 @@ Feature: Spielplan for tournament
     When the Spielplan page for t is visited
     Then there should be several rounds
     And there should be exactly 22 matches and 5 rounds
+    And the texts Vorrunde 1, Achtelfinale, Viertelfinale, Halbfinale, Finale are there.
 
   Scenario: Spielplan should update winner teams continuously
     When the Spielplan page for t is visited

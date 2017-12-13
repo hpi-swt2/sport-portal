@@ -62,3 +62,10 @@ Then(/^the (home|away) team of match (\d+) comes to the next round$/) do |home_o
   end
   all('a[href="' + team_path(team) + '"]').count == 2
 end
+
+And(/^the texts? (.+) (?:are|is) there\.$/) do |texts_raw|
+  texts = texts_raw.split ', '
+  texts.each do |text|
+    expect(page).to have_text(text)
+  end
+end

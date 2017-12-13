@@ -149,11 +149,12 @@ de:
       in: "In %{match_name}"
 
   matches:
-    finale_game: "Finalspiel %{gameid}"
-    semifinale_game: "Halbfinalspiel %{gameid}"
-    quarterfinale_game: "Viertelfinalspiel %{gameid}"
-    eighthfinale_game: "Achtelfinalspiel %{gameid}"
-    preliminaries_game: "Vorrunde %{round} - Spiel %{gameid}"
+    round_name:
+      zero: "Finalspiel %{gameid}"
+      one: "Halbfinalspiel %{gameid}"
+      two: "Viertelfinalspiel %{gameid}"
+      three: "Achtelfinalspiel %{gameid}"
+      other: "Vorrunde %{round} - Spiel %{gameid}"
 
   teams:
     show:

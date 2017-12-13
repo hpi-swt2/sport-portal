@@ -39,11 +39,11 @@ class Match < ApplicationRecord
   end
 
   def round
-    round = { 0 => I18n.t('matches.finale_game', gameid: index.to_s), 1 => I18n.t('matches.semifinale_game', gameid: index.to_s), 2 => I18n.t('matches.quarterfinale_game', gameid: index.to_s), 3 => I18n.t('matches.eighthfinale_game', gameid: index.to_s) }[depth]
-    if round == nil
-      round = I18n.t('matches.preliminaries_game', round: (gameday + 1).to_s, gameid: index.to_s)
+    key = { 0 => 'zero', 1 => 'one', 2 => 'two', 3 => 'three' }[depth]
+    if key == nil
+      key = 'other'
     end
-    round
+    I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
   end
 
   def winner
