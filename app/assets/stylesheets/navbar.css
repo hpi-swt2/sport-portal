@@ -22,7 +22,9 @@
     color: white;
     background-color: transparent;
     border-style: none;
+    background: none;
 }
+
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #1ba9e5;
