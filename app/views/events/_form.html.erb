@@ -57,21 +57,21 @@
   <div class="form-group">
     <%= f.label :deadline, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :deadline, class: 'form-control', data: {provide: 'datepicker', 'date-format' => 'yyyy-mm-dd'} %>
+      <%= f.text_field :deadline, class: 'form-control', data: {provide: 'datepicker', 'date-format': 'yyyy-mm-dd'} %>
       <%= f.error_span(:deadline) %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :startdate, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :startdate, class: 'form-control', data: {provide: 'datepicker', 'date-format' => 'yyyy-mm-dd'} %>
+      <%= f.text_field :startdate, class: 'form-control', data: {provide: 'datepicker', 'date-format': 'yyyy-mm-dd'} %>
       <%= f.error_span(:startdate) %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :enddate, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :enddate, class: 'form-control', data: {provide: 'datepicker', 'date-format' => 'yyyy-mm-dd'} %>
+      <%= f.text_field :enddate, class: 'form-control', data: {provide: 'datepicker', 'date-format': 'yyyy-mm-dd'} %>
       <%= f.error_span(:enddate) %>
     </div>
   </div>
@@ -81,7 +81,7 @@
       <%= f.text_field :duration, id: :event_duration, class: 'form-control' %></div>
   </div>
   <%# Rendering the correct template depending on the event type %>
-  <%= render @event.class.name.downcase, form: f %>
+  <%= render "events/forms/#{@event.model_name}", form: f %>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
