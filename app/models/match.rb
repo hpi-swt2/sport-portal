@@ -39,38 +39,41 @@ class Match < ApplicationRecord
   end
 
   def round
-    key = { 0 => 'zero', 1 => 'one', 2 => 'two', 3 => 'three' }[depth]
-    if key == nil
-      key = 'other'
+    key = case depth
+          when 0 then 'zero'
+          when 1 then 'zero'
+          when 2 then 'zero'
+          when 3 then 'zero'
+          else 'other'
     end
     I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
   end
 
+  def has_winner?
+    points_home != nil && points_away != nil && points_home != points_away
+  end
+
   def winner
-    if points_home != nil && points_away != nil && points_home != points_away
+    if has_winner?
       points_home > points_away ? team_home_recursive : team_away_recursive
     end
   end
 
   def loser
-    if points_home != nil && points_away != nil && points_home != points_away
+    if has_winner?
       points_home < points_away ? team_home_recursive : team_away_recursive
     end
   end
 
   def team_home_recursive
-    home_team_or_match = team_home
-    if home_team_or_match.is_a? Team
-      return home_team_or_match
-    end
-    home_team_or_match.winner
+    team_home.winner
   end
 
   def team_away_recursive
-    away_team_or_match = team_away
-    if away_team_or_match.is_a? Team
-      return away_team_or_match
-    end
-    away_team_or_match.winner
+    team_away.winner
+  end
+
+  def is_team_recursive?(team)
+    team_home_recursive == team || team_away_recursive == team
   end
 end

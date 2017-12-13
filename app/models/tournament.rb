@@ -19,32 +19,36 @@
 #  owner_id         :integer
 #
 
+
+def is_power_of_two?(number)
+  number.to_s(2).count('1') == 1
+end
+
 class Tournament < Event
   enum game_modes: [:ko, :ko_group, :double_elimination]
 
   def standing_of(team)
-    find_standing_of team, finale
+    get_standing_of team, finale
   end
 
-  def find_standing_of(team, match)
-    if match.team_home_recursive == team || match.team_away_recursive == team
-      if match.loser == team
-        return I18n.t 'events.overview.out', match_name: match.round
-      end
-      return I18n.t 'events.overview.in', match_name: match.round
+  def get_standing_of(team, match)
+    if match.is_team_recursive? team
+      return standing_of_string team, match
     end
+    standing_of_recursion_step(team, match.team_home) || standing_of_recursion_step(team, match.team_away)
+  end
 
-    if match.team_home_type == 'Match'
-      result = find_standing_of team, match.team_home
-      if result != nil
-        return result
-      end
+  def standing_of_string(team, match)
+    match_name = match.round
+    if match.loser == team
+      return I18n.t 'events.overview.out', match_name: match_name
     end
-    if match.team_away_type == 'Match'
-      result = find_standing_of team, match.team_away
-      if result != nil
-        return result
-      end
+    I18n.t 'events.overview.in', match_name: match_name
+  end
+
+  def standing_of_recursion_step(team, child)
+    if child.is_a? Match
+      get_standing_of team, child
     end
   end
 
@@ -55,11 +59,16 @@ class Tournament < Event
         finale = match
       end
     end
-    #TODO: keep care of 3rd place match
+    #TODO: keep care of 3rd place match here
     finale
   end
 
   def generate_schedule
+    build_matches filled_teams, max_match_level
+    set_match_indices
+  end
+
+  def filled_teams
     filled_teams = []
     teams.each { |team| filled_teams << team }
     filled_teams = filled_teams.shuffle!
@@ -68,52 +77,56 @@ class Tournament < Event
       filled_teams.insert(insert_index, nil)
       insert_index += 2
     end
-    build_matches filled_teams, max_match_level
-
-    last_gameday = nil
-    index = 1
-    matches.each { |match|
-      if match.gameday != last_gameday
-        last_gameday = match.gameday
-        index = 1
-      end
-      match.index = index
-      match.save!
-      index += 1
-    }
+    filled_teams
   end
 
   def build_matches(team_array, depth)
     team_count = team_array.length
     if team_count <= 2
-      if team_array[0] == nil
-        return team_array[1]
-      elsif team_array[1] == nil
-        return team_array[0]
-      end
-      return create_match team_array[0], team_array[1], depth
+      return build_leaf_match *team_array, depth
     end
 
     half_team_count = team_count / 2
     left_half = team_array[0 .. (half_team_count - 1)]
     right_half = team_array[half_team_count .. (team_count - 1)]
-    match1 = build_matches(left_half, depth - 1)
-    match2 = build_matches(right_half, depth - 1)
+    child_depth = depth - 1
+    match_left = build_matches(left_half, child_depth)
+    match_right = build_matches(right_half, child_depth)
 
-    create_match match1, match2, depth
+    create_match match_left, match_right, depth
   end
 
-  def is_power_of_two?(number)
-    number.to_s(2).count('1') == 1
+  def build_leaf_match(team_home, team_away, depth)
+    if team_home.nil?
+      return team_away
+    elsif team_away.nil?
+      return team_home
+    end
+    create_match team_home, team_away, depth
   end
 
-  def create_match(team1, team2, depth)
-    match = Match.new(team_home: team1, team_away: team2, gameday: depth, event: self)
+  def create_match(team_home, team_away, depth)
+    match = Match.new(team_home: team_home, team_away: team_away, gameday: depth, event: self)
     match.save!
     match
   end
 
   def max_match_level
     (Math.log teams.length, 2).ceil - 1
+  end
+
+  def set_match_indices
+    last_gameday = nil
+    index = 1
+    matches.each do |match|
+      new_gameday = match.gameday
+      if new_gameday != last_gameday
+        last_gameday = new_gameday
+        index = 1
+      end
+      match.index = index
+      match.save!
+      index += 1
+    end
   end
 end
