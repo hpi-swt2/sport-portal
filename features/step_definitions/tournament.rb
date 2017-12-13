@@ -68,15 +68,15 @@ def find_team_of_match(match_num, home_or_away)
   }[home_or_away.to_sym]
 end
 
-And(/^the results for match (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_id, points_home, points_away|
-  match = find_match_on_page match_id
+And(/^the results for match (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_num, points_home, points_away|
+  match = find_match_on_page match_num
   fill_in "match_#{match.id}_match_points_home", with: points_home
   fill_in "match_#{match.id}_match_points_away", with: points_away
   click_on "save_points_#{match.id}"
 end
 
-Then(/^the (home|away) team of match (\d+) comes to the next round$/) do |home_or_away, match_id|
-  team = find_team_of_match match_id, home_or_away
+Then(/^the (home|away) team of match (\d+) comes to the next round$/) do |home_or_away, match_num|
+  team = find_team_of_match match_num, home_or_away
   all('a[href="' + team_path(team) + '"]').count == 2
 end
 
@@ -84,4 +84,11 @@ Then(/^the (home|away) team of match (\d+) (is|isn't) in match (\d+)$/) do |home
   team = find_team_of_match match_id, home_or_away
   target_match = find_match_on_page target_match_num
   expect(target_match.is_team_recursive? team).to be(is_or_isnt == 'is')
+end
+
+Then(/^the standing of the (home|away) team of match (\d+) is '(.+)'$/) do |home_or_away, match_num, standing|
+  visit event_schedule_path single_tournament
+  team = find_team_of_match match_num, home_or_away
+  visit event_overview_path single_tournament
+  expect(page).to have_text("#{team.name} #{standing}")
 end
