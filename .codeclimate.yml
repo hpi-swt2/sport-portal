@@ -4,6 +4,9 @@ engines:
   # https://docs.codeclimate.com/v1.0/docs/rubocop
   rubocop:
     enabled: true
+    exclude_patterns:
+      # include spec directory for rubocop linting
+      - "!spec/"
   # Static analysis tool which checks Ruby on Rails applications for security vulnerabilities
   # https://docs.codeclimate.com/v1.0/docs/brakeman
   brakeman:
