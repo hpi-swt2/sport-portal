@@ -41,9 +41,9 @@ class Match < ApplicationRecord
   def round
     key = case depth
           when 0 then 'zero'
-          when 1 then 'zero'
-          when 2 then 'zero'
-          when 3 then 'zero'
+          when 1 then 'one'
+          when 2 then 'two'
+          when 3 then 'three'
           else 'other'
     end
     I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
