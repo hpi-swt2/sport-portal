@@ -108,12 +108,10 @@ class Tournament < Event
     end
 
     def build_leaf_match(team_home, team_away, depth)
-      if team_home.nil?
-        return team_away
-      elsif team_away.nil?
-        return team_home
+      unless team_home.nil? || team_away.nil?
+        return create_match team_home, team_away, depth
       end
-      create_match team_home, team_away, depth
+      team_home || team_away
     end
 
     def create_match(team_home, team_away, depth)
