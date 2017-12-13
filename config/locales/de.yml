@@ -94,6 +94,8 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+    validations:
+      must_be_after: "darf nicht vor %{other} sein."
 
   view:
     user:
