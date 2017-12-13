@@ -1,7 +1,7 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-  resources :events, only: [:index, :show, :new, :edit, :update, :destroy] do
+  resources :events, except: [:create] do
     member do
       put :join
       put :leave
