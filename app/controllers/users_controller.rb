@@ -1,6 +1,6 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
-  load_and_authorize_resource :only => [:dashboard]
+  load_and_authorize_resource only: [:dashboard]
   load_resource only: [:link, :unlink]
 
   attr_reader :user
