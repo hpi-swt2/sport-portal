@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-  before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
+  load_and_authorize_resource
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule]
 
   # GET /events
   def index
@@ -16,7 +17,12 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
+    case params[:type]
+    when 'league'
+      @event = League.new
+    when 'tournament'
+      @event = Tournament.new
+    end
   end
 
   # GET /events/1/edit
@@ -25,7 +31,13 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    if params[:type] == 'league'
+      @event = League.new event_params
+    elsif params[:type] == 'tournament'
+      @event = Tournament.new event_params
+    end
+
+    @event.owner = current_user
 
     if @event.save
       @event.editors << current_user
@@ -51,26 +63,33 @@ class EventsController < ApplicationController
   end
 
 
-  # PATCH/PUT /events/1/join
+  # PUT /events/1/join
   def join
-    @event.users << current_user
-    if @event.save
-      flash[:success] = "You have successfully joined #{@event.name}!"
-      redirect_to @event
-    else
-      flash[:error] = "There was an error."
-      render 'show'
-    end
+    @event.add_participant(current_user)
+    flash[:success] = t('success.join_event', event: @event.name)
+    redirect_back fallback_location: events_url
+  end
+
+  # PUT /events/1/leave
+  def leave
+    @event.remove_participant(current_user)
+    flash[:success] = t('success.leave_event', event: @event.name)
+    redirect_back fallback_location: events_url
+  end
+
+  def create_from_type
   end
 
   # GET /events/1/schedule
   def schedule
-    @event = Event.find(params[:id])
     if @event.teams.empty?
       @event.add_test_teams
       @event.generate_schedule
     end
     @matches = @event.matches.order('gameday ASC')
+  end
+
+  def overview
   end
 
   private
@@ -83,15 +102,12 @@ class EventsController < ApplicationController
       params[:showAll]
     end
 
-    def set_user
-      @user = current_user
-    end
-
     # Only allow a trusted parameter "white list" through.
     def event_params
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,
+                                    :type,
                                     :game_mode,
                                     :max_teams,
                                     :player_type,

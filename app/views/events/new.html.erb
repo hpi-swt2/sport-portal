@@ -1,2 +1,8 @@
-<%= render 'form', event: @event %>
- <%= link_to 'Back', events_path %>
+<script src="event.js"></script>
+
+<%- model_class = Event -%>
+<div class="page-header">
+  <h1><%=t("events.new_#{@event.class.name.downcase}" ) %></h1>
+</div>
+
+<%= render 'form', submit_label: t('helpers.links.create'), back_path: events_path %>

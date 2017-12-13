@@ -13,11 +13,34 @@ RSpec.describe UsersController, type: :controller do
     FactoryBot.attributes_for(:user)
   }
 
-  describe 'GET #index' do
-    it 'returns a success response' do
+  let(:invalid_attributes) {
+    FactoryBot.attributes_for(:user, last_name: nil)
+  }
+
+  before(:each) do
+    @user = FactoryBot.create(:user)
+    @other_user = FactoryBot.create(:user)
+    @admin = FactoryBot.create(:admin)
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+  end
+
+  after(:each) do
+    @user.destroy
+    @other_user.destroy
+    @admin.destroy
+  end
+
+  describe "GET #index" do
+    it "returns a success response" do
       # https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-%28and-RSpec%29#mappings
       @request.env['devise.mapping'] = Devise.mappings[:user]
       user = User.create! valid_attributes
+      get :index, params: {}
+      expect(response).to be_success
+    end
+
+    it "should allow normal user to view page" do
+      sign_in @user
       get :index, params: {}
       expect(response).to be_success
     end
@@ -30,16 +53,22 @@ RSpec.describe UsersController, type: :controller do
       get :show, params: { id: user.to_param }
       expect(response).to be_success
     end
+
+    it "should allow normal user to view his page" do
+      sign_in @user
+      get :show, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
   end
 
   describe 'GET #new' do
     before :each do
       @request.env['devise.mapping'] = Devise.mappings[:user]
       @auth_session = {
-        'provider' => 'mock',
-        'uid' => '1234567890',
-        'email' => 'test@potato.com',
-        'expires' => Time.current + 10.minutes
+          'provider' => 'mock',
+          'uid' => '1234567890',
+          'email' => 'test@potato.com',
+          'expires' => Time.current + 10.minutes
       }
     end
 
@@ -86,12 +115,60 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'POST #create' do
-    it 'creates a new user with valid params' do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
+  describe 'GET #dashboard' do
+    it "should not show user's dashboard to not logged in user" do
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_unauthorized
+    end
+
+    it "should not show admin's dashboard to not logged in user" do
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_unauthorized
+    end
+
+    it 'should allow user to view their dashboard' do
+      sign_in @user
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+
+    it "should disallow user to view other user's dashboard" do
+      sign_in @user
+      get :dashboard, params: { id: @other_user.to_param }
+      expect(response).to be_forbidden
+    end
+
+    it "should disallow user to view admin's dashboard" do
+      sign_in @user
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_forbidden
+    end
+
+    it 'should allow admin to view their dashboard' do
+      sign_in @admin
+      get :dashboard, params: { id: @admin.to_param }
+      expect(response).to be_success
+    end
+
+    it "should allow admin to view every user's dashboard" do
+      sign_in @admin
+      get :dashboard, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+  end
+
+  describe "POST #create" do
+    it "creates a new user with valid params" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
       expect {
         post :create, params: { user: valid_attributes }
       }.to change(User, :count).by(1)
+    end
+
+    it "should allow normal user to view the page of other users" do
+      sign_in @user
+      get :show, params: { id: @other_user.to_param }
+      expect(response).to be_success
     end
   end
 
@@ -99,7 +176,11 @@ RSpec.describe UsersController, type: :controller do
     context 'with valid params' do
       let(:new_attributes) {
         { first_name: valid_attributes[:first_name] + '_new',
-          current_password: valid_attributes[:password] }
+         current_password: valid_attributes[:password] }
+      }
+
+      let(:new_admin_attributes) {
+        { first_name: valid_attributes[:first_name] + '_new'}
       }
 
       it 'updates the requested user' do
@@ -109,6 +190,65 @@ RSpec.describe UsersController, type: :controller do
         put :update, params: { id: user.to_param, user: new_attributes }
         user.reload
         expect(user.first_name).to eq(new_attributes[:first_name])
+      end
+
+      it 'should allow admin to update other users' do
+        sign_in @admin
+        put :update, params: { id: @user.to_param, user: new_admin_attributes }
+        @user.reload
+        expect(@user.first_name).to eq(new_admin_attributes[:first_name])
+      end
+    end
+
+    context 'with invalid params' do
+      it 'as admin should be a success response' do
+        sign_in @admin
+        put :update, params: { id: @user.to_param, user: invalid_attributes }
+        expect(response).to be_success
+      end
+    end
+  end
+
+  describe "GET #edit_profile" do
+    it "returns a success response" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = User.create! valid_attributes
+      sign_in user
+      get :edit_profile, params: { id: user.to_param }
+      expect(response).to be_success
+    end
+  end
+
+  describe "PATCH #update_profile" do
+    context "with valid params" do
+      let(:new_attributes) {
+        { birthday: valid_attributes[:birthday] + 1.year,
+          telephone_number: "01766668734",
+          telegram_username: valid_attributes[:telegram_username] + "_new",
+          favourite_sports: valid_attributes[:favourite_sports] + ", Riding" }
+      }
+
+      it "updates the requested user" do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        user = User.create! valid_attributes
+        sign_in user
+        patch :update_profile, params: { id: user.to_param, user: new_attributes }
+        user.reload
+        expect(user.birthday).to eq(new_attributes[:birthday])
+        expect(user.telephone_number).to eq(new_attributes[:telephone_number])
+        expect(user.telegram_username).to eq(new_attributes[:telegram_username])
+        expect(user.favourite_sports).to eq(new_attributes[:favourite_sports])
+      end
+    end
+
+    context "with invalid params" do
+      it "rerenders the edit page with erors" do
+        @request.env["devise.mapping"] = Devise.mappings[:user]
+        user = User.create! valid_attributes
+        sign_in user
+        new_attributes = { birthday: Date.today + 1.year }
+        patch :update_profile, params: {id: user.to_param, user: new_attributes }
+        expect(response).to render_template(:edit_profile)
       end
     end
   end
@@ -129,7 +269,8 @@ RSpec.describe UsersController, type: :controller do
 
     context 'given no logged in user' do
       it 'should deny access' do
-        expect { get :link, params: { id: @user.to_param } }.to raise_error(CanCan::AccessDenied)
+        get :link, params: { id: @user.to_param }
+        expect(response).to be_unauthorized
       end
     end
   end
@@ -164,8 +305,25 @@ RSpec.describe UsersController, type: :controller do
 
     context 'given no logged in user' do
       it 'should deny access' do
-        expect { get :unlink, params: { id: @user.to_param } }.to raise_error(CanCan::AccessDenied)
+        get :unlink, params: { id: @user.to_param }
+        expect(response).to be_unauthorized
       end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    it "should allow normal users to destroy themselves" do
+      sign_in @user
+      delete :destroy, params: { id: @user.to_param }
+      expect(response).to redirect_to(root_path)
+    end
+  end
+
+  describe "GET #edit" do
+    it "should allow normal users to edit themselves" do
+      sign_in @user
+      get :edit, params: { id: @user.to_param }
+      expect(response).to be_success
     end
   end
 

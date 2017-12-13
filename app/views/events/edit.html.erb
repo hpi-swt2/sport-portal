@@ -1,10 +1,12 @@
-<h1>Editing Event</h1>
+<script src="event.js"></script>
+<%- model_class = Event -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => :'helpers.titles.edit', :model => model_class.model_name.human.titleize %></h1>
+</div>
 
 <% if user_signed_in? && current_user.organizing_events.include?(@event) %>
-  <%= render 'form', event: @event %>
+  <%= render 'form', submit_label: t('helpers.links.save'), back_path: event_path(@event) %>
 <% else %>
   <p>No Permission to edit.</p>
 <% end %>
 
-<%= link_to 'Show', @event %> |
-<%= link_to 'Back', events_path %>

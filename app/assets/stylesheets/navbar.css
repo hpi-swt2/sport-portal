@@ -1,5 +1,12 @@
-.navbar .dropdown:hover .dropdown-menu {
-    display: block;
+@media screen and (min-width : 768px) {
+    .navbar .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+}
+@media screen and (max-width : 768px) {
+    .nav > .divider-vertical {
+        display: none;
+    }
 }
 .navbar .dropdown-menu li {
     text-align: center;

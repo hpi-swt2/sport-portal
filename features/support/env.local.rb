@@ -7,6 +7,7 @@ module DataHelper
     @users = []
     @accounts = []
     @named = {}
+    @tournaments = []
     @current_user = nil
   end
 
@@ -27,6 +28,11 @@ module DataHelper
     collection.last
   end
 
+  def create_tournament(options = {})
+    @tournaments << FactoryBot.create(:tournament, options)
+    @tournaments.last
+  end
+
   def create_user(options = {})
     @users << FactoryBot.create(:user, options)
     @users.last
@@ -35,6 +41,10 @@ module DataHelper
   def build_user(options = {})
     @users << FactoryBot.build(:user, options)
     @users.last
+  end
+
+  def create_tournament_named(name, options = {})
+    add_named_object name, create_tournament(options)
   end
 
   def create_user_named(name, options = {})
@@ -47,6 +57,10 @@ module DataHelper
 
   def user_named(name)
     get_named_object name, User
+  end
+
+  def tournament_named(name)
+    get_named_object name, Event
   end
 
   def single_user

@@ -47,13 +47,57 @@ en:
       user:
         one: "player"
         other: "players"
+        errors:
+          future_birthday: "The birthday must not be a future date"
+          telephone_number_invalid: "Telephone number must consist of only numbers without spaces"
+      image:
+        one: "image"
+        other: "images"
       event:
         one: "event"
         other: "events"
+  view:
+    user:
+      edit_profile: "Edit Profile Properties"
+      update_profile: "Update Profile"
+      favourite_sports_placeholder: "Football, Basketball, Table football, ..."
+
+  unauthorized:
+      manage:
+        all: "Not authorized to %{action} %{subject}."
+        user: "Not allowed to manage other user accounts."
 
   events:
-        create_event: "Create Event"
-        choose_event_format: "Choose event format"
-        new_league: "New league"
-        new_tournament: "New tournament"
-        show_events: "Show all events"
+    create_event: "Create Event"
+    choose_event_format: "Choose event format"
+    new_league: "New league"
+    new_tournament: "New tournament"
+    new:
+      name: "Name"
+      description: "Description"
+      event_type: "Event type"
+      game_mode: "Game mode"
+      player_type: "Player type"
+      max_teams: "Max. Teams"
+      discipline: "Discipline"
+      deadline: "Deadline"
+      startdate: "Startdate"
+      enddate: "Enddate"
+      duration: "Duration"
+      select_type: "Select type"
+      select_game_mode: "Select game mode"
+      select_player_type: "Spielertyp auswählen"
+    show_events: "Show all events"
+
+  teams:
+      show:
+        invite_user_to_team: "+"
+      invite_user_to_team:
+        title: "Invite new player"
+        no_user_for_mail: 'No user matching the given email address.'
+        user_already_in_team: 'User is already part of this team.'
+        assignment_successful: 'User has been added successfully to this Team.'
+
+  validations:
+    not_only_numbers: "should not only contain numbers"
+    four_different_characters: "should contain at least 4 different characters"

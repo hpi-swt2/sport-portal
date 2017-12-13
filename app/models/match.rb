@@ -3,7 +3,6 @@
 # Table name: matches
 #
 #  id           :integer          not null, primary key
-#  date         :date
 #  place        :string
 #  score_home   :integer
 #  score_away   :integer
@@ -11,10 +10,19 @@
 #  updated_at   :datetime         not null
 #  team_home_id :integer
 #  team_away_id :integer
+#  event_id     :integer
+#  points_home  :integer
+#  points_away  :integer
+#  gameday      :integer
 #
 
 class Match < ApplicationRecord
-  belongs_to :team_home, class_name: 'Team', foreign_key: 'team_home_id'
-  belongs_to :team_away, class_name: 'Team', foreign_key: 'team_away_id'
-  belongs_to :event
+  has_many :home_matches, as: :team_home, class_name: 'Match'
+  has_many :away_matches, as: :team_away, class_name: 'Match'
+  def matches
+    home_matches.or away_matches
+  end
+  belongs_to :team_home, polymorphic: true
+  belongs_to :team_away, polymorphic: true
+  belongs_to :event, dependent: :delete
 end

@@ -11,8 +11,8 @@ end
 
 When(/^the user enters his name$/) do
   user = single_user
-  fill_in 'First name', with: user.first_name
-  fill_in 'Last name', with: user.last_name
+  fill_in User.human_attribute_name(:first_name), with: user.first_name
+  fill_in User.human_attribute_name(:last_name), with: user.last_name
 end
 
 
