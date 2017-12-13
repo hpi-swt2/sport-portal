@@ -4,34 +4,34 @@
 <h1><%= t('.sign_up') %></h1>
 <div class="row">
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal user', role: 'form' }) do |f| %>
+      <div class="col s6 offset-s3">
     <div class="row">
-      <div class="input-field col s6 offset-s3">
+      <div class="input-field">
         <%= f.label :first_name %>
         <%= f.text_field :first_name, autofocus: true %>
-        <%= f.error_span(:first_name) %>
       </div>
-      <div class="input-field col s6 offset-s3">
+      <label><%= f.error_span(:first_name) %></label>
+      <div class="input-field">
         <%= f.label :last_name %>
         <%= f.text_field :last_name %>
-        <%= f.error_span(:last_name) %>
       </div>
-      <div class="input-field col s6 offset-s3">
+      <label><%= f.error_span(:last_name) %></label>
+      <div class="input-field">
         <%= f.label :email %>
         <%= f.email_field :email, placeholder: resource.email %>
-        <%= f.error_span(:email) %>
       </div>
-
+      <label><%= f.error_span(:email) %></label>
       <% unless resource.has_omniauth? %>
-        <div class="input-field col s6 offset-s3">
+        <div class="input-field">
           <%= f.label :password %>
           <%= f.password_field :password %>
-          <%= f.error_span(:password) %>
         </div>
-        <div class="input-field col s6 offset-s3">
+        <label><%= f.error_span(:password) %></label>
+        <div class="input-field">
           <%= f.label :password_confirmation %>
           <%= f.password_field :password_confirmation %>
-          <%= f.error_span(:password_confirmation) %>
         </div>
+        <label><%= f.error_span(:password_confirmation) %></label>
       <% end %>
     </div>
 
@@ -40,6 +40,7 @@
         <%= f.submit t('.sign_up'), class: 'btn btn-primary' %>
       </div>
     </div>
+      </div>
   <% end %>
 </div>
 <div class="row" style="margin-top: 10px">

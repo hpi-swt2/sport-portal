@@ -30,6 +30,11 @@ a:link, a:visited, a:hover, a:active {
     line-height: 16px;
     border: 1px solid #B4B4B4;
     border-radius: 100px;
+    padding: 0 0.75rem;
+}
+
+.input-field label {
+    left: 0.75rem;
 }
 
 .input-field:focus-within {
