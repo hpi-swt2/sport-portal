@@ -49,6 +49,7 @@ class Ability
       can_join_event(user)
       can_leave_event(user)
       can :schedule, Event
+      can :team_join, Event
 
       # Team
       can_crud_team(user_id)
@@ -66,7 +67,7 @@ class Ability
   private
 
     def can_join_event(user)
-      can :join, Event do |event|
+      can :join, Event.active do |event|
         event.can_join?(user)
       end
     end
