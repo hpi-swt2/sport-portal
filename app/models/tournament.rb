@@ -43,7 +43,7 @@ class Tournament < Event
   end
 
   def max_match_level
-    (Math.log teams.length, 2).ceil - 1
+    Math.log(teams.length, 2).ceil - 1
   end
 
   private
@@ -73,7 +73,7 @@ class Tournament < Event
       filled_teams = shuffled_teams
       insert_index = 0
       until is_power_of_two? filled_teams.length
-        filled_teams.insert(insert_index, nil)
+        filled_teams.insert insert_index, nil
         insert_index += 2
       end
       filled_teams
@@ -114,7 +114,7 @@ class Tournament < Event
     end
 
     def create_match(team_home, team_away, depth)
-      match = Match.new(team_home: team_home, team_away: team_away, gameday: depth, event: self)
+      match = Match.new team_home: team_home, team_away: team_away, gameday: depth, event: self
       match.save!
       match
     end
