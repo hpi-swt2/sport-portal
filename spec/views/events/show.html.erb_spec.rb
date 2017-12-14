@@ -5,20 +5,20 @@ RSpec.describe "events/show", type: :view do
     @user = FactoryBot.create :user
     @other_user = FactoryBot.create :user
     @event = assign(:event, FactoryBot.create(:event))
-    # @event = assign(:event, Event.create!(
-    #   :name => "Name",
-    #   :description => "MyText",
-    #   :gamemode => "Gamemode",
-    #   :sport => "Sport",
-    #   :teamsport => false,
-    #   :playercount => 2,
-    #   :gamesystem => "Gamesystem",
-    #   :deadline => Date.tomorrow,
-    #   :startdate => Date.tomorrow+1,
-    #   :enddate => Date.tomorrow+3
-    # ))
     @event.editors << @user
     @event.owner = @user
+  end
+
+  context "League" do
+    before(:each) do
+      @event = assign(:event, FactoryBot.create(:league))
+      @event.editors << @user
+      @event.owner = @user
+    end
+    it "has a schedule button" do
+      render
+      expect(rendered).to have_content(t('events.show.to_schedule'))
+    end
   end
 
   it "renders attributes in <p>" do
@@ -38,7 +38,7 @@ RSpec.describe "events/show", type: :view do
 
   it "renders styled buttons" do
     render
-    expect(rendered).to have_content(t('events.show.to_schedule'))
+    expect(rendered).to have_content(t('events.show.to_overview'))
   end
 
   #not signed in user
