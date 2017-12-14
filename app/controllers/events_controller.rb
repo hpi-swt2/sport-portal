@@ -94,6 +94,7 @@ class EventsController < ApplicationController
     def event_type
       return League if params[:type] == 'League'
       return Tournament if params[:type] == 'Tournament'
+      return Rankinglist if params[:type] == 'Rankinglist'
       params[:type]
     end
 
@@ -107,6 +108,8 @@ class EventsController < ApplicationController
         params[:event] = params.delete :league
       elsif params.has_key? :tournament
         params[:event] = params.delete :tournament
+      elsif params.has_key? :rankinglist
+        params[:event] = params.delete :rankinglist
       end
 
       params.require(:event).permit(:name,
@@ -119,7 +122,6 @@ class EventsController < ApplicationController
                                     :deadline,
                                     :startdate,
                                     :enddate,
-                                    :metric,
                                     :initial_value,
                                     user_ids: [])
     end

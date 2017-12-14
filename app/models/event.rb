@@ -35,7 +35,6 @@ class Event < ApplicationRecord
   validate :end_after_start, :start_after_deadline #in tournament & league?
 
   enum player_types: [:single, :team]
-  enum metrics: [:elo, :win_loss, :true_skill]
 
   def duration
     return if enddate.blank? || startdate.blank?
