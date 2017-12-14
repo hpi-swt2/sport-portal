@@ -16,9 +16,9 @@ describe 'new event page', type: :feature do
     it 'should be possible to enter date conditions' do
       visit new_path
 
-      expect(page).to have_field(Event.human_attribute_name :deadline)
-      expect(page).to have_field(Event.human_attribute_name :startdate)
-      expect(page).to have_field(Event.human_attribute_name :enddate)
+      expect(page).to have_field("event_deadline")
+      expect(page).to have_field("event_startdate")
+      expect(page).to have_field("event_enddate")
     end
 
     it 'should have a field for league duration' do
@@ -31,30 +31,31 @@ describe 'new event page', type: :feature do
       visit new_path
       fill_in Event.human_attribute_name(:name), with: 'name'
       fill_in Event.human_attribute_name(:discipline), with: 'soccer'
-      select 'Round robin', from: Event.human_attribute_name(:game_mode)
-      select 'Single', from: Event.human_attribute_name(:player_type)
+      select I18n.t('events.gamemode.round_robin'), from: "league_game_mode"
+      select I18n.t('activerecord.attributes.event.player_types.single'),
+             from: "event_player_type"
       fill_in Event.human_attribute_name(:max_teams), with: '5'
 
-      fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
-      fill_in Event.human_attribute_name(:startdate), with: (Date.tomorrow + 2).to_s
-      fill_in Event.human_attribute_name(:enddate), with: (Date.tomorrow + 3).to_s
+      fill_in "event_deadline", with: Date.tomorrow.to_s
+      fill_in "event_startdate", with: (Date.tomorrow + 2).to_s
+      fill_in "event_enddate", with: (Date.tomorrow + 3).to_s
 
-<<<<<<< HEAD
-    expect(page).to have_select('event_type',
-                                options: [I18n.t('events.new.select_type'),
-                                          I18n.t('events.Tournament'),
-                                          I18n.t('events.League'),
-                                          I18n.t('events.Rankinglist')])
+      find('input[type="submit"]').click
+
+      expect(page).to have_current_path(/.*\/(events|tournaments|leagues)\/\d+/)
+      expect(page).to have_content(Date.tomorrow.to_s)
+      expect(page).to have_content((Date.tomorrow + 2).to_s)
+      expect(page).to have_content((Date.tomorrow + 3).to_s)
+    end
   end
 
   context "for ranking lists" do
     before :each do
-      visit new_event_path
-      select I18n.t('events.Rankinglist'), from: "event_type"
+      visit new_rankinglist_path
     end
 
     it "should show a field for choosing the ranking metric" do
-      expect(page).to have_field('event_metric')
+      expect(page).to have_field('rankinglist_game_mode')
     end
 
     it "should show a field for choosing the initial value of the ranking metric" do
@@ -62,52 +63,35 @@ describe 'new event page', type: :feature do
     end
 
     it "should not show a field for defining a deadline" do
-      expect(page).to have_field('event_deadline', disabled: 'disabled')
+      expect(page).not_to have_field('event_deadline')
     end
 
     it "should not show a field for defining a enddate " do
-      expect(page).to have_field('event_enddate', disabled: 'disabled')
+      expect(page).not_to have_field('event_enddate')
     end
 
     it "should not show a field for defining a startdate" do
-      expect(page).to have_field('event_startdate', disabled: 'disabled')
+      expect(page).not_to have_field('event_startdate')
     end
 
     it "should not show a field for defining whether its a team or single player sport" do
-      expect(page).to have_field('event_player_type', disabled: 'disabled')
+      expect(page).not_to have_field('event_player_type')
     end
 
     it "should not show a field for the duration" do
-      expect(page).to have_field('event_duration', disabled: 'disabled')
+      expect(page).not_to have_field('event_duration')
     end
 
-  end
-  it "should be possible to create a date conditions for an event" do
-    visit new_event_path
-    fill_in "event_name", with: "name"
-    fill_in "event_discipline", with: "soccer"
-    select I18n.t('events.Tournament'), from: "event_type"
-    select I18n.t('events.gamemode.ko'), from: "event_game_mode_tournament"
-    select I18n.t('activerecord.attributes.event.player_types.single'), from: "event_player_type"
-    fill_in "event_max_teams", with: "5"
+    it "should be possible to create a rankinglist" do
+      fill_in "rankinglist_name", with: 'name'
+      fill_in Event.human_attribute_name(:discipline), with: 'soccer'
+      select I18n.t('events.gamemode.elo'), from: "rankinglist_game_mode"
+      fill_in Event.human_attribute_name(:max_teams), with: '5'
+      fill_in "event_initial_value", with: "1.3"
 
-    fill_in "event_deadline", with: Date.tomorrow.to_s
-    fill_in "event_startdate", with: (Date.tomorrow + 2).to_s
-    fill_in "event_enddate", with: (Date.tomorrow + 3).to_s
-
-    find('input[type="submit"]').click
-
-    expect(page).to have_current_path(/.*\/(events|tournaments|leagues)\/\d+/)
-    expect(page).to have_content(Date.tomorrow.to_s)
-    expect(page).to have_content((Date.tomorrow + 2).to_s)
-    expect(page).to have_content((Date.tomorrow + 3).to_s)
-=======
       find('input[type="submit"]').click
 
-      expect(page).to have_current_path(/.*\/(events|tournaments|leagues)\/\d+/)
-      expect(page).to have_content(Date.tomorrow.to_s)
-      expect(page).to have_content((Date.tomorrow + 2).to_s)
-      expect(page).to have_content((Date.tomorrow + 3).to_s)
+      expect(page).to have_current_path(/.*\/rankinglists\/\d+/)
     end
   end
 
@@ -121,9 +105,9 @@ describe 'new event page', type: :feature do
     it 'should be possible to enter date conditions' do
       visit new_path
 
-      expect(page).to have_field(Event.human_attribute_name :deadline)
-      expect(page).to have_field(Event.human_attribute_name :startdate)
-      expect(page).to have_field(Event.human_attribute_name :enddate)
+      expect(page).to have_field("event_deadline")
+      expect(page).to have_field("event_startdate")
+      expect(page).to have_field("event_enddate")
     end
 
     it 'should have a field for league duration' do
@@ -137,13 +121,14 @@ describe 'new event page', type: :feature do
 
       fill_in Event.human_attribute_name(:name), with: 'name'
       fill_in Event.human_attribute_name(:discipline), with: 'soccer'
-      select 'Ko', from: Event.human_attribute_name(:game_mode)
-      select 'Single', from: Event.human_attribute_name(:player_type)
+      select I18n.t('events.gamemode.ko'), from: Event.human_attribute_name(:game_mode)
+      select I18n.t('activerecord.attributes.event.player_types.single'),
+             from: "event_player_type"
       fill_in Event.human_attribute_name(:max_teams), with: '5'
 
-      fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
-      fill_in Event.human_attribute_name(:startdate), with: (Date.tomorrow + 2).to_s
-      fill_in Event.human_attribute_name(:enddate), with: (Date.tomorrow + 3).to_s
+      fill_in "event_deadline", with: Date.tomorrow.to_s
+      fill_in "event_startdate", with: (Date.tomorrow + 2).to_s
+      fill_in "event_enddate", with: (Date.tomorrow + 3).to_s
 
       find('input[type="submit"]').click
 
@@ -152,8 +137,5 @@ describe 'new event page', type: :feature do
       expect(page).to have_content((Date.tomorrow + 2).to_s)
       expect(page).to have_content((Date.tomorrow + 3).to_s)
     end
->>>>>>> 35186c056587961731974fcae723f265a295ad6d
   end
-
-
 end

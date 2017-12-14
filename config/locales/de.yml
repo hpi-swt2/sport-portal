@@ -154,10 +154,6 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
-    metric:
-      elo: "ELO"
-      win_loss: "Gewinne-Niederlagen"
-      true_skill: "Wahres Können"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
@@ -166,6 +162,9 @@ de:
       two_halfs: "Hin- und Rückrunde"
       swiss: "Schweizer System"
       danish: "Dänisches System"
+      elo: "ELO"
+      win_loss: "Gewinne-Niederlagen"
+      true_skill: "Wahres Können"
     overview:
       title: "Übersicht"
       teamColumn: "Team"

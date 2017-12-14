@@ -16,6 +16,6 @@ module EventsHelper
   end
 
   def rankinglist_gamemodes_localize
-    Hash[Rankinglist.game_modes.map { |key, value| [key, I18n.t("events.metric.#{key}")] }]
+    Hash[Rankinglist.game_modes.map { |key, value| [key, I18n.t("events.gamemode.#{key}")] }]
   end
 end
