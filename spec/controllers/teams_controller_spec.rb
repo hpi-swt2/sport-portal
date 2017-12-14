@@ -31,12 +31,12 @@ RSpec.describe TeamsController, type: :controller do
     @admin.destroy
   end
 
-  describe "GET #index" do
-    it "returns a success response" do
-      team = Team.create! valid_attributes
-      get :index, params: {}
-      expect(response).to be_success
-    end
+  describe 'GET #index' do
+  it "returns a success response" do
+    team = Team.create! valid_attributes
+    get :index, params: {}
+    expect(response).to be_success
+  end
 
   it "should allow normal user to view page" do
     get :index, params: {}
@@ -53,7 +53,7 @@ end
 
     it "should allow normal user to view page" do
       team = Team.create! valid_attributes
-      get :show, params: {id: team.to_param}
+      get :show, params: { id: team.to_param }
       expect(response).to be_success
     end
   end
@@ -62,21 +62,22 @@ end
     it "returns a unauthorized response" do
       sign_out @user
       get :new, params: {}
-      expect(response).to be_unauthorized
+
+      expect(response).to redirect_to(new_user_session_url)
     end
 
-    it "should allow normal user to view page" do
+    it "should allow normal user to view new page" do
       get :new, params: {}
       expect(response).to be_success
     end
   end
 
   describe "GET #edit" do
-    it "returns a unauthorized response" do
+    it "redirects to sign_in page when not signed in" do
       sign_out @user
       team = Team.create! valid_attributes
       get :edit, params: { id: team.to_param }
-      expect(response).to be_unauthorized
+      expect(response).to redirect_to(new_user_session_url)
     end
 
     it "returns a success response if the user is a member" do
@@ -90,15 +91,18 @@ end
       team = Team.create! valid_attributes
       team.owners << subject.current_user
       team.members << subject.current_user
-      get :edit, params: {id: team.to_param}
+      get :edit, params: { id: team.to_param }
       expect(response).to be_success
     end
 
     it "should not allow normal user to edit others created team" do
       sign_in @other_user
       team = Team.create! valid_attributes
-      get :edit, params: {id: team.to_param}
-      expect(response).to be_forbidden
+      bypass_rescue
+      expect {
+        get :edit, params: { id: team.to_param }
+      }.to raise_error(CanCan::AccessDenied)
+
     end
   end
 
@@ -110,16 +114,11 @@ end
         }.to change(Team, :count).by(1)
       end
 
-      it "creates a new TeamOwner" do
+      it "creates a new TeamUser and assigns him/her as an owner" do
         expect {
           post :create, params: { team: valid_attributes }
-        }.to change(TeamOwner, :count).by(1)
-      end
-
-      it "creates a new TeamMember" do
-        expect {
-          post :create, params: { team: valid_attributes }
-        }.to change(TeamMember, :count).by(1)
+        }.to change(TeamUser, :count).by(1)
+        expect(Team.last.owners.length).to be 1
       end
 
       it "redirects to the created team" do
@@ -128,7 +127,7 @@ end
       end
 
       it "should allow normal user to create an team" do
-        post :create, params: {team: valid_attributes}
+        post :create, params: { team: valid_attributes }
         expect(response).to redirect_to(Team.last)
       end
     end
@@ -144,7 +143,7 @@ end
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        { :name => valid_attributes[:name] + "_new" }
+        { name: valid_attributes[:name] + "_new" }
       }
 
       it "updates the requested team" do
@@ -166,14 +165,14 @@ end
         team = Team.create! valid_attributes
         team.owners << subject.current_user
         team.members << subject.current_user
-        put :update, params: {id: team.to_param, team: valid_attributes}
+        put :update, params: { id: team.to_param, team: valid_attributes }
         expect(response).to redirect_to(team)
       end
 
       it "should not allow normal user to update others created teams" do
         sign_in @other_user
         team = Team.create! valid_attributes
-        put :update, params: {id: team.to_param, team: valid_attributes}
+        put :update, params: { id: team.to_param, team: valid_attributes }
         expect(response).to_not be_success
       end
     end
@@ -189,22 +188,20 @@ end
   end
 
   describe "DELETE #destroy" do
-    it "returns an unauthorized response when not signed in" do
+    it "redirects to sign_in page when not signed in" do
       sign_out @user
       team = Team.create! valid_attributes
       delete :destroy, params: { id: team.to_param }
-      expect(response).to be_unauthorized
+      expect(response).to redirect_to(new_user_session_url)
       team.destroy
     end
 
-    it "deletes the associated team ownerships and team memberships" do
+    it "deletes the associated TeamUser entries" do
       team = Team.create! valid_attributes
-      team.owners << subject.current_user
-      team.members = team.members + team.owners
+      number_of_members = team.members.length
       expect {
         delete :destroy, params: { id: team.to_param }
-      }.to change(TeamOwner, :count).by(-1)
-        .and change(TeamMember, :count).by(-1)
+      }.to change(TeamUser, :count).by(-number_of_members)
     end
 
     it "redirects to the teams list" do
@@ -217,15 +214,23 @@ end
     it "should not allow normal user to destroy teams created by others" do
       sign_in @other_user
       team = Team.create! valid_attributes
-      delete :destroy, params: {id: team.to_param}
+      delete :destroy, params: { id: team.to_param }
       expect(response).to be_forbidden
     end
 
     it "should allow normal user to destroy his created team" do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
-      delete :destroy, params: {id: team.to_param}
+      delete :destroy, params: { id: team.to_param }
       expect(response).to redirect_to(teams_url)
+    end
+
+    it "should not allow to delete a team if it participates in an event" do
+      team = Team.create! valid_attributes
+      team.owners << subject.current_user
+      team.events << FactoryBot.create(:event)
+      delete :destroy, params: { id: team.to_param }
+      expect(response).to redirect_to(team)
     end
   end
 
@@ -233,61 +238,56 @@ end
     it 'succeeds when called as a team owner' do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
-      team.members = team.members + team.owners
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
       expect {
-        post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
-      }.to change(TeamOwner, :count).by(1)
+        post :assign_ownership, params: { id: team.id, team_member: another_user.id }
+      }.to change(TeamUser, :count).by(0)
     end
 
 
     it 'fails when when not called as a team owner' do
       team = Team.create! valid_attributes
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
-      post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
+      post :assign_ownership, params: { id: team.id, team_member: another_user.id }
       expect(response).to be_forbidden
     end
 
-    it 'should not add a team owner twice' do
+    it "should not remove an owner's ownership when assigning the ownership again" do
       team = Team.create! valid_attributes
       team.owners << subject.current_user
-      team.members = team.members + team.owners
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
+      team.members << another_user
 
-      post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
+      post :assign_ownership, params: { id: team.id, team_member: another_user.id }
+      expect(team.owners).to include(another_user)
 
-      expect {
-        post :assign_ownership, params: { id: team.id, team_member: anotherUser.id }
-      }.to change(TeamOwner, :count).by(0)
+      post :assign_ownership, params: { id: team.id, team_member: another_user.id }
+      expect(team.owners).to include(another_user)
     end
   end
 
   describe 'POST #delete_ownership' do
     it 'succeeds when called as a team owner' do
       team = Team.create! valid_attributes
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
       team.owners << subject.current_user
-      team.owners << anotherUser
+      team.owners << another_user
 
-      team.members = team.members + team.owners
-
-      expect{
-        post :delete_ownership, params: { id: team.id, team_member: anotherUser.id }
-      }.to change(TeamOwner, :count).by(-1)
+      expect {
+        post :delete_ownership, params: { id: team.id, team_member: another_user.id }
+      }.to change(TeamUser, :count).by(0)
     end
 
     it 'does not succeed when called as a team meber' do
       team = Team.create! valid_attributes
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
-      team.owners << anotherUser
+      team.owners << another_user
 
-      team.members = team.members + team.owners
-
-      post :delete_ownership, params: { id: team.id, team_member: anotherUser.id }
+      post :delete_ownership, params: { id: team.id, team_member: another_user.id }
       expect(response).to be_forbidden
     end
   end
@@ -295,16 +295,124 @@ end
   describe 'POST #delete_membership' do
     it 'succeeds when called as a team owner' do
       team = Team.create! valid_attributes
-      anotherUser = FactoryBot.create :user
+      another_user = FactoryBot.create :user
 
       team.owners << subject.current_user
-      team.owners << anotherUser
-
-      team.members = team.members + team.owners
+      team.owners << another_user
 
       expect {
-        post :delete_membership, params: { id: team.id, team_member: anotherUser.id }
-      }.to change(TeamMember, :count).by(-1)
+        post :delete_membership, params: { id: team.id, team_member: another_user.id }
+      }.to change(TeamUser, :count).by(-1)
+    end
+  end
+
+  describe 'POST #perform_action_on_multiple_members' do
+    it 'can delete ownership' do
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+      still_another_user = FactoryBot.create :user
+
+      team.owners << subject.current_user
+      team.owners << another_user
+      team.owners << still_another_user
+
+      expect {
+        post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_ownership: "delete_ownership" }
+      }.to change(team.owners, :count).by(-2)
+    end
+
+    it 'does not allow unauthorized access' do
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+
+      team.owners << subject.current_user
+      team.owners << another_user
+
+      expect {
+        post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, subject.current_user.id], delete_ownership: "delete_ownership" }
+      }.to change(team.owners, :count).by(-1)
+    end
+
+    it 'does not remove the last remaining owner of a team' do
+      team = Team.create! valid_attributes
+      team.owners << subject.current_user
+
+      another_owner = FactoryBot.create (:user)
+      team.owners << another_owner
+
+      expect(team.owners.length).to eq(2)
+
+      member = FactoryBot.create (:user)
+      team.members << member
+
+      post :perform_action_on_multiple_members, params: { id: team.id, members: [subject.current_user.id, member.id], delete_ownership: "delete_ownership" }
+      team.reload
+      expect(team.owners.length).to eq(1)
+      expect(team.owners.first).to eq(another_owner)
+    end
+
+    it 'can delete membership' do
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+      still_another_user = FactoryBot.create :user
+      team.members << another_user
+      team.members << still_another_user
+
+      team.owners << subject.current_user
+      expect(team.members.length).to eq(3)
+
+      post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_membership: "delete_membership" }
+      team.reload
+      expect(team.members.length).to eq(1)
+    end
+
+    it 'can assign ownership' do
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+      still_another_user = FactoryBot.create :user
+
+      team.members << another_user
+      team.members << still_another_user
+
+      team.owners << subject.current_user
+
+      expect(team.owners.length).to eq(1)
+
+      post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], assign_ownership: "assign_ownership" }
+      team.reload
+      expect(team.owners.length).to eq(3)
+    end
+  end
+
+  describe 'POST #assign_membership_by_email' do
+    it 'succeeds when called as a team member' do
+      team = Team.create! valid_attributes
+      another_user = FactoryBot.create :user
+
+      team.members << subject.current_user
+
+      expect {
+        post :assign_membership_by_email, params: { id: team.id, email: another_user.email }
+      }.to change(team.members, :count).by(1)
+    end
+
+    it 'does not change members count when new user already member of team' do
+      team = Team.create! valid_attributes
+
+      team.members << subject.current_user
+
+      expect {
+        post :assign_membership_by_email, params: { id: team.id, email: subject.current_user.email }
+      }.to_not change(team.members, :count)
+    end
+
+    it 'does not succeed when email matches no member' do
+      team = Team.create! valid_attributes
+
+      team.members << subject.current_user
+
+      post :assign_membership_by_email, params: { id: team.id, email: nil }
+      expect(response).to_not be_success
     end
   end
 end

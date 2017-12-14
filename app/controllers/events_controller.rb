@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_event, :set_user, only: [:show, :edit, :update, :destroy, :join]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule]
 
   # GET /events
   def index
@@ -17,7 +17,11 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
+    if event_type
+      @event = event_type.new
+    else
+      render :create_from_type
+    end
   end
 
   # GET /events/1/edit
@@ -26,7 +30,7 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    @event = event_type.new(event_params)
     @event.owner = current_user
 
     if @event.save
@@ -53,26 +57,30 @@ class EventsController < ApplicationController
   end
 
 
-  # PATCH/PUT /events/1/join
+  # PUT /events/1/join
   def join
-    @event.users << current_user
-    if @event.save
-      flash[:success] = "You have successfully joined #{@event.name}!"
-      redirect_to @event
-    else
-      flash[:error] = "There was an error."
-      render 'show'
-    end
+    @event.add_participant(current_user)
+    flash[:success] = t('success.join_event', event: @event.name)
+    redirect_back fallback_location: events_url
+  end
+
+  # PUT /events/1/leave
+  def leave
+    @event.remove_participant(current_user)
+    flash[:success] = t('success.leave_event', event: @event.name)
+    redirect_back fallback_location: events_url
   end
 
   # GET /events/1/schedule
   def schedule
-    @event = Event.find(params[:id])
     if @event.teams.empty?
       @event.add_test_teams
       @event.generate_schedule
     end
     @matches = @event.matches.order('gameday ASC')
+  end
+
+  def overview
   end
 
   private
@@ -81,12 +89,15 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
-    def get_shown_events_value
-      params[:showAll]
+    # Get the type of event that should be created
+    def event_type
+      return League if params[:type] == 'League'
+      return Tournament if params[:type] == 'Tournament'
+      params[:type]
     end
 
-    def set_user
-      @user = current_user
+    def get_shown_events_value
+      params[:showAll]
     end
 
     # Only allow a trusted parameter "white list" through.

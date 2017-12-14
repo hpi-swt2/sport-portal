@@ -1,5 +1,10 @@
 $( document ).on('turbolinks:load', function() {
-    $("#event_duration").val(calcDateDiff($("#event_startdate").val(),$("#event_enddate").val()));
+    $('#event_deadline').datepicker({ autoclose: true});
+    $('#event_startdate').datepicker({ autoclose: true});
+    $('#event_enddate').datepicker({ autoclose: true});
+
+    $("#event_duration").val("");
+  
 
     $("#event_startdate").datepicker({
        onSelect: function() {
@@ -54,30 +59,4 @@ $( document ).on('turbolinks:load', function() {
        }
     });
 
-
-    displayTypeField();
-
-    // Display Game Mode field conditionally in create events form
-    $("#event_type").on('change', function() {
-        displayTypeField();
-    });
-
-    function displayTypeField() {
-        var option = $("#event_type").val();
-        var league = $("#league-game-mode");
-        var tournament = $("#tournament-game-mode");
-
-        if (option == "Tournament") {
-            $(tournament).find("select").removeAttr("disabled");
-            $(tournament).show();
-            $(league).hide();
-            $(league).find("select").attr("disabled", "disabled");
-
-        } else if (option == "League") {
-            $(league).find("select").removeAttr("disabled");
-            $(league).show();
-            $(tournament).hide();
-            $(tournament).find("select").attr("disabled", "disabled");
-        }
-    }
 });

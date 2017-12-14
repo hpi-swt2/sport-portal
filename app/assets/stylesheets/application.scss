@@ -11,6 +11,39 @@
  * It is generally better to create a new file per style scope.
  *
  *= require bootstrap-datepicker3
- *= require_tree .
+ *= require navbar
+ *= require footer
+ *= require bootstrap_and_overrides
  *= require_self
+ *= require font-awesome
  */
+
+/* Override colors of Materialize */
+@import "materialize/components/color";
+$primary-color: #01A8E8 !default;
+$secondary-color: #01A8E8 !default;
+
+@import "materialize";
+
+/* Load custom font families */
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('/assets/ProximaNova-Reg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Bold';
+  src: url('/assets/ProximaNova-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Application wide style */
+* {
+  font-family: "Proxima Nova";
+}
+.navbar-overlap {
+  padding-top: 50px;
+}
