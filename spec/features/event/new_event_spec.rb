@@ -121,7 +121,7 @@ describe 'new event page', type: :feature do
 
       fill_in Event.human_attribute_name(:name), with: 'name'
       fill_in Event.human_attribute_name(:discipline), with: 'soccer'
-      select I18n.t('events.gamemode.ko'), from: "tournament_game_mode"
+      select I18n.t('events.gamemode.ko_group'), from: "tournament_game_mode"
       select I18n.t('activerecord.attributes.event.player_types.single'),
              from: "event_player_type"
       fill_in Event.human_attribute_name(:max_teams), with: '5'
