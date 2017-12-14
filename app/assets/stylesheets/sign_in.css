@@ -1,0 +1,98 @@
+h1 {
+    font-family: Proxima Nova Bold;
+    text-align: center;
+}
+
+input, input:focus{
+    border-bottom: none !important;
+    box-shadow: none !important;
+    margin: 10px 0 0px 0 !important;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: #01A8E8;
+}
+
+.btn {
+    font-family: Proxima Nova Bold;
+    font-size: 15px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    background: #1CA9E5;
+    border-radius: 100px;
+}
+
+.input-field {
+    font-family: Proxima Nova;
+    font-size: 16px;
+    color: #A7B2B9;
+    letter-spacing: 1.14px;
+    line-height: 16px;
+    border: 1px solid #B4B4B4;
+    border-radius: 100px;
+    padding: 0 0.75rem;
+}
+
+.input-field label {
+    left: 0.75rem;
+}
+
+.input-field:focus-within {
+    border: 1px solid #1ba9e5;
+}
+
+[type="checkbox"].filled-in + label:after {
+    border-radius: 25px;
+}
+
+.input-field label:not(.label-icon).active {
+    transform: translateY(8px) scale(0.8);
+    transform-origin: 0 0;
+}
+
+.input-field label {
+    transform: translateY(18px);
+}
+
+.center {
+    margin: auto;
+    width: 35%;
+    min-width: 250px;
+}
+
+/* Mobile/desktop dependent: */
+
+@media screen and (min-width: 480px) {
+    .background{
+        background: url(https://owncloud.hpi.de/index.php/s/siSJzCTBN5U3pbf/download) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-repeat: none;
+    }
+
+    h1 {
+        color: #fffefe;
+        font-size: 69px;
+    }
+
+    .input-field:focus-within {
+        color: white;
+    }
+
+    .text {
+        color: white;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    h1 {
+        color: #1CA9E5;
+        font-size: 45px;
+    }
+
+    .input-field:focus-within {
+        color: #343e41;
+    }
+}

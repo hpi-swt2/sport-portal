@@ -90,6 +90,10 @@ gem 'bootstrap-datepicker-rails'
 # https://github.com/bokmann/font-awesome-rails
 gem 'font-awesome-rails'
 
+# Use the materializecss-library https://github.com/mkhairi/materialize-sass
+# A modern, responsive front-end-framework based on Material Design
+gem 'materialize-sass'
+
 group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
