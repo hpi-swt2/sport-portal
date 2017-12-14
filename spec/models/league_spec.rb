@@ -29,10 +29,12 @@ describe "League model", type: :model do
   end
 
   describe "Generating league schedule with default values" do
-    let(:league) { league = FactoryBot.create(:league_with_teams)
-                    league.game_mode = 0 #round robin
-                   league.generate_schedule
-                   league}
+    let(:league) {
+      league = FactoryBot.create(:league_with_teams)
+      league.game_mode = League.game_modes[:round_robin]
+      league.generate_schedule
+      league
+    }
     let(:matches) { league.matches }
     let(:home_teams) { matches.map(&:team_home) }
     let(:away_teams) { matches.map(&:team_away) }
@@ -64,17 +66,22 @@ describe "League model", type: :model do
     
     it "does only let half as many matches as teams play per gameday" do
       5.times do |gameday|
-        gameday+=1 #gamedays are from 1 to 5 not 0 to 4
-        gameday_matches = matches.select{|match| match.gameday==gameday}
+        gameday +=1 #gamedays are from 1 to 5 not 0 to 4
+        gameday_matches = matches.select { |match| match.gameday == gameday }
         expect(gameday_matches.length).to be 2
       end
     end
 
-    it "double round robin has double the matches as normal round robin" do
+    it "uses round robin if its selected" do
+      # simple round robin has n((n-1)/2) games
+      expect(matches.length).to be league.teams.length * ((league.teams.length - 1) / 2)
+    end
+
+    it "has double the matches if double round robin is selected" do
       new_league = FactoryBot.create(:league_with_teams)
       new_league.game_mode = League.game_modes[:two_halfs]
       new_league.generate_schedule
-
+      # double round robin has n(n-1) games
       expect(new_league.matches.length).to be new_league.teams.length * (new_league.teams.length - 1)
     end
   end

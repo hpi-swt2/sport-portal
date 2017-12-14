@@ -56,9 +56,9 @@ class League < Event
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
         if gameday < teams.size / 2
-          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? or pairing[1].nil?
+          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? || pairing[1].nil?
         else
-          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1) unless pairing[0].nil? or pairing[1].nil?
+          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1) unless pairing[0].nil? || pairing[1].nil?
         end
       end
     end
