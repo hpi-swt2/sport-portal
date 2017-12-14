@@ -18,11 +18,8 @@
   </head>
 
   <!--Display the background only when user signs in-->
-  <% if (action_name === "new" && controller_name == "sessions" or controller_name === "users" && action_name == "new" or controller_name === "users" && action_name == "create") && !(request.user_agent =~ /Mobile|webOS/) %>
-    <body class="background navbar-overlap">
-  <% else %>
-    <body class="navbar-overlap">
-  <% end %>
+  <body class="<%= render partial: "application/background"%>">
+
     <div class="container">
       <%= render partial: "application/navbar" %>
 

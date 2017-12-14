@@ -1,0 +1,28 @@
+<%-
+  $background = ""
+  $new_background = "navbar-overlap background"
+  $no_background = "navbar-overlap"
+
+  case controller_name
+    when "sessions"
+      case action_name
+        when "new"
+          $background = $new_background
+        else
+          $background = $no_background
+      end
+    when "users"
+      case action_name
+        when "new"
+          $background = $new_background
+        when "create"
+          $background = $new_background
+      end
+    else
+      $background = $no_background
+    end
+  if request.user_agent =~ /Mobile|webOS/
+    $background = $no_background
+  end
+%>
+<%=$background%>
