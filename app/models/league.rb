@@ -29,7 +29,11 @@ class League < Event
   end
 
   def generate_schedule
-    calculate_round_robin
+    if game_mode == League.game_modes[:round_robin]
+      calculate_round_robin
+    elsif game_mode == League.game_modes[:two_halfs]
+      calculate_double_round_robin
+    end
   end
 
   def calculate_round_robin
@@ -39,6 +43,23 @@ class League < Event
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
         matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? || pairing[1].nil?
+      end
+    end
+    save
+  end
+
+  def calculate_double_round_robin
+    pairings_per_day = round_robin_pairings teams.to_a
+    pairings_per_day += round_robin_pairings teams.to_a
+    pairings_per_day.each_with_index do |day, gameday|
+      day.each do |pairing|
+        # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
+        # the other team will have to wait for this day
+        if gameday < teams.size / 2
+          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? or pairing[1].nil?
+        else
+          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1) unless pairing[0].nil? or pairing[1].nil?
+        end
       end
     end
     save
