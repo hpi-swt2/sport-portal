@@ -36,15 +36,15 @@ RSpec.describe UsersController, type: :routing do
     end
 
     it "routes to #edit_profile" do
-      expect(:get => "/users/1/profile/edit").to route_to("users#edit_profile", :id => "1")
+      expect(get: "/users/1/profile/edit").to route_to("users#edit_profile", id: "1")
     end
 
     it "routes to #update_profile via PUT" do
-      expect(:put => "/users/1/profile").to route_to("users#update_profile", :id => "1")
+      expect(put: "/users/1/profile").to route_to("users#update_profile", id: "1")
     end
 
     it "routes to #update_profile via PATCH" do
-      expect(:patch => "/users/1/profile").to route_to("users#update_profile", :id => "1")
+      expect(patch: "/users/1/profile").to route_to("users#update_profile", id: "1")
     end
 
   end

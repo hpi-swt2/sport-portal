@@ -1,0 +1,15 @@
+<div class="form-group">
+  <%= form.label :game_mode, class: 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= form.collection_select :game_mode, rankinglist_gamemodes_localize, :first, :second,
+                            {selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
+                            { :class => 'form-control', id: :rankinglist_game_mode}%>
+  </div>
+</div>
+
+<div class="form-group" id="event_initial_value_div">
+  <%= form.label :initial_value, :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= form.text_field :initial_value, id: :event_initial_value, :class => 'form-control' %>
+  </div>
+</div>

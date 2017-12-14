@@ -8,6 +8,14 @@ Given(/^a tournament (.*) with (\d+) teams$/) do |tournamentName, numTeams|
   end
 end
 
+Given(/^a tournament$/) do
+  create_tournament
+end
+
+Given(/^a new tournament$/) do
+  build_tournament
+end
+
 Given(/^a tournament (.*)\.$/) do |tournamentName|
   create_tournament_named tournamentName
 end

@@ -66,6 +66,12 @@ de:
       image:
         one: "Bild"
         other: "Bilder"
+      league:
+        one: "Liga"
+        other: "Ligen"
+      tournament:
+        one: "Turnier"
+        other: "Turniere"
       event:
         one: "Event"
         other: "Events"
@@ -93,6 +99,8 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+    validations:
+      must_be_after: "darf nicht vor %{other} sein."
 
   view:
     user:
@@ -106,12 +114,12 @@ de:
           user: "Du bist nicht berechtigt, Konten anderer Nutzer zu verändern."
 
   success:
-    updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
+    updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
 
   error:
-    update_match_points: Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut.
+    update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
 
   events:
     create_event: "Veranstaltung erstellen"
@@ -154,8 +162,8 @@ de:
       ko: "KO"
       ko_group: "Gruppen-KO"
       double_elimination: "Doppel-KO-System"
-      round_robin: "Runder Robin"
-      two_halfs: "Zwei Halbe"
+      round_robin: "Jeder gegen Jeden"
+      two_halfs: "Hin- und Rückrunde"
       swiss: "Schweizer System"
       danish: "Dänisches System"
     overview:

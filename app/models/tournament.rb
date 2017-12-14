@@ -20,7 +20,8 @@
 #
 
 class Tournament < Event
-  enum game_modes: [:ko, :ko_group, :double_elimination]
-
   validates :deadline, :startdate, :enddate, presence: true
+  validates :player_type, presence: true
+
+  enum game_modes: [:ko, :ko_group, :double_elimination]
 end

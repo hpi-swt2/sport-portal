@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20171212084905) do
     t.string "discipline"
     t.integer "player_type"
     t.integer "max_teams"
-    t.integer "game_mode"
+    t.integer "game_mode", null: false
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 20171212084905) do
     t.date "deadline"
     t.integer "gameday_duration"
     t.integer "owner_id"
-    t.integer "metric"
     t.float "initial_value"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"

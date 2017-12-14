@@ -17,7 +17,6 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
-#  metric           :integer
 #  initial_value    :float
 #
 
@@ -31,25 +30,12 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
-  validates :name, :discipline,  presence: true
-  validates :deadline, :startdate, :game_mode, :player_type, :enddate,
-            presence: true,
-            if: :validate_not_rankinglist?
-
-  validates :max_teams, numericality: { greater_than_or_equal_to: 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
-  validate :end_after_start
+  validates :name, :discipline, :game_mode,  presence: true
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validate :end_after_start, :start_after_deadline #in tournament & league?
 
   enum player_types: [:single, :team]
   enum metrics: [:elo, :win_loss, :true_skill]
-
-
-  def validate_not_rankinglist?
-    self.class.name != "Rankinglist"
-  end
-
-  def self.types
-    %w(Tournament League Rankinglist)
-  end
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -58,9 +44,12 @@ class Event < ApplicationRecord
 
   def end_after_start
     return if enddate.blank? || startdate.blank?
-    if enddate < startdate
-      errors.add(:enddate, "must be after startdate.")
-    end
+    errors.add(:enddate, I18n.t('activerecord.validations.must_be_after', other: Event.human_attribute_name(:startdate))) if enddate < startdate
+  end
+
+  def start_after_deadline
+    return if startdate.blank? || deadline.blank?
+    errors.add(:startdate, I18n.t('activerecord.validations.must_be_after', other: Event.human_attribute_name(:deadline))) if startdate < deadline
   end
 
   def deadline_has_passed?
@@ -69,42 +58,6 @@ class Event < ApplicationRecord
 
   def single_player?
     player_type == Event.player_types[:single]
-  end
-
-  # Everything below this is leagues only code and will be moved to Leagues.rb once there is an actual option to create Leagues AND Tourneys, etc.
-
-  def add_test_teams
-    max_teams.times do |index|
-      teams << FactoryBot.create(:team)
-    end
-  end
-
-  def generate_schedule
-    calculate_round_robin
-  end
-
-  def calculate_round_robin
-    pairings_per_day = round_robin_pairings teams.to_a
-    pairings_per_day.each_with_index do |day, gameday|
-      day.each do |pairing|
-        # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
-        # the other team will have to wait for this day
-        matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? or pairing[1].nil?
-      end
-    end
-    save
-  end
-
-  # creates a twodimensional array of round robin pairings (one array per gameday) the inner array consists of the pairings
-  def round_robin_pairings(teams_array)
-    teams_array.push nil if teams_array.size.odd?
-    n = teams_array.size
-    pivot = teams_array.pop
-    games = (n - 1).times.map do
-      teams_array.rotate!
-      [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
-    end
-    games
   end
 
   def add_participant(user)

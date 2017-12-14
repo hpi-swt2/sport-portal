@@ -1,0 +1,10 @@
+<%= render "events/forms/Dates", f: form%>
+
+<div class="form-group">
+  <%= form.label :game_mode, class: 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= form.collection_select :game_mode, league_gamemodes_localize, :first, :second,
+                            {selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
+                            { :class => 'form-control', id: :league_game_mode}%>
+  </div>
+</div>
