@@ -45,8 +45,4 @@ class Team < ApplicationRecord
     # allows teams to be treated like matches. see Match#winner
     self
   end
-
-  def debug_name
-    name
-  end
 end
