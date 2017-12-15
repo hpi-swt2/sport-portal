@@ -28,11 +28,11 @@ class Event < ApplicationRecord
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
-  scope :active, -> { where('deadline >= ?', Date.current) }
+  scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  validates :name, :discipline, :game_mode,  presence: true
+  validates :name, :discipline, :game_mode, :player_type,  presence: true
+
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-  validate :end_after_start, :start_after_deadline #in tournament & league?
 
   enum player_types: [:single, :team]
 

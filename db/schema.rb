@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171212084905) do
+ActiveRecord::Schema.define(version: 20171208151635) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.string "discipline"
-    t.integer "player_type"
+    t.integer "player_type", null: false
     t.integer "max_teams"
     t.integer "game_mode", null: false
     t.string "type"

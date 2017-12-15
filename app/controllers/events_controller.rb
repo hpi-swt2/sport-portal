@@ -33,6 +33,7 @@ class EventsController < ApplicationController
   def create
     @event = event_type.new(event_params)
     @event.owner = current_user
+    @event.player_type ||= Event.player_types[:single]
 
     if @event.save
       @event.editors << current_user

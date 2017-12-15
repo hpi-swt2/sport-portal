@@ -5,7 +5,6 @@ FactoryBot.define do
     deadline nil
     startdate nil
     enddate nil
-    player_type nil
 
     factory :rankinglist_with_teams, class: "Rankinglist", parent: :event_with_teams do
     end

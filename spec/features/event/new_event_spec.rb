@@ -83,11 +83,14 @@ describe 'new event page', type: :feature do
     end
 
     it "should be possible to create a rankinglist" do
-      fill_in "rankinglist_name", with: 'name'
-      fill_in Event.human_attribute_name(:discipline), with: 'soccer'
-      select I18n.t('events.gamemode.elo'), from: "rankinglist_game_mode"
-      fill_in Event.human_attribute_name(:max_teams), with: '5'
-      fill_in "event_initial_value", with: "1.3"
+      rankinglist = FactoryBot.build :rankinglist
+      gamemode = Rankinglist.game_modes.map{ |key, value| [value, key]}[rankinglist.game_mode][1].to_s
+
+      fill_in "rankinglist_name", with: rankinglist.name
+      fill_in Event.human_attribute_name(:discipline), with: rankinglist.discipline
+      select I18n.t("events.gamemode.#{gamemode}"), from: "rankinglist_game_mode"
+      fill_in Event.human_attribute_name(:max_teams), with: rankinglist.max_teams
+      fill_in "event_initial_value", with: rankinglist.initial_value
 
       find('input[type="submit"]').click
 
