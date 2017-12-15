@@ -1,8 +1,4 @@
 module EventsHelper
-  def event_types_enum_localize
-    Hash[Event.types.map { |key, value| [key, I18n.t("events.#{key}")] }]
-  end
-
   def league_gamemodes_localize
     Hash[League.game_modes.map { |key, value| [key, I18n.t("events.gamemode.#{key}")] }]
   end
