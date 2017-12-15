@@ -38,8 +38,8 @@ class Tournament < Event
   end
 
   def generate_schedule
-    build_matches filled_teams, max_match_level
-    set_match_indices
+    build_matches filled_teams, max_match_level, 0
+    beautify_match_indices
   end
 
   def max_match_level
@@ -85,17 +85,17 @@ class Tournament < Event
       team_copy.shuffle!
     end
 
-    def build_matches(team_array, depth)
+    def build_matches(team_array, depth, index)
       if team_array.length <= 2
-        return build_leaf_match *team_array, depth
+        return build_leaf_match *team_array, depth, index
       end
 
       left_half, right_half = split_teams_array team_array
       child_depth = depth - 1
-      match_left = build_matches left_half, child_depth
-      match_right = build_matches right_half, child_depth
+      match_left = build_matches left_half, child_depth, (2 * index)
+      match_right = build_matches right_half, child_depth, (2 * index + 1)
 
-      create_match match_left, match_right, depth
+      create_match match_left, match_right, depth, index
     end
 
     def split_teams_array(team_array)
@@ -106,31 +106,27 @@ class Tournament < Event
       return left_half, right_half
     end
 
-    def build_leaf_match(team_home, team_away, depth)
+    def build_leaf_match(team_home, team_away, depth, index)
       unless team_home.nil? || team_away.nil?
-        return create_match team_home, team_away, depth
+        return create_match team_home, team_away, depth, index
       end
       team_home || team_away
     end
 
-    def create_match(team_home, team_away, depth)
-      match = Match.new team_home: team_home, team_away: team_away, gameday: depth, event: self
+    def create_match(team_home, team_away, depth, index)
+      match = Match.new team_home: team_home, team_away: team_away, gameday: depth, index: index + 1, event: self
       match.save!
       match
     end
 
-    def set_match_indices
-      last_gameday = nil
-      index = 1
+    def beautify_match_indices
+      first_match = matches[0]
+      first_gameday_index_offset = first_match.index - 1
       matches.each do |match|
-        new_gameday = match.gameday
-        if new_gameday != last_gameday
-          last_gameday = new_gameday
-          index = 1
+        if match.gameday == first_match.gameday
+          match.index -= first_gameday_index_offset
+          match.save!
         end
-        match.index = index
-        match.save!
-        index += 1
       end
     end
 
