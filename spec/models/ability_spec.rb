@@ -138,7 +138,7 @@ RSpec.describe Ability, type: :model do
   it 'should allow users to crud events they created' do
     event = Event.new(owner: @user)
     ability = Ability.new(@user)
-    ability.should be_able_to(:crud, event)
+    ability.should be_able_to([:create, :read, :update, :destroy], event)
   end
 
   it 'should not allow users to modify events they did not create' do

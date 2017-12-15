@@ -66,6 +66,12 @@ de:
       image:
         one: "Bild"
         other: "Bilder"
+      league:
+        one: "Liga"
+        other: "Ligen"
+      tournament:
+        one: "Turnier"
+        other: "Turniere"
       event:
         one: "Event"
         other: "Events"
@@ -88,6 +94,8 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+    validations:
+      must_be_after: "darf nicht vor %{other} sein."
 
   view:
     user:
@@ -101,14 +109,14 @@ de:
           user: "Du bist nicht berechtigt, Konten anderer Nutzer zu verändern."
 
   success:
-    updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
+    updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
     leave_team_event: "Du hast das Event %{event} erfolgreich  mit deinem Team %{team} verlassen."
 
   error:
-    update_match_points: Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut.
+    update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten, kann ein neues Team erstellt werden."
 
   events:
@@ -118,8 +126,6 @@ de:
     new_tournament: "Neues Turnier"
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
-    new_league: "Neue Liga"
-    new_tournament: "Neues Turnier"
     show_events: "Alle Events anzeigen"
     join_team_event: "Event %{event} mit einem Team beitreten"
     choose_team: "Ein Team auswählen"
