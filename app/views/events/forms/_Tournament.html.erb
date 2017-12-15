@@ -1,11 +1,11 @@
 <%= render "events/forms/Dates", f: form%>
 
 <div class="form-group" id="event_player_types">
-  <%= form.label :player_type, :class => 'control-label col-lg-2' %>
+  <%= form.label :player_type, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= form.collection_select :player_type, event_player_types_localize, :first, :second,
                             {selected: @event.player_type, include_blank: t('events.new.select_player_type')},
-                            { :class => 'form-control', :id => 'event_player_type'}%>
+                            { class: 'form-control', id: :event_player_type}%>
   </div>
 </div>
 
@@ -14,6 +14,6 @@
   <div class="col-lg-10">
     <%= form.collection_select :game_mode, tournament_gamemodes_localize, :first, :second,
                             {selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
-                            { :class => 'form-control', id: :tournament_game_mode}%>
+                            { class: 'form-control', id: :tournament_game_mode}%>
   </div>
 </div>
