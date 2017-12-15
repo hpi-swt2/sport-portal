@@ -83,6 +83,8 @@ end
 Then(/^the (home|away) team of match (\d+) (is|isn't) in match (\d+)$/) do |home_or_away, match_id, is_or_isnt, target_match_num|
   team = find_team_of_match match_id, home_or_away
   target_match = find_match_on_page target_match_num
+  print target_match.debug_name + "\n"
+  print team.name + "\n"
   expect(target_match.is_team_recursive? team).to be(is_or_isnt == 'is')
 end
 

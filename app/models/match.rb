@@ -34,6 +34,10 @@ class Match < ApplicationRecord
     round
   end
 
+  def debug_name
+    "( #{team_home.debug_name} | #{team_away.debug_name} )"
+  end
+
   def depth
     event.max_match_level - gameday
   end
