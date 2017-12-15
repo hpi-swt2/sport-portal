@@ -29,7 +29,7 @@ When(/^the event page for (.*) is visited$/) do |tournamentName|
   visit event_path (tournament_named tournamentName)
 end
 
-And(/^it should link to tournament Spielplan for (.*)$/) do |tournamentName|
+Then(/^it should link to tournament Spielplan for (.*)$/) do |tournamentName|
   click_link 'zum Spielplan'
   expect(page).to have_current_path(event_schedule_path(tournament_named tournamentName), only_path: true)
 end
@@ -50,7 +50,7 @@ Then(/^there should be several rounds$/) do
   expect(page).to have_content('Halbfinale')
 end
 
-And(/^there should be exactly (\d+) matches and (\d+) rounds$/) do |numberOfMatches, numberOfRounds|
+Then(/^there should be exactly (\d+) matches and (\d+) rounds$/) do |numberOfMatches, numberOfRounds|
   # The minus 1 is needed because the headline of the table is also a tr entry
   expect(all('table#matches-table tr').count - 1).to eq(numberOfMatches + numberOfRounds)
 end
@@ -68,7 +68,7 @@ def find_team_of_match(match_num, home_or_away)
   }[home_or_away.to_sym]
 end
 
-And(/^the results for match (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_num, points_home, points_away|
+Then(/^the results for match (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_num, points_home, points_away|
   match = find_match_on_page match_num
   fill_in "match_#{match.id}_match_points_home", with: points_home
   fill_in "match_#{match.id}_match_points_away", with: points_away
