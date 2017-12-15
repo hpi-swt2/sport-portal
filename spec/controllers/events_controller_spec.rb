@@ -256,17 +256,17 @@ RSpec.describe EventsController, type: :controller do
 
   describe "PUT #join" do
     context "League" do
-      let(:event_attributes){ FactoryBot.build(:league, owner: @user, max_teams:20, player_type: Event.player_types[:single]).attributes }
+      let(:event_attributes) { FactoryBot.build(:league, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
       include_examples "a joinable event"
     end
 
     context "Tournament" do
-      let(:event_attributes){ FactoryBot.build(:tournament, owner: @user, max_teams:20, player_type: Event.player_types[:single]).attributes }
+      let(:event_attributes) { FactoryBot.build(:tournament, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
       include_examples "a joinable event"
     end
 
     context "Rankinglist" do
-      let(:event_attributes){ FactoryBot.build(:rankinglist, owner: @user).attributes }
+      let(:event_attributes) { FactoryBot.build(:rankinglist, owner: @user).attributes }
       include_examples "a joinable event"
     end
   end

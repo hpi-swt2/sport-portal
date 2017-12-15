@@ -148,12 +148,12 @@ describe "index event page", type: :feature do
 
   context "for events whose deadline has passed" do
     describe "leagues" do
-      let(:event){FactoryBot.create(:league, deadline: Date.yesterday)}
+      let(:event) { FactoryBot.create(:league, deadline: Date.yesterday) }
       include_examples "a past event"
     end
 
     describe "Tournament" do
-      let(:event){FactoryBot.create(:tournament, deadline: Date.yesterday)}
+      let(:event) { FactoryBot.create(:tournament, deadline: Date.yesterday) }
       include_examples "a past event"
     end
 

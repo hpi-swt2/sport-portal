@@ -55,7 +55,7 @@ RSpec.describe "events/show", type: :view do
     @user = FactoryBot.create :user
     @other_user = FactoryBot.create :user
   end
-  
+
   describe "League" do
     before(:each) do
       @event = assign(:event, FactoryBot.create(:league))

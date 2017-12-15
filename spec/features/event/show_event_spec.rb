@@ -125,18 +125,18 @@ describe "detailed event page", type: :feature do
 
   context "for single player" do
     describe "Leagues" do
-      let(:event){ FactoryBot.create(:league, owner_id: @user.id, player_type: Event.player_types[:single]) }
+      let(:event) { FactoryBot.create(:league, owner_id: @user.id, player_type: Event.player_types[:single]) }
       include_examples "a single player event"
     end
 
     describe "Tournaments" do
-      let(:event){FactoryBot.create :tournament, owner_id: @user.id, player_type: Event.player_types[:single]}
+      let(:event) { FactoryBot.create :tournament, owner_id: @user.id, player_type: Event.player_types[:single] }
       include_examples "a single player event"
     end
 
     describe "Rankinglist" do
 
-      let(:event){FactoryBot.create :rankinglist, owner_id: @user.id}
+      let(:event) { FactoryBot.create :rankinglist, owner_id: @user.id }
       include_examples "a single player event"
 
     end
