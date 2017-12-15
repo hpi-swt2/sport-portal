@@ -58,4 +58,8 @@ class League < Event
       [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
     end
   end
+
+  def can_join?(user)
+    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+  end
 end

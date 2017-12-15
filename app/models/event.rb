@@ -72,7 +72,7 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+    true
   end
 
   def can_leave?(user)

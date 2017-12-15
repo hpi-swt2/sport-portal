@@ -24,4 +24,8 @@ class Tournament < Event
   validate :end_after_start, :start_after_deadline
 
   enum game_modes: [:ko, :ko_group, :double_elimination]
+
+  def can_join?(user)
+    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+  end
 end
