@@ -20,8 +20,6 @@ module SportPortal
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # Add custom fonts-asset route
-    Rails.application.config.assets.paths << "#{Rails.root}/app/assets/fonts"
-    Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf .otf)
+    config.i18n.default_locale = :de
   end
 end

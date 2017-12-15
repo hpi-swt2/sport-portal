@@ -76,7 +76,6 @@ de:
       unlink_success: "Die Verbindung wurde erfolgreich aufgehoben."
       no_link: "Dein Account ist mit keinem Dienst verbunden."
       no_account_question: "Du hast noch keinen Account?"
-      have_account_question: "Du hast schon einen Account?"
       my_account: "Mein Account"
     sessions:
       signed_in: "Erfolgreich angemeldet."
