@@ -1,6 +1,6 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
-  load_and_authorize_resource :only => [:dashboard]
+  load_and_authorize_resource only: [:dashboard]
   load_resource only: [:link, :unlink]
 
   attr_reader :user
@@ -43,7 +43,7 @@ class UsersController < Devise::RegistrationsController
 
     @user.destroy
     set_flash_message! :notice, :destroyed
-    redirect_to_users_or_root
+    redirect_to root_path
   end
 
   # GET /users/1/link
@@ -129,13 +129,5 @@ class UsersController < Devise::RegistrationsController
       user.reset_omniauth
       user.save!
       redirect_to user_path(user), notice: I18n.t('devise.registrations.unlink_success')
-    end
-
-    def redirect_to_users_or_root
-      if @user.present?
-        redirect_to users_path
-      else
-        redirect_to root_path
-      end
     end
 end

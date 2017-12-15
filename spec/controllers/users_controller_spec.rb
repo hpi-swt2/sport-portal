@@ -13,6 +13,10 @@ RSpec.describe UsersController, type: :controller do
     FactoryBot.attributes_for(:user)
   }
 
+  let(:invalid_attributes) {
+    FactoryBot.attributes_for(:user, last_name: nil)
+  }
+
   before(:each) do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
@@ -176,7 +180,7 @@ RSpec.describe UsersController, type: :controller do
       }
 
       let(:new_admin_attributes) {
-        { first_name: valid_attributes[:first_name] + '_new'}
+        { first_name: valid_attributes[:first_name] + '_new' }
       }
 
       it 'updates the requested user' do
@@ -193,6 +197,14 @@ RSpec.describe UsersController, type: :controller do
         put :update, params: { id: @user.to_param, user: new_admin_attributes }
         @user.reload
         expect(@user.first_name).to eq(new_admin_attributes[:first_name])
+      end
+    end
+
+    context 'with invalid params' do
+      it 'as admin should be a success response' do
+        sign_in @admin
+        put :update, params: { id: @user.to_param, user: invalid_attributes }
+        expect(response).to be_success
       end
     end
   end
@@ -235,7 +247,7 @@ RSpec.describe UsersController, type: :controller do
         user = User.create! valid_attributes
         sign_in user
         new_attributes = { birthday: Date.today + 1.year }
-        patch :update_profile, params: {id: user.to_param, user: new_attributes }
+        patch :update_profile, params: { id: user.to_param, user: new_attributes }
         expect(response).to render_template(:edit_profile)
       end
     end
@@ -300,15 +312,15 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it "should allow normal users to destroy theirselves" do
+    it "should allow normal users to destroy themselves" do
       sign_in @user
       delete :destroy, params: { id: @user.to_param }
-      expect(response).to redirect_to(users_url)
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe "GET #edit" do
-    it "should allow normal users to edit theirselves" do
+    it "should allow normal users to edit themselves" do
       sign_in @user
       get :edit, params: { id: @user.to_param }
       expect(response).to be_success

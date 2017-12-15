@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :league, parent: :event do
+  factory :league, parent: :event, class: :league do
     game_mode League.game_modes[League.game_modes.keys.sample]
     gameday_duration 7
 

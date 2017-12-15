@@ -61,8 +61,8 @@ describe "League model", type: :model do
 
     it "does only let half as many matches as teams play per gameday" do
       5.times do |gameday|
-        gameday+=1 #gamedays are from 1 to 5 not 0 to 4
-        gameday_matches = matches.select{|match| match.gameday==gameday}
+        gameday += 1 #gamedays are from 1 to 5 not 0 to 4
+        gameday_matches = matches.select { |match| match.gameday == gameday }
         expect(gameday_matches.length).to be 2
       end
     end

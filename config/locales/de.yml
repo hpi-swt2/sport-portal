@@ -66,6 +66,12 @@ de:
       image:
         one: "Bild"
         other: "Bilder"
+      league:
+        one: "Liga"
+        other: "Ligen"
+      tournament:
+        one: "Turnier"
+        other: "Turniere"
       event:
         one: "Event"
         other: "Events"
@@ -88,6 +94,8 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+    validations:
+      must_be_after: "darf nicht vor %{other} sein."
 
   view:
     user:
@@ -101,12 +109,12 @@ de:
           user: "Du bist nicht berechtigt, Konten anderer Nutzer zu verändern."
 
   success:
-    updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
+    updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
 
   error:
-    update_match_points: Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut.
+    update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
 
   events:
     create_event: "Veranstaltung erstellen"
@@ -115,8 +123,6 @@ de:
     new_tournament: "Neues Turnier"
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
-    new_league: "Neue Liga"
-    new_tournament: "Neues Tournier"
     show_events: "Alle Events anzeigen"
     participating: "Beigetreten"
     show:
@@ -141,6 +147,14 @@ de:
       teamColumn: "Team"
       standingColumn: "Platzierung"
 
+  teams:
+    show:
+      invite_user_to_team: "+"
+    invite_user_to_team:
+      title: "Neuen Spieler einladen"
+      no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
+      user_already_in_team: 'Der Nutzer ist bereits Mitglied in diesem Team.'
+      assignment_successful: 'Der Nutzer wurde erfolgreich zu diesem Team hinzugefügt.'
   validations:
     not_only_numbers: "darf nicht nur aus Zahlen bestehen"
     four_different_characters: "muss aus mindestens 4 verschiedenen Zeichen bestehen"

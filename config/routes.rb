@@ -1,14 +1,14 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
-  resources :events do
+  resources :events, except: [:create] do
     member do
       put :join
       put :leave
     end
   end
-  resources :leagues, controller: 'events', type: 'League'
-  resources :tournaments, controller: 'events', type: 'Tournament'
+  resources :leagues, controller: 'events', only: [:show, :new, :create, :update], type: League
+  resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
 
   root 'welcome#index'
   resources :teams
@@ -19,8 +19,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
   get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
+  get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {
@@ -49,11 +49,10 @@ Rails.application.routes.draw do
       post :assign_ownership
       post :delete_ownership
       post :delete_membership
+      post :perform_action_on_multiple_members
+      post :assign_membership_by_email
     end
   end
-    
-  #Define route for Create Event Button
-  get "/createEvent" , to: "application#createEvent" , as: "create_Event"
 
   get 'imprint' => "static_pages#imprint"
 end
