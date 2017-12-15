@@ -23,7 +23,8 @@ class Tournament < Event
   enum game_modes: [:ko, :ko_group, :double_elimination]
 
   def standing_of(team)
-    get_standing_of team, finale
+    last_match = last_match_of team, finale
+    standing_string team, last_match
   end
 
   def finale
@@ -48,9 +49,9 @@ class Tournament < Event
 
   private
 
-    def get_standing_of(team, match)
+    def last_match_of(team, match)
       if match.is_team_recursive? team
-        return standing_string team, match
+        return match
       end
       standing_recursion_step(team, match.team_home) || standing_recursion_step(team, match.team_away)
     end
@@ -65,7 +66,7 @@ class Tournament < Event
 
     def standing_recursion_step(team, child)
       if child.is_a? Match
-        get_standing_of team, child
+        last_match_of team, child
       end
     end
 
