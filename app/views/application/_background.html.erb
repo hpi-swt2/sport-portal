@@ -1,3 +1,4 @@
+<!--Specify for each controller and action which background to use, action specification is optional -->
 <%-
   $background = ""
   $new_background = "navbar-overlap background"
@@ -17,10 +18,13 @@
           $background = $new_background
         when "create"
           $background = $new_background
+        else
+          $background = $no_background
       end
     else
       $background = $no_background
     end
+
   if request.user_agent =~ /Mobile|webOS/
     $background = $no_background
   end
