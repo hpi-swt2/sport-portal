@@ -82,4 +82,10 @@ class Event < ApplicationRecord
   def standing_of(team)
     'Gewinner ' + team.id.to_s
   end
+
+  def add_test_teams
+    max_teams.times do |index|
+      teams << Team.new(name: "Team #{index}", private: false)
+    end
+  end
 end
