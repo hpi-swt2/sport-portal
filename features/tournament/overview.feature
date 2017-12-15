@@ -20,14 +20,14 @@ Feature: Tournament Overview Page
     Given a tournament t with 6 teams
 
     When the tournament overview page for t is visited
-    Then the standing of the home team of match 1 is 'In Viertelfinalspiel 1'
-    And the standing of the away team of match 1 is 'In Viertelfinalspiel 1'
-    And the standing of the home team of match 2 is 'In Viertelfinalspiel 2'
+    Then the standing of the home team of match Viertelfinale 1 is 'In Viertelfinalspiel 1'
+    And the standing of the away team of match Viertelfinale 1 is 'In Viertelfinalspiel 1'
+    And the standing of the home team of match Viertelfinale 2 is 'In Viertelfinalspiel 2'
 
     And the Spielplan page for t is visited
-    And the results for match 1 (6 : 7) got inserted
+    And the results for match Viertelfinale 1 (6 : 7) got inserted
 
     When the tournament overview page for t is visited
-    Then the standing of the home team of match 1 is 'In Viertelfinalspiel 1 ausgeschieden'
-    And the standing of the away team of match 1 is 'In Halbfinalspiel 2'
-    And the standing of the home team of match 2 is 'In Viertelfinalspiel 2'
+    Then the standing of the home team of match Viertelfinale 1 is 'In Viertelfinalspiel 1 ausgeschieden'
+    And the standing of the away team of match Viertelfinale 1 is 'In Halbfinalspiel 2'
+    And the standing of the home team of match Viertelfinale 2 is 'In Viertelfinalspiel 2'

@@ -19,8 +19,8 @@ Feature: Spielplan for tournament
 
   Scenario: Spielplan should update winner teams continuously
     When the Spielplan page for t is visited
-    And the results for match 1 (30 : 7) got inserted
-    Then the home team of match 1 comes to the next round
+    And the results for match Vorrunde 1 1 (30 : 7) got inserted
+    Then the home team of match Vorrunde 1 1 comes to the next round
 
-    When the results for match 1 (3 : 7) got inserted
-    Then the away team of match 1 comes to the next round
+    When the results for match Vorrunde 1 1 (3 : 7) got inserted
+    Then the away team of match Vorrunde 1 1 comes to the next round

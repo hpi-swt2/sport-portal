@@ -17,22 +17,22 @@ Feature: Spielplan progression for tournament
     And the Spielplan page for t is visited
 
   Scenario: Spielplan updates according to the inserted results
-    When the results for match 1 (66 : 7) got inserted
-    Then the home team of match 1 is in match 5
-    And the away team of match 1 isn't in match 5
+    When the results for match Viertelfinale 1 (66 : 7) got inserted
+    Then the home team of match Viertelfinale 1 is in match Halbfinale 1
+    And the away team of match Viertelfinale 1 isn't in match Halbfinale 1
 
-    When the results for match 2 (3 : 4) got inserted
-    Then the away team of match 2 is in match 5
-    And the home team of match 2 isn't in match 5
+    When the results for match Viertelfinale 2 (3 : 4) got inserted
+    Then the away team of match Viertelfinale 2 is in match Halbfinale 1
+    And the home team of match Viertelfinale 2 isn't in match Halbfinale 1
 
-    When the results for match 5 (1 : 0) got inserted
-    Then the home team of match 5 is in match 7
-    And the home team of match 1 is in match 7
-    And the away team of match 5 isn't in match 7
+    When the results for match Halbfinale 1 (1 : 0) got inserted
+    Then the home team of match Halbfinale 1 is in match Finale 1
+    And the home team of match Viertelfinale 1 is in match Finale 1
+    And the away team of match Halbfinale 1 isn't in match Finale 1
 
     #Now it gets interesting: We change, what happened in match 1
-    When the results for match 1 (6 : 7) got inserted
-    Then the away team of match 1 is in match 5
-    And the away team of match 1 is in match 7
-    And the home team of match 1 isn't in match 5
-    And the home team of match 1 isn't in match 7
+    When the results for match Viertelfinale 1 (6 : 7) got inserted
+    Then the away team of match Viertelfinale 1 is in match Halbfinale 1
+    And the away team of match Viertelfinale 1 is in match Finale 1
+    And the home team of match Viertelfinale 1 isn't in match Halbfinale 1
+    And the home team of match Viertelfinale 1 isn't in match Finale 1

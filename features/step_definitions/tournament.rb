@@ -55,40 +55,42 @@ Then(/^there should be exactly (\d+) matches and (\d+) rounds$/) do |numberOfMat
   expect(all('table#matches-table tr').count - 1).to eq(numberOfMatches + numberOfRounds)
 end
 
-def find_match_on_page(match_num)
-  *_, match_id = all('table#matches-table form')[match_num - 1][:id].split '_'
+def find_match_on_page(match_gameday, match_num)
+  *_, match_id = find(:xpath, "(//table//th/b[contains(.,'#{match_gameday}')]/following::tr/td[1][contains(.,'#{match_num}')]/following::form)[1]")[:id].split '_'
   Match.find match_id.to_i
+
 end
 
-def find_team_of_match(match_num, home_or_away)
-  match = find_match_on_page match_num
+def find_team_of_match(match_gameday, match_num, home_or_away)
+  match = find_match_on_page match_gameday, match_num
   {
       home: match.team_home_recursive,
       away: match.team_away_recursive
   }[home_or_away.to_sym]
 end
 
-Then(/^the results for match (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_num, points_home, points_away|
-  match = find_match_on_page match_num
+Then(/^the results for match (.+) (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_gameday, match_num, points_home, points_away|
+  match = find_match_on_page match_gameday, match_num
   fill_in "match_#{match.id}_match_points_home", with: points_home
   fill_in "match_#{match.id}_match_points_away", with: points_away
   click_on "save_points_#{match.id}"
 end
 
-Then(/^the (home|away) team of match (\d+) comes to the next round$/) do |home_or_away, match_num|
-  team = find_team_of_match match_num, home_or_away
+Then(/^the (home|away) team of match (.+) (\d+) comes to the next round$/) do |home_or_away, match_gameday, match_num|
+  team = find_team_of_match match_gameday, match_num, home_or_away
   all('a[href="' + team_path(team) + '"]').count == 2
 end
 
-Then(/^the (home|away) team of match (\d+) (is|isn't) in match (\d+)$/) do |home_or_away, match_id, is_or_isnt, target_match_num|
-  team = find_team_of_match match_id, home_or_away
-  target_match = find_match_on_page target_match_num
+
+Then(/^the (home|away) team of match (.+) (\d+) (is|isn't) in match (.+) (\d+)$/) do |home_or_away, match_gameday, match_num, is_or_isnt, target_match_gameday, target_match_num|
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  target_match = find_match_on_page target_match_gameday,target_match_num
   expect(target_match.is_team_recursive? team).to be(is_or_isnt == 'is')
 end
 
-Then(/^the standing of the (home|away) team of match (\d+) is '(.+)'$/) do |home_or_away, match_num, standing|
+Then(/^the standing of the (home|away) team of match (.+) (\d+) is '(.+)'$/) do |home_or_away, match_gameday, match_num, standing|
   visit event_schedule_path single_tournament
-  team = find_team_of_match match_num, home_or_away
+  team = find_team_of_match match_gameday, match_num, home_or_away
   visit event_overview_path single_tournament
   expect(page).to have_text("#{team.name} #{standing}")
 end
