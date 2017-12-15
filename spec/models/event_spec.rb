@@ -92,12 +92,12 @@ describe "Event model", type: :model do
   end
 
   it "should know if it is for single players" do
-    single_player_event = FactoryBot.build :single_player_event
+    single_player_event = FactoryBot.build :event, :single_player
     expect(single_player_event).to be_single_player
   end
 
   it "should know if its deadline has passed" do
-    passed_deadline_event = FactoryBot.build(:passed_deadline_event)
+    passed_deadline_event = FactoryBot.build :event, :passed_deadline
     expect(passed_deadline_event.deadline_has_passed?).to be true
   end
 end
