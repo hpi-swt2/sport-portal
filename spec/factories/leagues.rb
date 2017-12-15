@@ -1,10 +1,7 @@
 FactoryBot.define do
-  factory :league, parent: :event, class: :league do
+  factory :league, parent: :event, traits: [:has_dates], class: :league do
     game_mode League.game_modes[League.game_modes.keys.sample]
     gameday_duration 7
-    deadline { Date.current + 1 }
-    startdate { Date.current + 2 }
-    enddate { Date.current + 3 }
 
     factory :league_with_teams, class: "League", parent: :event_with_teams do
     end

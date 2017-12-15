@@ -31,6 +31,12 @@ FactoryBot.define do
 
     association :owner, factory: :user, strategy: :build
 
+    trait :has_dates do
+      deadline { Date.current + 1 }
+      startdate { Date.current + 2 }
+      enddate { Date.current + 3 }
+    end
+
     factory :event_with_teams do
       transient do
         teams_count 5
