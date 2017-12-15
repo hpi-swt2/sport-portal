@@ -32,8 +32,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = event_type.new(event_params)
-    @event.owner = current_user
-    @event.player_type ||= Event.player_types[:single]
+    set_associations
 
     if @event.save
       @event.editors << current_user
@@ -91,6 +90,11 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
+    def set_associations
+      @event.owner = current_user
+      @event.player_type ||= Event.player_types[:single]
+    end
+
     # Get the type of event that should be created
     def event_type
       return League if params[:type] == 'League'
@@ -103,16 +107,22 @@ class EventsController < ApplicationController
       params[:showAll]
     end
 
+    def map_event_on_event_types
+      [:league, :tournament, :rankinglist]
+          .each do |value|
+            delete_mapping_parameter value
+      end
+    end
+
+    def delete_mapping_parameter(event_class)
+      if params.has_key? event_class
+        params[:event] = params.delete event_class
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def event_params
-      if params.has_key? :league
-        params[:event] = params.delete :league
-      elsif params.has_key? :tournament
-        params[:event] = params.delete :tournament
-      elsif params.has_key? :rankinglist
-        params[:event] = params.delete :rankinglist
-      end
-
+      map_event_on_event_types
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,

@@ -1,3 +1,5 @@
+# For schema information see Event
+
 class Rankinglist < Event
   validates :deadline, :startdate, :enddate, presence: false
 
