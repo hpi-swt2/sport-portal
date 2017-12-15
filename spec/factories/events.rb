@@ -37,6 +37,14 @@ FactoryBot.define do
       enddate { Date.current + 3 }
     end
 
+    trait :single_player do
+      player_type Event.player_types[:single]
+    end
+
+    trait :passed_deadline do
+      deadline { Date.current - 1 }
+    end
+
     factory :event_with_teams do
       transient do
         teams_count 5
@@ -46,13 +54,7 @@ FactoryBot.define do
       end
     end
 
-    factory :single_player_event do
-      player_type Event.player_types[:single]
 
-      factory :passed_deadline_event do
-        deadline { Date.current - 1 }
-      end
-    end
 
     factory :team_event do
       player_type Event.player_types[:team]

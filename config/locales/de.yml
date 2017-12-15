@@ -72,6 +72,9 @@ de:
       tournament:
         one: "Turnier"
         other: "Turniere"
+      rankinglist:
+        one: "Rangliste"
+        other: "Ranglisten"
       event:
         one: "Event"
         other: "Events"
