@@ -21,7 +21,7 @@
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order 'gameday ASC' }, dependent: :delete_all
+  has_many :matches, -> { order '"gameday" ASC, "index" ASC' }, dependent: :delete_all
   has_and_belongs_to_many :teams
   has_and_belongs_to_many :participants, class_name: 'User'
   has_many :organizers
