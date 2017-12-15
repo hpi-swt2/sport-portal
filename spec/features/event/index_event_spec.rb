@@ -19,13 +19,15 @@ describe "index event page", type: :feature do
   context "for single player events" do
     before(:each) do
       @event = FactoryBot.create(:single_player_event)
+      @team = FactoryBot.create(:team)
+      @team.owners << @user
       sign_in @user
       visit events_path
     end
 
     context "which I participate in" do
       before(:each) do
-        @event.add_participant(@user)
+        @event.add_team(@team)
         visit events_path
       end
 

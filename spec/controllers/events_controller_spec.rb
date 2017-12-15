@@ -63,6 +63,8 @@ RSpec.describe EventsController, type: :controller do
     @other_user = FactoryBot.create(:user)
     @admin = FactoryBot.create(:admin)
     @event = FactoryBot.build(:event)
+    @team = FactoryBot.create(:team)
+    @team.owners << @user
     @event.owner = @user
     sign_in @user
   end
@@ -251,17 +253,42 @@ RSpec.describe EventsController, type: :controller do
     it "adds the user as participant to the event" do
       event = Event.create! attributes_single_player_team
       put :join, params: { id: event.to_param }, session: valid_session
-      expect(event).to have_participant(@user)
+      expect(event).to have_team_member(@user)
     end
   end
+
+  describe "PUT #join" do
+    let(:new_attributes) {
+      {
+          teams: @team
+      }
+    }
+    let(:attributes_multi_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
+    it "adds the team, which the user chose, as participant to the event" do
+      event = Event.create! attributes_multi_player_team
+      put :join, params: { id: event.to_param, event: new_attributes}, session: valid_session
+      expect(event).to have_team_member(@user)
+    end
+  end
+  
+  #This is not working yet
+  #describe "GET #team_join", type: :api do
+  #  let(:attributes_multi_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
+  #  it "opens the modal to the corresponding event" do
+  #    event = Event.create! attributes_multi_player_team
+  #    get :team_join, params: { id: event.to_param }, session: valid_session, format: :js
+  #    expect(response.content_type).to eq "js"
+  #  end
+  #end
+
 
   describe "PUT #leave" do
     let(:attributes_single_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
     it "remove the user as participant of the event" do
       event = Event.create! attributes_single_player_team
-      event.add_participant(@user)
+      put :join, params: { id: event.to_param }, session: valid_session
       put :leave, params: { id: event.to_param }, session: valid_session
-      expect(event).not_to have_participant(@user)
+      expect(event).not_to have_team_member(@user)
     end
   end
 

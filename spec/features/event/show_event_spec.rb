@@ -20,11 +20,12 @@ describe "detailed event page", type: :feature do
     before(:each) do
       sign_in @user
       @event = FactoryBot.create :single_player_event, owner_id: @user.id
+      @team = @event.create_single_team @user
     end
 
     context "participants" do
       before(:each) do
-        @event.add_participant @user
+        @event.add_team @team
         visit event_path(@event)
       end
 
@@ -39,7 +40,7 @@ describe "detailed event page", type: :feature do
 
     context "which I participate in" do
       before(:each) do
-        @event.add_participant(@user)
+        @event.add_team(@team)
         visit event_path(@event)
       end
 

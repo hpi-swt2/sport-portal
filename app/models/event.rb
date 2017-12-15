@@ -59,16 +59,10 @@ class Event < ApplicationRecord
     player_type == Event.player_types[:single]
   end
 
-  def add_participant(user)
-    participants << user
-  end
-
-  def remove_participant(user)
-    participants.delete(user)
-  end
-
-  def has_participant?(user)
-    participants.include?(user)
+  def create_single_team(user)
+    team = Team.create(Hash[name: user.name, private: true])
+    team.owners << user
+    return team
   end
 
   def add_team(team)
@@ -77,6 +71,9 @@ class Event < ApplicationRecord
 
   def remove_team(team)
     teams.delete(team)
+    if single_player?
+      team.destroy
+    end
   end
 
   def ownes_participating_teams?(user)
@@ -84,24 +81,11 @@ class Event < ApplicationRecord
   end
 
   def has_team_member?(user)
-    (teams & user.teams).present?
-  end
-
-
-  def can_join?(user)
-    if single_player?
-      (not has_participant?(user))
-    else
-      (not has_team_member?(user))
+    team_members = []
+    teams.each do |team|
+      team_members += team.members
     end
-  end
-
-  def can_leave?(user)
-    if single_player?
-      has_participant?(user)
-    else
-      has_team_member?(user)
-    end
+    team_members.include?(user)
   end
 
   def standing_of(team)
