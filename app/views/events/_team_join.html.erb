@@ -1,4 +1,4 @@
-<%= form_for @event, url: { action: "join"}, :method => :put, :html => { :class => "form-horizontal event" } do |f| %>
+<%= form_for @event, url: { action: "join"}, method: :put, :html => { class: "form-horizontal event" } do |f| %>
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
     <h3 id="myModalLabel"><%= t('events.join_team_event', event: @event.name) %></h3>
@@ -6,12 +6,12 @@
   <div class="modal-body">
     <div class="form-group">
       <% if current_user.owned_teams.present? %>
-        <%= f.label :teams, :class => 'control-label col-lg-2' %>
+        <%= f.label :teams, class: 'control-label col-lg-2' %>
         <div class="col-lg-10">
           <%= f.collection_select :teams, current_user.owned_teams, :id, :name,
                                   { include_blank: t('events.choose_team') },
-                                  :class => 'form-control', :id => 'event_team',
-                                  :required => true %>
+                                  class: 'form-control', id: 'event_team',
+                                  required: true %>
         </div>
       <% else %>
         <p class="text-center"><%= t("error.no_valid_team") %></p>
@@ -19,15 +19,15 @@
     </div>
   </div>
   <div class="modal-footer">
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                '#', data: { dismiss: "modal" }, :class => 'btn btn-default' %>
+    <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                '#', data: { dismiss: "modal" }, class: 'btn btn-default' %>
 
     <% if current_user.owned_teams.present? %>
-          <%= f.submit t('helpers.links.join'), :class => 'btn btn-primary' %>
+          <%= f.submit t('helpers.links.join'), class: 'btn btn-primary' %>
     <% else %>
-      <%= link_to t('.new', :default => t("helpers.links.new")),
+      <%= link_to t('.new', default: t("helpers.links.new")),
                   new_team_path,
-                  :class => 'btn btn-primary pull-left' %>
+                  class: 'btn btn-primary pull-left' %>
     <% end %>
   </div>
 <% end %>
