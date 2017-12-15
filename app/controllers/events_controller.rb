@@ -108,9 +108,8 @@ class EventsController < ApplicationController
     end
 
     def map_event_on_event_types
-      [:league, :tournament, :rankinglist]
-          .each do |value|
-            delete_mapping_parameter value
+      [:league, :tournament, :rankinglist].each do |value|
+        delete_mapping_parameter value
       end
     end
 
