@@ -35,7 +35,7 @@ class Match < ApplicationRecord
   end
 
   def debug_name
-    "( #{team_home.debug_name} | #{team_away.debug_name} )"
+    "( #{team_home.debug_name}: #{points_home} | #{team_away.debug_name}: #{points_away} )"
   end
 
   def depth

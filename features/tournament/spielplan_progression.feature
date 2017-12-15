@@ -17,7 +17,9 @@ Feature: Spielplan progression for tournament
     And the Spielplan page for t is visited
 
   Scenario: Spielplan updates according to the inserted results
+    Then the whole match plan gets debugged
     When the results for match 1 (66 : 7) got inserted
+    Then the whole match plan gets debugged
     Then the home team of match 1 is in match 5
     And the away team of match 1 isn't in match 5
 

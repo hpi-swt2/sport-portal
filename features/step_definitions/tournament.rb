@@ -84,7 +84,7 @@ Then(/^the (home|away) team of match (\d+) (is|isn't) in match (\d+)$/) do |home
   team = find_team_of_match match_id, home_or_away
   target_match = find_match_on_page target_match_num
   print target_match.debug_name + "\n"
-  print team.name + "\n"
+  print team.name + "\n\n"
   expect(target_match.is_team_recursive? team).to be(is_or_isnt == 'is')
 end
 
@@ -93,4 +93,9 @@ Then(/^the standing of the (home|away) team of match (\d+) is '(.+)'$/) do |home
   team = find_team_of_match match_num, home_or_away
   visit event_overview_path single_tournament
   expect(page).to have_text("#{team.name} #{standing}")
+end
+
+Then(/^the whole match plan gets debugged$/) do
+  match1 = find_match_on_page 1
+  print 'Fianle: ' + match1.event.finale.debug_name + "\n"
 end
