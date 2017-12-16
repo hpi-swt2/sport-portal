@@ -96,6 +96,7 @@ class Event < ApplicationRecord
       I18n.t("activerecord.attributes.event.player_types.#{type}")
     end
 
+    # This method should be implemented by subclasses to provide correct game mode names
     def human_game_mode(_)
       'None'
     end
