@@ -94,8 +94,8 @@ de:
           team: "Teamteilnahme"
       tournament:
         game_modes:
-          ko: "Ko"
-          ko_group: "Gruppen-Ko"
+          ko: "K.-o.-System"
+          ko_group: "K.-o.-System mit Gruppenphase"
           double_elimination: "Double Elimination"
       league:
         game_modes:
