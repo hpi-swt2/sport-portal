@@ -82,13 +82,16 @@ de:
         description: "Beschreibung"
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
-        player_type: "Solo / Team"
+        player_type: "Teilnahmeform"
         max_teams: "Anzahl Teams"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
+        player_types:
+          single: "Einzelteilnahme"
+          team: "Teamteilnahme"
       tournament:
         game_modes:
           ko: "Ko"
