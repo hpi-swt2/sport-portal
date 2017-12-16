@@ -55,10 +55,6 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
-  def single_player?
-    player_type == 'single'
-  end
-
   def add_participant(user)
     participants << user
   end
@@ -72,11 +68,11 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+    single? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
 
   def can_leave?(user)
-    single_player? && has_participant?(user)
+    single? && has_participant?(user)
   end
 
   def standing_of(team)

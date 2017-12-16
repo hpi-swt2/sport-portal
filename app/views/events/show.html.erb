@@ -54,7 +54,7 @@
 <div class="table-responsive">
   <h3><%= t("events.show.participants") %></h3>
   <table class="table">
-    <% if @event.single_player? %>
+    <% if @event.single? %>
       <thead><tr><th><%=t '.title', default: User.model_name.human.titleize %></th></tr></thead>
       <tbody>
         <% @event.participants.each do |participant| %>

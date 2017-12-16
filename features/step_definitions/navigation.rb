@@ -6,7 +6,6 @@ When /^he visits the new tournament path$/ do
   visit new_tournament_path
 end
 
-
 When(/^the tournament's page is visited$/) do
   visit event_path single_tournament
 end
