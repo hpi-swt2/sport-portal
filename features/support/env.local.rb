@@ -1,3 +1,5 @@
+require 'simplecov'
+
 require 'capybara/email'
 
 module DataHelper

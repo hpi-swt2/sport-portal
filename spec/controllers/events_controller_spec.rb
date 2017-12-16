@@ -253,7 +253,7 @@ RSpec.describe EventsController, type: :controller do
     it "adds the user as participant to the event" do
       event = Event.create! attributes_single_player_team
       put :join, params: { id: event.to_param }, session: valid_session
-      expect(event.reload).to have_participant(@user)
+      expect(event).to have_participant(@user)
     end
   end
 

@@ -10,7 +10,7 @@ describe 'new event page', type: :feature do
     let(:new_path) { new_league_path } # /new?type=league
 
     it 'should render without errors' do
-      visit new_path
+        visit new_path
       end
 
     it 'should be possible to enter date conditions' do
