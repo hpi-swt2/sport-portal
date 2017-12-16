@@ -33,10 +33,13 @@
   <dd><%= @event.discipline %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:game_mode) %>:</strong></dt>
-  <dd><%= model_class.human_game_mode @event.game_mode %></dd>
+  <dd><%= @event.human_game_mode %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
   <dd><%= @event.max_teams %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
+  <dd><%= @event.human_player_type %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:deadline) %>:</strong></dt>
   <dd><%= @event.deadline %></dd>
