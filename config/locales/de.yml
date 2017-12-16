@@ -142,6 +142,8 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      first_half: "Hinrunde"
+      second_half: "Rückrunde"
     overview:
       title: "Übersicht"
       teamColumn: "Team"

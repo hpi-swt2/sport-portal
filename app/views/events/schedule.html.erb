@@ -16,8 +16,26 @@
   </thead>
   <tbody>
     <% last_gameday = nil %>
+    <% if @event.game_mode == League.game_modes[:two_halfs] %>
+      <tr class="gameday">
+        <th colspan="6">
+          <b>
+            <%= t('events.schedule.first_half') %>
+          </b>
+        </th>
+      </tr>
+    <% end %>
     <% @matches.each do |match| %>
       <% if match.gameday != last_gameday %>
+        <% if @event.game_mode == League.game_modes[:two_halfs] && match.gameday == @event.teams.size + 1 %>
+            <tr class="gameday">
+              <th colspan="6">
+                <b>
+                  <%= t('events.schedule.second_half') %>
+                </b>
+              </th>
+            </tr>
+        <% end %>
         <tr class="gameday">
           <th colspan="6">
             <b>
