@@ -64,7 +64,7 @@
     <div class="form-group">
       <%= f.label Event.human_attribute_name(:deadline), :class => 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.text_field :deadline, id: :event_deadline, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+        <%= f.text_field :deadline, id: :event_deadline, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd"} %>
         <%= f.error_span(:deadline) %>
       </div>
     </div>
