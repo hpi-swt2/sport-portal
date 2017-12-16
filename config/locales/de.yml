@@ -89,7 +89,17 @@ de:
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
-
+      tournament:
+        game_modes:
+          ko: "Ko"
+          ko_group: "Gruppen-Ko"
+          double_elimination: "Double Elimination"
+      league:
+        game_modes:
+          round_robin: "Jeder gegen Jeden"
+          two_halfs: "Hin- und Rückrunde"
+          swiss: "Schweizer System"
+          danish: "Dänisches System"
       user:
         first_name: "Vorname"
         last_name: "Nachname"

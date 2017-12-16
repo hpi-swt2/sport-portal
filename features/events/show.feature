@@ -10,4 +10,4 @@ Feature: Detailed event page
     Given a league with gamemode round_robin
     When the league's page is visited
     Then the page header should show 'League'
-    And the page should show 'Jeder gegen jeden'
+    And the page should show 'Jeder gegen Jeden'

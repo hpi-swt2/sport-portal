@@ -82,4 +82,8 @@ class Event < ApplicationRecord
   def standing_of(team)
     'Gewinner ' + team.id.to_s
   end
+
+  def self.human_game_mode(_)
+    'None'
+  end
 end

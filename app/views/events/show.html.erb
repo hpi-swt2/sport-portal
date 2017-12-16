@@ -1,7 +1,7 @@
-<%- model_class = Event -%>
+<%- model_class = @event.class -%>
 <div class="page-header">
   <h1>
-    <%=t '.title', default: model_class.model_name.human.titleize %>
+    <%=t '.title', default: @event.model_name.human.titleize %>
   </h1>
   <% if user_signed_in? %>
     <span class="pull-right">
@@ -23,10 +23,29 @@
 </div>
 
 <dl class="dl-horizontal">
-  <% [:name, :description, :discipline, :game_mode, :max_teams, :deadline, :startdate, :enddate].each do |attribute| %>
-      <dt><strong><%= model_class.human_attribute_name(attribute) %>:</strong></dt>
-      <dd><%= @event.send attribute %></dd>
-  <% end %>
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @event.name %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @event.description %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:discipline) %>:</strong></dt>
+  <dd><%= @event.discipline %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:game_mode) %>:</strong></dt>
+  <dd><%= model_class.human_game_mode @event.game_mode %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
+  <dd><%= @event.max_teams %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:deadline) %>:</strong></dt>
+  <dd><%= @event.deadline %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:startdate) %>:</strong></dt>
+  <dd><%= @event.startdate %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:enddate) %>:</strong></dt>
+  <dd><%= @event.enddate %></dd>
 </dl>
 
 <div class="table-responsive">

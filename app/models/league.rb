@@ -55,4 +55,8 @@ class League < Event
       [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
     end
   end
+
+  def self.human_game_mode(mode)
+    I18n.t("activerecord.attributes.league.game_modes.#{mode}")
+  end
 end

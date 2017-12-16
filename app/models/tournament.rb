@@ -21,4 +21,8 @@
 
 class Tournament < Event
   enum game_mode: [:ko, :ko_group, :double_elimination]
+
+  def self.human_game_mode(mode)
+    I18n.t("activerecord.attributes.tournament.game_modes.#{mode}")
+  end
 end
