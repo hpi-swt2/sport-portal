@@ -23,5 +23,5 @@ When(/^the tournament overview page for (.*) is visited$/) do |tournamentName|
 end
 
 Given(/^a tournament with gamemode (.*)$/) do |mode|
-  create_tournament game_mode: Tournament.game_modes[mode.to_sym]
+  create_tournament game_mode: mode
 end
