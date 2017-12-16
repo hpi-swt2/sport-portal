@@ -32,7 +32,7 @@ describe 'new event page', type: :feature do
       fill_in Event.human_attribute_name(:name), with: 'name'
       fill_in Event.human_attribute_name(:discipline), with: 'soccer'
       select League.human_game_mode(:round_robin), from: Event.human_attribute_name(:game_mode)
-      select 'Single', from: Event.human_attribute_name(:player_type)
+      select Event.human_player_type(:single), from: Event.human_attribute_name(:player_type)
       fill_in Event.human_attribute_name(:max_teams), with: '5'
 
       fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
@@ -75,7 +75,7 @@ describe 'new event page', type: :feature do
       fill_in Event.human_attribute_name(:name), with: 'name'
       fill_in Event.human_attribute_name(:discipline), with: 'soccer'
       select Tournament.human_game_mode(:ko), from: Event.human_attribute_name(:game_mode)
-      select 'Single', from: Event.human_attribute_name(:player_type)
+      select Event.human_player_type(:single), from: Event.human_attribute_name(:player_type)
       fill_in Event.human_attribute_name(:max_teams), with: '5'
 
       fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s

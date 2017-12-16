@@ -247,16 +247,20 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "PUT #join" do
-    let(:attributes_single_player_team){FactoryBot.build(:event,owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes}
+    let(:attributes_single_player_team){
+      FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: :single).attributes
+    }
     it "adds the user as participant to the event" do
       event = Event.create! attributes_single_player_team
       put :join, params: { id: event.to_param }, session: valid_session
-      expect(event).to have_participant(@user)
+      expect(event.reload).to have_participant(@user)
     end
   end
 
   describe "PUT #leave" do
-    let(:attributes_single_player_team){FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes}
+    let(:attributes_single_player_team){
+      FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: :single).attributes
+    }
     it "remove the user as participant of the event" do
       event = Event.create! attributes_single_player_team
       event.add_participant(@user)

@@ -35,7 +35,7 @@
   <div class="form-group">
     <%= f.label :player_type, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.select(:player_type, Event.player_types.map {|k, v| [k.humanize, v]},
+      <%= f.select(:player_type, Event.player_types.map {|k, _| [Event.human_player_type(k), k]},
                    {include_blank: t('events.new.select_player_type')},
                    { class: 'form-control'}) %>
     </div>

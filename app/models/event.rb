@@ -34,7 +34,7 @@ class Event < ApplicationRecord
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validate :end_after_start, :start_after_deadline
 
-  enum player_types: [:single, :team]
+  enum player_type: [:single, :team]
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -56,7 +56,7 @@ class Event < ApplicationRecord
   end
 
   def single_player?
-    player_type == Event.player_types[:single]
+    player_type == 'single'
   end
 
   def add_participant(user)
@@ -83,7 +83,21 @@ class Event < ApplicationRecord
     'Gewinner ' + team.id.to_s
   end
 
-  def self.human_game_mode(_)
-    'None'
+  def human_player_type
+    self.class.human_player_type player_type
+  end
+
+  def human_game_mode
+    self.class.human_game_mode game_mode
+  end
+
+  class << self
+    def human_player_type(type)
+      I18n.t("activerecord.attributes.event.player_types.#{type}")
+    end
+
+    def human_game_mode(_)
+      'None'
+    end
   end
 end
