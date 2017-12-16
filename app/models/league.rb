@@ -20,7 +20,7 @@
 #
 
 class League < Event
-  enum game_modes: [:round_robin, :two_halfs, :swiss, :danish]
+  enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def add_test_teams
     max_teams.times do |index|

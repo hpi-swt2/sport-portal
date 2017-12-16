@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tournament, parent: :event, class: Tournament do
-    game_mode Tournament.game_modes[Tournament.game_modes.keys.sample]
+    game_mode :ko
 
     factory :tournament_with_teams, class: "Tournament", parent: :event_with_teams do
     end
