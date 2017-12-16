@@ -82,7 +82,7 @@ de:
         description: "Beschreibung"
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
-        player_type: "Solo / Team"
+        player_type: "Einzeln / Team"
         max_teams: "Anzahl Teams"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
@@ -146,6 +146,20 @@ de:
       title: "Übersicht"
       teamColumn: "Team"
       standingColumn: "Platzierung"
+    league:
+      game_modes:
+        round_robin: "Rundenturnier"
+        two_halfs: "Doppelrundenturnier"
+        swiss: "Schweizer System"
+        danish: "Dänisches System"
+    tournament:
+      game_modes:
+        ko: "K.-o.-System"
+        ko_group: "K.-o.-System Gruppe"
+        double_elimination: "Doppeltes K.-o.-System"
+    player_types:
+      single: "Einzeln"
+      team: "Team"
 
   teams:
     show:

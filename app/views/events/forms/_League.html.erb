@@ -2,7 +2,7 @@
 <div class="form-group">
   <%= form.label :game_mode, :class => 'control-label col-lg-2' %>
   <div class="col-lg-10">
-    <%= form.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
+    <%= form.select(:game_mode, League.game_modes.map {|k, v| [League.event_enums_name(:league, :game_modes, k), v]},
                  { include_blank: t('events.new.select_game_mode')},
                  { class: 'form-control' }) %>
   </div>
