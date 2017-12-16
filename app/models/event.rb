@@ -72,7 +72,7 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    throw NotImplementedError
+    raise NotImplementedError
   end
 
   def can_leave?(user)

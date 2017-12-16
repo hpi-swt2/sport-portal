@@ -50,7 +50,7 @@ describe "Event model", type: :model do
   end
 
   it "should have an attribute startdate" do
-    date = Date.today + 2
+    date = Date.current + 2
     expect(event.startdate).to eq date
 
     expect(event).to be_valid
@@ -59,7 +59,7 @@ describe "Event model", type: :model do
   end
 
   it "should have an attribute enddate" do
-    date = Date.today + 3
+    date = Date.current + 3
     expect(event.enddate).to eq date
 
     expect(event).to be_valid
@@ -69,7 +69,7 @@ describe "Event model", type: :model do
 
   it "should not be possible to have an enddate, that is before the startdate" do
     expect(event).to be_valid
-    event.enddate = Date.today
+    event.enddate = Date.current
     expect(event).not_to be_valid
   end
 
@@ -99,5 +99,11 @@ describe "Event model", type: :model do
   it "should know if its deadline has passed" do
     passed_deadline_event = FactoryBot.build :event, :passed_deadline
     expect(passed_deadline_event.deadline_has_passed?).to be true
+  end
+
+  it "can_join? should raise a NotImplementedError" do
+    event = FactoryBot.build :event
+    user = FactoryBot.build :user
+    expect{ event.can_join? user }.to raise_error NotImplementedError
   end
 end
