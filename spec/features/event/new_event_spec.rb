@@ -31,8 +31,8 @@ describe 'new event page', type: :feature do
       visit new_path
       fill_in Event.human_attribute_name(:name), with: 'name'
       fill_in Event.human_attribute_name(:discipline), with: 'soccer'
-      select 'Round robin', from: Event.human_attribute_name(:game_mode)
-      select 'Single', from: Event.human_attribute_name(:player_type)
+      select Event.event_enums_name(:league, :game_modes, :round_robin), from: Event.human_attribute_name(:game_mode)
+      select Event.event_enums_name("", :player_types, :single), from: Event.human_attribute_name(:player_type)
       fill_in Event.human_attribute_name(:max_teams), with: '5'
 
       fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
@@ -74,8 +74,8 @@ describe 'new event page', type: :feature do
 
       fill_in Event.human_attribute_name(:name), with: 'name'
       fill_in Event.human_attribute_name(:discipline), with: 'soccer'
-      select 'Ko', from: Event.human_attribute_name(:game_mode)
-      select 'Single', from: Event.human_attribute_name(:player_type)
+      select Tournament.event_enums_name(:tournament, :game_modes, :ko), from: Event.human_attribute_name(:game_mode)
+      select Event.event_enums_name("", :player_types, :single), from: Event.human_attribute_name(:player_type)
       fill_in Event.human_attribute_name(:max_teams), with: '5'
 
       fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
