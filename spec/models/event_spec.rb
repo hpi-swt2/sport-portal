@@ -104,6 +104,6 @@ describe "Event model", type: :model do
   it "can_join? should raise a NotImplementedError" do
     event = FactoryBot.build :event
     user = FactoryBot.build :user
-    expect{ event.can_join? user }.to raise_error NotImplementedError
+    expect { event.can_join? user }.to raise_error NotImplementedError
   end
 end
