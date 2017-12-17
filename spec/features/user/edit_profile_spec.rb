@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Edit profile", :type => :feature do
+RSpec.feature "Edit profile", type: :feature do
   let(:user) { FactoryBot.create :user }
 
   before(:each) { sign_in user }
@@ -15,10 +15,10 @@ RSpec.feature "Edit profile", :type => :feature do
     new_params[:favourite_sports] = new_params[:favourite_sports] + ", Baseball"
 
     page.attach_file("user_avatar", "#{Rails.root}/spec/fixtures/valid_avatar.png")
-    fill_in "user_birthday", :with => new_params[:birthday]
-    fill_in "user_telephone_number", :with => new_params[:telephone_number]
-    fill_in "user_telegram_username", :with => new_params[:telegram_username]
-    fill_in "user_favourite_sports", :with => new_params[:favourite_sports]
+    fill_in "user_birthday", with: new_params[:birthday]
+    fill_in "user_telephone_number", with: new_params[:telephone_number]
+    fill_in "user_telegram_username", with: new_params[:telegram_username]
+    fill_in "user_favourite_sports", with: new_params[:favourite_sports]
     find('input[type="submit"]').click
 
     user.reload

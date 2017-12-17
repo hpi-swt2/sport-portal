@@ -1,37 +1,51 @@
 require 'rails_helper'
 
-RSpec.describe "events/new", type: :view do
-  before(:each) do
-    assign(:event, FactoryBot.build(:event))
-  end
+RSpec.describe 'events/new', type: :view do
+  context 'new league' do
+    before(:each) do
+      assign(:event, FactoryBot.build(:league))
+    end
+    it 'should render the events form' do
+      render
+      expect(rendered).to have_css("form[action='#{leagues_path}'][method='post']", count: 1)
+    end
 
-  it "should render the events form" do
-    render
-    expect(rendered).to have_css("form[action='#{events_path}'][method='post']", count: 1)
-  end
+    it 'has input for all attributes' do
+      render
 
-  it "has input for all attributes" do
-    render
-
-    assert_select "form[action=?][method=?]", events_path, "post" do
-
-      assert_select "input[name=?]", "event[name]"
-
-      assert_select "textarea[name=?]", "event[description]"
-
-      assert_select "select[name=?]", "event[type]"
-
-      assert_select "select[name=?]", "event[game_mode]"
-
-      assert_select "input[name=?]", "event[discipline]"
-
-      assert_select "input[name=?]", "event[deadline]"
-
-      assert_select "input[name=?]", "event[startdate]"
-
-      assert_select "input[name=?]", "event[enddate]"
-
+      expect(rendered).to have_field("league_name")
+      expect(rendered).to have_field("event_description")
+      expect(rendered).to have_select("league_game_mode")
+      expect(rendered).to have_select("event_player_type")
+      expect(rendered).to have_field("league_max_teams")
+      expect(rendered).to have_field("league_discipline")
+      expect(rendered).to have_field("event_deadline")
+      expect(rendered).to have_field("event_startdate")
+      expect(rendered).to have_field("event_enddate")
     end
   end
 
+  context 'new tournament' do
+    before(:each) do
+      assign(:event, FactoryBot.build(:tournament))
+    end
+    it 'should render the events form' do
+      render
+      expect(rendered).to have_css("form[action='#{tournaments_path}'][method='post']", count: 1)
+    end
+
+    it 'has input for all attributes' do
+      render
+
+      expect(rendered).to have_field("tournament_name")
+      expect(rendered).to have_field("event_description")
+      expect(rendered).to have_select("tournament_game_mode")
+      expect(rendered).to have_select("event_player_type")
+      expect(rendered).to have_field("tournament_max_teams")
+      expect(rendered).to have_field("tournament_discipline")
+      expect(rendered).to have_field("event_deadline")
+      expect(rendered).to have_field("event_startdate")
+      expect(rendered).to have_field("event_enddate")
+    end
+  end
 end

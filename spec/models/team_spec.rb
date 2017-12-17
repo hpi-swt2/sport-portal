@@ -31,6 +31,23 @@ RSpec.describe Team, type: :model do
     expect(team.members).to have(1).items
   end
 
+  describe '#matches' do
+    it 'should return all matches of the team' do
+      team = FactoryBot.create(:team)
+      expect(team.matches).to be_empty
+      match_a = FactoryBot.create(:match)
+      match_b = FactoryBot.create(:match)
+      match_a.team_home = team
+      match_b.team_away = team
+      match_a.save
+      match_b.save
+      team.reload
+      expect(team.home_matches).to contain_exactly(match_a)
+      expect(team.away_matches).to contain_exactly(match_b)
+      expect(team.matches).to contain_exactly(match_a, match_b)
+    end
+  end
+
   it "should be able to have multiple team owners" do
     team = FactoryBot.create :team, :with_two_owners
     expect(team.owners).to have(2).items
@@ -40,6 +57,15 @@ RSpec.describe Team, type: :model do
   it "should be able to have multiple team members" do
     team = FactoryBot.create :team, :with_five_members
     expect(team.members).to have_at_least(5).items
+  end
+
+  it "should be in event if an event is assigned" do
+    team = FactoryBot.create :team
+    expect(team.in_event?).to be false
+
+    event = FactoryBot.create :event
+    team.events << event
+    expect(team.in_event?).to be true
   end
 
 end
