@@ -101,8 +101,9 @@ class Tournament < Event
 
       left_half, right_half = split_teams_array team_array
       child_depth = depth - 1
-      match_left = create_matches left_half, child_depth, (2 * index)
-      match_right = create_matches right_half, child_depth, (2 * index + 1)
+      child_index = index * 2
+      match_left = create_matches left_half, child_depth, child_index
+      match_right = create_matches right_half, child_depth, child_index + 1
 
       create_match match_left, match_right, depth, index
     end
@@ -141,5 +142,4 @@ class Tournament < Event
     def is_power_of_two?(number)
       number.to_s(2).count('1') == 1
     end
-
 end
