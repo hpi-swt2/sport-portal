@@ -67,4 +67,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Clear the mailbox before each test
+  config.before(:each) { ActionMailer::Base.deliveries.clear }
 end
