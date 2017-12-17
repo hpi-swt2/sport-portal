@@ -45,6 +45,7 @@ de:
     drop-down:
       dashboard: "Mein Dashboard"
       edit_profile: "Mein Profil"
+      notification_settings: "Benachrichtigungseinstellungen"
 
   dashboard:
     title: "Dashboard für %{name}"
