@@ -72,6 +72,9 @@ de:
       tournament:
         one: "Turnier"
         other: "Turniere"
+      rankinglist:
+        one: "Rangliste"
+        other: "Ranglisten"
       event:
         one: "Event"
         other: "Events"
@@ -82,13 +85,18 @@ de:
         description: "Beschreibung"
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
-        player_type: "Solo / Team"
+        player_type: "Einzel / Team"
+        player_types:
+          single: "Einzel"
+          team: "Team"
         max_teams: "Anzahl Teams"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
+        metric: "Metrik"
+        initial_value: "Anfangswert"
 
       user:
         first_name: "Vorname"
@@ -123,8 +131,15 @@ de:
     new_tournament: "Neues Turnier"
     create_event: "Veranstaltung erstellen"
     choose_event_format: "Veranstaltungsart wählen"
+    new_league: "Neue Liga"
+    new_tournament: "Neues Turnier"
+    new_rankinglist: "Neue Rangliste"
+    Tournament: "Turnier"
+    League: "Liga"
+    Rankinglist: "Rangliste"
     show_events: "Alle Events anzeigen"
     participating: "Beigetreten"
+    metric: "Metrik"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
@@ -133,6 +148,7 @@ de:
       select_type: "Eventtyp auswählen"
       select_game_mode: "Spieltyp auswählen"
       select_player_type: "Spielertyp auswählen"
+      select_metric: "Metrik auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"
@@ -147,6 +163,17 @@ de:
       quarterfinale: "Viertelfinale"
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
+    gamemode:
+      ko: "KO"
+      ko_group: "Gruppen-KO"
+      double_elimination: "Doppel-KO-System"
+      round_robin: "Jeder gegen Jeden"
+      two_halfs: "Hin- und Rückrunde"
+      swiss: "Schweizer System"
+      danish: "Dänisches System"
+      elo: "ELO"
+      win_loss: "Gewinne-Niederlagen"
+      true_skill: "True Skill"
     overview:
       title: "Übersicht"
       teamColumn: "Team"

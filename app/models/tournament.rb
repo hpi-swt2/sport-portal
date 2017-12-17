@@ -20,7 +20,15 @@
 #
 
 class Tournament < Event
+  validates :deadline, :startdate, :enddate, presence: true
+  validate :end_after_start, :start_after_deadline
+
   enum game_modes: [:ko, :ko_group, :double_elimination]
+
+
+  def can_join?(user)
+    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+  end
 
   def standing_of(team)
     last_match = last_match_of team, finale
@@ -133,4 +141,5 @@ class Tournament < Event
     def is_power_of_two?(number)
       number.to_s(2).count('1') == 1
     end
+
 end

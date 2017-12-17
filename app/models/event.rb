@@ -17,6 +17,7 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
 #
 
 class Event < ApplicationRecord
@@ -27,12 +28,11 @@ class Event < ApplicationRecord
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
-  scope :active, -> { where('deadline >= ?', Date.current) }
+  scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  validates :name, :discipline, :game_mode, :player_type, presence: true
-  validates :deadline, :startdate, :enddate, presence: true
+  validates :name, :discipline, :game_mode, :player_type,  presence: true
+
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-  validate :end_after_start, :start_after_deadline
 
   enum player_types: [:single, :team]
 
@@ -72,7 +72,7 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+    raise NotImplementedError
   end
 
   def can_leave?(user)

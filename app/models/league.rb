@@ -20,6 +20,9 @@
 #
 
 class League < Event
+  validates :deadline, :startdate, :enddate, presence: true
+  validate :end_after_start, :start_after_deadline
+
   enum game_modes: [:round_robin, :two_halfs, :swiss, :danish]
 
   def generate_schedule
@@ -48,5 +51,9 @@ class League < Event
       teams_array.rotate!
       [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
     end
+  end
+
+  def can_join?(user)
+    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
 end
