@@ -1,2 +1,2 @@
-release: bundle exec rake db:schema:load DISABLE_DATABASE_ENVIRONMENT_CHECK=1 && bundle exec rake db:seed DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+release: bundle exec rake db:schema:load DISABLE_DATABASE_ENVIRONMENT_CHECK=1 && bundle exec rake db:seed DISABLE_DATABASE_ENVIRONMENT_CHECK=1 && rake generate_fake_users
 web: bundle exec puma -C config/puma.rb

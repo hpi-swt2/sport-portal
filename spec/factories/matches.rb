@@ -27,5 +27,6 @@ FactoryBot.define do
     gameday 0
     points_away 3
     points_home 1
+    start_time Time.now
   end
 end

@@ -90,6 +90,9 @@ gem 'bootstrap-datepicker-rails'
 # https://github.com/bokmann/font-awesome-rails
 gem 'font-awesome-rails'
 
+# Generates fake users such as names
+gem 'faker'
+
 group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
