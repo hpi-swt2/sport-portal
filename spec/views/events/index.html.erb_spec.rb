@@ -3,8 +3,11 @@ require 'rails_helper'
 RSpec.describe "events/index", type: :view do
   before(:each) do
     @events = assign(:events, [
-      FactoryBot.create(:event),
-      FactoryBot.create(:event)
+      # Using all three kinds of events, don't use general event because checking if a player can join
+      # is a subclass responsibility
+      FactoryBot.create(:league),
+      FactoryBot.create(:rankinglist),
+      FactoryBot.create(:tournament)
       ])
     @user = FactoryBot.create :user
     @other_user = FactoryBot.create :user
@@ -17,7 +20,6 @@ RSpec.describe "events/index", type: :view do
 
   it "renders a list of events" do
      render
-     #FIXME: to be implemented
    end
 
   it "renders styled buttons" do

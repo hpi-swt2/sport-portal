@@ -7,8 +7,10 @@ Rails.application.routes.draw do
       put :leave
     end
   end
+
   resources :leagues, controller: 'events', only: [:show, :new, :create, :update], type: League
   resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
+  resources :rankinglists, controller: 'events', only: [:show, :new, :create, :update], type: Rankinglist
 
   root 'welcome#index'
   resources :teams

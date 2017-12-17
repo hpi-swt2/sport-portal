@@ -13,15 +13,15 @@ RSpec.describe 'events/new', type: :view do
     it 'has input for all attributes' do
       render
 
-      expect(rendered).to have_field(Event.human_attribute_name :name)
-      expect(rendered).to have_field(Event.human_attribute_name :description)
-      expect(rendered).to have_select(Event.human_attribute_name :game_mode)
-      expect(rendered).to have_select(Event.human_attribute_name :player_type)
-      expect(rendered).to have_field(Event.human_attribute_name :max_teams)
-      expect(rendered).to have_field(Event.human_attribute_name :discipline)
-      expect(rendered).to have_field(Event.human_attribute_name :deadline)
-      expect(rendered).to have_field(Event.human_attribute_name :startdate)
-      expect(rendered).to have_field(Event.human_attribute_name :enddate)
+      expect(rendered).to have_field("league_name")
+      expect(rendered).to have_field("event_description")
+      expect(rendered).to have_select("league_game_mode")
+      expect(rendered).to have_select("event_player_type")
+      expect(rendered).to have_field("league_max_teams")
+      expect(rendered).to have_field("league_discipline")
+      expect(rendered).to have_field("event_deadline")
+      expect(rendered).to have_field("event_startdate")
+      expect(rendered).to have_field("event_enddate")
     end
   end
 
@@ -37,15 +37,15 @@ RSpec.describe 'events/new', type: :view do
     it 'has input for all attributes' do
       render
 
-      expect(rendered).to have_field(Event.human_attribute_name :name)
-      expect(rendered).to have_field(Event.human_attribute_name :description)
-      expect(rendered).to have_select(Event.human_attribute_name :game_mode)
-      expect(rendered).to have_select(Event.human_attribute_name :player_type)
-      expect(rendered).to have_field(Event.human_attribute_name :max_teams)
-      expect(rendered).to have_field(Event.human_attribute_name :discipline)
-      expect(rendered).to have_field(Event.human_attribute_name :deadline)
-      expect(rendered).to have_field(Event.human_attribute_name :startdate)
-      expect(rendered).to have_field(Event.human_attribute_name :enddate)
+      expect(rendered).to have_field("tournament_name")
+      expect(rendered).to have_field("event_description")
+      expect(rendered).to have_select("tournament_game_mode")
+      expect(rendered).to have_select("event_player_type")
+      expect(rendered).to have_field("tournament_max_teams")
+      expect(rendered).to have_field("tournament_discipline")
+      expect(rendered).to have_field("event_deadline")
+      expect(rendered).to have_field("event_startdate")
+      expect(rendered).to have_field("event_enddate")
     end
   end
 end
