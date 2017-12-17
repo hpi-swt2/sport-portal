@@ -59,4 +59,13 @@ RSpec.describe Team, type: :model do
     expect(team.members).to have_at_least(5).items
   end
 
+  it "should be in event if an event is assigned" do
+    team = FactoryBot.create :team
+    expect(team.in_event?).to be false
+
+    event = FactoryBot.create :event
+    team.events << event
+    expect(team.in_event?).to be true
+  end
+
 end

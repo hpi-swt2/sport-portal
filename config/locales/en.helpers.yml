@@ -15,6 +15,7 @@ en:
       cancel: "Cancel"
       confirm: "Are you sure?"
       destroy: "Delete"
+      email: "Send Email"
       assign_ownership: "Assign Ownership"
       delete_ownership: "Delete Ownership"
       delete_membership: "Delete Membership"
@@ -22,6 +23,8 @@ en:
       edit: "Edit"
       show: "Show"
       save: "Save"
+      send: "Send"
+      close: "Close"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
@@ -38,6 +41,13 @@ en:
       kind_of_sport: "Kind of sport"
       description: "Description"
       private: "Private"
+      cant_destroy: "%{resource_name} can't be deleted, because it still participates in events."
+      multiple_actions:
+        apply_action: "Apply action to selected:"
+        select_all: "Select all"
+        deselect_all: "Deselect all"
+        confirmation: "Action successful"
+        failure_on: "Action successful. %{user_names} could not be changed."
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."
