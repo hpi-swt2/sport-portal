@@ -158,6 +158,8 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      propose_new_appointment: "Neuen Termin vorschlagen"
+      time: "Zeit"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
@@ -173,7 +175,6 @@ de:
       title: "Übersicht"
       teamColumn: "Team"
       standingColumn: "Platzierung"
-
   teams:
     show:
       invite_user_to_team: "+"
