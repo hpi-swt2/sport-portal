@@ -8,7 +8,7 @@ RSpec.describe MatchMailer, type: :mailer do
     before(:each) { mail.deliver_now }
 
     it 'renders the startdate in the subject' do
-      expect(mail.subject).to match(I18n.localize(match1.event.startdate))
+      expect(mail.subject).to match(I18n.localize(match1.start_time))
     end
 
     it 'renders the receiver email' do
@@ -40,7 +40,7 @@ RSpec.describe MatchMailer, type: :mailer do
     end
 
     it 'assigns event\'s startdate' do
-      expect(mail.body.encoded).to match(I18n.localize(match1.event.startdate))
+      expect(mail.body.encoded).to match(I18n.localize(match1.start_time))
     end
   end
 end

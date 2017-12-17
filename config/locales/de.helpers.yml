@@ -67,6 +67,6 @@ de:
   match_mailer:
     match_notification:
       hello: "Hallo %{firstname},"
-      next_game_info: "dein nächstes Spiel %{name} (%{team_home} vs. %{team_away}) startet morgen um %{startdate}. Ihr trefft euch am folgenden Ort: %{place}"
+      next_game_info: "dein nächstes Spiel %{name} (%{team_home} vs. %{team_away}) startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
       have_fun: "Viel Spaß beim Spiel!"
-      subject: "Ein Spiel startet morgen um %{startdate}"
+      subject: "Ein Spiel startet morgen um %{start_time}"
