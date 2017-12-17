@@ -32,7 +32,7 @@ class League < Event
     if game_mode == League.game_modes[:round_robin]
       calculate_round_robin
     elsif game_mode == League.game_modes[:two_halfs]
-      calculate_double_round_robin
+      calculate_two_halfs
     end
   end
 
@@ -48,7 +48,7 @@ class League < Event
     save
   end
 
-  def calculate_double_round_robin
+  def calculate_two_halfs
     pairings_per_day = round_robin_pairings teams.to_a
     pairings_per_day += round_robin_pairings teams.to_a
     pairings_per_day.each_with_index do |day, gameday|
