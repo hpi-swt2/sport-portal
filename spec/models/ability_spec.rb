@@ -171,14 +171,34 @@ RSpec.describe Ability, type: :model do
     ability.should_not be_able_to(:assign_membership_by_email, team)
   end
 
-  it 'should not allow users to join events after their deadline has passed' do
-    event = FactoryBot.create :passed_deadline_event
+  # If Event Abilitie tests become bigger than these 5 examples, consider using shared examples like done in the
+  # feature tests for index_event_spec and show_event_spec. Hardcoding for 5 cases doesn't seem too bad
+  it 'should not allow users to join leagues after their deadline has passed' do
+    event = FactoryBot.create :league, :passed_deadline
     ability = Ability.new(@user)
     expect(ability).not_to be_able_to(:join, event)
   end
 
-  it 'should not allow users to leave events they are not participating in' do
-    event = FactoryBot.create :single_player_event
+  it 'should not allow users to join leagues after their deadline has passed' do
+    event = FactoryBot.create :tournament, :passed_deadline
+    ability = Ability.new(@user)
+    expect(ability).not_to be_able_to(:join, event)
+  end
+
+  it 'should not allow users to leave leagues they are not participating in' do
+    event = FactoryBot.create :league, :single_player
+    ability = Ability.new(@user)
+    expect(ability).not_to be_able_to(:leave, event)
+  end
+
+  it 'should not allow users to leave tournaments they are not participating in' do
+    event = FactoryBot.create :tournament, :single_player
+    ability = Ability.new(@user)
+    expect(ability).not_to be_able_to(:leave, event)
+  end
+
+  it 'should not allow users to leave rankinglists they are not participating in' do
+    event = FactoryBot.create :rankinglist, :single_player
     ability = Ability.new(@user)
     expect(ability).not_to be_able_to(:leave, event)
   end
