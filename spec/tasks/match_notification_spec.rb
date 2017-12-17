@@ -11,19 +11,16 @@ describe 'rake match_notification:send_match_notification', type: :task do
 
   context 'exists a match in next 24 hours' do
     let(:participants) { [FactoryBot.create(:user)] }
-    let(:event) { FactoryBot.create(:event, startdate: Date.tomorrow, participants: participants) }
-    let(:match) { FactoryBot.create(:match, event: event) }
+    let(:match) { FactoryBot.create(:match, start_time: Time.now + 23.hours) }
 
     it 'should send a match notification to all participants' do
       email_count = event.participants.count
-      print Match.joins(:event).where(events: { startdate: Date.tomorrow.all_day })
       expect { task.execute }.to change { ActionMailer::Base.deliveries.length }.from(0).to(email_count)
     end
   end
 
   context 'exists no match in next 24 hours' do
-    let(:event) { FactoryBot.create(:event, startdate: Date.tomorrow + 1.day) }
-    let(:match) { FactoryBot.create(:match, event: event) }
+    let(:match) { FactoryBot.create(:match, start_time: Time.now) }
 
     it 'should not send a match notification' do
       task.execute
