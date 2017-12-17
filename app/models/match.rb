@@ -28,7 +28,7 @@ class Match < ApplicationRecord
 
   def name
     winner_team = winner
-    if winner_team != nil
+    if winner_team.present?
       return winner_team.name
     end
     round
@@ -45,7 +45,7 @@ class Match < ApplicationRecord
   end
 
   def has_winner?
-    points_home != nil && points_away != nil && points_home != points_away
+    points_home.present? && points_away.present? && points_home != points_away
   end
 
   def winner

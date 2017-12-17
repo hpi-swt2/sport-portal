@@ -39,7 +39,7 @@ class Tournament < Event
   end
 
   def generate_schedule
-    build_matches filled_teams, max_match_level, 0
+    create_matches filled_teams, max_match_level, 0
     beautify_match_indices
   end
 
@@ -86,28 +86,27 @@ class Tournament < Event
       team_copy.shuffle!
     end
 
-    def build_matches(team_array, depth, index)
+    def create_matches(team_array, depth, index)
       if team_array.length <= 2
-        return build_leaf_match *team_array, depth, index
+        return create_leaf_match *team_array, depth, index
       end
 
       left_half, right_half = split_teams_array team_array
       child_depth = depth - 1
-      match_left = build_matches left_half, child_depth, (2 * index)
-      match_right = build_matches right_half, child_depth, (2 * index + 1)
+      match_left = create_matches left_half, child_depth, (2 * index)
+      match_right = create_matches right_half, child_depth, (2 * index + 1)
 
       create_match match_left, match_right, depth, index
     end
 
     def split_teams_array(team_array)
-      team_count = team_array.length
-      half_team_count = team_count / 2
-      left_half = team_array[0 .. (half_team_count - 1)]
-      right_half = team_array[half_team_count .. (team_count - 1)]
+      half_team_count = team_array.length / 2
+      left_half = team_array.first half_team_count
+      right_half = team_array.last half_team_count
       return left_half, right_half
     end
 
-    def build_leaf_match(team_home, team_away, depth, index)
+    def create_leaf_match(team_home, team_away, depth, index)
       unless team_home.nil? || team_away.nil?
         return create_match team_home, team_away, depth, index
       end

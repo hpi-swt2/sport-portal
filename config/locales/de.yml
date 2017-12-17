@@ -161,6 +161,7 @@ de:
       two: "Viertelfinalspiel %{gameid}"
       three: "Achtelfinalspiel %{gameid}"
       other: "Vorrunde %{round} - Spiel %{gameid}"
+    winner_of_match: "Gewinner %{match}"
 
   teams:
     show:
