@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     member do
       patch :update_points
       put :update_points
+      patch :update_start_time
+      put :update_start_time
     end
   end
 
