@@ -17,6 +17,7 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
 #
 
 class Event < ApplicationRecord
@@ -27,19 +28,13 @@ class Event < ApplicationRecord
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
-  scope :active, -> { where('deadline >= ?', Date.current) }
+  scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  validates :name, :discipline, :game_mode, presence: true
-  validates :name, :discipline, :game_mode, :player_type, presence: true
-  validates :deadline, :startdate, :enddate, presence: true
-  validates :max_teams, numericality: { greater_than_or_equal_to: 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
-  validate :end_after_start
+  validates :name, :discipline, :game_mode, :player_type,  presence: true
+
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
   enum player_types: [:single, :team]
-
-  def self.types
-    %w(Tournament League)
-  end
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -48,9 +43,12 @@ class Event < ApplicationRecord
 
   def end_after_start
     return if enddate.blank? || startdate.blank?
-    if enddate < startdate
-      errors.add(:enddate, "must be after startdate.")
-    end
+    errors.add(:enddate, I18n.t('activerecord.validations.must_be_after', other: Event.human_attribute_name(:startdate))) if enddate < startdate
+  end
+
+  def start_after_deadline
+    return if startdate.blank? || deadline.blank?
+    errors.add(:startdate, I18n.t('activerecord.validations.must_be_after', other: Event.human_attribute_name(:deadline))) if startdate < deadline
   end
 
   def deadline_has_passed?
@@ -126,7 +124,7 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+    raise NotImplementedError
   end
 
   def can_leave?(user)
