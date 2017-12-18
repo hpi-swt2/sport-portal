@@ -270,16 +270,15 @@ RSpec.describe EventsController, type: :controller do
       expect(event).to have_team_member(@user)
     end
   end
-  
-  #This is not working yet
-  #describe "GET #team_join", type: :api do
-  #  let(:attributes_multi_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
-  #  it "opens the modal to the corresponding event" do
-  #    event = Event.create! attributes_multi_player_team
-  #    get :team_join, params: { id: event.to_param }, session: valid_session, format: :js
-  #    expect(response.content_type).to eq "js"
-  #  end
-  #end
+
+  describe "GET #team_join" do
+    let(:attributes_multi_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
+    it "returns javascript for the modal" do
+      event = Event.create! attributes_multi_player_team
+      get :team_join, xhr: true, params: { id: event.to_param }, session: valid_session, format: :js
+      expect(response.content_type).to eq "text/javascript"
+    end
+  end
 
 
   describe "PUT #leave" do
