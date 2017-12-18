@@ -90,6 +90,10 @@ gem 'bootstrap-datepicker-rails'
 # https://github.com/bokmann/font-awesome-rails
 gem 'font-awesome-rails'
 
+# Gem for nested fields inside forms
+# https://github.com/lailsonbm/awesome_nested_fields 
+gem 'awesome_nested_fields'
+
 group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
