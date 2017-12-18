@@ -9,4 +9,4 @@ Feature: Tournament creation
     When he visits the create event path
     And he clicks 'New tournament'
     Then the page should show 'Turnier erstellen'
-    And there should be a dropdown 'Spielsystem' with options 'KO'
+    And there should be a dropdown 'Spielsystem' with options 'K.-o.-System'

@@ -85,10 +85,7 @@ de:
         description: "Beschreibung"
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
-        player_type: "Einzel / Team"
-        player_types:
-          single: "Einzel"
-          team: "Team"
+        player_type: "Teilnahmeform"
         max_teams: "Anzahl Teams"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
@@ -97,7 +94,25 @@ de:
         duration: "Dauer in Tagen"
         metric: "Metrik"
         initial_value: "Anfangswert"
-
+        player_types:
+          single: "Einzelteilnahme"
+          team: "Teamteilnahme"
+      tournament:
+        game_modes:
+          ko: "K.-o.-System"
+          ko_group: "K.-o.-System mit Gruppenphase"
+          double_elimination: "Double Elimination"
+      league:
+        game_modes:
+          round_robin: "Jeder gegen Jeden"
+          two_halfs: "Hin- und Rückrunde"
+          swiss: "Schweizer System"
+          danish: "Dänisches System"
+      rankinglist:
+        game_modes:
+          elo: "ELO"
+          win_loss: "Gewinne-Niederlagen"
+          true_skill: "True Skill"
       user:
         first_name: "Vorname"
         last_name: "Nachname"
@@ -158,17 +173,6 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
-    gamemode:
-      ko: "KO"
-      ko_group: "Gruppen-KO"
-      double_elimination: "Doppel-KO-System"
-      round_robin: "Jeder gegen Jeden"
-      two_halfs: "Hin- und Rückrunde"
-      swiss: "Schweizer System"
-      danish: "Dänisches System"
-      elo: "ELO"
-      win_loss: "Gewinne-Niederlagen"
-      true_skill: "True Skill"
     overview:
       title: "Übersicht"
       teamColumn: "Team"
