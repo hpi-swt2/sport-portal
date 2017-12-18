@@ -58,5 +58,5 @@ $( document ).on('turbolinks:load', function() {
            $("#event_enddate").val(formattedDate);
        }
     });
-
 });
+

@@ -48,6 +48,55 @@ describe 'new event page', type: :feature do
     end
   end
 
+  context "for ranking lists" do
+    before :each do
+      visit new_rankinglist_path
+    end
+
+    it "should show a field for choosing the ranking metric" do
+      expect(page).to have_field('rankinglist_game_mode')
+    end
+
+    it "should show a field for choosing the initial value of the ranking metric" do
+      expect(page).to have_field('event_initial_value')
+    end
+
+    it "should not show a field for defining a deadline" do
+      expect(page).not_to have_field('event_deadline')
+    end
+
+    it "should not show a field for defining a enddate " do
+      expect(page).not_to have_field('event_enddate')
+    end
+
+    it "should not show a field for defining a startdate" do
+      expect(page).not_to have_field('event_startdate')
+    end
+
+    it "should not show a field for defining whether its a team or single player sport" do
+      expect(page).not_to have_field('event_player_type')
+    end
+
+    it "should not show a field for the duration" do
+      expect(page).not_to have_field('event_duration')
+    end
+
+    it "should be possible to create a rankinglist" do
+      rankinglist = FactoryBot.build :rankinglist
+      gamemode = Rankinglist.game_modes.map { |key, value| [value, key] }[rankinglist.game_mode][1].to_s
+
+      fill_in "rankinglist_name", with: rankinglist.name
+      fill_in Event.human_attribute_name(:discipline), with: rankinglist.discipline
+      select I18n.t("events.gamemode.#{gamemode}"), from: "rankinglist_game_mode"
+      fill_in Event.human_attribute_name(:max_teams), with: rankinglist.max_teams
+      fill_in "event_initial_value", with: rankinglist.initial_value
+
+      find('input[type="submit"]').click
+
+      expect(page).to have_current_path(/.*\/rankinglists\/\d+/)
+    end
+  end
+
   context 'for a tournament' do
     let(:new_path) { new_tournament_path } # /new?type=tournament
 
@@ -90,6 +139,4 @@ describe 'new event page', type: :feature do
       expect(page).to have_content((Date.tomorrow + 3).to_s)
     end
   end
-
-
 end

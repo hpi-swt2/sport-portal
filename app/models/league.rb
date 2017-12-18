@@ -20,6 +20,9 @@
 #
 
 class League < Event
+  validates :deadline, :startdate, :enddate, presence: true
+  validate :end_after_start, :start_after_deadline
+
   enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def add_test_teams
@@ -58,5 +61,9 @@ class League < Event
 
   def self.human_game_mode(mode)
     I18n.t("activerecord.attributes.league.game_modes.#{mode}")
+  end
+
+  def can_join?(user)
+    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
 end
