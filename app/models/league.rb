@@ -20,7 +20,10 @@
 #
 
 class League < Event
-  enum game_modes: [:round_robin, :two_halfs, :swiss, :danish]
+  validates :deadline, :startdate, :enddate, presence: true
+  validate :end_after_start, :start_after_deadline
+
+  enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def add_test_teams
     max_teams.times do |index|
@@ -54,5 +57,9 @@ class League < Event
       teams_array.rotate!
       [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
     end
+  end
+
+  def can_join?(user)
+    single? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
 end

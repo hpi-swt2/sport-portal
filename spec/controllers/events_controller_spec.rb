@@ -248,26 +248,28 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  describe "PUT #join" do
-    let(:attributes_single_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
+  shared_examples "a joinable event" do
     it "adds the user as participant to the event" do
-      event = Event.create! attributes_single_player_team
+      event = Event.create! event_attributes
       put :join, params: { id: event.to_param }, session: valid_session
       expect(event).to have_team_member(@user)
     end
   end
 
   describe "PUT #join" do
-    let(:new_attributes) {
-      {
-          teams: @team
-      }
-    }
-    let(:attributes_multi_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
-    it "adds the team, which the user chose, as participant to the event" do
-      event = Event.create! attributes_multi_player_team
-      put :join, params: { id: event.to_param, event: new_attributes}, session: valid_session
-      expect(event).to have_team_member(@user)
+    context "League" do
+      let(:event_attributes) { FactoryBot.build(:league, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
+      include_examples "a joinable event"
+    end
+
+    context "Tournament" do
+      let(:event_attributes) { FactoryBot.build(:tournament, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
+      include_examples "a joinable event"
+    end
+
+    context "Rankinglist" do
+      let(:event_attributes) { FactoryBot.build(:rankinglist, owner: @user).attributes }
+      include_examples "a joinable event"
     end
   end
 
@@ -280,11 +282,13 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-
   describe "PUT #leave" do
-    let(:attributes_single_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
+    let(:attributes_single_player_team) {
+      FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: :single).attributes
+    }
     it "remove the user as participant of the event" do
       event = Event.create! attributes_single_player_team
+      event.add_participant(@user)
       put :join, params: { id: event.to_param }, session: valid_session
       put :leave, params: { id: event.to_param }, session: valid_session
       expect(event).not_to have_team_member(@user)

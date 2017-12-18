@@ -17,6 +17,7 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
 #
 
 class Event < ApplicationRecord
@@ -27,14 +28,13 @@ class Event < ApplicationRecord
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
-  scope :active, -> { where('deadline >= ?', Date.current) }
+  scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  validates :name, :discipline, :game_mode, :player_type, presence: true
-  validates :deadline, :startdate, :enddate, presence: true
+  validates :name, :discipline, :game_mode, :player_type,  presence: true
+
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-  validate :end_after_start, :start_after_deadline
 
-  enum player_types: [:single, :team]
+  enum player_type: [:single, :team]
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -55,10 +55,6 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
-  def single_player?
-    player_type == Event.player_types[:single]
-  end
-
   def create_single_team(user)
     team = Team.create(Hash[name: user.name, private: true])
     team.owners << user
@@ -71,13 +67,21 @@ class Event < ApplicationRecord
 
   def remove_team(team)
     teams.delete(team)
-    if single_player?
+    if single?
       team.destroy
     end
   end
 
   def ownes_participating_teams?(user)
     (user.owned_teams & teams).present?
+  end
+
+  def can_join?(user)
+    raise NotImplementedError
+  end
+
+  def can_leave?(user)
+    has_team_member?(user)
   end
 
   def has_team_member?(user)
@@ -90,5 +94,24 @@ class Event < ApplicationRecord
 
   def standing_of(team)
     'Gewinner ' + team.id.to_s
+  end
+
+  def human_player_type
+    self.class.human_player_type player_type
+  end
+
+  def human_game_mode
+    self.class.human_game_mode game_mode
+  end
+
+  class << self
+    def human_player_type(type)
+      I18n.t("activerecord.attributes.event.player_types.#{type}")
+    end
+
+    # This method should be implemented by subclasses to provide correct game mode names
+    def human_game_mode(mode)
+      I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
+    end
   end
 end
