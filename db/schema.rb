@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20171215131703) do
     t.date "deadline"
     t.integer "gameday_duration"
     t.integer "owner_id"
+    t.float "initial_value"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -99,13 +100,13 @@ ActiveRecord::Schema.define(version: 20171215131703) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "provider"
+    t.string "uid"
     t.boolean "admin", default: false
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
-    t.string "provider"
-    t.string "uid"
     t.text "avatar_data"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true

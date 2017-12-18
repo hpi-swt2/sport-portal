@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+# Shared examples for show event page
+
+
 describe "detailed event page", type: :feature do
   before(:each) do
     @user = FactoryBot.create :user
@@ -16,10 +19,10 @@ describe "detailed event page", type: :feature do
     end
   end
 
-  context "for single player events" do
+  shared_examples "a single player event" do
     before(:each) do
       sign_in @user
-      @event = FactoryBot.create :single_player_event, owner_id: @user.id
+      @event = event
     end
 
     context "participants" do
@@ -69,6 +72,7 @@ describe "detailed event page", type: :feature do
     context "which I do not participate in" do
       before(:each) do
         visit event_path(@event)
+        @event = event
       end
 
       it "should have a join button" do
@@ -91,10 +95,10 @@ describe "detailed event page", type: :feature do
     end
   end
 
-  context "for team events" do
+  shared_examples "a team event" do
     before(:each) do
       sign_in @user
-      @teamevent = FactoryBot.create :team_event
+      @teamevent = event
       visit event_path(@teamevent)
     end
 
@@ -117,7 +121,35 @@ describe "detailed event page", type: :feature do
         expect(page).to have_link @team.name
       end
     end
+  end
 
+  context "for single player" do
+    describe "Leagues" do
+      let(:event) { FactoryBot.create(:league, owner_id: @user.id, player_type: Event.player_types[:single]) }
+      include_examples "a single player event"
+    end
 
+    describe "Tournaments" do
+      let(:event) { FactoryBot.create :tournament, owner_id: @user.id, player_type: Event.player_types[:single] }
+      include_examples "a single player event"
+    end
+
+    describe "Rankinglist" do
+
+      let(:event) { FactoryBot.create :rankinglist, owner_id: @user.id }
+      include_examples "a single player event"
+
+    end
+  end
+
+  context "for team" do
+    describe "leagues" do
+      let(:event) { FactoryBot.create(:league, owner_id: @user.id, player_type: Event.player_types[:team]) }
+      include_examples "a team event"
+    end
+    describe "tournaments" do
+      let(:event) { FactoryBot.create(:tournament, owner_id: @user.id, player_type: Event.player_types[:team]) }
+      include_examples "a team event"
+    end
   end
 end
