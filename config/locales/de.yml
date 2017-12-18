@@ -97,6 +97,8 @@ de:
         duration: "Dauer in Tagen"
         metric: "Metrik"
         initial_value: "Anfangswert"
+        event_min_players_per_team: "Maximale Anzahl Spieler pro Team"
+        event_max_players_per_team: "Minimale Anzahl Spieler pro Team"
 
       user:
         first_name: "Vorname"
