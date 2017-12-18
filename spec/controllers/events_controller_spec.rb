@@ -46,7 +46,7 @@ RSpec.describe EventsController, type: :controller do
   }
 
   let(:valid_league_attributes) {
-    FactoryBot.build(:league, owner: @user, max_teams: 20).attributes
+    FactoryBot.build(:league, owner: @user, max_teams: 20, game_mode: League.game_modes[:round_robin]).attributes
   }
 
   let(:invalid_league_attributes) {

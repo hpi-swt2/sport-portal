@@ -42,7 +42,7 @@ class League < Event
       day.each do |pairing|
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
-        matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? || pairing[1].nil?
+        matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1)
       end
     end
     save
@@ -56,9 +56,9 @@ class League < Event
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
         if gameday < teams.size
-          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? || pairing[1].nil?
+          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1)
         else
-          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1) unless pairing[0].nil? || pairing[1].nil?
+          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1)
         end
       end
     end
@@ -71,9 +71,12 @@ class League < Event
     n = teams_array.size
     pivot = teams_array.pop
 
-    (n - 1).times.map do
+    games = (n - 1).times.map do
       teams_array.rotate!
       [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
     end
+
+    # remove all matches that include a nil object
+    games.map { |g| g.select { |m| !m[1].nil? }}
   end
 end
