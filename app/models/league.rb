@@ -59,11 +59,7 @@ class League < Event
     end
   end
 
-  def self.human_game_mode(mode)
-    I18n.t("activerecord.attributes.league.game_modes.#{mode}")
-  end
-
   def can_join?(user)
-    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+    single? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
 end

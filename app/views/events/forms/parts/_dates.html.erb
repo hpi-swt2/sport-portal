@@ -1,5 +1,5 @@
 <div class="form-group" id="event_deadline_div">
-  <%= f.label :deadline, class: 'control-label col-lg-2' %>
+  <%= f.label :deadline, for: :event_deadline, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= f.text_field :deadline,
                      id: :event_deadline,
@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group" id="event_startdate_div">
-  <%= f.label :startdate, class: 'control-label col-lg-2' %>
+  <%= f.label :startdate, for: :event_startdate, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= f.text_field :startdate,
                      id: :event_startdate,
@@ -21,7 +21,7 @@
 </div>
 
 <div class="form-group" id="event_enddate_div">
-  <%= f.label :enddate, class: 'control-label col-lg-2' %>
+  <%= f.label :enddate, for: :event_enddate, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= f.text_field :enddate,
                      id: :event_enddate,
@@ -32,8 +32,8 @@
 </div>
 
 <div class="form-group" id="event_duration_div">
-  <%= f.label :duration, class: 'control-label col-lg-2' %>
+  <%= f.label :duration, for: :event_duration, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
-    <%= f.text_field :duration, id: :event_duration, :class => 'form-control' %>
+    <%= f.text_field :duration, id: :event_duration, class: 'form-control' %>
   </div>
 </div>

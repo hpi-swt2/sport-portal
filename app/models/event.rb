@@ -93,8 +93,8 @@ class Event < ApplicationRecord
     end
 
     # This method should be implemented by subclasses to provide correct game mode names
-    def human_game_mode(_)
-      'None'
+    def human_game_mode(mode)
+      I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
     end
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(@event.name)
       expect(rendered).to have_content(@event.description)
-      expect(rendered).to have_content('None') #base class event does not have a game mode
+      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
       expect(rendered).to have_content(@event.discipline)
       expect(rendered).to have_content(@event.deadline)
       expect(rendered).to have_content(@event.startdate)

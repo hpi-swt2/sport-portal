@@ -28,8 +28,4 @@ class Tournament < Event
   def can_join?(user)
     single? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
-
-  def self.human_game_mode(mode)
-    I18n.t("activerecord.attributes.tournament.game_modes.#{mode}")
-  end
 end
