@@ -83,7 +83,6 @@ describe 'new event page', type: :feature do
 
     it "should be possible to create a rankinglist" do
       rankinglist = FactoryBot.build :rankinglist
-      gamemode = Rankinglist.game_modes.map { |key, value| [value, key] }[rankinglist.game_mode][1].to_s
 
       fill_in Event.human_attribute_name(:name), with: rankinglist.name
       fill_in Event.human_attribute_name(:discipline), with: rankinglist.discipline
