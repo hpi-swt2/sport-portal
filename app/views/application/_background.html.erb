@@ -3,35 +3,36 @@
   $background = ""
   $new_background = "navbar-overlap background"
   $no_background = "navbar-overlap"
-
-  if request.user_agent =~ /Mobile|webOS/
-    case controller_name
-      when ""
-        $background = $no_background
-      else
-        $background = $no_background
-    end
-  else
-    case controller_name
-      when "sessions"
-        case action_name
-          when "new"
-            $background = $new_background
-          else
-            $background = $no_background
-        end
-      when "users"
-        case action_name
-          when "new"
-            $background = $new_background
-          when "create"
-            $background = $new_background
-          else
-            $background = $no_background
-        end
-      else
-        $background = $no_background
+  case request.user_agent =~ /Mobile|webOS/ # check if user is moving a mobile device
+    when true   # in case it is a mobile device
+      case controller_name
+        when ""
+          $background = $no_background
+        else
+          $background = $no_background
       end
+    when false  # in case it is not a mobile device
+      case controller_name
+        when "sessions"
+          case action_name
+            when "new"
+              $background = $new_background
+            else
+              $background = $no_background
+          end
+        when "users"
+          case action_name
+            when "new"
+              $background = $new_background
+            when "create"
+              $background = $new_background
+            else
+              $background = $no_background
+          end
+        else
+          $background = $no_background
+        end
     end
 %>
+<!-- return the correct background for the specific controller and action -->
 <%=$background%>
