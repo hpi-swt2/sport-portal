@@ -58,7 +58,7 @@ describe 'new event page', type: :feature do
     end
 
     it "should show a field for choosing the initial value of the ranking metric" do
-      expect(page).to have_field('event_initial_value')
+      expect(page).to have_field('rankinglist_initial_value')
     end
 
     it "should not show a field for defining a deadline" do
@@ -85,11 +85,11 @@ describe 'new event page', type: :feature do
       rankinglist = FactoryBot.build :rankinglist
       gamemode = Rankinglist.game_modes.map { |key, value| [value, key] }[rankinglist.game_mode][1].to_s
 
-      fill_in "rankinglist_name", with: rankinglist.name
+      fill_in Event.human_attribute_name(:name), with: rankinglist.name
       fill_in Event.human_attribute_name(:discipline), with: rankinglist.discipline
-      select I18n.t("events.gamemode.#{gamemode}"), from: "rankinglist_game_mode"
+      select Rankinglist.human_game_mode(:true_skill), from: Event.human_attribute_name(:game_mode)
       fill_in Event.human_attribute_name(:max_teams), with: rankinglist.max_teams
-      fill_in "event_initial_value", with: rankinglist.initial_value
+      fill_in Event.human_attribute_name(:initial_value), with: rankinglist.initial_value
 
       find('input[type="submit"]').click
 
