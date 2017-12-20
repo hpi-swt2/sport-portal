@@ -31,7 +31,7 @@ class Tournament < Event
   end
 
   def standing_of(team)
-    last_match = last_match_of team, finale
+    last_match = finale.last_match_of team
     last_match.standing_string_of team
   end
 
