@@ -63,7 +63,7 @@ class Tournament < Event
       # in order to deal with a number of teams that is not a power of two
       filled_teams = shuffled_teams
       insert_index = 0
-      until is_power_of_two? filled_teams.length
+      until Tournament.is_power_of_two? filled_teams.length
         filled_teams.insert insert_index, nil
         insert_index += 2
       end
@@ -85,7 +85,7 @@ class Tournament < Event
     end
 
     def create_child_matches(team_array, depth, index)
-      left_half, right_half = split_teams_array team_array
+      left_half, right_half = Tournament.split_teams_array team_array
       child_depth = depth - 1
       child_index = index * 2
       match_left = create_matches left_half, child_depth, child_index
@@ -116,16 +116,17 @@ class Tournament < Event
       end
     end
 
-    class << self
-        def split_teams_array(team_array)
-          half_team_count = team_array.length / 2
-          left_half = team_array.first half_team_count
-          right_half = team_array.last half_team_count
-          return left_half, right_half
-        end
 
-        def is_power_of_two?(number)
-          number.to_s(2).count('1') == 1
-        end
+    class << self
+      def split_teams_array(team_array)
+        half_team_count = team_array.length / 2
+        left_half = team_array.first half_team_count
+        right_half = team_array.last half_team_count
+        return left_half, right_half
       end
+
+      def is_power_of_two?(number)
+        number.to_s(2).count('1') == 1
+      end
+    end
 end
