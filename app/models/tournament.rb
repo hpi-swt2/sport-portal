@@ -36,19 +36,18 @@ class Tournament < Event
   end
 
   def finale
-    finale = nil
+    #TODO: keep care of 3rd place match here
     matches.each do |match|
       if match.depth == 0
-        finale = match
+        return match
       end
     end
-    #TODO: keep care of 3rd place match here
-    finale
+    nil
   end
 
   def generate_schedule
     create_matches filled_teams, max_match_level, 0
-    beautify_match_indices
+    normalize_first_layer_match_indices
   end
 
   def max_match_level
@@ -79,6 +78,10 @@ class Tournament < Event
     end
 
     def filled_teams
+      # converts 12345
+      # to       x1x2x345
+      # (where x == nil)
+      # in order to deal with a number of teams that is not a power of two
       filled_teams = shuffled_teams
       insert_index = 0
       until is_power_of_two? filled_teams.length
@@ -128,7 +131,7 @@ class Tournament < Event
       match
     end
 
-    def beautify_match_indices
+    def normalize_first_layer_match_indices
       first_match = matches[0]
       first_gameday_index_offset = first_match.index - 1
       matches.each do |match|

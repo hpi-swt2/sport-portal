@@ -83,6 +83,7 @@ class Event < ApplicationRecord
     'Gewinner ' + team.id.to_s
   end
 
+  # this is a method that simplifies manual testing, not intended for production use
   def add_test_teams
     max_teams.times do |index|
       teams << Team.new(name: "Team #{index}", private: false)
