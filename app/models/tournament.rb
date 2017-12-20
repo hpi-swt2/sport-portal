@@ -71,9 +71,7 @@ class Tournament < Event
     end
 
     def shuffled_teams
-      team_copy = []
-      teams.each { |team| team_copy << team }
-      team_copy.shuffle!
+      teams.to_a.shuffle!
     end
 
     def create_matches(team_array, depth, index)
@@ -81,24 +79,22 @@ class Tournament < Event
         return create_leaf_match *team_array, depth, index
       end
 
+      match_left, match_right = create_child_matches(team_array, depth, index)
+
+      create_match match_left, match_right, depth, index
+    end
+
+    def create_child_matches(team_array, depth, index)
       left_half, right_half = split_teams_array team_array
       child_depth = depth - 1
       child_index = index * 2
       match_left = create_matches left_half, child_depth, child_index
       match_right = create_matches right_half, child_depth, child_index + 1
-
-      create_match match_left, match_right, depth, index
-    end
-
-    def split_teams_array(team_array)
-      half_team_count = team_array.length / 2
-      left_half = team_array.first half_team_count
-      right_half = team_array.last half_team_count
-      return left_half, right_half
+      return match_left, match_right
     end
 
     def create_leaf_match(team_home, team_away, depth, index)
-      unless team_home.nil? || team_away.nil?
+      if team_home.present? && team_away.present?
         return create_match team_home, team_away, depth, index
       end
       team_home || team_away
@@ -121,7 +117,16 @@ class Tournament < Event
       end
     end
 
-    def is_power_of_two?(number)
-      number.to_s(2).count('1') == 1
+    class << self
+      def split_teams_array(team_array)
+        half_team_count = team_array.length / 2
+        left_half = team_array.first half_team_count
+        right_half = team_array.last half_team_count
+        return left_half, right_half
+      end
+
+      def is_power_of_two?(number)
+        number.to_s(2).count('1') == 1
+      end
     end
 end
