@@ -110,7 +110,9 @@ class Tournament < Event
       first_match = matches[0]
       first_gameday_index_offset = first_match.index - 1
       matches.each do |match|
-        match.adjust_index_on_gameday_by first_gameday_index_offset, first_match.gameday
+        if match.gameday == first_match.gameday
+          match.adjust_index_by first_gameday_index_offset
+        end
       end
     end
 

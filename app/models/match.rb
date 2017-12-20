@@ -87,10 +87,8 @@ class Match < ApplicationRecord
     team_home.last_match_of(team) || team_away.last_match_of(team)
   end
 
-  def adjust_index_on_gameday_by(offset, target_gameday)
-    if gameday == target_gameday
-      self.index -= offset
-      save!
-    end
+  def adjust_index_by(offset)
+    self.index -= offset
+    save!
   end
 end
