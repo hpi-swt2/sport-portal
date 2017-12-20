@@ -71,4 +71,19 @@ class Match < ApplicationRecord
   def is_team_recursive?(team)
     team_home_recursive == team || team_away_recursive == team
   end
+
+  def standing_string_of(team)
+    match_name = round
+    if loser == team
+      return I18n.t 'events.overview.out', match_name: match_name
+    end
+    I18n.t 'events.overview.in', match_name: match_name
+  end
+
+  def last_match_of(team)
+    if is_team_recursive? team
+      return self
+    end
+    team_home.last_match_of(team) || team_away.last_match_of(team)
+  end
 end

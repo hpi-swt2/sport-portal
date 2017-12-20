@@ -41,8 +41,11 @@ class Team < ApplicationRecord
     events.exists?
   end
 
+  # these methods allow teams to be treated like matches. see Match model
   def winner
-    # allows teams to be treated like matches. see Match#winner
     self
+  end
+
+  def last_match_of(_team)
   end
 end

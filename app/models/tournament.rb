@@ -32,7 +32,7 @@ class Tournament < Event
 
   def standing_of(team)
     last_match = last_match_of team, finale
-    standing_string team, last_match
+    last_match.standing_string_of team
   end
 
   def finale
@@ -55,27 +55,6 @@ class Tournament < Event
   end
 
   private
-
-    def last_match_of(team, match)
-      if match.is_team_recursive? team
-        return match
-      end
-      standing_recursion_step(team, match.team_home) || standing_recursion_step(team, match.team_away)
-    end
-
-    def standing_string(team, match)
-      match_name = match.round
-      if match.loser == team
-        return I18n.t 'events.overview.out', match_name: match_name
-      end
-      I18n.t 'events.overview.in', match_name: match_name
-    end
-
-    def standing_recursion_step(team, child)
-      if child.is_a? Match
-        last_match_of team, child
-      end
-    end
 
     def filled_teams
       # converts 12345
