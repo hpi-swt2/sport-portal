@@ -1,5 +1,3 @@
-
-
 Given(/^a tournament (.*) with (\d+) teams$/) do |tournamentName, numTeams|
   create_tournament_named tournamentName, max_teams: numTeams
   tournament = tournament_named tournamentName
@@ -93,4 +91,8 @@ Then(/^the standing of the (home|away) team of match (.+) (\d+) is '(.+)'$/) do 
   team = find_team_of_match match_gameday, match_num, home_or_away
   visit event_overview_path single_tournament
   expect(page).to have_text("#{team.name} #{standing}")
+end
+
+Given(/^a tournament with gamemode (.*)$/) do |mode|
+  create_tournament game_mode: mode
 end

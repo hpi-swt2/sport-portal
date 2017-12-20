@@ -23,7 +23,7 @@ class League < Event
   validates :deadline, :startdate, :enddate, presence: true
   validate :end_after_start, :start_after_deadline
 
-  enum game_modes: [:round_robin, :two_halfs, :swiss, :danish]
+  enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def generate_schedule
     calculate_round_robin
@@ -54,6 +54,6 @@ class League < Event
   end
 
   def can_join?(user)
-    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+    single? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
 end
