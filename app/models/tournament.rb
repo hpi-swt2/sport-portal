@@ -110,23 +110,20 @@ class Tournament < Event
       first_match = matches[0]
       first_gameday_index_offset = first_match.index - 1
       matches.each do |match|
-        if match.gameday == first_match.gameday
-          match.index -= first_gameday_index_offset
-          match.save!
-        end
+        match.adjust_index_on_gameday_by first_gameday_index_offset, first_match.gameday
       end
     end
 
     class << self
-      def split_teams_array(team_array)
-        half_team_count = team_array.length / 2
-        left_half = team_array.first half_team_count
-        right_half = team_array.last half_team_count
-        return left_half, right_half
-      end
+        def split_teams_array(team_array)
+          half_team_count = team_array.length / 2
+          left_half = team_array.first half_team_count
+          right_half = team_array.last half_team_count
+          return left_half, right_half
+        end
 
-      def is_power_of_two?(number)
-        number.to_s(2).count('1') == 1
+        def is_power_of_two?(number)
+          number.to_s(2).count('1') == 1
+        end
       end
-    end
 end
