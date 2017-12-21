@@ -1,13 +1,8 @@
 module MatchesHelper
   def participant_link(participant)
     if participant.present?
-      participant_name = participant.name
-      if participant.is_a? MatchResult
-        link_name = I18n.t 'matches.winner_of_match', match: participant_name
-        link_to link_name, match_path(participant.match)
-      else
-        link_to participant_name, team_path(participant)
-      end
+      path = participant.is_a?(MatchResult) ? match_path(participant.match) : team_path(participant)
+      link_to participant.name, path
     else
       '---'
     end

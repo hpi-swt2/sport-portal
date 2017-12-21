@@ -21,14 +21,6 @@ class Match < ApplicationRecord
   belongs_to :team_away, polymorphic: true
   belongs_to :event, dependent: :delete
 
-  def name
-    winner_team = winner
-    if winner_team.present?
-      return winner_team.name
-    end
-    round
-  end
-
   def depth
     event.max_match_level - gameday
   end

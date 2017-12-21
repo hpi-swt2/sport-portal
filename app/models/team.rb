@@ -41,7 +41,7 @@ class Team < ApplicationRecord
     events.exists?
   end
 
-  # these methods allow teams to be treated like matches. see Match model
+  # these methods allow teams to be treated like match results. see MatchResult model
   def advancing_participant
     self
   end

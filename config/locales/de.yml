@@ -205,6 +205,7 @@ de:
       three: "Achtelfinalspiel %{gameid}"
       other: "Vorrunde %{round} - Spiel %{gameid}"
     winner_of_match: "Gewinner %{match}"
+    loser_of_match: "Verlierer %{match}"
 
   teams:
     show:

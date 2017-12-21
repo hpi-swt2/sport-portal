@@ -11,11 +11,24 @@ class MatchResult < ApplicationRecord
   belongs_to :match
 
   def name
-    match.name
+    if knows_advancing_participant
+      advancing_participant.name
+    else
+      description
+    end
+  end
+
+  def description
+    key = winner_advances ? 'matches.winner_of_match' : 'matches.loser_of_match'
+    I18n.t key, match: match.round
   end
 
   def last_match_of(team)
     match.last_match_of team
+  end
+
+  def knows_advancing_participant
+    advancing_participant.present?
   end
 
   def advancing_participant
