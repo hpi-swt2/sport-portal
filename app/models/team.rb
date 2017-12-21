@@ -42,7 +42,7 @@ class Team < ApplicationRecord
   end
 
   # these methods allow teams to be treated like matches. see Match model
-  def winner
+  def advancing_participant
     self
   end
 

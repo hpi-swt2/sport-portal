@@ -74,14 +74,15 @@ class Tournament < Event
       teams.to_a.shuffle!
     end
 
-    def create_matches(team_array, depth, index)
+    def create_matches(team_array, depth, index) #returns match-participant-ables
       if team_array.length <= 2
         return create_leaf_match *team_array, depth, index
       end
 
       match_left, match_right = create_child_matches(team_array, depth, index)
 
-      create_match match_left, match_right, depth, index
+      match = create_match match_left, match_right, depth, index
+      create_match_participant match, true
     end
 
     def create_child_matches(team_array, depth, index)
@@ -95,7 +96,8 @@ class Tournament < Event
 
     def create_leaf_match(team_home, team_away, depth, index)
       if team_home.present? && team_away.present?
-        return create_match team_home, team_away, depth, index
+        match = create_match team_home, team_away, depth, index
+        return create_match_participant match, true
       end
       team_home || team_away
     end
@@ -104,6 +106,12 @@ class Tournament < Event
       match = Match.new team_home: team_home, team_away: team_away, gameday: depth, index: index + 1, event: self
       match.save!
       match
+    end
+
+    def create_match_participant(match, winner)
+      match_result = MatchResult.new match: match, winner_advances: winner
+      match_result.save!
+      match_result
     end
 
     def normalize_first_layer_match_indices

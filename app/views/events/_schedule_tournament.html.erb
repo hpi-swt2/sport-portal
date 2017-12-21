@@ -28,8 +28,8 @@
 
     <tr>
       <td><%= match.place %> <%= match.index %></td>
-      <td><%= match.team_home.winner != nil ? link_to(match.team_home.name, team_path(match.team_home.winner)) : link_to('Gewinner ' + match.team_home.name, match_path(match.team_home)) %></td>
-      <td><%= match.team_away.winner != nil ? link_to(match.team_away.name, team_path(match.team_away.winner)) : link_to('Gewinner ' + match.team_away.name, match_path(match.team_away)) %></td>
+      <td><%= match.team_home.is_a?(Team) ? link_to(match.team_home.name, team_path(match.team_home)) : link_to('Gewinner ' + match.team_home.name, match_path(match.team_home.match)) %></td>
+      <td><%= match.team_away.is_a?(Team) ? link_to(match.team_away.name, team_path(match.team_away)) : link_to('Gewinner ' + match.team_away.name, match_path(match.team_away.match)) %></td>
       <td>
         <%= match.score_home ? match.score_home : '-' %>
         :

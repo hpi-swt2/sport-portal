@@ -8,7 +8,21 @@
 #
 
 class MatchResult < ApplicationRecord
-  has_one :match
+  belongs_to :match
 
+  def name
+    match.name
+  end
 
+  def last_match_of(team)
+    match.last_match_of team
+  end
+
+  def advancing_participant
+    if winner_advances
+      match.winner
+    else
+      match.loser
+    end
+  end
 end

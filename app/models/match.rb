@@ -17,11 +17,7 @@
 #
 
 class Match < ApplicationRecord
-  has_many :home_matches, as: :team_home, class_name: 'Match'
-  has_many :away_matches, as: :team_away, class_name: 'Match'
-  def matches
-    home_matches.or away_matches
-  end
+  has_many :participants, as: :match, class_name: 'MatchResult'
   belongs_to :team_home, polymorphic: true
   belongs_to :team_away, polymorphic: true
   belongs_to :event, dependent: :delete
@@ -61,11 +57,11 @@ class Match < ApplicationRecord
   end
 
   def team_home_recursive
-    team_home.winner
+    team_home.advancing_participant
   end
 
   def team_away_recursive
-    team_away.winner
+    team_away.advancing_participant
   end
 
   def is_team_recursive?(team)
