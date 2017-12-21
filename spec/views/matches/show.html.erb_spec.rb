@@ -16,12 +16,12 @@ RSpec.describe "matches/show", type: :view do
   end
 
   it "renders correct link for a match of matches" do
-    @match.team_home = FactoryBot.create :match
-    @match.team_away = FactoryBot.create :match
+    @match.team_home = FactoryBot.create :match_result
+    @match.team_away = FactoryBot.create :match_result
     render
 
-    expect(rendered).to have_css("a[href='#{match_path(@match.team_home)}']", count: 1)
-    expect(rendered).to have_css("a[href='#{match_path(@match.team_away)}']", count: 1)
+    expect(rendered).to have_css("a[href='#{match_path(@match.team_home.match)}']", count: 1)
+    expect(rendered).to have_css("a[href='#{match_path(@match.team_away.match)}']", count: 1)
   end
 
   it "renders no participant link when there is no participant" do

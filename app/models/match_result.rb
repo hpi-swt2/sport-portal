@@ -4,7 +4,7 @@
 #
 #  id               :integer          not null, primary key
 #  match            :integer          (points to a Match Object)
-#  winner           :boolean
+#  winner_advances  :boolean
 #
 
 class MatchResult < ApplicationRecord

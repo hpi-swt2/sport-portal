@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :match_result do
-    match_id 1
-    winner false
+    association :match, factory: :match
+    winner_advances true
   end
 end

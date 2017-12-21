@@ -74,7 +74,7 @@ class Tournament < Event
       teams.to_a.shuffle!
     end
 
-    def create_matches(team_array, depth, index) #returns match-participant-ables
+    def create_matches(team_array, depth, index)
       if team_array.length <= 2
         return create_leaf_match *team_array, depth, index
       end

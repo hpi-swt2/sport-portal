@@ -17,7 +17,6 @@
 #
 
 class Match < ApplicationRecord
-  has_many :participants, as: :match, class_name: 'MatchResult'
   belongs_to :team_home, polymorphic: true
   belongs_to :team_away, polymorphic: true
   belongs_to :event, dependent: :delete
