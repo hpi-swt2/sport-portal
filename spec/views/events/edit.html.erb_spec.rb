@@ -34,7 +34,7 @@ RSpec.describe 'events/edit', type: :view do
       @event.editors << @user
     end
 
-    it_should_behave_like 'an event form', for_class: Tournament, path: :edit
+    it_should_behave_like 'an event form', for_class: Rankinglist, path: :edit
 
   end
 
