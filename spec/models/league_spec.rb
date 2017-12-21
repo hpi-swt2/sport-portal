@@ -30,7 +30,7 @@ describe 'League model', type: :model do
   end
 
   it 'should not validate without gameday duration' do
-    league = FactoryBot.build(:league, gameday_duration: nil)
+    league.gameday_duration = nil
     expect(league).to_not be_valid
   end
   describe 'gameday date calculation' do

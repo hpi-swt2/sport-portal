@@ -4,7 +4,7 @@
     <tr class="gameday">
       <th colspan="6">
         <b>
-          <%= t '.gameday' %> <%= match.gameday + 1 %>
+          <%= t '.gameday' %> <%= match.gameday %> <%= "#{ (@event.date_for_gameday match.gameday).strftime("%d.%m.") } #{t('.to')} #{((@event.date_for_gameday match.gameday+1)-1.day).strftime("%d.%m.")}"%>
         </b>
       </th>
     </tr>
