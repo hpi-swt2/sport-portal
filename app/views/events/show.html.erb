@@ -22,6 +22,44 @@
   <% end %>
 </div>
 
+<% if @event.is_a? Tournament and @event.finale.present? and @event.finale.has_winner? %>
+  <div class="table-responsive">
+    <h3><%= t('events.show.winners') %></h3>
+    <table class="table">
+      <tr>
+        <th>Platzierung</th>
+        <th><%= @event.single? ? t('.title', default: User.model_name.human.titleize) : t('.title', default: Team.model_name.human.titleize)%></th>
+      </tr>
+      <tr>
+        <td><%= t 'events.placing.first' %></td>
+        <td>
+          <% winner = @event.finale.winner %>
+          <% if @event.single? %>
+            <%= link_to winner.name, user_path(winner), id: winner.name %>
+          <% else %>
+            <%= link_to winner.name, team_path(winner), id: winner.name %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= t 'events.placing.second' %></td>
+        <td>
+          <% loser = @event.finale.loser %>
+          <% if @event.single? %>
+            <%= link_to loser.name, user_path(loser), id: loser.name %>
+          <% else %>
+            <%= link_to loser.name, team_path(loser), id: loser.name %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+<% end %>
+
+
+
+
+
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @event.name %></dd>
@@ -58,7 +96,7 @@
       <thead><tr><th><%=t '.title', default: User.model_name.human.titleize %></th></tr></thead>
       <tbody>
         <% @event.participants.each do |participant| %>
-          <tr><td><%= participant.name %></td></tr>
+          <tr><td><%= link_to participant.name, user_path(participant), id: participant.name %></td></tr>
         <% end %>
       </tbody>
     <% else %>
