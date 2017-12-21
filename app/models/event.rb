@@ -22,7 +22,7 @@
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order 'gameday ASC' }, dependent: :delete_all
+  has_many :matches, -> { order '"gameday" ASC, "index" ASC' }, dependent: :delete_all
   has_and_belongs_to_many :teams
   has_and_belongs_to_many :participants, class_name: 'User'
   has_many :organizers
@@ -76,7 +76,14 @@ class Event < ApplicationRecord
   end
 
   def standing_of(team)
-    'Gewinner ' + team.id.to_s
+    I18n.t 'events.overview.unkown_standing', team: team.id.to_s
+  end
+
+  # this is a method that simplifies manual testing, not intended for production use
+  def add_test_teams
+    max_teams.times do |index|
+      teams << Team.new(name: "Team #{index}", private: false)
+    end
   end
 
   def human_player_type

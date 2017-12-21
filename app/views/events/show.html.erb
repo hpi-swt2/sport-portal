@@ -72,15 +72,13 @@
   </table>
 </div>
 
-<%# Only rendering the schedule if the event is a league (schedule generation isn't defined for any other event type yet)%>
-<%= if @event.is_a? League
-      link_to t('.to_schedule'),
-              event_schedule_path(@event),
-              class: 'btn btn-default'
-    end %>
+<%= link_to t('.to_schedule'),
+            event_schedule_path(@event),
+            class: 'btn btn-default'%>
 
 <%= link_to t('.to_overview'),
-            event_overview_path(@event), class: 'btn btn-default' %>
+            event_overview_path(@event),
+            class: 'btn btn-default' %>
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
