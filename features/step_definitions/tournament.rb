@@ -96,3 +96,12 @@ end
 Given(/^a tournament with gamemode (.*)$/) do |mode|
   create_tournament game_mode: mode
 end
+
+def placing_to_display_string(placing)
+  I18n.t "events.placing.#{placing}"
+end
+
+Then(/^the (first|second) place of the tournament is the (home|away) team of (.+) (\d+)$/) do |placing, home_or_away, match_gameday, match_num|
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  expect(page).to have_text("#{placing_to_display_string placing} #{team.name}")
+end
