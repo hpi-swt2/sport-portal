@@ -179,6 +179,7 @@ de:
       quarterfinale: "Viertelfinale"
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
+      to: "bis"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"

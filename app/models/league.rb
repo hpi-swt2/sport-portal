@@ -57,4 +57,8 @@ class League < Event
   def can_join?(user)
     single? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
+
+  def date_for_gameday(gameday)
+    ((gameday-1)*gameday_duration).days.since startdate
+  end
 end

@@ -23,6 +23,7 @@ require 'rails_helper'
 
 describe 'League model', type: :model do
 
+  let(:league) {FactoryBot.build(:league)}
   it 'is valid when produced by a factory' do
     league = FactoryBot.build(:league)
     expect(league).to be_valid
@@ -32,7 +33,14 @@ describe 'League model', type: :model do
     league = FactoryBot.build(:league, gameday_duration: nil)
     expect(league).to_not be_valid
   end
+  describe 'gameday date calculation' do
+    let(:league) {FactoryBot.build(:league, startdate: Date.parse('24.12.2017'), gameday_duration: 7)}
 
+    it 'calculates gameday dates correctly' do
+      expect(league.date_for_gameday 1).to eq Date.parse('24.12.2017')
+      expect(league.date_for_gameday 2).to eq Date.parse('31.12.2017')
+    end
+  end
   describe 'Generating league schedule with default values' do
     let(:league) { league = FactoryBot.create(:league_with_teams)
                    league.generate_schedule
