@@ -200,7 +200,6 @@ de:
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
-      third: "Dritter Platz"
 
   matches:
     round_name:

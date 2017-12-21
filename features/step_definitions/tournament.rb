@@ -1,11 +1,8 @@
-Given(/^a tournament (.*) with (\d+) teams( and with small finale enabled|)?$/) do |tournamentName, numTeams, small_finale_enabled|
+Given(/^a tournament (.*) with (\d+) teams$/) do |tournamentName, numTeams|
   create_tournament_named tournamentName, max_teams: numTeams
   tournament = tournament_named tournamentName
   for each in 1..numTeams do
     tournament.teams << create_team
-  end
-  if small_finale_enabled.length > 0
-    tournament.has_small_finale = true
   end
   tournament.generate_schedule
 end
@@ -104,7 +101,7 @@ def placing_to_display_string(placing)
   I18n.t "events.placing.#{placing}"
 end
 
-Then(/^the (first|second|third) place of the tournament is the (home|away) team of (.+) (\d+)$/) do |placing, home_or_away, match_gameday, match_num|
+Then(/^the (first|second) place of the tournament is the (home|away) team of (.+) (\d+)$/) do |placing, home_or_away, match_gameday, match_num|
   visit event_schedule_path single_tournament
   team = find_team_of_match match_gameday, match_num, home_or_away
   visit event_path single_tournament
