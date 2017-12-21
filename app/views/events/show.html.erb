@@ -32,25 +32,11 @@
       </tr>
       <tr>
         <td><%= t 'events.placing.first' %></td>
-        <td>
-          <% winner = @event.finale.winner %>
-          <% if @event.single? %>
-            <%= link_to winner.name, user_path(winner), id: winner.name %>
-          <% else %>
-            <%= link_to winner.name, team_path(winner), id: winner.name %>
-          <% end %>
-        </td>
+        <td><%= participant_link @event.finale.winner %></td>
       </tr>
       <tr>
         <td><%= t 'events.placing.second' %></td>
-        <td>
-          <% loser = @event.finale.loser %>
-          <% if @event.single? %>
-            <%= link_to loser.name, user_path(loser), id: loser.name %>
-          <% else %>
-            <%= link_to loser.name, team_path(loser), id: loser.name %>
-          <% end %>
-        </td>
+        <td><%= participant_link @event.finale.loser %></td>
       </tr>
     </table>
   </div>
