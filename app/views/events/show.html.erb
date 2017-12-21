@@ -32,11 +32,11 @@
       </tr>
       <tr>
         <td><%= t 'events.placing.first' %></td>
-        <td><%= participant_link @event.finale.winner %></td>
+        <td><%= event_participant_link @event.finale.winner %></td>
       </tr>
       <tr>
         <td><%= t 'events.placing.second' %></td>
-        <td><%= participant_link @event.finale.loser %></td>
+        <td><%= event_participant_link @event.finale.loser %></td>
       </tr>
     </table>
   </div>
