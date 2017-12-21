@@ -12,3 +12,15 @@ Feature: Show Tournament winners
     When the tournament's page is visited
     Then the first place of the tournament is the home team of Halbfinale 2
     And the second place of the tournament is the away team of Halbfinale 1
+
+  Scenario: a small Tournament with small finale gets finished
+    Given a tournament t with 4 teams and with small finale enabled
+    And the Spielplan page for t is visited
+    And the results for match Halbfinale 1 (3 : 4) got inserted
+    And the results for match Halbfinale 2 (7 : 6) got inserted
+    And the results for match Finale 1 (3 : 4) got inserted
+    And the results for match Spiel um Platz 3 1 (1 : 2) got inserted
+    When the tournament's page is visited
+    Then the first place of the tournament is the home team of Halbfinale 2
+    And the second place of the tournament is the away team of Halbfinale 1
+    And the third place of the tournament is the away team of Halbfinale 2
