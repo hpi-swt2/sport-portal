@@ -105,6 +105,8 @@ def placing_to_display_string(placing)
 end
 
 Then(/^the (first|second|third) place of the tournament is the (home|away) team of (.+) (\d+)$/) do |placing, home_or_away, match_gameday, match_num|
+  visit event_schedule_path single_tournament
   team = find_team_of_match match_gameday, match_num, home_or_away
+  visit event_path single_tournament
   expect(page).to have_text("#{placing_to_display_string placing} #{team.name}")
 end
