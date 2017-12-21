@@ -196,6 +196,10 @@ de:
       out: "In %{match_name} ausgeschieden"
       in: "In %{match_name}"
       unkown_standing: "Gewinner %{team}"
+    placing:
+      first: "Gewinner"
+      second: "Zweiter Platz"
+      third: "Dritter Platz"
 
   matches:
     round_name:
