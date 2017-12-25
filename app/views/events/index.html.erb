@@ -15,7 +15,7 @@
   <% @events.each do |event| %>
       <tr>
         <td><%= link_to event.name, event_path(event) %></td>
-        <td><%= event.game_mode %></td>
+        <td><%= event.human_game_mode %></td>
         <td><%= event.max_teams %></td>
         <td><%= event.deadline %></td>
         <td><%= event.startdate %></td>

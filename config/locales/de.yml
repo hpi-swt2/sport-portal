@@ -85,10 +85,7 @@ de:
         description: "Beschreibung"
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
-        player_type: "Einzel / Team"
-        player_types:
-          single: "Einzel"
-          team: "Team"
+        player_type: "Teilnahmeform"
         max_teams: "Anzahl Teams"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
@@ -97,7 +94,25 @@ de:
         duration: "Dauer in Tagen"
         metric: "Metrik"
         initial_value: "Anfangswert"
-
+        player_types:
+          single: "Einzelteilnahme"
+          team: "Teamteilnahme"
+      tournament:
+        game_modes:
+          ko: "K.-o.-System"
+          ko_group: "K.-o.-System mit Gruppenphase"
+          double_elimination: "Double Elimination"
+      league:
+        game_modes:
+          round_robin: "Jeder gegen Jeden"
+          two_halfs: "Hin- und Rückrunde"
+          swiss: "Schweizer System"
+          danish: "Dänisches System"
+      rankinglist:
+        game_modes:
+          elo: "ELO"
+          win_loss: "Gewinne-Niederlagen"
+          true_skill: "True Skill"
       user:
         first_name: "Vorname"
         last_name: "Nachname"
@@ -158,6 +173,11 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      finale: "Finale"
+      semifinale: "Halbfinale"
+      quarterfinale: "Viertelfinale"
+      eighthfinale: "Achtelfinale"
+      preliminaries: "Vorrunde %{round}"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
@@ -173,6 +193,18 @@ de:
       title: "Übersicht"
       teamColumn: "Team"
       standingColumn: "Platzierung"
+      out: "In %{match_name} ausgeschieden"
+      in: "In %{match_name}"
+      unkown_standing: "Gewinner %{team}"
+
+  matches:
+    round_name:
+      zero: "Finalspiel %{gameid}"
+      one: "Halbfinalspiel %{gameid}"
+      two: "Viertelfinalspiel %{gameid}"
+      three: "Achtelfinalspiel %{gameid}"
+      other: "Vorrunde %{round} - Spiel %{gameid}"
+    winner_of_match: "Gewinner %{match}"
 
   teams:
     show:
@@ -182,6 +214,7 @@ de:
       no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
       user_already_in_team: 'Der Nutzer ist bereits Mitglied in diesem Team.'
       assignment_successful: 'Der Nutzer wurde erfolgreich zu diesem Team hinzugefügt.'
+
   validations:
     not_only_numbers: "darf nicht nur aus Zahlen bestehen"
     four_different_characters: "muss aus mindestens 4 verschiedenen Zeichen bestehen"

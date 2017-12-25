@@ -22,7 +22,7 @@
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order 'gameday ASC' }, dependent: :delete_all
+  has_many :matches, -> { order '"gameday" ASC, "index" ASC' }, dependent: :delete_all
   has_and_belongs_to_many :teams
   has_and_belongs_to_many :participants, class_name: 'User'
   has_many :organizers
@@ -34,7 +34,7 @@ class Event < ApplicationRecord
 
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
-  enum player_types: [:single, :team]
+  enum player_type: [:single, :team]
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -55,10 +55,6 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
-  def single_player?
-    player_type == Event.player_types[:single]
-  end
-
   def add_participant(user)
     participants << user
   end
@@ -76,10 +72,36 @@ class Event < ApplicationRecord
   end
 
   def can_leave?(user)
-    single_player? && has_participant?(user)
+    single? && has_participant?(user)
   end
 
   def standing_of(team)
-    'Gewinner ' + team.id.to_s
+    I18n.t 'events.overview.unkown_standing', team: team.id.to_s
+  end
+
+  # this is a method that simplifies manual testing, not intended for production use
+  def add_test_teams
+    max_teams.times do |index|
+      teams << Team.new(name: "Team #{index}", private: false)
+    end
+  end
+
+  def human_player_type
+    self.class.human_player_type player_type
+  end
+
+  def human_game_mode
+    self.class.human_game_mode game_mode
+  end
+
+  class << self
+    def human_player_type(type)
+      I18n.t("activerecord.attributes.event.player_types.#{type}")
+    end
+
+    # This method should be implemented by subclasses to provide correct game mode names
+    def human_game_mode(mode)
+      I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
+    end
   end
 end
