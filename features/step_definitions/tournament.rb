@@ -56,7 +56,6 @@ end
 def find_match_on_page(match_gameday, match_num)
   *_, match_id = find(:xpath, "(//table//th/b[contains(.,'#{match_gameday}')]/following::tr/td[1][contains(.,'#{match_num}')]/following::form)[1]")[:id].split '_'
   Match.find match_id.to_i
-
 end
 
 def find_team_of_match(match_gameday, match_num, home_or_away)
@@ -82,7 +81,7 @@ end
 
 Then(/^the (home|away) team of match (.+) (\d+) (is|isn't) in match (.+) (\d+)$/) do |home_or_away, match_gameday, match_num, is_or_isnt, target_match_gameday, target_match_num|
   team = find_team_of_match match_gameday, match_num, home_or_away
-  target_match = find_match_on_page target_match_gameday,target_match_num
+  target_match = find_match_on_page target_match_gameday, target_match_num
   expect(target_match.is_team_recursive? team).to be(is_or_isnt == 'is')
 end
 

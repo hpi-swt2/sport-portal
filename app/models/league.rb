@@ -67,6 +67,6 @@ class League < Event
   end
 
   def enddate_for_gameday(gameday)
-    date_for_gameday(gameday+1)-1.day
+    date_for_gameday(gameday + 1) - 1.day
   end
 end
