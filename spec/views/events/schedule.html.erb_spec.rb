@@ -3,8 +3,13 @@ require 'rails_helper'
 RSpec.describe 'events/schedule', type: :view do
 
   before :each do
-    @league = FactoryBot.create(:league, :with_matches, startdate: Date.parse('24.12.2017'), enddate: Date.parse('31.12.2017'), gameday_duration: 7)
+    @league = FactoryBot.create(:league, :with_matches,
+                                deadline: Date.parse('23.12.2017'),
+                                startdate: Date.parse('24.12.2017'),
+                                enddate: Date.parse('31.12.2017'),
+                                gameday_duration: 7)
     assign(:event, @league)
+    assign(:schedule_type, 'league')
     assign(:matches, @league.matches)
   end
 
