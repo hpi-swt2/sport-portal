@@ -90,6 +90,10 @@ gem 'bootstrap-datepicker-rails'
 # https://github.com/bokmann/font-awesome-rails
 gem 'font-awesome-rails'
 
+# Gem to easily split DateTimes
+# https://github.com/shekibobo/time_splitter
+gem "time_splitter"
+
 group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
