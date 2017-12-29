@@ -128,7 +128,7 @@ de:
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"
-      date: "Datum"
+      appointment: "Termin"
       place: "Ort"
       home: "Team 1"
       away: "Team 2"

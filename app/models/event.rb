@@ -64,9 +64,9 @@ class Event < ApplicationRecord
   # Everything below this is leagues only code and will be moved to Leagues.rb once there is an actual option to create Leagues AND Tourneys, etc.
 
   def add_test_teams
-    max_teams.times do |index|
-      teams << FactoryBot.create(:team)
-    end
+    #max_teams.times do |index|
+    #  teams << FactoryBot.create(:team)
+    #end
   end
 
   def generate_schedule

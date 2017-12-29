@@ -11,7 +11,7 @@
       <th><%= t '.away' %></th>
       <th><%= t '.score' %></th>
       <th><%= t '.points' %></th>
-      <th><%= t '.date' %></th>
+      <th><%= t '.appointment' %></th>
       <th><%= t '.actions', default: t('helpers.actions') %></th>
     </tr>
   </thead>
@@ -64,7 +64,7 @@
                 <%= form_for match, url: update_start_time_match_path(match), html: {method: "put"} do |f| %>
                   <div class="modal-body">
                   <p>
-                    <%= t '.date' %>
+                    <%= t '.appointment' %>
                   </p>
                   <%= f.text_field :start_time, :class => 'form-control', :value => date.to_date, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
                   <p>
