@@ -97,8 +97,8 @@ de:
         duration: "Dauer in Tagen"
         metric: "Metrik"
         initial_value: "Anfangswert"
-        min_players_per_team: "Min. Anz. Spieler p. Team"
-        max_players_per_team: "Max. Anz. Spieler p. Team"
+        min_players_per_team: "Min. Anzahl Spieler pro Team"
+        max_players_per_team: "Max. Anzahl Spieler pro Team"
 
       user:
         first_name: "Vorname"

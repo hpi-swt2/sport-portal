@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208151635) do
+ActiveRecord::Schema.define(version: 20171218081310) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20171208151635) do
     t.integer "gameday_duration"
     t.integer "owner_id"
     t.float "initial_value"
+    t.integer "min_players_per_team"
+    t.integer "max_players_per_team"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -43,8 +45,6 @@ ActiveRecord::Schema.define(version: 20171208151635) do
   create_table "events_users", id: false, force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "user_id", null: false
-    t.index ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id"
-    t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
   create_table "matches", force: :cascade do |t|

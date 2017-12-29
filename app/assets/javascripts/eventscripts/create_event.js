@@ -1,4 +1,5 @@
 $( document ).on('turbolinks:load', function() {
+    // Autofill for the dates of an event
     $('#event_deadline').datepicker({ autoclose: true});
     $('#event_startdate').datepicker({ autoclose: true});
     $('#event_enddate').datepicker({ autoclose: true});
@@ -58,5 +59,29 @@ $( document ).on('turbolinks:load', function() {
            $("#event_enddate").val(formattedDate);
        }
     });
+
+    // Autofill of player count for an event
+    $("#event_player_type").on("change", showPlayerCount);
+    $("#event_min_players_per_team").hide();
+    $("#event_max_players_per_team").hide();
+
+    function showPlayerCount()
+    {
+      switch($("#event_player_type").val())
+      {
+        case "single":
+          $("#event_min_players_per_team").hide();
+          $("#event_max_players_per_team").hide();
+          break;
+        case "team":
+          $("#event_min_players_per_team").show();
+          $("#event_max_players_per_team").show();
+          break;
+        default: 
+          $("#event_min_players_per_team").hide();
+          $("#event_max_players_per_team").hide();
+          break;
+      }
+    }
 });
 

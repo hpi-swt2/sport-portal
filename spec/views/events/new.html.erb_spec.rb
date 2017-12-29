@@ -22,8 +22,6 @@ RSpec.describe 'events/new', type: :view do
       expect(rendered).to have_field("event_deadline")
       expect(rendered).to have_field("event_startdate")
       expect(rendered).to have_field("event_enddate")
-      expect(rendered).to have_field("league_min_players_per_team")
-      expect(rendered).to have_field("league_max_players_per_team")
     end
   end
 
@@ -48,8 +46,6 @@ RSpec.describe 'events/new', type: :view do
       expect(rendered).to have_field("event_deadline")
       expect(rendered).to have_field("event_startdate")
       expect(rendered).to have_field("event_enddate")
-      expect(rendered).to have_field("tournament_min_players_per_team")
-      expect(rendered).to have_field("tournament_max_players_per_team")
     end
   end
 end
