@@ -32,6 +32,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = event_type.new(event_params)
+    set_playercount_per_team
     set_associations
 
     if @event.save
@@ -90,6 +91,13 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
+    def set_playercount_per_team
+      if event_params[:player_type] == "single" || @event.type == 'Rankinglist'
+        @event.min_players_per_team = 1
+        @event.max_players_per_team = 1
+      end
+    end
+
     def set_associations
       @event.owner = current_user
       @event.player_type ||= Event.player_types[:single]
@@ -133,6 +141,8 @@ class EventsController < ApplicationController
                                     :startdate,
                                     :enddate,
                                     :initial_value,
+                                    :min_players_per_team,
+                                    :max_players_per_team,
                                     user_ids: [])
     end
 end

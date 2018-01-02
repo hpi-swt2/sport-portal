@@ -106,4 +106,24 @@ describe "Event model", type: :model do
     user = FactoryBot.build :user
     expect { event.can_join? user }.to raise_error NotImplementedError
   end
+
+  it "should have the attributes min and max players per team" do
+    expect(event).to be_valid 
+    event.min_players_per_team = nil
+    event.max_players_per_team = nil
+    expect(event).not_to be_valid 
+  end
+
+  it "min players per team = max players per team = 1 if it is a single player event" do
+    single_player_event = FactoryBot.build :event, :single_player
+    expect(single_player_event.min_players_per_team).to eq(1)
+    expect(single_player_event.max_players_per_team).to eq(1)
+  end
+
+  it "should not be possible, that the min playercount per team is higher than the max playercount" do
+    team_event = FactoryBot.build :team_event
+    team_event.min_players_per_team = 15
+    team_event.max_players_per_team = 11
+    expect(team_event).not_to be_valid
+  end
 end

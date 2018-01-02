@@ -66,42 +66,5 @@ describe "League model", type: :model do
         expect(gameday_matches.length).to be 2
       end
     end
-
-    it "should have an attribute min players per team" do
-      expect(league.min_players_per_team).to eq 11
-
-      league.min_players_per_team = nil
-      expect(league).not_to be_valid
-    end
-
-    it "should habe an attribute max players per team" do
-      expect(league.max_players_per_team).to eq 15
-
-      league.max_players_per_team = nil
-      expect(league).not_to be_valid
-    end
-
-    it "should not be possible, that the min player count per team is greater than the max" do
-      league.min_players_per_team = 15
-      league.max_players_per_team = 11
-
-      expect(league).not_to be_valid
-    end
-  end
-
-  it "the min player count for a team in a single player league is one" do
-    single_league = FactoryBot.build(:league)
-    expect(single_league.min_players_per_team).to eq 1
-
-    single_league.min_players_per_team = nil
-    expect(single_league).not_to be_valid
-  end
-
-  it "the max player count for a team in a single player league is one" do
-    single_league = FactoryBot.build(:league)
-    expect(single_league.max_players_per_team).to eq 1
-
-    single_league.max_players_per_team = nil
-    expect(single_league).not_to be_valid
   end
 end

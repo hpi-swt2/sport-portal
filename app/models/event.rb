@@ -30,9 +30,9 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  validates :name, :discipline, :game_mode, :player_type,  presence: true
-
+  validates :name, :discipline, :game_mode, :player_type, presence: true
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :max_players_per_team, numericality: {greater_than_or_equal_to: :min_players_per_team}
 
   enum player_types: [:single, :team]
 
