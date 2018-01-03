@@ -25,7 +25,7 @@
                     event_path(event), class: 'btn btn-default btn-xs' %>
 
         <% if can? :leave, event %>
-          <% if event.single_player? %>
+          <% if event.single? %>
             <%= link_to t('.leave', default: t("helpers.links.leave")),
                         leave_event_path(event),
                         method: :put,
@@ -43,7 +43,7 @@
         <% end %>
 
         <% if can? :join, event %>
-          <% if event.single_player? %>
+          <% if event.single? %>
             <%= link_to t('.join', default: t("helpers.links.join")),
                         join_event_path(event),
                         method: :put,

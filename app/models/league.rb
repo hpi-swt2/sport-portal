@@ -59,7 +59,7 @@ class League < Event
     end
   end
 
-  def can_join?(user)
-    single? && (not has_participant?(user)) && (not deadline_has_passed?)
-  end
+  #def can_join?(user)
+  #  single? && (not has_participant?(user)) && (not deadline_has_passed?)
+  #end
 end

@@ -85,25 +85,17 @@
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
 <% if can? :leave, @event %>
-  <% if @event.single_player? %>
-    <%= link_to t('.leave', default: t("helpers.links.leave")),
-                leave_event_path(@event),
-                method: :put,
-                class: 'btn btn-default',
-                id: :leave_event_button %>
-  <% else %>
-    <%= link_to t('.leave', :default => t("helpers.links.leave")),
-                leave_event_path(@event),
-                method: :put,
-                class: 'btn btn-default',
-                disabled: (not @event.ownes_participating_teams?(current_user)),
-                id: :leave_event_button %>
-  <% end %>
+  <%= link_to t('.leave', :default => t("helpers.links.leave")),
+              leave_event_path(@event),
+              method: :put,
+              class: 'btn btn-default',
+              disabled: (not @event.ownes_participating_teams?(current_user)),
+              id: :leave_event_button %>
   <%= t('events.participating') %>
 <% end %>
 <% if can? :join, @event%>
-  <% if @event.single_player? %>
-    <<%= link_to t('.join', default: t('helpers.links.join')),
+  <% if @event.single? %>
+    <%= link_to t('.join', default: t('helpers.links.join')),
                  join_event_path(@event),
                  method: :put,
                  class: 'btn btn-default',

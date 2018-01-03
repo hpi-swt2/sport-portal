@@ -101,9 +101,9 @@ describe "Event model", type: :model do
     expect(passed_deadline_event.deadline_has_passed?).to be true
   end
 
-  it "can_join? should raise a NotImplementedError" do
-    event = FactoryBot.build :event
-    user = FactoryBot.build :user
-    expect { event.can_join? user }.to raise_error NotImplementedError
-  end
+  #it "can_join? should raise a NotImplementedError" do
+  #  event = FactoryBot.build :event
+  #  user = FactoryBot.build :user
+  #  expect { event.can_join? user }.to raise_error NotImplementedError
+  #end
 end

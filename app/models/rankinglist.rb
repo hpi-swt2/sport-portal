@@ -6,7 +6,7 @@ class Rankinglist < Event
   player_type = Event.player_types[:single]
   enum game_mode: [:elo, :win_loss, :true_skill]
 
-  def can_join?(user)
-    not has_participant?(user)
-  end
+  #def can_join?(user)
+  #  not has_participant?(user)
+  #end
 end

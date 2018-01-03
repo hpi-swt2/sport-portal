@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208151635) do
+ActiveRecord::Schema.define(version: 20180102181138) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.string "discipline"
-    t.integer "player_type", null: false
+    t.integer "player_type"
     t.integer "max_teams"
-    t.integer "game_mode", null: false
+    t.integer "game_mode"
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20171208151635) do
     t.date "deadline"
     t.integer "gameday_duration"
     t.integer "owner_id"
+    t.integer "metric"
     t.float "initial_value"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
@@ -73,6 +74,13 @@ ActiveRecord::Schema.define(version: 20171208151635) do
     t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
+  create_table "participants", force: :cascade do |t|
+    t.integer "attendee_id"
+    t.string "attendee_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "team_users", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
@@ -87,6 +95,7 @@ ActiveRecord::Schema.define(version: 20171208151635) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
+    t.boolean "single", default: false
   end
 
   create_table "users", force: :cascade do |t|

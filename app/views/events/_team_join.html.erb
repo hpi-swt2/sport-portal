@@ -5,10 +5,10 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <% if current_user.owned_teams.present? %>
+      <% if current_user.owned_teams.not_single.present? %>
         <%= f.label :teams, class: 'control-label col-lg-2' %>
         <div class="col-lg-10">
-          <%= f.collection_select :teams, current_user.owned_teams, :id, :name,
+          <%= f.collection_select :teams, current_user.owned_teams.not_single, :id, :name,
                                   { include_blank: t('events.choose_team') },
                                   class: 'form-control', id: 'event_team',
                                   required: true %>
@@ -22,7 +22,7 @@
     <%= link_to t('.cancel', default: t("helpers.links.cancel")),
                 '#', data: { dismiss: "modal" }, class: 'btn btn-default' %>
 
-    <% if current_user.owned_teams.present? %>
+    <% if current_user.owned_teams.not_single.present? %>
           <%= f.submit t('helpers.links.join'), class: 'btn btn-primary' %>
     <% else %>
       <%= link_to t('.new', default: t("helpers.links.new")),

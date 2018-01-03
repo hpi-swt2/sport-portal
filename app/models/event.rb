@@ -56,7 +56,7 @@ class Event < ApplicationRecord
   end
 
   def create_single_team(user)
-    team = Team.create(Hash[name: user.name, private: true])
+    team = Team.create(Hash[name: user.name, private: true, single: true])
     team.owners << user
     return team
   end
@@ -72,24 +72,33 @@ class Event < ApplicationRecord
     end
   end
 
-  def ownes_participating_teams?(user)
-    (user.owned_teams & teams).present?
+  def add_participant(user)
+    team = create_single_team(user)
+    add_team(team)
   end
 
-  def can_join?(user)
-    raise NotImplementedError
-  end
-
-  def can_leave?(user)
-    has_team_member?(user)
-  end
-
-  def has_team_member?(user)
+  def has_participant?(user)
     team_members = []
     teams.each do |team|
       team_members += team.members
     end
     team_members.include?(user)
+  end
+
+  def ownes_participating_teams?(user)
+    (user.owned_teams & teams).present?
+  end
+
+  def available_team_slot?
+    teams.count < max_teams
+  end
+
+  def can_join?(user)
+    (not has_participant?(user)) && available_team_slot?
+  end
+
+  def can_leave?(user)
+    has_participant?(user)
   end
 
   def standing_of(team)

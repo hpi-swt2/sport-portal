@@ -212,12 +212,15 @@ describe "detailed event page", type: :feature do
   end
 
   context "for team" do
+    let(:player_type) { Event.player_types[:team] }
+    let(:team) { FactoryBot.create(:team) }
+
     describe "leagues" do
-      let(:event) { FactoryBot.create(:league, owner_id: @user.id, player_type: Event.player_types[:team]) }
+      let(:event) { FactoryBot.create(:league, player_type: player_type) }
       include_examples "a team event"
     end
     describe "tournaments" do
-      let(:event) { FactoryBot.create(:tournament, owner_id: @user.id, player_type: Event.player_types[:team]) }
+      let(:event) { FactoryBot.create(:tournament, player_type: player_type) }
       include_examples "a team event"
     end
   end

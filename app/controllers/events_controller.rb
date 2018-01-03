@@ -59,7 +59,7 @@ class EventsController < ApplicationController
 
   # PUT /events/1/join
   def join
-    if @event.single_player?
+    if @event.single?
       team = @event.create_single_team(current_user)
      else
       team = Team.find(event_params[:teams])

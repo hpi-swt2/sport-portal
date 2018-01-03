@@ -6,8 +6,8 @@ describe "index event page", type: :feature do
     context "which I participate in" do
       before(:each) do
         @event = event
-        @event.add_participant(@user)
-        @event.add_team(@team)
+        team = @event.create_single_team(@user)
+        @event.add_team(team)
         visit events_path
       end
 
@@ -129,7 +129,6 @@ describe "index event page", type: :feature do
 
 
   shared_examples "a past event" do
-
     before(:each) do
       @oldevent = event
     end
