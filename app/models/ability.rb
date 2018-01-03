@@ -73,7 +73,7 @@ class Ability
 
     def can_leave_event(user)
       can :leave, Event do |event|
-        event.has_participant?(user)
+        event.can_leave?(user)
       end
     end
 

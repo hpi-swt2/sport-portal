@@ -248,7 +248,7 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  shared_examples "a joinable event" do
+  shared_examples "a joinable single event" do
     it "adds the user as participant to the event" do
       event = Event.create! event_attributes
       put :join, params: { id: event.to_param }, session: valid_session
@@ -256,20 +256,43 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
+  shared_examples "a joinable team event" do
+    let(:new_attributes) {
+      {
+          teams: @team
+      }
+    }
+    it "adds the user as participant to the event" do
+      event = Event.create! team_event_attributes
+      put :join, params: { id: event.to_param, event: new_attributes }, session: valid_session
+      expect(event).to have_participant(@user)
+    end
+  end
+
   describe "PUT #join" do
     context "League" do
       let(:event_attributes) { FactoryBot.build(:league, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
-      include_examples "a joinable event"
+      include_examples "a joinable single event"
+    end
+
+    context "League" do
+      let(:team_event_attributes) { FactoryBot.build(:league, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
+      include_examples "a joinable team event"
     end
 
     context "Tournament" do
       let(:event_attributes) { FactoryBot.build(:tournament, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
-      include_examples "a joinable event"
+      include_examples "a joinable single event"
+    end
+
+    context "Tournament" do
+      let(:team_event_attributes) { FactoryBot.build(:tournament, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
+      include_examples "a joinable team event"
     end
 
     context "Rankinglist" do
       let(:event_attributes) { FactoryBot.build(:rankinglist, owner: @user).attributes }
-      include_examples "a joinable event"
+      include_examples "a joinable single event"
     end
   end
 
