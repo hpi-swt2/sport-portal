@@ -62,7 +62,7 @@ class MatchesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def match_params
-      params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id)
+      params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id, :start_time)
     end
 
     def match_points_params
