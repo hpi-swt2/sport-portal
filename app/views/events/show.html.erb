@@ -32,11 +32,11 @@
       </tr>
       <tr>
         <td><%= t 'events.placing.first' %></td>
-        <td><%= event_participant_link @event.finale.winner %></td>
+        <td><%= link_to_participant @event.finale.winner %></td>
       </tr>
       <tr>
         <td><%= t 'events.placing.second' %></td>
-        <td><%= event_participant_link @event.finale.loser %></td>
+        <td><%= link_to_participant @event.finale.loser %></td>
       </tr>
     </table>
   </div>
@@ -75,21 +75,13 @@
 <div class="table-responsive">
   <h3><%= t("events.show.participants") %></h3>
   <table class="table">
-    <% if @event.single? %>
-      <thead><tr><th><%=t '.title', default: User.model_name.human.titleize %></th></tr></thead>
-      <tbody>
-        <% @event.participants.each do |participant| %>
-          <tr><td><%= link_to participant.name, user_path(participant), id: participant.name %></td></tr>
-        <% end %>
-      </tbody>
-    <% else %>
-      <thead><tr><%=t '.title', default: Team.model_name.human.titleize %></tr></thead>
-      <tbody>
-        <% @event.teams.each do |team| %>
-          <tr><td><%= link_to team.name, team_path(team), id: team.name %></td></tr>
-        <% end %>
-      </tbody>
+    <thead><tr><th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th></tr></thead>
+    <tbody>
+    <% event_participants = @event.single? ? @event.participants : @event.teams %>
+    <% event_participants.each do |participant| %>
+      <tr><td><%= link_to_participant participant %></td></tr>
     <% end %>
+    </tbody>
   </table>
 </div>
 

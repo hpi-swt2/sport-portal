@@ -76,7 +76,7 @@ end
 
 Then(/^the (home|away) team of match (.+) (\d+) comes to the next round$/) do |home_or_away, match_gameday, match_num|
   team = find_team_of_match match_gameday, match_num, home_or_away
-  all('a[href="' + team_path(team) + '"]').count == 2
+  expect(all('a[href="' + team_path(team) + '"]').count).to eq(2)
 end
 
 
