@@ -1,7 +1,12 @@
 class EventsController < ApplicationController
+  # FIXME Factor out the RankingEntry struct into a helper class that gets used in the event/ranking view as well
+  # FIXME (maybe the existing EventsHelper?)
+  RankingEntry = Struct.new(:rank, :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against,
+                            :goals_difference, :points)
+
   helper EventsHelper
   load_and_authorize_resource
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking]
 
   # GET /events
   def index
@@ -81,6 +86,77 @@ class EventsController < ApplicationController
     end
     @matches = @event.matches
     @schedule_type = @event.type.downcase!
+  end
+
+  # GET /events/1/ranking
+  def ranking
+    # Array of RankingEntry Structs that gets sorted when filled completely
+    @ranking_entries = []
+
+    # TODO Either add the possibility to calculate rankings for single-player events
+    # TODO or replace `teams` with the to be introduced EventParticipant superclass
+    # Leaves the Array of RankingEntry Structs empty when no teams participate in the event
+    unless @event.teams.empty?
+      for team in @event.teams
+        ranking_entry = RankingEntry.new(nil, team.name, 0, 0, 0, 0, 0, 0, 0, 0)
+
+        # FIXME Factor out the following code for home and away matches into one generic method getting called two times
+
+        # Considers only the team's matches that belong to the event
+        home_matches_in_event = team.home_matches & @event.matches
+        for home_match in home_matches_in_event
+          match_has_score = home_match.score_home && home_match.score_away
+          break unless match_has_score
+          ranking_entry.match_count += 1
+          if home_match.has_winner?
+            if home_match.winner == team
+              ranking_entry.won_count += 1
+            else
+              ranking_entry.lost_count += 1
+            end
+          else
+            ranking_entry.draw_count += 1
+          end
+          ranking_entry.goals += home_match.score_home
+          ranking_entry.goals_against += home_match.score_away
+          ranking_entry.points += home_match.points_home
+        end
+
+        # Considers only the team's matches that belong to the event
+        away_matches_in_event = team.away_matches & @event.matches
+        for away_match in away_matches_in_event
+          match_has_score = away_match.score_home && away_match.score_away
+          break unless match_has_score
+          ranking_entry.match_count += 1
+          if away_match.has_winner?
+            if away_match.winner == team
+              ranking_entry.won_count += 1
+            else
+              ranking_entry.lost_count += 1
+            end
+          else
+            ranking_entry.draw_count += 1
+          end
+          ranking_entry.goals += home_match.score_away
+          ranking_entry.goals_against += home_match.score_home
+          ranking_entry.points += home_match.points_away
+        end
+
+        ranking_entry.goals_difference = ranking_entry.goals - ranking_entry.goals_against
+        @ranking_entries.push ranking_entry
+      end
+    end
+
+    # Sorts the RankingEntries in the following order:
+    #   1. DESCENDING by points
+    #   2. DESCENDING by goals
+    #   3. ASCENDING by name
+    @ranking_entries.sort_by { | ranking_entry | [-ranking_entry.points, -ranking_entry.goals, ranking_entry.name] }
+
+    # Adds a rank to each RankingEntry based on its position in the Array
+    @ranking_entries.each_with_index do |ranking_entry, index|
+      ranking_entry.rank = index + 1
+    end
   end
 
   def overview
