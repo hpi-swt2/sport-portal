@@ -8,6 +8,7 @@
 #
 
 class MatchResult < ApplicationRecord
+  default_scope { includes(:match) }
   belongs_to :match
 
   def name

@@ -20,6 +20,7 @@ class Match < ApplicationRecord
   belongs_to :team_home, polymorphic: true
   belongs_to :team_away, polymorphic: true
   belongs_to :event, dependent: :delete
+  has_many :match_results, dependent: :destroy
 
   def depth
     event.max_match_level - gameday
