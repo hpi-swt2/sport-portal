@@ -23,7 +23,7 @@
 </div>
 
 <% if @event.is_a? Tournament and @event.finale.present? and @event.finale.has_winner? %>
-    <div class="table-responsive">
+  <div class="table-responsive">
     <h3><%= t('events.show.winners') %></h3>
     <table class="table">
       <tr>
