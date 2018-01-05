@@ -326,6 +326,55 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
+  describe 'GET League#ranking' do
+    it 'should calculate an empty ranking when no participant has joined the event' do
+      event = League.create! valid_league_attributes
+      get :ranking, params: { id: event.to_param }, session: valid_session
+      ranking_entries = controller.instance_variable_get(:@ranking_entries)
+      expect(ranking_entries).to be_empty
+    end
+    describe 'when teams have joined the event' do
+      describe 'when no match has been played yet' do
+        it 'should calculate a lexicographically sorted zero-filled ranking' do
+          event = League.create! valid_league_attributes
+          # Generate matches by getting the event's schedule
+          get :schedule, params: { id: event.to_param }, session: valid_session
+          get :ranking, params: { id: event.to_param }, session: valid_session
+          ranking_entries = controller.instance_variable_get(:@ranking_entries)
+          expect(ranking_entries.first.name).to be < ranking_entries.second.name
+        end
+      end
+      describe 'when at least two matches have been played already' do
+        before (:each) do
+          # TODO Construct an event, generate its schedule, fill two matches with results, get ranking
+          # TODO and save ranking_entries instance variable
+        end
+
+        it 'should calculate the rank of a participant based on his points correctly'
+        it "should pass on the participant's name correctly"
+        it 'should sum up the number of played games of a participant correctly'
+        it 'should sum up the number of won games of a participant correctly'
+        it 'should sum up the number of drawn games of a participant correctly'
+        it 'should sum up the number of lost games of a participant correctly'
+        it 'should sum up the own goals of a participant correctly'
+        it 'should sum up the goals for the other side of a participant correctly'
+        it 'should calculate the number of points of a participant correctly'
+        it 'should calculate the rank of two participants with the same points based on the number of goals correctly'
+      end
+    end
+    describe 'when users have joined the event' do
+      # TODO Factor out and reference tests for events with joined teams from above
+    end
+  end
+
+  describe 'GET Tournament#ranking' do
+    # TODO Factor out and reference tests for Leagues from above
+  end
+
+  describe 'GET Rankinglist#ranking' do
+    # TODO Factor out and reference tests for Leagues from above
+  end
+
   describe "GET #overview" do
     it "returns a success response" do
       tournament = Tournament.create! valid_tournament_attributes
