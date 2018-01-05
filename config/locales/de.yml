@@ -140,12 +140,8 @@ de:
     update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
 
   events:
-    create_event: "Veranstaltung erstellen"
-    choose_event_format: "Veranstaltungsart wählen"
-    new_league: "Neue Liga"
-    new_tournament: "Neues Turnier"
-    create_event: "Veranstaltung erstellen"
-    choose_event_format: "Veranstaltungsart wählen"
+    create_event: "Event erstellen"
+    choose_event_format: "Eventsart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Turnier"
     new_rankinglist: "Neue Rangliste"
