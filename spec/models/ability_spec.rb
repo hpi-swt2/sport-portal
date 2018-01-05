@@ -57,6 +57,11 @@ RSpec.describe Ability, type: :model do
           it { is_expected.to be_able_to(:assign_membership_by_email, team) }
         end
       end
+
+      describe 'for events' do
+        let(:event) { FactoryBot.build :event }
+        it { is_expected.to be_able_to(:ranking, event) }
+      end
     end
   end
 
