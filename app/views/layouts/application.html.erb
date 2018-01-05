@@ -6,11 +6,20 @@
     <title><%= t('appname') %></title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <% if (action_name === "new" && controller_name == "sessions" or controller_name === "users" && action_name == "new" or controller_name === "users" && action_name == "create") %>
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track'=>'reload' %>
+        <%= stylesheet_link_tag 'navbar', media: 'all', 'data-turbolinks-track'=>'reload' %>
+    <% else %>
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track'=>'reload' %>
+    <% end %>
+
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track'=> 'reload' %>
   </head>
 
-  <body>
+  <!--Display the background -->
+  <body class="<%= render partial: "application/background"%> navbar-overlap">
+
     <div class="container">
       <%= render partial: "application/navbar" %>
 
