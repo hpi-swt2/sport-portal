@@ -50,6 +50,11 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
     end
+
+    it 'has a ranking button' do
+      render
+      expect(rendered).to have_content(t('events.show.to_ranking'))
+    end
   end
   before(:each) do
     @user = FactoryBot.create :user

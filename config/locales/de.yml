@@ -154,6 +154,7 @@ de:
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
+      to_ranking: "zur Tabelle"
       participants: "Teilnehmer"
       winners: "Gewinner"
     new:

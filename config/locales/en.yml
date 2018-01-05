@@ -72,6 +72,8 @@ en:
     choose_event_format: "Choose event format"
     new_league: "New league"
     new_tournament: "New tournament"
+    show:
+      to_ranking: "Ranking table"
     new:
       name: "Name"
       description: "Description"
