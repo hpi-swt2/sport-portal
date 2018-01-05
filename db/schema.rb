@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102181138) do
+ActiveRecord::Schema.define(version: 20171212150919) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.string "discipline"
-    t.integer "player_type"
+    t.integer "player_type", null: false
     t.integer "max_teams"
-    t.integer "game_mode"
+    t.integer "game_mode", null: false
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.date "deadline"
     t.integer "gameday_duration"
     t.integer "owner_id"
-    t.integer "metric"
     t.float "initial_value"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
@@ -62,6 +61,7 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.integer "gameday"
     t.string "team_home_type", default: "Team"
     t.string "team_away_type", default: "Team"
+    t.integer "index"
     t.index ["event_id"], name: "index_matches_on_event_id"
   end
 
@@ -72,13 +72,6 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.integer "event_id"
     t.index ["event_id"], name: "index_organizers_on_event_id"
     t.index ["user_id"], name: "index_organizers_on_user_id"
-  end
-
-  create_table "participants", force: :cascade do |t|
-    t.integer "attendee_id"
-    t.string "attendee_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "team_users", force: :cascade do |t|
@@ -95,7 +88,6 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
-    t.boolean "single", default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -108,13 +100,13 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "provider"
-    t.string "uid"
     t.boolean "admin", default: false
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
+    t.string "provider"
+    t.string "uid"
     t.text "avatar_data"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true

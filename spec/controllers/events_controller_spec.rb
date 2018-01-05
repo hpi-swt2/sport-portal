@@ -345,7 +345,7 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  describe "GET #schedule" do
+  describe "GET League#schedule" do
     it "should generate schedule if not existing" do
       event = League.create! valid_league_attributes
       get :schedule, params: { id: event.to_param }, session: valid_session
