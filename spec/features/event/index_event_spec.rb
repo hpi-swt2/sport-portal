@@ -6,7 +6,7 @@ describe "index event page", type: :feature do
     context "which I participate in" do
       before(:each) do
         @event = event
-        team = @event.create_single_team(@user)
+        team = @user.create_single_team
         @event.add_team(team)
         visit events_path
       end

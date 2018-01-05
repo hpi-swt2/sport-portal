@@ -55,12 +55,6 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
-  def create_single_team(user)
-    team = Team.create(Hash[name: user.name, private: true, single: true])
-    team.owners << user
-    return team
-  end
-
   def add_team(team)
     teams << team
   end
@@ -73,16 +67,17 @@ class Event < ApplicationRecord
   end
 
   def add_participant(user)
-    team = create_single_team(user)
+    team = user.create_single_team
     add_team(team)
   end
 
   def has_participant?(user)
-    team_members = []
     teams.each do |team|
-      team_members += team.members
+      if team.members.include?(user)
+        return true
+      end
     end
-    team_members.include?(user)
+    false
   end
 
   def ownes_participating_teams?(user)

@@ -69,6 +69,11 @@ class User < ApplicationRecord
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
   has_many :owned_teams, through: :team_owners, source: :team
 
+  def create_single_team
+    team = Team.create(Hash[name: name, private: true, single: true])
+    team.owners << self
+    team
+  end
 
   def has_omniauth?
     provider.present? && uid.present?

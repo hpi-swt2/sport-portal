@@ -60,8 +60,8 @@ class EventsController < ApplicationController
   # PUT /events/1/join
   def join
     if @event.single?
-      team = @event.create_single_team(current_user)
-     else
+      team = current_user.create_single_team
+    else
       team = Team.find(event_params[:teams])
     end
     @event.add_team(team)
