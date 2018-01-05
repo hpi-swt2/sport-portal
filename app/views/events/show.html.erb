@@ -28,7 +28,7 @@
     <table class="table">
       <tr>
         <th>Platzierung</th>
-        <th><%= @event.single? ? t('.title', default: User.model_name.human.titleize) : t('.title', default: Team.model_name.human.titleize)%></th>
+        <th><%= @event.participant_model.model_name.human.titleize %></th>
       </tr>
       <tr>
         <td><%= t 'events.placing.first' %></td>
