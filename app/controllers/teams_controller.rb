@@ -5,7 +5,7 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
-    @teams = Team.not_single
+    @teams = Team.multiplayer
   end
 
   # GET /teams/1

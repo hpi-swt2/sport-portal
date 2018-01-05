@@ -16,7 +16,7 @@ class Team < ApplicationRecord
 
   validates :private, inclusion:  [true, false]
 
-  scope :not_single, -> { where single: false }
+  scope :multiplayer, -> { where single: false }
 
   has_and_belongs_to_many :events
 
