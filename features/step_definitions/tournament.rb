@@ -76,7 +76,7 @@ end
 
 Then(/^the (home|away) team of match (.+) (\d+) comes to the next round$/) do |home_or_away, match_gameday, match_num|
   team = find_team_of_match match_gameday, match_num, home_or_away
-  all('a[href="' + team_path(team) + '"]').count == 2
+  expect(all('a[href="' + team_path(team) + '"]').count).to eq(2)
 end
 
 
@@ -95,4 +95,15 @@ end
 
 Given(/^a tournament with gamemode (.*)$/) do |mode|
   create_tournament game_mode: mode
+end
+
+def placing_to_display_string(placing)
+  I18n.t "events.placing.#{placing}"
+end
+
+Then(/^the (first|second) place of the tournament is the (home|away) team of (.+) (\d+)$/) do |placing, home_or_away, match_gameday, match_num|
+  visit event_schedule_path single_tournament
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  visit event_path single_tournament
+  expect(page).to have_text("#{placing_to_display_string placing} #{team.name}")
 end
