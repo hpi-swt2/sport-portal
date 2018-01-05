@@ -79,7 +79,7 @@ RSpec.describe "events/show", type: :view do
     include_examples "an event"
   end
 
-  describe "League" do
+  describe "Rankinglist" do
     before(:each) do
       @event = assign(:event, FactoryBot.create(:rankinglist))
       @event.editors << @user
