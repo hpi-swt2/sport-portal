@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171206172721) do
+ActiveRecord::Schema.define(version: 20180106173807) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20171206172721) do
     t.date "deadline"
     t.integer "gameday_duration"
     t.integer "owner_id"
+    t.float "initial_value"
+    t.integer "matchtype"
+    t.integer "bestof_length"
+    t.integer "game_winrule"
+    t.integer "points_for_win"
+    t.integer "points_for_draw"
+    t.integer "points_for_lose"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -42,14 +49,19 @@ ActiveRecord::Schema.define(version: 20171206172721) do
   create_table "events_users", id: false, force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "user_id", null: false
-    t.index ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id"
-    t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
+  end
+
+  create_table "game_results", force: :cascade do |t|
+    t.integer "score_home"
+    t.integer "score_away"
+    t.integer "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_game_results_on_match_id"
   end
 
   create_table "matches", force: :cascade do |t|
     t.string "place"
-    t.integer "score_home"
-    t.integer "score_away"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "team_home_id"
@@ -72,7 +84,7 @@ ActiveRecord::Schema.define(version: 20171206172721) do
     t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
-  create_table "team_users", id: false, force: :cascade do |t|
+  create_table "team_users", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
     t.boolean "is_owner"
@@ -98,14 +110,14 @@ ActiveRecord::Schema.define(version: 20171206172721) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "provider"
-    t.string "uid"
-    t.text "image_data"
-    t.boolean "admin", default: false
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
+    t.string "provider"
+    t.string "uid"
+    t.boolean "admin", default: false
+    t.text "avatar_data"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

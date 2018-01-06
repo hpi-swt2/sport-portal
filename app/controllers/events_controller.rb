@@ -27,6 +27,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.new(event_params)
+    @event.matchtype = :bestof
     @event.owner = current_user
 
     if @event.save
@@ -107,6 +108,12 @@ class EventsController < ApplicationController
                                     :deadline,
                                     :startdate,
                                     :enddate,
+                                    :matchtype,
+                                    :bestof_length,
+                                    :game_winrule,
+                                    :points_for_win,
+                                    :points_for_draw,
+                                    :points_for_lose,
                                     user_ids: [])
     end
 end

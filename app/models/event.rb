@@ -17,6 +17,13 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
+#  matchtype        :integer
+#  bestof_length    :integer
+#  game_winrule     :integer
+#  points_for_win   :integer
+#  points_for_draw  :integer
+#  points_for_lose  :integer
 #
 
 class Event < ApplicationRecord
@@ -29,13 +36,16 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
-  validates :name, :discipline, :game_mode, presence: true
-  validates :name, :discipline, :game_mode, :player_type, presence: true
+  validates :name, :discipline, :game_mode, :player_type, :matchtype, :game_winrule, presence: true
   validates :deadline, :startdate, :enddate, presence: true
   validates :max_teams, numericality: { greater_than_or_equal_to: 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
+  validates :points_for_win, :points_for_draw, :points_for_lose, numericality: { only_integer: true }
+  validates :bestof_length, numericality: {only_integer: true, greater_than_or_equal_to: 0 }
   validate :end_after_start
 
   enum player_types: [:single, :team]
+  enum matchtype: [:bestof]
+  enum game_winrule: [:most_sets]
 
   def self.types
     %w(Tournament League)

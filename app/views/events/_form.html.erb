@@ -1,147 +1,146 @@
 <%= form_for @event, :html => { :class => "form-horizontal event" } do |f| %>
 
-    <%= render partial: "application/validation_errors", locals: {model: @event} %>
+  <%= render partial: "application/validation_errors", locals: {model: @event} %>
 
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:name), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, id: :event_name, :class => 'form-control' %>
+      <%= f.error_span(:name) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:description), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :description, id: :event_description, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:event_type), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.collection_select :type, Event.types, :to_s, :to_s,
+                              {selected: @event.type, include_blank: t('events.new.select_type')},
+                              :class => 'form-control', :id => 'event_type' %>
+    </div>
+  </div>
+  <div class="form-group" id="league-game-mode">
+    <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
+                   {:include_blank => t('events.new.select_game_mode')},
+                   { :class => 'form-control', :id => 'event_game_mode_league'}) %>
+    </div>
+  </div>
+  <div class="form-group" id="tournament-game-mode">
+    <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.select(:game_mode, Tournament.game_modes.map {|k, v| [k.humanize, v]},
+                   {:include_blank => t('events.new.select_game_mode')},
+                   { :class => 'form-control', :id => 'event_game_mode_tournament'}) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:player_type), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.select(:player_type, Event.player_types.map {|k, v| [k.humanize, v]},
+                   {:include_blank => t('events.new.select_player_type')},
+                   { :class => 'form-control'}) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:max_teams), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :max_teams, id: :event_max_teams, :class => 'form-control' %>
+      <%= f.error_span(:max_teams) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:discipline), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :discipline, id: :event_discipline, :class => 'form-control' %>
+      <%= f.error_span(:discipline) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:deadline), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :deadline, id: :event_deadline, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+      <%= f.error_span(:deadline) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:startdate), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :startdate, id: :event_startdate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+      <%= f.error_span(:startdate) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:enddate), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :enddate, id: :event_enddate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+      <%= f.error_span(:enddate) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label Event.human_attribute_name(:duration), :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :duration, id: :event_duration, :class => 'form-control' %></div>
+  </div>
+    
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAdvancedOptions" aria-expanded="false" aria-controls="collapseAdvancedOptions">
+    Erweitert
+  </button>
+
+  <div class="collapse" id="collapseAdvancedOptions">
     <div class="form-group">
-      <%= f.label Event.human_attribute_name(:name), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :name, id: :event_name, :class => 'form-control' %>
-        <%= f.error_span(:name) %>
+      <%= f.label "Spiele Art", for: :matchtype, class: 'control-label col-lg-2'  %>
+      <div id="matchtype" class="col-lg-10">
+        <%= f.label "Best of", for: :bestof_length, class: "control-label col-lg-2" %>
+        <div class="col-lg-10">
+          <%= f.select(:bestof_length, [["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7], ["8", 8]], selected: f.object.bestof_length || 1) %>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:description), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_area :description, id: :event_description, :class => 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:event_type), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.collection_select :type, Event.types, :to_s, :to_s,
-                                {selected: @event.type, include_blank: t('events.new.select_type')},
-                                :class => 'form-control', :id => 'event_type' %>
-      </div>
-    </div>
-    <div class="form-group" id="league-game-mode">
-      <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.select(:game_mode, League.game_modes.map {|k, v| [k.humanize, v]},
-                     {:include_blank => t('events.new.select_game_mode')},
-                     { :class => 'form-control', :id => 'event_game_mode_league'}) %>
-      </div>
-    </div>
-    <div class="form-group" id="tournament-game-mode">
-      <%= f.label Event.human_attribute_name(:game_mode), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.select(:game_mode, Tournament.game_modes.map {|k, v| [k.humanize, v]},
-                     {:include_blank => t('events.new.select_game_mode')},
-                     { :class => 'form-control', :id => 'event_game_mode_tournament'}) %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:player_type), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.select(:player_type, Event.player_types.map {|k, v| [k.humanize, v]},
-                     {:include_blank => t('events.new.select_player_type')},
-                     { :class => 'form-control'}) %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:max_teams), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :max_teams, id: :event_max_teams, :class => 'form-control' %>
-        <%= f.error_span(:max_teams) %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:discipline), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :discipline, id: :event_discipline, :class => 'form-control' %>
-        <%= f.error_span(:discipline) %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:deadline), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :deadline, id: :event_deadline, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
-        <%= f.error_span(:deadline) %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:startdate), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :startdate, id: :event_startdate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
-        <%= f.error_span(:startdate) %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:enddate), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :enddate, id: :event_enddate, :class => 'form-control', :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
-        <%= f.error_span(:enddate) %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label Event.human_attribute_name(:duration), :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= f.text_field :duration, id: :event_duration, :class => 'form-control' %></div>
     </div>
     
-    
-      <div>
-
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Erweitert
-      </button>
-
-      <div class="collapse " id="collapseExample">
-            <div class="form-group">
-             <%= f.label "Spiele Art", :class => 'control-label col-lg-2'  %>
-              <div class="col-lg-10">
-                <%= f.label "Best of ", :class => 'control-label col-lg-2' %>
-                <div class="col-lg-10">
-                <%= f.text_field :duration, :class => 'form-control',:style=> 'width:50px' %></div>
-              </div>
-            </div>
-            <div class="form-group">
-             <%= f.label "Gewinnregeln", :class => 'control-label col-lg-2'  %>
-              <div class="col-lg-10">
-               <%= f.select :duration, [['Sieger ist wer die meisten Sätze gewinnt','saetze']] %>
-              </div>
-            </div>
-
-
-            <div class="form-group">
-             <%= f.label "PunkteVerteilung", :class => 'control-label col-lg-2'  %>
-              <div class="col-lg-10">
-                <%= f.label "Gewinner", :class => 'control-label col-lg-2' %>
-                <div class="col-lg-10">
-                <%= f.text_field :duration, :class => 'form-control',:style=> 'width:50px' %></div>
-              
-                <%= f.label "Unentschieden", :class => 'control-label col-lg-2' %>
-                <div class="col-lg-10">
-                <%= f.text_field :duration, :class => 'form-control' ,:style=> 'width:50px'%></div>
-              
-                <%= f.label "Verlierer", :class => 'control-label col-lg-2' %>
-                <div class="col-lg-10">
-                <%= f.text_field :duration, :class => 'form-control',:style=> 'width:50px' %></div>
-             
-              </div>
-            </div>
-   
-        
-      </div>
-    
-
-
-
-<div class="form-group">
-      <div class="col-lg-offset-2 col-lg-10">
-        <%= f.submit t('events.create_event'), :class => 'btn btn-primary' %>
-        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                    back_path, :class => 'btn btn-default' %>
+    <div class="form-group">
+      <%= f.label "Gewinnregel", for: :game_winrule, :class => 'control-label col-lg-2'  %>
+      <div class="col-lg-10">
+        <%= f.select(:game_winrule, Event.game_winrules.map {|k, v| [k.humanize, k]},
+                     { :class => 'form-control' }) %>
       </div>
     </div>
+
+    <div class="form-group">
+      <%= f.label "PunkteVerteilung", for: :pointdistribution, :class => 'control-label col-lg-2'  %>
+      <div id="pointdistribution" class="col-lg-10">
+        <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= f.number_field :points_for_win, :class => 'form-control',:style=> 'width:50px' %>
+        </div>
+
+        <%= f.label :points_for_draw, :class => 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= f.number_field :points_for_draw, :class => 'form-control' ,:style=> 'width:50px'%>
+        </div>
+
+        <%= f.label :points_for_lose, :class => 'control-label col-lg-2' %>
+        <div class="col-lg-10">
+          <%= f.number_field :points_for_lose, :class => 'form-control',:style=> 'width:50px' %>
+        </div>
+         
+      </div>
+    </div>
+  
+  </div>
+    
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit t('events.create_event'), :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+        back_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
 
 <% end %>

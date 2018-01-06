@@ -5,6 +5,7 @@
 #  team_id  :integer          not null
 #  user_id  :integer          not null
 #  is_owner :boolean
+#  id       :integer          not null, primary key
 #
 
 require 'rails_helper'

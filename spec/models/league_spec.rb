@@ -17,6 +17,13 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
+#  matchtype        :integer
+#  bestof_length    :integer
+#  game_winrule     :integer
+#  points_for_win   :integer
+#  points_for_draw  :integer
+#  points_for_lose  :integer
 #
 
 require 'rails_helper'
