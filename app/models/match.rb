@@ -103,7 +103,7 @@ class Match < ApplicationRecord
   end
 
   def calculate_points
-    return if !has_scores? && has_points?
+    return if !has_scores? || has_points?
 
     if score_home > score_away
       self.points_home = 3

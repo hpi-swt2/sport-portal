@@ -27,5 +27,10 @@ FactoryBot.define do
     gameday 0
     points_away 3
     points_home 1
+
+    trait :empty_points do
+      points_away nil
+      points_home nil
+    end
   end
 end
