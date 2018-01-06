@@ -90,6 +90,18 @@ en:
       select_game_mode: "Select game mode"
       select_player_type: "Spielertyp auswählen"
     show_events: "Show all events"
+    ranking:
+          title: "Ranking table"
+          rank: "rank"
+          name: "name"
+          match_count: "match count"
+          won_count: "won"
+          draw_count: "draw"
+          lost_count: "lost"
+          goals: "goals"
+          goals_against: "goals against"
+          goals_difference: "goal difference"
+          points: "points"
 
   teams:
       show:
