@@ -72,6 +72,6 @@ RSpec.describe Team, type: :model do
     team = FactoryBot.create :team
     another_team = FactoryBot.create :team
     team.name = "New Name"
-    Team.all.should == [team, another_team]
+    expect(Team.all).to eq([team, another_team])
   end
 end
