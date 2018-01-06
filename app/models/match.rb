@@ -26,6 +26,8 @@ class Match < ApplicationRecord
   belongs_to :team_away, polymorphic: true
   belongs_to :event, dependent: :delete
 
+  after_validation :calculate_points
+
   def name
     winner_team = winner
     if winner_team.present?
@@ -44,8 +46,16 @@ class Match < ApplicationRecord
     I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
   end
 
+  def has_points?
+    points_home.present? && points_away.present?
+  end
+
+  def has_scores?
+    score_home.present? && score_away.present?
+  end
+
   def has_winner?
-    points_home.present? && points_away.present? && points_home != points_away
+    has_points? && points_home != points_away
   end
 
   def winner
@@ -90,5 +100,20 @@ class Match < ApplicationRecord
   def adjust_index_by(offset)
     self.index -= offset
     save!
+  end
+
+  def calculate_points
+    return if !has_scores? && has_points?
+
+    if score_home > score_away
+      self.points_home = 3
+      self.points_away = 0
+    elsif score_home < score_away
+      self.points_home = 0
+      self.points_away = 3
+    else
+      self.points_home = 1
+      self.points_away = 3
+    end
   end
 end
