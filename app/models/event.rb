@@ -110,9 +110,9 @@ class Event < ApplicationRecord
   # this is a method that simplifies manual testing, not intended for production use
   # method not used at the moment since it is now testet with joined users
   #def add_test_teams
-    #max_teams.times do |index|
-     # teams << Team.new(name: "Team #{index}", private: false)
-    #end
+  #max_teams.times do |index|
+  #teams << Team.new(name: "Team #{index}", private: false)
+  #end
   #end
 
   def human_player_type
