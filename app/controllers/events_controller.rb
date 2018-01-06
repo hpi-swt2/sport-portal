@@ -76,8 +76,10 @@ class EventsController < ApplicationController
   def schedule
     if @event.matches.empty?
       @event.generate_schedule
+      @event.save
     end
-    @matches = @event.matches.order('gameday ASC')
+    @matches = @event.matches
+    @schedule_type = @event.type.downcase!
   end
 
   def overview
