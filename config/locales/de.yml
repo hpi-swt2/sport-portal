@@ -197,6 +197,18 @@ de:
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
+    ranking:
+      title: "Tabelle"
+      rank: "Rang"
+      name: "Name"
+      match_count: "Spiele"
+      won_count: "Siege"
+      draw_count: "Unentschieden"
+      lost_count: "Niederlagen"
+      goals: "Tore"
+      goals_against: "Gegentore"
+      goals_difference: "Tordifferenz"
+      points: "Punkte"
 
   matches:
     round_name:
