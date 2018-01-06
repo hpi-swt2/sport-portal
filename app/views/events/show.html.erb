@@ -93,6 +93,10 @@
             event_overview_path(@event),
             class: 'btn btn-default' %>
 
+<%= link_to t('.to_ranking'),
+            event_ranking_path(@event),
+            class: 'btn btn-default' %>
+
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
 <% if can? :leave, @event %>
