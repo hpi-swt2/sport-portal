@@ -68,4 +68,10 @@ RSpec.describe Team, type: :model do
     expect(team.in_event?).to be true
   end
 
+  it "by default return teams ordered by their date of creation" do
+    team = FactoryBot.create :team
+    another_team = FactoryBot.create :team
+    team.name = "New Name"
+    Team.all.should == [team, another_team]
+  end
 end
