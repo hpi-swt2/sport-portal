@@ -69,6 +69,10 @@ class Event < ApplicationRecord
     teams.where(name: "#{user.email}").destroy_all
   end
 
+  def generateSchedule
+    raise NotImplementedError
+  end
+
   def invalidate_schedule
     matches.delete_all
   end
