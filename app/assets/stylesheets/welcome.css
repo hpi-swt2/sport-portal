@@ -1,4 +1,24 @@
 .background {
     background:
-        url(https://owncloud.hpi.de/index.php/s/9COQa356VzqZGon/download) left top no-repeat;
+            url(https://owncloud.hpi.de/index.php/s/9COQa356VzqZGon/download),
+            url(https://owncloud.hpi.de/index.php/s/EGPcXbAmI63mB1C/download),
+            url(https://owncloud.hpi.de/index.php/s/rkCBUFNVV5Pw9kE/download),
+            url(https://owncloud.hpi.de/index.php/s/9kF7pAHTCurEXPm/download),
+            url(https://owncloud.hpi.de/index.php/s/BokofLs1yk3wJlL/download);
+    background-size: 100% 20%;
+    background-repeat: no-repeat;
+    background-position:
+            0% 0%,
+            0% 19%,
+            0% 41%,
+            0% 60%,
+            0% 80%;
+}
+
+.header-description {
+    font-size: 1.6rem;
+}
+
+html, body {
+    min-height: 500vh;
 }
