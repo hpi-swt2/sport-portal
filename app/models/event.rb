@@ -67,6 +67,10 @@ class Event < ApplicationRecord
     participants.include?(user)
   end
 
+  def participant_model
+    single? ? User : Team
+  end
+
   def can_join?(user)
     raise NotImplementedError
   end

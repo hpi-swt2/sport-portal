@@ -1,6 +1,12 @@
 <%- model_class = Event -%>
 <div class="page-header">
-  <h1><%= t '.title', :default => model_class.model_name.human(:count => :many).titleize %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human(:count => :many).titleize %>
+    <% if can? :create, Event %>
+        <%= link_to t('helpers.links.new'),
+                    new_event_path,
+                    :class => 'btn btn-primary' %>
+    <% end %>
+  </h1>
 </div>
 <table class="table table-striped">
   <thead>
@@ -57,12 +63,6 @@
   <% end %>
   </tbody>
 </table>
-
-<% if can? :create, Event %>
-    <%= link_to t('helpers.links.new'),
-                new_event_path,
-                :class => 'btn btn-primary' %>
-<% end %>
 
 <br>
 <form>
