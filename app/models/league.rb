@@ -20,13 +20,10 @@
 #
 
 class League < Event
-  enum game_modes: [:round_robin, :two_halfs, :swiss, :danish]
+  validates :deadline, :startdate, :enddate, presence: true
+  validate :end_after_start, :start_after_deadline
 
-  def add_test_teams
-    max_teams.times do |index|
-      teams << Team.new(name: "Team #{index}", private: false)
-    end
-  end
+  enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def generate_schedule
     if game_mode == League.game_modes[:round_robin]
@@ -78,5 +75,9 @@ class League < Event
 
     # remove all matches that include a nil object
     games.map { |g| g.select { |m| !m[1].nil? }}
+  end
+
+  def can_join?(user)
+    single? && (not has_participant?(user)) && (not deadline_has_passed?)
   end
 end

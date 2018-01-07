@@ -82,7 +82,7 @@ describe "League model", type: :model do
       new_league.game_mode = League.game_modes[:two_halfs]
       new_league.generate_schedule
       # double round robin has n(n-1) games
-      expect(new_league.matches.length).to be new_league.teams.length * (new_league.teams.length - 1)
+      expect(new_league.matches.length).to eq(new_league.teams.length * (new_league.teams.length - 1))
     end
   end
 end
