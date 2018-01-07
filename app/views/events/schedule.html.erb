@@ -72,7 +72,15 @@
                   <p>
                     <%= t '.time'%>
                   </p>
-                  <%= f.text_field :start_time, :class => 'form-control', :value => time, :data => { :provide => 'timepicker', "date-format" => "yyyy-mm-dd" } %>
+
+                  <div class="input-group bootstrap-timepicker timepicker">
+                    <%= f.text_field :start_time, :class => 'form-control', :value => time, :data => { :provide => 'timepicker' }, :id => "time" %>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                  </div>
+
+                  <script type="text/javascript">
+                      $('#time').timepicker();
+                  </script>
                   <p>
                     <%= t '.place' %>
                   </p>

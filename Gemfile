@@ -70,6 +70,11 @@ gem 'shrine', '~> 2.8.0'
 # https://github.com/Nerian/bootstrap-datepicker-rails
 gem 'bootstrap-datepicker-rails'
 
+# Use Bootstrap timepicker
+# https://github.com/tispratik/bootstrap-timepicker-rails
+gem 'bootstrap-timepicker-rails'
+
+
 # Package Select2 dropdown replacement featuring autocomplete
 # https://github.com/argerim/select2-rails
 # gem 'select2-rails'
