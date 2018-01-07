@@ -106,4 +106,9 @@ describe "Event model", type: :model do
     user = FactoryBot.build :user
     expect { event.can_join? user }.to raise_error NotImplementedError
   end
+
+  it "generate_Schedule? should raise a NotImplementedError" do
+    event = FactoryBot.build :event
+    expect { event.generate_schedule }.to raise_error NotImplementedError
+  end
 end
