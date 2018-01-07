@@ -113,7 +113,7 @@ class Match < ApplicationRecord
       self.points_away = 3
     else
       self.points_home = 1
-      self.points_away = 3
+      self.points_away = 1
     end
   end
 end

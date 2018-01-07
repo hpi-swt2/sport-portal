@@ -35,7 +35,7 @@ RSpec.describe Match, type: :model do
     expect(match_b.away_matches).to be_empty
     expect(match_b.matches).to contain_exactly(match_a)
   end
-
+  
   describe '#calculate_points' do
     subject { -> { match.calculate_points } }
 
@@ -46,7 +46,7 @@ RSpec.describe Match, type: :model do
     end
 
     context 'team home has a higher score' do
-      let(:match) { FactoryBot.build(:match, :empty_points, score_home: nil, score_away: 0) }
+      let(:match) { FactoryBot.build(:match, :empty_points, score_home: 1, score_away: 0) }
       it { is_expected.to change { match.points_home }.from(nil).to(3) }
       it { is_expected.to change { match.points_away }.from(nil).to(0)  }
     end
