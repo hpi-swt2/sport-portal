@@ -109,6 +109,6 @@ describe "Event model", type: :model do
 
   it "generate_Schedule? should raise a NotImplementedError" do
     event = FactoryBot.build :event
-    expect { event.generate_Schedule }.to raise_error NotImplementedError
+    expect { event.generate_schedule }.to raise_error NotImplementedError
   end
 end
