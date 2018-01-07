@@ -39,7 +39,14 @@ de:
 
   welcome:
     index:
-      lead: "Wir bieten unglaubliche Lösungen für vielfältige Use Cases."
+      lead: "Lorem ipsum dolor sit amet"
+      lead-description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et"
+      free-sign-up: "Kostenlos anmelden"
+      soccer: "Fußball"
+      basketball: "Basketball"
+      volleyball: "Volleyball"
+      table-tennis: "Tischtennis"
+      others: "und andere
 
   navbar:
     drop-down:
