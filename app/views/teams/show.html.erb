@@ -35,17 +35,17 @@
       <thead>
           <tr>
             <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
-            <th><%= model_class.human_attribute_name(:id) %></th>
+            <th>#</th>
             <th><%= model_class.human_attribute_name(:first_name) %></th>
             <th><%= model_class.human_attribute_name(:last_name) %></th>
             <th><%= t '.actions', :default => t("helpers.actions") %></th>
           </tr>
           </thead>
     <tbody>
-    <% @team.members.each do |member| %>
+    <% @team.members.each_with_index do |member, i| %>
         <tr>
           <td><%= check_box_tag "members[]", member.id %></td>
-          <td><%= member.id %></td>
+          <td><%= i + 1 %></td>
           <td><%= member.first_name%></td>
           <td><%= member.last_name%></td>
           <td>
