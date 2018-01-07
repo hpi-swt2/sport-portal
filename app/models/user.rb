@@ -85,6 +85,14 @@ class User < ApplicationRecord
     name = first_name + " " + last_name
   end
 
+  # these methods allow users to be treated like match results. see MatchResult model or see Team model
+  def advancing_participant
+    self
+  end
+
+  def last_match_of(_team)
+  end
+
   class << self
     def new_with_session(_, session)
       super.tap do |user|

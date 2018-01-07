@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20171221143530) do
     t.boolean "winner_advances"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_match_results_on_match_id"
   end
 
   create_table "matches", force: :cascade do |t|
