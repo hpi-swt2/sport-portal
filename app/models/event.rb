@@ -69,7 +69,7 @@ class Event < ApplicationRecord
     teams.where(name: "#{user.email}").destroy_all
   end
 
-  def generateSchedule
+  def generate_Schedule
     raise NotImplementedError
   end
 
