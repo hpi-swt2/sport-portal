@@ -26,9 +26,9 @@ class League < Event
   enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def generate_schedule
-    if game_mode == League.game_modes[:round_robin]
+    if game_mode == League.game_modes.key(0)
       calculate_round_robin
-    elsif game_mode == League.game_modes[:two_halfs]
+    elsif game_mode == League.game_modes.key(1)
       calculate_two_halfs
     end
   end
