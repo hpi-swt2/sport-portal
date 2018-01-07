@@ -21,4 +21,22 @@ describe 'Show team page', type: :feature do
       expect(page).to have_text another_user.first_name
     end
   end
+
+  describe 'display consecutive numbering of members' do
+    before(:each) do
+      sign_in @user
+    end
+
+    it 'should not show an id column for members' do
+      @team.members << @user
+      visit team_path @team
+      expect(page).to_not have_text "Id"
+    end
+
+    it 'should show # column for members' do
+      @team.members << @user
+      visit team_path @team
+      expect(page).to have_text "#"
+    end
+  end
 end
