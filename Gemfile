@@ -64,7 +64,7 @@ gem 'shrine', '~> 2.8.0'
 
 # Use Bootstrap Tooltips
 # https://github.com/brandonhilkert/bootstrap-tooltip-rails
-# gem 'bootstrap-tooltip-rails'
+gem 'bootstrap-tooltip-rails'
 
 # Use Bootstrap datepicker
 # https://github.com/Nerian/bootstrap-datepicker-rails

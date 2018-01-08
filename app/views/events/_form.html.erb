@@ -94,7 +94,7 @@
 
   <div class="collapse" id="collapseAdvancedOptions">
     <div class="form-group">
-      <%= f.label "Spiele Art", for: :matchtype, class: 'control-label col-lg-2'  %>
+      <%= f.label "Spielart", for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"%>
       <div id="matchtype" class="col-lg-10">
         <%= f.label "Best of", for: :bestof_length, class: "control-label col-lg-2" %>
         <div class="col-lg-10">
