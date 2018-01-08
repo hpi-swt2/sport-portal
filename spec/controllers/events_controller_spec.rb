@@ -272,7 +272,9 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "PUT #leave" do
-    let(:attributes_single_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
+    let(:attributes_single_player_team) {
+      FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: :single).attributes
+    }
     it "remove the user as participant of the event" do
       event = Event.create! attributes_single_player_team
       event.add_participant(@user)
@@ -309,10 +311,13 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
-
-  describe "GET #schedule" do
+  #this test is only for leagues
+  describe "GET League#schedule" do
     it "should generate schedule if not existing" do
       event = League.create! valid_league_attributes
+      event.add_participant(@user)
+      event.add_participant(@other_user)
+      event.generate_schedule
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(event.matches).not_to be_empty
     end
