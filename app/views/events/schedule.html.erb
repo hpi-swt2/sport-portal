@@ -68,7 +68,11 @@
                   <p>
                     <%= t '.appointment' %>
                   </p>
-                  <%= f.text_field :start_time, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "yyyy-mm-dd" } %>
+
+                  <div class="input-group bootstrap-datepicker datepicker">
+                    <%= f.text_field :start_time, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "dd-mm-yyyy" } %>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                  </div>
                   <p>
                     <%= t '.time'%>
                   </p>
