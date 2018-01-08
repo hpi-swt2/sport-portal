@@ -96,10 +96,7 @@
     <div class="form-group">
       <%= f.label "Spielart", for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"%>
       <div id="matchtype" class="col-lg-10">
-        <%= f.label "Best of", for: :bestof_length, class: "control-label col-lg-2" %>
-        <div class="col-lg-10">
-          <%= f.select(:bestof_length, [["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7], ["8", 8]], selected: f.object.bestof_length || 1) %>
-        </div>
+          <%= f.select(:bestof_length, (1..8).map { |n| ["Bestof #{n}", n] }, selected: f.object.bestof_length || 1) %>
       </div>
     </div>
     
@@ -111,22 +108,28 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <%= f.label "PunkteVerteilung", for: :pointdistribution, :class => 'control-label col-lg-2'  %>
-      <div id="pointdistribution" class="col-lg-10">
-        <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
-        <div class="col-lg-10">
+    <div class="panel panel-default">
+      <div class="panel-heading">Punkteverteilung</div>
+      <div class="panel-body">
+        <div class="form-group">
+          <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
           <%= f.number_field :points_for_win, :class => 'form-control',:style=> 'width:50px', :value=> f.object.points_for_win || 3%>
+          </div>
         </div>
 
-        <%= f.label :points_for_draw, :class => 'control-label col-lg-2' %>
-        <div class="col-lg-10">
+        <div class="form-group">
+          <%= f.label :points_for_draw, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
           <%= f.number_field :points_for_draw, :class => 'form-control' ,:style=> 'width:50px', :value=> f.object.points_for_draw || 1%>
+          </div>
         </div>
 
-        <%= f.label :points_for_lose, :class => 'control-label col-lg-2' %>
-        <div class="col-lg-10">
+        <div class="form-group">
+          <%= f.label :points_for_lose, :class => 'control-label col-lg-2' %>
+          <div class="col-lg-10">
           <%= f.number_field :points_for_lose, :class => 'form-control',:style=> 'width:50px', :value=> f.object.points_for_lose || 0%>
+          </div>
         </div>
          
       </div>
