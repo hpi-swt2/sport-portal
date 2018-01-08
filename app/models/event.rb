@@ -29,13 +29,13 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ?', Date.current) }
 
-  validates :name, :discipline, :game_mode, presence: true
-  validates :name, :discipline, :game_mode, :player_type, presence: true
+  validates :name, :discipline, :game_mode, :player_type, :selection_type, presence: true
   validates :deadline, :startdate, :enddate, presence: true
   validates :max_teams, numericality: { greater_than_or_equal_to: 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
   validate :end_after_start
 
   enum player_types: [:single, :team]
+  enum selection_types: [:fcfs, :fcfs_queue, :selection]
 
   def self.types
     %w(Tournament League)

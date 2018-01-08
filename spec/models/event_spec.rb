@@ -40,6 +40,11 @@ describe "Event model", type: :model do
     expect(league.valid?).to eq(false)
   end
 
+  it "should not validate without selection_type" do
+    league = FactoryBot.build(:league, selection_type: nil)
+    expect(league.valid?).to eq(false)
+  end
+
   it "should have an attribute deadline" do
     date = Date.tomorrow
     expect(event.deadline).to eq date
@@ -49,7 +54,7 @@ describe "Event model", type: :model do
   end
 
   it "should have an attribute startdate" do
-    date = Date.tomorrow + 1
+    date = Date.current + 2
     expect(event.startdate).to eq date
 
     expect(event).to be_valid
@@ -58,7 +63,7 @@ describe "Event model", type: :model do
   end
 
   it "should have an attribute enddate" do
-    date = Date.tomorrow + 2
+    date = Date.current + 3
     expect(event.enddate).to eq date
 
     expect(event).to be_valid
@@ -68,7 +73,7 @@ describe "Event model", type: :model do
 
   it "should not be possible to have an enddate, that is before the startdate" do
     expect(event).to be_valid
-    event.enddate = Date.today
+    event.enddate = Date.current
     expect(event).not_to be_valid
   end
 

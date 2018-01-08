@@ -71,23 +71,34 @@ describe "detailed event page", type: :feature do
         visit event_path(@event)
       end
 
-      it "should have a join button" do
-        expect(page).to have_link(:join_event_button)
+      context "fcfs event" do
+        before(:each) do
+          @event.selection_type = Event.selection_types[:fcfs]
+          @event.max_teams = 10
+        end
+
+        it "should have a join button if not exceeding max teams" do
+          expect(page).to have_link(:join_event_button)
+        end
+
+        it "should have a"
+
+        it "should redirect me to itself when clicking the join button" do
+          click_link(:join_event_button)
+          expect(current_path).to eq(event_path(@event))
+        end
+
+        it "should not have a leave button" do
+          expect(page).not_to have_link(:leave_event_button)
+        end
+
+        it "should have a leave button after clicking the join button" do
+          click_link(:join_event_button)
+          expect(page).to have_link(:leave_event_button)
+        end
       end
 
-      it "should redirect me to itself when clicking the join button" do
-        click_link(:join_event_button)
-        expect(current_path).to eq(event_path(@event))
-      end
 
-      it "should not have a leave button" do
-        expect(page).not_to have_link(:leave_event_button)
-      end
-
-      it "should have a leave button after clicking the join button" do
-        click_link(:join_event_button)
-        expect(page).to have_link(:leave_event_button)
-      end
     end
   end
 

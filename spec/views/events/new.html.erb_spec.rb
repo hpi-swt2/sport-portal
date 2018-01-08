@@ -31,6 +31,8 @@ RSpec.describe "events/new", type: :view do
 
       assert_select "input[name=?]", "event[enddate]"
 
+      assert_select "input[name=?]", "event[selection_type]"
+
     end
   end
 

@@ -35,6 +35,12 @@ describe "new event page", type: :feature do
     expect(page).to have_select('event_type', options: [I18n.t('events.new.select_type'), 'Tournament', 'League'])
   end
 
+  it "should be possible to select selection type" do
+    visit new_event_path
+
+    expect(page).to have_select('selection_type', options: [I18n.t('events.new.select_selection_type'), I18n.t('events.selection_type.fcfs'), I18n.t('events.selection_type.fcfs_queue'), I18n.t('events.selection_type.selection')])
+  end
+
   it "should be possible to create a date conditions for an event" do
     visit new_event_path
     fill_in "event_name", with: "name"

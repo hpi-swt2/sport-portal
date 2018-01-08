@@ -83,6 +83,7 @@ de:
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
+        selection_type: "Auswahlverfahren"
 
       user:
         first_name: "Vorname"
@@ -127,6 +128,11 @@ de:
       select_type: "Eventtyp auswählen"
       select_game_mode: "Spieltyp auswählen"
       select_player_type: "Spielertyp auswählen"
+      select_selection_type: "Auswahlverfahren auswählen"
+    selection_type:
+      fcfs: "First come first serve"
+      fcfs_queue: "Warteschlange"
+      selection: "Teilnehmer auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"
