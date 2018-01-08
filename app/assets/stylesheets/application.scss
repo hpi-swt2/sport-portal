@@ -29,15 +29,12 @@ $secondary-color: #01A8E8 !default;
 @font-face {
   font-family: 'Proxima Nova';
   src: font_url('ProximaNova-Reg.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Proxima Nova Bold';
+  font-family: 'Proxima Nova';
   src: font_url('ProximaNova-Bold.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+  font-weight: 500;
 }
 
 /* Application wide style */
