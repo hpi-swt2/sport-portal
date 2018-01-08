@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     resources :users, except: [:new, :create] do
       member do
         get 'dashboard'
+        get 'notifications'
         get 'link'
         get 'unlink'
       end
