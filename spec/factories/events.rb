@@ -38,6 +38,12 @@ FactoryBot.define do
     deadline { Date.current + 1 }
     startdate { Date.current + 2 }
     enddate { Date.current + 3 }
+    matchtype :bestof
+    bestof_length 5
+    game_winrule :most_sets
+    points_for_win 3
+    points_for_draw 1
+    points_for_lose 0
     association :owner, factory: :user, strategy: :build
 
     factory :event_with_teams do
