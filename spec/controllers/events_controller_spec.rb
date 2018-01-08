@@ -53,6 +53,22 @@ RSpec.describe EventsController, type: :controller do
     FactoryBot.build(:league, name: nil).attributes
   }
 
+  let(:valid_small_league_attributes) {
+    FactoryBot.build(:league, owner: @user, max_teams: 2).attributes
+  }
+
+  let(:valid_team1_attributes) {
+    FactoryBot.attributes_for(:team)
+  }
+
+  let(:valid_team2_attributes) {
+    FactoryBot.attributes_for(:team)
+  }
+
+  let(:valid_team3_attributes) {
+    FactoryBot.attributes_for(:team)
+  }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # EventsController. Be sure to keep this updated too.
@@ -346,20 +362,90 @@ RSpec.describe EventsController, type: :controller do
       end
       describe 'when at least two matches have been played already' do
         before (:each) do
+          @event = League.create! valid_small_league_attributes
+          @team1 = Team.create! valid_team1_attributes
+          @team2 = Team.create! valid_team2_attributes
+          @team3 = Team.create! valid_team3_attributes
+
+          @event.teams << @team1
+          @event.teams << @team2
+          @event.teams << @team3
+
+          @match1 = Match.new(team_home: @team1, team_away: @team2, gameday: 1,
+                              score_home: 10, score_away: 0,
+                              points_home: 3, points_away: 0)
+          @event.matches << @match1
+          @team1.home_matches << @match1
+          @team2.away_matches << @match1
+
+          @match2 = Match.new(team_home: @team2, team_away: @team1, gameday: 2,
+                              score_home: 10, score_away: 10,
+                              points_home: 1, points_away: 1)
+          @event.matches << @match2
+          @team2.home_matches << @match2
+          @team1.away_matches << @match2
+
+          @match3 = Match.new(team_home: @team1, team_away: @team3, gameday: 3,
+                              score_home: 0, score_away: 1,
+                              points_home: 0, points_away: 3)
+          @event.matches << @match3
+          @team1.home_matches << @match3
+          @team3.away_matches << @match3
+
+          @match4 = Match.new(team_home: @team2, team_away: @team3, gameday: 4,
+                              score_home: 0, score_away: 0,
+                              points_home: 1, points_away: 1)
+          @event.matches << @match4
+          @team2.home_matches << @match4
+          @team3.away_matches << @match4
+
+          p @team1
+          p @team2
+          p @team3
+
+          get :ranking, params: { id: @event.to_param }, session: valid_session
+          @ranking_entries = controller.instance_variable_get(:@ranking_entries)
+
+          p @ranking_entries
           # TODO Construct an event, generate its schedule, fill two matches with results, get ranking
           # TODO and save ranking_entries instance variable
         end
 
-        it 'should calculate the rank of a participant based on his points correctly'
-        it "should pass on the participant's name correctly"
-        it 'should sum up the number of played games of a participant correctly'
-        it 'should sum up the number of won games of a participant correctly'
-        it 'should sum up the number of drawn games of a participant correctly'
-        it 'should sum up the number of lost games of a participant correctly'
-        it 'should sum up the own goals of a participant correctly'
-        it 'should sum up the goals for the other side of a participant correctly'
-        it 'should calculate the number of points of a participant correctly'
-        it 'should calculate the rank of two participants with the same points based on the number of goals correctly'
+        it 'should calculate the rank of a participant based on his points correctly' do
+          #expect(@team1.home_matches & @event.matches).to be([@match1])
+          #expect((@event.matches)[1].team_home.name).to eq(@team2.name)
+          expect(@ranking_entries.first.name).to eq(@team1.name)
+        end
+
+        it "should pass on the participant's name correctly" do
+          expect(@ranking_entries.first.name).to eq(@team1.name)
+        end
+        it 'should sum up the number of played games of a participant correctly' do
+          expect(@ranking_entries.first.match_count).to eq(3)
+        end
+        it 'should sum up the number of won games of a participant correctly' do
+          expect(@ranking_entries.first.won_count).to eq(1)
+        end
+        it 'should sum up the number of drawn games of a participant correctly' do
+          expect(@ranking_entries.first.draw_count).to eq(1)
+        end
+        it 'should sum up the number of lost games of a participant correctly' do
+          expect(@ranking_entries.first.lost_count).to eq(1)
+        end
+        it 'should sum up the own goals of a participant correctly' do
+          expect(@ranking_entries.first.goals).to eq(20)
+        end
+        it 'should sum up the goals for the other side of a participant correctly'do
+          expect(@ranking_entries.first.goals_against).to eq(11)
+        end
+        it 'should calculate the number of points of a participant correctly' do
+          expect(@ranking_entries.first.points).to eq(4)
+        end
+        it 'should calculate the rank of two participants with the same points based on the number of goals correctly' do
+          expect(@ranking_entries.first.name).to eq(@team1.name)
+          expect(@ranking_entries[1].name).to eq(@team3.name)
+
+        end
       end
     end
     describe 'when users have joined the event' do

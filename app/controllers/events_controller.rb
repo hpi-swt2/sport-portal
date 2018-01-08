@@ -137,9 +137,9 @@ class EventsController < ApplicationController
           else
             ranking_entry.draw_count += 1
           end
-          ranking_entry.goals += home_match.score_away
-          ranking_entry.goals_against += home_match.score_home
-          ranking_entry.points += home_match.points_away
+          ranking_entry.goals += away_match.score_away
+          ranking_entry.goals_against += away_match.score_home
+          ranking_entry.points += away_match.points_away
         end
 
         ranking_entry.goals_difference = ranking_entry.goals - ranking_entry.goals_against
