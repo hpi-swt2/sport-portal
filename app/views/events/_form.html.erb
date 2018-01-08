@@ -116,17 +116,17 @@
       <div id="pointdistribution" class="col-lg-10">
         <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
         <div class="col-lg-10">
-          <%= f.number_field :points_for_win, :class => 'form-control',:style=> 'width:50px' %>
+          <%= f.number_field :points_for_win, :class => 'form-control',:style=> 'width:50px', :value=> f.object.points_for_win || 3%>
         </div>
 
         <%= f.label :points_for_draw, :class => 'control-label col-lg-2' %>
         <div class="col-lg-10">
-          <%= f.number_field :points_for_draw, :class => 'form-control' ,:style=> 'width:50px'%>
+          <%= f.number_field :points_for_draw, :class => 'form-control' ,:style=> 'width:50px', :value=> f.object.points_for_draw || 1%>
         </div>
 
         <%= f.label :points_for_lose, :class => 'control-label col-lg-2' %>
         <div class="col-lg-10">
-          <%= f.number_field :points_for_lose, :class => 'form-control',:style=> 'width:50px' %>
+          <%= f.number_field :points_for_lose, :class => 'form-control',:style=> 'width:50px', :value=> f.object.points_for_lose || 0%>
         </div>
          
       </div>
