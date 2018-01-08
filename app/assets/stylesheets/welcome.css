@@ -26,7 +26,7 @@ All css for landing page.
 }
 
 .section.lightblue-soccer  {
-    background: url(https://owncloud.hpi.de/index.php/s/EGPcXbAmI63mB1C/download);
+    background: url(https://owncloud.hpi.de/index.php/s/X1ROoJHfM0dbdya/download);
     background-size: cover;
 }
 
@@ -66,6 +66,11 @@ h1 {
 .sport-image {
     width: 85px;
     height: 85px;
+}
+
+.sport-player {
+    max-height: 60vh;
+    max-width: 40vw;
 }
 
 .sport-name {
