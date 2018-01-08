@@ -17,4 +17,4 @@ admin = FactoryBot.build(:user,
 # Skip validations, so that e.g. a short password is possible
 admin.save(validate: false)
 
-FactoryBot.create(:match)
+#FactoryBot.create(:match)
