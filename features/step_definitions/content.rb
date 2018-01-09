@@ -12,6 +12,10 @@ Then(/^there should be a '(.*)' button$/) do |text|
   expect(page).to have_button(text)
 end
 
+Then(/^there should be a '(.*)' link/) do |text|
+  expect(page).to have_link(text)
+end
+
 
 Then(/^there should be a table$/) do
   expect(page).to have_table
@@ -42,4 +46,12 @@ end
 
 And(/^the table should have (\d+) rows$/) do |arg|
   expect(page).to have_xpath('//table/tbody/tr', count: arg)
+end
+
+Then(/^the page header should show '(.*)'$/) do |text|
+  translations = {
+    'Tournament' => ['activerecord.models.tournament.one'],
+    'League' => ['activerecord.models.league.one']
+  }
+  expect(page).to have_xpath("//h1[contains(text(),'#{I18n.t *translations[text]}')]")
 end
