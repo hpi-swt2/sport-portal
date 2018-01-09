@@ -93,7 +93,7 @@ describe "Event model", type: :model do
 
   it "should know if it is for single players" do
     single_player_event = FactoryBot.build :event, :single_player
-    expect(single_player_event).to be_single_player
+    expect(single_player_event).to be_single
   end
 
   it "should know if its deadline has passed" do
@@ -105,5 +105,10 @@ describe "Event model", type: :model do
     event = FactoryBot.build :event
     user = FactoryBot.build :user
     expect { event.can_join? user }.to raise_error NotImplementedError
+  end
+
+  it "generate_Schedule? should raise a NotImplementedError" do
+    event = FactoryBot.build :event
+    expect { event.generate_schedule }.to raise_error NotImplementedError
   end
 end

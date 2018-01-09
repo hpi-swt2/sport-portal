@@ -28,12 +28,12 @@ $secondary-color: #01A8E8 !default;
 /* Load custom font families */
 @font-face {
   font-family: 'Proxima Nova';
-  src: url('/assets/ProximaNova-Reg.otf') format('opentype');
+  src: font_url('ProximaNova-Reg.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Proxima Nova';
-  src: url('/assets/ProximaNova-Bold.otf') format('opentype');
+  src: font_url('ProximaNova-Bold.otf') format('opentype');
   font-weight: 500;
 }
 
