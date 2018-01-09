@@ -57,6 +57,7 @@ class Event < ApplicationRecord
 
   def add_team(team)
     teams << team
+    invalidate_schedule
   end
 
   def remove_team(team)
@@ -64,6 +65,15 @@ class Event < ApplicationRecord
     if single?
       team.destroy
     end
+    invalidate_schedule
+  end
+
+  def generate_schedule
+    raise NotImplementedError
+  end
+
+  def invalidate_schedule
+    matches.delete_all
   end
 
   def add_participant(user)
@@ -105,11 +115,12 @@ class Event < ApplicationRecord
   end
 
   # this is a method that simplifies manual testing, not intended for production use
-  def add_test_teams
-    max_teams.times do |index|
-      teams << Team.new(name: "Team #{index}", private: false)
-    end
-  end
+  # method not used at the moment since it is now testet with joined users
+  #def add_test_teams
+  #max_teams.times do |index|
+  #teams << Team.new(name: "Team #{index}", private: false)
+  #end
+  #end
 
   def human_player_type
     self.class.human_player_type player_type

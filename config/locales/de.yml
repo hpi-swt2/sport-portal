@@ -45,6 +45,7 @@ de:
     drop-down:
       dashboard: "Mein Dashboard"
       edit_profile: "Mein Profil"
+      notification_settings: "Benachrichtigungseinstellungen"
 
   dashboard:
     title: "Dashboard für %{name}"
@@ -143,12 +144,8 @@ de:
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten, kann ein neues Team erstellt werden."
 
   events:
-    create_event: "Veranstaltung erstellen"
-    choose_event_format: "Veranstaltungsart wählen"
-    new_league: "Neue Liga"
-    new_tournament: "Neues Turnier"
-    create_event: "Veranstaltung erstellen"
-    choose_event_format: "Veranstaltungsart wählen"
+    create_event: "Event erstellen"
+    choose_event_format: "Eventsart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Turnier"
     new_rankinglist: "Neue Rangliste"

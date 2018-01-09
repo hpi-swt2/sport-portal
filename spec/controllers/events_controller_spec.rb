@@ -344,10 +344,13 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
-
+  #this test is only for leagues
   describe "GET League#schedule" do
     it "should generate schedule if not existing" do
       event = League.create! valid_league_attributes
+      event.add_participant(@user)
+      event.add_participant(@other_user)
+      event.generate_schedule
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(event.matches).not_to be_empty
     end
