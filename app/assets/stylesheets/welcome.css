@@ -15,7 +15,7 @@ body>.container {
     background-repeat: no-repeat;
     min-width: 100vw;
     /* children have to set attributes as following:
-    min-height: calc(<image height>/<image width> * 100vh);
+    height: calc(<image height>/<image width> * 100vh);
     margin-bottom: calc(- <height of edge> / <image height> * 100%);
     z-index: number of sections - index of this section
      */
@@ -23,15 +23,14 @@ body>.container {
 
 .section.darkblue-soccer  {
     background-image: url(https://owncloud.hpi.de/index.php/s/9COQa356VzqZGon/download);
-    padding-top: 10vh;
-    min-height: calc(796 / 1200 * 100vw);
+    height: calc(796 / 1200 * 100vw);
     margin-bottom: calc(-160 / 796 * 100%);
     z-index: 5;
 }
 
 .section.lightblue-soccer  {
     background-image: url(https://owncloud.hpi.de/index.php/s/X1ROoJHfM0dbdya/download);
-    min-height: calc(888 / 1200 * 100vw);
+    height: calc(888 / 1200 * 100vw);
     margin-bottom: calc(-84 / 888 * 100%);
     z-index: 4;
     padding-top: calc(160 / 796 * 100%);
@@ -39,21 +38,21 @@ body>.container {
 
 .section.orange-basketball  {
     background-image: url(https://owncloud.hpi.de/index.php/s/rkCBUFNVV5Pw9kE/download);
-    min-height: calc(746 / 1200 * 100vw);
+    height: calc(746 / 1200 * 100vw);
     margin-bottom: calc(-100 / 888 * 100%);
     z-index: 3;
     padding-top: calc(84 / 796 * 100%);
 }
 
 .section.white-nothing  {
-    min-height: calc(700 / 1200 * 100vw);
+    height: calc(700 / 1200 * 100vw);
     z-index: 2;
     padding-top: calc(100 / 796 * 100%);
 }
 
 .section.purple-skating  {
     background-image: url(https://owncloud.hpi.de/index.php/s/BokofLs1yk3wJlL/download);
-    min-height: calc(756 / 1200 * 100vw);
+    height: calc(756 / 1200 * 100vw);
     z-index: 1;
     padding-top: calc(100 / 796 * 100%);
 }
@@ -72,13 +71,7 @@ h1 {
     font-size: 24px;
     color: #FFFFFF;
     letter-spacing: 0;
-    padding: 10px 20px;
     height: auto;
-}
-
-.sport-image {
-    width: 85px;
-    height: 85px;
 }
 
 .sport-player {
@@ -90,4 +83,63 @@ h1 {
     text-transform: uppercase;
     color: #FFFFFF;
     line-height: 3rem;
+}
+
+/*============================
+    Device dependent css style
+  ============================*/
+
+/* Desktop | Laptop */
+@media only screen and (min-width : 1300px) {
+
+    .section.darkblue-soccer {
+        padding-top: 13%;
+    }
+
+    .registerButton {
+        padding: 20px 50px;
+    }
+
+    .sport-image {
+        width: 85px;
+        height: 85px;
+    }
+
+    #sport-image-row {
+        margin-top: 70px;
+    }
+
+    #register-row {
+        margin-top: 50px;
+    }
+}
+
+/* Tablet */
+@media only screen and (min-width : 992px) and (max-width: 1300px) {
+
+    .section.darkblue-soccer {
+        padding-top: 8%;
+    }
+
+    .registerButton {
+        padding: 15px 30px;
+    }
+
+    .sport-image {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Smartphones */
+@media only screen and (max-width: 992px) {
+
+    .registerButton {
+        padding: 10px 20px;
+    }
+
+    .sport-image {
+        width: 30px;
+        height: 30px;
+    }
 }

@@ -9,43 +9,43 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s10 offset-s1">
+      <div class="col s8 offset-s2">
         <p class="white-text center" id="header-description"><%= t('welcome.index.lead-description') %></p>
       </div>
     </div>
-    <div class="row" style="margin-top: 50px;">
+    <div id="register-row" class="row">
       <div class="col s12 center">
         <% if not user_signed_in? %>
             <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn registerButton'%>
         <% end %>
       </div>
     </div>
-    <div class="row" style="margin-top: 70px;">
-      <div class="col l4 xl2 offset-xl1 offset-l2 center">
+    <div id="sport-image-row" class="row">
+      <div class="col m4 l2 offset-l1 offset-m2 center">
         <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/IItyAIGtevods2X/download"/>
         <div class="clear">
           <span class="sport-name"><%= t('welcome.index.soccer') %></span>
         </div>
       </div>
-      <div class="col l4 xl2 center">
+      <div class="col m4 l2 center">
         <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/TDiXLgm0Sqhwxn6/download"/>
         <div class="clear">
           <span class="sport-name"><%= t('welcome.index.basketball') %></span>
         </div>
       </div>
-      <div class="col l4 xl2 offset-l2 center">
+      <div class="col m4 l2 offset-m2 center">
         <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/Ws9gDsi8XdWSUtF/download"/>
         <div class="clear">
           <span class="sport-name"><%= t('welcome.index.volleyball') %></span>
         </div>
       </div>
-      <div class="col l4 xl2 center">
+      <div class="col m4 l2 center">
         <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/a5hyIspQSjTmr2P/download"/>
         <div class="clear">
           <span class="sport-name"><%= t('welcome.index.table-tennis') %></span>
         </div>
       </div>
-      <div class="col l12 xl2 center">
+      <div class="col m12 l2 center">
         <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/bnWpUw1I5EHQ8lt/download"/>
         <div class="clear">
           <span class="sport-name"><%= t('welcome.index.others') %></span>
