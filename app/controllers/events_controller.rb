@@ -74,11 +74,12 @@ class EventsController < ApplicationController
 
   # GET /events/1/schedule
   def schedule
-    if @event.teams.empty?
-      @event.add_test_teams
+    if @event.matches.empty?
       @event.generate_schedule
+      @event.save
     end
-    @matches = @event.matches.order('gameday ASC')
+    @matches = @event.matches
+    @schedule_type = @event.type.downcase!
   end
 
   def overview

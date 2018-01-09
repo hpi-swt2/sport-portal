@@ -1,5 +1,4 @@
 h1 {
-    font-family: Proxima Nova Bold;
     text-align: center;
 }
 
@@ -14,7 +13,6 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .btn {
-    font-family: Proxima Nova Bold;
     font-size: 15px;
     color: #FFFFFF;
     letter-spacing: 0;
