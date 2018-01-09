@@ -34,6 +34,7 @@ body>.container {
     min-height: calc(888 / 1200 * 100vw);
     margin-bottom: calc(-84 / 888 * 100%);
     z-index: 4;
+    padding-top: calc(160 / 796 * 100%);
 }
 
 .section.orange-basketball  {
@@ -41,17 +42,20 @@ body>.container {
     min-height: calc(746 / 1200 * 100vw);
     margin-bottom: calc(-100 / 888 * 100%);
     z-index: 3;
+    padding-top: calc(84 / 796 * 100%);
 }
 
 .section.white-nothing  {
     min-height: calc(700 / 1200 * 100vw);
     z-index: 2;
+    padding-top: calc(100 / 796 * 100%);
 }
 
 .section.purple-skating  {
     background-image: url(https://owncloud.hpi.de/index.php/s/BokofLs1yk3wJlL/download);
     min-height: calc(756 / 1200 * 100vw);
     z-index: 1;
+    padding-top: calc(100 / 796 * 100%);
 }
 
 h1 {
