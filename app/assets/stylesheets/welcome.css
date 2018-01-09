@@ -1,48 +1,57 @@
 /*
-All css for landing page.
+    All css for landing page.
  */
 
-/* Overwrite container from application.html.erb */
-.container {
+/* Overwrite container from application.html.erb for background image only*/
+body>.container {
     width: 100%;
     max-width: 100%;
     padding: 0 0;
 }
 
 .section {
-    width: 100vw;
-    height: auto;
-    min-height: 100vh;
-    background-color: cadetblue;
+    padding: 0;
     background-size: cover;
-    margin-bottom: -25vh;
-    padding: 25vh 15px;
+    background-repeat: no-repeat;
+    min-width: 100vw;
+    /* children have to set attributes as following:
+    min-height: calc(<image height>/<image width> * 100vh);
+    margin-bottom: calc(- <height of edge> / <image height> * 100%);
+    z-index: number of sections - index of this section
+     */
 }
 
 .section.darkblue-soccer  {
-    background: url(https://owncloud.hpi.de/index.php/s/9COQa356VzqZGon/download);
-    background-size: cover;
+    background-image: url(https://owncloud.hpi.de/index.php/s/9COQa356VzqZGon/download);
     padding-top: 10vh;
+    min-height: calc(796 / 1200 * 100vw);
+    margin-bottom: calc(-160 / 796 * 100%);
+    z-index: 5;
 }
 
 .section.lightblue-soccer  {
-    background: url(https://owncloud.hpi.de/index.php/s/X1ROoJHfM0dbdya/download);
-    background-size: cover;
+    background-image: url(https://owncloud.hpi.de/index.php/s/X1ROoJHfM0dbdya/download);
+    min-height: calc(888 / 1200 * 100vw);
+    margin-bottom: calc(-84 / 888 * 100%);
+    z-index: 4;
 }
 
 .section.orange-basketball  {
-    background: url(https://owncloud.hpi.de/index.php/s/rkCBUFNVV5Pw9kE/download);
-    background-size: cover;
+    background-image: url(https://owncloud.hpi.de/index.php/s/rkCBUFNVV5Pw9kE/download);
+    min-height: calc(746 / 1200 * 100vw);
+    margin-bottom: calc(-100 / 888 * 100%);
+    z-index: 3;
 }
 
 .section.white-nothing  {
-    background: url(https://owncloud.hpi.de/index.php/s/9kF7pAHTCurEXPm/download);
-    background-size: cover;
+    min-height: calc(700 / 1200 * 100vw);
+    z-index: 2;
 }
 
 .section.purple-skating  {
-    background: url(https://owncloud.hpi.de/index.php/s/BokofLs1yk3wJlL/download);
-    background-size: cover;
+    background-image: url(https://owncloud.hpi.de/index.php/s/BokofLs1yk3wJlL/download);
+    min-height: calc(756 / 1200 * 100vw);
+    z-index: 1;
 }
 
 h1 {
