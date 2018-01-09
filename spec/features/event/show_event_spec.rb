@@ -45,7 +45,6 @@ describe "detailed event page", type: :feature do
     context "which I participate in" do
       before(:each) do
         @event.add_participant(@user)
-        #@event.add_team(@team)
         visit event_path(@event)
       end
 

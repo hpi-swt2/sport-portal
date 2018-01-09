@@ -57,7 +57,7 @@
                         id: :join_event_button %>
           <% else %>
             <%= link_to t('.join', default: t("helpers.links.join")),
-                        team_join_path(event),
+                        team_join_event_path(event),
                         remote: true, data: {toggle: "modal", target: "modal-window"},
                         class: 'btn btn-xs btn-default',
                         id: :join_event_button %>

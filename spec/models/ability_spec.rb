@@ -193,34 +193,6 @@ RSpec.describe Ability, type: :model do
     end
   end
 
-  shared_examples "a team event" do
-    before(:each) do
-      @team = FactoryBot.create :team, :private
-      @ability = Ability.new(@user)
-    end
-
-    it 'should allow users to join with a team if they own one' do
-      @team.owners = [@user]
-      expect(@ability).to be_able_to(:join_with_team, event)
-    end
-
-    it 'should not allow users to join with a team if dont they own one' do
-      expect(@ability).not_to be_able_to(:join_with_team, event)
-    end
-  end
-
-  context "for team" do
-    describe "leagues" do
-      let(:event) { FactoryBot.create(:league, :team_player) }
-      include_examples "a team event"
-    end
-
-    describe "tournaments" do
-      let(:event) { FactoryBot.create(:tournament, :team_player) }
-      include_examples "a team event"
-    end
-  end
-
   context "for time-restricted" do
     describe "leagues" do
       let(:event) { FactoryBot.create(:league, :passed_deadline) }

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     member do
       put :join
       put :leave
+      get :team_join
     end
   end
 
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
+  #get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
   get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
 

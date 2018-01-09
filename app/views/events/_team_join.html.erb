@@ -5,7 +5,7 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <% if can? :join_with_team, @event %>
+      <% if current_user.owned_teams.multiplayer.present? %>
         <%= f.label :teams, class: 'control-label col-lg-2' %>
         <div class="col-lg-10">
           <%= f.collection_select :teams, current_user.owned_teams.multiplayer, :id, :name,
@@ -21,7 +21,7 @@
   <div class="modal-footer">
     <%= link_to t('.cancel', default: t("helpers.links.cancel")),
                 '#', data: { dismiss: "modal" }, class: 'btn btn-default' %>
-    <% if can? :join_with_team, @event %>
+    <% if current_user.owned_teams.multiplayer.present? %>
       <%= f.submit t('helpers.links.join'), class: 'btn btn-primary' %>
     <% else %>
       <%= link_to t('.new', default: t("helpers.links.new")),

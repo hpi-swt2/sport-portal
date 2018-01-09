@@ -47,7 +47,6 @@ class Ability
       can [:create, :read, :update, :destroy], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
-      can_join_with_team(user)
       can :schedule, Event
       can :team_join, Event
 
@@ -65,12 +64,6 @@ class Ability
   end
 
   private
-
-    def can_join_with_team(user)
-      can :join_with_team, Event do |event|
-        user.owned_teams.multiplayer.present?
-      end
-    end
 
     def can_join_event(user)
       can :join, Event.active do |event|
