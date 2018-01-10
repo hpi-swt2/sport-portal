@@ -61,6 +61,7 @@ de:
       section4-description_html: |
         Wir sind ein Team ambitionierter Studenten, welche im Rahmen einer Bachelor-Lehrveranstaltung den Umgang mit großen Teams und Ruby-On-Rails lernen. Das Projekt begann im Oktober 2017 im Auftrag des Sportklubs des Hasso-Plattner-Institut Potsdam.<br /><br />
         Unsere Vision ist es, den gesamten Organisationsprozess von Sportveranstaltungen zu vereinfachen. Um dir ein so angenehmes Erlebnis wie nur möglich zu ermöglichen, schwitzen wir Tag und Nacht, nicht nur beim Sport.<br /><br />
+      create-schedule: "Spielplan erstellen"
 
   navbar:
     drop-down:

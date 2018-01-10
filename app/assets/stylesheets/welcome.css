@@ -69,13 +69,25 @@ h1 {
     font-size: 1.6rem;
 }
 
-.registerButton {
-    background: #1CA9E5;
+.myButton {
     border-radius: 100px;
     font-size: 24px;
     color: #FFFFFF;
     letter-spacing: 0;
     height: auto;
+}
+
+.registerButton {
+    background: #1CA9E5;
+}
+
+.createScheduleButton {
+    border: 1px solid #FFFFFF;
+    background: transparent;
+}
+
+.createScheduleButton:hover {
+    background: #FFFFFF;
 }
 
 .sport-player {
@@ -103,7 +115,7 @@ p {
         padding-top: 13%;
     }
 
-    .registerButton {
+    .registerButton, .createScheduleButton {
         padding: 20px 50px;
     }
 
@@ -128,7 +140,7 @@ p {
         padding-top: 8%;
     }
 
-    .registerButton {
+    .myButton {
         padding: 5px 30px;
     }
 
@@ -167,7 +179,7 @@ p {
         padding-top: 4%;
     }
 
-    .registerButton {
+    .myButton {
         padding: 5px 20px;
     }
 

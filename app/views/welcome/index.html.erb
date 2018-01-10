@@ -16,7 +16,7 @@
     <div id="register-row" class="row">
       <div class="col s12 center">
         <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn registerButton'%>
+            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn registerButton myButton'%>
         <% end %>
       </div>
     </div>
@@ -134,27 +134,38 @@
 </div>
 
 <div class="section white-nothing">
-  <div class="row center">
-    <div class="col s12">
-      <h1>
-        <%= t('welcome.index.section3') %>
-      </h1>
+  <div class="container">
+    <div class="row center">
+      <div class="col s12">
+        <h1>
+          <%= t('welcome.index.section3') %>
+        </h1>
+      </div>
     </div>
-  </div>
-  <div class="row">
+    <div class="row">
 
+    </div>
   </div>
 </div>
 
 <div class="section purple-skating">
-  <div class="row center">
-    <div class="col s12 m8 offset-m2">
+  <div class="container">
+    <div class="row center">
       <h1 class="white-text">
         <%= t('welcome.index.section4') %>
       </h1>
-      <p class="white-text">
-        <%= t('welcome.index.section4-description_html') %>
-      </p>
+    </div>
+    <div class="row center">
+      <div class="col s12 m10 offset-m1">
+        <p class="white-text">
+          <%= t('welcome.index.section4-description_html') %>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 center">
+        <%= link_to t('welcome.index.create-schedule'), new_user_session_path , class: 'btn createScheduleButton myButton'%>
+      </div>
     </div>
   </div>
 </div>
