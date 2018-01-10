@@ -35,7 +35,7 @@ RSpec.describe Match, type: :model do
     expect(match_b.away_matches).to be_empty
     expect(match_b.matches).to contain_exactly(match_a)
   end
-  
+
   describe '#calculate_points' do
     subject { -> { match.calculate_points } }
 
