@@ -78,7 +78,7 @@ h1 {
     height: auto;
 }
 
-.sport-player {
+.mobile-sport-player {
     max-height: 40vw;
 }
 
@@ -86,6 +86,10 @@ h1 {
     text-transform: uppercase;
     color: #FFFFFF;
     line-height: 3rem;
+}
+
+p {
+    font-size: 1.4rem;
 }
 
 /*============================
