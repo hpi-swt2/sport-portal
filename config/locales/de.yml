@@ -39,22 +39,28 @@ de:
 
   welcome:
     index:
-      lead: "Lorem ipsum dolor sit amet"
-      lead-description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et"
-      free-sign-up: "Kostenlos anmelden"
+      lead: "Organisiere deine Liga!"
+      lead-description: "Plane, erstelle und betreue mühelos sowohl Turniere als auch Ligen für deinen Sport. Du hast noch keine Erfahrung als Event-Organisator? Kein Problem! Baue dir jetzt mit wenigen Klicks problemlos deinen persönlichen Spielplan."
+      free-sign-up: "Kostenlos Anmelden"
       soccer: "Fußball"
       basketball: "Basketball"
       volleyball: "Volleyball"
       table-tennis: "Tischtennis"
       others: "und andere"
-      section1: "Kinderleichte Turnierverwaltung"
-      section1-description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et"
-      section2: "Anwendungsbereich"
-      section2-description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et"
-      section3: "Spielpläne im Überblick"
-      section3-description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et"
-      section4: "Über uns"
-      section4-description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et"
+      section1: "Was bieten wir?"
+      section1-description_html: |
+        <p>Verwalte über unsere hochmoderne Plattform alle Sportereignisse. Unsere Benutzeroberfläche ermöglicht es dir, deine Ergebnisse mit allen deinen Freunden (auch wenn es nur 2 sind) zu teilen und sie für deinen Sport zu begeistern.</p>
+        <p>Dir ist das rudimentäre Ligensystem nicht genug? Wir bieten zusätzlich auch das Schweizer System, in dem auch große Differenzen zwischen den Fertigkeiten einzelner Spieler, ein faires und reizendes Erlebnis bieten.</p>
+        <p>Neben einer spielend leichten Ligenverwaltung bieten wir natürlich auch Hilfe bei der Organisation von Turnieren.</p>
+      section2: "Wofür eigentlich?"
+      section2-description_html: |
+        <p>Egal ob du eine Fußballliga, ein Tischtennisturnier oder vielleicht sogar ein Turnier für dein Lieblingsonlinespiel organisieren willst, auf unserer Plattform ist das alles kein Problem. Bei uns kannst du deiner Fantasie freien Lauf lassen.</p>
+        <p>Da auch für uns der Sport an erster Stelle steht, wollen wir dir natürlich so viel Mehraufwand wie nur möglich ersparen. Deswegen musst du nicht jedes einzelne Spiel selbst überwachen. Unser vollautomatisierter Email-Service erinnert alle Spieler selbstständig an ihre Spieltermine und das Eintragen ihrer Ergebnisse. Du musst dich also nicht ständig um den reibungslosen Ablauf deiner Liga kümmern und hast den Kopf frei für deinen Sport.</p>
+      section3: "Hier nochmal im Detail:"
+      section4: "Und wer sind wir?"
+      section4-description_html: |
+        <p>Wir sind ein Team ambitionierter Studenten, welche im Rahmen einer Bachelor-Lehrveranstaltung den Umgang mit großen Teams und Ruby-On-Rails lernen. Das Projekt begann im Oktober 2017 im Auftrag des Sportklubs des Hasso-Plattner-Institut Potsdam.</p>
+        <p>Unsere Vision ist es, den gesamten Organisationsprozess von Sportveranstaltungen zu vereinfachen. Um dir ein so angenehmes Erlebnis wie nur möglich zu ermöglichen, schwitzen wir Tag und Nacht, nicht nur beim Sport.</p>
 
   navbar:
     drop-down:
