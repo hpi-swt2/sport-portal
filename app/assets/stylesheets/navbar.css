@@ -32,6 +32,10 @@ ul.nav.navbar-nav.navbar-right {
     margin-top: 7px;
 }
 
+.nav.navbar-nav.navbar-right li.active{
+    background-color: transparent;
+}
+
 .navbar .dropdown-menu li {
     text-align: center;
 }
