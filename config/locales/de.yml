@@ -95,6 +95,7 @@ de:
         duration: "Dauer in Tagen"
         metric: "Metrik"
         initial_value: "Anfangswert"
+        gameday_duration: "Spieltagdauer"
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
@@ -176,6 +177,7 @@ de:
       quarterfinale: "Viertelfinale"
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
+      to: "bis"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
