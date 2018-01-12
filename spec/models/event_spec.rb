@@ -106,10 +106,10 @@ describe 'Event model', type: :model do
   end
 
   it "should have the attributes min and max players per team" do
-    expect(event).to be_valid 
+    expect(event).to be_valid
     event.min_players_per_team = nil
     event.max_players_per_team = nil
-    expect(event).not_to be_valid 
+    expect(event).not_to be_valid
   end
 
   it "min players per team = max players per team = 1 if it is a single player event" do
@@ -125,7 +125,7 @@ describe 'Event model', type: :model do
     expect(team_event).not_to be_valid
   end
 
-  context "TEXT!!!!!" do
+  context "with team event" do
     before :each do
       @team_event = FactoryBot.create :event, :with_teams
       @team = FactoryBot.create :team, :with_five_members

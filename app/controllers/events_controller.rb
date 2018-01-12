@@ -34,7 +34,6 @@ class EventsController < ApplicationController
     @event = event_type.new(event_params)
     set_playercount_per_team
     set_associations
-
     if @event.save
       @event.editors << current_user
       redirect_to @event, notice: 'Event was successfully created.'
