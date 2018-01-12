@@ -2,16 +2,22 @@
     .navbar .dropdown:hover .dropdown-menu {
         display: block;
     }
+
     .navbar {
         background-color: transparent !important;
     }
+
+    .navbar-collapse {
+        background-color: transparent !important;
+    }
 }
+
 @media screen and (max-width : 768px) {
     .nav > .divider-vertical {
         display: none;
     }
 
-    .navbar, .navbar-nav {
+    .navbar {
         background-color: #0f3157 !important;
     }
 
@@ -23,6 +29,28 @@
     li {
         width: 100%;
     }
+
+    .navbar-collapse ul {
+        margin-top: 0px;
+    }
+
+    .navbar-header {
+        padding-bottom: 7px;
+    }
+
+    .navbar-collapse {
+        background-color: #0f3157 !important;
+        padding-top: 5px;
+    }
+}
+
+.navbar-nav a{
+    color: white !important;
+    background-color: transparent !important;
+}
+
+.navbar-nav a:hover{
+    color: #1ba9e5 !important;
 }
 
 .not-transparent{
@@ -53,10 +81,6 @@ ul.nav.navbar-nav.navbar-right {
     background-color: transparent;
     border-color: transparent;
     width: 100%;
-}
-
-.navbar-default .navbar-brand {
-    color: darkblue;
 }
 
 .navbar-default .navbar-nav > li > a {
