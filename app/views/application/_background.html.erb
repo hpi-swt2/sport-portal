@@ -1,9 +1,8 @@
-<!--Specify for each controller and action which background to use, action specification is optional -->
 <%-
-  $background = ""
+  $background = "navbar-overlap"
   $new_background = "navbar-overlap background"
   $no_background = "navbar-overlap"
-  case request.user_agent =~ /Mobile|webOS/ # check if user is moving a mobile device
+  case (request.user_agent =~ /Mobile|webOS/) # check if user is using a mobile device
     when true   # in case it is a mobile device
       case controller_name
         when ""
@@ -11,7 +10,7 @@
         else
           $background = $no_background
       end
-    when false  # in case it is not a mobile device
+    else  # in case it is not a mobile device
       case controller_name
         when "sessions"
           case action_name
@@ -34,5 +33,5 @@
         end
     end
 %>
-<!-- return the correct background for the specific controller and action -->
+
 <%=$background%>
