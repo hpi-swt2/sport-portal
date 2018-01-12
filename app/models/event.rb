@@ -56,18 +56,17 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
-  # Everything below this is leagues only code and will be moved to Leagues.rb once there is an actual option to create Leagues AND Tourneys, etc.
-  # Joining a single Player for a single Player Event
-  # This method is only temporary until we have a working teams-infrastructure
-  def add_single_player_team(user)
-    if teams.length < max_teams
-      teams << Team.new(name: "#{user.email}"  , private: false)
-    end
+  def add_team(team)
+    teams << team
+    invalidate_schedule
   end
 
-  # This method is only temporary until we have a working teams-infrastructure
-  def remove_single_player_team(user)
-    teams.where(name: "#{user.email}").destroy_all
+  def remove_team(team)
+    teams.delete(team)
+    if single?
+      team.destroy
+    end
+    invalidate_schedule
   end
 
   def generate_schedule
@@ -79,25 +78,20 @@ class Event < ApplicationRecord
   end
 
   def add_participant(user)
-    add_single_player_team(user)
-    participants << user
-
-    invalidate_schedule
-  end
-
-  def remove_participant(user)
-    remove_single_player_team(user)
-    participants.delete(user)
-
-    invalidate_schedule
-  end
-
-  def is_full?
-
+    team = user.create_single_team
+    add_team(team)
   end
 
   def has_participant?(user)
-    participants.include?(user)
+    teams.any? { |team| team.members.include?(user) }
+  end
+
+  def owns_participating_teams?(user)
+    (user.owned_teams & teams).present?
+  end
+
+  def team_slot_available?
+    teams.count < max_teams
   end
 
   def participant_model
@@ -105,11 +99,11 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    raise NotImplementedError
+    (not has_participant?(user)) && team_slot_available?
   end
 
   def can_leave?(user)
-    single? && has_participant?(user)
+    has_participant?(user)
   end
 
   def standing_of(team)

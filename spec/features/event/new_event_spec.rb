@@ -38,10 +38,11 @@ describe 'new event page', type: :feature do
       fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
       fill_in Event.human_attribute_name(:startdate), with: (Date.tomorrow + 2).to_s
       fill_in Event.human_attribute_name(:enddate), with: (Date.tomorrow + 3).to_s
+      fill_in Event.human_attribute_name(:gameday_duration), with: '1'
 
       find('input[type="submit"]').click
 
-      expect(page).to have_current_path(/.*\/(events|tournaments|leagues)\/\d+/)
+      expect(page).to have_current_path(/.*\/leagues\/\d+/)
       expect(page).to have_content(Date.tomorrow.to_s)
       expect(page).to have_content((Date.tomorrow + 2).to_s)
       expect(page).to have_content((Date.tomorrow + 3).to_s)
