@@ -1,5 +1,6 @@
-<table class="matches-table table" id="matches-table">>
-  <% render partial: "events/schedule/table_head" %>
+
+<table class="matches-table table" id="matches-table">
+  <%= render partial: "events/schedule/table_head" %>
   <tbody>
     <% last_gameday = nil %>
     <% @matches.each do |match| %>
@@ -18,7 +19,7 @@
         </tr>
         <% last_gameday = match.gameday %>
       <% end %>
-      <%= render partial: "events/schedule_league/match_row", locals: { match: match } %>
+      <%= render partial: "events/schedule/league/match_row", locals: { match: match } %>
     <% end %>
   </tbody>
 </table>

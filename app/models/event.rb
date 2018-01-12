@@ -72,7 +72,7 @@ class Event < ApplicationRecord
       gamedays << match.gameday
     end
 
-    gamedays.uniq!
+    gamedays.uniq
   end
 
   def deadline_has_passed?

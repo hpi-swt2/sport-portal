@@ -98,13 +98,13 @@ ActiveRecord::Schema.define(version: 20171212150919) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "provider"
+    t.string "uid"
     t.boolean "admin", default: false
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
-    t.string "provider"
-    t.string "uid"
     t.text "avatar_data"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true

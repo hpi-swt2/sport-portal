@@ -8,39 +8,47 @@ $(function() {
     var $items = $(".gameday-slider-item");
     var $selected = $items.filter(".selected");
 
-    $arrowLeft.click(function() {
+    var disableArrowsIfRequired = function() {
         var index = $items.index($selected);
 
         if(index === 0)
-            return false;
+            $arrowLeft.prop("disabled", true);
+        else if($arrowLeft.prop("disabled", true)) {
+            $arrowLeft.prop("disabled", false);
+        }
 
-        $arrowRight.prop("disabled", false);
+        if(index === $items.length - 1)
+            $arrowRight.prop("disabled", true);
+        else if($arrowRight.prop("disabled", true)) {
+            $arrowRight.prop("disabled", false);
+        }
+    };
+
+    $arrowLeft.click(function() {
+        if($items.index($selected) === 0)
+            return false;
 
         $selected = $selected
             .removeClass("selected")
             .prev()
             .addClass("selected");
 
-        if(index - 1 === 0)
-            $(this).prop("disabled", true);
+        disableArrowsIfRequired();
     });
 
     $arrowRight.click(function() {
-        var index = $items.index($selected);
-
-        if(index === $items.length - 1)
+        if($items.index($selected) === $items.length - 1)
             return false;
-
-        $arrowLeft.prop("disabled", false);
 
         $selected = $selected
             .removeClass("selected")
             .next()
             .addClass("selected");
 
-        if(index === $items.length - 2)
-            $(this).prop("disabled", true);
+        disableArrowsIfRequired();
     });
+
+    disableArrowsIfRequired();
 });
 
 $(function() {
