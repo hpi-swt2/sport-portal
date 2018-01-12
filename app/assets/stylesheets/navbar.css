@@ -42,6 +42,15 @@
         background-color: #0f3157 !important;
         padding-top: 5px;
     }
+
+    .navbar-nav > li {
+        text-align: center;
+    }
+}
+
+.mobile-avatar {
+    height: 48px;
+    width: 48px;
 }
 
 .navbar-nav a{
