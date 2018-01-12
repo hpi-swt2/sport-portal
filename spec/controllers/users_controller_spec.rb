@@ -39,8 +39,14 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to be_success
     end
 
-    it "should allow normal user to view page" do
+    it "should allow not normal users to view page" do
       sign_in @user
+      get :index, params: {}
+      expect(response).to be_forbidden
+    end
+
+    it "should allow admins to view page" do
+      sign_in @admin
       get :index, params: {}
       expect(response).to be_success
     end
@@ -56,6 +62,12 @@ RSpec.describe UsersController, type: :controller do
 
     it "should allow normal user to view his page" do
       sign_in @user
+      get :show, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+
+    it "should allow other users to view his page" do
+      sign_in @other_user
       get :show, params: { id: @user.to_param }
       expect(response).to be_success
     end
