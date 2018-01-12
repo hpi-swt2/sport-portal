@@ -8,6 +8,7 @@
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true %>
       </div>
+    </div>
 
     <div class="row">
       <div class="<%= if flash[:alert].present? then "input-field-error input-field" else "input-field" end%> col s6 offset-s3">
@@ -42,4 +43,5 @@
   <div class="center text">
     <%= render 'devise/shared/links' %>
   </div>
+</div>
 </div>
