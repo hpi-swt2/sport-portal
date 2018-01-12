@@ -78,7 +78,21 @@
     <thead><tr><th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th></tr></thead>
     <tbody>
     <% @event.teams.each do |participant| %>
-      <tr><td><%= link_to_participant participant %></td></tr>
+      <tr>
+        <td><%= link_to_participant participant %></td>
+        <td>
+          <% if (@event.is_a? Rankinglist) and (@event.has_participant? current_user) %>
+            <%= link_to t('.show', default: t('helpers.links.show')),
+                        new_match_path(team_home_id: participant,
+                                       team_away_id: current_user,
+                                       event_id: @event,
+                                       score_home: nil,
+                                       score_away: nil,
+                                       place: nil),
+                        class: 'btn btn-default btn-xs' %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
     </tbody>
   </table>

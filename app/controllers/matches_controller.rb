@@ -7,7 +7,7 @@ class MatchesController < ApplicationController
 
   # GET /matches/new
   def new
-    @match = Match.new
+    @match = Match.new(match_params)
   end
 
   # GET /matches/1/edit
