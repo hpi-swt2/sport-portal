@@ -57,9 +57,5 @@ FactoryBot.define do
         FactoryBot.create_list(:team, evaluator.teams_count, events: [event])
       end
     end
-
-    factory :team_event do
-      player_type Event.player_types[:team]
-    end
   end
 end

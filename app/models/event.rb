@@ -82,19 +82,14 @@ class Event < ApplicationRecord
   end
 
   def has_participant?(user)
-    teams.each do |team|
-      if team.members.include?(user)
-        return true
-      end
-    end
-    false
+    teams.any? { |team| team.members.include?(user) }
   end
 
-  def ownes_participating_teams?(user)
+  def owns_participating_teams?(user)
     (user.owned_teams & teams).present?
   end
 
-  def available_team_slot?
+  def team_slot_available?
     teams.count < max_teams
   end
 
@@ -103,7 +98,7 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    (not has_participant?(user)) && available_team_slot?
+    (not has_participant?(user)) && team_slot_available?
   end
 
   def can_leave?(user)

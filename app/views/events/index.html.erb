@@ -31,20 +31,12 @@
                     event_path(event), class: 'btn btn-default btn-xs' %>
 
         <% if can? :leave, event %>
-          <% if event.single? %>
-            <%= link_to t('.leave', default: t("helpers.links.leave")),
+          <%= link_to t('.leave', default: t("helpers.links.leave")),
                         leave_event_path(event),
                         method: :put,
                         class: 'btn btn-xs btn-default',
+                        disabled: (not event.owns_participating_teams?(current_user)),
                         id: :leave_event_button %>
-          <% else %>
-            <%= link_to t('.leave', default: t("helpers.links.leave")),
-                        leave_event_path(event),
-                        method: :put,
-                        class: 'btn btn-xs btn-default',
-                        disabled: (not event.ownes_participating_teams?(current_user)),
-                        id: :leave_event_button %>
-          <% end %>
           <%= t('events.participating') %>
         <% end %>
 

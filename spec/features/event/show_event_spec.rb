@@ -23,13 +23,11 @@ describe "detailed event page", type: :feature do
     before(:each) do
       sign_in @user
       @event = event
-      #@team = @event.create_single_team @user
     end
 
     context "participants" do
       before(:each) do
         @event.add_participant @user
-        #@event.add_team @team
         visit event_path(@event)
       end
 

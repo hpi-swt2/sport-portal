@@ -60,11 +60,10 @@ class EventsController < ApplicationController
   # PUT /events/1/join
   def join
     if @event.single?
-      team = current_user.create_single_team
+      @event.add_participant(current_user)
     else
-      team = Team.find(event_params[:teams])
+      @event.add_team(Team.find(event_params[:teams]))
     end
-    @event.add_team(team)
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
