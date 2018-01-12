@@ -17,4 +17,4 @@ Feature: Detailed event page
   Scenario: Missing capacity
     Given a league without max teams
     When the league's page is visited
-    Then the page should show 'unlimited'
+    Then the page should show 'unbegrenzt'
