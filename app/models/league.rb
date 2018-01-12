@@ -21,6 +21,7 @@
 
 class League < Event
   validates :deadline, :startdate, :enddate, presence: true
+  validates :gameday_duration, presence: true
   validate :end_after_start, :start_after_deadline
 
   enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
@@ -51,5 +52,13 @@ class League < Event
       teams_array.rotate!
       [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
     end
+  end
+
+  def startdate_for_gameday(gameday)
+    ((gameday - 1) * gameday_duration).days.since startdate
+  end
+
+  def enddate_for_gameday(gameday)
+    startdate_for_gameday(gameday.next) - 1.day
   end
 end

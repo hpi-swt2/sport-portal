@@ -146,6 +146,7 @@ class EventsController < ApplicationController
                                     :teams,
                                     :enddate,
                                     :initial_value,
+                                    :gameday_duration,
                                     user_ids: [])
     end
 end
