@@ -42,6 +42,7 @@ class Ability
       # User
       can [:modify, :edit_profile, :update_profile, :dashboard], User, id: user_id
       cannot :create, User
+      cannot :index, User
 
       # Event
       can [:create, :read, :update, :destroy], Event, owner_id: user_id
