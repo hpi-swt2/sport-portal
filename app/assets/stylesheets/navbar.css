@@ -10,13 +10,23 @@
     .nav > .divider-vertical {
         display: none;
     }
+
     .navbar, .navbar-nav {
         background-color: #0f3157 !important;
     }
+
     img.logo-img{
         height: 38px;
         margin-top: -2px !important;
     }
+
+    li {
+        width: 100%;
+    }
+}
+
+.not-transparent{
+    background-color: #0f3157 !important;
 }
 
 img.logo-img{
