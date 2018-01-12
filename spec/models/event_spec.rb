@@ -21,7 +21,11 @@
 
 require 'rails_helper'
 
+<<<<<<< HEAD
 describe 'Event model', type: :model do
+=======
+describe "Event model", type: :model do
+>>>>>>> Schedule showing single gamedays and all at once
 
   let(:event) { FactoryBot.build(:league) }
 
@@ -106,8 +110,44 @@ describe 'Event model', type: :model do
     expect { event.can_join? user }.to raise_error NotImplementedError
   end
 
+<<<<<<< HEAD
   it "generate_Schedule? should raise a NotImplementedError" do
     event = FactoryBot.build :event
     expect { event.generate_schedule }.to raise_error NotImplementedError
+=======
+  shared_example "an event with schedule" do
+    before(:each) do
+      [1, 2, 2, 3].each do |gameday|
+        event.matches << FactoryBot.build(:match, gameday: gameday)
+      end
+    end
+
+    it "should be possible to get matches grouped by gamedays" do
+      gamedays_with_matches = event.matches_per_gameday
+
+      expect(gamedays_with_matches.keys).to eq [1, 2, 3]
+
+      expect(gamedays_with_matches.at(1).at(0).gameday).to eq 1
+      expect(gamedays_with_matches.at(2).at(0).gameday).to eq 2
+      expect(gamedays_with_matches.at(2).at(1).gameday).to eq 2
+      expect(gamedays_with_matches.at(3).at(0).gameday).to eq 3
+    end
+  end
+
+  describe "League" do
+    before(:each) do
+      assign(:event, FactoryBot.build(:league))
+    end
+
+    it_should_behave_like 'an event with schedule'
+  end
+
+  describe "Tournament" do
+    before(:each) do
+      assign(:event, FactoryBot.build(:tournament))
+    end
+
+    it_should_behave_like 'an event with schedule'
+>>>>>>> Schedule showing single gamedays and all at once
   end
 end

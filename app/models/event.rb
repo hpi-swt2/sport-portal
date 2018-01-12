@@ -51,6 +51,30 @@ class Event < ApplicationRecord
     errors.add(:startdate, I18n.t('activerecord.validations.must_be_after', other: Event.human_attribute_name(:deadline))) if startdate < deadline
   end
 
+  def matches_per_gameday
+    gamedays = []
+
+    matches.each do |match|
+      if gamedays.has_key? match.gameday
+        gamedays[match.gameday] << match
+      else
+        gamedays[match.gameday] = []
+      end
+    end
+
+    gamedays
+  end
+
+  def gamedays
+    gamedays = []
+
+    matches.each do |match|
+      gamedays << match.gameday
+    end
+
+    gamedays.uniq!
+  end
+
   def deadline_has_passed?
     deadline < Date.current
   end

@@ -178,6 +178,8 @@ de:
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
       to: "bis"
+      show_single: "Spieltage einzeln anzeigen"
+      show_all: "Alle Spieltage anzeigen"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"

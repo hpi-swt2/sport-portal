@@ -3,6 +3,8 @@
   <h1><%= t '.title' %></h1>
 </div>
 
+<%= render partial: "events/schedule_league/single" if @schedule_type == 'league' %>
+
 <table class="matches-table table" id="matches-table">
   <thead>
     <tr>

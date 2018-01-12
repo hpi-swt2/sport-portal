@@ -72,8 +72,6 @@ FactoryBot.define do
       end
     end
 
-
-
     factory :team_event do
       player_type Event.player_types[:team]
     end

@@ -1,0 +1,27 @@
+
+<div id="gameday-slider">
+  <button class="btn arrow-left" disabled>
+    &lt;
+  </button>
+  <span class="gameday">Spieltag</span>
+  <button class="btn arrow-right">
+    &gt;
+  </button>
+</div>
+
+<% @event.gamedays.each_with_index do |gameday, index| %>
+  <table class="table table-striped gameday-slider-item <%= "selected" if index == 0 %>">
+    <thead>
+      <tr>
+        <th><%= t 'events.schedule.home' %></th>
+        <th><%= t 'events.schedule.away' %></th>
+        <th><%= t 'events.schedule.score' %></th>
+        <th><%= t 'events.schedule.points' %></th>
+        <th><%= t 'events.schedule.actions', default: t('helpers.actions') %></th>
+      </tr>
+    </thead>
+    <% @matches.select{ |match| match.gameday == gameday }.each do |match| %>
+      <%= render partial: "events/schedule/match_row", locals: { match: match } %>
+    <% end %>
+  </table>
+<% end %>

@@ -318,13 +318,13 @@ RSpec.describe EventsController, type: :controller do
       event.add_participant(@user)
       event.add_participant(@other_user)
       event.generate_schedule
-      get :schedule, params: { id: event.to_param }, session: valid_session
+      get :schedule_league, params: {id: event.to_param }, session: valid_session
       expect(event.matches).not_to be_empty
     end
 
     it "returns a success response" do
       event = League.create! valid_league_attributes
-      get :schedule, params: { id: event.to_param }, session: valid_session
+      get :schedule_league, params: {id: event.to_param }, session: valid_session
       expect(response).to be_success
     end
   end
