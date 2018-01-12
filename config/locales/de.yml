@@ -146,7 +146,7 @@ de:
 
   events:
     create_event: "Event erstellen"
-    choose_event_format: "Eventsart wählen"
+    choose_event_format: "Eventart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Turnier"
     new_rankinglist: "Neue Rangliste"
