@@ -21,15 +21,10 @@
 
 class League < Event
   validates :deadline, :startdate, :enddate, presence: true
+  validates :gameday_duration, presence: true
   validate :end_after_start, :start_after_deadline
 
-  enum game_modes: [:round_robin, :two_halfs, :swiss, :danish]
-
-  def add_test_teams
-    max_teams.times do |index|
-      teams << Team.new(name: "Team #{index}", private: false)
-    end
-  end
+  enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def generate_schedule
     calculate_round_robin
@@ -59,7 +54,11 @@ class League < Event
     end
   end
 
-  def can_join?(user)
-    single_player? && (not has_participant?(user)) && (not deadline_has_passed?)
+  def startdate_for_gameday(gameday)
+    ((gameday - 1) * gameday_duration).days.since startdate
+  end
+
+  def enddate_for_gameday(gameday)
+    startdate_for_gameday(gameday.next) - 1.day
   end
 end

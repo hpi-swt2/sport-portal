@@ -22,7 +22,7 @@
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order 'gameday ASC' }, dependent: :delete_all
+  has_many :matches, -> { order '"gameday" ASC, "index" ASC' }, dependent: :delete_all
   has_and_belongs_to_many :teams
   has_and_belongs_to_many :participants, class_name: 'User'
   has_many :organizers
@@ -34,7 +34,7 @@ class Event < ApplicationRecord
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :max_players_per_team, numericality: {greater_than_or_equal_to: :min_players_per_team}
 
-  enum player_types: [:single, :team]
+  enum player_type: [:single, :team]
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -55,31 +55,94 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
-  def single_player?
-    player_type == Event.player_types[:single]
+  def add_team(team)
+    teams << team
+    invalidate_schedule
   end
 
-  def add_participant(user)
-    participants << user
+  def remove_team(team)
+    teams.delete(team)
+    if single?
+      team.destroy
+    end
+    invalidate_schedule
   end
 
-  def remove_participant(user)
-    participants.delete(user)
-  end
-
-  def has_participant?(user)
-    participants.include?(user)
-  end
-
-  def can_join?(user)
+  def generate_schedule
     raise NotImplementedError
   end
 
+  def invalidate_schedule
+    matches.delete_all
+  end
+
+  def add_participant(user)
+    team = user.create_single_team
+    add_team(team)
+  end
+
+  def has_participant?(user)
+    teams.any? { |team| team.members.include?(user) }
+  end
+
+  def owns_participating_teams?(user)
+    (user.owned_teams & teams).present?
+  end
+
+  def team_slot_available?
+    teams.count < max_teams
+  end
+
+  def participant_model
+    single? ? User : Team
+  end
+
+  def can_join?(user)
+    (not has_participant?(user)) && team_slot_available?
+  end
+
   def can_leave?(user)
-    single_player? && has_participant?(user)
+    has_participant?(user)
   end
 
   def standing_of(team)
-    'Gewinner ' + team.id.to_s
+    I18n.t 'events.overview.unkown_standing', team: team.id.to_s
+  end
+
+  # this is a method that simplifies manual testing, not intended for production use
+  # method not used at the moment since it is now testet with joined users
+  #def add_test_teams
+  #max_teams.times do |index|
+  #teams << Team.new(name: "Team #{index}", private: false)
+  #end
+  #end
+
+  def human_player_type
+    self.class.human_player_type player_type
+  end
+
+  def human_game_mode
+    self.class.human_game_mode game_mode
+  end
+
+  def fitting_teams(user)
+    fitting_teams = user.owned_teams.multiplayer
+    fitting_teams.each do |team|
+      if not (min_players_per_team <= team.members.count && max_players_per_team >= team.members.count)
+        fitting_teams.delete(team)
+      end
+    end
+    fitting_teams
+  end
+
+  class << self
+    def human_player_type(type)
+      I18n.t("activerecord.attributes.event.player_types.#{type}")
+    end
+
+    # This method should be implemented by subclasses to provide correct game mode names
+    def human_game_mode(mode)
+      I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
+    end
   end
 end

@@ -16,6 +16,8 @@ class Team < ApplicationRecord
 
   validates :private, inclusion:  [true, false]
 
+  scope :multiplayer, -> { where single: false }
+
   has_and_belongs_to_many :events
 
   has_many :team_members, source: :team_user, class_name: "TeamUser"
@@ -39,5 +41,13 @@ class Team < ApplicationRecord
 
   def in_event?
     events.exists?
+  end
+
+  # these methods allow teams to be treated like matches. see Match model
+  def winner
+    self
+  end
+
+  def last_match_of(_team)
   end
 end

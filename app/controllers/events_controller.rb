@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   helper EventsHelper
   load_and_authorize_resource
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :team_join]
 
   # GET /events
   def index
@@ -61,25 +61,38 @@ class EventsController < ApplicationController
 
   # PUT /events/1/join
   def join
-    @event.add_participant(current_user)
+    if @event.single?
+      @event.add_participant(current_user)
+    else
+      @event.add_team(Team.find(event_params[:teams]))
+    end
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
 
+  # GET /events/1/team_join
+  def team_join
+    respond_to do |format|
+      format.js
+    end
+  end
+
   # PUT /events/1/leave
   def leave
-    @event.remove_participant(current_user)
+    team = Team.find((current_user.owned_teams & @event.teams)[0].id)
+    @event.remove_team(team)
     flash[:success] = t('success.leave_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
 
   # GET /events/1/schedule
   def schedule
-    if @event.teams.empty?
-      @event.add_test_teams
+    if @event.matches.empty?
       @event.generate_schedule
+      @event.save
     end
-    @matches = @event.matches.order('gameday ASC')
+    @matches = @event.matches
+    @schedule_type = @event.type.downcase!
   end
 
   def overview
@@ -139,10 +152,12 @@ class EventsController < ApplicationController
                                     :player_type,
                                     :deadline,
                                     :startdate,
+                                    :teams,
                                     :enddate,
                                     :initial_value,
                                     :min_players_per_team,
                                     :max_players_per_team,
+                                    :gameday_duration,
                                     user_ids: [])
     end
 end

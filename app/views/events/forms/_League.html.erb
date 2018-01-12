@@ -1,13 +1,5 @@
-<%= render "events/forms/Dates", f: form%>
-
-<div class="form-group" id="event_player_types">
-  <%= form.label :player_type, class: 'control-label col-lg-2' %>
-  <div class="col-lg-10">
-    <%= form.collection_select :player_type, event_player_types_localize, :first, :second,
-                            {selected: @event.player_type, include_blank: t('events.new.select_player_type')},
-                            { class: 'form-control', id: :event_player_type}%>
-  </div>
-</div>
+<%= render 'events/forms/parts/dates', form: form %>
+<%= render 'events/forms/parts/player_type', form: form %>
 
 <div class="form-group" id="event_min_players_per_team">
   <%= form.label :min_players_per_team, class: 'control-label col-lg-2' %>
@@ -26,8 +18,15 @@
 <div class="form-group" id="event_game_modes">
   <%= form.label :game_mode, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
-    <%= form.collection_select :game_mode, league_gamemodes_localize, :first, :second,
-                            {selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
-                            { class: 'form-control', id: :league_game_mode}%>
+    <%= form.select(:game_mode, League.game_modes.map { |k, _| [League.human_game_mode(k), k] },
+                            { selected: @event.game_mode, include_blank: t('events.new.select_game_mode') },
+                            { class: 'form-control'}) %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= form.label :gameday_duration, class: 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= form.number_field :gameday_duration, class: 'form-control' %>
   </div>
 </div>
