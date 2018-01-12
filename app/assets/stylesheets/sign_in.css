@@ -30,7 +30,15 @@ a:link, a:visited, a:hover, a:active {
     border-radius: 100px;
     padding: 0 0.75rem;
 }
-
+.input-field-error {
+    border-color: orange;
+}
+.input-field-error label{
+    color: orange;
+}
+.input-field-error:focus-within {
+    border-color: orange;
+}
 .input-field label {
     left: 0.75rem;
 }
@@ -38,6 +46,14 @@ a:link, a:visited, a:hover, a:active {
 .input-field:focus-within {
     border: 1px solid #1ba9e5;
 }
+.input-field-error:focus-within {
+    border-color: orange;
+}
+
+.has-error .help-block{
+    color: orange;
+}
+
 
 [type="checkbox"].filled-in + label:after {
     border-radius: 25px;
@@ -78,6 +94,9 @@ a:link, a:visited, a:hover, a:active {
     .input-field:focus-within {
         color: white;
     }
+    .input-field-error:focus-within {
+        color: orange;
+    }
 
     .text {
         color: white;
@@ -93,4 +112,5 @@ a:link, a:visited, a:hover, a:active {
     .input-field:focus-within {
         color: #343e41;
     }
+
 }

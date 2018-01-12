@@ -1,4 +1,3 @@
-<%= render partial: "application/validation_errors", locals: {model: resource} %>
 <%= stylesheet_link_tag 'sign_in' %>
 
 <h1><%= t('.sign_up') %></h1>
@@ -6,28 +5,28 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal user', role: 'form' }) do |f| %>
       <div class="col s6 offset-s3">
     <div class="row">
-      <div class="input-field">
+      <div class="<%= error_detector(:first_name) %>">
         <%= f.label :first_name %>
         <%= f.text_field :first_name, autofocus: true %>
       </div>
-      <label><%= f.error_span(:first_name) %></label>
-      <div class="input-field">
+      <label><%= f.error_span(:last_name) %></label>
+      <div class="<%= error_detector(:last_name) %>">
         <%= f.label :last_name %>
         <%= f.text_field :last_name %>
       </div>
       <label><%= f.error_span(:last_name) %></label>
-      <div class="input-field">
+      <div class="<%= error_detector(:email) %>">
         <%= f.label :email %>
-        <%= f.email_field :email, placeholder: resource.email %>
+        <%= f.email_field :email %>
       </div>
       <label><%= f.error_span(:email) %></label>
       <% unless resource.has_omniauth? %>
-        <div class="input-field">
+        <div class="<%= error_detector(:password) %>">
           <%= f.label :password %>
           <%= f.password_field :password %>
         </div>
         <label><%= f.error_span(:password) %></label>
-        <div class="input-field">
+        <div class="<%= error_detector(:password_confirmation) %>">
           <%= f.label :password_confirmation %>
           <%= f.password_field :password_confirmation %>
         </div>
