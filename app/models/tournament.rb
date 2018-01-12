@@ -99,6 +99,7 @@ class Tournament < Event
 
     def create_match(team_home, team_away, depth, index)
       match = Match.new team_home: team_home, team_away: team_away, gameday: depth, index: index + 1, event: self
+      matches << match
       match.save!
       match
     end
