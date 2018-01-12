@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "User avatar in navbar", :type => :feature do
+RSpec.feature "User avatar in navbar", type: :feature do
   context 'user is signed in' do
     context 'the user has uploaded an avatar' do
       scenario "User sees his avatar in navbar" do

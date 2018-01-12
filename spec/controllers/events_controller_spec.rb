@@ -28,30 +28,29 @@ RSpec.describe EventsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Event. As you add validations to Event, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    {
-      name: "TT Event",
-      discipline: 0,
-      game_mode: 0,
-      player_type: Event.player_types[:single],
-      deadline: Date.current,
-      startdate: Date.current,
-      enddate: Date.current,
-      owner: @user,
-      max_teams: 20
-    }
+
+  let(:valid_event_attributes) {
+    FactoryBot.build(:event, owner: @user, max_teams: 20).attributes
   }
 
-  let(:invalid_attributes) {
-    {
-      name: "TT Event",
-      discipline: 0,
-      game_mode: 0,
-      player_type: Event.player_types[:single],
-      deadline: Date.new(2017, 11, 23),
-      startdate: Date.new(2017, 11, 23),
-      enddate: Date.new(2017, 10, 1)
-    }
+  let(:invalid_event_attributes) {
+    FactoryBot.build(:event, name: nil).attributes
+  }
+
+  let(:valid_tournament_attributes) {
+    FactoryBot.build(:tournament, owner: @user, max_teams: 20).attributes
+  }
+
+  let(:invalid_tournament_attributes) {
+    FactoryBot.build(:tournament, name: nil).attributes
+  }
+
+  let(:valid_league_attributes) {
+    FactoryBot.build(:league, owner: @user, max_teams: 20).attributes
+  }
+
+  let(:invalid_league_attributes) {
+    FactoryBot.build(:league, name: nil).attributes
   }
 
   # This should return the minimal set of values that should be in the session
@@ -78,7 +77,7 @@ RSpec.describe EventsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response if not signed in" do
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_success
     end
@@ -91,13 +90,13 @@ RSpec.describe EventsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       get :show, params: { id: event.to_param }, session: valid_session
       expect(response).to be_success
     end
 
     it "should allow normal user to view page" do
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       get :show, params: { id: event.to_param }
       expect(response).to be_success
     end
@@ -119,13 +118,13 @@ RSpec.describe EventsController, type: :controller do
   describe "GET #edit" do
     it "returns a unauthorized response" do
       sign_out @user
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       get :edit, params: { id: event.to_param }, session: valid_session
       expect(response).to be_unauthorized
     end
 
     it "should allow normal user to edit his created event" do
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       get :edit, params: { id: event.to_param }
       expect(response).to be_success
     end
@@ -133,7 +132,7 @@ RSpec.describe EventsController, type: :controller do
     it "should not allow normal user to edit others created event" do
       sign_out @user
       sign_in @other_user
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       get :edit, params: { id: event.to_param }
       expect(response).to_not be_success
     end
@@ -141,42 +140,60 @@ RSpec.describe EventsController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
+      let(:league_params) {
+        {
+          event: valid_league_attributes,
+          type: League
+        }
+      }
+      let(:tournament_params) {
+        {
+          event: FactoryBot.build(:tournament, owner: @user).attributes,
+          type: Tournament
+        }
+      }
       it "creates a new Event" do
         expect {
-          post :create, params: { event: valid_attributes }
+          post :create, params: league_params
         }.to change(Event, :count).by(1)
       end
 
       it "redirects to the created event" do
-        post :create, params: { event: valid_attributes }, session: valid_session
+        post :create, params: league_params, session: valid_session
         expect(response).to redirect_to(Event.last)
       end
 
-      it "should allow normal user to create an event" do
-        post :create, params: { event: valid_attributes }
+      it "should allow normal user to create a league" do
+        post :create, params: league_params
+        expect(response).to redirect_to(Event.last)
+      end
+
+      it "should allow normal user to create a tournament" do
+        post :create, params: tournament_params
         expect(response).to redirect_to(Event.last)
       end
     end
     context "with invalid params" do
-      it "returns success" do
-        post :create, params: { event: invalid_attributes }, session: valid_session
+      let(:league_params) {
+        {
+          event: invalid_league_attributes,
+          type: League
+        }
+      }
+      let(:tournament_params) {
+        {
+          event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
+          type: Tournament
+        }
+      }
+      it "returns success when creating a league" do
+        post :create, params: league_params, session: valid_session
         expect(response).to be_success
       end
-    end
 
-    context "with subclass params" do
-      it "should delete league subclass param" do
-        league = FactoryBot.build(:league)
-
-        post :create, params: { league: league.attributes }, session: valid_session
-        expect(controller.params[:event]).to_not be_nil
-      end
-
-      it "should delete tournament subclass param" do
-        tournament = FactoryBot.build(:tournament)
-
-        post :create, params: { tournament: tournament.attributes }, session: valid_session
-        expect(controller.params[:event]).to_not be_nil
+      it "returns success when creating a tournament" do
+        post :create, params: tournament_params, session: valid_session
+        expect(response).to be_success
       end
     end
   end
@@ -192,7 +209,7 @@ RSpec.describe EventsController, type: :controller do
       }
 
       it "updates the requested event" do
-        event = Event.create! valid_attributes
+        event = Event.create! valid_event_attributes
         put :update, params: { id: event.to_param, event: new_attributes }, session: valid_session
         event.reload
         expect(event.deadline).to eq(Date.new(2017, 11, 20))
@@ -201,45 +218,65 @@ RSpec.describe EventsController, type: :controller do
       end
 
       it "redirects to the event" do
-        event = Event.create! valid_attributes
-        put :update, params: { id: event.to_param, event: valid_attributes }, session: valid_session
+        event = Event.create! valid_event_attributes
+        put :update, params: { id: event.to_param, event: valid_event_attributes }, session: valid_session
         expect(response).to redirect_to(event)
       end
 
       it "should allow normal user to update his created event" do
-        event = Event.create! valid_attributes
-        put :update, params: { id: event.to_param, event: valid_attributes }
+        event = Event.create! valid_event_attributes
+        put :update, params: { id: event.to_param, event: valid_event_attributes }
         expect(response).to redirect_to(event)
       end
 
       it "should not allow normal user to update others created events" do
         sign_out @user
         sign_in @other_user
-        event = Event.create! valid_attributes
-        put :update, params: { id: event.to_param, event: valid_attributes }
+        event = Event.create! valid_event_attributes
+        put :update, params: { id: event.to_param, event: valid_event_attributes }
         expect(response).to_not be_success
       end
     end
     context "with invalid params" do
       it "returns success" do
-        event = Event.create! valid_attributes
-        put :update, params: { id: event.to_param, event: invalid_attributes }
+        event = Event.create! valid_event_attributes
+        put :update, params: { id: event.to_param, event: invalid_event_attributes }
         expect(response).to be_success
       end
     end
   end
 
-  describe "PUT #join" do
+  shared_examples "a joinable event" do
     it "adds the user as participant to the event" do
-      event = Event.create! valid_attributes
+      event = Event.create! event_attributes
       put :join, params: { id: event.to_param }, session: valid_session
       expect(event).to have_participant(@user)
     end
   end
 
+  describe "PUT #join" do
+    context "League" do
+      let(:event_attributes) { FactoryBot.build(:league, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
+      include_examples "a joinable event"
+    end
+
+    context "Tournament" do
+      let(:event_attributes) { FactoryBot.build(:tournament, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
+      include_examples "a joinable event"
+    end
+
+    context "Rankinglist" do
+      let(:event_attributes) { FactoryBot.build(:rankinglist, owner: @user).attributes }
+      include_examples "a joinable event"
+    end
+  end
+
   describe "PUT #leave" do
+    let(:attributes_single_player_team) {
+      FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: :single).attributes
+    }
     it "remove the user as participant of the event" do
-      event = Event.create! valid_attributes
+      event = Event.create! attributes_single_player_team
       event.add_participant(@user)
       put :leave, params: { id: event.to_param }, session: valid_session
       expect(event).not_to have_participant(@user)
@@ -248,14 +285,14 @@ RSpec.describe EventsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested event" do
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       delete :destroy, params: { id: event.to_param }
       expect(response).to be_redirect
       event.destroy
     end
 
     it "redirects to the events list" do
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       delete :destroy, params: { id: event.to_param }, session: valid_session
       expect(response).to redirect_to(events_url)
     end
@@ -263,27 +300,30 @@ RSpec.describe EventsController, type: :controller do
     it "should not allow normal user to destroy events created by others" do
       sign_out @user
       sign_in @other_user
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       delete :destroy, params: { id: event.to_param }
       expect(response).to be_forbidden
     end
 
     it "should allow normal user to destroy his created event" do
-      event = Event.create! valid_attributes
+      event = Event.create! valid_event_attributes
       delete :destroy, params: { id: event.to_param }
       expect(response).to redirect_to(events_url)
     end
   end
-
-  describe "GET #schedule" do
+  #this test is only for leagues
+  describe "GET League#schedule" do
     it "should generate schedule if not existing" do
-      event = Event.create! valid_attributes
+      event = League.create! valid_league_attributes
+      event.add_participant(@user)
+      event.add_participant(@other_user)
+      event.generate_schedule
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(event.matches).not_to be_empty
     end
 
     it "returns a success response" do
-      event = Event.create! valid_attributes
+      event = League.create! valid_league_attributes
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(response).to be_success
     end
@@ -291,7 +331,7 @@ RSpec.describe EventsController, type: :controller do
 
   describe "GET #overview" do
     it "returns a success response" do
-      tournament = Tournament.create! valid_attributes
+      tournament = Tournament.create! valid_tournament_attributes
       get :overview, params: { id: tournament.to_param }, session: valid_session
       expect(response).to be_success
     end

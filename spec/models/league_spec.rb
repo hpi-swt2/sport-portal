@@ -38,6 +38,7 @@ describe "League model", type: :model do
     #The following line creates a hash in this matter {team=> occurrences of team} i.e. {Team:1 => 2, Team:2 =>2, etc.}
     let(:all_teams_with_occurrences) { Hash[(home_teams + away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
     subject { matches }
+
     it "has correct amount of teams" do
       expect(league.teams.length).to be 5
     end
@@ -57,13 +58,13 @@ describe "League model", type: :model do
         expect(occurrence).to be 4
       end
     end
-    
-      it "does only let half as many matches as teams play per gameday" do
-        5.times do |gameday|
-          gameday+=1 #gamedays are from 1 to 5 not 0 to 4
-          gameday_matches = matches.select{|match| match.gameday==gameday}
-          expect(gameday_matches.length).to be 2
-        end
+
+    it "does only let half as many matches as teams play per gameday" do
+      5.times do |gameday|
+        gameday += 1 #gamedays are from 1 to 5 not 0 to 4
+        gameday_matches = matches.select { |match| match.gameday == gameday }
+        expect(gameday_matches.length).to be 2
       end
+    end
   end
 end

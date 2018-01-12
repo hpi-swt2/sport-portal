@@ -28,7 +28,7 @@ class Ability
   def initialize(user)
     alias_action :schedule, :overview, to: :read
     alias_action :update, :destroy, to: :modify
-    alias_action :create, :read, :update, :destroy, to: :crud
+    alias_action :create_from_type, to: :create
 
     can :read, :all
     cannot :read, Team, private: true
@@ -44,7 +44,7 @@ class Ability
       cannot :create, User
 
       # Event
-      can :crud, Event, owner_id: user_id
+      can [:create, :read, :update, :destroy], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
       can :schedule, Event

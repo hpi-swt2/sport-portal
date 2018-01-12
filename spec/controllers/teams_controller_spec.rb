@@ -99,7 +99,7 @@ end
       sign_in @other_user
       team = Team.create! valid_attributes
       bypass_rescue
-      expect{
+      expect {
         get :edit, params: { id: team.to_param }
       }.to raise_error(CanCan::AccessDenied)
 
@@ -317,10 +317,9 @@ end
       team.owners << still_another_user
 
       expect {
-        post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_ownership: "delete_ownership"}
+        post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_ownership: "delete_ownership" }
       }.to change(team.owners, :count).by(-2)
-      end
-
+    end
 
     it 'does not allow unauthorized access' do
       team = Team.create! valid_attributes
@@ -330,7 +329,7 @@ end
       team.owners << another_user
 
       expect {
-        post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, subject.current_user.id], delete_ownership: "delete_ownership"}
+        post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, subject.current_user.id], delete_ownership: "delete_ownership" }
       }.to change(team.owners, :count).by(-1)
     end
 
@@ -362,7 +361,7 @@ end
       team.owners << subject.current_user
       expect(team.members.length).to eq(3)
 
-      post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_membership: "delete_membership"}
+      post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], delete_membership: "delete_membership" }
       team.reload
       expect(team.members.length).to eq(1)
     end
@@ -379,7 +378,7 @@ end
 
       expect(team.owners.length).to eq(1)
 
-      post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], assign_ownership: "assign_ownership"}
+      post :perform_action_on_multiple_members, params: { id: team.id, members: [another_user.id, still_another_user.id], assign_ownership: "assign_ownership" }
       team.reload
       expect(team.owners.length).to eq(3)
     end

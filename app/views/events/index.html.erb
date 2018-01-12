@@ -1,6 +1,12 @@
 <%- model_class = Event -%>
 <div class="page-header">
-  <h1><%= t '.title', :default => model_class.model_name.human(:count => :many).titleize %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human(:count => :many).titleize %>
+    <% if can? :create, Event %>
+        <%= link_to t('helpers.links.new'),
+                    new_event_path,
+                    :class => 'btn btn-primary' %>
+    <% end %>
+  </h1>
 </div>
 <table class="table table-striped">
   <thead>
@@ -15,7 +21,7 @@
   <% @events.each do |event| %>
       <tr>
         <td><%= link_to event.name, event_path(event) %></td>
-        <td><%= event.game_mode %></td>
+        <td><%= event.human_game_mode %></td>
         <td><%= event.max_teams %></td>
         <td><%= event.deadline %></td>
         <td><%= event.startdate %></td>
@@ -57,12 +63,6 @@
   <% end %>
   </tbody>
 </table>
-
-<% if can? :create, Event %>
-    <%= link_to t('helpers.links.new'),
-                new_event_path,
-                :class => 'btn btn-primary' %>
-<% end %>
 
 <br>
 <form>

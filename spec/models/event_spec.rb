@@ -23,6 +23,7 @@ require 'rails_helper'
 
 describe "Event model", type: :model do
 
+
   let(:event) { FactoryBot.build(:league) }
 
   it "should not validate without name" do
@@ -96,12 +97,23 @@ describe "Event model", type: :model do
   end
 
   it "should know if it is for single players" do
-    single_player_event = FactoryBot.build :single_player_event
-    expect(single_player_event).to be_single_player
+    single_player_event = FactoryBot.build :event, :single_player
+    expect(single_player_event).to be_single
   end
 
   it "should know if its deadline has passed" do
-    passed_deadline_event = FactoryBot.build(:passed_deadline_event)
+    passed_deadline_event = FactoryBot.build :event, :passed_deadline
     expect(passed_deadline_event.deadline_has_passed?).to be true
+  end
+
+  it "can_join? should raise a NotImplementedError" do
+    event = FactoryBot.build :event
+    user = FactoryBot.build :user
+    expect { event.can_join? user }.to raise_error NotImplementedError
+  end
+
+  it "generate_Schedule? should raise a NotImplementedError" do
+    event = FactoryBot.build :event
+    expect { event.generate_schedule }.to raise_error NotImplementedError
   end
 end

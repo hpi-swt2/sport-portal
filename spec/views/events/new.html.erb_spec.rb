@@ -1,39 +1,62 @@
 require 'rails_helper'
 
-RSpec.describe "events/new", type: :view do
-  before(:each) do
-    assign(:event, FactoryBot.build(:event))
-  end
+RSpec.describe 'events/new', type: :view do
+  # This set of shared examples provides a configurable way to test event creation forms
+  shared_examples 'an event creation form' do |for_class: Event, with: []|
+    it 'should render the events form' do
+      render
+      expect(rendered).to have_css("form[action='/#{for_class.name.pluralize.downcase}'][method='post']", count: 1)
+    end
 
-  it "should render the events form" do
-    render
-    expect(rendered).to have_css("form[action='#{events_path}'][method='post']", count: 1)
-  end
+    it 'has input for default attributes' do
+      render
 
-  it "has input for all attributes" do
-    render
+      expect(rendered).to have_field(Event.human_attribute_name :name)
+      expect(rendered).to have_field(Event.human_attribute_name :description)
+      expect(rendered).to have_field(Event.human_attribute_name :game_mode)
+      expect(rendered).to have_field(Event.human_attribute_name :discipline)
+    end
 
-    assert_select "form[action=?][method=?]", events_path, "post" do
+    if with.include? :dates
+      it 'has input for dates' do
+        render
 
-      assert_select "input[name=?]", "event[name]"
+        expect(rendered).to have_field(Event.human_attribute_name :deadline)
+        expect(rendered).to have_field(Event.human_attribute_name :startdate)
+        expect(rendered).to have_field(Event.human_attribute_name :enddate)
+      end
+    end
 
-      assert_select "textarea[name=?]", "event[description]"
+    if with.include? :capacity
+      it 'has input for capacity' do
+        render
 
-      assert_select "select[name=?]", "event[type]"
-
-      assert_select "select[name=?]", "event[game_mode]"
-
-      assert_select "input[name=?]", "event[discipline]"
-
-      assert_select "input[name=?]", "event[deadline]"
-
-      assert_select "input[name=?]", "event[startdate]"
-
-      assert_select "input[name=?]", "event[enddate]"
-
-      assert_select "input[name=?]", "event[selection_type]"
-
+        expect(rendered).to have_field(Event.human_attribute_name :max_teams)
+      end
     end
   end
 
+  context 'new league' do
+    before(:each) do
+      assign(:event, FactoryBot.build(:league))
+    end
+
+    it_should_behave_like 'an event creation form', for_class: League, with: [:dates, :capacity]
+  end
+
+  context 'new tournament' do
+    before(:each) do
+      assign(:event, FactoryBot.build(:tournament))
+    end
+
+    it_should_behave_like 'an event creation form', for_class: Tournament, with: [:dates, :capacity]
+  end
+
+  context 'new rankinglist' do
+    before(:each) do
+      assign(:event, FactoryBot.build(:rankinglist))
+    end
+
+    it_should_behave_like 'an event creation form', for_class: Rankinglist
+  end
 end

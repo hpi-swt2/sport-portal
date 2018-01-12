@@ -180,7 +180,7 @@ RSpec.describe UsersController, type: :controller do
       }
 
       let(:new_admin_attributes) {
-        { first_name: valid_attributes[:first_name] + '_new'}
+        { first_name: valid_attributes[:first_name] + '_new' }
       }
 
       it 'updates the requested user' do
@@ -247,7 +247,7 @@ RSpec.describe UsersController, type: :controller do
         user = User.create! valid_attributes
         sign_in user
         new_attributes = { birthday: Date.today + 1.year }
-        patch :update_profile, params: {id: user.to_param, user: new_attributes }
+        patch :update_profile, params: { id: user.to_param, user: new_attributes }
         expect(response).to render_template(:edit_profile)
       end
     end
