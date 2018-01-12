@@ -55,16 +55,48 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
+  # Everything below this is leagues only code and will be moved to Leagues.rb once there is an actual option to create Leagues AND Tourneys, etc.
+  # Joining a single Player for a single Player Event
+  # This method is only temporary until we have a working teams-infrastructure
+  def add_single_player_team(user)
+    if teams.length < max_teams
+      teams << Team.new(name: "#{user.email}"  , private: false)
+    end
+  end
+
+  # This method is only temporary until we have a working teams-infrastructure
+  def remove_single_player_team(user)
+    teams.where(name: "#{user.email}").destroy_all
+  end
+
+  def generate_schedule
+    raise NotImplementedError
+  end
+
+  def invalidate_schedule
+    matches.delete_all
+  end
+
   def add_participant(user)
+    add_single_player_team(user)
     participants << user
+
+    invalidate_schedule
   end
 
   def remove_participant(user)
+    remove_single_player_team(user)
     participants.delete(user)
+
+    invalidate_schedule
   end
 
   def has_participant?(user)
     participants.include?(user)
+  end
+
+  def participant_model
+    single? ? User : Team
   end
 
   def can_join?(user)
@@ -80,11 +112,12 @@ class Event < ApplicationRecord
   end
 
   # this is a method that simplifies manual testing, not intended for production use
-  def add_test_teams
-    max_teams.times do |index|
-      teams << Team.new(name: "Team #{index}", private: false)
-    end
-  end
+  # method not used at the moment since it is now testet with joined users
+  #def add_test_teams
+  #max_teams.times do |index|
+  #teams << Team.new(name: "Team #{index}", private: false)
+  #end
+  #end
 
   def human_player_type
     self.class.human_player_type player_type
