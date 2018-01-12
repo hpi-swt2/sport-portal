@@ -96,12 +96,6 @@ describe 'new event page', type: :feature do
     end
   end
 
-  it "should be possible to select selection type" do
-    visit new_event_path
-
-    expect(page).to have_select('selection_type', options: [I18n.t('events.new.select_selection_type'), I18n.t('events.new.selection_type.fcfs'), I18n.t('events.new.selection_type.fcfs_queue'), I18n.t('events.new.selection_type.selection')])
-  end
-
   context 'for a tournament' do
     let(:new_path) { new_tournament_path } # /new?type=tournament
 

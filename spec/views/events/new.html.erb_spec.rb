@@ -34,6 +34,14 @@ RSpec.describe 'events/new', type: :view do
         expect(rendered).to have_field(Event.human_attribute_name :max_teams)
       end
     end
+
+    if with.include? :selection
+      it 'has input for selection type' do
+        render
+
+        expect(rendered).to have_field(Event.human_attribute_name :selection_type)
+      end
+    end
   end
 
   context 'new league' do
@@ -41,7 +49,7 @@ RSpec.describe 'events/new', type: :view do
       assign(:event, FactoryBot.build(:league))
     end
 
-    it_should_behave_like 'an event creation form', for_class: League, with: [:dates, :capacity]
+    it_should_behave_like 'an event creation form', for_class: League, with: [:dates, :capacity, :selection]
   end
 
   context 'new tournament' do
@@ -49,7 +57,7 @@ RSpec.describe 'events/new', type: :view do
       assign(:event, FactoryBot.build(:tournament))
     end
 
-    it_should_behave_like 'an event creation form', for_class: Tournament, with: [:dates, :capacity]
+    it_should_behave_like 'an event creation form', for_class: Tournament, with: [:dates, :capacity, :selection]
   end
 
   context 'new rankinglist' do

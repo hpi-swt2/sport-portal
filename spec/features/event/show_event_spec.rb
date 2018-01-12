@@ -85,8 +85,6 @@ describe "detailed event page", type: :feature do
           expect(page).to have_link(:join_event_button)
         end
 
-        it "should have a"
-
         it "should redirect me to itself when clicking the join button" do
           click_link(:join_event_button)
           expect(current_path).to eq(event_path(@event))

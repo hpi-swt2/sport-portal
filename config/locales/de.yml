@@ -99,6 +99,10 @@ de:
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
+        selection_types:
+          fcfs: "First Come First Serve"
+          fcfs_queue: "Warteschlange"
+          selection: "Teilnehmer auswählen"
       tournament:
         game_modes:
           ko: "K.-o.-System"
@@ -164,10 +168,6 @@ de:
       select_player_type: "Spielertyp auswählen"
       select_selection_type: "Auswahlverfahren auswählen"
       select_metric: "Metrik auswählen"
-      selection_type:
-        fcfs: "First come first serve"
-        fcfs_queue: "Warteschlange"
-        selection: "Teilnehmer auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"

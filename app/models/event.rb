@@ -92,6 +92,10 @@ class Event < ApplicationRecord
     invalidate_schedule
   end
 
+  def is_full?
+
+  end
+
   def has_participant?(user)
     participants.include?(user)
   end
@@ -120,6 +124,10 @@ class Event < ApplicationRecord
   #end
   #end
 
+  def human_selection_type
+    self.class.human_selection_type selection_type
+  end
+
   def human_player_type
     self.class.human_player_type player_type
   end
@@ -129,6 +137,10 @@ class Event < ApplicationRecord
   end
 
   class << self
+    def human_selection_type(type)
+      I18n.t("activerecord.attributes.event.selection_types.#{type}")
+    end
+
     def human_player_type(type)
       I18n.t("activerecord.attributes.event.player_types.#{type}")
     end
