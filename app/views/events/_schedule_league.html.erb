@@ -1,19 +1,24 @@
-<% last_gameday = nil %>
-<% @matches.each do |match| %>
-  <% if match.gameday != last_gameday %>
-    <tr class="gameday">
-      <th colspan="6">
-        <b>
-          <%= t 'events.schedule.gameday' %> <%= match.gameday %>
-        </b>
-        <b>
-          <%= "- #{ (@event.startdate_for_gameday match.gameday).to_s(:day_and_month) } " %>
-          <%= t 'events.schedule.to' %>
-          <%= " #{(@event.enddate_for_gameday match.gameday).to_s(:day_and_month)}" %>
-        </b>
-      </th>
-    </tr>
-    <% last_gameday = match.gameday %>
-  <% end %>
-  <%= render partial: "events/schedule_league/match_row", locals: { match: match } %>
-<% end %>
+<table class="matches-table table" id="matches-table">>
+  <% render partial: "events/schedule/table_head" %>
+  <tbody>
+    <% last_gameday = nil %>
+    <% @matches.each do |match| %>
+      <% if match.gameday != last_gameday %>
+        <tr class="gameday">
+          <th colspan="6">
+            <b>
+              <%= t 'events.schedule.gameday' %> <%= match.gameday %>
+            </b>
+            <b>
+              <%= "- #{ (@event.startdate_for_gameday match.gameday).to_s(:day_and_month) } " %>
+              <%= t 'events.schedule.to' %>
+              <%= " #{(@event.enddate_for_gameday match.gameday).to_s(:day_and_month)}" %>
+            </b>
+          </th>
+        </tr>
+        <% last_gameday = match.gameday %>
+      <% end %>
+      <%= render partial: "events/schedule_league/match_row", locals: { match: match } %>
+    <% end %>
+  </tbody>
+</table>

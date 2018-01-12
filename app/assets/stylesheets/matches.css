@@ -3,7 +3,37 @@
   They will automatically be included in application.css.
 */
 
-.matches-table > tbody > tr.gameday {
+.matches-table tr.gameday {
     background-color: #eeeeee;
     border-bottom: 4px solid #ddd;
+}
+
+.schedule-single-view {
+    display: none;
+}
+
+.schedule-view-switches {
+    text-align: right;
+    margin-bottom: 20px;
+}
+    .to-schedule-all-view {
+        display: none;
+    }
+
+#gameday-slider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+    #gameday-slider .gameday {
+        font-weight: bold;
+        font-size: 14pt;
+    }
+    #gameday-slider :disabled {
+        opacity: 0.3;
+    }
+
+.gameday-slider-item:not(.selected) {
+    display: none;
 }

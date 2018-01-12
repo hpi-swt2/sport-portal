@@ -1,5 +1,4 @@
 <tr>
-  <td><%= match.place %></td>
   <td><%= match.team_home ? link_to(match.team_home.name, team_path(match.team_home)) : '---' %></td>
   <td><%= match.team_away ? link_to(match.team_away.name, team_path(match.team_away)) : '---' %></td>
   <td>
@@ -16,11 +15,11 @@
     <% end %>
   </td>
   <td>
-    <%= link_to t('events.schedule_league.show', default: t('helpers.links.show')),
+    <%= link_to t('events.schedule.show', default: t('helpers.links.show')),
                 match_path(match), :class => 'btn btn-default btn-xs' %>
-    <%= link_to t('events.schedule_league.edit', default: t('helpers.links.edit')),
+    <%= link_to t('events.schedule.edit', default: t('helpers.links.edit')),
                 edit_match_path(match), :class => 'btn btn-default btn-xs' %>
-    <%= link_to t('events.schedule_league.destroy', default: t('helpers.links.destroy')),
+    <%= link_to t('events.schedule.destroy', default: t('helpers.links.destroy')),
                 match_path(match),
                 :method => :delete,
                 :data => { :confirm => t('.confirm', default: t('helpers.links.confirm')) },

@@ -3,20 +3,17 @@
   <h1><%= t '.title' %></h1>
 </div>
 
-<%= render partial: "events/schedule_league/single" if @schedule_type == 'league' %>
+<% if @schedule_type == 'league' %>
+  <div class="schedule-view-switches">
+    <button class="btn to-schedule-all-view"><%= t '.show_all' %></button>
+    <button class="btn to-schedule-single-view"><%= t '.show_single' %></button>
+  </div>
 
-<table class="matches-table table" id="matches-table">
-  <thead>
-    <tr>
-      <th><%= t '.place' %></th>
-      <th><%= t '.home' %></th>
-      <th><%= t '.away' %></th>
-      <th><%= t '.score' %></th>
-      <th><%= t '.points' %></th>
-      <th><%= t '.actions', default: t('helpers.actions') %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render ('schedule_' + @schedule_type), back_path: events_path %>
-  </tbody>
-</table>
+  <div class="schedule-single-view">
+    <%= render partial: "events/schedule/league_single" %>
+  </div>
+<% end %>
+
+<div class="schedule-all-view">
+  <%= render ('schedule_' + @schedule_type), back_path: events_path %>
+</div>
