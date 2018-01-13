@@ -42,7 +42,6 @@ describe 'League model', type: :model do
       expect(league.enddate_for_gameday 1).to eq Date.parse('30.12.2017')
     end
   end
-  
   describe 'Generating league schedule with default values' do
     let(:league) { league = FactoryBot.create(:league_with_teams)
                    league.game_mode = League.game_modes[:round_robin]
@@ -58,7 +57,6 @@ describe 'League model', type: :model do
     it 'has correct amount of teams' do
       expect(league.teams.length).to be 5
     end
-    
     it 'does create matches' do
       expect(matches.length).to be > 0
     end
@@ -66,7 +64,6 @@ describe 'League model', type: :model do
     it 'does create 10 matches' do
       expect(matches.length).to be 10
     end
-    
     it 'incorporates all teams into the schedule' do
       expect(all_teams_with_occurrences.length).to be 5
     end

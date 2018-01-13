@@ -75,7 +75,7 @@ class League < Event
     end
 
     # remove all matches that include a nil object
-    games.map { |g| g.select { |m| !m[1].nil? }}
+    games.map { |game| game.select { |match| !match[1].nil? } }
   end
 
   def startdate_for_gameday(gameday)
