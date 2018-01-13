@@ -87,7 +87,7 @@ de:
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Anzahl Teams"
+        max_teams: "Teilnehmeranzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
