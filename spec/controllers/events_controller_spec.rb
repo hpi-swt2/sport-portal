@@ -63,6 +63,8 @@ RSpec.describe EventsController, type: :controller do
     @other_user = FactoryBot.create(:user)
     @admin = FactoryBot.create(:admin)
     @event = FactoryBot.build(:event)
+    @team = FactoryBot.create(:team)
+    @team.owners << @user
     @event.owner = @user
     sign_in @user
   end
@@ -246,7 +248,7 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  shared_examples "a joinable event" do
+  shared_examples "a joinable single event" do
     it "adds the user as participant to the event" do
       event = Event.create! event_attributes
       put :join, params: { id: event.to_param }, session: valid_session
@@ -254,30 +256,61 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
+  shared_examples "a joinable team event" do
+    let(:new_attributes) {
+      {
+          teams: @team
+      }
+    }
+    it "adds the user as participant to the event" do
+      event = Event.create! team_event_attributes
+      put :join, params: { id: event.to_param, event: new_attributes }, session: valid_session
+      expect(event).to have_participant(@user)
+    end
+  end
+
   describe "PUT #join" do
     context "League" do
       let(:event_attributes) { FactoryBot.build(:league, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
-      include_examples "a joinable event"
+      include_examples "a joinable single event"
+    end
+
+    context "League" do
+      let(:team_event_attributes) { FactoryBot.build(:league, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
+      include_examples "a joinable team event"
     end
 
     context "Tournament" do
       let(:event_attributes) { FactoryBot.build(:tournament, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
-      include_examples "a joinable event"
+      include_examples "a joinable single event"
+    end
+
+    context "Tournament" do
+      let(:team_event_attributes) { FactoryBot.build(:tournament, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
+      include_examples "a joinable team event"
     end
 
     context "Rankinglist" do
       let(:event_attributes) { FactoryBot.build(:rankinglist, owner: @user).attributes }
-      include_examples "a joinable event"
+      include_examples "a joinable single event"
+    end
+  end
+
+  describe "GET #team_join" do
+    let(:attributes_multi_player_team) { FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: Event.player_types[:team]).attributes }
+    it "returns javascript for the modal" do
+      event = Event.create! attributes_multi_player_team
+      get :team_join, xhr: true, params: { id: event.to_param }, session: valid_session, format: :js
+      expect(response.content_type).to eq "text/javascript"
     end
   end
 
   describe "PUT #leave" do
-    let(:attributes_single_player_team) {
-      FactoryBot.build(:event, owner: @user, max_teams: 20, player_type: :single).attributes
-    }
-    it "remove the user as participant of the event" do
-      event = Event.create! attributes_single_player_team
-      event.add_participant(@user)
+    let(:event_attributes) { FactoryBot.build(:league, owner: @user, max_teams: 20, player_type: Event.player_types[:single]).attributes }
+    it "removes the user as participant of the event" do
+      event = Event.create! event_attributes
+      sign_in @user
+      put :join, params: { id: event.to_param }, session: valid_session
       put :leave, params: { id: event.to_param }, session: valid_session
       expect(event).not_to have_participant(@user)
     end
@@ -311,10 +344,13 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
-
+  #this test is only for leagues
   describe "GET League#schedule" do
     it "should generate schedule if not existing" do
       event = League.create! valid_league_attributes
+      event.add_participant(@user)
+      event.add_participant(@other_user)
+      event.generate_schedule
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(event.matches).not_to be_empty
     end

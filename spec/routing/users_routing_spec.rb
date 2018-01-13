@@ -19,6 +19,10 @@ RSpec.describe UsersController, type: :routing do
       expect(get: "/users/1/dashboard").to route_to("users#dashboard", id: "1")
     end
 
+    it "routes to #notifications" do
+      expect(get: "/users/1/notifications").to route_to("users#notifications", id: "1")
+    end
+
     it "routes to #sign_up to #new" do
       expect(get: "/my/users/sign_up").to route_to("users#new")
     end

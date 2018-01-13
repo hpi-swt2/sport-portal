@@ -22,11 +22,16 @@
         <tr class="gameday">
           <th colspan="6">
             <b>
-              <%= t '.gameday' %> <%= match.gameday %>
+              <%= t 'events.schedule.gameday' %> <%= match.gameday %>
+            </b>
+            <b>
+              <%= "- #{ (@event.startdate_for_gameday match.gameday).to_s(:day_and_month) } " %>
+              <%= t 'events.schedule.to' %>
+              <%= " #{(@event.enddate_for_gameday match.gameday).to_s(:day_and_month)}" %>
             </b>
           </th>
         </tr>
-        <% last_gameday = match.gameday %>
+      <% last_gameday = match.gameday %>
     <% end %>
   <tr>
     <td><%= match.place %></td>
