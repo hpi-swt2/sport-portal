@@ -91,7 +91,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'font-awesome-rails'
 
 # Gem for nested fields inside forms
-# https://github.com/lailsonbm/awesome_nested_fields 
+# https://github.com/lailsonbm/awesome_nested_fields
 gem 'awesome_nested_fields'
 
 group :development, :test do

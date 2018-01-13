@@ -48,7 +48,7 @@ class Match < ApplicationRecord
   end
 
   def select_results_by_score(score_comparison)
-    game_results.select { |current_result| current_result.score_home.nil? || current_result.score_away.nil? false : send(score_comparison, current_result.score_home, current_result.score_away) }
+    game_results.select { |current_result| (current_result.score_home.nil? || current_result.score_away.nil?) ? false : send(score_comparison, current_result.score_home, current_result.score_away) }
   end
 
   def wins_home

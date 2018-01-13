@@ -10,7 +10,7 @@ RSpec.describe "matches/_form", type: :view do
 
     expect(rendered).to have_css("form[action='#{match_path(@match)}'][method='post']", count: 1)
   end
-  
+
   it "has score home and score away input fields" do
     render
 
