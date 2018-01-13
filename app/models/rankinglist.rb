@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id               :integer          not null, primary key
+#  name             :string
+#  description      :text
+#  discipline       :string
+#  player_type      :integer          not null
+#  max_teams        :integer
+#  game_mode        :integer          not null
+#  type             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  startdate        :date
+#  enddate          :date
+#  deadline         :date
+#  gameday_duration :integer
+#  owner_id         :integer
+#  initial_value    :float
+#
+
 # For schema information see Event
 
 class Rankinglist < Event
@@ -5,8 +27,4 @@ class Rankinglist < Event
 
   player_type = Event.player_types[:single]
   enum game_mode: [:elo, :win_loss, :true_skill]
-
-  def can_join?(user)
-    not has_participant?(user)
-  end
 end

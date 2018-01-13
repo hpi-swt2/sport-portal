@@ -9,12 +9,15 @@
 #  description   :text
 #  kind_of_sport :string
 #  private       :boolean
+#  single        :boolean          default(FALSE)
 #
 
 class Team < ApplicationRecord
   validates :name, presence: true
 
   validates :private, inclusion:  [true, false]
+
+  scope :multiplayer, -> { where single: false }
 
   has_and_belongs_to_many :events
 

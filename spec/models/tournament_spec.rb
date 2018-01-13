@@ -17,6 +17,7 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
 #
 
 require 'rails_helper'

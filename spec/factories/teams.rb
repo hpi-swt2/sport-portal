@@ -9,6 +9,7 @@
 #  description   :text
 #  kind_of_sport :string
 #  private       :boolean
+#  single        :boolean          default(FALSE)
 #
 
 FactoryBot.define do

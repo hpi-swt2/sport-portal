@@ -17,6 +17,7 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
 #
 
 class Tournament < Event
@@ -24,11 +25,6 @@ class Tournament < Event
   validate :end_after_start, :start_after_deadline
 
   enum game_mode: [:ko, :ko_group, :double_elimination]
-
-
-  def can_join?(user)
-    single? && (not has_participant?(user)) && (not deadline_has_passed?)
-  end
 
   def standing_of(team)
     last_match = finale.last_match_of team
