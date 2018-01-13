@@ -81,6 +81,10 @@ class User < ApplicationRecord
     self.provider = nil
   end
 
+  def name
+    name = first_name + " " + last_name
+  end
+
   class << self
     def new_with_session(_, session)
       super.tap do |user|

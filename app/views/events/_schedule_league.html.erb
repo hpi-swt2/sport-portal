@@ -1,0 +1,45 @@
+<% last_gameday = nil %>
+<% @matches.each do |match| %>
+  <% if match.gameday != last_gameday %>
+    <tr class="gameday">
+      <th colspan="6">
+        <b>
+          <%= t '.gameday' %> <%= match.gameday + 1 %>
+        </b>
+      </th>
+    </tr>
+    <% last_gameday = match.gameday %>
+  <% end %>
+  <tr>
+    <td><%= match.place %></td>
+    <td><%= match.team_home ? link_to(match.team_home.name, team_path(match.team_home)) : '---' %></td>
+    <td><%= match.team_away ? link_to(match.team_away.name, team_path(match.team_away)) : '---' %></td>
+    <td class="text-center">
+      <% match.game_results.each do |result| %>
+        <%= result.score_home ? result.score_home : '-' %>
+        :
+        <%= result.score_away ? result.score_away : '-' %>
+        <br/>
+      <% end %>
+    </td>
+    <td>
+      <%= form_for match, url: update_points_match_path(match), html: {method: "put"} do |f| %>
+        <%= f.text_field :points_away, class: 'input-sm', style: 'width: 50px' %>
+        :
+        <%= f.text_field :points_home, class: 'input-sm', style: 'width: 50px' %>
+        <%= f.submit t('helpers.links.save'), :class => 'btn btn-default btn-xs' %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to t('.show', default: t('helpers.links.show')),
+                  match_path(match), :class => 'btn btn-default btn-xs' %>
+      <%= link_to t('.edit', default: t('helpers.links.edit')),
+                  edit_match_path(match), :class => 'btn btn-default btn-xs' %>
+      <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+                  match_path(match),
+                  :method => :delete,
+                  :data => { :confirm => t('.confirm', default: t('helpers.links.confirm')) },
+                  :class => 'btn btn-xs btn-danger' %>
+    </td>
+  </tr>
+<% end %>

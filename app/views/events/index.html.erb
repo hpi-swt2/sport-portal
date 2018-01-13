@@ -1,9 +1,12 @@
-<p id="notice"><%= notice %></p>
-
-
 <%- model_class = Event -%>
 <div class="page-header">
-  <h1><%= t '.title', :default => model_class.model_name.human(:count => :many).titleize %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human(:count => :many).titleize %>
+    <% if can? :create, Event %>
+        <%= link_to t('helpers.links.new'),
+                    new_event_path,
+                    :class => 'btn btn-primary' %>
+    <% end %>
+  </h1>
 </div>
 <table class="table table-striped">
   <thead>
@@ -18,7 +21,7 @@
   <% @events.each do |event| %>
       <tr>
         <td><%= link_to event.name, event_path(event) %></td>
-        <td><%= event.game_mode %></td>
+        <td><%= event.human_game_mode %></td>
         <td><%= event.max_teams %></td>
         <td><%= event.deadline %></td>
         <td><%= event.startdate %></td>
@@ -27,21 +30,21 @@
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       event_path(event), :class => 'btn btn-default btn-xs' %>
 
-          <% if can? :join, event %>
-              <% if event.users.include?(current_user) %>
-                  <%= link_to t('.leave', :default => t("helpers.links.leave")),
-                              join_event_path(event),
-                              :method => :put,
-                              :class => 'btn btn-xs btn-default',
-                              id: :leave_event_button %>
-                  Participating
-              <% else %>
-                  <%= link_to t('.join', :default => t("helpers.links.join")),
-                              join_event_path(event),
-                              :method => :put,
-                              :class => 'btn btn-xs btn-default',
-                              id: :join_event_button %>
-              <% end %>
+          <% if can? :leave, event %>
+            <%= link_to t('.leave', :default => t("helpers.links.leave")),
+                        leave_event_path(event),
+                        :method => :put,
+                        :class => 'btn btn-xs btn-default',
+                        id: :leave_event_button %>
+            <%= t('events.participating') %>
+          <% end %>
+
+          <% if can? :join, event%>
+            <%= link_to t('.join', :default => t("helpers.links.join")),
+                        join_event_path(event),
+                        :method => :put,
+                        :class => 'btn btn-xs btn-default',
+                        id: :join_event_button %>
           <% end %>
 
           <% if can? :edit, event %>
@@ -60,12 +63,6 @@
   <% end %>
   </tbody>
 </table>
-
-<% if can? :create, Event %>
-    <%= link_to t('.new', :default => t("helpers.links.new")),
-                new_event_path,
-                :class => 'btn btn-primary' %>
-<% end %>
 
 <br>
 <form>

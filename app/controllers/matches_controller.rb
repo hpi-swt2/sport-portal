@@ -59,6 +59,7 @@ class MatchesController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def match_params
       params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id, game_results_attributes: [:id, :_destroy, :score_home, :score_away])
+        .merge(team_home_type: 'Team', team_away_type: 'Team')
     end
 
     def match_points_params

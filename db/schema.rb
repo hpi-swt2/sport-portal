@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208150236) do
+ActiveRecord::Schema.define(version: 20171212150919) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20171208150236) do
     t.date "deadline"
     t.integer "gameday_duration"
     t.integer "owner_id"
+    t.float "initial_value"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -65,6 +66,9 @@ ActiveRecord::Schema.define(version: 20171208150236) do
     t.integer "points_home"
     t.integer "points_away"
     t.integer "gameday"
+    t.string "team_home_type", default: "Team"
+    t.string "team_away_type", default: "Team"
+    t.integer "index"
     t.index ["event_id"], name: "index_matches_on_event_id"
   end
 
@@ -77,7 +81,7 @@ ActiveRecord::Schema.define(version: 20171208150236) do
     t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
-  create_table "team_users", id: false, force: :cascade do |t|
+  create_table "team_users", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
     t.boolean "is_owner"

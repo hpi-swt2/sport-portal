@@ -17,29 +17,24 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
 #
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order 'gameday ASC' }, dependent: :delete_all
+  has_many :matches, -> { order '"gameday" ASC, "index" ASC' }, dependent: :delete_all
   has_and_belongs_to_many :teams
-  validates :name, :discipline, :game_mode, presence: true
-  validates :name, :discipline, :game_mode, :player_type, presence: true
-  validates :deadline, :startdate, :enddate, presence: true
-  validates :max_teams, numericality: { greater_than_or_equal_to: 0 } # this validation will be moved to League.rb once leagues are being created and not general event objects
-  validate :end_after_start
-  enum player_types: [:single, :team]
-
-  def self.types
-    %w(Tournament League)
-  end
-
+  has_and_belongs_to_many :participants, class_name: 'User'
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
-  scope :active, -> { where('deadline >= ?', Date.current) }
+  scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  has_and_belongs_to_many :users
+  validates :name, :discipline, :game_mode, :player_type,  presence: true
+
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+
+  enum player_type: [:single, :team]
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -48,44 +43,98 @@ class Event < ApplicationRecord
 
   def end_after_start
     return if enddate.blank? || startdate.blank?
-    if enddate < startdate
-      errors.add(:enddate, "must be after startdate.")
-    end
+    errors.add(:enddate, I18n.t('activerecord.validations.must_be_after', other: Event.human_attribute_name(:startdate))) if enddate < startdate
+  end
+
+  def start_after_deadline
+    return if startdate.blank? || deadline.blank?
+    errors.add(:startdate, I18n.t('activerecord.validations.must_be_after', other: Event.human_attribute_name(:deadline))) if startdate < deadline
+  end
+
+  def deadline_has_passed?
+    deadline < Date.current
   end
 
   # Everything below this is leagues only code and will be moved to Leagues.rb once there is an actual option to create Leagues AND Tourneys, etc.
-
-  def add_test_teams
-    max_teams.times do |index|
-      teams << FactoryBot.create(:team)
+  # Joining a single Player for a single Player Event
+  # This method is only temporary until we have a working teams-infrastructure
+  def add_single_player_team(user)
+    if teams.length < max_teams
+      teams << Team.new(name: "#{user.email}"  , private: false)
     end
+  end
+
+  # This method is only temporary until we have a working teams-infrastructure
+  def remove_single_player_team(user)
+    teams.where(name: "#{user.email}").destroy_all
   end
 
   def generate_schedule
-    calculate_gamedays
+    raise NotImplementedError
   end
 
-  def gamedays
-    size = teams.length
-    size.even? ? size - 1 : size
+  def invalidate_schedule
+    matches.delete_all
   end
 
-  def calculate_gamedays
-    teams1 = teams.to_a
-    teams2 = teams1.reverse
-    team_len = teams.length
-    gamedays.times do |gameday|
-      matched_teams = []
-      (team_len).times do |teamindex|
-        team_1 = teams1[teamindex]
-        team_2 = teams2[(gameday + teamindex) % team_len]
-        unless (team_1 == team_2) || matched_teams.include?(team_1) || matched_teams.include?(team_2)
-          matches << Match.new(team_home: team_1, team_away: team_2, gameday: gameday)
-        end
-        matched_teams << team_1
-        matched_teams << team_2
-      end
+  def add_participant(user)
+    add_single_player_team(user)
+    participants << user
+
+    invalidate_schedule
+  end
+
+  def remove_participant(user)
+    remove_single_player_team(user)
+    participants.delete(user)
+
+    invalidate_schedule
+  end
+
+  def has_participant?(user)
+    participants.include?(user)
+  end
+
+  def participant_model
+    single? ? User : Team
+  end
+
+  def can_join?(user)
+    raise NotImplementedError
+  end
+
+  def can_leave?(user)
+    single? && has_participant?(user)
+  end
+
+  def standing_of(team)
+    I18n.t 'events.overview.unkown_standing', team: team.id.to_s
+  end
+
+  # this is a method that simplifies manual testing, not intended for production use
+  # method not used at the moment since it is now testet with joined users
+  #def add_test_teams
+  #max_teams.times do |index|
+  #teams << Team.new(name: "Team #{index}", private: false)
+  #end
+  #end
+
+  def human_player_type
+    self.class.human_player_type player_type
+  end
+
+  def human_game_mode
+    self.class.human_game_mode game_mode
+  end
+
+  class << self
+    def human_player_type(type)
+      I18n.t("activerecord.attributes.event.player_types.#{type}")
     end
-    self.save
+
+    # This method should be implemented by subclasses to provide correct game mode names
+    def human_game_mode(mode)
+      I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
+    end
   end
 end

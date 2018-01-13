@@ -1,3 +1,5 @@
+require 'simplecov'
+
 require 'capybara/email'
 
 module DataHelper
@@ -7,6 +9,8 @@ module DataHelper
     @users = []
     @accounts = []
     @named = {}
+    @tournaments = []
+    @leagues = []
     @current_user = nil
   end
 
@@ -51,6 +55,54 @@ module DataHelper
 
   def single_user
     get_single_object(@users)
+  end
+
+  def create_league(options = {})
+    @leagues << FactoryBot.create(:league, options)
+    @leagues.last
+  end
+
+  def build_league(options = {})
+    @leagues << FactoryBot.build(:league, options)
+    @leagues.last
+  end
+
+  def create_league_named(name, options = {})
+    add_named_object name, create_league(options)
+  end
+
+  def build_league_named(name, options = {})
+    add_named_object name, build_league(options)
+  end
+
+  def league_named(name)
+    get_named_object name, League
+  end
+
+  def single_league
+    get_single_object(@leagues)
+  end
+
+  def create_tournament(options = {})
+    @tournaments << FactoryBot.create(:tournament, options)
+    @tournaments.last
+  end
+
+  def build_tournament(options = {})
+    @tournaments << FactoryBot.build(:tournament, options)
+    @tournaments.last
+  end
+
+  def create_tournament_named(name, options = {})
+    add_named_object name, create_tournament(options)
+  end
+
+  def tournament_named(name)
+    get_named_object name, Tournament
+  end
+
+  def single_tournament
+    get_single_object @tournaments
   end
 
   def create_team(options = {})

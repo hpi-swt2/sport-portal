@@ -24,14 +24,26 @@ FactoryBot.define do
     sequence(:name) { |n| "name#{n}" }
     sequence(:description) { |n| "description#{n}" }
     sequence(:discipline) { |n| "discipline#{n}" }
-    player_type Event.player_types[Event.player_types.keys.sample]
+    player_type :team
     # game mode is only defined for leagues atm change this and refactor tests once they are streamlined
     game_mode League.game_modes[League.game_modes.keys.sample]
     max_teams { rand(1..30) }
-    deadline Date.tomorrow
-    startdate Date.today + 2
-    enddate Date.today + 3
+
     association :owner, factory: :user, strategy: :build
+
+    trait :has_dates do
+      deadline { Date.current + 1 }
+      startdate { Date.current + 2 }
+      enddate { Date.current + 3 }
+    end
+
+    trait :single_player do
+      player_type Event.player_types[:single]
+    end
+
+    trait :passed_deadline do
+      deadline { Date.current - 1 }
+    end
 
     factory :event_with_teams do
       transient do
@@ -40,6 +52,12 @@ FactoryBot.define do
       after(:create) do |event, evaluator|
         FactoryBot.create_list(:team, evaluator.teams_count, events: [event])
       end
+    end
+
+
+
+    factory :team_event do
+      player_type Event.player_types[:team]
     end
   end
 end

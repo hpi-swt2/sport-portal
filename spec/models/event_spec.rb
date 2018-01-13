@@ -23,6 +23,7 @@ require 'rails_helper'
 
 describe "Event model", type: :model do
 
+
   let(:event) { FactoryBot.build(:league) }
 
   it "should not validate without name" do
@@ -49,7 +50,7 @@ describe "Event model", type: :model do
   end
 
   it "should have an attribute startdate" do
-    date = Date.tomorrow + 1
+    date = Date.current + 2
     expect(event.startdate).to eq date
 
     expect(event).to be_valid
@@ -58,7 +59,7 @@ describe "Event model", type: :model do
   end
 
   it "should have an attribute enddate" do
-    date = Date.tomorrow + 2
+    date = Date.current + 3
     expect(event.enddate).to eq date
 
     expect(event).to be_valid
@@ -68,7 +69,7 @@ describe "Event model", type: :model do
 
   it "should not be possible to have an enddate, that is before the startdate" do
     expect(event).to be_valid
-    event.enddate = Date.today
+    event.enddate = Date.current
     expect(event).not_to be_valid
   end
 
@@ -86,7 +87,28 @@ describe "Event model", type: :model do
   end
 
   it "should have an association participants" do
-    relation = Event.reflect_on_association(:users)
+    relation = Event.reflect_on_association(:participants)
     expect(relation.macro).to eq :has_and_belongs_to_many
+  end
+
+  it "should know if it is for single players" do
+    single_player_event = FactoryBot.build :event, :single_player
+    expect(single_player_event).to be_single
+  end
+
+  it "should know if its deadline has passed" do
+    passed_deadline_event = FactoryBot.build :event, :passed_deadline
+    expect(passed_deadline_event.deadline_has_passed?).to be true
+  end
+
+  it "can_join? should raise a NotImplementedError" do
+    event = FactoryBot.build :event
+    user = FactoryBot.build :user
+    expect { event.can_join? user }.to raise_error NotImplementedError
+  end
+
+  it "generate_Schedule? should raise a NotImplementedError" do
+    event = FactoryBot.build :event
+    expect { event.generate_schedule }.to raise_error NotImplementedError
   end
 end

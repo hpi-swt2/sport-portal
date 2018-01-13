@@ -1,0 +1,59 @@
+<% level = 0 %>
+<% while true %>
+  <% this_level_matches = @matches.select { |match| match.gameday == level } %>
+  <% if this_level_matches.length == 0 %>
+    <% break %>
+  <% end %>
+
+
+  <tr class="gameday">
+    <th colspan="6">
+      <b>
+        <% if this_level_matches[0].depth == 0 %>
+          <%= t('events.schedule.finale') %>
+        <% elsif this_level_matches[0].depth == 1 %>
+          <%= t('events.schedule.semifinale') %>
+        <% elsif this_level_matches[0].depth == 2 %>
+          <%= t('events.schedule.quarterfinale') %>
+        <% elsif this_level_matches[0].depth == 3 %>
+          <%= t('events.schedule.eighthfinale') %>
+        <% else %>
+          <%= t('events.schedule.preliminaries', round: (level + 1).to_s) %>
+        <% end %>
+      </b>
+    </th>
+  </tr>
+
+  <% this_level_matches.each do |match| %>
+
+    <tr>
+      <td><%= match.place %> <%= match.index %></td>
+      <td><%= match.team_home.winner != nil ? link_to(match.team_home.name, team_path(match.team_home.winner)) : link_to('Gewinner ' + match.team_home.name, match_path(match.team_home)) %></td>
+      <td><%= match.team_away.winner != nil ? link_to(match.team_away.name, team_path(match.team_away.winner)) : link_to('Gewinner ' + match.team_away.name, match_path(match.team_away)) %></td>
+      <td class="text-center">
+        <% match.game_results.each do |result| %>
+          <%= result.score_home ? result.score_home : '-' %>
+          :
+          <%= result.score_away ? result.score_away : '-' %>
+          <br/>
+        <% end %>
+      </td>
+      <td>
+        <%= form_for match, url: update_points_match_path(match), html: {method: "put"}, namespace: "match_#{match.id}" do |f| %>
+          <%= f.text_field :points_home, class: 'input-sm', style: 'width: 50px' %>
+          :
+          <%= f.text_field :points_away, class: 'input-sm', style: 'width: 50px' %>
+          <%= f.submit t('helpers.links.save'), class: 'btn btn-default btn-xs', id: "save_points_#{match.id}" %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to t('.show', default: t('helpers.links.show')),
+                    match_path(match), :class => 'btn btn-default btn-xs' %>
+        <%= link_to t('.edit', default: t('helpers.links.edit')),
+                    edit_match_path(match), :class => 'btn btn-default btn-xs' %>
+      </td>
+    </tr>
+  <% end %>
+
+  <% level += 1 %>
+<% end %>
