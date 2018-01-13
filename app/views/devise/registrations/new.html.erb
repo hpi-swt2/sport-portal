@@ -9,7 +9,7 @@
         <%= f.label :first_name %>
         <%= f.text_field :first_name, autofocus: true %>
       </div>
-      <label><%= f.error_span(:last_name) %></label>
+      <label><%= f.error_span(:first_name) %></label>
       <div class="<%= error_detector(:last_name) %>">
         <%= f.label :last_name %>
         <%= f.text_field :last_name %>
