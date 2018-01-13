@@ -1,5 +1,4 @@
 h1 {
-    font-family: Proxima Nova Bold;
     text-align: center;
 }
 
@@ -14,7 +13,6 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .btn {
-    font-family: Proxima Nova Bold;
     font-size: 15px;
     color: #FFFFFF;
     letter-spacing: 0;
@@ -32,7 +30,15 @@ a:link, a:visited, a:hover, a:active {
     border-radius: 100px;
     padding: 0 0.75rem;
 }
-
+.input-field-error {
+    border-color: orange;
+}
+.input-field-error label{
+    color: orange;
+}
+.input-field-error:focus-within {
+    border-color: orange;
+}
 .input-field label {
     left: 0.75rem;
 }
@@ -80,6 +86,9 @@ a:link, a:visited, a:hover, a:active {
     .input-field:focus-within {
         color: white;
     }
+    .input-field-error:focus-within {
+        color: orange;
+    }
 
     .text {
         color: white;
@@ -95,4 +104,5 @@ a:link, a:visited, a:hover, a:active {
     .input-field:focus-within {
         color: #343e41;
     }
+
 }

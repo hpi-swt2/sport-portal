@@ -18,14 +18,14 @@
   </head>
 
   <!--Display the background -->
-  <body class="<%= render partial: "application/background"%> navbar-overlap">
+  <body class="<%= render partial: "application/background"%>">
 
     <div class="container">
       <%= render partial: "application/navbar" %>
 
       <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
       <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
-      <%= bootstrap_flash %>
+      <%= if controller_name != "sessions" and action_name != "new" then bootstrap_flash end%>
 
       <%# Render content of views %>
       <%= yield %>

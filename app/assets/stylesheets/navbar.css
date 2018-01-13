@@ -17,7 +17,7 @@
         display: none;
     }
 
-    .navbar {
+    .navbar.navbar-fixed-top {
         background-color: #0f3157 !important;
     }
 
