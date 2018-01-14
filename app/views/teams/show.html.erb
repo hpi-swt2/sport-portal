@@ -55,24 +55,26 @@
                         :method => 'get',
                         :class => 'btn btn-default btn-xs' %>
             <% if (@team.owners.include? current_user) %>
-                <% if (@team.owners.include? member) %>
-                    <%= link_to t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
-                                delete_ownership_team_path(@team, :team_member => member.id),
-                                :method => 'post',
-                                :class => 'btn btn-default btn-xs',
-                                :disabled => (cannot? :delete_ownership, @team) %>
-                <% else %>
-                    <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
-                                assign_ownership_team_path(@team, :team_member => member.id),
-                                :method => 'post',
-                                :class => 'btn btn-default btn-xs',
-                                :disabled => (cannot? :assign_ownership, @team)%>
-                <% end %>
+              <% if (@team.owners.include? member) %>
+                <%= link_to t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
+                            delete_ownership_team_path(@team, :team_member => member.id),
+                            :method => 'post',
+                            :class => 'btn btn-default btn-xs',
+                            :disabled => (cannot? :delete_ownership, @team) %>
+              <% else %>
+                <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
+                            assign_ownership_team_path(@team, :team_member => member.id),
+                            :method => 'post',
+                            :class => 'btn btn-default btn-xs',
+                            :disabled => (cannot? :assign_ownership, @team)%>
+              <% end %>
+              <% if (!member.id.equal? current_user.id) %>
                 <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
                             delete_membership_team_path(@team, :team_member => member.id),
                             :method => 'post',
                             :class => 'btn btn-xs btn-danger',
                             :disabled => (cannot? :delete_membership, @team, member.id)%>
+              <% end %>
             <% end %>
           </td>
         </tr>
