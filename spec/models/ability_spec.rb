@@ -25,6 +25,7 @@ RSpec.describe Ability, type: :model do
       describe 'for public teams' do
         let(:team) { FactoryBot.build :team }
         it { is_expected.to be_able_to(:read, team) }
+        it { is_expected.to_not be_able_to(:send_emails_to_team_members, team) }
       end
 
       describe 'for private teams' do
@@ -39,6 +40,7 @@ RSpec.describe Ability, type: :model do
       describe 'for public teams' do
         let(:team) { FactoryBot.build :team }
         it { is_expected.to be_able_to(:read, team) }
+        it { is_expected.to_not be_able_to(:send_emails_to_team_members, team) }
       end
 
       describe 'for private teams with two owners and five members' do
@@ -49,12 +51,14 @@ RSpec.describe Ability, type: :model do
           let(:user) { team.members[0] }
           it { is_expected.to be_able_to(:read, team) }
           it { is_expected.to be_able_to(:assign_membership_by_email, team) }
+          it { is_expected.to be_able_to(:send_emails_to_team_members, team) }
         end
 
         describe 'when is an owner' do
           let(:user) { team.owners[0] }
           it { is_expected.to be_able_to(:read, team) }
           it { is_expected.to be_able_to(:assign_membership_by_email, team) }
+          it { is_expected.to be_able_to(:send_emails_to_team_members, team) }
         end
       end
     end
