@@ -57,6 +57,12 @@ de:
         Egal ob du eine Fußballliga, ein Tischtennisturnier oder vielleicht sogar ein Turnier für dein Lieblingsonlinespiel organisieren willst, auf unserer Plattform ist das alles kein Problem. Bei uns kannst du deiner Fantasie freien Lauf lassen.<br /><br />
         Da auch für uns der Sport an erster Stelle steht, wollen wir dir natürlich so viel Mehraufwand wie nur möglich ersparen. Deswegen musst du nicht jedes einzelne Spiel selbst überwachen. Unser vollautomatisierter Email-Service erinnert alle Spieler selbstständig an ihre Spieltermine und das Eintragen ihrer Ergebnisse. Du musst dich also nicht ständig um den reibungslosen Ablauf deiner Liga kümmern und hast den Kopf frei für deinen Sport.<br /><br />
       section3: "Hier nochmal im Detail:"
+      section3-card1-header: "Turnier"
+      section3-card1-description_html:
+        <li>K.O.-System</li><li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Automatische oder manuelle Paarungen</li>
+      section3-card2-header: "Liga"
+      section3-card2-description_html:
+        <li>Liga und Schweizer System</li><li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Automatische oder manuelle Paarungen</li><li>Automatische Spielplangenerierung</li><li>Erinnerung via Email</li><li>Automatische Punktevergabe</li><li>Statistiken</li>
       section4: "Und wer sind wir?"
       section4-description_html: |
         Wir sind ein Team ambitionierter Studenten, welche im Rahmen einer Bachelor-Lehrveranstaltung den Umgang mit großen Teams und Ruby-On-Rails lernen. Das Projekt begann im Oktober 2017 im Auftrag des Sportklubs des Hasso-Plattner-Institut Potsdam.<br /><br />
