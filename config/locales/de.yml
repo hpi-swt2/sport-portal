@@ -51,44 +51,6 @@ de:
     title: "Dashboard für %{name}"
 
   activerecord:
-    attributes:
-      team:
-        id: "ID"
-        name: "Name"
-        description: "Beschreibung"
-        kind_of_sport: "Sportart"
-        private: "Privassdt"
-        created_at: "Erstellt am"
-        updated_at: "Aktualisiert am"
-      match:
-        id: "ID"
-        date: "Datum"
-        place: "Ort"
-        score_home: "Heim-Ergebnis"
-        score_away: "Auswärts-Ergebnis"
-        created_at: "Erstellt am"
-        updated_at: "Aktualisiert am"
-        team_home_id: "Heim-Team"
-        team_away_id: "Auswärts-Team"
-      event:
-        name: "Name"
-        description: "Beschreibung"
-        discipline: "Disziplin"
-        player_type: "Spieltyp"
-        max_teams: "max. Anzahl Spieler"
-        game_mode: "Spielmodus"
-        type: "Typ"
-        created_at: "Erstellt am"
-        deadline: "Frist"
-        startdate: "Beginn"
-        enddate: "Ende"
-        updated_at: "Aktualisiert am"
-        duration_in_days: "Dauer in Tagen"
-      user:
-        id: "ID"
-        first_name: "Vorname"
-        last_name: "Nachname"
-        created_at: "Erstellt am"
     models:
       match:
         one: "Spiel"
@@ -120,6 +82,24 @@ de:
         id: "ID"
 
     attributes:
+      match:
+        id: "ID"
+        date: "Datum"
+        place: "Ort"
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
+        created_at: "Erstellt am"
+        updated_at: "Aktualisiert am"
+        team_home_id: "Heim-Team"
+        team_away_id: "Auswärts-Team"
+      team:
+        id: "ID"
+        name: "Name"
+        description: "Beschreibung"
+        kind_of_sport: "Sportart"
+        private: "Privassdt"
+        created_at: "Erstellt am"
+        updated_at: "Aktualisiert am"
       event:
         name: "Name"
         description: "Beschreibung"
@@ -158,6 +138,8 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+        id: "ID"
+        created_at: "Erstellt am"
     validations:
       must_be_after: "darf nicht vor %{other} sein."
 
@@ -273,7 +255,8 @@ de:
   users:
     avatar:
       errors:
-        too_large: "is too large (max is 2 MB)"
+        too_large: "ist zu groß (max. 2 MB)"
+        wrong_type: "hat den falschen Datentyp."
 
     edit:
       cancel_this_account: "Diesen Account löschen"

@@ -1,13 +1,13 @@
 <%- model_class = Team -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human(:count => :many).titleize %></h1>
+  <h1><%= t '.title', default: model_class.model_name.human(count: :many).titleize %></h1>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <% [:id, :name, :created_at].each do |attribute| %>
+        <th><%= model_class.human_attribute_name(attribute) %></th>
+      <% end %>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
