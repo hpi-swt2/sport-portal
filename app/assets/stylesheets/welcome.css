@@ -36,29 +36,31 @@ body>.container {
     padding-bottom: calc(84 / 888 * 100%);
     margin-bottom: calc(-84 / 888 * 100%);
     z-index: 4;
-    padding-top: calc(84 / 796 * 100%);
+    padding-top: calc(84 / 888 * 100%);
 }
 
 .section.orange-basketball  {
     background-image: url(https://owncloud.hpi.de/index.php/s/rkCBUFNVV5Pw9kE/download);
     min-height: calc(746 / 1200 * 100vw);
-    padding-bottom: calc(100 / 888 * 100%);
-    margin-bottom: calc(-100 / 888 * 100%);
+    padding-bottom: calc(100 / 746 * 100%);
+    margin-bottom: calc(-100 / 746 * 100%);
     z-index: 3;
-    padding-top: calc(100 / 796 * 100%);
+    padding-top: calc(100 / 746 * 100%);
 }
 
 .section.white-nothing  {
     min-height: calc(800 / 1200 * 100vw);
     z-index: 2;
-    padding-top: calc(100 / 796 * 100%);
+    padding-top: calc(100 / 800 * 100%);
 }
 
 .section.purple-skating  {
     background-image: url(https://owncloud.hpi.de/index.php/s/BokofLs1yk3wJlL/download);
     min-height: calc(756 / 1200 * 100vw);
+    padding-bottom: calc(104 / 756 * 100%);
+    margin-bottom: calc(-104 / 756 * 100%);
     z-index: 1;
-    padding-top: calc(100 / 796 * 100%);
+    padding-top: calc(104 / 800 * 100%);
 }
 
 h1 {
@@ -72,6 +74,14 @@ h1 {
 .myButton {
     border-radius: 100px;
     font-size: 24px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    height: auto;
+}
+
+.myButton-small {
+    border-radius: 100px;
+    font-size: 16px;
     color: #FFFFFF;
     letter-spacing: 0;
     height: auto;
@@ -102,6 +112,64 @@ h1 {
 
 p {
     font-size: 1.4rem;
+}
+
+.content-is-cards {
+    display: flex;
+    justify-content: center;
+}
+
+.myCollapsible {
+    margin: 15px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+.myCollapsible .collapsible-header {
+    border: none;
+    background-color: #F3F9FF;
+    margin-top: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.myCollapsible .collapsible-body {
+    border: none;
+    background-color: #F3F9FF;
+}
+
+#myCollapsibleIcon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    background-color: #1CA9E5;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-card {
+    width: 300px;
+    background-color: #F3F9FF;
+    margin: 0 10px;
+    padding: 10px 20px;
+}
+
+ul.myList>li {
+    list-style-type: disc;
+    list-style-position: inside;
+    padding: 5px 0;
+}
+
+.rotated {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 /*============================
@@ -169,6 +237,13 @@ p {
         padding-bottom: calc(100 / 888 * 100%);
         margin-bottom: calc(-100 / 888 * 100%);
         padding-top: calc(100 / 796 * 100% + 60px);
+    }
+
+    .section.purple-skating  {
+        padding-bottom: calc(104 / 756 * 100%);
+        margin-bottom: calc(-104 / 756 * 100%);
+        padding-top: calc(104 / 756 * 100% + 60px);
+
     }
 }
 
