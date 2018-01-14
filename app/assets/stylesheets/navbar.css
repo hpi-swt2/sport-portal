@@ -11,3 +11,39 @@
 .navbar .dropdown-menu li {
     text-align: center;
 }
+.navbar-default {
+    background-color: transparent;
+    border-color: transparent;
+    width: 100%;
+}
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: white;
+    background-color: transparent;
+    border-style: none;
+    background: none;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #1ba9e5;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #1ba9e5;
+}
+
+img.avatar {
+    height: 20px;
+    width: 20px;
+    object-fit: cover;
+}

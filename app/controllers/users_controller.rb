@@ -1,5 +1,6 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
+  helper_method :error_detector
   load_and_authorize_resource only: [:dashboard]
   load_resource only: [:link, :unlink]
 
@@ -147,4 +148,10 @@ class UsersController < Devise::RegistrationsController
       user.save!
       redirect_to user_path(user), notice: I18n.t('devise.registrations.unlink_success')
     end
+
+    private
+
+      def error_detector(attribute)
+        if resource.errors.include?(attribute) then "input-field-error input-field" else "input-field" end
+      end
 end
