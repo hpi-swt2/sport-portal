@@ -2,6 +2,18 @@ h1 {
     text-align: center;
 }
 
+@-webkit-keyframes autofill {
+    to {
+        color: #A7B2B9;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
 input, input:focus{
     border-bottom: none !important;
     box-shadow: none !important;
