@@ -32,6 +32,9 @@ class Ability
 
     can :read, :all
     cannot :read, Team, private: true
+    cannot :index, User
+    cannot :show, User
+    can :create, User
 
     if user.present?
       user_id = user.id
@@ -40,7 +43,7 @@ class Ability
       can :create, :all
 
       # User
-      can [:modify, :edit_profile, :update_profile, :dashboard], User, id: user_id
+      can [:show, :modify, :edit_profile, :update_profile, :dashboard], User, id: user_id
       cannot :create, User
 
       # Event
