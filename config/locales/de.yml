@@ -87,7 +87,7 @@ de:
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Anzahl Teams"
+        max_teams: "Teilnehmeranzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
@@ -95,6 +95,7 @@ de:
         duration: "Dauer in Tagen"
         metric: "Metrik"
         initial_value: "Anfangswert"
+        gameday_duration: "Spieltagdauer"
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
@@ -135,14 +136,17 @@ de:
   success:
     updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
+    join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
+    leave_team_event: "Du hast das Event %{event} erfolgreich  mit deinem Team %{team} verlassen."
 
   error:
     update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
+    no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
     create_event: "Event erstellen"
-    choose_event_format: "Eventsart wählen"
+    choose_event_format: "Eventart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Turnier"
     new_rankinglist: "Neue Rangliste"
@@ -150,6 +154,8 @@ de:
     League: "Liga"
     Rankinglist: "Rangliste"
     show_events: "Alle Events anzeigen"
+    join_team_event: "Event %{event} mit einem Team beitreten"
+    choose_team: "Ein Team auswählen"
     participating: "Beigetreten"
     metric: "Metrik"
     show:
@@ -171,11 +177,14 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      first_half: "Hinrunde"
+      second_half: "Rückrunde"
       finale: "Finale"
       semifinale: "Halbfinale"
       quarterfinale: "Viertelfinale"
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
+      to: "bis"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
