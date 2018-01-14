@@ -399,16 +399,8 @@ RSpec.describe EventsController, type: :controller do
           @team2.home_matches << @match4
           @team3.away_matches << @match4
 
-          p @team1
-          p @team2
-          p @team3
-
           get :ranking, params: { id: @event.to_param }, session: valid_session
           @ranking_entries = controller.instance_variable_get(:@ranking_entries)
-
-          p @ranking_entries
-          # TODO Construct an event, generate its schedule, fill two matches with results, get ranking
-          # TODO and save ranking_entries instance variable
         end
 
         it 'should calculate the rank of a participant based on his points correctly' do
@@ -435,7 +427,7 @@ RSpec.describe EventsController, type: :controller do
         it 'should sum up the own goals of a participant correctly' do
           expect(@ranking_entries.first.goals).to eq(20)
         end
-        it 'should sum up the goals for the other side of a participant correctly'do
+        it 'should sum up the goals for the other side of a participant correctly' do
           expect(@ranking_entries.first.goals_against).to eq(11)
         end
         it 'should calculate the number of points of a participant correctly' do

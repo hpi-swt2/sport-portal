@@ -96,21 +96,20 @@ class EventsController < ApplicationController
     # TODO Either add the possibility to calculate rankings for single-player events
     # TODO or replace `teams` with the to be introduced EventParticipant superclass
     # Leaves the Array of RankingEntry Structs empty when no teams participate in the event
-    unless @event.teams.empty?
-      for team in @event.teams
-        ranking_entry = RankingEntry.new(nil, team.name, 0, 0, 0, 0, 0, 0, 0, 0)
+    @event.teams.each do |team|
+      ranking_entry = RankingEntry.new(nil, team.name, 0, 0, 0, 0, 0, 0, 0, 0)
 
-        # Considers only the team's home matches that belong to the event
-        home_matches_in_event = team.home_matches & @event.matches
-        parse_matches_data_into_ranking_entry team, ranking_entry, home_matches_in_event, :home
+      event_matches = @event.matches
+      # Considers only the team's home matches that belong to the event
+      home_matches_in_event = team.home_matches & event_matches
+      parse_matches_data_into_ranking_entry team, ranking_entry, home_matches_in_event, :home
 
-        # Considers only the team's away matches that belong to the event
-        away_matches_in_event = team.away_matches & @event.matches
-        parse_matches_data_into_ranking_entry team, ranking_entry, away_matches_in_event, :away
+      # Considers only the team's away matches that belong to the event
+      away_matches_in_event = team.away_matches & event_matches
+      parse_matches_data_into_ranking_entry team, ranking_entry, away_matches_in_event, :away
 
-        ranking_entry.goals_difference = ranking_entry.goals - ranking_entry.goals_against
-        @ranking_entries.push ranking_entry
-      end
+      ranking_entry.goals_difference = ranking_entry.goals - ranking_entry.goals_against
+      @ranking_entries.push ranking_entry
     end
 
     # Sorts the RankingEntries in the following order:
@@ -127,19 +126,21 @@ class EventsController < ApplicationController
 
   def parse_matches_data_into_ranking_entry(team, ranking_entry, matches, home_or_away)
     matches.each do |match|
-      match_has_score = match.score_home && match.score_away
+      score_home = match.score_home
+      score_away = match.score_away
+      match_has_score = score_home && score_away
       break unless match_has_score
 
       ranking_entry.match_count += 1
       parse_match_result_into_ranking_entry team, match, ranking_entry
 
-      if home_or_away  == :home
-        ranking_entry.goals += match.score_home
-        ranking_entry.goals_against += match.score_away
+      if home_or_away == :home
+        ranking_entry.goals += score_home
+        ranking_entry.goals_against += score_away
         ranking_entry.points += match.points_home
-      elsif home_or_away  == :away
-        ranking_entry.goals += match.score_away
-        ranking_entry.goals_against += match.score_home
+      elsif home_or_away == :away
+        ranking_entry.goals += score_away
+        ranking_entry.goals_against += score_home
         ranking_entry.points += match.points_away
       end
     end
