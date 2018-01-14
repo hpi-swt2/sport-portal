@@ -102,11 +102,13 @@ de:
 
   success:
     updated_match_points: Die Punkte dieses Matches wurden erfolgreich aktualisiert.
+    updated_appointment: "Das Spiel wurde aktualisiert."
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
 
   error:
     update_match_points: Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut.
+    update_appointment: "Das Spiel konnte nicht aktualisiert werden, versuchen Sie es erneut."
 
   events:
     create_event: "Veranstaltung erstellen"

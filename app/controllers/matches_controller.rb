@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :update_start_time, :destroy]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :update_appointment, :destroy]
 
   # GET /matches/1
   def show
@@ -44,8 +44,12 @@ class MatchesController < ApplicationController
     end
   end
 
-  def update_start_time
-    redirect_to event_schedule_path(@match.event), notice: "Der Termin für das Spiel wurde aktualisiert."
+  def update_appointment
+    if @match.update(match_params)
+      redirect_to event_schedule_path(@match.event), notice: t('success.updated_appointment')
+    else
+      redirect_to event_schedule_path(@match.event), notice: t('error.update_appointment')
+    end
   end
 
   # DELETE /matches/1
