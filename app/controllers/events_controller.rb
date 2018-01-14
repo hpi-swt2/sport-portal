@@ -100,47 +100,13 @@ class EventsController < ApplicationController
       for team in @event.teams
         ranking_entry = RankingEntry.new(nil, team.name, 0, 0, 0, 0, 0, 0, 0, 0)
 
-        # FIXME Factor out the following code for home and away matches into one generic method getting called two times
-
-        # Considers only the team's matches that belong to the event
+        # Considers only the team's home matches that belong to the event
         home_matches_in_event = team.home_matches & @event.matches
-        for home_match in home_matches_in_event
-          match_has_score = home_match.score_home && home_match.score_away
-          break unless match_has_score
-          ranking_entry.match_count += 1
-          if home_match.has_winner?
-            if home_match.winner == team
-              ranking_entry.won_count += 1
-            else
-              ranking_entry.lost_count += 1
-            end
-          else
-            ranking_entry.draw_count += 1
-          end
-          ranking_entry.goals += home_match.score_home
-          ranking_entry.goals_against += home_match.score_away
-          ranking_entry.points += home_match.points_home
-        end
+        parse_matches_data_into_ranking_entry team, ranking_entry, home_matches_in_event, :home
 
-        # Considers only the team's matches that belong to the event
+        # Considers only the team's away matches that belong to the event
         away_matches_in_event = team.away_matches & @event.matches
-        for away_match in away_matches_in_event
-          match_has_score = away_match.score_home && away_match.score_away
-          break unless match_has_score
-          ranking_entry.match_count += 1
-          if away_match.has_winner?
-            if away_match.winner == team
-              ranking_entry.won_count += 1
-            else
-              ranking_entry.lost_count += 1
-            end
-          else
-            ranking_entry.draw_count += 1
-          end
-          ranking_entry.goals += away_match.score_away
-          ranking_entry.goals_against += away_match.score_home
-          ranking_entry.points += away_match.points_away
-        end
+        parse_matches_data_into_ranking_entry team, ranking_entry, away_matches_in_event, :away
 
         ranking_entry.goals_difference = ranking_entry.goals - ranking_entry.goals_against
         @ranking_entries.push ranking_entry
@@ -156,6 +122,38 @@ class EventsController < ApplicationController
     # Adds a rank to each RankingEntry based on its position in the Array
     @ranking_entries.each_with_index do |ranking_entry, index|
       ranking_entry.rank = index + 1
+    end
+  end
+
+  def parse_matches_data_into_ranking_entry(team, ranking_entry, matches, home_or_away)
+    matches.each do |match|
+      match_has_score = match.score_home && match.score_away
+      break unless match_has_score
+
+      ranking_entry.match_count += 1
+      parse_match_result_into_ranking_entry team, match, ranking_entry
+
+      if home_or_away  == :home
+        ranking_entry.goals += match.score_home
+        ranking_entry.goals_against += match.score_away
+        ranking_entry.points += match.points_home
+      elsif home_or_away  == :away
+        ranking_entry.goals += match.score_away
+        ranking_entry.goals_against += match.score_home
+        ranking_entry.points += match.points_away
+      end
+    end
+  end
+
+  def parse_match_result_into_ranking_entry(team, match, ranking_entry)
+    if match.has_winner?
+      if match.winner == team
+        ranking_entry.won_count += 1
+      else
+        ranking_entry.lost_count += 1
+      end
+    else
+      ranking_entry.draw_count += 1
     end
   end
 
