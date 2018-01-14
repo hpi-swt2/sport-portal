@@ -171,35 +171,54 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:assign_membership_by_email, team)
   end
 
-  # If Event Abilitie tests become bigger than these 5 examples, consider using shared examples like done in the
+  # If Event Ability tests become bigger than these 5 examples, consider using shared examples like done in the
   # feature tests for index_event_spec and show_event_spec. Hardcoding for 5 cases doesn't seem too bad
-  it 'should not allow users to join leagues after their deadline has passed' do
-    event = FactoryBot.create :league, :passed_deadline
-    ability = Ability.new(@user)
-    expect(ability).not_to be_able_to(:join, event)
+  shared_examples "a past event" do
+    before(:each) do
+      @ability = Ability.new(@user)
+    end
+
+    it 'should not allow users to join' do
+      expect(@ability).not_to be_able_to(:join, event)
+    end
   end
 
-  it 'should not allow users to join leagues after their deadline has passed' do
-    event = FactoryBot.create :tournament, :passed_deadline
-    ability = Ability.new(@user)
-    expect(ability).not_to be_able_to(:join, event)
+  shared_examples "a single player event" do
+    before(:each) do
+      @ability = Ability.new(@user)
+    end
+
+    it 'should not allow users to leave if they are not participating' do
+      expect(@ability).not_to be_able_to(:leave, event)
+    end
   end
 
-  it 'should not allow users to leave leagues they are not participating in' do
-    event = FactoryBot.create :league, :single_player
-    ability = Ability.new(@user)
-    expect(ability).not_to be_able_to(:leave, event)
+  context "for time-restricted" do
+    describe "leagues" do
+      let(:event) { FactoryBot.create(:league, :passed_deadline) }
+      include_examples "a past event"
+    end
+
+    describe "tournaments" do
+      let(:event) { FactoryBot.create(:tournament, :passed_deadline) }
+      include_examples "a past event"
+    end
   end
 
-  it 'should not allow users to leave tournaments they are not participating in' do
-    event = FactoryBot.create :tournament, :single_player
-    ability = Ability.new(@user)
-    expect(ability).not_to be_able_to(:leave, event)
-  end
+  context "for single player" do
+    describe "leagues" do
+      let(:event) { FactoryBot.create(:league, :single_player) }
+      include_examples "a single player event"
+    end
 
-  it 'should not allow users to leave rankinglists they are not participating in' do
-    event = FactoryBot.create :rankinglist, :single_player
-    ability = Ability.new(@user)
-    expect(ability).not_to be_able_to(:leave, event)
+    describe "tournaments" do
+      let(:event) { FactoryBot.create(:tournament, :single_player) }
+      include_examples "a single player event"
+    end
+
+    describe "rankinglists" do
+      let(:event) { FactoryBot.create(:rankinglist, :single_player) }
+      include_examples "a single player event"
+    end
   end
 end
