@@ -30,6 +30,10 @@ class Match < ApplicationRecord
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
 
+  @@has_winner_strategy = { "most_sets" => lambda { |match| match.wins_home != match.wins_away } }
+  @@winner_strategy = { "most_sets" => lambda { |match| (match.wins_home > match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
+  @@loser_strategy = { "most_sets" => lambda { |match| (match.wins_home < match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
+
   def name
     winner_team = winner
     if winner_team.present?
@@ -49,7 +53,7 @@ class Match < ApplicationRecord
   end
 
   def select_results_by_score(score_comparison)
-    game_results.select { |current_result| (current_result.score_home.nil? || current_result.score_away.nil?) ? false : send(score_comparison, current_result.score_home, current_result.score_away) }
+	  game_results.select { |current_result| (current_result.score_home.nil? || current_result.score_away.nil?) ? false : current_result.score_home.send(score_comparison, current_result.score_away) }
   end
 
   def wins_home
@@ -61,19 +65,15 @@ class Match < ApplicationRecord
   end
 
   def has_winner?
-    wins_home != wins_away
+    @@has_winner_strategy[event.game_winrule].call(self)
   end
 
   def winner
-    if has_winner?
-      wins_home > wins_away
-    end
+	  @@winner_strategy[event.game_winrule].call(self)
   end
 
   def loser
-    if has_winner?
-      wins_home < wins_away
-    end
+	  @@loser_strategy[event.game_winrule].call(self)
   end
 
   def team_home_recursive
