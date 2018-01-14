@@ -29,13 +29,10 @@ class Ability
     alias_action :schedule, :overview, to: :read
     alias_action :update, :destroy, to: :modify
     alias_action :create_from_type, to: :create
-
     can :read, :all
     cannot :read, Team, private: true
-    cannot :index, User
-    cannot :show, User
+    cannot [:index, :show], User
     can :create, User
-
     if user.present?
       user_id = user.id
 
