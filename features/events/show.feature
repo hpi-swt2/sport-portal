@@ -13,3 +13,8 @@ Feature: Detailed event page
     Then the page header should show 'League'
     And the page should show 'Jeder gegen Jeden'
     And the page should show 'Teamteilnahme'
+
+  Scenario: Missing capacity
+    Given a league without max teams
+    When the league's page is visited
+    Then the page should show 'unbegrenzt'
