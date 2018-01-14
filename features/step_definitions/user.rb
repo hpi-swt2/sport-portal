@@ -140,3 +140,7 @@ end
 And(/^he logs out$/) do
   sign_out
 end
+
+And (/^he changes his email/) do
+  fill_in :user_email, with: 'test2@test.com'
+end
