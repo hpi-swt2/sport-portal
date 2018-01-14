@@ -102,6 +102,11 @@ de:
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
+        bestof_length: "Spielart"
+        game_winrule: "Gewinnregel"
+        points_for_win: "Punkte für Gewinn"
+        points_for_draw: "Punkte für Unentschieden"
+        points_for_lose: "Punkte für Niederlage"
       tournament:
         game_modes:
           ko: "K.-o.-System"
@@ -175,6 +180,9 @@ de:
     choose_team: "Ein Team auswählen"
     participating: "Beigetreten"
     metric: "Metrik"
+    best_of: "Best-of"
+    winrule_tooltip: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"
+    advanced: "Erweitert"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"

@@ -36,19 +36,19 @@
   <%= render "events/forms/#{@event.model_name}", form: f %>
 
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAdvancedOptions" aria-expanded="false" aria-controls="collapseAdvancedOptions">
-    Erweitert
+    <%= t('events.advanced') %>
   </button>
 
   <div class="collapse" id="collapseAdvancedOptions">
     <div class="form-group">
-      <%= f.label "Spielart", for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"%>
+      <%= f.label :bestof_length, for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: t('events.winrule_tooltip') %>
       <div id="matchtype" class="col-lg-10">
-          <%= f.select(:bestof_length, (1..8).map { |n| ["Bestof #{n}", n] }, selected: f.object.bestof_length || 1) %>
+          <%= f.select(:bestof_length, (1..8).map { |n| [ t('events.best_of') + "-#{n}", n] }, selected: f.object.bestof_length || 1) %>
       </div>
     </div>
     
     <div class="form-group">
-      <%= f.label "Gewinnregel", for: :game_winrule, :class => 'control-label col-lg-2'  %>
+      <%= f.label :game_winrule, for: :game_winrule, :class => 'control-label col-lg-2'  %>
       <div class="col-lg-10">
         <%= f.select(:game_winrule, Event.game_winrules.map {|k, v| [k.humanize, k]},
                      { :class => 'form-control' }) %>
