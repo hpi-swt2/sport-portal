@@ -126,4 +126,10 @@ RSpec.describe "teams/show", type: :view do
     render
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.leave_team'))
   end
+
+  it "doesn't render the leave button when user has no team membership" do
+    sign_in @user
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.leave_team'))
+  end
 end
