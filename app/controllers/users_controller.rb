@@ -25,7 +25,6 @@ class UsersController < Devise::RegistrationsController
   def update
     @user = User.find(params[:id])
     authorize! :update, @user
-
     unless current_user.admin?
       super
     else
@@ -86,7 +85,25 @@ class UsersController < Devise::RegistrationsController
   # All other controller methods are handled by original `Devise::RegistrationsController`
   # Views are located in `app/views/devise`
 
+  protected
+
+  # Override method of `Devise::RegistrationsController` to update without password
+  def update_resource(resource, params)
+    if unimportant_changes?(resource, params) or resource.has_omniauth?
+      resource.update_without_password(params)
+    else
+      super(resource, params)
+    end
+  end
+
   private
+
+    def unimportant_changes?(resource, params)
+      return (params[:current_password].blank? and
+          params[:password].blank? and
+          params[:password_confirmation].blank? and
+          params[:email] == resource[:email])
+    end
 
     # Overridden methods of `Devise::RegistrationsController` to permit additional model params
     def sign_up_params
@@ -100,7 +117,7 @@ class UsersController < Devise::RegistrationsController
 
     def admin_update_params
       user_params = params[:user]
-      if user_params[:password].blank?
+      if user_params[:password].blank
         user_params.delete(:password)
         user_params.delete(:password_confirmation)
       end
