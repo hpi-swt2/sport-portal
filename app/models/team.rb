@@ -16,36 +16,54 @@ class Team < ApplicationRecord
 
   validates :private, inclusion:  [true, false]
 
-  has_and_belongs_to_many :events
-
   has_many :team_members, source: :team_user, class_name: "TeamUser"
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
 
   has_many :members, through: :team_members, source: :user
   has_many :owners, through: :team_owners, source: :user
-  has_many :home_matches, as: :team_home, class_name: 'Match'
-  has_many :away_matches, as: :team_away, class_name: 'Match'
 
-  def matches
-    home_matches.or away_matches
-  end
+  has_one :participant, as: :particable, class_name: 'Participants'
 
   # validates :owners, presence: true
   # validates :members, presence: true
+
+  def initialize(*args)
+    @participant ||= Participant.new
+    super
+  end
 
   def has_multiple_owners?
     owners.length > 1
   end
 
-  def in_event?
-    events.exists?
+  # >>>>>> participating behaviour is encapsulated in Participant class
+
+  def events
+    @participant.events
   end
 
-  # these methods allow teams to be treated like matches. see Match model
+  def home_matches
+    @participant.home_matches
+  end
+
+  def away_matches
+    @participant.away_matches
+  end
+
+  def in_event?
+    @participant.in_event?
+  end
+
   def winner
-    self
+    @participant.winner
+  end
+
+  def matches
+    @participant.matches
   end
 
   def last_match_of(_team)
   end
+
+  # end of participating behaviour <<<<<<
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171212150919) do
+ActiveRecord::Schema.define(version: 20180114120616) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 20171212150919) do
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
+  end
+
+  create_table "events_participants", id: false, force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "participant_id", null: false
+    t.index ["event_id", "participant_id"], name: "index_events_participants_on_event_id_and_participant_id"
+    t.index ["participant_id", "event_id"], name: "index_events_participants_on_participant_id_and_event_id"
   end
 
   create_table "events_teams", id: false, force: :cascade do |t|
@@ -72,6 +79,14 @@ ActiveRecord::Schema.define(version: 20171212150919) do
     t.integer "event_id"
     t.index ["event_id"], name: "index_organizers_on_event_id"
     t.index ["user_id"], name: "index_organizers_on_user_id"
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "particable_type"
+    t.integer "particable_id"
+    t.index ["particable_type", "particable_id"], name: "index_participants_on_particable_type_and_particable_id"
   end
 
   create_table "team_users", force: :cascade do |t|

@@ -34,6 +34,8 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
   has_many :created_events, class_name: 'Event', primary_key: 'id', foreign_key: 'owner'
 
+  has_one :participant, as: :particable
+
   validates :first_name, presence: true
   validates_each :birthday do |record, attribute, value|
     record.errors.add(attribute, I18n.t('activerecord.models.user.errors.future_birthday')) if !value.nil? && value >= Time.now.to_date
