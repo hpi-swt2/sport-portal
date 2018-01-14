@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20180106173807) do
     t.date "deadline"
     t.integer "gameday_duration"
     t.integer "owner_id"
+    t.float "initial_value"
     t.integer "matchtype"
     t.integer "bestof_length"
     t.integer "game_winrule"
@@ -52,10 +53,17 @@ ActiveRecord::Schema.define(version: 20180106173807) do
     t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
-  create_table "matches", force: :cascade do |t|
-    t.string "place"
+  create_table "game_results", force: :cascade do |t|
     t.integer "score_home"
     t.integer "score_away"
+    t.integer "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_game_results_on_match_id"
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.string "place"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "team_home_id"
@@ -66,6 +74,7 @@ ActiveRecord::Schema.define(version: 20180106173807) do
     t.integer "gameday"
     t.string "team_home_type", default: "Team"
     t.string "team_away_type", default: "Team"
+    t.integer "index"
     t.index ["event_id"], name: "index_matches_on_event_id"
   end
 
@@ -78,7 +87,7 @@ ActiveRecord::Schema.define(version: 20180106173807) do
     t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
-  create_table "team_users", id: false, force: :cascade do |t|
+  create_table "team_users", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
     t.boolean "is_owner"
@@ -92,6 +101,7 @@ ActiveRecord::Schema.define(version: 20180106173807) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
+    t.boolean "single", default: false
   end
 
   create_table "users", force: :cascade do |t|

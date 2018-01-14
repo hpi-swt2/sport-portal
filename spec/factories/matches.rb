@@ -14,6 +14,7 @@
 #  gameday        :integer
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
+#  index          :integer
 #
 
 FactoryBot.define do
@@ -22,10 +23,15 @@ FactoryBot.define do
     association :team_away, factory: :team
     association :team_home, factory: :team
     association :event, factory: :event
-    score_home { rand(10..20) }
-    score_away { rand(1..9) }
-    gameday 0
+    gameday 1
     points_away 3
     points_home 1
+
+    factory :match_with_results do
+      after(:create) do |match|
+        create_list(:game_result, 3, match: match)
+      end
+    end
   end
+
 end

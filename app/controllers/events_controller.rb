@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
+  helper EventsHelper
   load_and_authorize_resource
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :team_join]
 
   # GET /events
   def index
@@ -17,7 +18,11 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
+    if event_type
+      @event = event_type.new
+    else
+      render :create_from_type
+    end
   end
 
   # GET /events/1/edit
@@ -26,9 +31,9 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    @event = event_type.new(event_params)
     @event.matchtype = :bestof
-    @event.owner = current_user
+    set_associations
 
     if @event.save
       @event.editors << current_user
@@ -53,28 +58,40 @@ class EventsController < ApplicationController
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
-
   # PUT /events/1/join
   def join
-    @event.add_participant(current_user)
+    if @event.single?
+      @event.add_participant(current_user)
+    else
+      @event.add_team(Team.find(event_params[:teams]))
+    end
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
 
+  # GET /events/1/team_join
+  def team_join
+    respond_to do |format|
+      format.js
+    end
+  end
+
   # PUT /events/1/leave
   def leave
-    @event.remove_participant(current_user)
+    team = Team.find((current_user.owned_teams & @event.teams)[0].id)
+    @event.remove_team(team)
     flash[:success] = t('success.leave_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
 
   # GET /events/1/schedule
   def schedule
-    if @event.teams.empty?
-      @event.add_test_teams
+    if @event.matches.empty?
       @event.generate_schedule
+      @event.save
     end
-    @matches = @event.matches.order('gameday ASC')
+    @matches = @event.matches
+    @schedule_type = @event.type.downcase!
   end
 
   def overview
@@ -86,18 +103,38 @@ class EventsController < ApplicationController
       @event = Event.find(params[:id])
     end
 
+    def set_associations
+      @event.owner = current_user
+      @event.player_type ||= Event.player_types[:single]
+    end
+
+    # Get the type of event that should be created
+    def event_type
+      return League if params[:type] == 'League'
+      return Tournament if params[:type] == 'Tournament'
+      return Rankinglist if params[:type] == 'Rankinglist'
+      params[:type]
+    end
+
     def get_shown_events_value
       params[:showAll]
     end
 
+    def map_event_on_event_types
+      [:league, :tournament, :rankinglist].each do |value|
+        delete_mapping_parameter value
+      end
+    end
+
+    def delete_mapping_parameter(event_class)
+      if params.has_key? event_class
+        params[:event] = params.delete event_class
+      end
+    end
+
     # Only allow a trusted parameter "white list" through.
     def event_params
-      if params.has_key? :league
-        params[:event] = params.delete :league
-      elsif params.has_key? :tournament
-        params[:event] = params.delete :tournament
-      end
-
+      map_event_on_event_types
       params.require(:event).permit(:name,
                                     :description,
                                     :discipline,
@@ -107,6 +144,7 @@ class EventsController < ApplicationController
                                     :player_type,
                                     :deadline,
                                     :startdate,
+                                    :teams,
                                     :enddate,
                                     :matchtype,
                                     :bestof_length,
@@ -114,6 +152,8 @@ class EventsController < ApplicationController
                                     :points_for_win,
                                     :points_for_draw,
                                     :points_for_lose,
+                                    :initial_value,
+                                    :gameday_duration,
                                     user_ids: [])
     end
 end

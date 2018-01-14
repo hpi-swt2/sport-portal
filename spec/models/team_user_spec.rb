@@ -30,14 +30,15 @@ RSpec.describe TeamUser, type: :model do
       team.members << user
       team.members << another_user
 
-      ability = Ability.new(user, another_user.id)
+      ability = Ability.new(user)
 
-      assert ability.cannot?(:delete_membership, team)
+      assert ability.cannot?(:delete_membership, team, another_user.id)
     end
 
     it "should be able to delete himself from team" do
-      ability = Ability.new(user, user.id)
-      assert ability.can?(:delete_membership, team)
+      ability = Ability.new(user)
+      team.members << user
+      assert ability.can?(:delete_membership, team, user.id)
     end
 
     it "should be able to assign team ownership to users and delete it" do
@@ -55,15 +56,15 @@ RSpec.describe TeamUser, type: :model do
     it "should be able to delete members from team" do
       another_user = FactoryBot.create :user
       team.members << another_user
-      ability = Ability.new(user, another_user.id)
+      ability = Ability.new(user)
       team.owners << user
-      assert ability.can?(:delete_membership, team)
+      assert ability.can?(:delete_membership, team, another_user.id)
     end
 
     it "should not be able to delete himself from team if he's the only owner" do
       user = team.owners.first
-      ability = Ability.new(user, user.id)
-      assert ability.cannot?(:delete_membership, team)
+      ability = Ability.new(user)
+      assert ability.cannot?(:delete_membership, team, user.id)
     end
   end
 end

@@ -14,6 +14,7 @@
 #  gameday        :integer
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
+#  index          :integer
 #
 
 require 'rails_helper'
