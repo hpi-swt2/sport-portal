@@ -102,11 +102,11 @@ class EventsController < ApplicationController
       event_matches = @event.matches
       # Considers only the team's home matches that belong to the event
       home_matches_in_event = team.home_matches & event_matches
-      parse_matches_data_into_ranking_entry team, ranking_entry, home_matches_in_event, :home
+      parse_matches_data_into_ranking_entry team, ranking_entry, home_matches_in_event, :parse_match_details_for_home
 
       # Considers only the team's away matches that belong to the event
       away_matches_in_event = team.away_matches & event_matches
-      parse_matches_data_into_ranking_entry team, ranking_entry, away_matches_in_event, :away
+      parse_matches_data_into_ranking_entry team, ranking_entry, away_matches_in_event, :parse_match_details_for_away
 
       ranking_entry.goals_difference = ranking_entry.goals - ranking_entry.goals_against
       @ranking_entries.push ranking_entry
@@ -124,25 +124,17 @@ class EventsController < ApplicationController
     end
   end
 
-  def parse_matches_data_into_ranking_entry(team, ranking_entry, matches, home_or_away)
+  def parse_matches_data_into_ranking_entry(team, ranking_entry, matches, parse_match_details_for_home_or_away)
     matches.each do |match|
       score_home = match.score_home
       score_away = match.score_away
       match_has_score = score_home && score_away
-      break unless match_has_score
+      next unless match_has_score
 
       ranking_entry.match_count += 1
       parse_match_result_into_ranking_entry team, match, ranking_entry
 
-      if home_or_away == :home
-        ranking_entry.goals += score_home
-        ranking_entry.goals_against += score_away
-        ranking_entry.points += match.points_home
-      elsif home_or_away == :away
-        ranking_entry.goals += score_away
-        ranking_entry.goals_against += score_home
-        ranking_entry.points += match.points_away
-      end
+      send(parse_match_details_for_home_or_away, ranking_entry, score_home, score_away, match)
     end
   end
 
@@ -156,6 +148,18 @@ class EventsController < ApplicationController
     else
       ranking_entry.draw_count += 1
     end
+  end
+
+  def parse_match_details_for_home(ranking_entry, score_home, score_away, match)
+    ranking_entry.goals += score_home
+    ranking_entry.goals_against += score_away
+    ranking_entry.points += match.points_home
+  end
+
+  def parse_match_details_for_away(ranking_entry, score_home, score_away, match)
+    ranking_entry.goals += score_away
+    ranking_entry.goals_against += score_home
+    ranking_entry.points += match.points_away
   end
 
   def overview
