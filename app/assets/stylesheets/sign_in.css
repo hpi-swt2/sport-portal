@@ -31,13 +31,13 @@ a:link, a:visited, a:hover, a:active {
     padding: 0 0.75rem;
 }
 .input-field-error {
-    border-color: orange;
+    border-color: #d45a1d;
 }
 .input-field-error label{
-    color: orange;
+    color: #d45a1d;
 }
 .input-field-error:focus-within {
-    border-color: orange;
+    border-color: #d45a1d;
 }
 .input-field label {
     left: 0.75rem;
@@ -47,11 +47,11 @@ a:link, a:visited, a:hover, a:active {
     border: 1px solid #1ba9e5;
 }
 .input-field-error:focus-within {
-    border-color: orange;
+    border-color: #d45a1d;
 }
 
 .has-error .help-block{
-    color: orange;
+    color: #d45a1d;
 }
 
 
@@ -95,7 +95,7 @@ a:link, a:visited, a:hover, a:active {
         color: white;
     }
     .input-field-error:focus-within {
-        color: orange;
+        color: #d45a1d;
     }
 
     .text {
