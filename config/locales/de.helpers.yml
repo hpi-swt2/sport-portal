@@ -16,24 +16,51 @@ de:
       confirm: "Bist du sicher?"
       destroy: "Löschen"
       new: "Neu"
+      create: "Erstellen"
       edit: "Bearbeiten"
       show: "Anzeigen"
+      save: "Speichern"
+      email: "E-Mail senden"
+      assign_ownership: "Als Captain hinzufügen"
+      delete_ownership: "Als Captain löschen"
+      delete_membership: "Aus dem Team entfernen"
+      leave_team: "Team verlassen"
+      confirm_leave_team: "Bist du sicher, dass du das Team verlassen möchtest?"
+      save: "Speichern"
+      join: "Beitreten"
+      leave: "Verlassen"
+      send: "Senden"
+      close: "Schließen"
     titles:
       edit: "%{model} bearbeiten"
       save: "%{model} speichern"
       new: "%{model} erstellen"
       delete: "%{model} löschen"
     submit:
-      create: Erstelle %{model}
-      submit: Speichere %{model}
-      update: Aktualisiere %{model}
+      create: "Erstelle %{model}"
+      submit: "Speichere %{model}"
+      update: "Aktualisiere %{model}"
+      delete: "Lösche %{model}"
     select:
-      prompt: Bitte wähle
+      prompt: "Bitte wähle"
     teams:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
       private: "Privat"
+      cant_destroy: "%{resource_name} kann nicht gelöscht werden, da es noch an Events teilnimmt."
+      multiple_actions:
+        apply_action: "Wende folgende Aktion auf Ausgewählte an:"
+        select_all: "Alle auswählen"
+        deselect_all: "Alle abwählen"
+        confirmation: "Aktion erfolgreich ausgeführt."
+        failure_on: "Aktion erfolgreich ausgeführt, außer auf: %{user_names}"
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
       destroyed: "%{resource_name} wurde erfolgreich entfernt."
+    label:
+      user:
+        birthday: "Geburtstag"
+        telephone_number: "Telefonnummer"
+        telegram_username: "Telegram Benutzername"
+        favourite_sports: "Lieblingssportarten"

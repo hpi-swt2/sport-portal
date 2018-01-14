@@ -1,3 +1,5 @@
+ENV['HOST_URL'] = 'sport-portal-dev.herokuapp.com'
+
 # Configure airbrake, error reporting to Errbit
 # https://github.com/airbrake/airbrake
 Airbrake.configure do |config|
@@ -19,6 +21,8 @@ unless ENV['ERRBIT_API_KEY']
   puts "[WARNING] ERRBIT_API_KEY env variable was not found, not sending any data to Errbit!"
   Airbrake.add_filter(&:ignore!)
 end
+
+require "shrine/storage/s3"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -51,6 +55,8 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
+
+  config.assets.prefix = '/dev-assets'
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -110,4 +116,31 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Configure Shrine file upload to use AWS S3 file storage
+  s3_options = {
+      bucket:            ENV.fetch("S3_BUCKET"),
+      region:            ENV.fetch("S3_REGION"),
+      access_key_id:     ENV.fetch("S3_ACCESS_KEY_ID"),
+      secret_access_key: ENV.fetch("S3_SECRET_ACCESS_KEY"),
+  }
+
+  Shrine.storages = {
+      cache: Shrine::Storage::S3.new(prefix: "cache", **s3_options),
+      store: Shrine::Storage::S3.new(prefix: "store", **s3_options),
+  }
+
+  # Mailer setup
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default charset: 'utf-8'
+  config.action_mailer.smtp_settings = {
+      address: ENV.fetch('SMTP_ADDRESS'),
+      port: ENV.fetch('SMTP_PORT').to_i,
+      domain: ENV.fetch('SMTP_DOMAIN'),
+      authentication: ENV.fetch('SMTP_AUTHENTICATION'),
+      enable_starttls_auto: true,
+      user_name: ENV.fetch('SMTP_USERNAME'),
+      password: ENV.fetch('SMTP_PASSWORD')
+  }
 end

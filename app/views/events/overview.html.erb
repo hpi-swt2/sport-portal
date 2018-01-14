@@ -1,0 +1,21 @@
+<%- model_class = Event -%>
+<div class="page-header">
+  <h1><%= t('events.overview.title') %></h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><%= I18n.t "events.overview.teamColumn" %></th>
+    <th><%= I18n.t "events.overview.standingColumn" %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @event.teams.each do |team| %>
+      <tr>
+        <td><%= link_to team.name, team_path(team) %></td>
+        <td><%= @event.standing_of team %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

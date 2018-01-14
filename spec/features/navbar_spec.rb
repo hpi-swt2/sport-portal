@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Page has navbar", :type => :feature do
+RSpec.feature "Page has navbar", type: :feature do
   context 'when the user is signed in' do
     before(:each) do
       @user = FactoryBot.create(:user)

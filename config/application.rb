@@ -11,7 +11,7 @@ module SportPortal
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-  	config.generators.javascript_engine = :js
+    config.generators.javascript_engine = :js
 
     # Set default language to German
     config.i18n.default_locale = :de
@@ -19,5 +19,9 @@ module SportPortal
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    # Add custom fonts-asset route
+    Rails.application.config.assets.paths << "#{Rails.root}/app/assets/fonts"
+    Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf .otf)
   end
 end

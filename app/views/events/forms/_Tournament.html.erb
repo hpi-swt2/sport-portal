@@ -1,0 +1,11 @@
+<%= render 'events/forms/parts/dates', form: form%>
+<%= render 'events/forms/parts/player_type', form: form %>
+
+<div class="form-group" id="event_game_modes">
+  <%= form.label :game_mode, class: 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= form.select(:game_mode, Tournament.game_modes.map {|k, _| [Tournament.human_game_mode(k), k]},
+                 { selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
+                 { class: 'form-control' }) %>
+  </div>
+</div>
