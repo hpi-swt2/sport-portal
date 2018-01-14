@@ -151,7 +151,7 @@ class EventsController < ApplicationController
     #   1. DESCENDING by points
     #   2. DESCENDING by goals
     #   3. ASCENDING by name
-    @ranking_entries.sort_by { | ranking_entry | [-ranking_entry.points, -ranking_entry.goals, ranking_entry.name] }
+    @ranking_entries = @ranking_entries.sort_by { | ranking_entry | [-ranking_entry.points, -ranking_entry.goals, ranking_entry.name] }
 
     # Adds a rank to each RankingEntry based on its position in the Array
     @ranking_entries.each_with_index do |ranking_entry, index|
