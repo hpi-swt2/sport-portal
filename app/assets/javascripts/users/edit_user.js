@@ -1,10 +1,10 @@
 $( document ).on('turbolinks:load', function() {
-    var password_block = $('.form-group:has(#user_current_password)');
+    var password_block = $('.form-group:has(#user_current_password:not([data-show=\'true\']))');
     password_block.hide();
-    $('#user_password').on('change', function () {
+    $('#user_password').on('input', function () {
         password_block.show();
     });
-    $('#user_email').on('change', function () {
+    $('#user_email').on('input', function () {
         password_block.show();
     });
 });

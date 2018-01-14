@@ -48,7 +48,11 @@
     <div class="form-group">
       <%= f.label :current_password, class: 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.password_field :current_password, class: 'form-control' %>
+        <% if resource.errors.include? :current_password %>
+          <%= f.password_field :current_password, class: 'form-control', data: { show: true } %>
+        <% else %>
+          <%= f.password_field :current_password, class: 'form-control' %>
+        <% end %>
         <%= f.error_span(:current_password) %>
         <p class="help-block"><i><%= t('.we_need_your_current_password_to_confirm_your_changes') %></i></p>
       </div>
