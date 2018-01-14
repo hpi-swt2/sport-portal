@@ -74,8 +74,8 @@ RSpec.describe Ability, type: :model do
     team = FactoryBot.create :team, :private
     team.owners = [@user]
 
-    expect(ability).not_to be_able_to(:delete_ownership, team, @user.id)
-    expect(ability).not_to be_able_to(:delete_membership, team, @user.id)
+    expect(ability).to_not be_able_to(:delete_ownership, team, @user.id)
+    expect(ability).to_not be_able_to(:delete_membership, team, @user.id)
   end
 
   it 'should allow team owners to delete the ownership & membership of onother team owner having multiple team owners left' do
@@ -101,8 +101,8 @@ RSpec.describe Ability, type: :model do
     team.members = [@user, @other_user]
     team.owners = [@other_user]
 
-    expect(ability).not_to be_able_to(:delete_ownership, team, @other_user.id)
-    expect(ability).not_to be_able_to(:delete_membership, team, @other_user.id)
+    expect(ability).to_not be_able_to(:delete_ownership, team, @other_user.id)
+    expect(ability).to_not be_able_to(:delete_membership, team, @other_user.id)
   end
 
   it 'should have admin permissions, if the user is admin' do
@@ -120,7 +120,7 @@ RSpec.describe Ability, type: :model do
   it 'should not allow users to crud other users data' do
     ability = Ability.new(@user)
 
-    expect(ability).not_to be_able_to(:manage, @other_user)
+    expect(ability).to_not be_able_to(:manage, @other_user)
   end
 
   it 'should allow users to view their user dashboard' do
@@ -132,7 +132,7 @@ RSpec.describe Ability, type: :model do
   it "should not allow users to view other users' dashboard" do
     ability = Ability.new(@user)
 
-    expect(ability).not_to be_able_to(:dashboard, @other_user)
+    expect(ability).to_not be_able_to(:dashboard, @other_user)
   end
 
   it 'should allow users to crud events they created' do
@@ -145,7 +145,7 @@ RSpec.describe Ability, type: :model do
     event = Event.new
 
     ability = Ability.new(@user)
-    expect(ability).not_to be_able_to(:modify, event)
+    expect(ability).to_not be_able_to(:modify, event)
   end
 
 
@@ -161,14 +161,14 @@ RSpec.describe Ability, type: :model do
     team = Team.new
 
     ability = Ability.new(@user)
-    expect(ability).not_to be_able_to(:manage, team)
+    expect(ability).to_not be_able_to(:manage, team)
   end
 
   it 'should not allow users to invite user to teams they are no member of' do
     team = Team.new
 
     ability = Ability.new(@user)
-    expect(ability).not_to be_able_to(:assign_membership_by_email, team)
+    expect(ability).to_not be_able_to(:assign_membership_by_email, team)
   end
 
   # If Event Ability tests become bigger than these 5 examples, consider using shared examples like done in the

@@ -18,7 +18,7 @@ RSpec.describe "teams/show", type: :view do
     user = FactoryBot.create :user
     @team.owners = []
     render
-    rendered.should_not have_content(t("helpers.links.delete_ownership"))
+    expect(rendered).to_not have_content(t("helpers.links.delete_ownership"))
   end
 
   it "shows delete ownership button for owners" do
@@ -27,7 +27,7 @@ RSpec.describe "teams/show", type: :view do
     @team.owners << another_user
     sign_in @user
     render
-    rendered.should have_content(t("helpers.links.delete_ownership"))
+    expect(rendered).to have_content(t('helpers.links.delete_ownership'))
   end
 
   it "shows the leave button when user can leave team" do
@@ -45,7 +45,7 @@ RSpec.describe "teams/show", type: :view do
     @team.members << @user
     @team.owners = @team.members
     render
-    rendered.should_not have_content(t("helpers.links.assign_ownership"))
+    expect(rendered).to_not have_content(t("helpers.links.assign_ownership"))
   end
 
   describe 'invite user to team' do
