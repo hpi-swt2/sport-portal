@@ -1,7 +1,7 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
   load_and_authorize_resource only: [:dashboard]
-  load_resource only: [:link, :unlink]
+  load_resource only: [:link, :unlink, :confirm_destroy, :destroy]
 
   attr_reader :user
 
@@ -36,13 +36,21 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
-  def destroy
-    @user = User.find(params[:id])
+  def confirm_destroy
     authorize! :destroy, @user
+    if @user.valid_password?(params[:password])
+      @user.destroy
+      set_flash_message! :notice, :destroyed
+      redirect_to root_path
+    else
+      set_flash_message! :error, :not_destroyed unless params[:password].blank?
+      render :destroy
+    end
+  end
 
-    @user.destroy
-    set_flash_message! :notice, :destroyed
-    redirect_to root_path
+  def destroy
+    authorize! :destroy, @user
+    render :destroy
   end
 
   # GET /users/1/link

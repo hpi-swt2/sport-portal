@@ -242,3 +242,4 @@ de:
     registrations:
       user:
         destroyed: "Dieser Account wurde gelöscht"
+        not_destroyed: "Dieser Account wurde nicht gelöscht, weil du ein falsches Passwort eingegeben hast"

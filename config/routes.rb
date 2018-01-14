@@ -42,6 +42,7 @@ Rails.application.routes.draw do
         get 'notifications'
         get 'link'
         get 'unlink'
+        post 'delete', to: 'users#confirm_destroy'
       end
     end
 
