@@ -112,5 +112,13 @@ a:link, a:visited, a:hover, a:active {
     .input-field:focus-within {
         color: #343e41;
     }
+    .row .col.offset-s3 {
+        margin-left: 0%;
+    }
+    .row .col.s6{
+        width: 100%;
+        left: auto;
+        right: auto;
+    }
 
 }
