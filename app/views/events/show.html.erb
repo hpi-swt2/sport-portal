@@ -57,7 +57,13 @@
   <dd><%= @event.human_game_mode %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
-  <dd><%= @event.max_teams %></dd>
+  <dd>
+    <% if @event.max_teams.present? %>
+      <%= @event.max_teams %>
+    <% else %>
+      <%= t 'events.max_teams.infinite' %>
+    <% end %>
+  </dd>
 
   <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
   <dd><%= @event.human_player_type %></dd>
