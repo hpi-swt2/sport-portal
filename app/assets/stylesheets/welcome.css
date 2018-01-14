@@ -160,8 +160,8 @@ p {
 
 ul.myList>li {
     list-style-type: disc;
-    list-style-position: inside;
-    padding: 5px 0;
+    list-style-position: outside;
+    margin-left: 15px;
 }
 
 .rotated {
