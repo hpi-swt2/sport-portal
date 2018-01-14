@@ -2,6 +2,18 @@ h1 {
     text-align: center;
 }
 
+@-webkit-keyframes autofill {
+    to {
+        color: #A7B2B9;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
 input, input:focus{
     border-bottom: none !important;
     box-shadow: none !important;
@@ -30,7 +42,15 @@ a:link, a:visited, a:hover, a:active {
     border-radius: 100px;
     padding: 0 0.75rem;
 }
-
+.input-field-error {
+    border-color: #d45a1d;
+}
+.input-field-error label{
+    color: #d45a1d;
+}
+.input-field-error:focus-within {
+    border-color: #d45a1d;
+}
 .input-field label {
     left: 0.75rem;
 }
@@ -38,6 +58,14 @@ a:link, a:visited, a:hover, a:active {
 .input-field:focus-within {
     border: 1px solid #1ba9e5;
 }
+.input-field-error:focus-within {
+    border-color: #d45a1d;
+}
+
+.has-error .help-block{
+    color: #d45a1d;
+}
+
 
 [type="checkbox"].filled-in + label:after {
     border-radius: 25px;
@@ -78,6 +106,9 @@ a:link, a:visited, a:hover, a:active {
     .input-field:focus-within {
         color: white;
     }
+    .input-field-error:focus-within {
+        color: #d45a1d;
+    }
 
     .text {
         color: white;
@@ -93,4 +124,13 @@ a:link, a:visited, a:hover, a:active {
     .input-field:focus-within {
         color: #343e41;
     }
+    .row .col.offset-s3 {
+        margin-left: 0%;
+    }
+    .row .col.s6{
+        width: 100%;
+        left: auto;
+        right: auto;
+    }
+
 }

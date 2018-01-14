@@ -41,6 +41,14 @@ class User < ApplicationRecord
   validates_format_of :telephone_number, with: /\A\d*\z/, message: I18n.t('activerecord.models.user.errors.telephone_number_invalid'), allow_nil: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
+  def update_without_password(params, *options)
+    unless has_omniauth?
+      #params.delete :email
+    end
+    params.delete :current_password
+    super params
+  end
+
   def password_complexity
     if password.present?
       not_only_numbers
@@ -66,6 +74,14 @@ class User < ApplicationRecord
 
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
+  has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
+  has_many :owned_teams, through: :team_owners, source: :team
+
+  def create_single_team
+    team = Team.create(Hash[name: name, private: true, single: true])
+    team.owners << self
+    team
+  end
 
   def has_omniauth?
     provider.present? && uid.present?
