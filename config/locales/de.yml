@@ -206,6 +206,8 @@ de:
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
+    max_teams:
+      infinite: "unbegrenzt"
 
   matches:
     round_name:
