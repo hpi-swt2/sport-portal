@@ -142,7 +142,7 @@ And(/^he logs out$/) do
 end
 
 And (/^he changes his email/) do
-  fill_in :user_email, with: 'test2@test.com'
+  fill_in :user_email, with: 'new' + single_user.email
 end
 
 When(/^the user wants to delete his account$/) do

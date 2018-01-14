@@ -87,7 +87,7 @@ de:
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Anzahl Teams"
+        max_teams: "Teilnehmeranzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
@@ -177,6 +177,8 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      first_half: "Hinrunde"
+      second_half: "Rückrunde"
       finale: "Finale"
       semifinale: "Halbfinale"
       quarterfinale: "Viertelfinale"
@@ -204,6 +206,8 @@ de:
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
+    max_teams:
+      infinite: "unbegrenzt"
 
   matches:
     round_name:

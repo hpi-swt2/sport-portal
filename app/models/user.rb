@@ -43,7 +43,7 @@ class User < ApplicationRecord
 
   def update_without_password(params, *options)
     unless has_omniauth?
-      params.delete :email
+      #params.delete :email
     end
     params.delete :current_password
     super params
