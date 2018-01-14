@@ -109,6 +109,15 @@ RSpec.describe "teams/show", type: :view do
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 
+  it "doesn't render the delete membership button for current user" do
+    @team.owners = [@user]
+    @team.members = @team.owners
+    sign_in @user
+    render
+    # Current user is the one and only owner/member of current team
+    expect(rendered).to_not have_content(t('helpers.links.delete_membership'))
+  end
+
   it "doesn't render the leave button when user is not allowed to leave team" do
     another_user = FactoryBot.build :user
     @team.owners << another_user
