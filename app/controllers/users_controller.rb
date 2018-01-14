@@ -88,20 +88,20 @@ class UsersController < Devise::RegistrationsController
   protected
 
   # Override method of `Devise::RegistrationsController` to update without password
-  def update_resource(resource, params)
-    if unimportant_changes?(resource, params) or resource.has_omniauth?
-      resource.update_without_password(params)
-    else
-      super(resource, params)
+    def update_resource(resource, params)
+      if unimportant_changes?(resource, params) || resource.has_omniauth?
+        resource.update_without_password(params)
+      else
+        super(resource, params)
+      end
     end
-  end
 
   private
 
     def unimportant_changes?(resource, params)
-      return (params[:current_password].blank? and
-          params[:password].blank? and
-          params[:password_confirmation].blank? and
+      (params[:current_password].blank? &&
+          params[:password].blank? &&
+          params[:password_confirmation].blank? &&
           params[:email] == resource[:email])
     end
 
