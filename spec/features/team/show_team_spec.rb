@@ -52,5 +52,13 @@ describe 'Show team page', type: :feature do
         break if i == 2
       end
     end
+
+    it 'should render correct "Send Email" links for team members' do
+      sign_in @user
+      @team.members << @user
+      visit team_path @team
+      mailto_link_for_user = 'mailto:' + @user.email
+      expect(page).to have_link(I18n.t("helpers.links.email"), href: mailto_link_for_user)
+    end
   end
 end
