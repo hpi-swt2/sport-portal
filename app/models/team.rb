@@ -12,6 +12,7 @@
 #
 
 class Team < ApplicationRecord
+  default_scope { order(created_at: :asc) }
   validates :name, presence: true
 
   validates :private, inclusion:  [true, false]
