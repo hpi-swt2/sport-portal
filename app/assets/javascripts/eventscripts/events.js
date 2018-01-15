@@ -24,6 +24,6 @@ $( document ).on('turbolinks:load', function() {
     }
 });
 
-$(document).on("ready page:change", function () {
-    $('[data-toggle="tooltip"]').tooltip()
-});
+$(document).on('turbolinks:load', function() {
+    $('[data-toggle="tooltip"]').tooltip();
+})
