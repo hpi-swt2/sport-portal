@@ -85,8 +85,8 @@ describe 'Event model', type: :model do
     expect(Event.all).to include(new_event, old_event)
   end
 
-  it 'should have an association participants' do
-    relation = Event.reflect_on_association(:participants)
+  it 'should have an association teams' do
+    relation = Event.reflect_on_association(:teams)
     expect(relation.macro).to eq :has_and_belongs_to_many
   end
 
