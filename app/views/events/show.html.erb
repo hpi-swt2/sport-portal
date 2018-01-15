@@ -70,6 +70,10 @@
 
   <dt><strong><%= model_class.human_attribute_name(:enddate) %>:</strong></dt>
   <dd><%= @event.enddate %></dd>
+  <% unless @event.gameday_duration.nil? %>
+    <dt><strong><%= model_class.human_attribute_name(:gameday_duration) %>:</strong></dt>
+    <dd><%= @event.gameday_duration %></dd>
+  <% end %>
 </dl>
 
 <div class="table-responsive">
