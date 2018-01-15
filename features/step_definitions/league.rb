@@ -3,10 +3,10 @@ Given /^a league with gamemode (.*)$/ do |mode|
 end
 
 Given(/^a league (.*) with (\d+) teams$/) do |leagueName, numTeams|
-  create_league_named leagueName, {max_teams: numTeams,
+  create_league_named leagueName,  max_teams: numTeams,
                                    deadline: Date.parse('23.12.2017'),
                                    startdate: Date.parse('24.12.2017'),
-                                   gameday_duration: 7}
+                                   gameday_duration: 7
   league = league_named leagueName
   for each in 1..numTeams do
     league.teams << create_team
