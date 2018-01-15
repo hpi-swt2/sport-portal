@@ -34,6 +34,13 @@ class Ability
     cannot [:index, :show], User
     can :create, User
     if user.present?
+      initialize_with_user(user)
+    end
+  end
+
+  private
+
+    def initialize_with_user(user)
       user_id = user.id
 
       # all
@@ -61,9 +68,6 @@ class Ability
         can :manage, :all
       end
     end
-  end
-
-  private
 
     def can_join_event(user)
       can :join, Event.active do |event|
