@@ -14,7 +14,7 @@
 
 <div class="page-header">
   <h1><%= t '.title', :default => model_class.model_name.human.titleize %></h1>
-  <%= image_tag @team.avatar_url || image_path('missing_avatar.png'), id: "preview", style: "width:350px; height:350px"%>
+  <%= image_tag @team.avatar_url || image_path('missing_avatar.png'), id: "preview", style: "max-width:350px; max-height:350px"%>
 </div>
 <dl class="dl-horizontal">
   <dt><strong><%=t '.name', :default => t("helpers.name") %>:</strong></dt>
