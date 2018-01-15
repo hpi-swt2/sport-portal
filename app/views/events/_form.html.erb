@@ -43,7 +43,8 @@
     <div class="form-group">
       <%= f.label :bestof_length, for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: t('events.winrule_tooltip') %>
       <div id="matchtype" class="col-lg-10">
-          <%= f.select(:bestof_length, (1..8).map { |n| [ t('events.best_of') + "-#{n}", n] }, selected: f.object.bestof_length || 1) %>
+        <%= t('events.best_of') %>
+        <%= f.select(:bestof_length, (1..8).map { |n| ["#{n}", n] }, selected: f.object.bestof_length) %>
       </div>
     </div>
     
@@ -56,26 +57,28 @@
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading">Punkteverteilung</div>
+      <div class="panel-heading">
+        <%= t('view.event.point_distribution') %>
+      </div>
       <div class="panel-body">
         <div class="form-group">
           <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
           <div class="col-lg-10">
-          <%= f.number_field :points_for_win, :class => 'form-control',:style=> 'width:50px', :value=> f.object.points_for_win || 3%>
+          <%= f.number_field :points_for_win, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_win %>
           </div>
         </div>
 
         <div class="form-group">
           <%= f.label :points_for_draw, :class => 'control-label col-lg-2' %>
           <div class="col-lg-10">
-          <%= f.number_field :points_for_draw, :class => 'form-control' ,:style=> 'width:50px', :value=> f.object.points_for_draw || 1%>
+          <%= f.number_field :points_for_draw, :class => 'form-control' ,:style=> 'width:60px', :value=> f.object.points_for_draw %>
           </div>
         </div>
 
         <div class="form-group">
           <%= f.label :points_for_lose, :class => 'control-label col-lg-2' %>
           <div class="col-lg-10">
-          <%= f.number_field :points_for_lose, :class => 'form-control',:style=> 'width:50px', :value=> f.object.points_for_lose || 0%>
+          <%= f.number_field :points_for_lose, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_lose %>
           </div>
         </div>
          

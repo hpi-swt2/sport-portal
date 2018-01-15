@@ -150,6 +150,9 @@ de:
       add_game_result: "Ergebnis hinzufügen"
       remove_game_result: "Ergebnis entfernen"
 
+    event:
+      point_distribution: "Punkteverteilung"
+
   unauthorized:
         manage:
           all: "Fehlende Berechtigung für %{action} %{subject}."
@@ -180,7 +183,7 @@ de:
     choose_team: "Ein Team auswählen"
     participating: "Beigetreten"
     metric: "Metrik"
-    best_of: "Best-of"
+    best_of: "Best-of-"
     winrule_tooltip: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"
     advanced: "Erweitert"
     show:
