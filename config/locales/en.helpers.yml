@@ -51,6 +51,8 @@ en:
         deselect_all: "Deselect all"
         confirmation: "Action successful"
         failure_on: "Action successful. %{user_names} could not be changed."
+    fields:
+      mandatory: "Mandatory field"
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."

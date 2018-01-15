@@ -3,6 +3,12 @@
   They will automatically be included in application.css.
 */
 
+label.required:after {
+  content: "*";
+  vertical-align: 0.5em;
+  font-size: 0.75em;
+  font-weight: normal;
+}
 select.filterSelect{
   display: block;
 }
