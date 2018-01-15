@@ -1,4 +1,5 @@
 <%- model_class = Team -%>
+<%= stylesheet_link_tag 'teams' %>
 <%= form_for @team, :html => { :class => "form-horizontal team" } do |f| %>
 
   <%= render partial: "application/validation_errors", locals: {model: @team} %>
