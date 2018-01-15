@@ -19,7 +19,7 @@ describe "Index team page", type: :feature do
     @another_team = FactoryBot.create :team
     @another_team.name = "Second"
     @another_team.save
-    
+
     @user = FactoryBot.create :user
     @team.members << @user
     sign_in @user
