@@ -125,7 +125,7 @@ de:
         name: "Name"
         description: "Beschreibung"
         kind_of_sport: "Sportart"
-        private: "Privassdt"
+        private: "Privat"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
       event:
