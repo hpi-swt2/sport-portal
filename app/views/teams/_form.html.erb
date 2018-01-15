@@ -33,8 +33,11 @@
             <%= image_tag @team.avatar_url || image_path('missing_avatar.png'), id: "preview", style: "max-width:100px; max-height:100px"%>
             <%= f.file_field :avatar, class: "form-control-file" %>
             <% if @team.avatar %>
-                  <%= t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %><%= f.check_box :remove_avatar %>
-              <% end %>
+              <%= f.check_box :remove_avatar %>
+              <label for="team_remove_avatar">
+                &nbsp;<%= t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %>
+              </label>
+            <% end %>
     </div>
     </div>
 
