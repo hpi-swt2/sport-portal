@@ -113,8 +113,9 @@ class Tournament < Event
     end
 
     def first_gameday_offset
-      return 0 if Tournament.is_power_of_two? teams.size
-      2**teams.size.to_s(2).length - teams.size
+      teams_size = teams.size
+      return 0 if Tournament.is_power_of_two? teams_size
+      2**teams_size.to_s(2).length - teams_size
     end
 
     class << self
