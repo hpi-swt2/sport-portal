@@ -230,7 +230,7 @@ de:
       standingColumn: "Platzierung"
       out: "In %{match_name} ausgeschieden"
       in: "In %{match_name}"
-      unkown_standing: "Gewinner %{team}"
+      unkown_standing: "Platzierung Unbekannt"
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"

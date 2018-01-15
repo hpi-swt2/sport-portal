@@ -106,7 +106,7 @@ class Event < ApplicationRecord
   end
 
   def standing_of(team)
-    I18n.t 'events.overview.unkown_standing', team: team.id.to_s
+    I18n.t 'events.overview.unkown_standing'
   end
 
   # this is a method that simplifies manual testing, not intended for production use

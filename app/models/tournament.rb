@@ -26,7 +26,9 @@ class Tournament < Event
   enum game_mode: [:ko, :ko_group, :double_elimination]
 
   def standing_of(team)
-    last_match = finale.last_match_of team
+    final_match = finale
+    return super(team) if final_match.blank?
+    last_match = final_match.last_match_of team
     last_match.standing_string_of team
   end
 
@@ -41,6 +43,7 @@ class Tournament < Event
   end
 
   def generate_schedule
+    return if teams.size < 2
     create_matches filled_teams, max_match_level, 0
     normalize_first_layer_match_indices
   end
