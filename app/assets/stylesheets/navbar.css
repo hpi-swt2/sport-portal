@@ -127,3 +127,10 @@ img.avatar {
     max-width: 1200px;
 }
 
+.dropdown-menu > li.active {
+    background-color: #1ba9e5 !important;
+}
+.dropdown-menu >li {
+    width: 100%;
+}
+
