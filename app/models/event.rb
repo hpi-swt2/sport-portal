@@ -30,7 +30,7 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  enum selection_types: [:fcfs, :fcfs_queue, :selection]
+  enum selection_type: [:fcfs, :fcfs_queue, :selection]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
 
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }

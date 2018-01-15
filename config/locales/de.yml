@@ -192,6 +192,7 @@ de:
     participating: "Beigetreten"
     metric: "Metrik"
     full: "Voll"
+    fcfs: "First Come First Serve"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
