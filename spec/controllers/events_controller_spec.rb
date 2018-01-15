@@ -389,8 +389,11 @@ RSpec.describe EventsController, type: :controller do
       describe 'when no match has been played yet' do
         it 'should calculate a lexicographically sorted zero-filled ranking' do
           event = League.create! valid_league_attributes
-          # Generate matches by getting the event's schedule
-          get :schedule, params: { id: event.to_param }, session: valid_session
+          team1 = FactoryBot.create(:team)
+          team2 = FactoryBot.create(:team)
+          event.add_team(team1)
+          event.add_team(team2)
+          event.generate_schedule
           get :ranking, params: { id: event.to_param }, session: valid_session
           ranking_entries = controller.instance_variable_get(:@ranking_entries)
           expect(ranking_entries.first.name).to be < ranking_entries.second.name
