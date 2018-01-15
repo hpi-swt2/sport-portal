@@ -11,7 +11,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -20,8 +19,7 @@
   <tbody>
     <% @teams.each do |team| %>
       <tr>
-        <td><%= link_to team.id, team_path(team) %></td>
-        <td><%= team.name %></td>
+        <td><%= link_to team.name, team_path(team) %></td>
         <td><%=l team.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
