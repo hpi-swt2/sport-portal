@@ -83,6 +83,10 @@ describe "detailed event page", type: :feature do
           @event = event
         end
 
+        it "should have right selection type" do
+          expect(@event.human_selection_type).to eq(t('event.selection_types.fcfs'))
+        end
+
         it "should have a join button if not exceeding max teams" do
           expect(page).to have_link(:join_event_button)
         end
