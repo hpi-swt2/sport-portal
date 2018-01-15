@@ -44,10 +44,11 @@
   <table class="table table-striped">
       <thead>
           <tr>
+            <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
+            <th><%=t("teams.show.number")%></th>
             <% if @team.members.include? current_user %>
               <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
             <% end %>
-            <th><%= model_class.human_attribute_name(:id) %></th>
             <th><%= model_class.human_attribute_name(:first_name) %></th>
             <th><%= model_class.human_attribute_name(:last_name) %></th>
             <% if @team.members.include? current_user %>
@@ -56,12 +57,12 @@
           </tr>
           </thead>
     <tbody>
-    <% @team.members.each do |member| %>
+    <% @team.members.each_with_index do |member, i| %>
         <tr>
           <% if @team.members.include? current_user %>
             <td><%= check_box_tag "members[]", member.id %></td>
           <% end %>
-          <td><%= member.id %></td>
+          <td><%= i + 1 %></td>
           <td><%= member.first_name%></td>
           <td><%= member.last_name%></td>
           <% if @team.members.include? current_user %>
