@@ -16,7 +16,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-if(getUrlParameter('filter').replace(/\+/g, " ") == $(".filterSelect option:eq(1)").val()){
+if(getUrlParameter('filter') == "true"){
     $('.filterSelect').val($(".filterSelect option:eq(1)").val())
 }
 });

@@ -6,7 +6,7 @@
 </div>
 <%= form_tag('/teams', method: :get) do %>
   <%= label_tag(:filter, t("helpers.teams.filter")) %>
-  <%= select_tag(:filter, options_for_select([t("helpers.teams.show_all"), t("helpers.teams.show_mine")]), {:class=>'filterSelect', onchange: "this.form.submit();"}) %>
+  <%= select_tag(:filter, options_for_select([[t("helpers.teams.show_all"), false], [t("helpers.teams.show_mine"), true]]), {:class=>'filterSelect', onchange: "this.form.submit();"}) %>
 <% end %>
 <table class="table table-striped">
   <thead>

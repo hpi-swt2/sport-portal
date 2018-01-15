@@ -24,7 +24,7 @@ describe "Index team page", type: :feature do
     @team.members << @user
     sign_in @user
 
-    visit teams_path(filter: I18n.t("helpers.teams.show_mine"))
+    visit teams_path(filter: "true")
 
     expect(page).to have_text("First")
     expect(page).to_not have_text("Second")
