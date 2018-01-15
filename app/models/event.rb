@@ -55,16 +55,43 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
-  def add_participant(user)
-    participants << user
+  def add_team(team)
+    teams << team
+    invalidate_schedule
   end
 
-  def remove_participant(user)
-    participants.delete(user)
+  def remove_team(team)
+    teams.delete(team)
+    if single?
+      team.destroy
+    end
+    invalidate_schedule
+  end
+
+  def generate_schedule
+    raise NotImplementedError
+  end
+
+  def invalidate_schedule
+    matches.delete_all
+  end
+
+  def add_participant(user)
+    team = user.create_single_team
+    add_team(team)
   end
 
   def has_participant?(user)
-    participants.include?(user)
+    teams.any? { |team| team.members.include?(user) }
+  end
+
+  def owns_participating_teams?(user)
+    (user.owned_teams & teams).present?
+  end
+
+  def team_slot_available?
+    return true unless max_teams.present?
+    teams.count < max_teams
   end
 
   def participant_model
@@ -72,11 +99,11 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    raise NotImplementedError
+    (not has_participant?(user)) && team_slot_available?
   end
 
   def can_leave?(user)
-    single? && has_participant?(user)
+    has_participant?(user)
   end
 
   def standing_of(team)
@@ -84,11 +111,12 @@ class Event < ApplicationRecord
   end
 
   # this is a method that simplifies manual testing, not intended for production use
-  def add_test_teams
-    max_teams.times do |index|
-      teams << Team.new(name: "Team #{index}", private: false)
-    end
-  end
+  # method not used at the moment since it is now testet with joined users
+  #def add_test_teams
+  #max_teams.times do |index|
+  #teams << Team.new(name: "Team #{index}", private: false)
+  #end
+  #end
 
   def human_player_type
     self.class.human_player_type player_type

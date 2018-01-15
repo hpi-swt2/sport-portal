@@ -12,9 +12,12 @@
 #
 
 class Team < ApplicationRecord
+  default_scope { order(created_at: :asc) }
   validates :name, presence: true
 
   validates :private, inclusion:  [true, false]
+
+  scope :multiplayer, -> { where single: false }
 
   has_and_belongs_to_many :events
 

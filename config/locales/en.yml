@@ -67,8 +67,16 @@ en:
         all: "Not authorized to %{action} %{subject}."
         user: "Not allowed to manage other user accounts."
 
+  success:
+      join_event: "You've joined the event %{event} successfully."
+      join_team_event: "You and your team %{team} have joined the event %{event} successfully."
+      leave_event: "You've left the event %{event} successfully."
+      leave_team_event: "You and your team %{team} have left the event %{event} successfully."
+
+
   events:
     create_event: "Create Event"
+    choose_team: "Choose a team"
     choose_event_format: "Choose event format"
     new_league: "New league"
     new_tournament: "New tournament"
@@ -102,6 +110,9 @@ en:
           goals_against: "goals against"
           goals_difference: "goal difference"
           points: "points"
+    join_team_event: "Join event %{event} as a team"
+    max_teams:
+      infinite: "unlimited"
 
   teams:
       show:
