@@ -1,6 +1,19 @@
 require 'rails_helper'
 
 describe 'new event page', type: :feature do
+
+  def fill_in_creation_form_with(fields = {})
+    fields.each do |field_symbol, input|
+      fill_in Event.human_attribute_name(field_symbol), with: input
+    end
+  end
+
+  def has_input_fields(*fields)
+    fields.each do |field|
+        expect(page).to have_field(Event.human_attribute_name field)
+    end
+  end
+
   before(:each) do
     @user = FactoryBot.create :user
     sign_in @user
@@ -16,9 +29,7 @@ describe 'new event page', type: :feature do
     it 'should be possible to enter date conditions' do
       visit new_path
 
-      expect(page).to have_field(Event.human_attribute_name :deadline)
-      expect(page).to have_field(Event.human_attribute_name :startdate)
-      expect(page).to have_field(Event.human_attribute_name :enddate)
+      has_input_fields :deadline, :startdate, :enddate
     end
 
     it 'should have a field for league duration' do
@@ -27,18 +38,13 @@ describe 'new event page', type: :feature do
       expect(page).to have_field('event_duration')
     end
 
-    it 'should be possible to create a date conditions' do
+    it 'should be possible to submit the form if filled out correctly' do
       visit new_path
-      fill_in Event.human_attribute_name(:name), with: 'name'
-      fill_in Event.human_attribute_name(:discipline), with: 'soccer'
+      fill_in_creation_form_with name: 'name', discipline: 'soccer', max_teams: '5', deadline: Date.tomorrow.to_s, startdate: (Date.tomorrow + 2).to_s, enddate: (Date.tomorrow + 3).to_s, gameday_duration: 1
+      # fill_in Event.human_attribute_name(:name), with: 'name'
+      # fill_in Event.human_attribute_name(:discipline), with: 'soccer'
       select League.human_game_mode(:round_robin), from: Event.human_attribute_name(:game_mode)
       select Event.human_player_type(:single), from: Event.human_attribute_name(:player_type)
-      fill_in Event.human_attribute_name(:max_teams), with: '5'
-
-      fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
-      fill_in Event.human_attribute_name(:startdate), with: (Date.tomorrow + 2).to_s
-      fill_in Event.human_attribute_name(:enddate), with: (Date.tomorrow + 3).to_s
-      fill_in Event.human_attribute_name(:gameday_duration), with: '1'
 
       find('input[type="submit"]').click
 
@@ -49,40 +55,40 @@ describe 'new event page', type: :feature do
     end
   end
 
-  context "for ranking lists" do
+  context 'for ranking lists' do
     before :each do
       visit new_rankinglist_path
     end
 
-    it "should show a field for choosing the ranking metric" do
+    it 'should show a field for choosing the ranking metric' do
       expect(page).to have_field('rankinglist_game_mode')
     end
 
-    it "should show a field for choosing the initial value of the ranking metric" do
+    it 'should show a field for choosing the initial value of the ranking metric' do
       expect(page).to have_field('rankinglist_initial_value')
     end
 
-    it "should not show a field for defining a deadline" do
+    it 'should not show a field for defining a deadline' do
       expect(page).not_to have_field('event_deadline')
     end
 
-    it "should not show a field for defining a enddate " do
+    it 'should not show a field for defining a enddate ' do
       expect(page).not_to have_field('event_enddate')
     end
 
-    it "should not show a field for defining a startdate" do
+    it 'should not show a field for defining a startdate' do
       expect(page).not_to have_field('event_startdate')
     end
 
-    it "should not show a field for defining whether its a team or single player sport" do
+    it 'should not show a field for defining whether its a team or single player sport' do
       expect(page).not_to have_field('event_player_type')
     end
 
-    it "should not show a field for the duration" do
+    it 'should not show a field for the duration' do
       expect(page).not_to have_field('event_duration')
     end
 
-    it "should be possible to create a rankinglist" do
+    it 'should be possible to create a rankinglist' do
       rankinglist = FactoryBot.build :rankinglist
 
       fill_in Event.human_attribute_name(:name), with: rankinglist.name
