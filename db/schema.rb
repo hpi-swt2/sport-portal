@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180107175546) do
+=======
+ActiveRecord::Schema.define(version: 20180102181138) do
+>>>>>>> dev
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -43,8 +47,6 @@ ActiveRecord::Schema.define(version: 20180107175546) do
   create_table "events_users", id: false, force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "user_id", null: false
-    t.index ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id"
-    t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
   create_table "matches", force: :cascade do |t|

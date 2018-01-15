@@ -10,6 +10,7 @@ module DataHelper
     @accounts = []
     @named = {}
     @tournaments = []
+    @leagues = []
     @current_user = nil
   end
 
@@ -56,6 +57,32 @@ module DataHelper
     get_single_object(@users)
   end
 
+  def create_league(options = {})
+    @leagues << FactoryBot.create(:league, options)
+    @leagues.last
+  end
+
+  def build_league(options = {})
+    @leagues << FactoryBot.build(:league, options)
+    @leagues.last
+  end
+
+  def create_league_named(name, options = {})
+    add_named_object name, create_league(options)
+  end
+
+  def build_league_named(name, options = {})
+    add_named_object name, build_league(options)
+  end
+
+  def league_named(name)
+    get_named_object name, League
+  end
+
+  def single_league
+    get_single_object(@leagues)
+  end
+
   def create_tournament(options = {})
     @tournaments << FactoryBot.create(:tournament, options)
     @tournaments.last
@@ -68,6 +95,10 @@ module DataHelper
 
   def create_tournament_named(name, options = {})
     add_named_object name, create_tournament(options)
+  end
+
+  def league_named(name)
+    get_named_object name, League
   end
 
   def tournament_named(name)

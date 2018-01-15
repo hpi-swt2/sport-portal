@@ -4,17 +4,22 @@
 <div class="row">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f| %>
     <div class="row">
-      <div class="input-field col s6 offset-s3">
+      <div class="<%= if flash[:alert].present? then "input-field-error input-field" else "input-field" end%> col s6 offset-s3">
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true %>
       </div>
     </div>
+
     <div class="row">
-      <div class="input-field col s6 offset-s3">
+      <div class="<%= if flash[:alert].present? then "input-field-error input-field" else "input-field" end%> col s6 offset-s3">
         <%= f.label :password %>
         <%= f.password_field :password, autocomplete: 'off' %>
       </div>
-    </div>
+      <% if flash[:alert].present? then  %>
+          <div class="center">
+          <label> <div class="has-error"> <span class = help-block><%= flash[:alert] %>
+          </span> </div> </label> <%end%> </div>
+
     <% if devise_mapping.rememberable? %>
         <div class="center">
           <%= f.check_box :remember_me, class: 'filled-in' %>
@@ -38,4 +43,5 @@
   <div class="center text">
     <%= render 'devise/shared/links' %>
   </div>
+</div>
 </div>
