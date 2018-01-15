@@ -38,8 +38,11 @@ class Event < ApplicationRecord
 
   validates :name, :discipline, :game_mode, :player_type, :matchtype, :game_winrule, presence: true
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-  validates :points_for_win, :points_for_draw, :points_for_lose, numericality: { only_integer: true }
-  validates :bestof_length, numericality: {only_integer: true, greater_than_or_equal_to: 0 }
+  validates :points_for_win,
+            :points_for_draw,
+            :points_for_lose,
+            :bestof_length,
+            numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   enum matchtype: [:bestof]
   enum game_winrule: [:most_sets]
