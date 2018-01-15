@@ -255,8 +255,8 @@ de:
   users:
     avatar:
       errors:
-        too_large: "ist zu groß (max. 2 MB)"
-        wrong_type: "hat den falschen Datentyp."
+        max_size: "ist zu groß (max. 2 MB)"
+        mime_type_inclusion: "ist ein nicht erlaubter Datentyp"
 
     edit:
       cancel_this_account: "Diesen Account löschen"
