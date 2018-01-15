@@ -11,3 +11,18 @@
   border-left: 1px solid #F2F2F2;
   border-right: 1px solid #FFF;
 }
+
+
+.page-header {
+  border-bottom: none;
+  text-align: center;
+}
+
+.page-header > h1 {
+  color: #1CA9E5;
+  font-weight: 500;
+}
+
+.container {
+  max-width: 1200px !important;
+}

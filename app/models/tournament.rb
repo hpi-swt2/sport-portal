@@ -25,11 +25,6 @@ class Tournament < Event
 
   enum game_mode: [:ko, :ko_group, :double_elimination]
 
-
-  def can_join?(user)
-    single? && (not has_participant?(user)) && (not deadline_has_passed?)
-  end
-
   def standing_of(team)
     last_match = finale.last_match_of team
     last_match.standing_string_of team
