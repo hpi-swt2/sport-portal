@@ -230,7 +230,7 @@ de:
       standingColumn: "Platzierung"
       out: "In %{match_name} ausgeschieden"
       in: "In %{match_name}"
-      unkown_standing: "Gewinner %{team}"
+      unkown_standing: "Platzierung Unbekannt"
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
@@ -245,6 +245,7 @@ de:
       three: "Achtelfinalspiel %{gameid}"
       other: "Vorrunde %{round} - Spiel %{gameid}"
     winner_of_match: "Gewinner %{match}"
+    loser_of_match: "Verlierer %{match}"
 
   teams:
     show:
