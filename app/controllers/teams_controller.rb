@@ -5,10 +5,11 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
+    @multi_teams = Team.multiplayer
     if params[:filter] == I18n.t("helpers.teams.show_mine")
-      @teams = Team.multiplayer.includes(:team_members).where(team_users: { user_id: current_user })
+      @teams = @multi_teams.includes(:team_members).where(team_users: { user_id: current_user })
     else
-      @teams = Team.multiplayer
+      @teams = @multi_teams
     end
   end
 
