@@ -48,12 +48,17 @@ de:
       description: "Beschreibung"
       private: "Privat"
       cant_destroy: "%{resource_name} kann nicht gelöscht werden, da es noch an Events teilnimmt."
+      filter: Zeige
+      show_all: Alle Teams
+      show_mine: Nur meine Teams
       multiple_actions:
         apply_action: "Wende folgende Aktion auf Ausgewählte an:"
         select_all: "Alle auswählen"
         deselect_all: "Alle abwählen"
         confirmation: "Aktion erfolgreich ausgeführt."
         failure_on: "Aktion erfolgreich ausgeführt, außer auf: %{user_names}"
+    fields:
+      mandatory: "Pflichtfeld"
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."

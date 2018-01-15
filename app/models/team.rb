@@ -12,6 +12,7 @@
 #
 
 class Team < ApplicationRecord
+  default_scope { order(created_at: :asc) }
   validates :name, presence: true
 
   validates :private, inclusion:  [true, false]
@@ -43,8 +44,8 @@ class Team < ApplicationRecord
     events.exists?
   end
 
-  # these methods allow teams to be treated like matches. see Match model
-  def winner
+  # these methods allow teams to be treated like match results. see MatchResult model
+  def advancing_participant
     self
   end
 
