@@ -56,6 +56,7 @@ class Ability
       can_delete_ownership(user)
       can_delete_membership(user)
       can_assign_membership_by_email(user)
+      can_send_emails_to_team_members(user)
 
       if user.admin?
         can :manage, :all
@@ -87,6 +88,10 @@ class Ability
       can :assign_membership_by_email, Team, members: { id: user.id }
     end
 
+    def can_send_emails_to_team_members(user)
+      can :send_emails_to_team_members, Team, members: { id: user.id }
+    end
+
     def can_assign_ownership(user)
       can :assign_ownership, Team, Team do |team|
         team.owners.include? user
@@ -97,7 +102,7 @@ class Ability
       can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
         exist_owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
-        ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)
+        ((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete)
       end
     end
 

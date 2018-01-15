@@ -91,6 +91,7 @@ class Event < ApplicationRecord
   end
 
   def team_slot_available?
+    return true unless max_teams.present?
     teams.count < max_teams
   end
 
