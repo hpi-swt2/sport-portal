@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "users/edit_profile", type: :view do
+RSpec.describe "users/edit", type: :view do
   before(:each) do
     @user = assign(:user, FactoryBot.create(:user))
     # Devise helper to sign_in user

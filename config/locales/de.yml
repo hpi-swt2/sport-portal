@@ -72,7 +72,7 @@ de:
   navbar:
     drop-down:
       dashboard: "Mein Dashboard"
-      edit_profile: "Mein Profil"
+      edit_profile: "Profil bearbeiten"
       notification_settings: "Benachrichtigungseinstellungen"
 
   dashboard:
