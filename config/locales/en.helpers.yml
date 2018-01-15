@@ -42,6 +42,9 @@ en:
       description: "Description"
       private: "Private"
       cant_destroy: "%{resource_name} can't be deleted, because it still participates in events."
+      filter: Show
+      show_all: All teams
+      show_mine: Only my teams
       multiple_actions:
         apply_action: "Apply action to selected:"
         select_all: "Select all"
