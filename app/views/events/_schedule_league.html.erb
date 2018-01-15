@@ -1,0 +1,65 @@
+<% last_gameday = nil %>
+<% if @event.game_mode == League.game_modes[:two_halfs] %>
+    <tr class="gameday">
+      <th colspan="6">
+        <b>
+          <%= t('events.schedule.first_half') %>
+        </b>
+      </th>
+    </tr>
+<% end %>
+<% @matches.each do |match| %>
+    <% if match.gameday != last_gameday %>
+        <% if @event.game_mode == League.game_modes[:two_halfs] && match.gameday == @event.teams.size + 1 %>
+            <tr class="gameday">
+              <th colspan="6">
+                <b>
+                  <%= t('events.schedule.second_half') %>
+                </b>
+              </th>
+            </tr>
+        <% end %>
+        <tr class="gameday">
+          <th colspan="6">
+            <b>
+              <%= t 'events.schedule.gameday' %> <%= match.gameday %>
+            </b>
+            <b>
+              <%= "- #{ (@event.startdate_for_gameday match.gameday).to_s(:day_and_month) } " %>
+              <%= t 'events.schedule.to' %>
+              <%= " #{(@event.enddate_for_gameday match.gameday).to_s(:day_and_month)}" %>
+            </b>
+          </th>
+        </tr>
+      <% last_gameday = match.gameday %>
+    <% end %>
+  <tr>
+    <td><%= match.place %></td>
+    <td><%= match.team_home ? link_to(match.team_home.name, team_path(match.team_home)) : '---' %></td>
+    <td><%= match.team_away ? link_to(match.team_away.name, team_path(match.team_away)) : '---' %></td>
+    <td>
+      <%= match.score_home ? match.score_home : '-' %>
+      :
+      <%= match.score_away ? match.score_away : '-' %>
+    </td>
+    <td>
+      <%= form_for match, url: update_points_match_path(match), html: {method: "put"} do |f| %>
+        <%= f.text_field :points_away, class: 'input-sm', style: 'width: 50px' %>
+        :
+        <%= f.text_field :points_home, class: 'input-sm', style: 'width: 50px' %>
+        <%= f.submit t('helpers.links.save'), :class => 'btn btn-default btn-xs' %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to t('.show', default: t('helpers.links.show')),
+                  match_path(match), :class => 'btn btn-default btn-xs' %>
+      <%= link_to t('.edit', default: t('helpers.links.edit')),
+                  edit_match_path(match), :class => 'btn btn-default btn-xs' %>
+      <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+                  match_path(match),
+                  :method => :delete,
+                  :data => { :confirm => t('.confirm', default: t('helpers.links.confirm')) },
+                  :class => 'btn btn-xs btn-danger' %>
+    </td>
+  </tr>
+<% end %>

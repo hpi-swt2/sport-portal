@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+# Shared examples for show event page
+
+
 describe "detailed event page", type: :feature do
   before(:each) do
     @user = FactoryBot.create :user
@@ -16,10 +19,10 @@ describe "detailed event page", type: :feature do
     end
   end
 
-  context "for single player events" do
+  shared_examples "a single player event" do
     before(:each) do
       sign_in @user
-      @event = FactoryBot.create :single_player_event, owner_id: @user.id
+      @event = event
     end
 
     context "participants" do
@@ -69,6 +72,7 @@ describe "detailed event page", type: :feature do
     context "which I do not participate in" do
       before(:each) do
         visit event_path(@event)
+        @event = event
       end
 
       it "should have a join button" do
@@ -91,15 +95,82 @@ describe "detailed event page", type: :feature do
     end
   end
 
-  context "for team events" do
+  shared_examples "a team event" do
     before(:each) do
       sign_in @user
-      @teamevent = FactoryBot.create :team_event
+      @team = team
+      @team.members << @user
+      @teamevent = event
       visit event_path(@teamevent)
     end
 
-    it "should not have a join button" do
-      expect(page).not_to have_link(:join_event_button)
+    context "which I do not participate in" do
+      it "should have a join button" do
+        expect(page).to have_link(:join_event_button)
+      end
+
+      it "should not have a leave button" do
+        expect(page).not_to have_link(:leave_event_button)
+      end
+    end
+
+    context "which I participate in" do
+      before(:each) do
+        @teamevent.add_team(@team)
+        visit event_path(@teamevent)
+      end
+      it "should not have a join button" do
+        expect(page).not_to have_link(:join_event_button)
+      end
+
+      it "should have a leave button" do
+        expect(page).to have_link(:leave_event_button)
+      end
+
+      it "should show that I am participating" do
+        expect(page).to have_content I18n.t('events.participating')
+      end
+
+      context "with a team I own" do
+        before(:each) do
+          @team.owners << @user
+          visit event_path(@teamevent)
+        end
+
+        it "should have a clickable leave button" do
+          leave_button = page.find_link(:leave_event_button)
+          expect(leave_button[:disabled]).to eq nil
+        end
+
+        it "should redirect me to itself when clicking the leave button" do
+          click_link(:leave_event_button)
+          expect(current_path).to eq(event_path(@teamevent))
+        end
+
+        it "should let me join again after clicking the leave button" do
+          click_link(:leave_event_button)
+          expect(page).to have_link(:join_event_button)
+        end
+      end
+
+      context "with a team I don't own" do
+        it "should have a leave button that is disabled" do
+          leave_button = page.find_link(:leave_event_button)
+          expect(leave_button[:disabled]).to eq 'disabled'
+        end
+      end
+    end
+
+    context "for events whose deadline has passed" do
+      before(:each) do
+        @oldevent = FactoryBot.create :event, deadline: Date.yesterday
+        sign_in @user
+        visit event_path(@oldevent)
+      end
+
+      it "should not display a join button" do
+        expect(page).not_to have_link(:join_event_button)
+      end
     end
 
     context "participants" do
@@ -117,7 +188,37 @@ describe "detailed event page", type: :feature do
         expect(page).to have_link @team.name
       end
     end
+  end
 
+  context "for single player" do
+    describe "Leagues" do
+      let(:event) { FactoryBot.create(:league, owner_id: @user.id, player_type: Event.player_types[:single]) }
+      include_examples "a single player event"
+    end
 
+    describe "Tournaments" do
+      let(:event) { FactoryBot.create :tournament, owner_id: @user.id, player_type: Event.player_types[:single] }
+      include_examples "a single player event"
+    end
+
+    describe "Rankinglist" do
+
+      let(:event) { FactoryBot.create :rankinglist, owner_id: @user.id }
+      include_examples "a single player event"
+    end
+  end
+
+  context "for team" do
+    let(:player_type) { Event.player_types[:team] }
+    let(:team) { FactoryBot.create(:team) }
+
+    describe "leagues" do
+      let(:event) { FactoryBot.create(:league, player_type: player_type) }
+      include_examples "a team event"
+    end
+    describe "tournaments" do
+      let(:event) { FactoryBot.create(:tournament, player_type: player_type) }
+      include_examples "a team event"
+    end
   end
 end
