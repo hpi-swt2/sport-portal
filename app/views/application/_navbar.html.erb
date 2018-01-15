@@ -3,15 +3,20 @@
 
 <%= nav_bar brand: (image_tag 'https://owncloud.hpi.de/index.php/s/Ap9E74hcMbV7Vp5/download', class: 'logo-img'), responsive: true, fluid: true, fixed: :top do %>
 
-    <% if (request.user_agent =~ /Mobile|webOS/).present? # check if user is moving a mobile device  %>
+    <% if (request.user_agent =~ /Mobile|webOS/).present? # check if user is moving a mobile device   %>
         <%= menu_group pull: :right do %>
             <div id="user-mobile-back" class="text-center hidden">
               <%= '< ' + t('helpers.links.back') %>
             </div>
             <% if user_signed_in? %>
-              <div class="text-center">
-                 <%= (image_tag current_user.avatar_url || 'https://owncloud.hpi.de/index.php/s/57REqYtqsah3A7o/download', class: 'mobile-avatar center-block') + " #{current_user.first_name}" %>
-              </div>
+                <%= menu_item (image_tag current_user.avatar_url || 'https://owncloud.hpi.de/index.php/s/57REqYtqsah3A7o/download', class: 'mobile-avatar center-block') + " #{current_user.first_name}" %>
+                <div id="user-mobile-menu" class="hidden">
+                  <%= drop_down_divider %>
+                  <%= menu_item t('devise.registrations.my_account'), edit_user_path(current_user), class: 'text-center' %>
+                  <%= menu_item t('navbar.drop-down.dashboard'), dashboard_user_path(current_user), class: 'text-center' %>
+                  <%= menu_item t('navbar.drop-down.edit_profile'), user_profile_edit_path(current_user), class: 'text-center' %>
+                  <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete, class: 'text-center' %>
+                </div>
             <% else %>
                 <%= menu_item (image_tag 'https://owncloud.hpi.de/index.php/s/45SBYQMw1jnN9UM/download', class: 'login-img center-block'), new_user_session_path %>
             <% end %>
@@ -20,14 +25,6 @@
               <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path, class: 'text-center' %>
               <%= menu_item Event.model_name.human(:count => :many).titleize, events_path, class: 'text-center' %>
               <%= menu_item t('events.create_event'), new_event_path, class: 'text-center' %>
-            </div>
-            <div id="user-mobile-menu" class="hidden">
-              <%= drop_down_divider %>
-              <%= menu_item t('devise.registrations.my_account'), edit_user_path(current_user), class: 'text-center' %>
-              <%= menu_item t('navbar.drop-down.dashboard'), dashboard_user_path(current_user), class: 'text-center' %>
-              <%= menu_item t('navbar.drop-down.edit_profile'), user_profile_edit_path(current_user), class: 'text-center' %>
-              <%= drop_down_divider %>
-              <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete, class: 'text-center' %>
             </div>
         <% end %>
     <% else %>

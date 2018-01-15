@@ -4,11 +4,15 @@
     }
 
     .navbar {
-        background-color: transparent !important;
+        background-color: transparent;
+    }
+
+    .navbar-fixed-top{
+        background-color: #0f3157 !important;
     }
 
     .navbar-collapse {
-        background-color: transparent !important;
+        background-color: transparent;
     }
 }
 
@@ -62,8 +66,8 @@
     color: #1ba9e5 !important;
 }
 
-.not-transparent{
-    background-color: #0f3157 !important;
+.transparent{
+    background-color: transparent !important;
 }
 
 img.logo-img{

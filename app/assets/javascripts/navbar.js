@@ -13,4 +13,16 @@ $(document).ready(function(){
             $('#user-mobile-back').addClass('hidden');
         })
     }
+
+    changeNavbarTransparency();
 })
+
+changeNavbarTransparency = function() {
+    if($('body').hasClass('background')){
+        $('.navbar-fixed-top').addClass('transparent');
+    } else {
+        $('.navbar-fixed-top').removeClass('transparent');
+    }
+}
+
+
