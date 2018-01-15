@@ -22,13 +22,13 @@ class Team < ApplicationRecord
   has_many :members, through: :team_members, source: :user
   has_many :owners, through: :team_owners, source: :user
 
-  has_one :participant, as: :particable, class_name: 'Participants'
+  has_one :participant, as: :particable
 
   # validates :owners, presence: true
   # validates :members, presence: true
 
   def initialize(*args)
-    @participant ||= Participant.new
+    participant = Participant.new
     super
   end
 
@@ -39,27 +39,27 @@ class Team < ApplicationRecord
   # >>>>>> participating behaviour is encapsulated in Participant class
 
   def events
-    @participant.events
+    participant.events
   end
 
   def home_matches
-    @participant.home_matches
+    participant.home_matches
   end
 
   def away_matches
-    @participant.away_matches
+    participant.away_matches
   end
 
   def in_event?
-    @participant.in_event?
+    participant.in_event?
   end
 
   def winner
-    @participant.winner
+    participant.winner
   end
 
   def matches
-    @participant.matches
+    participant.matches
   end
 
   def last_match_of(_team)

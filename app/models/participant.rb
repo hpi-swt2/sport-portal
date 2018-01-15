@@ -16,8 +16,9 @@ class Participant < ApplicationRecord
 
   has_and_belongs_to_many :events
 
+  belongs_to :particable, polymorphic: true
+
   def in_event?
-    puts "como estas"
     events.exists?
   end
 
