@@ -18,7 +18,7 @@ RSpec.describe "teams/show", type: :view do
     user = FactoryBot.create :user
     @team.owners = []
     render
-    rendered.should_not have_content(t("helpers.links.delete_ownership"))
+    expect(rendered).to_not have_content(t("helpers.links.delete_ownership"))
   end
 
   it "shows delete ownership button for owners" do
@@ -27,7 +27,7 @@ RSpec.describe "teams/show", type: :view do
     @team.owners << another_user
     sign_in @user
     render
-    rendered.should have_content(t("helpers.links.delete_ownership"))
+    expect(rendered).to have_content(t('helpers.links.delete_ownership'))
   end
 
   it "shows the leave button when user can leave team" do
@@ -45,7 +45,7 @@ RSpec.describe "teams/show", type: :view do
     @team.members << @user
     @team.owners = @team.members
     render
-    rendered.should_not have_content(t("helpers.links.assign_ownership"))
+    expect(rendered).to_not have_content(t("helpers.links.assign_ownership"))
   end
 
   describe 'invite user to team' do
@@ -109,10 +109,25 @@ RSpec.describe "teams/show", type: :view do
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 
+  it "doesn't render the delete membership button for current user" do
+    @team.owners = [@user]
+    @team.members = @team.owners
+    sign_in @user
+    render
+    # Current user is the one and only owner/member of current team
+    expect(rendered).to_not have_content(t('helpers.links.delete_membership'))
+  end
+
   it "doesn't render the leave button when user is not allowed to leave team" do
     another_user = FactoryBot.build :user
     @team.owners << another_user
     # User has no team membership, therefore unable to delete his membership, according to ability :delete_membership
+    sign_in @user
+    render
+    expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.leave_team'))
+  end
+
+  it "doesn't render the leave button when user has no team membership" do
     sign_in @user
     render
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.leave_team'))
