@@ -249,6 +249,7 @@ de:
   teams:
     show:
       invite_user_to_team: "+"
+      number: "#"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
       no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'

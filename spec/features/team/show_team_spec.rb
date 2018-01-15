@@ -30,13 +30,13 @@ describe 'Show team page', type: :feature do
     it 'should not show an id column for members' do
       @team.members << @user
       visit team_path @team
-      expect(page).to_not have_text "Id"
+      expect(page).to_not have_text User.human_attribute_name(:id)
     end
 
     it 'should show # column for members' do
       @team.members << @user
       visit team_path @team
-      expect(page).to have_text "#"
+      expect(page).to have_text I18n.t('teams.show.number')
     end
 
     it 'should actually number teams consecutively' do
