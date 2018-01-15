@@ -84,5 +84,12 @@ RSpec.describe Team, type: :model do
     expect(team).not_to be_valid
     expect(team.errors[:avatar]).to include('is too large (max is 2 MB)')
   end
-
+  
+  it "by default return teams ordered by their date of creation" do
+    team = FactoryBot.create :team
+    another_team = FactoryBot.create :team
+    # update team name to be able to check that updated_at is not used to order teams
+    team.name = "New Name"
+    expect(Team.all).to eq([team, another_team])
+  end
 end
