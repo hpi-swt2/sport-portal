@@ -29,8 +29,8 @@
   <div class="form-group row">
     <%= f.label :avatar, t('activerecord.models.image.one'), class: 'control-label col-lg-2'%>
     <div class="col-lg-10">
-      <%= image_tag @user.avatar_url || image_path('missing_avatar.png'), :id => "preview", :style => "max-width:100px; max-height:100px"%>
-      <%= f.file_field :avatar, class: "form-control-file" %>
+      <%= image_tag @user.avatar_url || image_path('missing_avatar.png'), id: 'preview', style: 'max-width:100px; max-height:100px'%>
+      <%= f.file_field :avatar, class: 'form-control-file' %>
       <% if current_user.avatar %>
           <%= t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %><%= f.check_box :remove_avatar %>
       <% end %>

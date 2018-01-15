@@ -1,13 +1,22 @@
 <%- model_class = User -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <h1><%=@user.name %></h1>
 </div>
 
+<br>
+<div style="text-align: center;">
+<%= image_tag @user.avatar_url || image_path('missing_avatar.png'), id: 'preview', style: 'max-width:500px; max-height:500px'%>
+</div>
+<br>
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:first_name) %>:</strong></dt>
-  <dd><%= @user.first_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
-  <dd><%= @user.last_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:birthday) %>:</strong></dt>
+  <dd><%= @user.birthday %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:telephone_number) %>:</strong></dt>
+  <dd><%= @user.telephone_number %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:telegram_username) %>:</strong></dt>
+  <dd><%= @user.telegram_username %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:favourite_sports) %>:</strong></dt>
+  <dd><%= @user.favourite_sports %></dd>
 </dl>
 
 <%# app/helpers/button_helper.rb %>
