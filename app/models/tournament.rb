@@ -105,15 +105,17 @@ class Tournament < Event
     end
 
     def normalize_first_layer_match_indices
-      first_match = matches[0]
-      first_gameday_index_offset = first_match.index - 1
       matches.each do |match|
-        if match.gameday == first_match.gameday
-          match.adjust_index_by first_gameday_index_offset
+        if match.gameday == 0
+          match.adjust_index_by first_gameday_offset
         end
       end
     end
 
+    def first_gameday_offset
+      return 0 if Tournament.is_power_of_two? teams.size
+      2**teams.size.to_s(2).length - teams.size
+    end
 
     class << self
       def split_teams_array(team_array)
