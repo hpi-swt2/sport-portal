@@ -38,5 +38,19 @@ describe 'Show team page', type: :feature do
       visit team_path @team
       expect(page).to have_text "#"
     end
+
+    it 'should actually number teams consecutively' do
+      @another_user = FactoryBot.create :user
+      @yet_another_user = FactoryBot.create :user
+      @team.members << @user
+      @team.members << @another_user
+      @team.members << @yet_another_user
+      visit team_path @team
+
+      all('.table tr > td:nth-child(2)').each_with_index do |td, i|
+        expect(td.text).to eq((i+1).to_s)
+        break if i == 2
+      end
+    end
   end
 end
