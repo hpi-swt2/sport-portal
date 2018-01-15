@@ -77,7 +77,7 @@ FactoryBot.define do
       end
     end
 
-    factory :fcfs_event do
+    trait :fcfs do
       selection_type Event.selection_types[:fcfs]
     end
   end

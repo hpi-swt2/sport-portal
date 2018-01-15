@@ -102,6 +102,10 @@ class Event < ApplicationRecord
     (not has_participant?(user)) && team_slot_available?
   end
 
+  def can_join_fcfs?
+    team_slot_available? && selection_type == 0
+  end
+
   def can_leave?(user)
     has_participant?(user)
   end

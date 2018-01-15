@@ -163,6 +163,7 @@ de:
     choose_team: "Ein Team auswählen"
     participating: "Beigetreten"
     metric: "Metrik"
+    full: "Voll"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
