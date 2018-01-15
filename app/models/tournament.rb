@@ -26,7 +26,9 @@ class Tournament < Event
   enum game_mode: [:ko, :ko_group, :double_elimination]
 
   def standing_of(team)
-    last_match = finale.last_match_of team
+    final_match = finale
+    return super(team) if final_match.blank?
+    last_match = final_match.last_match_of team
     last_match.standing_string_of team
   end
 
@@ -41,6 +43,7 @@ class Tournament < Event
   end
 
   def generate_schedule
+    return if teams.size < 2
     create_matches filled_teams, max_match_level, 0
     normalize_first_layer_match_indices
   end
@@ -76,7 +79,8 @@ class Tournament < Event
 
       match_left, match_right = create_child_matches(team_array, depth, index)
 
-      create_match match_left, match_right, depth, index
+      match = create_match match_left, match_right, depth, index
+      Tournament.create_match_participant match, true
     end
 
     def create_child_matches(team_array, depth, index)
@@ -90,27 +94,32 @@ class Tournament < Event
 
     def create_leaf_match(team_home, team_away, depth, index)
       if team_home.present? && team_away.present?
-        return create_match team_home, team_away, depth, index
+        match = create_match team_home, team_away, depth, index
+        return Tournament.create_match_participant match, true
       end
       team_home || team_away
     end
 
     def create_match(team_home, team_away, depth, index)
       match = Match.new team_home: team_home, team_away: team_away, gameday: depth, index: index + 1, event: self
+      matches << match
       match.save!
       match
     end
 
     def normalize_first_layer_match_indices
-      first_match = matches[0]
-      first_gameday_index_offset = first_match.index - 1
       matches.each do |match|
-        if match.gameday == first_match.gameday
-          match.adjust_index_by first_gameday_index_offset
+        if match.gameday == 0
+          match.adjust_index_by first_gameday_offset
         end
       end
     end
 
+    def first_gameday_offset
+      teams_size = teams.size
+      return 0 if Tournament.is_power_of_two? teams_size
+      2**teams_size.to_s(2).length - teams_size
+    end
 
     class << self
       def split_teams_array(team_array)
@@ -122,6 +131,12 @@ class Tournament < Event
 
       def is_power_of_two?(number)
         number.to_s(2).count('1') == 1
+      end
+
+      def create_match_participant(match, winner)
+        match_result = MatchResult.new match: match, winner_advances: winner
+        match_result.save!
+        match_result
       end
     end
 end
