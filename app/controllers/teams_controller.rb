@@ -5,6 +5,11 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
+    if params[:filter] == I18n.t("helpers.teams.show_mine")
+      @teams = Team.includes(:team_members).where(team_users: { user_id: current_user })
+    else
+      @teams = Team.all
+    end
   end
 
   # GET /teams/1
