@@ -40,8 +40,9 @@
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <label>
-        <%= f.check_box :private %>&nbsp;<%=t '.private', :default => t("helpers.teams.private") %>
+      <%= f.check_box :private %>
+      <label for="team_private">
+        &nbsp;<%=t '.private', :default => t("helpers.teams.private") %>
       </label>
       <%= f.error_span(:private) %>
     </div>
