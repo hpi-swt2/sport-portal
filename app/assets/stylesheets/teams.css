@@ -9,3 +9,6 @@ label.required:after {
   font-size: 0.75em;
   font-weight: normal;
 }
+select.filterSelect{
+  display: block;
+}
