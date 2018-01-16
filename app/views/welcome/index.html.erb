@@ -142,8 +142,37 @@
         </h1>
       </div>
     </div>
-    <div class="row">
-
+    <div class="row hide-on-med-and-up">
+      <ul class="collapsible info-collapsible myCollapsible" data-collapsible="expandable">
+        <li>
+          <div class="collapsible-header active" onclick="$(this).find('#myCollapsibleIcon').toggleClass('rotated')">
+            <h3><%= t('welcome.index.section3-card1-header') %></h3>
+            <i id="myCollapsibleIcon" class="fa fa-angle-down rotated"></i>
+          </div>
+          <div class="collapsible-body">
+            <ul class="myList"><%= t('welcome.index.section3-card1-description_html') %></ul>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"  onclick="$(this).find('#myCollapsibleIcon').toggleClass('rotated')">
+            <h3><%= t('welcome.index.section3-card2-header') %></h3>
+            <i id="myCollapsibleIcon" class="fa fa-angle-down"></i>
+          </div>
+          <div class="collapsible-body">
+            <ul class="myList"><%= t('welcome.index.section3-card2-description_html') %></ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="row hide-on-small-only content-is-cards">
+      <div class="info-card">
+        <h3><%= t('welcome.index.section3-card1-header') %></h3>
+        <ul class="myList"><%= t('welcome.index.section3-card1-description_html') %></ul>
+      </div>
+      <div class="info-card">
+        <h3><%= t('welcome.index.section3-card2-header') %></h3>
+        <ul class="myList"><%= t('welcome.index.section3-card2-description_html') %></ul>
+      </div>
     </div>
   </div>
 </div>
