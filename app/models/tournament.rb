@@ -38,7 +38,7 @@ class Tournament < Event
 
   def finale
     matches.each do |match|
-      if (match.depth == 0) && (match.index == 1)
+      if match.depth == 0
         return match
       end
     end
@@ -47,7 +47,7 @@ class Tournament < Event
 
   def place_3_match
     matches.each do |match|
-      if (match.depth == 0) && (match.index == 2)
+      if match.depth == -1
         return match
       end
     end
@@ -156,7 +156,7 @@ class Tournament < Event
 
     def create_place_3_match
       loser1, loser2 = place_3_match_participants
-      match = Match.new team_home: loser1, team_away: loser2, gameday: max_match_level, index: 2, event: self
+      match = Match.new team_home: loser1, team_away: loser2, gameday: max_match_level + 1, index: 1, event: self
       matches << match
       match.save!
     end

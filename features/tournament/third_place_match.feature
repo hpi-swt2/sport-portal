@@ -27,6 +27,6 @@ Feature: Spielplan progression for tournament
     Then the standing of the away team of match Halbfinale 2 is 'Zweiter Platz'
 
     When the Spielplan page for t is visited
-    And the results for match Finale 2 (3 : 6) got inserted
+    And the results for match Spiel um Platz 3 1 (3 : 6) got inserted
     Then the standing of the home team of match Halbfinale 2 is 'Dritter Platz'
     Then the standing of the away team of match Halbfinale 1 is 'Vierter Platz'
