@@ -1,6 +1,4 @@
 class EventsController < ApplicationController
-  # FIXME Factor out the RankingEntry struct into a helper class that gets used in the event/ranking view as well
-  # FIXME (maybe the existing EventsHelper?)
   RankingEntry = Struct.new(:rank, :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against,
                             :goals_difference, :points)
 
@@ -105,8 +103,6 @@ class EventsController < ApplicationController
     # Array of RankingEntry Structs that gets sorted when filled completely
     @ranking_entries = []
 
-    # TODO Either add the possibility to calculate rankings for single-player events
-    # TODO or replace `teams` with the to be introduced EventParticipant superclass
     # Leaves the Array of RankingEntry Structs empty when no teams participate in the event
     @event.teams.each do |team|
       ranking_entry = RankingEntry.new(nil, team.name, 0, 0, 0, 0, 0, 0, 0, 0)
