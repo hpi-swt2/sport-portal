@@ -22,11 +22,43 @@ describe 'Show team page', type: :feature do
     end
   end
 
-  it 'should render correct "Send Email" links for team members' do
-    sign_in @user
-    @team.members << @user
-    visit team_path @team
-    mailto_link_for_user = 'mailto:' + @user.email
-    expect(page).to have_link(I18n.t("helpers.links.email"), href: mailto_link_for_user)
+  describe 'display consecutive numbering of members' do
+    before(:each) do
+      sign_in @user
+    end
+
+    it 'should not show an id column for members' do
+      @team.members << @user
+      visit team_path @team
+      expect(page).to_not have_text User.human_attribute_name(:id)
+    end
+
+    it 'should show # column for members' do
+      @team.members << @user
+      visit team_path @team
+      expect(page).to have_text I18n.t('teams.show.number')
+    end
+
+    it 'should actually number teams consecutively' do
+      @another_user = FactoryBot.create :user
+      @yet_another_user = FactoryBot.create :user
+      @team.members << @user
+      @team.members << @another_user
+      @team.members << @yet_another_user
+      visit team_path @team
+
+      all('.table tr > td:nth-child(2)').each_with_index do |td, i|
+        expect(td.text).to eq((i + 1).to_s)
+        break if i == 2
+      end
+    end
+
+    it 'should render correct "Send Email" links for team members' do
+      sign_in @user
+      @team.members << @user
+      visit team_path @team
+      mailto_link_for_user = 'mailto:' + @user.email
+      expect(page).to have_link(I18n.t("helpers.links.email"), href: mailto_link_for_user)
+    end
   end
 end

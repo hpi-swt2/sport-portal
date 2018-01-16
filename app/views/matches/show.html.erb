@@ -9,9 +9,9 @@
   <dt><strong><%= model_class.human_attribute_name(:place) %>:</strong></dt>
   <dd><%= @match.place %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team_home_id) %>:</strong></dt>
-  <dd><%= participant_link @match.team_home %></dd>
+  <dd><%= link_to_participant @match.team_home %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team_away_id) %>:</strong></dt>
-  <dd><%= participant_link @match.team_away %></dd>
+  <dd><%= link_to_participant @match.team_away %></dd>
   <dt><strong><%= model_class.human_attribute_name(:score_home) %>:</strong></dt>
   <dd><%= @match.score_home %></dd>
   <dt><strong><%= model_class.human_attribute_name(:score_away) %>:</strong></dt>
