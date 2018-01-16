@@ -82,6 +82,8 @@ class Tournament < Event
             I18n.t 'events.placing.third'
           elsif p3m.loser == team
             I18n.t 'events.placing.fourth'
+          elsif p3m.is_team_recursive?(team)
+            I18n.t 'events.overview.in_place_3_match'
           end
         end
       end

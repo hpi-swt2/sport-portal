@@ -235,6 +235,7 @@ de:
       standingColumn: "Platzierung"
       unkown_standing: "Platzierung Unbekannt"
       out: "In %{match_name} ausgeschieden"
+      in_place_3_match: "In Spiel um Platz 3"
       in: "In %{match_name}"
     placing:
       first: "Erster Platz"
