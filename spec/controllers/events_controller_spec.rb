@@ -144,14 +144,14 @@ RSpec.describe EventsController, type: :controller do
     context "with valid params" do
       let(:league_params) {
         {
-          event: valid_league_attributes,
-          type: League
+            event: valid_league_attributes,
+            type: League
         }
       }
       let(:tournament_params) {
         {
-          event: FactoryBot.build(:tournament, owner: @user).attributes,
-          type: Tournament
+            event: FactoryBot.build(:tournament, owner: @user).attributes,
+            type: Tournament
         }
       }
       it "creates a new Event" do
@@ -178,14 +178,14 @@ RSpec.describe EventsController, type: :controller do
     context "with invalid params" do
       let(:league_params) {
         {
-          event: invalid_league_attributes,
-          type: League
+            event: invalid_league_attributes,
+            type: League
         }
       }
       let(:tournament_params) {
         {
-          event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
-          type: Tournament
+            event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
+            type: Tournament
         }
       }
       it "returns success when creating a league" do
@@ -204,9 +204,9 @@ RSpec.describe EventsController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {
-          deadline: Date.new(2017, 11, 20),
-          startdate: Date.new(2017, 11, 21),
-          enddate: Date.new(2017, 11, 22)
+            deadline: Date.new(2017, 11, 20),
+            startdate: Date.new(2017, 11, 21),
+            enddate: Date.new(2017, 11, 22)
         }
       }
 
@@ -344,10 +344,13 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
-
+  #this test is only for leagues
   describe "GET League#schedule" do
     it "should generate schedule if not existing" do
       event = League.create! valid_league_attributes
+      event.add_participant(@user)
+      event.add_participant(@other_user)
+      event.generate_schedule
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(event.matches).not_to be_empty
     end
