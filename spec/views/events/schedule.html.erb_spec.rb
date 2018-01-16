@@ -50,4 +50,9 @@ RSpec.describe 'events/schedule', type: :view do
       expect(rendered).to have_selector :link, @user.name, href: user_path(@user)
     end
   end
+
+  it 'has edit button for gameday days' do
+    render
+    expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
+  end
 end

@@ -29,6 +29,8 @@
               <%= t 'events.schedule.to' %>
               <%= " #{(@event.enddate_for_gameday match.gameday).to_s(:day_and_month)}" %>
             </b>
+            <%= link_to t('events.schedule.edit_date', default: t('helpers.links.edit')),
+                        event_schedule_path(@event), class: 'btn btn-default btn-xs' %>
           </th>
         </tr>
       <% last_gameday = match.gameday %>

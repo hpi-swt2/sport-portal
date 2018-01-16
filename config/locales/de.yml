@@ -303,6 +303,7 @@ de:
       title: "Spielplan"
       gameday: "Spieltag"
       date: "Datum"
+      edit_date: "Datum ändern"
       place: "Ort"
       home: "Team 1"
       away: "Team 2"
