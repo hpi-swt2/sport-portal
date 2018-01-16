@@ -57,7 +57,13 @@
   <dd><%= @event.human_game_mode %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
-  <dd><%= @event.max_teams %></dd>
+  <dd>
+    <% if @event.max_teams.present? %>
+      <%= @event.max_teams %>
+    <% else %>
+      <%= t 'events.max_teams.infinite' %>
+    <% end %>
+  </dd>
 
   <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
   <dd><%= @event.human_player_type %></dd>
@@ -81,8 +87,7 @@
   <table class="table">
     <thead><tr><th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th></tr></thead>
     <tbody>
-    <% event_participants = @event.single? ? @event.participants : @event.teams %>
-    <% event_participants.each do |participant| %>
+    <% @event.teams.each do |participant| %>
       <tr><td><%= link_to_participant participant %></td></tr>
     <% end %>
     </tbody>
@@ -104,13 +109,29 @@
               leave_event_path(@event),
               method: :put,
               class: 'btn btn-default',
+              disabled: (not @event.owns_participating_teams?(current_user)),
               id: :leave_event_button %>
   <%= t('events.participating') %>
 <% end %>
-<% if can? :join, @event %>
-  <%= link_to t('.join', default: t('helpers.links.join')),
-              join_event_path(@event),
-              method: :put,
-              class: 'btn btn-default',
-              id: :join_event_button %>
+<% if can? :join, @event%>
+  <% if @event.single? %>
+    <%= link_to t('.join', default: t('helpers.links.join')),
+                 join_event_path(@event),
+                 method: :put,
+                 class: 'btn btn-default',
+                 id: :join_event_button %>
+  <% else %>
+    <%= link_to t('.join', default: t("helpers.links.join")),
+                team_join_event_path(@event),
+                remote: true, data: {toggle: "modal", target: "modal-window"},
+                class: 'btn btn-default',
+                id: :join_event_button %>
+  <% end %>
 <% end %>
+
+<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>

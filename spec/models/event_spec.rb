@@ -85,8 +85,8 @@ describe 'Event model', type: :model do
     expect(Event.all).to include(new_event, old_event)
   end
 
-  it 'should have an association participants' do
-    relation = Event.reflect_on_association(:participants)
+  it 'should have an association teams' do
+    relation = Event.reflect_on_association(:teams)
     expect(relation.macro).to eq :has_and_belongs_to_many
   end
 
@@ -98,12 +98,6 @@ describe 'Event model', type: :model do
   it 'should know if its deadline has passed' do
     passed_deadline_event = FactoryBot.build :event, :passed_deadline
     expect(passed_deadline_event.deadline_has_passed?).to be true
-  end
-
-  it 'can_join? should raise a NotImplementedError' do
-    event = FactoryBot.build :event
-    user = FactoryBot.build :user
-    expect { event.can_join? user }.to raise_error NotImplementedError
   end
 
   it "generate_Schedule? should raise a NotImplementedError" do

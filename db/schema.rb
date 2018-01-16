@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171212150919) do
+ActiveRecord::Schema.define(version: 20180107175546) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(version: 20171212150919) do
     t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
+  create_table "match_results", force: :cascade do |t|
+    t.integer "match_id"
+    t.boolean "winner_advances"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_match_results_on_match_id"
+  end
+
   create_table "matches", force: :cascade do |t|
     t.string "place"
     t.integer "score_home"
@@ -78,6 +86,7 @@ ActiveRecord::Schema.define(version: 20171212150919) do
     t.integer "team_id", null: false
     t.integer "user_id", null: false
     t.boolean "is_owner"
+    t.datetime "created_at"
     t.index ["user_id", "team_id"], name: "index_team_users_on_user_id_and_team_id"
   end
 
@@ -88,6 +97,8 @@ ActiveRecord::Schema.define(version: 20171212150919) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
+    t.text "avatar_data"
+    t.boolean "single", default: false
   end
 
   create_table "users", force: :cascade do |t|

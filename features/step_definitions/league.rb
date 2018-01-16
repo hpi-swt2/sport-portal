@@ -31,3 +31,8 @@ Then (/^there should be gameday dates$/) do
   expect(page).to have_content('24.12. bis 30.12.')
   expect(page).to have_content('31.12. bis 06.01.')
 end
+
+
+Given(/^a league without max teams$/) do
+  create_league(max_teams: nil)
+end

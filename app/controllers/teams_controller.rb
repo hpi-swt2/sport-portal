@@ -5,6 +5,12 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
+    multi_teams = Team.multiplayer
+    if params[:filter] == "true"
+      @teams = multi_teams.includes(:team_members).where(team_users: { user_id: current_user })
+    else
+      @teams = multi_teams
+    end
   end
 
   # GET /teams/1
@@ -162,6 +168,6 @@ class TeamsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def team_params
-      params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members)
+      params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members, :avatar, :remove_avatar)
     end
 end
