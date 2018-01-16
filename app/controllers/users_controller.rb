@@ -43,7 +43,7 @@ class UsersController < Devise::RegistrationsController
       set_flash_message! :notice, :destroyed
       redirect_to root_path
     else
-      set_flash_message! :error, :not_destroyed unless params[:password].blank?
+      set_flash_message! :error, :not_destroyed
       render :destroy
     end
   end
