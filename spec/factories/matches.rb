@@ -27,5 +27,9 @@ FactoryBot.define do
     gameday 1
     points_away 3
     points_home 1
+
+    trait :with_tournament do
+      association :event, factory: :tournament
+    end
   end
 end
