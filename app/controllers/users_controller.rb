@@ -38,7 +38,6 @@ class UsersController < Devise::RegistrationsController
   end
 
   def confirm_destroy
-    authorize! :destroy, @user
     if @user.valid_password?(params[:password])
       @user.destroy
       set_flash_message! :notice, :destroyed
@@ -50,7 +49,6 @@ class UsersController < Devise::RegistrationsController
   end
 
   def destroy
-    authorize! :destroy, @user
     render :destroy
   end
 
