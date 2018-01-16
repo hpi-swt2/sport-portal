@@ -1,7 +1,7 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
   helper_method :error_detector
-  load_and_authorize_resource :user, only: [:index, :show, :edit, :destroy, :confirm_destroy, :dashboard]
+  load_and_authorize_resource :user, only: [:index, :edit, :destroy, :confirm_destroy, :dashboard]
   load_resource only: [:link, :unlink]
 
   attr_reader :user
