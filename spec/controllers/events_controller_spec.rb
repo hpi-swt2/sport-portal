@@ -443,9 +443,8 @@ RSpec.describe EventsController, type: :controller do
         end
 
         it 'should calculate the rank of a participant based on his points correctly' do
-          #expect(@team1.home_matches & @event.matches).to be([@match1])
-          #expect((@event.matches)[1].team_home.name).to eq(@team2.name)
-          expect(@ranking_entries.first.name).to eq(@team1.name)
+          expect(@ranking_entries.second.points).to be > @ranking_entries.third.points
+          expect(@ranking_entries.second.rank).to be < @ranking_entries.third.rank
         end
 
         it "should pass on the participant's name correctly" do
@@ -473,9 +472,9 @@ RSpec.describe EventsController, type: :controller do
           expect(@ranking_entries.first.points).to eq(4)
         end
         it 'should calculate the rank of two participants with the same points based on the number of goals correctly' do
-          expect(@ranking_entries.first.name).to eq(@team1.name)
-          expect(@ranking_entries[1].name).to eq(@team3.name)
-
+          expect(@ranking_entries.first.points).to be == @ranking_entries.second.points
+          expect(@ranking_entries.first.goals).to be > @ranking_entries.second.goals
+          expect(@ranking_entries.first.rank).to be < @ranking_entries.second.rank
         end
       end
     end
