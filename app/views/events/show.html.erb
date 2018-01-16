@@ -22,6 +22,26 @@
   <% end %>
 </div>
 
+<% if @event.is_a? Tournament and @event.finale.present? and @event.finale.has_winner? %>
+  <div class="table-responsive">
+    <h3><%= t('events.show.winners') %></h3>
+    <table class="table">
+      <tr>
+        <th>Platzierung</th>
+        <th><%= @event.participant_model.model_name.human.titleize %></th>
+      </tr>
+      <tr>
+        <td><%= t 'events.placing.first' %></td>
+        <td><%= link_to_participant @event.finale.winner %></td>
+      </tr>
+      <tr>
+        <td><%= t 'events.placing.second' %></td>
+        <td><%= link_to_participant @event.finale.loser %></td>
+      </tr>
+    </table>
+  </div>
+<% end %>
+
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @event.name %></dd>
@@ -36,7 +56,13 @@
   <dd><%= @event.human_game_mode %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
-  <dd><%= @event.max_teams %></dd>
+  <dd>
+    <% if @event.max_teams.present? %>
+      <%= @event.max_teams %>
+    <% else %>
+      <%= t 'events.max_teams.infinite' %>
+    <% end %>
+  </dd>
 
   <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
   <dd><%= @event.human_player_type %></dd>
@@ -49,25 +75,19 @@
 
   <dt><strong><%= model_class.human_attribute_name(:enddate) %>:</strong></dt>
   <dd><%= @event.enddate %></dd>
+  <% unless @event.gameday_duration.nil? %>
+    <dt><strong><%= model_class.human_attribute_name(:gameday_duration) %>:</strong></dt>
+    <dd><%= @event.gameday_duration %></dd>
+  <% end %>
 </dl>
 
 <div class="table-responsive">
   <h3><%= t("events.show.participants") %></h3>
   <table class="table">
-    <% if @event.single? %>
-      <thead><tr><th><%=t '.title', default: User.model_name.human.titleize %></th></tr></thead>
-      <tbody>
-        <% @event.participants.each do |participant| %>
-          <tr><td><%= participant.name %></td></tr>
-        <% end %>
-      </tbody>
-    <% else %>
-      <thead><tr><%=t '.title', default: Team.model_name.human.titleize %></tr></thead>
-      <tbody>
-        <% @event.teams.each do |team| %>
-          <tr><td><%= link_to team.name, team_path(team), id: team.name %></td></tr>
-        <% end %>
-      </tbody>
+    <thead><tr><th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th></tr></thead>
+    <tbody>
+    <% @event.teams.each do |participant| %>
+      <tr><td><%= link_to_participant participant %></td></tr>
     <% end %>
   </table>
 </div>
@@ -87,13 +107,29 @@
               leave_event_path(@event),
               method: :put,
               class: 'btn btn-default',
+              disabled: (not @event.owns_participating_teams?(current_user)),
               id: :leave_event_button %>
   <%= t('events.participating') %>
 <% end %>
-<% if can? :join, @event %>
-  <%= link_to t('.join', default: t('helpers.links.join')),
-              join_event_path(@event),
-              method: :put,
-              class: 'btn btn-default',
-              id: :join_event_button %>
+<% if can? :join, @event%>
+  <% if @event.single? %>
+    <%= link_to t('.join', default: t('helpers.links.join')),
+                 join_event_path(@event),
+                 method: :put,
+                 class: 'btn btn-default',
+                 id: :join_event_button %>
+  <% else %>
+    <%= link_to t('.join', default: t("helpers.links.join")),
+                team_join_event_path(@event),
+                remote: true, data: {toggle: "modal", target: "modal-window"},
+                class: 'btn btn-default',
+                id: :join_event_button %>
+  <% end %>
 <% end %>
+
+<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>

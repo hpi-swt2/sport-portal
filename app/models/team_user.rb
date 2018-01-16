@@ -10,6 +10,7 @@
 # Class for members of teams. They can be owners with advanced rights.
 # By default, new TeamUsers are no owners.
 class TeamUser < ApplicationRecord
+  default_scope { order(created_at: :asc) }
   belongs_to :team
   belongs_to :user
   before_create :init
