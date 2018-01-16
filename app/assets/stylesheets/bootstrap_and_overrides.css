@@ -5,11 +5,6 @@
   =require twitter-bootstrap-static/sprites
 */
 
-.container {
-    /* important for footer which sticks to the bottom of the page */
-    flex: 1 0 auto;
-}
-
 /* Navbar vertical divider, dropped in Bootstrap 3 */
 .divider-vertical {
   height: 50px;

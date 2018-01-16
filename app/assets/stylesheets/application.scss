@@ -51,6 +51,26 @@ body {
   flex-direction: column;
 }
 
+.background-layer {
+  /* important for footer which sticks to the bottom of the page */
+  flex: 1 0 auto;
+}
+
+/* make sure footer is displayed in front of white background on sign in / up page */
+@media screen and (min-width: 992px) {
+  .background-layer {
+    margin-bottom: -80px;
+    padding-bottom: 110px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .background-layer {
+    margin-bottom: -50px;
+    padding-bottom: 50px;
+  }
+}
+
 .navbar-overlap {
   padding-top: 50px;
 }

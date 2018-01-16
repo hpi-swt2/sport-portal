@@ -89,13 +89,16 @@ a:link, a:visited, a:hover, a:active {
 /* Mobile/desktop dependent: */
 
 @media screen and (min-width: 480px) {
-    .background{
-        background: url(https://owncloud.hpi.de/index.php/s/siSJzCTBN5U3pbf/download) no-repeat center center fixed;
+    .background {
+        background: url(https://owncloud.hpi.de/index.php/s/siSJzCTBN5U3pbf/download);
+
+        background-repeat: no-repeat;
+        background-position: bottom left;
+
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-        background-repeat: none;
     }
 
     h1 {
