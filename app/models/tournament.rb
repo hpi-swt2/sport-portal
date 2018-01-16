@@ -32,8 +32,7 @@ class Tournament < Event
     special_standing = special_standing_of team
     return special_standing if special_standing.present?
 
-    last_match = final_match.last_match_of team
-    last_match.standing_string_of team
+    final_match.last_match_of(team).standing_string_of team
   end
 
   def finale
@@ -55,10 +54,11 @@ class Tournament < Event
   end
 
   def generate_schedule
-    return if teams.size < 2
+    team_count = teams.size
+    return if team_count < 2
     create_matches filled_teams, max_match_level, 0
     normalize_first_layer_match_indices
-    if teams.size >= 4
+    if team_count >= 4
       create_place_3_match
     end
   end
@@ -76,15 +76,19 @@ class Tournament < Event
       elsif final_match.loser == team
         I18n.t 'events.placing.second'
       else
-        p3m = place_3_match
-        if p3m.present?
-          if p3m.winner == team
-            I18n.t 'events.placing.third'
-          elsif p3m.loser == team
-            I18n.t 'events.placing.fourth'
-          elsif p3m.is_team_recursive?(team)
-            I18n.t 'events.overview.in_place_3_match'
-          end
+        place_3_standing_of team
+      end
+    end
+
+    def place_3_standing_of(team)
+      p3m = place_3_match
+      if p3m.present?
+        if p3m.winner == team
+          I18n.t 'events.placing.third'
+        elsif p3m.loser == team
+          I18n.t 'events.placing.fourth'
+        elsif p3m.is_team_recursive?(team)
+          I18n.t 'events.overview.in_place_3_match'
         end
       end
     end
@@ -157,17 +161,17 @@ class Tournament < Event
     end
 
     def create_place_3_match
-      loser1, loser2 = place_3_match_participants
-      match = Match.new team_home: loser1, team_away: loser2, gameday: max_match_level + 1, index: 1, event: self
+      loser_home, loser_away = place_3_match_participants
+      match = Match.new team_home: loser_home, team_away: loser_away, gameday: max_match_level + 1, index: 1, event: self
       matches << match
       match.save!
     end
 
     def place_3_match_participants
       final_match = finale
-      loser1 = Tournament.create_match_participant final_match.team_home.match, false
-      loser2 = Tournament.create_match_participant final_match.team_away.match, false
-      [loser1, loser2]
+      loser_home = Tournament.create_match_participant final_match.team_home.match, false
+      loser_away = Tournament.create_match_participant final_match.team_away.match, false
+      [loser_home, loser_away]
     end
 
     class << self
