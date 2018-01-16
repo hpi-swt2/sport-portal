@@ -406,9 +406,9 @@ RSpec.describe EventsController, type: :controller do
           @team2 = Team.create! valid_team2_attributes
           @team3 = Team.create! valid_team3_attributes
 
-          @event.teams << @team1
-          @event.teams << @team2
-          @event.teams << @team3
+          @event.add_team(@team1)
+          @event.add_team(@team2)
+          @event.add_team(@team3)
 
           @match1 = Match.new(team_home: @team1, team_away: @team2, gameday: 1,
                               score_home: 10, score_away: 0,
