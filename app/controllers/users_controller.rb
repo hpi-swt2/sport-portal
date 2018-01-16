@@ -38,12 +38,10 @@ class UsersController < Devise::RegistrationsController
   end
 
   def confirm_destroy
-    if @user.valid_password?(params[:password])
-      @user.destroy
+    if @user.destroy_with_password(params[:password])
       set_flash_message! :notice, :destroyed
       redirect_to root_path
     else
-      set_flash_message! :error, :not_destroyed unless params[:password].blank?
       render :destroy
     end
   end

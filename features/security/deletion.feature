@@ -18,5 +18,5 @@ Feature: Account deletion
     And he enters a wrong password
     And the user submits the form
     Then the user should not be deleted
-    And the page should show 'falsches Passwort'
+    And the page should show 'Bisheriges Passwort ist nicht gültig'
 

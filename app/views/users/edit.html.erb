@@ -121,7 +121,7 @@
       <%= f.submit nil, class: 'btn btn-primary' %>
       <%= link_to t('.cancel', default: t('helpers.links.cancel')),
                 user_path(@user), class: 'btn btn-default' %>
-      <%= t('.unhappy') %>? <%= link_to t('.cancel_this_account'), user_path(@user), data: { confirm: t('.are_you_sure', default: t('helpers.links.confirm')) }, method: :delete, current_password: f.submit %>.
+      <%= t('.unhappy') %>? <%= link_to t('.cancel_this_account'), user_path(@user), method: :delete %>.
     </div>
   </div>
 <% end %>
