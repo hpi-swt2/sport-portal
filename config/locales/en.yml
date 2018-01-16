@@ -117,6 +117,7 @@ en:
   teams:
       show:
         invite_user_to_team: "+"
+        number: "#"
       invite_user_to_team:
         title: "Invite new player"
         no_user_for_mail: 'No user matching the given email address.'
