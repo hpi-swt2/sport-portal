@@ -202,7 +202,7 @@ ul.myList>li {
 }
 
 /* Tablet */
-@media only screen and (min-width : 992px) and (max-width: 1300px) {
+@media only screen and (min-width : 600px) and (max-width: 1300px) {
 
     .section.darkblue-soccer {
         padding-top: 8%;
@@ -248,10 +248,31 @@ ul.myList>li {
 }
 
 /* Smartphones */
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 600px) {
 
     .section.darkblue-soccer {
         padding-top: 4%;
+        padding-bottom: calc(450 / 796 * 100%);
+        margin-bottom: calc(-600 / 796 * 100%);
+    }
+
+    .section.lightblue-soccer {
+        padding-bottom: calc(230 / 888 * 100%);
+        margin-bottom: calc(-400 / 888 * 100%);
+        padding-top: calc(84 / 796 * 100% + 100px);
+    }
+
+    .section.orange-basketball  {
+        padding-bottom: calc(150 / 888 * 100%);
+        margin-bottom: calc(-150 / 888 * 100%);
+        padding-top: calc(100 / 796 * 100% + 60px);
+    }
+
+    .section.purple-skating  {
+        padding-bottom: calc(104 / 756 * 100% + 60px);
+        margin-bottom: calc(-104 / 756 * 100% + 60px);
+        padding-top: calc(104 / 756 * 100% + 60px);
+
     }
 
     .myButton {
