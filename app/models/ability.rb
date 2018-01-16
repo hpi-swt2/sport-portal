@@ -29,25 +29,32 @@ class Ability
     alias_action :schedule, :overview, to: :read
     alias_action :update, :destroy, to: :modify
     alias_action :create_from_type, to: :create
-
     can :read, :all
     cannot :read, Team, private: true
-
+    cannot [:index, :show], User
+    can :create, User
     if user.present?
+      initialize_with_user(user)
+    end
+  end
+
+  private
+
+    def initialize_with_user(user)
       user_id = user.id
 
       # all
       can :create, :all
 
       # User
-      can [:modify, :edit_profile, :update_profile, :dashboard], User, id: user_id
+      can [:show, :modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
       cannot :create, User
 
       # Event
       can [:create, :read, :update, :destroy], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
-      can :schedule, Event
+      can [:schedule, :team_join], Event
 
       # Team
       can_crud_team(user_id)
@@ -55,17 +62,15 @@ class Ability
       can_delete_ownership(user)
       can_delete_membership(user)
       can_assign_membership_by_email(user)
+      can_send_emails_to_team_members(user)
 
       if user.admin?
         can :manage, :all
       end
     end
-  end
-
-  private
 
     def can_join_event(user)
-      can :join, Event do |event|
+      can :join, Event.active do |event|
         event.can_join?(user)
       end
     end
@@ -86,6 +91,10 @@ class Ability
       can :assign_membership_by_email, Team, members: { id: user.id }
     end
 
+    def can_send_emails_to_team_members(user)
+      can :send_emails_to_team_members, Team, members: { id: user.id }
+    end
+
     def can_assign_ownership(user)
       can :assign_ownership, Team, Team do |team|
         team.owners.include? user
@@ -96,7 +105,7 @@ class Ability
       can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
         exist_owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
-        ((team.owners.include? user) && exist_owners_after_delete) || ((user_id == Integer(team_member)) && exist_owners_after_delete)
+        ((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete)
       end
     end
 
