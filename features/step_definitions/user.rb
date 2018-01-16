@@ -155,6 +155,10 @@ And(/^he enters his password$/) do
   fill_in :password, with: single_user.password
 end
 
+And(/^he enters his current password$/) do
+  fill_in User.human_attribute_name(:current_password), with: single_user.password
+end
+
 Then(/^the user should be deleted$/) do
   expect(User.find_by_id(single_user.id)).to be_nil
 end
@@ -163,11 +167,9 @@ And(/^he enters a wrong password$/) do
   fill_in :password, with: single_user.password + 'potato'
 end
 
-
 Then(/^the user should not be deleted$/) do
   expect(User.find_by_id(single_user.id)).to_not be_nil
 end
-
 
 And(/^he enters the first name '(.*)'$/) do |name|
   fill_in User.human_attribute_name(:first_name), with: name
@@ -188,4 +190,9 @@ Then(/^his email should not have changed$/) do
   old_email = single_user.email
   single_user.reload
   expect(single_user.email).to eq(old_email)
+end
+
+Then(/^his email should be '(.*)'$/) do |email|
+  single_user.reload
+  expect(single_user.email).to eq(email)
 end
