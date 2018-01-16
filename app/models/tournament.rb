@@ -28,6 +28,10 @@ class Tournament < Event
   def standing_of(team)
     final_match = finale
     return super(team) if final_match.blank?
+
+    special_standing = special_standing_of team
+    return special_standing if special_standing.present?
+
     last_match = final_match.last_match_of team
     last_match.standing_string_of team
   end
@@ -64,6 +68,24 @@ class Tournament < Event
   end
 
   private
+
+    def special_standing_of(team)
+      final_match = finale
+      if final_match.winner == team
+        I18n.t 'events.placing.first'
+      elsif final_match.loser == team
+        I18n.t 'events.placing.second'
+      else
+        p3m = place_3_match
+        if p3m.present?
+          if p3m.winner == team
+            I18n.t 'events.placing.third'
+          elsif p3m.loser == team
+            I18n.t 'events.placing.fourth'
+          end
+        end
+      end
+    end
 
     def filled_teams
       # converts 12345

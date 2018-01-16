@@ -14,7 +14,7 @@ Feature: Spielplan for tournament
   Scenario: Spielplan should have several rounds for ko tournament
     When the Spielplan page for t is visited
     Then there should be several rounds
-    And there should be exactly 22 matches and 5 rounds
+    And there should be exactly 23 matches and 5 rounds
     And the texts Vorrunde 1, Achtelfinale, Viertelfinale, Halbfinale, Finale are there.
 
   Scenario: Spielplan should update winner teams continuously

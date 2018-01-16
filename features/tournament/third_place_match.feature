@@ -23,9 +23,10 @@ Feature: Spielplan progression for tournament
     And the home team of match Halbfinale 2 isn't in match Finale 1
 
     When the results for match Finale 1 (1 : 0) got inserted
-    Then the standing of the home team of match Halbfinale 1 is 'Gewinner'
+    Then the standing of the home team of match Halbfinale 1 is 'Erster Platz'
     Then the standing of the away team of match Halbfinale 2 is 'Zweiter Platz'
 
-    When the results for match Spiel um Platz 3 (3 : 6) got inserted
-    Then the standing of the away team of match Halbfinale 2 is 'Dritter Platz'
+    When the Spielplan page for t is visited
+    And the results for match Finale 2 (3 : 6) got inserted
+    Then the standing of the home team of match Halbfinale 2 is 'Dritter Platz'
     Then the standing of the away team of match Halbfinale 1 is 'Vierter Platz'
