@@ -170,13 +170,13 @@ end
 group :production do
   # Ruby interface to the PostgreSQL RDBMS
   # https://github.com/ged/ruby-pg
-  #gem 'pg'
+  gem 'pg'
   # Exception tracking in production, report to Errbit
   # https://github.com/airbrake/airbrake
   # Errbit requires airbrake 5.0
-  #gem 'airbrake', '~> 5.0'
+  gem 'airbrake', '~> 5.0'
 
   # S3 upload should only be used in production
-  #gem 'aws-sdk-s3', '~> 1.2'
+  gem 'aws-sdk-s3', '~> 1.2'
 
 end
