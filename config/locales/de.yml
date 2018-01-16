@@ -32,6 +32,10 @@
 de:
   appname: "Sport-Portal"
 
+  footer:
+    hpi: "HASSO-PLATTNER-INSTITUT"
+    imprint: "IMPRESSUM"
+
   imprint:
     headline: "Impressum"
     contact:
@@ -231,7 +235,7 @@ de:
       standingColumn: "Platzierung"
       out: "In %{match_name} ausgeschieden"
       in: "In %{match_name}"
-      unkown_standing: "Gewinner %{team}"
+      unkown_standing: "Platzierung Unbekannt"
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
@@ -258,6 +262,7 @@ de:
       three: "Achtelfinalspiel %{gameid}"
       other: "Vorrunde %{round} - Spiel %{gameid}"
     winner_of_match: "Gewinner %{match}"
+    loser_of_match: "Verlierer %{match}"
 
   teams:
     show:
@@ -283,8 +288,11 @@ de:
       unhappy: "Unzufrieden"
       leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
       we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+    destroy:
+      confirm: "Bestätigen"
 
   devise:
     registrations:
       user:
         destroyed: "Dieser Account wurde gelöscht"
+        not_destroyed: "Dieser Account wurde nicht gelöscht, weil du ein falsches Passwort eingegeben hast"

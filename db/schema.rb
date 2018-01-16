@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
+  create_table "match_results", force: :cascade do |t|
+    t.integer "match_id"
+    t.boolean "winner_advances"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_match_results_on_match_id"
+  end
+
   create_table "matches", force: :cascade do |t|
     t.string "place"
     t.integer "score_home"
@@ -89,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
+    t.text "avatar_data"
     t.boolean "single", default: false
   end
 
@@ -102,13 +111,13 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "provider"
-    t.string "uid"
     t.boolean "admin", default: false
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
+    t.string "provider"
+    t.string "uid"
     t.text "avatar_data"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true

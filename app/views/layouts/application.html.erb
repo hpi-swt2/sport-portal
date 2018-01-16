@@ -16,19 +16,19 @@
   </head>
 
   <!--Display the background -->
-  <body class="<%= render partial: "application/background"%>">
+  <body>
+    <div class="background-layer <%= render partial: "application/background"%>">
+      <div class="container">
+        <%= render partial: "application/navbar" %>
 
-    <div class="container">
-      <%= render partial: "application/navbar" %>
+        <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
+        <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
+        <%= if controller_name != "sessions" and action_name != "new" then bootstrap_flash end%>
 
-      <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
-      <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
-      <%= if controller_name != "sessions" and action_name != "new" then bootstrap_flash end%>
-
-      <%# Render content of views %>
-      <%= yield %>
-
-      <%= render partial: "application/footer"%>
+        <%# Render content of views %>
+        <%= yield %>
+      </div>
     </div>
+    <%= render partial: "application/footer"%>
   </body>
 </html>
