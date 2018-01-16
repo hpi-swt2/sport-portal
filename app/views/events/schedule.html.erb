@@ -3,7 +3,7 @@
   <h1><%= t '.title' %></h1>
 </div>
 
-<table class="matches-table table">
+<table class="matches-table table" id="matches-table">
   <thead>
     <tr>
       <th><%= t '.place' %></th>
@@ -102,5 +102,6 @@
         </td>
       </tr>
     <% end %>
+    <%= render ('schedule_' + @schedule_type), back_path: events_path %>
   </tbody>
 </table>
