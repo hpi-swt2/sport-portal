@@ -66,6 +66,12 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(t('events.show.to_schedule'))
     end
+
+    it "renders the gameday duration" do
+      render
+      expect(rendered).to have_content Event.human_attribute_name :gameday_duration
+      expect(rendered).to have_content @event.gameday_duration
+    end
     include_examples "an event"
   end
 
