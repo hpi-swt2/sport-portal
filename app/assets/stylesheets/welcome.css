@@ -51,7 +51,7 @@ body>.background-layer>.container {
 .section.white-nothing  {
     min-height: calc(800 / 1200 * 100vw);
     z-index: 2;
-    padding-top: calc(100 / 800 * 100%);
+    padding-top: calc(150 / 800 * 100%);
 }
 
 .section.purple-skating  {
@@ -74,14 +74,6 @@ h1 {
 .myButton {
     border-radius: 100px;
     font-size: 24px;
-    color: #FFFFFF;
-    letter-spacing: 0;
-    height: auto;
-}
-
-.myButton-small {
-    border-radius: 100px;
-    font-size: 16px;
     color: #FFFFFF;
     letter-spacing: 0;
     height: auto;
@@ -252,24 +244,23 @@ ul.myList>li {
 
     .section.darkblue-soccer {
         padding-top: 4%;
-        padding-bottom: calc(450 / 796 * 100%);
-        margin-bottom: calc(-600 / 796 * 100%);
+        margin-bottom: calc(-450 / 796 * 100% - 60px);
     }
 
     .section.lightblue-soccer {
-        padding-bottom: calc(300 / 888 * 100%);
-        margin-bottom: calc(-400 / 888 * 100%);
+        margin-bottom: calc(-230 / 888 * 100% - 60px);
         padding-top: calc(84 / 796 * 100% + 100px);
     }
 
     .section.orange-basketball  {
-        padding-bottom: calc(150 / 888 * 100%);
-        margin-bottom: calc(-150 / 888 * 100%);
-        padding-top: calc(100 / 796 * 100% + 60px);
+        padding-bottom: calc(104 / 888 * 100% + 40px);
+        margin-bottom: calc(-104 / 888 * 100%);
+        padding-top: calc(104 / 796 * 100% + 80px);
     }
 
     .myButton {
         padding: 5px 20px;
+        font-size: 20px;
     }
 
     .sport-image {
