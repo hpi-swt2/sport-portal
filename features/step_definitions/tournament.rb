@@ -1,8 +1,13 @@
-Given(/^a tournament (.*) with (\d+) teams$/) do |tournamentName, numTeams|
-  create_tournament_named tournamentName, max_teams: numTeams
+Given(/^a tournament (.*) with (\d+) (teams|users)$/) do |tournamentName, numTeams, teams_or_users|
+  create_tournament_named tournamentName, max_teams: numTeams, player_type: (teams_or_users != 'teams' ? :team : :single)
   tournament = tournament_named tournamentName
   for each in 1..numTeams do
-    tournament.teams << create_team
+    if teams_or_users == 'teams'
+      tournament.add_team create_team
+    else
+      tournament.add_participant create_user
+    end
+
   end
   tournament.generate_schedule
 end
@@ -56,7 +61,6 @@ end
 def find_match_on_page(match_gameday, match_num)
   *_, match_id = find(:xpath, "(//table//th/b[contains(.,'#{match_gameday}')]/following::tr/td[1][contains(.,'#{match_num}')]/following::form)[1]")[:id].split '_'
   Match.find match_id.to_i
-
 end
 
 def find_team_of_match(match_gameday, match_num, home_or_away)
@@ -82,7 +86,7 @@ end
 
 Then(/^the (home|away) team of match (.+) (\d+) (is|isn't) in match (.+) (\d+)$/) do |home_or_away, match_gameday, match_num, is_or_isnt, target_match_gameday, target_match_num|
   team = find_team_of_match match_gameday, match_num, home_or_away
-  target_match = find_match_on_page target_match_gameday,target_match_num
+  target_match = find_match_on_page target_match_gameday, target_match_num
   expect(target_match.is_team_recursive? team).to be(is_or_isnt == 'is')
 end
 

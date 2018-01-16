@@ -32,10 +32,38 @@
 de:
   appname: "Sport-Portal"
 
-  footer:
-    hpi: "Hasso-Plattner-Institut"
-
-  imprint: "Impressum"
+  imprint:
+    headline: "Impressum"
+    contact:
+      head: "Hasso-Plattner-Institut"
+      body: "Musterstraße 1</br>
+             12345 Musterstadt</br>
+             Telefon: +49 (0)1234 / 5678-9</br>
+             Telefax: +49 (0)1234 / 5678-0</br>
+             E-Mail: info@example.com</br>
+             Internet: www.example.com"
+    manager:
+      head: "Vertretungsberechtigte Geschäftsführer:"
+      body: "Prof. Dr. Companion Cube</br>
+             Registergericht: Amtsgericht Musterstadt</br>
+             Registernummer: HRB 12345"
+    legal-notice:
+      head: "Rechtliche Hinweise:"
+      body: "Das Hasso-Plattner-Institut (HPI) überprüft und aktualisiert regelmäßig die Inhalte
+            seiner Websites. Trotz größtmöglicher Sorgfalt können wir nicht ausschließen, dass
+            einzelne Informationen auf unseren Seiten veraltet oder nicht zutreffend sind. Daher
+            können wir keine Haftung für Aktualität, Genauigkeit und Vollständigkeit der publizierten
+            Informationen übernehmen. Das gleiche gilt für alle Websites, die von den HPI-Seiten
+            über Hyperlinks erreichbar sind. Für alle diese Links gilt: Wir erklären ausdrücklich,
+            dass wir keinen Einfluss auf die Gestaltung und die Inhalte der verlinkten Seite haben.
+            Deshalb distanzieren wir uns hiermit ausdrücklich von allen Inhalten aller verlinkten
+            Seiten und machen uns ihre Inhalte nicht zu Eigen. Diese Erklärung gilt für alle auf
+            unserer Seite angebrachten Links zu fremden Seiten.</br></br>
+            Für den Inhalt dieser verlinkten Seiten ist das HPI nicht verantwortlich. Weiterhin
+            behält sich das HPI jederzeit Änderungen und Ergänzungen der angezeigten Informationen
+            vor. Inhalt und Struktur der HPI-Website sind durch das Copyright geschützt. Die
+            Weiterverwendung von Informationen und Daten, vor allem die Verwendung von Texten und
+            Illustrationen ist nur nach unserer Zustimmung zulässig."
 
   welcome:
     index:
@@ -115,7 +143,7 @@ de:
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Anzahl Teams"
+        max_teams: "Teilnehmeranzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
@@ -123,6 +151,7 @@ de:
         duration: "Dauer in Tagen"
         metric: "Metrik"
         initial_value: "Anfangswert"
+        gameday_duration: "Spieltagdauer"
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
@@ -163,14 +192,17 @@ de:
   success:
     updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
+    join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
+    leave_team_event: "Du hast das Event %{event} erfolgreich  mit deinem Team %{team} verlassen."
 
   error:
     update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
+    no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
     create_event: "Event erstellen"
-    choose_event_format: "Eventsart wählen"
+    choose_event_format: "Eventart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Turnier"
     new_rankinglist: "Neue Rangliste"
@@ -178,6 +210,8 @@ de:
     League: "Liga"
     Rankinglist: "Rangliste"
     show_events: "Alle Events anzeigen"
+    join_team_event: "Event %{event} mit einem Team beitreten"
+    choose_team: "Ein Team auswählen"
     participating: "Beigetreten"
     metric: "Metrik"
     show:
@@ -199,11 +233,14 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      first_half: "Hinrunde"
+      second_half: "Rückrunde"
       finale: "Finale"
       semifinale: "Halbfinale"
       quarterfinale: "Viertelfinale"
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
+      to: "bis"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
@@ -221,10 +258,12 @@ de:
       standingColumn: "Platzierung"
       out: "In %{match_name} ausgeschieden"
       in: "In %{match_name}"
-      unkown_standing: "Gewinner %{team}"
+      unkown_standing: "Platzierung Unbekannt"
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
+    max_teams:
+      infinite: "unbegrenzt"
 
   matches:
     round_name:
@@ -234,10 +273,12 @@ de:
       three: "Achtelfinalspiel %{gameid}"
       other: "Vorrunde %{round} - Spiel %{gameid}"
     winner_of_match: "Gewinner %{match}"
+    loser_of_match: "Verlierer %{match}"
 
   teams:
     show:
       invite_user_to_team: "+"
+      number: "#"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
       no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
