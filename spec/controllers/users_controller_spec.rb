@@ -308,14 +308,6 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "DELETE #destroy" do
-    it "should allow normal users to destroy themselves" do
-      sign_in @user
-      delete :destroy, params: { id: @user.to_param }
-      expect(response).to redirect_to(root_path)
-    end
-  end
-
   describe "GET #edit" do
     it "should allow normal users to edit themselves" do
       sign_in @user
