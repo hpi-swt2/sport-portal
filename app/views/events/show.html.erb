@@ -38,6 +38,12 @@
         <td><%= t 'events.placing.second' %></td>
         <td><%= link_to_participant @event.finale.loser %></td>
       </tr>
+      <% if @event.place_3_match.present? and @event.place_3_match.has_winner? %>
+        <tr>
+          <td><%= t 'events.placing.third' %></td>
+          <td><%= link_to_participant @event.place_3_match.winner %></td>
+        </tr>
+      <% end %>
     </table>
   </div>
 <% end %>
