@@ -33,9 +33,17 @@ class Tournament < Event
   end
 
   def finale
-    #TODO: keep care of 3rd place match here
     matches.each do |match|
-      if match.depth == 0
+      if (match.depth == 0) && (match.index == 1)
+        return match
+      end
+    end
+    nil
+  end
+
+  def place_3_match
+    matches.each do |match|
+      if (match.depth == 0) && (match.index == 2)
         return match
       end
     end
@@ -46,6 +54,9 @@ class Tournament < Event
     return if teams.size < 2
     create_matches filled_teams, max_match_level, 0
     normalize_first_layer_match_indices
+    if teams.size >= 4
+      create_place_3_match
+    end
   end
 
   def max_match_level
@@ -89,7 +100,7 @@ class Tournament < Event
       child_index = index * 2
       match_left = create_matches left_half, child_depth, child_index
       match_right = create_matches right_half, child_depth, child_index + 1
-      return match_left, match_right
+      [match_left, match_right]
     end
 
     def create_leaf_match(team_home, team_away, depth, index)
@@ -119,6 +130,20 @@ class Tournament < Event
       teams_size = teams.size
       return 0 if Tournament.is_power_of_two? teams_size
       2**teams_size.to_s(2).length - teams_size
+    end
+
+    def create_place_3_match
+      loser1, loser2 = place_3_match_participants
+      match = Match.new team_home: loser1, team_away: loser2, gameday: max_match_level, index: 2, event: self
+      matches << match
+      match.save!
+    end
+
+    def place_3_match_participants
+      final_match = finale
+      loser1 = Tournament.create_match_participant final_match.team_home.match, false
+      loser2 = Tournament.create_match_participant final_match.team_away.match, false
+      [loser1, loser2]
     end
 
     class << self
