@@ -58,9 +58,7 @@ class Tournament < Event
     return if team_count < 2
     create_matches filled_teams, max_match_level, 0
     normalize_first_layer_match_indices
-    if team_count >= 4
-      create_place_3_match
-    end
+    create_place_3_match if team_count >= 4
   end
 
   def max_match_level
