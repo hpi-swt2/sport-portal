@@ -32,6 +32,10 @@
 de:
   appname: "Sport-Portal"
 
+  footer:
+    hpi: "HASSO-PLATTNER-INSTITUT"
+    imprint: "IMPRESSUM"
+
   imprint:
     headline: "Impressum"
     contact:

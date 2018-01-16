@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
+    t.text "avatar_data"
     t.boolean "single", default: false
   end
 
