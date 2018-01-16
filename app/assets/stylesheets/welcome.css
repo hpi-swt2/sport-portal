@@ -3,7 +3,7 @@
  */
 
 /* Overwrite container from application.html.erb for background image only*/
-body>.container {
+body>.background-layer>.container {
     width: 100%;
     max-width: 100% !important;
     padding: 0 0;
@@ -58,7 +58,7 @@ body>.container {
     background-image: url(https://owncloud.hpi.de/index.php/s/BokofLs1yk3wJlL/download);
     min-height: calc(756 / 1200 * 100vw);
     padding-bottom: calc(104 / 756 * 100%);
-    margin-bottom: calc(-104 / 756 * 100%);
+    margin-bottom: calc(-104 / 756 * 100% + 60px);
     z-index: 1;
     padding-top: calc(104 / 800 * 100%);
 }
@@ -127,7 +127,7 @@ p {
     border: none;
 }
 
-.myCollapsible .collapsible-header {
+.myCollapsible>li>.collapsible-header {
     border: none;
     background-color: #F3F9FF;
     margin-top: 15px;
@@ -135,7 +135,7 @@ p {
     align-items: center;
 }
 
-.myCollapsible .collapsible-body {
+.myCollapsible>li>.collapsible-body {
     border: none;
     background-color: #F3F9FF;
 }
@@ -240,8 +240,8 @@ ul.myList>li {
     }
 
     .section.purple-skating  {
-        padding-bottom: calc(104 / 756 * 100%);
-        margin-bottom: calc(-104 / 756 * 100%);
+        padding-bottom: calc(104 / 756 * 100% + 60px);
+        margin-bottom: calc(-104 / 756 * 100% + 60px);
         padding-top: calc(104 / 756 * 100% + 60px);
 
     }
@@ -257,7 +257,7 @@ ul.myList>li {
     }
 
     .section.lightblue-soccer {
-        padding-bottom: calc(230 / 888 * 100%);
+        padding-bottom: calc(300 / 888 * 100%);
         margin-bottom: calc(-400 / 888 * 100%);
         padding-top: calc(84 / 796 * 100% + 100px);
     }
@@ -266,13 +266,6 @@ ul.myList>li {
         padding-bottom: calc(150 / 888 * 100%);
         margin-bottom: calc(-150 / 888 * 100%);
         padding-top: calc(100 / 796 * 100% + 60px);
-    }
-
-    .section.purple-skating  {
-        padding-bottom: calc(104 / 756 * 100% + 60px);
-        margin-bottom: calc(-104 / 756 * 100% + 60px);
-        padding-top: calc(104 / 756 * 100% + 60px);
-
     }
 
     .myButton {
