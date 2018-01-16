@@ -53,20 +53,8 @@ RSpec.describe EventsController, type: :controller do
     FactoryBot.build(:league, name: nil).attributes
   }
 
-  let(:valid_small_league_attributes) {
-    FactoryBot.build(:league, owner: @user, max_teams: 2).attributes
-  }
-
-  let(:valid_team1_attributes) {
-    FactoryBot.attributes_for(:team)
-  }
-
-  let(:valid_team2_attributes) {
-    FactoryBot.attributes_for(:team)
-  }
-
-  let(:valid_team3_attributes) {
-    FactoryBot.attributes_for(:team)
+  let(:valid_rankinglist_attributes) {
+    FactoryBot.build(:rankinglist, owner: @user, max_teams: 20).attributes
   }
 
   # This should return the minimal set of values that should be in the session
@@ -378,9 +366,8 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  describe 'GET League#ranking' do
+  shared_examples 'an event' do
     it 'should calculate an empty ranking when no participant has joined the event' do
-      event = League.create! valid_league_attributes
       get :ranking, params: { id: event.to_param }, session: valid_session
       ranking_entries = controller.instance_variable_get(:@ranking_entries)
       expect(ranking_entries).to be_empty
@@ -388,12 +375,10 @@ RSpec.describe EventsController, type: :controller do
     describe 'when teams have joined the event' do
       describe 'when no match has been played yet' do
         it 'should calculate a lexicographically sorted zero-filled ranking' do
-          event = League.create! valid_league_attributes
           team1 = FactoryBot.create(:team)
           team2 = FactoryBot.create(:team)
           event.add_team(team1)
           event.add_team(team2)
-          event.generate_schedule
           get :ranking, params: { id: event.to_param }, session: valid_session
           ranking_entries = controller.instance_variable_get(:@ranking_entries)
           expect(ranking_entries.first.name).to be < ranking_entries.second.name
@@ -401,10 +386,11 @@ RSpec.describe EventsController, type: :controller do
       end
       describe 'when at least two matches have been played already' do
         before (:each) do
-          @event = League.create! valid_small_league_attributes
-          @team1 = Team.create! valid_team1_attributes
-          @team2 = Team.create! valid_team2_attributes
-          @team3 = Team.create! valid_team3_attributes
+          @event = event
+
+          @team1 = FactoryBot.create(:team)
+          @team2 = FactoryBot.create(:team)
+          @team3 = FactoryBot.create(:team)
 
           @event.add_team(@team1)
           @event.add_team(@team2)
@@ -479,16 +465,36 @@ RSpec.describe EventsController, type: :controller do
       end
     end
     describe 'when users have joined the event' do
-      # TODO Factor out and reference tests for events with joined teams from above
+      describe 'when no match has been played yet' do
+        it 'should calculate a lexicographically sorted zero-filled ranking' do
+          user1 = FactoryBot.create(:user)
+          user2 = FactoryBot.create(:user)
+          event.add_participant(user1)
+          event.add_participant(user2)
+          get :ranking, params: { id: event.to_param }, session: valid_session
+          ranking_entries = controller.instance_variable_get(:@ranking_entries)
+          expect(ranking_entries.first.name).to be < ranking_entries.second.name
+        end
+      end
+    end
+  end
+
+  describe 'GET League#ranking' do
+    it_should_behave_like 'an event' do
+      let (:event) { League.create! valid_league_attributes }
     end
   end
 
   describe 'GET Tournament#ranking' do
-    # TODO Factor out and reference tests for Leagues from above
+    it_should_behave_like 'an event' do
+      let (:event) { Tournament.create! valid_tournament_attributes }
+    end
   end
 
   describe 'GET Rankinglist#ranking' do
-    # TODO Factor out and reference tests for Leagues from above
+    it_should_behave_like 'an event' do
+      let (:event) { Rankinglist.create! valid_rankinglist_attributes }
+    end
   end
 
   describe "GET #overview" do
