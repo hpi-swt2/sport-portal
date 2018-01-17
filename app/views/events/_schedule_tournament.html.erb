@@ -29,7 +29,8 @@
   <% this_level_matches.each do |match| %>
 
     <tr>
-      <td><%= match.place %> <%= match.index %></td>
+      <td><%= match.index %></td>
+      <td><%= match.place %></td>
       <td><%= link_to_participant match.team_home %></td>
       <td><%= link_to_participant match.team_away %></td>
       <td>
