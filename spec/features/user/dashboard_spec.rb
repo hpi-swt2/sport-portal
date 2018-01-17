@@ -9,9 +9,9 @@ RSpec.feature "View Dashboard", type: :feature do
     visit root_path
 
     click_on(text: user.first_name, class: 'dropdown-toggle')
-    within('nav'){
+    within('nav') do
       click_on(I18n.t('navbar.drop-down.dashboard'))
-    }
+    end
 
     expect(page).to have_css(
       'h1',
