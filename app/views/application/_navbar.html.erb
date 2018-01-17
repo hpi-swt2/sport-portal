@@ -3,14 +3,14 @@
 
 <%= nav_bar brand: (image_tag 'https://owncloud.hpi.de/index.php/s/Ap9E74hcMbV7Vp5/download', class: 'logo-img'), responsive: true, fluid: true, fixed: :top do %>
 
-    <% if (request.user_agent =~ /Mobile|webOS/).present? # check if user is moving a mobile device   %>
+    <% if (request.user_agent =~ /Mobile|webOS/).present? # check if user is moving a mobile device     %>
         <%= menu_group pull: :right do %>
             <div id="user-mobile-back" class="text-center hidden">
               <%= '< ' + t('helpers.links.back') %>
             </div>
             <% if user_signed_in? %>
                 <div>
-                  <%= (image_tag current_user.avatar_url || 'https://owncloud.hpi.de/index.php/s/57REqYtqsah3A7o/download', class: 'mobile-avatar center-block')%>
+                  <%= (image_tag current_user.avatar_url || 'https://owncloud.hpi.de/index.php/s/57REqYtqsah3A7o/download', class: 'mobile-avatar center-block') %>
                   <li><a class="text-center"><%= "#{current_user.first_name}" %></a></li>
                   <%= drop_down_divider %>
                 </div>
@@ -25,7 +25,9 @@
                 <%= menu_item (image_tag 'https://owncloud.hpi.de/index.php/s/45SBYQMw1jnN9UM/download', class: 'login-img center-block'), new_user_session_path %>
             <% end %>
             <div id="default-mobile-menu">
-              <%= menu_item User.model_name.human(:count => :many).titleize, users_path, class: 'text-center' %>
+              <% if can? :index, User %>
+                  <%= menu_item User.model_name.human(:count => :many).titleize, users_path, class: 'text-center' %>
+              <% end %>
               <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path, class: 'text-center' %>
               <%= menu_item Event.model_name.human(:count => :many).titleize, events_path, class: 'text-center' %>
               <%= menu_item t('events.create_event'), new_event_path, class: 'text-center' %>
@@ -33,7 +35,9 @@
         <% end %>
     <% else %>
         <%= menu_group pull: :right do %>
-            <%= menu_item User.model_name.human(:count => :many).titleize, users_path %>
+            <% if can? :index, User %>
+                <%= menu_item User.model_name.human(:count => :many).titleize, users_path %>
+            <% end %>
             <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path %>
             <%= menu_item Event.model_name.human(:count => :many).titleize, events_path %>
             <%= menu_item t('events.create_event'), new_event_path %>
