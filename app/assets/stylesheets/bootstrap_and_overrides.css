@@ -4,6 +4,7 @@
   Static version of css will use Glyphicons sprites by default
   =require twitter-bootstrap-static/sprites
 */
+
 /* Navbar vertical divider, dropped in Bootstrap 3 */
 .divider-vertical {
   height: 50px;

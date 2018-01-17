@@ -1,4 +1,5 @@
 <%- model_class = Team -%>
+<%= stylesheet_link_tag 'teams' %>
 <script type="text/javascript">
   $(document).ready(function(){
     $('#check_all').on("click", function() {
@@ -23,6 +24,7 @@
 
 <div class="page-header">
   <h1><%= t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <%= image_tag @team.avatar_url || image_path('missing_avatar.png'), id: "preview", style: "max-width:350px; max-height:350px"%>
 </div>
 <dl class="dl-horizontal">
   <dt><strong><%=t '.name', :default => t("helpers.name") %>:</strong></dt>
@@ -43,10 +45,11 @@
   <table class="table table-striped">
       <thead>
           <tr>
+            <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
+            <th><%=t("teams.show.number")%></th>
             <% if @team.members.include? current_user %>
               <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
             <% end %>
-            <th><%= model_class.human_attribute_name(:id) %></th>
             <th><%= model_class.human_attribute_name(:first_name) %></th>
             <th><%= model_class.human_attribute_name(:last_name) %></th>
             <% if @team.members.include? current_user %>
@@ -55,12 +58,12 @@
           </tr>
           </thead>
     <tbody>
-    <% @team.members.each do |member| %>
+    <% @team.members.each_with_index do |member, i| %>
         <tr>
           <% if @team.members.include? current_user %>
             <td><%= check_box_tag "members[]", member.id %></td>
           <% end %>
-          <td><%= member.id %></td>
+          <td><%= i + 1 %></td>
           <td><%= member.first_name%></td>
           <td><%= member.last_name%></td>
           <% if @team.members.include? current_user %>

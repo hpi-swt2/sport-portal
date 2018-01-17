@@ -29,26 +29,33 @@ class Ability
     alias_action :schedule, :overview, to: :read
     alias_action :update, :destroy, to: :modify
     alias_action :create_from_type, to: :create
-
     can :read, :all
     cannot :read, Team, private: true
-
+    cannot :index, User
+    can :create, User
     if user.present?
+      initialize_with_user(user)
+    end
+  end
+
+  private
+
+    def initialize_with_user(user)
       user_id = user.id
 
       # all
       can :create, :all
 
       # User
-      can [:modify, :edit_profile, :update_profile, :dashboard], User, id: user_id
+      can [:show, :modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
       cannot :create, User
 
       # Event
       can [:create, :read, :update, :destroy], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
-      can :schedule, Event
-      can :team_join, Event
+      can :ranking, Event
+      can [:schedule, :team_join], Event
 
       # Team
       can_crud_team(user_id)
@@ -62,9 +69,6 @@ class Ability
         can :manage, :all
       end
     end
-  end
-
-  private
 
     def can_join_event(user)
       can :join, Event.active do |event|

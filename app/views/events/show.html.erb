@@ -38,6 +38,12 @@
         <td><%= t 'events.placing.second' %></td>
         <td><%= link_to_participant @event.finale.loser %></td>
       </tr>
+      <% if @event.place_3_match.present? and @event.place_3_match.has_winner? %>
+        <tr>
+          <td><%= t 'events.placing.third' %></td>
+          <td><%= link_to_participant @event.place_3_match.winner %></td>
+        </tr>
+      <% end %>
     </table>
   </div>
 <% end %>
@@ -76,6 +82,10 @@
 
   <dt><strong><%= model_class.human_attribute_name(:enddate) %>:</strong></dt>
   <dd><%= @event.enddate %></dd>
+  <% unless @event.gameday_duration.nil? %>
+    <dt><strong><%= model_class.human_attribute_name(:gameday_duration) %>:</strong></dt>
+    <dd><%= @event.gameday_duration %></dd>
+  <% end %>
 </dl>
 
 <div class="table-responsive">
@@ -96,6 +106,10 @@
 
 <%= link_to t('.to_overview'),
             event_overview_path(@event),
+            class: 'btn btn-default' %>
+
+<%= link_to t('.to_ranking'),
+            event_ranking_path(@event),
             class: 'btn btn-default' %>
 
 <%# app/helpers/button_helper.rb %>
