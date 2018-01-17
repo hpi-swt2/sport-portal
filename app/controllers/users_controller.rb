@@ -10,6 +10,7 @@ class UsersController < Devise::RegistrationsController
   # View: app/views/devise/registrations/index.html.erb
   def index
     @users = User.all
+    authorize! :index, User
   end
 
   # GET /users/1

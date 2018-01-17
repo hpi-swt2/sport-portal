@@ -56,6 +56,10 @@
           <% end %>
         <% end %>
 
+        <% if !event.can_join_fcfs? %>
+          <%= t('events.full') %>
+        <% end %>
+
         <% if can? :edit, event %>
           <%= link_to t('.edit', default: t("helpers.links.edit")),
                       edit_event_path(event), class: 'btn btn-default btn-xs' %>
