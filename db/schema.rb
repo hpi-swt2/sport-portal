@@ -82,6 +82,13 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
+  create_table "participants", force: :cascade do |t|
+    t.integer "attendee_id"
+    t.string "attendee_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "team_users", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false

@@ -31,7 +31,7 @@ class Ability
     alias_action :create_from_type, to: :create
     can :read, :all
     cannot :read, Team, private: true
-    cannot [:index, :show], User
+    cannot :index, User
     can :create, User
     if user.present?
       initialize_with_user(user)

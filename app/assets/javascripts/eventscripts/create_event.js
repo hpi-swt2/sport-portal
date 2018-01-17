@@ -1,7 +1,7 @@
 $( document ).on('turbolinks:load', function() {
-    $('#event_deadline').datepicker({ autoclose: true, todayHighlight: true});
-    $('#event_startdate').datepicker({ autoclose: true, todayHighlight: true});
-    $('#event_enddate').datepicker({ autoclose: true, todayHighlight: true});
+    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
 
     $("#event_duration").val("");
   
