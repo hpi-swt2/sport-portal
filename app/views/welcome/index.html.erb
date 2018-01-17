@@ -153,6 +153,11 @@
           </div>
           <div class="collapsible-body">
             <ul class="gameModeList"><%= t('welcome.index.section3-card1-description_html') %></ul>
+            <% if not user_signed_in? %>
+                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+            <% else %>
+                <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+            <% end %>
           </div>
         </li>
         <li>
@@ -162,6 +167,11 @@
           </div>
           <div class="collapsible-body">
             <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
+            <% if not user_signed_in? %>
+                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+            <% else %>
+                <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+            <% end %>
           </div>
         </li>
         <li>
@@ -171,6 +181,11 @@
           </div>
           <div class="collapsible-body">
             <ul class="gameModeList"><%= t('welcome.index.section3-card3-description_html') %></ul>
+            <% if not user_signed_in? %>
+                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+            <% else %>
+                <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+            <% end %>
           </div>
         </li>
       </ul>

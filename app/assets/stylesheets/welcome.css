@@ -84,6 +84,11 @@ h1, h2, h3 {
     background: #1CA9E5;
 }
 
+.registerButton:hover {
+    color: white;
+    background: #1CC3FF;
+}
+
 .createScheduleButton {
     border: 1px solid #FFFFFF;
     background: transparent;
@@ -101,6 +106,14 @@ h1, h2, h3 {
     width: 70%;
     padding: 10px 20px !important;
     margin-bottom: 50px;
+    background: #1CA9E5;
+    border: 0;
+    font-size: 1.2rem;
+}
+
+.card-button:hover {
+    color: white;
+    background: #1CC3FF;
 }
 
 .sport-player {
@@ -204,10 +217,6 @@ ul.gameModeList>li {
     #register-row {
         margin-top: 50px;
     }
-
-    .card-button {
-        font-size: 1.4rem;
-    }
 }
 
 /* Tablet */
@@ -277,6 +286,13 @@ ul.gameModeList>li {
 
     .genericButton {
         font-size: 20px;
+    }
+
+    .card-button {
+        font-size: 1rem;
+        width: 90%;
+        display: block;
+        margin: 2rem auto 0 auto;
     }
 
     .sport-image {
