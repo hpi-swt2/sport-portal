@@ -1,13 +1,16 @@
 <% if controller_name != 'sessions' %>
-  <%= link_to t('.sign_in'), new_session_path(resource_name) %><br />
+  <%= t('devise.registrations.have_account_question')%>
+  <%= link_to t('devise.registrations.sign_in')+ '!', new_session_path(resource_name)%><br />
 <% end %>
 
-<% if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to t('.sign_up'), new_registration_path(resource_name) %><br />
+<% if devise_mapping.registerable? && controller_name != 'users' %>
+  <%= t('devise.registrations.no_account_question') %>
+  <%= link_to t('devise.registrations.sign_up')+ '!', new_registration_path(resource_name)%><br />
 <% end %>
 
 <% if devise_mapping.recoverable? && controller_name != 'passwords' %>
-  <%= link_to t('.forgot_your_password'), new_password_path(resource_name) %><br />
+  <%= t('devise.passwords.forgotten_question') %>
+  <%= link_to t('devise.passwords.reset')+ '.', new_password_path(resource_name) %><br />
 <% end %>
 
 <% if devise_mapping.confirmable? && controller_name != 'confirmations' %>

@@ -33,9 +33,41 @@ de:
   appname: "Sport-Portal"
 
   footer:
-    hpi: "Hasso-Plattner-Institut"
+    hpi: "HASSO-PLATTNER-INSTITUT"
+    imprint: "IMPRESSUM"
 
-  imprint: "Impressum"
+  imprint:
+    headline: "Impressum"
+    contact:
+      head: "Hasso-Plattner-Institut"
+      body: "Musterstraße 1</br>
+             12345 Musterstadt</br>
+             Telefon: +49 (0)1234 / 5678-9</br>
+             Telefax: +49 (0)1234 / 5678-0</br>
+             E-Mail: info@example.com</br>
+             Internet: www.example.com"
+    manager:
+      head: "Vertretungsberechtigte Geschäftsführer:"
+      body: "Prof. Dr. Companion Cube</br>
+             Registergericht: Amtsgericht Musterstadt</br>
+             Registernummer: HRB 12345"
+    legal-notice:
+      head: "Rechtliche Hinweise:"
+      body: "Das Hasso-Plattner-Institut (HPI) überprüft und aktualisiert regelmäßig die Inhalte
+            seiner Websites. Trotz größtmöglicher Sorgfalt können wir nicht ausschließen, dass
+            einzelne Informationen auf unseren Seiten veraltet oder nicht zutreffend sind. Daher
+            können wir keine Haftung für Aktualität, Genauigkeit und Vollständigkeit der publizierten
+            Informationen übernehmen. Das gleiche gilt für alle Websites, die von den HPI-Seiten
+            über Hyperlinks erreichbar sind. Für alle diese Links gilt: Wir erklären ausdrücklich,
+            dass wir keinen Einfluss auf die Gestaltung und die Inhalte der verlinkten Seite haben.
+            Deshalb distanzieren wir uns hiermit ausdrücklich von allen Inhalten aller verlinkten
+            Seiten und machen uns ihre Inhalte nicht zu Eigen. Diese Erklärung gilt für alle auf
+            unserer Seite angebrachten Links zu fremden Seiten.</br></br>
+            Für den Inhalt dieser verlinkten Seiten ist das HPI nicht verantwortlich. Weiterhin
+            behält sich das HPI jederzeit Änderungen und Ergänzungen der angezeigten Informationen
+            vor. Inhalt und Struktur der HPI-Website sind durch das Copyright geschützt. Die
+            Weiterverwendung von Informationen und Daten, vor allem die Verwendung von Texten und
+            Illustrationen ist nur nach unserer Zustimmung zulässig."
 
   welcome:
     index:
@@ -87,7 +119,7 @@ de:
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Anzahl Teams"
+        max_teams: "Teilnehmeranzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
@@ -146,7 +178,7 @@ de:
 
   events:
     create_event: "Event erstellen"
-    choose_event_format: "Eventsart wählen"
+    choose_event_format: "Eventart wählen"
     new_league: "Neue Liga"
     new_tournament: "Neues Turnier"
     new_rankinglist: "Neue Rangliste"
@@ -161,6 +193,7 @@ de:
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
+      to_ranking: "zur Tabelle"
       participants: "Teilnehmer"
       winners: "Gewinner"
     new:
@@ -177,6 +210,8 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      first_half: "Hinrunde"
+      second_half: "Rückrunde"
       finale: "Finale"
       semifinale: "Halbfinale"
       quarterfinale: "Viertelfinale"
@@ -200,10 +235,24 @@ de:
       standingColumn: "Platzierung"
       out: "In %{match_name} ausgeschieden"
       in: "In %{match_name}"
-      unkown_standing: "Gewinner %{team}"
+      unkown_standing: "Platzierung Unbekannt"
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
+    ranking:
+      title: "Tabelle"
+      rank: "Rang"
+      name: "Name"
+      match_count: "Spiele"
+      won_count: "Siege"
+      draw_count: "Unentschieden"
+      lost_count: "Niederlagen"
+      goals: "Tore"
+      goals_against: "Gegentore"
+      goals_difference: "Tordifferenz"
+      points: "Punkte"
+    max_teams:
+      infinite: "unbegrenzt"
 
   matches:
     round_name:
@@ -213,10 +262,12 @@ de:
       three: "Achtelfinalspiel %{gameid}"
       other: "Vorrunde %{round} - Spiel %{gameid}"
     winner_of_match: "Gewinner %{match}"
+    loser_of_match: "Verlierer %{match}"
 
   teams:
     show:
       invite_user_to_team: "+"
+      number: "#"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
       no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
@@ -237,8 +288,11 @@ de:
       unhappy: "Unzufrieden"
       leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
       we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+    destroy:
+      confirm: "Bestätigen"
 
   devise:
     registrations:
       user:
         destroyed: "Dieser Account wurde gelöscht"
+        not_destroyed: "Dieser Account wurde nicht gelöscht, weil du ein falsches Passwort eingegeben hast"

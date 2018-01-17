@@ -22,9 +22,8 @@
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order '"gameday" ASC, "index" ASC' }, dependent: :delete_all
+  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :delete_all
   has_and_belongs_to_many :teams
-  has_and_belongs_to_many :participants, class_name: 'User'
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
@@ -90,6 +89,7 @@ class Event < ApplicationRecord
   end
 
   def team_slot_available?
+    return true unless max_teams.present?
     teams.count < max_teams
   end
 
@@ -106,7 +106,7 @@ class Event < ApplicationRecord
   end
 
   def standing_of(team)
-    I18n.t 'events.overview.unkown_standing', team: team.id.to_s
+    I18n.t 'events.overview.unkown_standing'
   end
 
   # this is a method that simplifies manual testing, not intended for production use
