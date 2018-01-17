@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h1><%= t '.title' %></h1>
+</div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><%= t '.rank' %></th>
+    <th><%= t '.name' %></th>
+    <th><%= t '.match_count' %></th>
+    <th><%= t '.won_count' %></th>
+    <th><%= t '.draw_count' %></th>
+    <th><%= t '.lost_count' %></th>
+    <th><%= t '.goals' %></th>
+    <th><%= t '.goals_against' %></th>
+    <th><%= t '.goals_difference' %></th>
+    <th><%= t '.points' %></th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @ranking_entries.each do |entry| %>
+    <tr>
+      <td><%= entry.rank %></td>
+      <td><%= entry.name %></td>
+      <td><%= entry.match_count %></td>
+      <td><%= entry.won_count%></td>
+      <td><%= entry.draw_count%></td>
+      <td><%= entry.lost_count%></td>
+      <td><%= entry.goals%></td>
+      <td><%= entry.goals_against%></td>
+      <td><%= entry.goals_difference%></td>
+      <td><%= entry.points%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

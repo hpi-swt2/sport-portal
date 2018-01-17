@@ -31,9 +31,6 @@ RSpec.describe Match, type: :model do
     match_a.save
     match_a.reload
     expect(match_a.team_home).to eq(match_b)
-    expect(match_b.home_matches).to contain_exactly(match_a)
-    expect(match_b.away_matches).to be_empty
-    expect(match_b.matches).to contain_exactly(match_a)
   end
 
   describe '#calculate_points' do

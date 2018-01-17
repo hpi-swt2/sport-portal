@@ -6,22 +6,29 @@
     <title><%= t('appname') %></title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track'=>'reload' %>
+    <% if (action_name === "new" && controller_name == "sessions" or controller_name === "users" && action_name == "new" or controller_name === "users" && action_name == "create") %>
+        <%= stylesheet_link_tag 'navbar', media: 'all', 'data-turbolinks-track'=>'reload' %>
+    <% end %>
+
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track'=> 'reload' %>
   </head>
 
+  <!--Display the background -->
   <body>
-    <div class="container">
-      <%= render partial: "application/navbar" %>
+    <div class="background-layer <%= render partial: "application/background"%>">
+      <div class="container">
+        <%= render partial: "application/navbar" %>
 
-      <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
-      <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
-      <%= bootstrap_flash %>
+        <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
+        <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
+        <%= if controller_name != "sessions" and action_name != "new" then bootstrap_flash end%>
 
-      <%# Render content of views %>
-      <%= yield %>
-
-      <%= render partial: "application/footer"%>
+        <%# Render content of views %>
+        <%= yield %>
+      </div>
     </div>
+    <%= render partial: "application/footer"%>
   </body>
 </html>

@@ -60,7 +60,7 @@ gem 'shrine', '~> 2.8.0'
 
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
-# gem 'jquery-ui-rails'
+gem 'jquery-ui-rails'
 
 # Use Bootstrap Tooltips
 # https://github.com/brandonhilkert/bootstrap-tooltip-rails
@@ -89,6 +89,10 @@ gem 'bootstrap-datepicker-rails'
 # Gem for many customizable scalable vector icons
 # https://github.com/bokmann/font-awesome-rails
 gem 'font-awesome-rails'
+
+# Use the materializecss-library https://github.com/mkhairi/materialize-sass
+# A modern, responsive front-end-framework based on Material Design
+gem 'materialize-sass'
 
 group :development, :test do
   # Testing framework for Rails
