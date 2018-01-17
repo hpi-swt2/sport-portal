@@ -61,5 +61,16 @@ RSpec.describe "teams/index", type: :view do
     expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 
+  it "renders the filter select input field when user is signed in" do
+    sign_in @user
+    render
+    expect(rendered).to have_select('filter')
+  end
+
+  it "doesn't render the filter select input field when user is not signed in" do
+    render
+    expect(rendered).to_not have_select('filter')
+  end
+
 
 end
