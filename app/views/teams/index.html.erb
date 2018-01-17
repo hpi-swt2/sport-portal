@@ -2,7 +2,7 @@
 <script src="teams.js"></script>
 <%= stylesheet_link_tag 'teams' %>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human(:count => :many).titleize %></h1>
+  <h1><%= t '.title', default: model_class.model_name.human(count: :many).titleize %></h1>
 </div>
 <%= form_tag('/teams', method: :get) do %>
   <%= label_tag(:filter, t("helpers.teams.filter")) %>
