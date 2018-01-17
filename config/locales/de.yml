@@ -256,9 +256,9 @@ de:
       teamColumn: "Team"
       standingColumn: "Platzierung"
       unkown_standing: "Platzierung Unbekannt"
-      out: "In %{match_name} ausgeschieden"
-      in_place_3_match: "In Spiel um Platz 3"
-      in: "In %{match_name}"
+      out: "Im %{match_name} ausgeschieden"
+      in_place_3_match: "Im Spiel um Platz 3"
+      in: "Im %{match_name}"
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
@@ -281,7 +281,7 @@ de:
 
   matches:
     round_name:
-      zero: "Finalspiel %{gameid}"
+      zero: "Finalspiel"
       one: "Halbfinalspiel %{gameid}"
       two: "Viertelfinalspiel %{gameid}"
       three: "Achtelfinalspiel %{gameid}"
