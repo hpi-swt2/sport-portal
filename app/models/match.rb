@@ -23,7 +23,7 @@ class Match < ApplicationRecord
   has_many :match_results, dependent: :destroy
 
   def depth
-    event.max_match_level - gameday
+    event.finale_gameday - gameday
   end
 
   def round

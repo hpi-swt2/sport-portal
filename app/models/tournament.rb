@@ -36,32 +36,23 @@ class Tournament < Event
   end
 
   def finale
-    matches.each do |match|
-      if match.depth == 0
-        return match
-      end
-    end
-    nil
+    matches.where(gameday: finale_gameday).first
   end
 
   def place_3_match
-    matches.each do |match|
-      if match.depth == -1
-        return match
-      end
-    end
-    nil
+    matches.where(gameday: finale_gameday + 1).first
   end
 
   def generate_schedule
     team_count = teams.size
     return if team_count < 2
-    create_matches filled_teams, max_match_level, 0
+    create_matches filled_teams, finale_gameday, 0
     normalize_first_layer_match_indices
     create_place_3_match if team_count >= 4
   end
 
-  def max_match_level
+  def finale_gameday
+    return 0 if teams.empty?
     Math.log(teams.length, 2).ceil - 1
   end
 
@@ -160,7 +151,7 @@ class Tournament < Event
 
     def create_place_3_match
       loser_home, loser_away = place_3_match_participants
-      match = Match.new team_home: loser_home, team_away: loser_away, gameday: max_match_level + 1, index: 1, event: self
+      match = Match.new team_home: loser_home, team_away: loser_away, gameday: finale_gameday + 1, index: 1, event: self
       matches << match
       match.save!
     end
