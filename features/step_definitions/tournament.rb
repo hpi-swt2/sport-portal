@@ -1,5 +1,5 @@
 Given(/^a tournament (.*) with (\d+) (teams|users)$/) do |tournamentName, numTeams, teams_or_users|
-  create_tournament_named tournamentName, max_teams: numTeams, player_type: (teams_or_users != 'teams' ? :team : :single)
+  create_tournament_named tournamentName, max_teams: numTeams, has_place_3_match: true, player_type: (teams_or_users != 'teams' ? :team : :single)
   tournament = tournament_named tournamentName
   for each in 1..numTeams do
     if teams_or_users == 'teams'

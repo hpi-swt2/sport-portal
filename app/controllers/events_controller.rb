@@ -227,6 +227,7 @@ class EventsController < ApplicationController
                                     :enddate,
                                     :initial_value,
                                     :gameday_duration,
+                                    :has_place_3_match,
                                     user_ids: [])
     end
 end
