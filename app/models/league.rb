@@ -21,7 +21,7 @@
 
 class League < Event
   validates :deadline, :startdate, :enddate, presence: true
-  validates :gameday_duration, presence: true
+  validates :gameday_duration, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000 }
   validate :end_after_start, :start_after_deadline
 
   enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
