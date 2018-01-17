@@ -92,18 +92,20 @@ class Match < ApplicationRecord
     save!
   end
 
+  def set_points(home, away)
+    self.points_home = home
+    self.points_away = away
+  end
+
   def calculate_points
     return if !has_scores? || has_points?
 
     if score_home > score_away
-      self.points_home = 3
-      self.points_away = 0
+      set_points(3, 0)
     elsif score_home < score_away
-      self.points_home = 0
-      self.points_away = 3
+      set_points(0, 3)
     else
-      self.points_home = 1
-      self.points_away = 1
+      set_points(3, 3)
     end
   end
 end
