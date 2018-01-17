@@ -95,6 +95,9 @@ de:
       section3-card2-header: "Liga"
       section3-card2-description_html:
         <li>Liga und Schweizer System</li><li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Automatische oder manuelle Paarungen</li><li>Automatische Spielplangenerierung</li><li>Erinnerung via Email</li><li>Automatische Punktevergabe</li><li>Statistiken</li>
+      section3-card3-header: "Rangliste"
+      section3-card3-description_html:
+        <li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Keine festen Paarungen</li><li>Metriken zur Bestimmung der Spielstärke (Elo, Trueskill, Verhältnis S./N.)</li><li>Keine festen Spieltage</li><li>Beitritt jederzeit möglich</li>
       section4: "Und wer sind wir?"
       section4-description_html: |
         Wir sind ein Team ambitionierter Studenten, welche im Rahmen einer Bachelor-Lehrveranstaltung den Umgang mit großen Teams und Ruby-On-Rails lernen. Das Projekt begann im Oktober 2017 im Auftrag des Sportklubs des Hasso-Plattner-Institut Potsdam.<br /><br />

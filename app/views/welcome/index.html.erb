@@ -164,6 +164,15 @@
             <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
           </div>
         </li>
+        <li>
+          <div class="collapsible-header"  onclick="$(this).find('#collapsibleToggleIcon').toggleClass('rotated')">
+            <h3><%= t('welcome.index.section3-card3-header') %></h3>
+            <i id="collapsibleToggleIcon" class="fa fa-angle-down"></i>
+          </div>
+          <div class="collapsible-body">
+            <ul class="gameModeList"><%= t('welcome.index.section3-card3-description_html') %></ul>
+          </div>
+        </li>
       </ul>
     </div>
     <div class="row hide-on-small-only content-is-cards">
@@ -174,6 +183,10 @@
       <div class="info-card">
         <h3><%= t('welcome.index.section3-card2-header') %></h3>
         <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
+      </div>
+      <div class="info-card">
+        <h3><%= t('welcome.index.section3-card3-header') %></h3>
+        <ul class="gameModeList"><%= t('welcome.index.section3-card3-description_html') %></ul>
       </div>
     </div>
   </div>
