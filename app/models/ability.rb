@@ -54,6 +54,7 @@ class Ability
       can [:create, :read, :update, :destroy], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
+      can :ranking, Event
       can [:schedule, :team_join], Event
 
       # Team
