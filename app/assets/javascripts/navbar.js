@@ -1,4 +1,8 @@
 $(document).ready(function(){
+   setupPage();
+})
+
+setupPage = function() {
     if($('.mobile-avatar')){
         $('.mobile-avatar').on('click', function() {
             $('#default-mobile-menu').addClass('hidden');
@@ -25,7 +29,7 @@ $(document).ready(function(){
     }
 
     changeNavbarTransparency();
-})
+}
 
 changeNavbarTransparency = function() {
     if($('body').hasClass('background')){
