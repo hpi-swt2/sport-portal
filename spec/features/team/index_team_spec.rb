@@ -6,11 +6,6 @@ describe "Index team page", type: :feature do
     visit teams_path
   end
 
-  it "should have a select box to filter teams" do
-    visit teams_path
-    expect(page).to have_select('filter')
-  end
-
   it "should only show teams current user is member of if filter is set" do
     @team = FactoryBot.create :team
     @team.name = "First"
