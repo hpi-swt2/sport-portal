@@ -9,7 +9,9 @@
   <tr class="gameday">
     <th colspan="6">
       <b>
-        <% if this_level_matches[0].depth == 0 %>
+        <% if this_level_matches[0].depth == -1 %>
+          <%= t('events.schedule.place_3_match') %>
+        <% elsif this_level_matches[0].depth == 0 %>
           <%= t('events.schedule.finale') %>
         <% elsif this_level_matches[0].depth == 1 %>
           <%= t('events.schedule.semifinale') %>

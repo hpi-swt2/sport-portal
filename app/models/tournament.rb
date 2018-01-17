@@ -28,31 +28,59 @@ class Tournament < Event
   def standing_of(team)
     final_match = finale
     return super(team) if final_match.blank?
-    last_match = final_match.last_match_of team
-    last_match.standing_string_of team
+
+    special_standing = special_standing_of team
+    return special_standing if special_standing.present?
+
+    final_match.last_match_of(team).standing_string_of team
   end
 
   def finale
-    #TODO: keep care of 3rd place match here
-    matches.each do |match|
-      if match.depth == 0
-        return match
-      end
-    end
-    nil
+    matches.find_by(gameday: finale_gameday)
+  end
+
+  def place_3_match
+    matches.find_by(gameday: finale_gameday + 1)
   end
 
   def generate_schedule
-    return if teams.size < 2
-    create_matches filled_teams, max_match_level, 0
+    team_count = teams.size
+    return if team_count < 2
+    create_matches filled_teams, finale_gameday, 0
     normalize_first_layer_match_indices
+    create_place_3_match if team_count >= 4
   end
 
-  def max_match_level
+  def finale_gameday
+    return 0 if teams.empty?
     Math.log(teams.length, 2).ceil - 1
   end
 
   private
+
+    def special_standing_of(team)
+      final_match = finale
+      if final_match.winner == team
+        I18n.t 'events.placing.first'
+      elsif final_match.loser == team
+        I18n.t 'events.placing.second'
+      else
+        place_3_standing_of team
+      end
+    end
+
+    def place_3_standing_of(team)
+      p3m = place_3_match
+      if p3m.present?
+        if p3m.winner == team
+          I18n.t 'events.placing.third'
+        elsif p3m.loser == team
+          I18n.t 'events.placing.fourth'
+        elsif p3m.is_team_recursive?(team)
+          I18n.t 'events.overview.in_place_3_match'
+        end
+      end
+    end
 
     def filled_teams
       # converts 12345
@@ -89,7 +117,7 @@ class Tournament < Event
       child_index = index * 2
       match_left = create_matches left_half, child_depth, child_index
       match_right = create_matches right_half, child_depth, child_index + 1
-      return match_left, match_right
+      [match_left, match_right]
     end
 
     def create_leaf_match(team_home, team_away, depth, index)
@@ -119,6 +147,20 @@ class Tournament < Event
       teams_size = teams.size
       return 0 if Tournament.is_power_of_two? teams_size
       2**teams_size.to_s(2).length - teams_size
+    end
+
+    def create_place_3_match
+      loser_home, loser_away = place_3_match_participants
+      match = Match.new team_home: loser_home, team_away: loser_away, gameday: finale_gameday + 1, index: 1, event: self
+      matches << match
+      match.save!
+    end
+
+    def place_3_match_participants
+      final_match = finale
+      loser_home = Tournament.create_match_participant final_match.team_home.match, false
+      loser_away = Tournament.create_match_participant final_match.team_away.match, false
+      [loser_home, loser_away]
     end
 
     class << self
