@@ -37,7 +37,7 @@ body>.background-layer>.container {
     padding-bottom: calc(84 / 888 * 100%);
     margin-bottom: calc(-84 / 888 * 100%);
     z-index: 4;
-    padding-top: calc(84 / 888 * 100%);
+    padding-top: calc(84 / 888 * 100% + 60px);
 }
 
 .section.orange-basketball  {
