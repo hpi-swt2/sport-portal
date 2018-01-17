@@ -9,7 +9,11 @@
               <%= '< ' + t('helpers.links.back') %>
             </div>
             <% if user_signed_in? %>
-                <%= menu_item (image_tag current_user.avatar_url || 'https://owncloud.hpi.de/index.php/s/57REqYtqsah3A7o/download', class: 'mobile-avatar center-block') + " #{current_user.first_name}" %>
+                <div>
+                  <%= (image_tag current_user.avatar_url || 'https://owncloud.hpi.de/index.php/s/57REqYtqsah3A7o/download', class: 'mobile-avatar center-block')%>
+                  <li><a class="text-center"><%= "#{current_user.first_name}" %></a></li>
+                  <%= drop_down_divider %>
+                </div>
                 <div id="user-mobile-menu" class="hidden">
                   <%= drop_down_divider %>
                   <%= menu_item t('devise.registrations.my_account'), edit_user_path(current_user), class: 'text-center' %>
