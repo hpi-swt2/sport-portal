@@ -111,8 +111,27 @@ de:
       event:
         one: "Event"
         other: "Events"
+        id: "ID"
 
     attributes:
+      match:
+        id: "ID"
+        date: "Datum"
+        place: "Ort"
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
+        created_at: "Erstellt am"
+        updated_at: "Aktualisiert am"
+        team_home_id: "Heim-Team"
+        team_away_id: "Auswärts-Team"
+      team:
+        id: "ID"
+        name: "Name"
+        description: "Beschreibung"
+        kind_of_sport: "Sportart"
+        private: "Privat"
+        created_at: "Erstellt am"
+        updated_at: "Aktualisiert am"
       event:
         name: "Name"
         description: "Beschreibung"
@@ -151,6 +170,8 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+        id: "ID"
+        created_at: "Erstellt am"
     validations:
       must_be_after: "darf nicht vor %{other} sein."
 
@@ -281,7 +302,8 @@ de:
   users:
     avatar:
       errors:
-        too_large: "is too large (max is 2 MB)"
+        max_size: "ist zu groß (max. 2 MB)"
+        mime_type_inclusion: "ist ein nicht erlaubter Datentyp"
 
     edit:
       cancel_this_account: "Diesen Account löschen"
