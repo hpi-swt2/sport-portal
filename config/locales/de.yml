@@ -193,6 +193,7 @@ de:
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
+      to_ranking: "zur Tabelle"
       participants: "Teilnehmer"
       winners: "Gewinner"
     new:
@@ -238,6 +239,18 @@ de:
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
+    ranking:
+      title: "Tabelle"
+      rank: "Rang"
+      name: "Name"
+      match_count: "Spiele"
+      won_count: "Siege"
+      draw_count: "Unentschieden"
+      lost_count: "Niederlagen"
+      goals: "Tore"
+      goals_against: "Gegentore"
+      goals_difference: "Tordifferenz"
+      points: "Punkte"
     max_teams:
       infinite: "unbegrenzt"
 
