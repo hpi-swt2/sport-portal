@@ -144,12 +144,17 @@ de:
         startdate: "Beginn"
         enddate: "Ende"
         duration: "Dauer in Tagen"
+        selection_type: "Auswahlverfahren"
         metric: "Metrik"
         initial_value: "Anfangswert"
         gameday_duration: "Spieltagdauer"
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
+        selection_types:
+          fcfs: "First Come First Serve"
+          fcfs_queue: "Warteschlange"
+          selection: "Teilnehmer auswählen"
       tournament:
         game_modes:
           ko: "K.-o.-System"
@@ -211,6 +216,8 @@ de:
     choose_team: "Ein Team auswählen"
     participating: "Beigetreten"
     metric: "Metrik"
+    full: "Voll"
+    fcfs: "First Come First Serve"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
@@ -221,6 +228,7 @@ de:
       select_type: "Eventtyp auswählen"
       select_game_mode: "Spieltyp auswählen"
       select_player_type: "Spielertyp auswählen"
+      select_selection_type: "Auswahlverfahren auswählen"
       select_metric: "Metrik auswählen"
     schedule:
       title: "Spielplan"

@@ -40,6 +40,11 @@ describe 'Event model', type: :model do
     expect(league.valid?).to eq(false)
   end
 
+  it 'should not validate without selection_type' do
+    league = FactoryBot.build(:league, selection_type: nil)
+    expect(league.valid?).to eq(false)
+  end
+
   it 'should have an attribute deadline' do
     date = Date.tomorrow
     expect(event.deadline).to eq date
