@@ -75,23 +75,53 @@ describe "detailed event page", type: :feature do
         @event = event
       end
 
-      it "should have a join button" do
-        expect(page).to have_link(:join_event_button)
+      context "fcfs event" do
+        before(:each) do
+          @event.selection_type = Event.selection_types[:fcfs]
+          @event.max_teams = 1
+          visit event_path(@event)
+          @event = event
+        end
+
+        it "should have right selection type" do
+          expect(@event.human_selection_type).to eq(I18n.t('events.fcfs'))
+        end
+
+        it "should have a join button if not exceeding max teams" do
+          expect(page).to have_link(:join_event_button)
+        end
+
+        it "should redirect me to itself when clicking the join button" do
+          click_link(:join_event_button)
+          expect(current_path).to eq(event_path(@event))
+        end
+
+        it "should not have a leave button" do
+          expect(page).not_to have_link(:leave_event_button)
+        end
+
+        it "should have a leave button after clicking the join button" do
+          click_link(:join_event_button)
+          expect(page).to have_link(:leave_event_button)
+        end
+
+        context "full fcfs event" do
+          before(:each) do
+            event = FactoryBot.create(:event, max_teams: 0)
+            visit event_path(event)
+          end
+
+          it "should be labeled as full if max teams is reached" do
+            expect(page).to have_content(I18n.t('events.full'))
+          end
+
+          it "should not be able to join if max teams is reached" do
+            expect(page).not_to have_link(:join_event_button)
+          end
+        end
       end
 
-      it "should redirect me to itself when clicking the join button" do
-        click_link(:join_event_button)
-        expect(current_path).to eq(event_path(@event))
-      end
 
-      it "should not have a leave button" do
-        expect(page).not_to have_link(:leave_event_button)
-      end
-
-      it "should have a leave button after clicking the join button" do
-        click_link(:join_event_button)
-        expect(page).to have_link(:leave_event_button)
-      end
     end
   end
 

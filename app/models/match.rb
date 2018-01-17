@@ -22,8 +22,10 @@ class Match < ApplicationRecord
   belongs_to :event, dependent: :delete
   has_many :match_results, dependent: :destroy
 
+  validates :points_home, :points_away, numericality: { allow_nil: true }
+
   def depth
-    event.max_match_level - gameday
+    event.finale_gameday - gameday
   end
 
   def round
