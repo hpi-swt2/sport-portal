@@ -10,15 +10,16 @@ body>.background-layer>.container {
 }
 
 .section {
-    padding: 0;
     background-size: cover;
     background-position: center;
     width: 100%;
     /* children have to set attributes as following:
-    min-height: calc(<image height>/<image width> * 100vh);
+    min-height: calc(<image height>/<image width> * 100vw);
     padding-bottom: calc(<height of edge> / <image height> * 100%);
     margin-bottom: calc(- <height of edge> / <image height> * 100%);
     z-index: number of sections - index of this section
+
+    The edge is the height of the lower triangle, which is cut out of the image.
      */
 }
 
@@ -67,11 +68,11 @@ h1 {
     margin: 0 0 0.68rem 0;
 }
 
-#header-description {
+#headerDescription {
     font-size: 1.6rem;
 }
 
-.myButton {
+.genericButton {
     border-radius: 100px;
     font-size: 24px;
     color: #FFFFFF;
@@ -111,7 +112,7 @@ p {
     justify-content: center;
 }
 
-.myCollapsible {
+.gameModeCollapsible {
     margin: 15px;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -119,7 +120,7 @@ p {
     border: none;
 }
 
-.myCollapsible>li>.collapsible-header {
+.gameModeCollapsible>li>.collapsible-header {
     border: none;
     background-color: #F3F9FF;
     margin-top: 15px;
@@ -127,12 +128,12 @@ p {
     align-items: center;
 }
 
-.myCollapsible>li>.collapsible-body {
+.gameModeCollapsible>li>.collapsible-body {
     border: none;
     background-color: #F3F9FF;
 }
 
-#myCollapsibleIcon {
+#collapsibleToggleIcon {
     width: 3rem;
     height: 3rem;
     border-radius: 3rem;
@@ -150,7 +151,7 @@ p {
     padding: 10px 20px;
 }
 
-ul.myList>li {
+ul.gameModeList>li {
     list-style-type: disc;
     list-style-position: outside;
     margin-left: 15px;
@@ -200,7 +201,7 @@ ul.myList>li {
         padding-top: 8%;
     }
 
-    .myButton {
+    .genericButton {
         padding: 5px 30px;
     }
 
@@ -258,7 +259,7 @@ ul.myList>li {
         padding-top: calc(104 / 796 * 100% + 80px);
     }
 
-    .myButton {
+    .genericButton {
         padding: 5px 20px;
         font-size: 20px;
     }

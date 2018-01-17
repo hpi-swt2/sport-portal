@@ -10,13 +10,15 @@
     </div>
     <div class="row">
       <div class="col s10 offset-s1">
-        <p class="white-text center" id="header-description"><%= t('welcome.index.lead-description') %></p>
+        <p class="white-text center" id="headerDescription"><%= t('welcome.index.lead-description') %></p>
       </div>
     </div>
     <div id="register-row" class="row">
       <div class="col s12 center">
         <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn registerButton myButton'%>
+            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn registerButton genericButton'%>
+        <% else %>
+            <%= link_to t('navbar.drop-down.dashboard'), dashboard_user_path(current_user), class: 'btn registerButton genericButton' %>
         <% end %>
       </div>
     </div>
@@ -143,23 +145,23 @@
       </div>
     </div>
     <div class="row hide-on-med-and-up">
-      <ul class="collapsible info-collapsible myCollapsible" data-collapsible="expandable">
+      <ul class="collapsible info-collapsible gameModeCollapsible" data-collapsible="expandable">
         <li>
-          <div class="collapsible-header active" onclick="$(this).find('#myCollapsibleIcon').toggleClass('rotated')">
+          <div class="collapsible-header active" onclick="$(this).find('#collapsibleToggleIcon').toggleClass('rotated')">
             <h3><%= t('welcome.index.section3-card1-header') %></h3>
-            <i id="myCollapsibleIcon" class="fa fa-angle-down rotated"></i>
+            <i id="collapsibleToggleIcon" class="fa fa-angle-down rotated"></i>
           </div>
           <div class="collapsible-body">
-            <ul class="myList"><%= t('welcome.index.section3-card1-description_html') %></ul>
+            <ul class="gameModeList"><%= t('welcome.index.section3-card1-description_html') %></ul>
           </div>
         </li>
         <li>
-          <div class="collapsible-header"  onclick="$(this).find('#myCollapsibleIcon').toggleClass('rotated')">
+          <div class="collapsible-header"  onclick="$(this).find('#collapsibleToggleIcon').toggleClass('rotated')">
             <h3><%= t('welcome.index.section3-card2-header') %></h3>
-            <i id="myCollapsibleIcon" class="fa fa-angle-down"></i>
+            <i id="collapsibleToggleIcon" class="fa fa-angle-down"></i>
           </div>
           <div class="collapsible-body">
-            <ul class="myList"><%= t('welcome.index.section3-card2-description_html') %></ul>
+            <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
           </div>
         </li>
       </ul>
@@ -167,11 +169,11 @@
     <div class="row hide-on-small-only content-is-cards">
       <div class="info-card">
         <h3><%= t('welcome.index.section3-card1-header') %></h3>
-        <ul class="myList"><%= t('welcome.index.section3-card1-description_html') %></ul>
+        <ul class="gameModeList"><%= t('welcome.index.section3-card1-description_html') %></ul>
       </div>
       <div class="info-card">
         <h3><%= t('welcome.index.section3-card2-header') %></h3>
-        <ul class="myList"><%= t('welcome.index.section3-card2-description_html') %></ul>
+        <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
       </div>
     </div>
   </div>
@@ -193,7 +195,11 @@
     </div>
     <div class="row">
       <div class="col s12 center">
-        <%= link_to t('welcome.index.create-schedule'), new_user_session_path , class: 'btn createScheduleButton myButton'%>
+        <% if not user_signed_in? %>
+            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton'%>
+        <% else %>
+            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton' %>
+        <% end %>
       </div>
     </div>
   </div>

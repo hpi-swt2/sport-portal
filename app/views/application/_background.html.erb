@@ -1,39 +1,26 @@
 <%-
-  $background = "navbar-overlap"
-  $new_background = "navbar-overlap background"
   $no_background = "navbar-overlap"
+  $with_background = "navbar-overlap background"
+  $background = $no_background
+
+
   case (request.user_agent =~ /Mobile|webOS/).present? # check if user is using a mobile device
-    when true   # in case it is a mobile device
-      $background = $no_background
-    else  # in case it is not a mobile device
+    when false  # in case it is not a mobile device
       case controller_name
         when "sessions"
           case action_name
-            when "new"
-              $background = $new_background
-            else
-              $background = $no_background
+            when "new" then $background = $with_background
           end
-        when "users"
+        when "users" then
           case action_name
-            when "new"
-              $background = $new_background
-            when "create"
-              $background = $new_background
-            else
-              $background = $no_background
+            when "new", "create" then $background = $with_background
           end
         when "welcome"
           case action_name
-            when "index"
-              $background = $new_background
-            else
-              $background = $no_background
+            when "index" then $background = $with_background
           end
-        else
-          $background = $no_background
-        end
-    end
+      end
+  end
 %>
 
 <%=$background%>
