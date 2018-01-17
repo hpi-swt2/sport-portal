@@ -130,7 +130,7 @@ And(/^he fills in valid tournament data$/) do
   fill_in :tournament_name, with: 'Dummy'
   fill_in :tournament_discipline, with: 'DummySport'
   fill_in :tournament_max_teams, with: 8
-  page.select 'Teamteilnahme', from: :event_player_type
+  page.select I18n.t('activerecord.attributes.event.player_types.team'), from: :event_player_type
   fill_in :event_deadline, with: Date.today + 1.day
   fill_in :event_startdate, with: Date.today + 2.day
   fill_in :event_enddate, with: Date.today + 3.day
