@@ -1,7 +1,12 @@
-footer > .navbar-static-bottom {
-    margin-top: 20px;
+footer {
+    text-align: center;
 }
 
-footer .navbar-nav {
-    display: inline-block
+footer > .primary-link {
+    color: #1CA9E5;
+    font-size: 30px;
+}
+
+footer > .secondary-links, footer > .secondary-links > a {
+    color: #B2B2B2;
 }

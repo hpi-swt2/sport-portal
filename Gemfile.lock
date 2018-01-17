@@ -170,6 +170,8 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (6.0.1)
+      railties (>= 3.2.16)
     json (2.1.0)
     less (2.6.0)
       commonjs (~> 0.2.7)
@@ -188,6 +190,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
+    materialize-sass (0.100.2)
+      sass (~> 3.3)
     method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -294,6 +298,11 @@ GEM
     ruby-openid (2.7.0)
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
+    sass (3.5.3)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
     shrine (2.8.0)
       down (~> 4.1)
     simplecov (0.14.1)
@@ -377,6 +386,8 @@ DEPENDENCIES
   has_scope
   i18n-tasks
   jquery-rails
+  jquery-ui-rails
+  materialize-sass
   omniauth
   omniauth-openid
   pg
@@ -405,4 +416,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
