@@ -48,8 +48,8 @@ class Ability
       can :create, :all
 
       # User
-      can :read, User
-      can [:show, :modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
+      can :show, User
+      can [:modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
       cannot :create, User
 
       # Event
