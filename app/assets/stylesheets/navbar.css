@@ -36,7 +36,6 @@
 
     .navbar-collapse ul {
         margin-top: 0px;
-        max-height: 600px !important;
     }
 
     .navbar-header {
@@ -46,6 +45,7 @@
     .navbar-collapse {
         background-color: #0f3157 !important;
         padding-top: 5px;
+        max-height: 600px !important;
     }
 
     .navbar-nav > li {
