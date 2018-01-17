@@ -31,7 +31,7 @@ class Ability
     alias_action :create_from_type, to: :create
     can :read, :all
     cannot :read, Team, private: true
-    cannot [:index, :show], User
+    cannot :index, User
     can :create, User
     if user.present?
       initialize_with_user(user)
@@ -47,13 +47,14 @@ class Ability
       can :create, :all
 
       # User
-      can [:show, :modify, :edit_profile, :update_profile, :dashboard], User, id: user_id
+      can [:show, :modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
       cannot :create, User
 
       # Event
       can [:create, :read, :update, :destroy], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
+      can :ranking, Event
       can [:schedule, :team_join], Event
 
       # Team

@@ -52,10 +52,10 @@ RSpec.describe UsersController, type: :controller do
       get :show, params: { id: @user.to_param }
       expect(response).to be_success
     end
-    it "should not allow another user to view his page" do
+    it "should allow another user to view his page" do
       sign_in @user
       get :show, params: { id: @other_user.to_param }
-      expect(response).to be_forbidden
+      expect(response).to be_success
     end
     it "should allow an admin to view his page" do
       sign_in @admin
@@ -305,14 +305,6 @@ RSpec.describe UsersController, type: :controller do
         get :unlink, params: { id: @user.to_param }
         expect(response).to be_unauthorized
       end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "should allow normal users to destroy themselves" do
-      sign_in @user
-      delete :destroy, params: { id: @user.to_param }
-      expect(response).to redirect_to(root_path)
     end
   end
 

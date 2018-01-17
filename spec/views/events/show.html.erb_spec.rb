@@ -50,6 +50,11 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
     end
+
+    it 'has a ranking button' do
+      render
+      expect(rendered).to have_content(t('events.show.to_ranking'))
+    end
   end
   before(:each) do
     @user = FactoryBot.create :user
@@ -66,6 +71,12 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(t('events.show.to_schedule'))
     end
+
+    it "renders the gameday duration" do
+      render
+      expect(rendered).to have_content Event.human_attribute_name :gameday_duration
+      expect(rendered).to have_content @event.gameday_duration
+    end
     include_examples "an event"
   end
 
@@ -79,7 +90,7 @@ RSpec.describe "events/show", type: :view do
     include_examples "an event"
   end
 
-  describe "League" do
+  describe "Rankinglist" do
     before(:each) do
       @event = assign(:event, FactoryBot.create(:rankinglist))
       @event.editors << @user

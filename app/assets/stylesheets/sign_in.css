@@ -58,6 +58,7 @@ a:link, a:visited, a:hover, a:active {
 .input-field:focus-within {
     border: 1px solid #1ba9e5;
 }
+
 .input-field-error:focus-within {
     border-color: #d45a1d;
 }

@@ -7,6 +7,11 @@ RSpec.feature "Page has navbar", type: :feature do
       sign_in @user
     end
 
+    it "doesn't have a players button for normal users" do
+      visit root_path
+      expect(page).not_to have_link(User.model_name.human(count: :many))
+    end
+
     it "has a dropdown menu" do
       visit root_path
       expect(page).to have_css(".navbar .dropdown")
@@ -22,6 +27,18 @@ RSpec.feature "Page has navbar", type: :feature do
       expect(page).to have_link(I18n.t('navbar.drop-down.dashboard'))
     end
 
+  end
+
+  context 'when the user is admin' do
+    before(:each) do
+      @admin = FactoryBot.create(:admin)
+      sign_in @admin
+    end
+
+    it "has a players button for admins" do
+      visit root_path
+      expect(page).to have_link(User.model_name.human(count: :many))
+    end
   end
 
   context 'when the user is logged out' do

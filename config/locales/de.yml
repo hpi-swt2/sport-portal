@@ -111,8 +111,27 @@ de:
       event:
         one: "Event"
         other: "Events"
+        id: "ID"
 
     attributes:
+      match:
+        id: "ID"
+        date: "Datum"
+        place: "Ort"
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
+        created_at: "Erstellt am"
+        updated_at: "Aktualisiert am"
+        team_home_id: "Heim-Team"
+        team_away_id: "Auswärts-Team"
+      team:
+        id: "ID"
+        name: "Name"
+        description: "Beschreibung"
+        kind_of_sport: "Sportart"
+        private: "Privat"
+        created_at: "Erstellt am"
+        updated_at: "Aktualisiert am"
       event:
         name: "Name"
         description: "Beschreibung"
@@ -151,6 +170,8 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+        id: "ID"
+        created_at: "Erstellt am"
     validations:
       must_be_after: "darf nicht vor %{other} sein."
 
@@ -193,6 +214,7 @@ de:
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
+      to_ranking: "zur Tabelle"
       participants: "Teilnehmer"
       winners: "Gewinner"
     new:
@@ -238,6 +260,18 @@ de:
     placing:
       first: "Gewinner"
       second: "Zweiter Platz"
+    ranking:
+      title: "Tabelle"
+      rank: "Rang"
+      name: "Name"
+      match_count: "Spiele"
+      won_count: "Siege"
+      draw_count: "Unentschieden"
+      lost_count: "Niederlagen"
+      goals: "Tore"
+      goals_against: "Gegentore"
+      goals_difference: "Tordifferenz"
+      points: "Punkte"
     max_teams:
       infinite: "unbegrenzt"
 
@@ -268,15 +302,19 @@ de:
   users:
     avatar:
       errors:
-        too_large: "is too large (max is 2 MB)"
+        max_size: "ist zu groß (max. 2 MB)"
+        mime_type_inclusion: "ist ein nicht erlaubter Datentyp"
 
     edit:
       cancel_this_account: "Diesen Account löschen"
       unhappy: "Unzufrieden"
       leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
       we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+    destroy:
+      confirm: "Bestätigen"
 
   devise:
     registrations:
       user:
         destroyed: "Dieser Account wurde gelöscht"
+        not_destroyed: "Dieser Account wurde nicht gelöscht, weil du ein falsches Passwort eingegeben hast"

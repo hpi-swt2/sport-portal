@@ -144,3 +144,55 @@ end
 And (/^he changes his email/) do
   fill_in :user_email, with: 'new' + single_user.email
 end
+
+When(/^the user wants to delete his account$/) do
+  ensure_current_user!
+  visit edit_user_path(single_user)
+  click_on I18n.t('users.edit.cancel_this_account')
+end
+
+And(/^he enters his password$/) do
+  fill_in :password, with: single_user.password
+end
+
+And(/^he enters his current password$/) do
+  fill_in User.human_attribute_name(:current_password), with: single_user.password
+end
+
+Then(/^the user should be deleted$/) do
+  expect(User.find_by_id(single_user.id)).to be_nil
+end
+
+And(/^he enters a wrong password$/) do
+  fill_in :password, with: single_user.password + 'potato'
+end
+
+Then(/^the user should not be deleted$/) do
+  expect(User.find_by_id(single_user.id)).to_not be_nil
+end
+
+And(/^he enters the first name '(.*)'$/) do |name|
+  fill_in User.human_attribute_name(:first_name), with: name
+end
+
+
+Then(/^his first name should be '(.*)'$/) do |name|
+  single_user.reload
+  expect(single_user.first_name).to eq(name)
+end
+
+And(/^he enters the email '(.*)'$/) do |email|
+  fill_in User.human_attribute_name(:email), with: email
+end
+
+
+Then(/^his email should not have changed$/) do
+  old_email = single_user.email
+  single_user.reload
+  expect(single_user.email).to eq(old_email)
+end
+
+Then(/^his email should be '(.*)'$/) do |email|
+  single_user.reload
+  expect(single_user.email).to eq(email)
+end
