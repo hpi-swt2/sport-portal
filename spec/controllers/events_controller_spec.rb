@@ -148,14 +148,14 @@ RSpec.describe EventsController, type: :controller do
     context "with valid params" do
       let(:league_params) {
         {
-          event: valid_league_attributes,
-          type: League
+            event: valid_league_attributes,
+            type: League
         }
       }
       let(:tournament_params) {
         {
-          event: FactoryBot.build(:tournament, owner: @user).attributes,
-          type: Tournament
+            event: FactoryBot.build(:tournament, owner: @user).attributes,
+            type: Tournament
         }
       }
       it "creates a new Event" do
@@ -182,14 +182,14 @@ RSpec.describe EventsController, type: :controller do
     context "with invalid params" do
       let(:league_params) {
         {
-          event: invalid_league_attributes,
-          type: League
+            event: invalid_league_attributes,
+            type: League
         }
       }
       let(:tournament_params) {
         {
-          event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
-          type: Tournament
+            event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
+            type: Tournament
         }
       }
       it "returns success when creating a league" do
@@ -208,9 +208,9 @@ RSpec.describe EventsController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {
-          deadline: Date.new(2017, 11, 20),
-          startdate: Date.new(2017, 11, 21),
-          enddate: Date.new(2017, 11, 22)
+            deadline: Date.new(2017, 11, 20),
+            startdate: Date.new(2017, 11, 21),
+            enddate: Date.new(2017, 11, 22)
         }
       }
 
