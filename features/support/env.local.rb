@@ -106,6 +106,9 @@ module DataHelper
   end
 
   def single_tournament
+    if @tournaments.empty?
+      return Tournament.last
+    end
     get_single_object @tournaments
   end
 

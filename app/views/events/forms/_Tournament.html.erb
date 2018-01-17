@@ -6,7 +6,13 @@
   <%= form.label :game_mode, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= form.select(:game_mode, Tournament.game_modes.map {|k, _| [Tournament.human_game_mode(k), k]},
-                 { selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
-                 { class: 'form-control' }) %>
+                    { selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
+                    { class: 'form-control' }) %>
+  </div>
+</div>
+<div class="form-group" id="event_has_place_3_match">
+  <div class="col-lg-10">
+    <%= form.check_box :has_place_3_match, checked: true %>
+    <%= form.label :has_place_3_match %>
   </div>
 </div>
