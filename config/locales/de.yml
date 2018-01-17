@@ -171,6 +171,9 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+        birthday: "Geburtstag"
+        telegram_username: "Telegram Benutzername"
+        favourite_sports: "Lieblingssportarten"
         id: "ID"
         created_at: "Erstellt am"
     validations:
