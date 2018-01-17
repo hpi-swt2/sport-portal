@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-admin = FactoryBot.build(:user,
+admin = User.new(
   first_name: 'admin',
   last_name: '',
   email: 'admin@example.com',
@@ -17,11 +17,9 @@ admin = FactoryBot.build(:user,
 # Skip validations, so that e.g. a short password is possible
 admin.save(validate: false)
 
-FactoryBot.create(:match)
-
 # Some example user entries
 
-FactoryBot.build(:user,
+User.new(
   first_name: 'Nilrem',
   last_name: 'Eyah al ed',
   email: 'wizard@hpi.de',
@@ -33,7 +31,7 @@ FactoryBot.build(:user,
   avatar: File.open("#{Rails.root}/db/seed_data/avatar1.png"),
   favourite_sports: 'Userstory-Wett-Schreiben').save(validate: false)
 
-FactoryBot.build(:user,
+User.new(
   first_name: 'Sukram',
   last_name: 'Dnarb',
   email: 'cuber@hpi.de',
@@ -45,7 +43,7 @@ FactoryBot.build(:user,
   avatar: File.open("#{Rails.root}/db/seed_data/avatar2.gif"),
   favourite_sports: 'Userstory-Wett-Lösen').save(validate: false)
 
-FactoryBot.build(:user,
+User.new(
   first_name: 'Kire',
   last_name: 'Lednerb',
   email: 'gummi.ente@hpi.de',

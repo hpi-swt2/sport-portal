@@ -33,9 +33,7 @@
       <%= f.file_field :avatar, class: 'form-control-file' %>
       <% if current_user.avatar %>
         <%= f.check_box :remove_avatar %>
-        <label for="user_remove_avatar">
-          &nbsp;<%= t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %>
-        </label>
+        <%= f.label :remove_avatar, t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %>
       <% end %>
     </div>
   </div>
