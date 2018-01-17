@@ -32,7 +32,7 @@ FactoryBot.define do
       points_away nil
       points_home nil
     end
-    
+
     trait :with_tournament do
       association :event, factory: :tournament
     end
