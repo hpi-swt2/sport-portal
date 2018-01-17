@@ -36,11 +36,11 @@ class Tournament < Event
   end
 
   def finale
-    matches.where(gameday: finale_gameday).first
+    matches.find_by(gameday: finale_gameday)
   end
 
   def place_3_match
-    matches.where(gameday: finale_gameday + 1).first
+    matches.find_by(gameday: finale_gameday + 1)
   end
 
   def generate_schedule
