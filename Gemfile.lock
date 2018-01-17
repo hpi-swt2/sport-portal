@@ -390,7 +390,7 @@ DEPENDENCIES
   materialize-sass
   omniauth
   omniauth-openid
-  pg
+  pg (~> 0.21.0)
   pry
   pry-rails
   pry-rescue
