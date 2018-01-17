@@ -1,8 +1,9 @@
 <footer>
-  <%= nav_bar static: :bottom, brand: t('appname'), fluid: true do %>
-      <% menu_group pull: :right do %>
-          <%= menu_item t('imprint'), imprint_path %>
-          <%= menu_item t('footer.hpi'), "https://hpi.de/", target: :blank %>
-      <% end %>
-  <% end %>
+  <%= link_to t('appname'), root_path, {class: 'primary-link'} %>
+
+  <p class="secondary-links">
+    <%= link_to t('footer.imprint'), imprint_path %>
+    &nbsp&nbsp | &nbsp&nbsp
+    <%= link_to t('footer.hpi'), "https://hpi.de/", target: :blank %>
+  </p>
 </footer>

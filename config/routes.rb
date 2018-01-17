@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     member do
       put :join
       put :leave
+      get :team_join
     end
   end
 
@@ -23,8 +24,10 @@ Rails.application.routes.draw do
     end
   end
 
+  #get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
   get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
+  get '/events/:id/ranking', to: 'events#ranking', as: 'event_ranking'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {
@@ -42,6 +45,7 @@ Rails.application.routes.draw do
         get 'notifications'
         get 'link'
         get 'unlink'
+        post 'delete', to: 'users#confirm_destroy'
       end
     end
 

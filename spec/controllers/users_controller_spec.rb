@@ -31,31 +31,34 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET #index" do
-    it "returns a success response" do
-      # https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-%28and-RSpec%29#mappings
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      user = User.create! valid_attributes
+
+    it "should not allow normal user to view page" do
+      sign_in @user
+      get :index, params: {}
+      expect(response).to be_forbidden
+    end
+
+    it "should allow admin to view page" do
+      sign_in @admin
       get :index, params: {}
       expect(response).to be_success
     end
 
-    it "should allow normal user to view page" do
-      sign_in @user
-      get :index, params: {}
-      expect(response).to be_success
-    end
   end
 
   describe 'GET #show' do
-    it 'returns a success response' do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      user = User.create! valid_attributes
-      get :show, params: { id: user.to_param }
-      expect(response).to be_success
-    end
-
     it "should allow normal user to view his page" do
       sign_in @user
+      get :show, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+    it "should allow another user to view his page" do
+      sign_in @user
+      get :show, params: { id: @other_user.to_param }
+      expect(response).to be_success
+    end
+    it "should allow an admin to view his page" do
+      sign_in @admin
       get :show, params: { id: @user.to_param }
       expect(response).to be_success
     end
@@ -163,12 +166,6 @@ RSpec.describe UsersController, type: :controller do
       expect {
         post :create, params: { user: valid_attributes }
       }.to change(User, :count).by(1)
-    end
-
-    it "should allow normal user to view the page of other users" do
-      sign_in @user
-      get :show, params: { id: @other_user.to_param }
-      expect(response).to be_success
     end
   end
 
@@ -308,14 +305,6 @@ RSpec.describe UsersController, type: :controller do
         get :unlink, params: { id: @user.to_param }
         expect(response).to be_unauthorized
       end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "should allow normal users to destroy themselves" do
-      sign_in @user
-      delete :destroy, params: { id: @user.to_param }
-      expect(response).to redirect_to(root_path)
     end
   end
 
