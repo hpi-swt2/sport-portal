@@ -134,10 +134,13 @@ class EventsController < ApplicationController
 
   def parse_matches_data_into_ranking_entry(team, ranking_entry, matches, parse_match_details_for_home_or_away)
     matches.each do |match|
+      # Validate data since matches do not always have both goals (scores) and points assigned
       score_home = match.score_home
       score_away = match.score_away
-      match_has_score = score_home && score_away
-      next unless match_has_score
+      points_home = match.points_home
+      points_away = match.points_away
+      match_has_result = score_home && score_away && points_home && points_away
+      next unless match_has_result
 
       ranking_entry.match_count += 1
       parse_match_result_into_ranking_entry team, match, ranking_entry
