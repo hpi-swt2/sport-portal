@@ -14,6 +14,16 @@ $(document).ready(function(){
         })
     }
 
+    if($('.navbar-toggle')){
+        $('.navbar-toggle').on('click', function() {
+            if($('.navbar-toggle').hasClass('expanded')){
+                $('.navbar-toggle').removeClass('expanded');
+            }else {
+                $('.navbar-toggle').addClass('expanded');
+            }
+        })
+    }
+
     changeNavbarTransparency();
 })
 

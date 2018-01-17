@@ -50,7 +50,29 @@
     .navbar-nav > li {
         text-align: center;
     }
+
+    .icon-bar {
+        background-color: #1ba9e5 !important;
+    }
+
+    .navbar-toggle{
+        border-color: transparent !important;
+        background-color: transparent !important;
+    }
+
+    .navbar-toggle.expanded {
+        background-image: url('https://owncloud.hpi.de/index.php/s/bWdfeewNyoUK9Kt/download');
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-top: 1.8vh;
+        margin-right: 3vh;
+    }
+
+    .navbar-toggle.expanded .icon-bar {
+        display: none;
+    }
 }
+
 
 .mobile-avatar {
     height: 48px;
