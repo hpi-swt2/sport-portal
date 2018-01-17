@@ -73,21 +73,6 @@ class UsersController < Devise::RegistrationsController
     @user = User.find(params[:id])
   end
 
-  def edit_profile
-    @user = User.find(params[:id])
-    authorize! :edit_profile, @user
-  end
-
-  def update_profile
-    @user = User.find(params[:id])
-    authorize! :edit_profile, @user
-    if @user.update(profile_update_params)
-      redirect_to @user, notice: I18n.t('helpers.flash.updated', resource_name: User.model_name.human).capitalize
-    else
-      render :edit_profile
-    end
-  end
-
   # All other controller methods are handled by original `Devise::RegistrationsController`
   # Views are located in `app/views/devise`
 
@@ -108,17 +93,17 @@ class UsersController < Devise::RegistrationsController
       (params[:current_password].blank? &&
           params[:password].blank? &&
           params[:password_confirmation].blank? &&
-          params[:email] == resource[:email])
+          (params[:email].blank? || params[:email] == resource[:email]))
     end
 
     # Overridden methods of `Devise::RegistrationsController` to permit additional model params
     def sign_up_params
       generate_random_password if get_omniauth_data
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, event_ids: [])
     end
 
     def account_update_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, event_ids: [])
     end
 
     def admin_update_params
@@ -127,7 +112,7 @@ class UsersController < Devise::RegistrationsController
         user_params.delete(:password)
         user_params.delete(:password_confirmation)
       end
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:first_name, :last_name, :birthday, :email, :password, :password_confirmation)
     end
 
     def generate_random_password
@@ -142,10 +127,6 @@ class UsersController < Devise::RegistrationsController
       if (data = session['omniauth.data'])
         data if data['expires'].to_time > Time.current
       end
-    end
-
-    def profile_update_params
-      params.require(:user).permit(:avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports)
     end
 
     def unlink_omniauth
