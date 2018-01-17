@@ -61,11 +61,43 @@ body {
   .background-layer {
     padding-bottom: 120px;
   }
+
+  h1 {
+    font-size: 4.5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+  }
+
+  p {
+    font-size: 1.4rem;
+  }
+
+  li {
+    font-size: 1.4rem;
+  }
 }
 
 @media screen and (max-width: 991px) {
   .background-layer {
     padding-bottom: 50px;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  li {
+    font-size: 1.2rem;
   }
 }
 

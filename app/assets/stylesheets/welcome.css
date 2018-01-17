@@ -103,10 +103,6 @@ h1 {
     line-height: 3rem;
 }
 
-p {
-    font-size: 1.4rem;
-}
-
 .content-is-cards {
     display: flex;
     justify-content: center;
@@ -236,7 +232,6 @@ ul.gameModeList>li {
         padding-bottom: calc(104 / 756 * 100% + 60px);
         margin-bottom: calc(-104 / 756 * 100% + 60px);
         padding-top: calc(104 / 756 * 100% + 60px);
-
     }
 }
 

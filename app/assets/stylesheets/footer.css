@@ -10,3 +10,7 @@ footer > .primary-link {
 footer > .secondary-links, footer > .secondary-links > a {
     color: #B2B2B2;
 }
+
+footer > p {
+    font-size: 1rem;
+}
