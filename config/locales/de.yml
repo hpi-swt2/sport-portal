@@ -193,6 +193,7 @@ de:
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
+      to_ranking: "zur Tabelle"
       participants: "Teilnehmer"
       winners: "Gewinner"
     new:
@@ -234,20 +235,32 @@ de:
       teamColumn: "Team"
       standingColumn: "Platzierung"
       unkown_standing: "Platzierung Unbekannt"
-      out: "In %{match_name} ausgeschieden"
-      in_place_3_match: "In Spiel um Platz 3"
-      in: "In %{match_name}"
+      out: "Im %{match_name} ausgeschieden"
+      in_place_3_match: "Im Spiel um Platz 3"
+      in: "Im %{match_name}"
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
       third: "Dritter Platz"
       fourth: "Vierter Platz"
+    ranking:
+      title: "Tabelle"
+      rank: "Rang"
+      name: "Name"
+      match_count: "Spiele"
+      won_count: "Siege"
+      draw_count: "Unentschieden"
+      lost_count: "Niederlagen"
+      goals: "Tore"
+      goals_against: "Gegentore"
+      goals_difference: "Tordifferenz"
+      points: "Punkte"
     max_teams:
       infinite: "unbegrenzt"
 
   matches:
     round_name:
-      zero: "Finalspiel %{gameid}"
+      zero: "Finalspiel"
       one: "Halbfinalspiel %{gameid}"
       two: "Viertelfinalspiel %{gameid}"
       three: "Achtelfinalspiel %{gameid}"
