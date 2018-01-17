@@ -41,10 +41,14 @@ When(/^the Spielplan page for (.*) is visited$/) do |tournamentName|
   visit event_schedule_path(tournament_named tournamentName)
 end
 
-And(/^the texts? (.+) (?:are|is) there\.$/) do |texts_raw|
+And(/^the texts? (.+) (?:are|is)( not)? there\.?$/) do |texts_raw, _not|
   texts = texts_raw.split ', '
   texts.each do |text|
-    expect(page).to have_text(text)
+    if _not.present?
+      expect(page).not_to have_text(text)
+    else
+      expect(page).to have_text(text)
+    end
   end
 end
 
@@ -110,4 +114,14 @@ Then(/^the (first|second) place of the tournament is the (home|away) team of (.+
   team = find_team_of_match match_gameday, match_num, home_or_away
   visit event_path single_tournament
   expect(page).to have_text("#{placing_to_display_string placing} #{team.name}")
+end
+
+When(/^the schedule page is visited$/) do
+  visit event_schedule_path(single_tournament)
+end
+
+Given(/^(\d+) teams join the tournament$/) do |num_teams|
+  for each in 1..num_teams do
+    single_tournament.add_team create_team
+  end
 end
