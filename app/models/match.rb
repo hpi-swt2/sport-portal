@@ -105,7 +105,7 @@ class Match < ApplicationRecord
     elsif score_home < score_away
       set_points(0, 3)
     else
-      set_points(3, 3)
+      set_points(1, 1)
     end
   end
 end
