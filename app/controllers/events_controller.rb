@@ -49,6 +49,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
+    @event.invalidate_schedule if event_params[:has_place_3_match].to_i.zero? == @event.has_place_3_match
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
