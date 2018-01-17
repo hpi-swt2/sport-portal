@@ -24,14 +24,6 @@ class Match < ApplicationRecord
 
   after_validation :calculate_points
 
-  def name
-    winner_team = winner
-    if winner_team.present?
-      return winner_team.name
-    end
-    round
-  end
-
   validates :points_home, :points_away, numericality: { allow_nil: true }
 
   def depth
