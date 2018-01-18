@@ -40,6 +40,11 @@
     <% end %>
   </tbody>
 </table>
+
+<% @teams.each do |team| %>
+    <% render partial: 'application/tile_template', title: team.name, image_url: 'https://owncloud.hpi.de/index.php/s/45SBYQMw1jnN9UM/download', description: 'Test' %>
+<% end %>
+
 <% if can? :create, Team %>
   <%= link_to t('.new', :default => t("helpers.links.new")),
               new_team_path,

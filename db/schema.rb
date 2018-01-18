@@ -96,8 +96,8 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
-    t.boolean "single", default: false
     t.text "avatar_data"
+    t.boolean "single", default: false
   end
 
   create_table "users", force: :cascade do |t|
