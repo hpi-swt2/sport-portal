@@ -22,7 +22,20 @@ RSpec.describe 'events/schedule', type: :view do
     expect(rendered).to have_text "- 24.12. #{t 'events.schedule.to'} 30.12."
   end
 
-  shared_examples "an event" do
+  describe "Tournament" do
+    before(:each) do
+      @event = assign(:event, FactoryBot.create(:tournament))
+      @event.editors << @user
+      @event.owner = @user
+    end
+  end
+
+  describe "League" do
+    before(:each) do
+      @event = assign(:event, FactoryBot.create(:rankinglist))
+      @event.editors << @user
+      @event.owner = @user
+    end
 
     context "all gamedays view" do
       it "should show switch to single gameday view" do
@@ -37,23 +50,5 @@ RSpec.describe 'events/schedule', type: :view do
         expect(rendered).to have_content(t('events.schedule.show_single'))
       end
     end
-  end
-
-  describe "Tournament" do
-    before(:each) do
-      @event = assign(:event, FactoryBot.create(:tournament))
-      @event.editors << @user
-      @event.owner = @user
-    end
-    include_examples "an event"
-  end
-
-  describe "League" do
-    before(:each) do
-      @event = assign(:event, FactoryBot.create(:rankinglist))
-      @event.editors << @user
-      @event.owner = @user
-    end
-    include_examples "an event"
   end
 end
