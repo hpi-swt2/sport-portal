@@ -45,7 +45,7 @@
     <h4><%= t('teams.index.my_teams')%></h4>
     <div class="tile-wrapper">
       <% current_user.teams.each do |team| %>
-          <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/Yq7UMRhNXlqD5o5/download', description: team.description,
+          <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/MF5ElupOS6N4eKC/download', description: team.description,
           destination_path: team_path(team)} %>
       <% end %>
     </div>
@@ -54,7 +54,7 @@
 <h4><%= t('teams.index.all_teams')%></h4>
 <div class="tile-wrapper">
   <% @teams.each do |team| %>
-      <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/KIVku7kimBG3Sr4/download', description: team.description, destination_path: team_path(team)} %>
+      <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/ZFilkMbpK7koelg/download', description: team.description, destination_path: team_path(team)} %>
   <% end %>
 </div>
 
