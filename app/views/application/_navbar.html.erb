@@ -32,7 +32,6 @@
               <% end %>
               <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path, class: 'text-center' %>
               <%= menu_item Event.model_name.human(:count => :many).titleize, events_path, class: 'text-center' %>
-              <%= menu_item t('events.create_event'), new_event_path, class: 'text-center' %>
             </div>
         <% end %>
     <% else %>
@@ -42,7 +41,6 @@
             <% end %>
             <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path %>
             <%= menu_item Event.model_name.human(:count => :many).titleize, events_path %>
-            <%= menu_item t('events.create_event'), new_event_path %>
             <% if user_signed_in? %>
                 <%= drop_down (image_tag current_user.avatar_url || 'https://owncloud.hpi.de/index.php/s/57REqYtqsah3A7o/download', class: 'avatar') + " #{current_user.first_name}" do %>
                     <!--Fill in more drop down menu items-->

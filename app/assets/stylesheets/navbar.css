@@ -3,11 +3,7 @@
         display: block;
     }
 
-    .navbar {
-        background-color: transparent;
-    }
-
-    .navbar-fixed-top{
+    .navbar.not-transparent {
         background-color: #0f3157 !important;
     }
 
@@ -21,13 +17,17 @@
         display: none;
     }
 
-    .navbar.navbar-fixed-top {
+    .navbar {
+        height: 64px !important;
+        background-color: #0f3157 !important;
+    }
+
+    .navbar.not-transparent {
         background-color: #0f3157 !important;
     }
 
     img.logo-img{
         height: 38px;
-        margin-top: -2px !important;
     }
 
     li {
@@ -45,7 +45,12 @@
     .navbar-collapse {
         background-color: #0f3157 !important;
         padding-top: 5px;
+        margin-top: 6px;
         max-height: 600px !important;
+    }
+
+    .navbar-collapse.collapsing {
+        margin-top: 3px;
     }
 
     .navbar-nav > li {
@@ -57,6 +62,7 @@
     }
 
     .navbar-toggle{
+        margin-top: 12px !important;
         border-color: transparent !important;
         background-color: transparent !important;
     }
@@ -65,13 +71,17 @@
         background-image: url('https://owncloud.hpi.de/index.php/s/bWdfeewNyoUK9Kt/download');
         background-size: cover;
         background-repeat: no-repeat;
-        margin-top: 1.8vh;
+        margin-top: 18px !important;
         margin-right: 3vh;
     }
 
     .navbar-toggle.expanded .icon-bar {
         display: none;
     }
+}
+
+.navbar{
+    margin-bottom: 0px !important;
 }
 
 .mobile-avatar {
@@ -81,6 +91,7 @@
 
 .navbar-nav a{
     background-color: transparent !important;
+    font-size: large;
 }
 
 .navbar-nav a:hover{

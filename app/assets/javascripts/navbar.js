@@ -32,10 +32,12 @@ setupPage = function() {
 }
 
 changeNavbarTransparency = function() {
-    if($('body').hasClass('background')){
-        $('.navbar-fixed-top').addClass('transparent');
+    if($('body > div').hasClass('background')){
+        $('.navbar').addClass('transparent');
+        $('.navbar').removeClass('not-transparent');
     } else {
-        $('.navbar-fixed-top').removeClass('transparent');
+        $('.navbar').removeClass('transparent');
+        $('.navbar').addClass('not-transparent');
     }
 }
 
