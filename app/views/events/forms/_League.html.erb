@@ -2,7 +2,7 @@
 <%= render 'events/forms/parts/player_type', form: form %>
 <%= render 'events/forms/parts/selection_type', form: form %>
 
-<div class="form-group" id="event_game_modes">
+<div class="form-group" id="event_game_modes_div">
   <%= form.label :game_mode, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= form.select(:game_mode, League.game_modes.map { |k, _| [League.human_game_mode(k), k] },
@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div class="form-group">
+<div class="form-group" id="event_gameday_duration_div">
   <%= form.label :gameday_duration, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= form.number_field :gameday_duration, class: 'form-control' %>

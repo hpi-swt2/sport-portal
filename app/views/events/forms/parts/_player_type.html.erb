@@ -1,4 +1,4 @@
-<div class="form-group" id="event_player_types">
+<div class="form-group" id="event_player_types_div">
   <%= form.label :player_type, for: :event_player_type, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= form.select(:player_type, Event.player_types.map { |k, _| [Event.human_player_type(k), k] },
