@@ -1,5 +1,10 @@
-<div class="tile">
-  <img class="tile-img" src="<%= image_url %>" />
-  <span class="tile-title"> <%= title %></span>
-  <span> <% description %></span>
-</div>
+
+  <div onclick="location.href='<%= destination_path%>';" class="tile">
+    <div class="tile-img-wrapper">
+      <img class="tile-img" src="<%= image_url %>"/>
+    </div>
+    <span class="tile-title"> <%= title %></span>
+    <span> <% description %></span>
+  </div>
+
+
