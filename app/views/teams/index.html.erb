@@ -41,9 +41,11 @@
   </tbody>
 </table>
 
-<% @teams.each do |team| %>
-    <% render partial: 'application/tile_template', title: team.name, image_url: 'https://owncloud.hpi.de/index.php/s/45SBYQMw1jnN9UM/download', description: 'Test' %>
-<% end %>
+<div class="tile-wrapper">
+  <% @teams.each do |team| %>
+      <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_data || 'https://owncloud.hpi.de/index.php/s/Yq7UMRhNXlqD5o5/download', description: team.description} %>
+  <% end %>
+</div>
 
 <% if can? :create, Team %>
   <%= link_to t('.new', :default => t("helpers.links.new")),

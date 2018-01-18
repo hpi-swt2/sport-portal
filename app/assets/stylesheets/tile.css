@@ -1,0 +1,30 @@
+@media screen and (min-width : 800px) {
+    .tile-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width : 799px) and (min-width: 400px){
+    .tile-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr
+    }
+}
+
+.tile {
+    width: 100%;
+    padding: 16px;
+    display: inline;
+}
+
+.tile-img {
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+
+.tile-title {
+    margin-left: 5px;
+    font-size: 150%;
+    font-weight: bold;
+}
