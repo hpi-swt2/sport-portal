@@ -1,8 +1,7 @@
 $( document ).on('turbolinks:load', function() {
-    // Autofill for the dates of an event
-    $('#event_deadline').datepicker({ autoclose: true});
-    $('#event_startdate').datepicker({ autoclose: true});
-    $('#event_enddate').datepicker({ autoclose: true});
+    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
 
     $("#event_duration").val("");
   
