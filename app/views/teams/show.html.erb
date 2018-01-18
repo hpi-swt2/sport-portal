@@ -36,7 +36,7 @@
     </div>
     <div class="row">
       <div class="col s12 center">
-        <% if user_signed_in? %>
+        <% if user_signed_in? && (@team.members.include? current_user) %>
             <% if can? :delete_membership, @team, current_user.id %>
                 <%= link_to t('.delete_membership', :default => t("helpers.links.leave_team")),
                             delete_membership_team_path(@team, :team_member => current_user.id),
