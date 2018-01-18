@@ -3,10 +3,10 @@ Given /^a league with gamemode (.*)$/ do |mode|
 end
 
 Given(/^a league (.*) with (\d+) teams$/) do |leagueName, numTeams|
-  create_league_named leagueName, {max_teams: numTeams,
+  create_league_named leagueName,  max_teams: numTeams,
                                    deadline: Date.parse('23.12.2017'),
                                    startdate: Date.parse('24.12.2017'),
-                                   gameday_duration: 7}
+                                   gameday_duration: 7
   league = league_named leagueName
   for each in 1..numTeams do
     league.teams << create_team
@@ -30,4 +30,9 @@ end
 Then (/^there should be gameday dates$/) do
   expect(page).to have_content('24.12. bis 30.12.')
   expect(page).to have_content('31.12. bis 06.01.')
+end
+
+
+Given(/^a league without max teams$/) do
+  create_league(max_teams: nil)
 end
