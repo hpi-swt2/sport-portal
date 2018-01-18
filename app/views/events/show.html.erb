@@ -3,10 +3,8 @@
   <h1>
     <%=t '.title', default: @event.model_name.human.titleize %>
   </h1>
-  <% if user_signed_in? %>
     <span class="pull-right">
-      <% if current_user.organizing_events.include?(@event) %>
-        <% if can? :edit, @event %>
+      <% if can? :edit, @event %>
           <%= link_to t('.edit', default: t('helpers.links.edit')),
                       edit_event_path(@event), class: 'btn btn-default' %>
         <% end %>
@@ -17,9 +15,7 @@
                       data: {confirm: t('.confirm', default: t('helpers.links.confirm'))},
                       class: 'btn btn-danger' %>
         <% end %>
-      <% end %>
     </span>
-  <% end %>
 </div>
 
 <% if @event.is_a? Tournament and @event.finale.present? and @event.finale.has_winner? %>
@@ -38,10 +34,15 @@
         <td><%= t 'events.placing.second' %></td>
         <td><%= link_to_participant @event.finale.loser %></td>
       </tr>
+      <% if @event.place_3_match.present? and @event.place_3_match.has_winner? %>
+        <tr>
+          <td><%= t 'events.placing.third' %></td>
+          <td><%= link_to_participant @event.place_3_match.winner %></td>
+        </tr>
+      <% end %>
     </table>
   </div>
 <% end %>
-
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
@@ -57,7 +58,13 @@
   <dd><%= @event.human_game_mode %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
-  <dd><%= @event.max_teams %></dd>
+  <dd>
+    <% if @event.max_teams.present? %>
+      <%= @event.max_teams %>
+    <% else %>
+      <%= t 'events.max_teams.infinite' %>
+    <% end %>
+  </dd>
 
   <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
   <dd><%= @event.human_player_type %></dd>
@@ -70,6 +77,10 @@
 
   <dt><strong><%= model_class.human_attribute_name(:enddate) %>:</strong></dt>
   <dd><%= @event.enddate %></dd>
+  <% unless @event.gameday_duration.nil? %>
+    <dt><strong><%= model_class.human_attribute_name(:gameday_duration) %>:</strong></dt>
+    <dd><%= @event.gameday_duration %></dd>
+  <% end %>
 </dl>
 
 <div class="table-responsive">
@@ -106,6 +117,10 @@
             event_overview_path(@event),
             class: 'btn btn-default' %>
 
+<%= link_to t('.to_ranking'),
+            event_ranking_path(@event),
+            class: 'btn btn-default' %>
+
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
 <% if can? :leave, @event %>
@@ -133,9 +148,8 @@
   <% end %>
 <% end %>
 
-<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    </div>
-  </div>
-</div>
+<% if not @event.can_join_fcfs? %>
+  <%= t('events.full') %>
+<% end %>
+
+<div id="modal-window" class="modal modal-fixed-footer fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>

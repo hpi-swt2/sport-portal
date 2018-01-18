@@ -1,6 +1,7 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
-  load_and_authorize_resource only: [:dashboard]
+  helper_method :error_detector
+  load_and_authorize_resource :user, only: [:index, :show, :edit, :destroy, :confirm_destroy, :dashboard]
   load_resource only: [:link, :unlink]
 
   attr_reader :user
@@ -9,6 +10,7 @@ class UsersController < Devise::RegistrationsController
   # View: app/views/devise/registrations/index.html.erb
   def index
     @users = User.all
+    authorize! :index, User
   end
 
   # GET /users/1
@@ -25,7 +27,6 @@ class UsersController < Devise::RegistrationsController
   def update
     @user = User.find(params[:id])
     authorize! :update, @user
-
     unless current_user.admin?
       super
     else
@@ -37,13 +38,17 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
-  def destroy
-    @user = User.find(params[:id])
-    authorize! :destroy, @user
+  def confirm_destroy
+    if @user.destroy_with_password(params[:password])
+      set_flash_message! :notice, :destroyed
+      redirect_to root_path
+    else
+      render :destroy
+    end
+  end
 
-    @user.destroy
-    set_flash_message! :notice, :destroyed
-    redirect_to root_path
+  def destroy
+    render :destroy
   end
 
   # GET /users/1/link
@@ -68,34 +73,37 @@ class UsersController < Devise::RegistrationsController
     @user = User.find(params[:id])
   end
 
-  def edit_profile
-    @user = User.find(params[:id])
-    authorize! :edit_profile, @user
-  end
-
-  def update_profile
-    @user = User.find(params[:id])
-    authorize! :edit_profile, @user
-    if @user.update(profile_update_params)
-      redirect_to @user, notice: I18n.t('helpers.flash.updated', resource_name: User.model_name.human).capitalize
-    else
-      render :edit_profile
-    end
-  end
-
   # All other controller methods are handled by original `Devise::RegistrationsController`
   # Views are located in `app/views/devise`
 
+  protected
+
+    # Override method of `Devise::RegistrationsController` to update without password
+    def  update_resource(resource, params)
+      if self.class.unimportant_changes?(resource, params) || resource.has_omniauth?
+        resource.update_without_password(params)
+      else
+        super(resource, params)
+      end
+    end
+
   private
+
+    def self.unimportant_changes?(resource, params)
+      (params[:current_password].blank? &&
+          params[:password].blank? &&
+          params[:password_confirmation].blank? &&
+          (params[:email].blank? || params[:email] == resource[:email]))
+    end
 
     # Overridden methods of `Devise::RegistrationsController` to permit additional model params
     def sign_up_params
       generate_random_password if get_omniauth_data
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, event_ids: [])
     end
 
     def account_update_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, event_ids: [])
     end
 
     def admin_update_params
@@ -104,7 +112,7 @@ class UsersController < Devise::RegistrationsController
         user_params.delete(:password)
         user_params.delete(:password_confirmation)
       end
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:first_name, :last_name, :birthday, :email, :password, :password_confirmation)
     end
 
     def generate_random_password
@@ -121,13 +129,15 @@ class UsersController < Devise::RegistrationsController
       end
     end
 
-    def profile_update_params
-      params.require(:user).permit(:avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports)
-    end
-
     def unlink_omniauth
       user.reset_omniauth
       user.save!
       redirect_to user_path(user), notice: I18n.t('devise.registrations.unlink_success')
     end
+
+    private
+
+      def error_detector(attribute)
+        if resource.errors.include?(attribute) then "input-field-error input-field" else "input-field" end
+      end
 end

@@ -45,15 +45,33 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
     end
 
+    it "does render the edit button when the user is an admin" do
+      sign_in @admin
+      render
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.edit'))
+    end
+
+    it "does render the delete button when the user is an admin" do
+      sign_in @admin
+      render
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
+    end
+
     it "doesn't render the delete button when the event doesn´t belong to the user" do
       sign_in @other_user
       render
       expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
     end
+
+    it 'has a ranking button' do
+      render
+      expect(rendered).to have_content(t('events.show.to_ranking'))
+    end
   end
   before(:each) do
     @user = FactoryBot.create :user
     @other_user = FactoryBot.create :user
+    @admin = FactoryBot.create :admin
   end
 
   describe "League" do
@@ -65,6 +83,12 @@ RSpec.describe "events/show", type: :view do
     it "has a schedule button" do
       render
       expect(rendered).to have_content(t('events.show.to_schedule'))
+    end
+
+    it "renders the gameday duration" do
+      render
+      expect(rendered).to have_content Event.human_attribute_name :gameday_duration
+      expect(rendered).to have_content @event.gameday_duration
     end
     include_examples "an event"
   end
@@ -79,7 +103,7 @@ RSpec.describe "events/show", type: :view do
     include_examples "an event"
   end
 
-  describe "League" do
+  describe "Rankinglist" do
     before(:each) do
       @event = assign(:event, FactoryBot.create(:rankinglist))
       @event.editors << @user

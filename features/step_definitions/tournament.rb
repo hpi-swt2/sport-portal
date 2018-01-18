@@ -1,8 +1,13 @@
-Given(/^a tournament (.*) with (\d+) teams$/) do |tournamentName, numTeams|
-  create_tournament_named tournamentName, max_teams: numTeams
+Given(/^a tournament (.*) with (\d+) (teams|users)$/) do |tournamentName, numTeams, teams_or_users|
+  create_tournament_named tournamentName, max_teams: numTeams, player_type: (teams_or_users != 'teams' ? :team : :single)
   tournament = tournament_named tournamentName
   for each in 1..numTeams do
-    tournament.teams << create_team
+    if teams_or_users == 'teams'
+      tournament.add_team create_team
+    else
+      tournament.add_participant create_user
+    end
+
   end
   tournament.generate_schedule
 end
