@@ -1,6 +1,9 @@
 <%= form_for @event, html: { class: 'form-horizontal event' } do |f| %>
   <%= render partial: 'application/validation_errors', locals: {model: @event} %>
 
+  <div class="form-group" id="event_title_basic_information">
+    <h3 class="form-group__title"><%= t('activerecord.attributes.event.basic_information') %></h3>
+  </div>
   <div class="form-group" id="event_name_div">
     <%= f.label :name, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">

@@ -3,7 +3,46 @@
   They will automatically be included in application.css.
 */
 
-#league-game-mode,
-#tournament-game-mode {
-    display:none;
+form.event {
+    display:flex;
+    flex-direction:column;
+}
+
+
+/* FORM FIELDS ORDER */
+/* BASIC INFORMATION */
+
+#event_title_basic_information,
+#event_name_div,
+#event_description_div,
+#event_discipline_div,
+#event_game_modes_div {
+    order:1;
+}
+
+/* PARTICIPANTS */
+
+#event_title_participants,
+#event_player_types_div {
+    order:2;
+}
+
+#event_max_teams_div,
+#event_selection_type_div {
+    order:3;
+}
+
+/* DATES */
+
+#event_title_dates,
+#event_gameday_duration_div {
+    order:4;
+}
+
+#event_deadline_div,
+#event_startdate_div,
+#event_enddate_div,
+#event_duration_div,
+#event_submit_div {
+    order:5;
 }
