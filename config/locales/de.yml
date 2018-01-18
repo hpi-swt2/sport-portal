@@ -302,6 +302,9 @@ de:
     loser_of_match: "Verlierer %{match}"
 
   teams:
+    index:
+      my_teams: "Meine Teams"
+      all_teams: "Alle Teams"
     show:
       invite_user_to_team: "+"
       number: "#"
