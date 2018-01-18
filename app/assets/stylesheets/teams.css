@@ -33,7 +33,6 @@ h1 {
 
 .genericButton {
     border-radius: 100px;
-    font-size: 24px;
     color: #FFFFFF;
     letter-spacing: 0;
     height: auto;
@@ -42,7 +41,13 @@ h1 {
 
 #membershipButton {
     border: 1px solid #FFFFFF;
+    font-size: 24px;
     background: transparent;
+}
+
+.actionButton {
+    background: #1CA9E5;
+    padding: 5px 50px;
 }
 
 #kindOfSports {

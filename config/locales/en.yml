@@ -116,7 +116,7 @@ en:
 
   teams:
       show:
-        invite_user_to_team: "+"
+        invite_user_to_team: "Invite player"
         number: "#"
       invite_user_to_team:
         title: "Invite new player"

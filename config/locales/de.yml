@@ -334,7 +334,7 @@ de:
 
   teams:
     show:
-      invite_user_to_team: "+"
+      invite_user_to_team: "Spieler einladen"
       number: "#"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
