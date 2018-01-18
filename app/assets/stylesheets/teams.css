@@ -4,7 +4,7 @@
 */
 
 /* Overwrite container from application.html.erb for background image only*/
-body>.background-layer>.container {
+body > .background-layer > .container {
     width: 100%;
     max-width: 100% !important;
     padding: 0 0;
@@ -54,6 +54,21 @@ h1 {
     background-color: #F3F9FF;
     padding: 20px 0;
     font-weight: 500;
+}
+
+.participant {
+    background-color: #F3F9FF;
+    border: 10px solid #FFFFFF;
+    border-radius: 5px;
+    height: 80px;
+}
+
+.participant img {
+    height: 35px;
+}
+
+[type="checkbox"].filled-in + label:after {
+    border-radius: 25px;
 }
 
 /* Smartphones */

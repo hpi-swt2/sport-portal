@@ -59,14 +59,44 @@
     <div class="row">
       <div class="col s12">
         <% if can? :assign_membership_by_email, @team %>
-            <%= link_to t('teams.show.invite_user_to_team'),
-                        '#',
-                        data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
-                        class: 'btn btn-primary genericButton actionButton' %>
+          <%= link_to t('teams.show.invite_user_to_team'),
+                      '#',
+                      data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
+                      class: 'btn btn-primary genericButton actionButton' %>
 
-            <%= render :partial => 'invite_user_by_email_modal' %>
+          <%= render :partial => 'invite_user_by_email_modal' %>
         <% end %>
       </div>
     </div>
+    <% @team.members.each_with_index do | member, iMember | %>
+      <% if (iMember % 2) == 0 %>
+        <div class="row">
+      <% end %>
+      <div class="col s12 m6 participant">
+        <div class="row valign-wrapper" style="height: 100%;">
+          <div class="col s2">
+            <% if @team.members.include? current_user %>
+                <%= check_box_tag "members[]", member.id, class: 'filled-in' %>
+            <% end %>
+          </div>
+          <div class="col s2">
+            <%= (image_tag member.avatar_url || 'https://owncloud.hpi.de/index.php/s/rd14acG6qOlAHHJ/download') %>
+          </div>
+          <div class="col s6 truncate">
+            <%= member.first_name %> <%= member.last_name %>
+          </div>
+          <div class="col s2">
+            <% if can? :send_emails_to_team_members, @team %>
+                <%= mail_to member.email do %>
+                    <img src="https://owncloud.hpi.de/index.php/s/OEnLDLBOBktpqzT/download">
+                <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <% if (iMember % 2) == 1 %>
+        </div>
+      <% end %>
+    <% end %>
   </section>
 </div>
