@@ -40,14 +40,21 @@ h1 {
 }
 
 #membershipButton {
-    border: 1px solid #FFFFFF;
     font-size: 24px;
+    border: 1px solid #FFFFFF;
     background: transparent;
 }
 
-.actionButton {
+.blueActionButton {
     background: #1CA9E5;
     padding: 5px 50px;
+}
+
+.whiteActionButton {
+    padding: 10px 25px;
+    border: 1px solid darkgrey;
+    color: black;
+    background-color: transparent;
 }
 
 #kindOfSports {
@@ -65,10 +72,6 @@ h1 {
 
 .participant img {
     height: 35px;
-}
-
-[type="checkbox"].filled-in + label:after {
-    border-radius: 25px;
 }
 
 /* Smartphones */
