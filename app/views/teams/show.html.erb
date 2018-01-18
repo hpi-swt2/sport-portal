@@ -2,25 +2,19 @@
 <%= stylesheet_link_tag 'teams' %>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('#check_all').on("click", function() {
-            var cbxs = $('input[type="checkbox"]');
-            cbxs.prop("checked", true);
+    function checkAll(check) {
+        var cbxs = $('input[type="checkbox"]');
+        cbxs.prop("checked", check);
+    }
+    function sendMailToMultipleMembers() {
+        var email_adresses = [];
+        $('table tr').filter(':has(:checkbox:checked)').each(function() {
+            email_adresses.push($(this).find('a[href^="mailto:"]')[0].pathname);
         });
-        $('#uncheck_all').on("click", function() {
-            var cbxs = $('input[type="checkbox"]');
-            cbxs.prop("checked", false);
-        });
-        $('#send_email_to_multiple_members').on("click", function() {
-            var email_adresses = [];
-            $('table tr').filter(':has(:checkbox:checked)').each(function() {
-                email_adresses.push($(this).find('a[href^="mailto:"]')[0].pathname);
-            });
-            if (email_adresses.length > 0) {
-                window.location.href = 'mailto:' + email_adresses.join();
-            }
-        });
-    });
+        if (email_adresses.length > 0) {
+            window.location.href = 'mailto:' + email_adresses.join();
+        }
+    }
 </script>
 
 <div id="teamProfile">
@@ -122,10 +116,10 @@
     <% end %>
     <div class="row">
       <div class="col s12">
-        <button type="button" id="check_all" class="genericButton whiteActionButton">
+        <button type="button" onclick="checkAll(true);" class="genericButton whiteActionButton">
           <%=t('.select_all', :default => t("helpers.teams.multiple_actions.select_all"))%>
         </button>
-        <button type="button" id="uncheck_all" style="margin-left: 10px;" class="genericButton whiteActionButton">
+        <button type="button" onclick="checkAll(false);" style="margin-left: 10px;" class="genericButton whiteActionButton">
           <%=t('.deselect_all', :default => t("helpers.teams.multiple_actions.deselect_all"))%>
         </button>
       </div>
