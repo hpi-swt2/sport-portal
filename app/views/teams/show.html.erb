@@ -36,3 +36,18 @@
   </div>
 </div>
 <div style="clear: both" />
+
+<div class="container">
+  <section id="kindOfSportsSection">
+    <div class="row">
+      <div class="col s12 center">
+        <h2><%=t '.kind_of_sport', :default => t("helpers.teams.kind_of_sport") %></h2>
+      </div>
+    </div>
+    <div class="row">
+      <div id="kindOfSports" class="col s12 center">
+        <%= @team.kind_of_sport %>
+      </div>
+    </div>
+  </section>
+</div>

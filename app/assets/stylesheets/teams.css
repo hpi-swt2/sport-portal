@@ -16,17 +16,18 @@ body>.background-layer>.container {
     width: 100%;
     background-image: url(https://owncloud.hpi.de/index.php/s/fERWNGqZbm6ud1p/download);
     min-height: calc(875 / 1200 * 100vw);
-    padding-bottom: calc(195 / 875 * 100%);
-    margin-bottom: calc(-195 / 875 * 100%);
 }
 
 #teamProfileImage {
     width: 200px;
 }
 
-h1 {
+h1, h2 {
     color: #1CA9E5;
     font-weight: 500;
+}
+
+h1 {
     margin-top: 0;
 }
 
@@ -42,6 +43,12 @@ h1 {
 #membershipButton {
     border: 1px solid #FFFFFF;
     background: transparent;
+}
+
+#kindOfSports {
+    background-color: #F3F9FF;
+    padding: 20px 0;
+    font-weight: 500;
 }
 
 /* Smartphones */
