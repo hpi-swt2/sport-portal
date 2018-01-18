@@ -207,6 +207,9 @@ de:
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
+    index:
+      my_events: "Meine Events"
+      all_events: "Alle Events"
     create_event: "Event erstellen"
     choose_event_format: "Eventart wählen"
     new_league: "Neue Liga"
