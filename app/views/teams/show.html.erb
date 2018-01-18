@@ -135,4 +135,25 @@
       <% end %>
     </div>
   </section>
+  <div class="row">
+    <div class="col s10 offset-s1">
+      <div class="divider"></div>
+    </div>
+  </div>
+  <section>
+    <div class="row">
+      <% if can? :edit, @team %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_team_path(@team), :class => 'genericButton grey darken-1' %>
+      <% end %>
+      <% if can? :destroy, @team %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      team_path(@team),
+                      :method => 'delete',
+                      :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
+                      :class => 'btn-danger genericButton red',
+                      :style => 'margin-left: 20px;' %>
+      <% end %>
+    </div>
+  </section>
 </div>

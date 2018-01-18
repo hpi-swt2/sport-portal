@@ -74,6 +74,11 @@ h1 {
     height: 35px;
 }
 
+.divider {
+    height: 2px;
+    margin: 30px 0;
+}
+
 /* Smartphones */
 @media only screen and (max-width: 600px) {
 
