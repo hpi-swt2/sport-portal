@@ -30,7 +30,7 @@ describe 'new event page', type: :feature do
     it 'should be possible to create a date conditions' do
       visit new_path
       fill_in Event.human_attribute_name(:name), with: 'name'
-      fill_in Event.human_attribute_name(:discipline), with: 'soccer'
+      find('#event_discipline').find(:xpath, 'option[2]').select_option
       select League.human_game_mode(:round_robin), from: Event.human_attribute_name(:game_mode)
       select Event.human_player_type(:single), from: Event.human_attribute_name(:player_type)
       fill_in Event.human_attribute_name(:max_teams), with: '5'
@@ -86,7 +86,7 @@ describe 'new event page', type: :feature do
       rankinglist = FactoryBot.build :rankinglist
 
       fill_in Event.human_attribute_name(:name), with: rankinglist.name
-      fill_in Event.human_attribute_name(:discipline), with: rankinglist.discipline
+      find('#event_discipline').find(:xpath, 'option[2]').select_option
       select Rankinglist.human_game_mode(:true_skill), from: Event.human_attribute_name(:game_mode)
       fill_in Event.human_attribute_name(:max_teams), with: rankinglist.max_teams
       fill_in Event.human_attribute_name(:initial_value), with: rankinglist.initial_value
@@ -122,7 +122,7 @@ describe 'new event page', type: :feature do
       visit new_path
 
       fill_in Event.human_attribute_name(:name), with: 'name'
-      fill_in Event.human_attribute_name(:discipline), with: 'soccer'
+      find('#event_discipline').find(:xpath, 'option[2]').select_option
       select Tournament.human_game_mode(:ko), from: Event.human_attribute_name(:game_mode)
       select Event.human_player_type(:single), from: Event.human_attribute_name(:player_type)
       fill_in Event.human_attribute_name(:max_teams), with: '5'
