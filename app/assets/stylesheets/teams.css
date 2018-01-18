@@ -50,11 +50,11 @@ h1 {
     padding: 5px 50px;
 }
 
-.whiteActionButton {
+.whiteActionButton, .whiteActionButton:focus {
     padding: 10px 25px;
     border: 1px solid darkgrey;
-    color: black;
     background-color: transparent;
+    color: black;
 }
 
 #kindOfSports {

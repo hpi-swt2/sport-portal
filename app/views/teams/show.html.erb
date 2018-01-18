@@ -98,7 +98,7 @@
           <div class="col s2">
             <%= (image_tag member.avatar_url || 'https://owncloud.hpi.de/index.php/s/rd14acG6qOlAHHJ/download') %>
           </div>
-          <div class="col s6 truncate">
+          <div class="col s6 truncate" style="font-size: 120%;">
             <%= member.first_name %> <%= member.last_name %>
           </div>
           <div class="col s2">
@@ -125,9 +125,14 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s12">
+      <div class="col s12" style="font-size: 80%;">
         <%= t('.apply_action', :default => t("helpers.teams.multiple_actions.apply_action")) %>
       </div>
+    </div>
+    <div class="row">
+      <% if @team.members.include? current_user %>
+          <!-- logic not ready yet to put real buttons here -->
+      <% end %>
     </div>
   </section>
 </div>
