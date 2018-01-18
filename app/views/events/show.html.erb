@@ -134,13 +134,8 @@
   <% end %>
 <% end %>
 
-<% if !@event.can_join_fcfs? %>
+<% if not @event.can_join_fcfs? %>
   <%= t('events.full') %>
 <% end %>
 
-<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    </div>
-  </div>
-</div>
+<div id="modal-window" class="modal modal-fixed-footer fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
