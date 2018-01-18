@@ -185,6 +185,8 @@ de:
       must_be_after: "darf nicht vor %{other} sein."
 
   view:
+    event:
+      new: "Neues Event erstellen"
     user:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
