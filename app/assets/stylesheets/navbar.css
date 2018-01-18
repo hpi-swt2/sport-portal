@@ -3,8 +3,16 @@
         display: block;
     }
 
-    .navbar.not-transparent {
+    /*.navbar.not-transparent {*/
+        /*background-color: #0f3157 !important;*/
+    /*}*/
+
+    .navbar {
         background-color: #0f3157 !important;
+    }
+
+    .transparent{
+        background-color: transparent !important;
     }
 
     .navbar-collapse {
@@ -19,10 +27,6 @@
 
     .navbar {
         height: 64px !important;
-        background-color: #0f3157 !important;
-    }
-
-    .navbar.not-transparent {
         background-color: #0f3157 !important;
     }
 
@@ -84,6 +88,11 @@
     margin-bottom: 0px !important;
 }
 
+.navbar-default{
+    border: none !important;
+    border-radius: 0px !important;
+}
+
 .mobile-avatar {
     height: 48px;
     width: 48px;
@@ -96,10 +105,6 @@
 
 .navbar-nav a:hover{
     color: #1ba9e5 !important;
-}
-
-.transparent{
-    background-color: transparent !important;
 }
 
 img.logo-img{
