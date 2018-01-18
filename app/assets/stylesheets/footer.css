@@ -11,6 +11,6 @@ footer > .secondary-links, footer > .secondary-links > a {
     color: #B2B2B2;
 }
 
-footer > p {
+footer > p.secondary-links > a {
     font-size: 1rem;
 }
