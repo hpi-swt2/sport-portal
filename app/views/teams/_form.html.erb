@@ -1,10 +1,11 @@
 <%- model_class = Team -%>
+<%= stylesheet_link_tag 'teams' %>
 <%= form_for @team, :html => { :class => "form-horizontal team" } do |f| %>
 
   <%= render partial: "application/validation_errors", locals: {model: @team} %>
 
   <div class="form-group">
-    <%= f.label t("helpers.name"), :class => 'control-label col-lg-2' %>
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :name, :class => 'form-control' %>
       <%= f.error_span(:name) %>
@@ -12,7 +13,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label t("helpers.teams.kind_of_sport"), :class => 'control-label col-lg-2' %>
+    <%= f.label :kind_of_sport, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :kind_of_sport, :class => 'form-control' %>
       <%= f.error_span(:kind_of_sport) %>
@@ -20,7 +21,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label t("helpers.teams.description"), :class => 'control-label col-lg-2' %>
+    <%= f.label :description, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_area :description, :class => 'form-control' %>
       <%= f.error_span(:description) %>
@@ -28,11 +29,32 @@
   </div>
 
   <div class="form-group">
+          <%= f.label :avatar, t('activerecord.models.image.one'), class: 'control-label col-lg-2'%>
+          <div class="col-lg-10">
+            <%= image_tag @team.avatar_url || image_path('missing_avatar.png'), id: "preview", style: "max-width:100px; max-height:100px"%>
+            <%= f.file_field :avatar, class: "form-control-file" %>
+            <% if @team.avatar %>
+              <%= f.check_box :remove_avatar %>
+              <label for="team_remove_avatar">
+                &nbsp;<%= t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %>
+              </label>
+            <% end %>
+    </div>
+    </div>
+
+  <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <label>
-        <%= f.check_box :private %>&nbsp;<%=t '.private', :default => t("helpers.teams.private") %>
+      <%= f.check_box :private %>
+      <label for="team_private">
+        &nbsp;<%=t '.private', :default => t("helpers.teams.private") %>
       </label>
       <%= f.error_span(:private) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <p><sup>*</sup><%=t '.mandatory', :default => t("helpers.fields.mandatory") %></p>
     </div>
   </div>
 

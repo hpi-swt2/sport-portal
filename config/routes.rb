@@ -5,10 +5,13 @@ Rails.application.routes.draw do
     member do
       put :join
       put :leave
+      get :team_join
     end
   end
+
   resources :leagues, controller: 'events', only: [:show, :new, :create, :update], type: League
   resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
+  resources :rankinglists, controller: 'events', only: [:show, :new, :create, :update], type: Rankinglist
 
   root 'welcome#index'
   resources :teams
@@ -19,8 +22,10 @@ Rails.application.routes.draw do
     end
   end
 
+  #get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
   get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
+  get '/events/:id/ranking', to: 'events#ranking', as: 'event_ranking'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {
@@ -35,13 +40,13 @@ Rails.application.routes.draw do
     resources :users, except: [:new, :create] do
       member do
         get 'dashboard'
+        get 'notifications'
         get 'link'
         get 'unlink'
+        post 'delete', to: 'users#confirm_destroy'
       end
     end
 
-    get '/users/:id/profile/edit', to: 'users#edit_profile', as: :user_profile_edit
-    match '/users/:id/profile', to: 'users#update_profile', as: :user_profile, via: [:patch, :put]
   end
 
   resources :teams do

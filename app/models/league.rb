@@ -20,16 +20,18 @@
 #
 
 class League < Event
-  enum game_modes: [:round_robin, :two_halfs, :swiss, :danish]
+  validates :deadline, :startdate, :enddate, :selection_type, presence: true
+  validates :gameday_duration, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000 }
+  validate :end_after_start, :start_after_deadline
 
-  def add_test_teams
-    max_teams.times do |index|
-      teams << Team.new(name: "Team #{index}", private: false)
-    end
-  end
+  enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def generate_schedule
-    calculate_round_robin
+    if game_mode == League.game_modes.key(0)
+      calculate_round_robin
+    elsif game_mode == League.game_modes.key(1)
+      calculate_two_halfs
+    end
   end
 
   def calculate_round_robin
@@ -38,7 +40,24 @@ class League < Event
       day.each do |pairing|
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
-        matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1) unless pairing[0].nil? || pairing[1].nil?
+        matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1)
+      end
+    end
+    save
+  end
+
+  def calculate_two_halfs
+    pairings_per_day = round_robin_pairings teams.to_a
+    pairings_per_day += round_robin_pairings teams.to_a
+    pairings_per_day.each_with_index do |day, gameday|
+      day.each do |pairing|
+        # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
+        # the other team will have to wait for this day
+        if gameday < teams.size
+          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1)
+        else
+          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1)
+        end
       end
     end
     save
@@ -50,9 +69,20 @@ class League < Event
     n = teams_array.size
     pivot = teams_array.pop
 
-    (n - 1).times.map do
+    games = (n - 1).times.map do
       teams_array.rotate!
       [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
     end
+
+    # remove all matches that include a nil object
+    games.map { |game| game.select { |match| !match[1].nil? } }
+  end
+
+  def startdate_for_gameday(gameday)
+    ((gameday - 1) * gameday_duration).days.since startdate
+  end
+
+  def enddate_for_gameday(gameday)
+    startdate_for_gameday(gameday.next) - 1.day
   end
 end

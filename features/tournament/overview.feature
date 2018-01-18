@@ -15,3 +15,19 @@ Feature: Tournament Overview Page
     When the tournament overview page for t is visited
     Then there should be a table
     And the table should have 10 rows
+
+  Scenario: Tournament overview page should display the right standings
+    Given a tournament t with 6 teams
+
+    When the tournament overview page for t is visited
+    Then the standing of the home team of match Viertelfinale 1 is 'Im Viertelfinalspiel 1'
+    And the standing of the away team of match Viertelfinale 1 is 'Im Viertelfinalspiel 1'
+    And the standing of the home team of match Viertelfinale 2 is 'Im Viertelfinalspiel 2'
+
+    And the Spielplan page for t is visited
+    And the results for match Viertelfinale 1 (6 : 7) got inserted
+
+    When the tournament overview page for t is visited
+    Then the standing of the home team of match Viertelfinale 1 is 'Im Viertelfinalspiel 1 ausgeschieden'
+    And the standing of the away team of match Viertelfinale 1 is 'Im Halbfinalspiel 2'
+    And the standing of the home team of match Viertelfinale 2 is 'Im Viertelfinalspiel 2'

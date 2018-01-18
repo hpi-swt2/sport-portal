@@ -28,22 +28,72 @@ $secondary-color: #01A8E8 !default;
 /* Load custom font families */
 @font-face {
   font-family: 'Proxima Nova';
-  src: url('/assets/ProximaNova-Reg.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+  src: font_url('ProximaNova-Reg.otf') format('opentype');
 }
 
 @font-face {
-  font-family: 'Proxima Nova Bold';
-  src: url('/assets/ProximaNova-Bold.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'Proxima Nova';
+  src: font_url('ProximaNova-Bold.otf') format('opentype');
+  font-weight: 500;
 }
 
 /* Application wide style */
 * {
   font-family: "Proxima Nova";
 }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.background-layer {
+  /* important for footer which sticks to the bottom of the page */
+  flex: 1 0 auto;
+}
+
+/* make sure footer is displayed in front of white background on sign in / up page */
+@media screen and (min-width: 992px) {
+  .background-layer {
+    padding-bottom: 120px;
+  }
+
+  * {
+    font-size: 1.4rem;
+  }
+
+  h1 {
+    font-size: 4.5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .background-layer {
+    padding-bottom: 50px;
+  }
+
+  * {
+    font-size: 1.2rem;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+}
+
 .navbar-overlap {
   padding-top: 50px;
 }
+

@@ -60,7 +60,7 @@ gem 'shrine', '~> 2.8.0'
 
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
-# gem 'jquery-ui-rails'
+gem 'jquery-ui-rails'
 
 # Use Bootstrap Tooltips
 # https://github.com/brandonhilkert/bootstrap-tooltip-rails
@@ -170,7 +170,7 @@ end
 group :production do
   # Ruby interface to the PostgreSQL RDBMS
   # https://github.com/ged/ruby-pg
-  gem 'pg'
+  gem 'pg', '~> 0.21.0'
   # Exception tracking in production, report to Errbit
   # https://github.com/airbrake/airbrake
   # Errbit requires airbrake 5.0

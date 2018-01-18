@@ -68,4 +68,27 @@ RSpec.describe Team, type: :model do
     expect(team.in_event?).to be true
   end
 
+  it 'is valid with image as avatar' do
+    team = FactoryBot.build :team, :with_avatar
+    expect(team).to be_valid
+  end
+
+  it 'is not valid with any other file type than image' do
+    team = FactoryBot.build :team, :with_large_avatar
+    expect(team).not_to be_valid
+    expect(team.errors[:avatar]).to include(I18n.t('users.avatar.errors.mime_type_inclusion'))
+  end
+
+  it 'is not valid with an avatar of size >2mb' do
+    team = FactoryBot.build :user, :with_large_avatar
+    expect(team).not_to be_valid
+    expect(team.errors[:avatar]).to include(I18n.t('users.avatar.errors.max_size'))
+  end
+  it "by default return teams ordered by their date of creation" do
+    team = FactoryBot.create :team
+    another_team = FactoryBot.create :team
+    # update team name to be able to check that updated_at is not used to order teams
+    team.name = "New Name"
+    expect(Team.all).to eq([team, another_team])
+  end
 end
