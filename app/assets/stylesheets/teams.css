@@ -12,10 +12,10 @@ body > .background-layer > .container {
 
 #teamProfile {
     background-size: cover;
-    background-position: center;
+    background-position: bottom center;
     width: 100%;
     background-image: url(https://owncloud.hpi.de/index.php/s/fERWNGqZbm6ud1p/download);
-    min-height: calc(875 / 1200 * 100vw);
+    min-height: calc(50vh + 300px);
 }
 
 #teamProfileImage {
