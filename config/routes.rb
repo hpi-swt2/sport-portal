@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/users/:id/profile', to: 'users#show', as: 'user'
     get '/users/:id', to: redirect('/users/%{id}/profile')
+    put '/users/:id/profile', to: 'users#update'
+    delete '/users/:id/profile', to: 'users#destroy'
 
     resources :users, except: [:new, :create] do
       member do
