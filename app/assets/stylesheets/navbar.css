@@ -51,6 +51,8 @@
         padding-top: 5px;
         margin-top: 6px;
         max-height: 600px !important;
+        position: relative;
+        z-index: 10;
     }
 
     .navbar-collapse.collapsing {
