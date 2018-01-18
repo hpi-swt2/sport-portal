@@ -32,7 +32,7 @@ class Event < ApplicationRecord
   enum selection_type: [:fcfs, :fcfs_queue, :selection]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
 
-  validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000, allow_nil: true }
 
   enum player_type: [:single, :team]
 
