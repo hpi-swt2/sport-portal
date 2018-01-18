@@ -5,6 +5,7 @@ RSpec.describe 'events/edit', type: :view do
 
   before(:each) do
     @user = FactoryBot.create :user
+    @admin = FactoryBot.create :admin
     sign_in @user
   end
 

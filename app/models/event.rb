@@ -103,7 +103,7 @@ class Event < ApplicationRecord
   end
 
   def can_join_fcfs?
-    team_slot_available? && selection_type == 0
+    team_slot_available? && selection_type == 'fcfs'
   end
 
   def can_leave?(user)
