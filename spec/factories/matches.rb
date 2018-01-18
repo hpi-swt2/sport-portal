@@ -2,18 +2,20 @@
 #
 # Table name: matches
 #
-#  id           :integer          not null, primary key
-#  place        :string
-#  score_home   :integer
-#  score_away   :integer
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  team_home_id :integer
-#  team_away_id :integer
-#  event_id     :integer
-#  points_home  :integer
-#  points_away  :integer
-#  gameday      :integer
+#  id             :integer          not null, primary key
+#  place          :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  team_home_id   :integer
+#  team_away_id   :integer
+#  event_id       :integer
+#  points_home    :integer
+#  points_away    :integer
+#  gameday        :integer
+#  team_home_type :string           default("Team")
+#  team_away_type :string           default("Team")
+#  index          :integer
+#  start_time     :datetime
 #
 
 FactoryBot.define do

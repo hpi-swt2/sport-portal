@@ -17,6 +17,13 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
+#  matchtype        :integer
+#  bestof_length    :integer          default(1)
+#  game_winrule     :integer
+#  points_for_win   :integer          default(3)
+#  points_for_draw  :integer          default(1)
+#  points_for_lose  :integer          default(0)
 #
 
 FactoryBot.define do
