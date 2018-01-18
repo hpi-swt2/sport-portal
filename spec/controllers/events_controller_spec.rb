@@ -142,6 +142,14 @@ RSpec.describe EventsController, type: :controller do
       get :edit, params: { id: event.to_param }
       expect(response).to_not be_success
     end
+
+    it "should allow normal user to edit others created event" do
+      sign_out @user
+      sign_in @admin
+      event = Event.create! valid_event_attributes
+      get :edit, params: { id: event.to_param }
+      expect(response).to be_success
+    end
   end
 
   describe "POST #create" do
