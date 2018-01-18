@@ -7,20 +7,12 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(@event.name)
       expect(rendered).to have_content(@event.description)
-      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
       expect(rendered).to have_content(@event.discipline)
+      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
+      expect(rendered).to have_content(@event.max_teams)
       expect(rendered).to have_content(@event.deadline)
       expect(rendered).to have_content(@event.startdate)
       expect(rendered).to have_content(@event.enddate)
-    end
-
-    it "renders an edit button for organizers" do
-      render
-    end
-
-    it "renders styled buttons" do
-      render
-      expect(rendered).to have_content(t('events.show.to_overview'))
     end
 
     #not signed in user
@@ -67,9 +59,15 @@ RSpec.describe "events/show", type: :view do
       @event.editors << @user
       @event.owner = @user
     end
-    it "has a schedule button" do
+
+    it "renders a schedule button" do
       render
-      expect(rendered).to have_content(t('events.show.to_schedule'))
+      expect(rendered).to have_selector(:link_or_button, t('events.show.to_schedule'))
+    end
+
+    it "renders an overview button" do
+      render
+      expect(rendered).to have_selector(:link_or_button, t('events.show.to_overview'))
     end
 
     it "renders the gameday duration" do
@@ -77,6 +75,7 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_content Event.human_attribute_name :gameday_duration
       expect(rendered).to have_content @event.gameday_duration
     end
+
     include_examples "an event"
   end
 
@@ -87,6 +86,17 @@ RSpec.describe "events/show", type: :view do
       @event.editors << @user
       @event.owner = @user
     end
+
+    it "renders a schedule button" do
+      render
+      expect(rendered).to have_selector(:link_or_button, t('events.show.to_schedule'))
+    end
+
+    it "renders an overview button" do
+      render
+      expect(rendered).to have_selector(:link_or_button, t('events.show.to_overview'))
+    end
+
     include_examples "an event"
   end
 
@@ -96,6 +106,17 @@ RSpec.describe "events/show", type: :view do
       @event.editors << @user
       @event.owner = @user
     end
+
+    it "doesn't render a schedule button" do
+      render
+      expect(rendered).to_not have_selector(:link_or_button, t('events.show.to_schedule'))
+    end
+
+    it "doesn't render an overview button" do
+      render
+      expect(rendered).to_not have_selector(:link_or_button, t('events.show.to_overview'))
+    end
+
     include_examples "an event"
   end
 end
