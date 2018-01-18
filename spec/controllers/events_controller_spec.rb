@@ -143,7 +143,7 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to_not be_success
     end
 
-    it "should allow normal user to edit others created event" do
+    it "should allow admin to edit others created event" do
       sign_out @user
       sign_in @admin
       event = Event.create! valid_event_attributes
