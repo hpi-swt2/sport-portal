@@ -19,6 +19,7 @@
 #  owner_id         :integer
 #  initial_value    :float
 #
+#
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
@@ -30,11 +31,38 @@ class Event < ApplicationRecord
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
   enum selection_type: [:fcfs, :fcfs_queue, :selection]
-  validates :name, :discipline, :game_mode, :player_type,  presence: true
+  enum player_type: [:single, :team]
+  after_initialize :update_state
 
+  validates :name, :discipline, :game_mode, :player_type,  presence: true
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
-  enum player_type: [:single, :team]
+  include Workflow
+
+  workflow do
+    state :new do
+      event :join, transitions_to: :new
+      event :leave, transitions_to: :new
+      event :lock, transitions_to: :waiting
+    end
+    state :waiting do
+      event :start, transitions_to: :active
+      event :leave, transitions_to: :new
+    end
+    state :active do
+      event :archive, transitions_to: :archived
+      event :generate_schedule, transitions_to: :active
+    end
+    state :archived do
+      event :reactivate, transitions_to: :active
+    end
+  end
+
+  def update_state
+    unless deadline.nil?
+      self.lock! if deadline_has_passed? && current_state < :waiting
+    end
+  end
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -99,15 +127,15 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    (not has_participant?(user)) && team_slot_available?
+    current_state < :waiting && (not has_participant?(user)) && team_slot_available?
   end
 
   def can_join_fcfs?
-    team_slot_available? && selection_type == 0
+    current_state < :waiting && team_slot_available? && selection_type == 0
   end
 
   def can_leave?(user)
-    has_participant?(user)
+    current_state < :active && has_participant?(user)
   end
 
   def standing_of(team)

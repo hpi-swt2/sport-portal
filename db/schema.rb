@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107175546) do
+ActiveRecord::Schema.define(version: 20180118011636) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.integer "owner_id"
     t.float "initial_value"
     t.integer "selection_type", default: 0, null: false
+    t.string "workflow_state"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -44,6 +45,8 @@ ActiveRecord::Schema.define(version: 20180107175546) do
   create_table "events_users", id: false, force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "user_id", null: false
+    t.index ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id"
+    t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
   create_table "match_results", force: :cascade do |t|
@@ -96,8 +99,8 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
-    t.boolean "single", default: false
     t.text "avatar_data"
+    t.boolean "single", default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -111,12 +114,12 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "admin", default: false
-    t.string "provider"
-    t.string "uid"
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
+    t.string "provider"
+    t.string "uid"
     t.text "avatar_data"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true

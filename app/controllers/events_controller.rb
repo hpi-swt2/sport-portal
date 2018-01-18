@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   helper EventsHelper
   load_and_authorize_resource
 
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join, :archive, :reactivate]
 
 
   # GET /events
@@ -60,6 +60,18 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     redirect_to events_url, notice: 'Event was successfully destroyed.'
+  end
+
+  def archive
+    @event.archive!
+    @event.save
+    redirect_to @event, notice: 'Event successfully archived!'
+  end
+
+  def reactivate
+    @event.reactivate!
+    @event.save
+    redirect_to @event, notice: 'Event successfully reactivated!!'
   end
 
   # PUT /events/1/join

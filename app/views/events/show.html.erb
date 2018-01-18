@@ -2,6 +2,9 @@
 <div class="page-header">
   <h1>
     <%=t '.title', default: @event.model_name.human.titleize %>
+    <% if @event.archived? %>
+      Archived
+    <% end %>
   </h1>
   <% if user_signed_in? %>
     <span class="pull-right">
@@ -99,9 +102,11 @@
   </table>
 </div>
 
-<%= link_to t('.to_schedule'),
-            event_schedule_path(@event),
-            class: 'btn btn-default'%>
+<% if @event.can_generate_schedule? %>
+  <%= link_to t('.to_schedule'),
+              event_schedule_path(@event),
+              class: 'btn btn-default'%>
+<% end %>
 
 <%= link_to t('.to_overview'),
             event_overview_path(@event),
@@ -130,12 +135,45 @@
                  class: 'btn btn-default',
                  id: :join_event_button %>
   <% else %>
-    <%= link_to t('.join', default: t("helpers.links.join")),
+    <%= link_to t('.join', default: t('helpers.links.join')),
                 team_join_event_path(@event),
                 remote: true, data: {toggle: "modal", target: "modal-window"},
                 class: 'btn btn-default',
                 id: :join_event_button %>
   <% end %>
+<% end %>
+
+<% if can?(:modify, @event) && @event.can_archive? %>
+  <%= link_to t('.end'),
+              archive_event_path(@event), method: :put,
+              remote: true, data: {toggle: "modal", target: "modal-window"},
+              class: 'btn btn-default' %>
+<% end %>
+
+<% if can?(:modify, @event) && @event.can_reactivate? %>
+  <%= link_to t('.reactivate'),
+              reactivate_event_path(@event), method: :put,
+              remote: true, data: {toggle: "modal", target: "modal-window"},
+              class: 'btn btn-default' %>
+<% end %>
+
+<% if @event.archived? %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th><%= t '.rank' %></th>
+      <th><%= t '.name' %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% [{rank: 1, name: "Alfred"}, {rank: 2, name: "Marcel"}, {rank: 3, name: "Bob"}].each do |entry| %>
+      <tr>
+        <td><%= entry[:rank] %></td>
+        <td><%= entry[:name] %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 <% end %>
 
 <% if !@event.can_join_fcfs? %>

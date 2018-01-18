@@ -19,18 +19,18 @@
   </thead>
   <tbody>
     <% @ranking_entries.each do |entry| %>
-    <tr>
-      <td><%= entry.rank %></td>
-      <td><%= entry.name %></td>
-      <td><%= entry.match_count %></td>
-      <td><%= entry.won_count%></td>
-      <td><%= entry.draw_count%></td>
-      <td><%= entry.lost_count%></td>
-      <td><%= entry.goals%></td>
-      <td><%= entry.goals_against%></td>
-      <td><%= entry.goals_difference%></td>
-      <td><%= entry.points%></td>
-    </tr>
+      <tr>
+        <td><%= entry.rank %></td>
+        <td><%= entry.name %></td>
+        <td><%= entry.match_count %></td>
+        <td><%= entry.won_count%></td>
+        <td><%= entry.draw_count%></td>
+        <td><%= entry.lost_count%></td>
+        <td><%= entry.goals%></td>
+        <td><%= entry.goals_against%></td>
+        <td><%= entry.goals_difference%></td>
+        <td><%= entry.points%></td>
+      </tr>
     <% end %>
   </tbody>
 </table>

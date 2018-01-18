@@ -70,6 +70,9 @@ gem 'jquery-ui-rails'
 # https://github.com/Nerian/bootstrap-datepicker-rails
 gem 'bootstrap-datepicker-rails'
 
+# Use workflow gem as statemachine
+gem 'workflow'
+
 # Package Select2 dropdown replacement featuring autocomplete
 # https://github.com/argerim/select2-rails
 # gem 'select2-rails'
