@@ -33,7 +33,7 @@ class Event < ApplicationRecord
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
-  include AvatarUploader::Attachment.new(:avatar)
+  include ImageUploader::Attachment.new(:image)
   
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 

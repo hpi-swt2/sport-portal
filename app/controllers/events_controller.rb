@@ -227,6 +227,8 @@ class EventsController < ApplicationController
                                     :enddate,
                                     :initial_value,
                                     :gameday_duration,
+                                    :avatar,
+                                    :remove_avatar,
                                     user_ids: [])
     end
 end
