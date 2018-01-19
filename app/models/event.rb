@@ -69,7 +69,7 @@ class Event < ApplicationRecord
   end
 
   def team_of(user)
-    teams.detect { |team| team.include(user) }
+    teams.detect { |team| team.has_member?(user) }
   end
 
   def generate_schedule
