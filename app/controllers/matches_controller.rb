@@ -7,7 +7,8 @@ class MatchesController < ApplicationController
 
   # GET /matches/new
   def new
-    @match = Match.new(match_params)
+    @match = Match.new(new_match_params)
+    render :new
   end
 
   # GET /matches/1/edit
@@ -54,6 +55,10 @@ class MatchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_match
       @match = Match.find(params[:id])
+    end
+
+    def new_match_params
+      params.permit(:team_home_id, :team_away_id, :event_id)
     end
 
     # Only allow a trusted parameter "white list" through.
