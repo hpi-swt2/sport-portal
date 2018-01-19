@@ -55,3 +55,22 @@ Then(/^the page header should show '(.*)'$/) do |text|
   }
   expect(page).to have_xpath("//h1[contains(text(),'#{I18n.t *translations[text]}')]")
 end
+
+
+Then(/^there should be a back button on all pages except the start page$/) do
+  Rails.application.routes.routes.each do |route|
+    currentpath = route.path.spec.to_s
+    if currentpath.include? '(.:format)'
+      currentpath['(.:format)'] = ''
+    end
+    if currentpath.include? ':id'
+      currentpath[':id'] = '1'
+    end
+    visit events_path
+    begin
+      visit currentpath
+    rescue Exception
+    end
+    expect(page).to have_button('zurück')
+  end;nil
+end
