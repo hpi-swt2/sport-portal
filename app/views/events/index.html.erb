@@ -10,7 +10,7 @@
   <% end %>
 </div>
 <% if user_signed_in? and current_user.all_events.present? %>
-    <h4><%= t('events.index.my_events')%></h4>
+    <h4><b><%= t('events.index.my_events')%></b></h4>
     <div class="tile-wrapper">
       <% current_user.all_events.each do |event| %>
           <%= render partial: 'application/tile_template', locals: {title: event.name, image_url: 'https://owncloud.hpi.de/index.php/s/SygCflD2id5YJgp/download', description: event.build_description_string,
@@ -19,7 +19,7 @@
     </div>
 <% end %>
 <br>
-    <h4><%= t('events.index.all_events') %></h4>
+<h4><b><%= t('events.index.all_events') %></b></h4>
     <div class="tile-wrapper">
       <% @events.each do |event| %>
           <%= render partial: 'application/tile_template', locals: {title: event.name, image_url: 'https://owncloud.hpi.de/index.php/s/Mjdi0UvHNgfzCTo/download', description: event.build_description_string,

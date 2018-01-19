@@ -12,15 +12,12 @@
     }
 }
 
-
-
 .btn {
     color: #FFFFFF;
     letter-spacing: 0;
     background: #1CA9E5;
     border-radius: 100px;
     text-align: center;
-    vertical-align: middle;
 }
 
 .tile-img-wrapper {
@@ -30,7 +27,7 @@
 
 .tile {
     width: 100%;
-    padding: 16px;
+    padding: 5px;
     display: inline;
     cursor:pointer;
 }
@@ -63,6 +60,12 @@
         width: 70%;
         margin-right: 15%;
         height: 55px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+        background: #1CA9E5;
+        border-radius: 100px;
+        padding: 0.81em 1.88em 0.94em;
+
     }
     .mobile-img {
         margin: 0 auto;
