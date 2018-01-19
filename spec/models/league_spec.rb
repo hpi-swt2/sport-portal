@@ -101,7 +101,7 @@ describe 'League model', type: :model do
     end
 
     it 'has double the matches if double round robin is selected' do
-      new_league = FactoryBot.create(:league_with_teams)
+      new_league = FactoryBot.create(:league, :with_teams)
       new_league.game_mode = League.game_modes[:two_halfs]
       new_league.generate_schedule
       # double round robin has n(n-1) games
