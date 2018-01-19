@@ -1,5 +1,263 @@
-<div class="text-center">
-  <h1 class="page-header"><%= t 'appname' %></h1>
-  <img class="img-responsive" src="https://bluefin-live-assets.s3.amazonaws.com/media/filer_public_thumbnails/filer_public/30/dc/30dcb5b3-815d-4e4c-af3e-d2823050911c/sports_montage_-_chosen_concept_v9_carouselv3_rgb.jpg__1600x580_q85_crop_upscale.jpg"/>
-  <p class="lead"><%= t '.lead' %></p>
+<!-- Add css file manually, since it does not get linked automatically as it should -->
+<%= stylesheet_link_tag 'welcome' %>
+
+<div class="section darkblue-soccer">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <h1 class="white-text center"><%= t('welcome.index.lead') %></h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s10 offset-s1">
+        <p class="white-text center"><%= t('welcome.index.lead-description') %></p>
+      </div>
+    </div>
+    <div id="register-row" class="row">
+      <div class="col s12 center">
+        <% if not user_signed_in? %>
+            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn registerButton genericButton'%>
+        <% else %>
+            <%= link_to t('navbar.drop-down.dashboard'), dashboard_user_path(current_user), class: 'btn registerButton genericButton' %>
+        <% end %>
+      </div>
+    </div>
+    <div id="sport-image-row" class="row">
+      <div class="col s4 m2 offset-m1 offset-s2 center">
+        <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/IItyAIGtevods2X/download"/>
+        <div class="clear">
+          <span class="sport-name"><%= t('welcome.index.soccer') %></span>
+        </div>
+      </div>
+      <div class="col s4 m2 center">
+        <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/TDiXLgm0Sqhwxn6/download"/>
+        <div class="clear">
+          <span class="sport-name"><%= t('welcome.index.basketball') %></span>
+        </div>
+      </div>
+      <div class="col s4 m2 offset-s2 center">
+        <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/Ws9gDsi8XdWSUtF/download"/>
+        <div class="clear">
+          <span class="sport-name"><%= t('welcome.index.volleyball') %></span>
+        </div>
+      </div>
+      <div class="col s4 m2 center">
+        <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/a5hyIspQSjTmr2P/download"/>
+        <div class="clear">
+          <span class="sport-name"><%= t('welcome.index.table-tennis') %></span>
+        </div>
+      </div>
+      <div class="col s12 m2 center">
+        <img class="sport-image" src="https://owncloud.hpi.de/index.php/s/bnWpUw1I5EHQ8lt/download"/>
+        <div class="clear">
+          <span class="sport-name"><%= t('welcome.index.others') %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section lightblue-soccer">
+  <div class="container">
+    <div class="row hide-on-med-and-up">
+      <div class="col s12 center">
+        <img class="sport-player" src="https://owncloud.hpi.de/index.php/s/ZyvegSKkk8jLHup/download"/>
+      </div>
+    </div>
+    <div class="row valign-wrapper">
+      <div class="col s12 m9">
+        <div class="row">
+          <div class="col s12 m9">
+            <h2 class="white-text">
+              <%= t('welcome.index.section1') %>
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 m11">
+            <p class="white-text">
+              <%= t('welcome.index.section1-description_html') %>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col m2 hide-on-small-only">
+        <img class="sport-player" src="https://owncloud.hpi.de/index.php/s/ZyvegSKkk8jLHup/download"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section orange-basketball">
+  <div class="container">
+    <div class="row valign-wrapper hide-on-small-only">
+      <div class="col m3">
+        <img class="sport-player" src="https://owncloud.hpi.de/index.php/s/w5hjuUShQSiyvCp/download"/>
+      </div>
+      <div class="col m8 offset-m1">
+        <div class="row">
+          <div class="col m9 offset-m3">
+            <h2 class="white-text right">
+              <%= t('welcome.index.section2') %>
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col m12">
+            <p class="white-text right-align">
+              <%= t('welcome.index.section2-description_html') %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hide-on-med-and-up">
+      <div class="row">
+        <div class="col s12">
+          <h2 class="white-text">
+            <%= t('welcome.index.section2') %>
+          </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 center">
+          <img class="sport-player" src="https://owncloud.hpi.de/index.php/s/w5hjuUShQSiyvCp/download"/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <p class="white-text">
+            <%= t('welcome.index.section2-description_html') %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section white-nothing">
+  <div class="container">
+    <div class="row center">
+      <div class="col s12">
+        <h2 style="color: #1CA9E5;">
+          <%= t('welcome.index.section3') %>
+        </h2>
+      </div>
+    </div>
+    <div class="row hide-on-med-and-up">
+      <ul class="collapsible info-collapsible gameModeCollapsible" data-collapsible="expandable">
+        <li>
+          <div class="collapsible-header active" onclick="$(this).find('#collapsibleToggleIcon').toggleClass('rotated')">
+            <h3><%= t('welcome.index.section3-card1-header') %></h3>
+            <i id="collapsibleToggleIcon" class="fa fa-angle-down rotated"></i>
+          </div>
+          <div class="collapsible-body">
+            <ul class="gameModeList"><%= t('welcome.index.section3-card1-description_html') %></ul>
+            <% if not user_signed_in? %>
+                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+            <% else %>
+                <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+            <% end %>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"  onclick="$(this).find('#collapsibleToggleIcon').toggleClass('rotated')">
+            <h3><%= t('welcome.index.section3-card2-header') %></h3>
+            <i id="collapsibleToggleIcon" class="fa fa-angle-down"></i>
+          </div>
+          <div class="collapsible-body">
+            <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
+            <% if not user_signed_in? %>
+                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+            <% else %>
+                <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+            <% end %>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"  onclick="$(this).find('#collapsibleToggleIcon').toggleClass('rotated')">
+            <h3><%= t('welcome.index.section3-card3-header') %></h3>
+            <i id="collapsibleToggleIcon" class="fa fa-angle-down"></i>
+          </div>
+          <div class="collapsible-body">
+            <ul class="gameModeList"><%= t('welcome.index.section3-card3-description_html') %></ul>
+            <% if not user_signed_in? %>
+                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+            <% else %>
+                <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+            <% end %>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="row hide-on-small-only content-is-cards">
+      <div class="info-card col m4">
+        <h3><%= t('welcome.index.section3-card1-header') %></h3>
+        <div class="row">
+          <ul class="gameModeList"><%= t('welcome.index.section3-card1-description_html') %></ul>
+        </div>
+      </div>
+      <div class="info-card col m4">
+        <h3><%= t('welcome.index.section3-card2-header') %></h3>
+        <div class="row">
+          <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
+        </div>
+      </div>
+      <div class="info-card col m4">
+        <h3><%= t('welcome.index.section3-card3-header') %></h3>
+        <div class="row">
+          <ul class="gameModeList"><%= t('welcome.index.section3-card3-description_html') %></ul>
+        </div>
+      </div>
+    </div>
+    <div class="row hide-on-small-only" style="display: flex;">
+      <div class="col m4 center card-button-col">
+        <% if not user_signed_in? %>
+            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+        <% else %>
+            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+        <% end %>
+      </div>
+      <div class="col m4 center card-button-col">
+        <% if not user_signed_in? %>
+            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+        <% else %>
+            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+        <% end %>
+      </div>
+      <div class="col m4 center card-button-col">
+        <% if not user_signed_in? %>
+            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+        <% else %>
+            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section purple-skating">
+  <div class="container">
+    <div class="row center">
+      <h2 class="white-text">
+        <%= t('welcome.index.section4') %>
+      </h2>
+    </div>
+    <div class="row center">
+      <div class="col s12 m10 offset-m1">
+        <p class="white-text">
+          <%= t('welcome.index.section4-description_html') %>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 center">
+        <% if not user_signed_in? %>
+            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton'%>
+        <% else %>
+            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn createScheduleButton genericButton' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
