@@ -30,7 +30,7 @@
 
 .tile {
     width: 100%;
-    padding: 16px;
+    padding: 5px;
     display: inline;
     cursor:pointer;
 }
