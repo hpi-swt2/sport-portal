@@ -66,11 +66,15 @@ Then(/^there should be a back button on all pages except the start page$/) do
     if currentpath.include? ':id'
       currentpath[':id'] = '1'
     end
-    visit events_path
     begin
       visit currentpath
     rescue Exception
+      currentpath = '/events/1'
+      visit '/events/1'
     end
-    expect(page).to have_button('zurück')
+    puts currentpath
+    unless currentpath.eql? '/' or currentpath.eql? '/cable'
+      expect(page).to have_link('Zurück')
+    end
   end;nil
 end
