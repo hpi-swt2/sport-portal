@@ -95,7 +95,7 @@
           <% if (@event.is_a? Rankinglist) and (@event.has_participant? current_user) and (participant.name != current_user.name) %>
             <%= link_to t('.create', default: t('helpers.links.duel')),
                         new_match_path(team_home_id: participant,
-                                       team_away_id: current_user,
+                                       team_away_id: @event.teams.find(team.has_owner? current_user),
                                        event_id: @event,
                                        score_home: nil,
                                        score_away: nil,
