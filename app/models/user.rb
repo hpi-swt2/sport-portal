@@ -105,6 +105,7 @@ class User < ApplicationRecord
     all_events = self.events
     self.teams.map { |team| all_events += team.events}
     self.owned_teams.map { |team| all_events += team.events}
+    self.organizing_events.map { |event| all_events << event}
     all_events.uniq
   end
 

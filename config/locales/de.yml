@@ -210,8 +210,11 @@ de:
 
   events:
     index:
-      my_events: "Meine Events"
+      my_events: "Deine Events"
       all_events: "Alle Events"
+      start_date: "Startdatum"
+      registration_until: "Anmeldung bis"
+      max_players: "Max. Spielerzahl"
     create_event: "Event erstellen"
     choose_event_format: "Eventart wählen"
     new_league: "Neue Liga"
