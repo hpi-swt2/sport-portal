@@ -83,22 +83,18 @@ describe 'League model', type: :model do
       let(:gamemode) { League.game_modes[:round_robin] }
 
       it 'does create matches' do
-        expect(subject.length).to be > 0
+        expect(matches.length).to be > 0
       end
 
-      it 'does create the correct amount of matches' do
-        expect(subject.length).to be 10
+      it 'does create 10 matches' do
+        expect(matches.length).to be 10
       end
 
       it 'incorporates all teams into the schedule' do
         expect(all_teams_with_occurrences.length).to be 5
       end
 
-      it 'creates the right amount of gameday' do
-        expect(league.gamedays.length).to eq 5
-      end
-
-      it 'makes every single team play the right amount of games times' do
+      it 'makes every single team play exactly 4 times' do
         all_teams_with_occurrences.each do |team, occurrence|
           expect(occurrence).to be 4
         end
@@ -106,11 +102,13 @@ describe 'League model', type: :model do
 
       it 'does only let half as many matches as teams play per gameday' do
         5.times do |gameday|
-          expect(league.gamedays[gameday].matches.length).to eq 2
+          gameday += 1 #gamedays are from 1 to 5 not 0 to 4
+          gameday_matches = matches.select { |match| match.gameday == gameday }
+          expect(gameday_matches.length).to be 2
         end
       end
 
-      it 'uses round robin if its selected' do
+      it 'has a correct amount of matches' do
         # simple round robin has n((n-1)/2) games
         expect(matches.length).to be league.teams.length * ((league.teams.length - 1) / 2)
       end
@@ -119,25 +117,44 @@ describe 'League model', type: :model do
     context 'double round robin' do
       let(:gamemode) { League.game_modes[:two_halfs] }
 
+      let(:league) { league = FactoryBot.create(:league_with_teams)
+                     league.game_mode = League.game_modes[:two_halfs]
+                     league.generate_schedule
+                     league }
 
-      let(:all_teams_with_home_occurences) { Hash[(home_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
-      let(:all_teams_with_away_occurences) { Hash[(away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
-      it 'makes each team play as home and away just as often' do
-        expect(all_teams_with_home_occurences).to eq all_teams_with_away_occurences
-      end
-      it 'creates the right amount of gamedays' do
-        expect(league.gamedays.length).to eq 10
-      end
-
-      it 'does only let half as many matches as teams play per gameday' do
-        10.times do |gameday|
-          expect(league.gamedays[gameday].matches.length).to eq 2
-        end
-      end
-
-      it 'has double the matches if double round robin is selected' do
+      it 'has double the matches' do
         # double round robin has n(n-1) games
-        expect(subject.length).to eq(league.teams.length * (league.teams.length - 1))
+        expect(league.matches.length).to eq(league.teams.length * (league.teams.length - 1))
+      end
+    end
+
+    context 'uses swiss system' do
+
+      let(:league) { league = FactoryBot.create(:league_with_teams)
+                     league.game_mode = League.game_modes[:swiss]
+                     league.generate_schedule
+                     league }
+
+      let(:amount_playing_teams) { (league.matches.map { |match| [match.team_home, match.team_away] }).flatten }
+
+      it 'has correct amount of teams' do
+        expect(league.teams.length).to be 5
+      end
+
+      it 'creates 2 matches' do
+        expect(league.matches.length).to be 2
+      end
+
+      it 'creates a correct amount of matches' do
+        expect(league.matches.length).to be (league.teams.length / 2).floor
+      end
+
+      it 'incorporates each team to play on the first gameday if team amount is even' do
+        expect(amount_playing_teams.length).to be league.teams.length
+      end
+
+      it 'incorporates each team except one to play on the first gameday if team amount is uneven' do
+        expect(amount_playing_teams.length).to be league.teams.length - 1
       end
     end
   end

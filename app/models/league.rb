@@ -42,6 +42,22 @@ class League < Event
       calculate_round_robin
     elsif game_mode == League.game_modes.key(1)
       calculate_two_halfs
+    elsif game_mode == League.game_modes.key(2)
+      calculate_swiss_system_start
+    end
+  end
+
+  # create a random first gameday for the swiss system
+  def calculate_swiss_system_start
+    temp = teams
+
+    temp.each do |team|
+      team_away = temp[1 + rand(temp.size - 2)]
+
+      matches << Match.new(team_home: team, team_away: team_away, gameday: 1)
+
+      temp.delete(team)
+      temp.delete(team_away)
     end
   end
 
