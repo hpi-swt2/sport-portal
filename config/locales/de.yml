@@ -305,6 +305,7 @@ de:
     index:
       my_teams: "Meine Teams"
       all_teams: "Alle Teams"
+      create_team: "Ein Team erstellen"
     show:
       invite_user_to_team: "+"
       number: "#"

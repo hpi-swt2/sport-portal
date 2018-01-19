@@ -24,14 +24,6 @@ a:link, a:visited, a:hover, a:active {
     color: #01A8E8;
 }
 
-.btn {
-    font-size: 15px;
-    color: #FFFFFF;
-    letter-spacing: 0;
-    background: #1CA9E5;
-    border-radius: 100px;
-}
-
 .input-field {
     font-family: Proxima Nova;
     font-size: 16px;
