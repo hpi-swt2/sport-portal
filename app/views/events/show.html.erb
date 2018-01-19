@@ -92,8 +92,8 @@
       <tr>
         <td><%= link_to_participant participant %></td>
         <td>
-          <% if (@event.is_a? Rankinglist) and (@event.has_participant? current_user) %>
-            <%= link_to t('.show', default: t('helpers.links.show')),
+          <% if (@event.is_a? Rankinglist) and (@event.has_participant? current_user) and (participant.name != current_user.name) %>
+            <%= link_to t('.create', default: t('helpers.links.duel')),
                         new_match_path(team_home_id: participant,
                                        team_away_id: current_user,
                                        event_id: @event,
