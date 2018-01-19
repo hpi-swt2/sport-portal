@@ -55,6 +55,10 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
+  def startdate_has_passed?
+    startdate < Date.current
+  end
+
   def add_team(team)
     teams << team
     invalidate_schedule

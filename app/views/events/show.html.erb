@@ -8,7 +8,7 @@
           <%= link_to t('.edit', default: t('helpers.links.edit')),
                       edit_event_path(@event), class: 'btn btn-default' %>
         <% end %>
-        <% if can? :destroy, @event %>
+        <% if (can? :destroy, @event) && !@event.startdate_has_passed? %>
           <%= link_to t('.destroy', default: t('helpers.links.destroy')),
                       event_path(@event),
                       method: 'delete',
