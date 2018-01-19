@@ -52,6 +52,11 @@
 .event-details {
     font-size: 50%;
     font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    width: 150px;
+    white-space: nowrap;
 }
 
 @media screen and (max-width : 480px){
@@ -76,9 +81,11 @@
     }
     .mobile-title {
         margin: 0 auto;
+        width:300px;
     }
     .mobile-event-details {
         font-size: 75%;
         font-weight: bold;
+        width: 300px;
     }
 }
