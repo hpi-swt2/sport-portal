@@ -16,11 +16,11 @@ Then(/^there should be a '(.*)' link/) do |text|
   expect(page).to have_link(text)
 end
 
-When(/^he (un)?checks the checkbox '(.*)'$/) do |un, checkbox_name|
-  if un.present?
-    page.uncheck checkbox_name
+When(/^he (checks|unchecks) the checkbox '(.*)'$/) do |action, checkbox_name|
+  if action == 'unchecks'
+    uncheck checkbox_name
   else
-    page.check checkbox_name
+    check checkbox_name
   end
 end
 

@@ -1,6 +1,6 @@
 Feature: Tournament optional place 3 match
   As a user
-  In order to easily create a tournament
+  In order to have events in the form that I wish
   I want to make the place 3 match optional
 
   Scenario: Create match without place 3 match
@@ -12,7 +12,7 @@ Feature: Tournament optional place 3 match
     And he unchecks the checkbox 'Spiel um Platz 3'
     And he clicks 'Create'
 
-    Given 8 teams join the tournament
+    When 8 teams join the tournament
     And the schedule page is visited
 
     Then the text Spiel um Platz 3 is not there
@@ -26,7 +26,7 @@ Feature: Tournament optional place 3 match
     And he checks the checkbox 'Spiel um Platz 3'
     And he clicks 'Create'
 
-    Given 8 teams join the tournament
+    When 8 teams join the tournament
     And the schedule page is visited
 
     Then the text Spiel um Platz 3 is there
