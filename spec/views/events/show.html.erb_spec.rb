@@ -63,7 +63,7 @@ RSpec.describe "events/show", type: :view do
 
   describe "League" do
     before(:each) do
-      @event = assign(:event, FactoryBot.create(:league))
+      @event = assign(:event, FactoryBot.create(:league, workflow_state: 'active'))
       @event.editors << @user
       @event.owner = @user
     end

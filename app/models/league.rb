@@ -23,8 +23,38 @@ class League < Event
   validates :deadline, :startdate, :enddate, :selection_type, presence: true
   validates :gameday_duration, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000 }
   validate :end_after_start, :start_after_deadline
+  after_initialize :update_state
+
 
   enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
+
+  include Workflow
+
+  workflow do
+    state :new do
+      event :join, transitions_to: :new
+      event :leave, transitions_to: :new
+      event :lock, transitions_to: :waiting
+    end
+    state :waiting do
+      event :start, transitions_to: :active
+      event :leave, transitions_to: :new
+      event :generate_schedule, transitions_to: :waiting
+    end
+    state :active do
+      event :archive, transitions_to: :archived
+      event :generate_schedule, transitions_to: :active
+    end
+    state :archived do
+      event :reactivate, transitions_to: :active
+    end
+  end
+
+  def update_state
+    unless deadline.nil?
+      self.lock! if deadline_has_passed? && current_state < :waiting
+    end
+  end
 
   def generate_schedule
     if game_mode == League.game_modes.key(0)
@@ -62,6 +92,20 @@ class League < Event
     end
     save
   end
+
+  def can_join?(user)
+    super(user) && current_state < :waiting
+  end
+
+  def can_join_fcfs?
+    super && current_state < :waiting
+  end
+
+  def can_leave?(user)
+    super(user) && current_state < :active
+  end
+
+
 
   # creates a twodimensional array of round robin pairings (one array per gameday) the inner array consists of the pairings
   def round_robin_pairings(teams_array)

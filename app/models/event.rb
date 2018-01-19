@@ -32,36 +32,23 @@ class Event < ApplicationRecord
 
   enum selection_type: [:fcfs, :fcfs_queue, :selection]
   enum player_type: [:single, :team]
-  after_initialize :update_state
-
   validates :name, :discipline, :game_mode, :player_type,  presence: true
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
-  include Workflow
-
-  workflow do
-    state :new do
-      event :join, transitions_to: :new
-      event :leave, transitions_to: :new
-      event :lock, transitions_to: :waiting
-    end
-    state :waiting do
-      event :start, transitions_to: :active
-      event :leave, transitions_to: :new
-    end
-    state :active do
-      event :archive, transitions_to: :archived
-      event :generate_schedule, transitions_to: :active
-    end
-    state :archived do
-      event :reactivate, transitions_to: :active
-    end
+  def can_generate_schedule?
+    false
   end
 
-  def update_state
-    unless deadline.nil?
-      self.lock! if deadline_has_passed? && current_state < :waiting
-    end
+  def archived?
+    false
+  end
+
+  def can_archive?
+    false
+  end
+
+  def can_reactivate?
+    false
   end
 
   def duration
@@ -83,7 +70,7 @@ class Event < ApplicationRecord
     deadline < Date.current
   end
 
-  def add_team(team)
+    def add_team(team)
     teams << team
     invalidate_schedule
   end
@@ -127,15 +114,15 @@ class Event < ApplicationRecord
   end
 
   def can_join?(user)
-    current_state < :waiting && (not has_participant?(user)) && team_slot_available?
+    not has_participant?(user) && team_slot_available?
   end
 
   def can_join_fcfs?
-    current_state < :waiting && team_slot_available? && selection_type == 0
+    team_slot_available? && selection_type == 0
   end
 
   def can_leave?(user)
-    current_state < :active && has_participant?(user)
+    has_participant?(user)
   end
 
   def standing_of(team)

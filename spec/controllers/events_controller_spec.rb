@@ -350,17 +350,13 @@ RSpec.describe EventsController, type: :controller do
   end
   #this test is only for leagues
   describe "GET League#schedule" do
+    let(:event) { FactoryBot.create(:league, :with_teams, owner: @user, max_teams: 10, workflow_state: 'active') }
     it "should generate schedule if not existing" do
-      event = League.create! valid_league_attributes
-      event.add_participant(@user)
-      event.add_participant(@other_user)
-      event.generate_schedule
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(event.matches).not_to be_empty
     end
 
     it "returns a success response" do
-      event = League.create! valid_league_attributes
       get :schedule, params: { id: event.to_param }, session: valid_session
       expect(response).to be_success
     end

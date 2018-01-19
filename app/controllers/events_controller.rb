@@ -100,8 +100,13 @@ class EventsController < ApplicationController
     redirect_back fallback_location: events_url
   end
 
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
   # GET /events/1/schedule
   def schedule
+    @event.can_generate_schedule? or not_found
     if @event.matches.empty?
       @event.generate_schedule
       @event.save
