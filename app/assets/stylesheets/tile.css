@@ -12,24 +12,7 @@
     }
 }
 
-@media screen and (max-width : 480px){
-    .tile-wrapper {
-        display: grid;
-        grid-template-columns: 1fr
-    }
-    .mobile-header {
-        margin-left: 15%;
-        width: 70%;
-        margin-right: 15%;
-        height: 55px;
-    }
-    .mobile-img {
-        margin: 0 auto;
-    }
-    .mobile-title {
-        margin: 0 auto;
-    }
-}
+
 
 .btn {
     color: #FFFFFF;
@@ -64,4 +47,31 @@
 .tile-title {
     font-size: 150%;
     font-weight: bold;
+}
+.event-details {
+    font-size: 50%;
+    font-weight: bold;
+}
+
+@media screen and (max-width : 480px){
+    .tile-wrapper {
+        display: grid;
+        grid-template-columns: 1fr
+    }
+    .mobile-header {
+        margin-left: 15%;
+        width: 70%;
+        margin-right: 15%;
+        height: 55px;
+    }
+    .mobile-img {
+        margin: 0 auto;
+    }
+    .mobile-title {
+        margin: 0 auto;
+    }
+    .mobile-event-details {
+        font-size: 75%;
+        font-weight: bold;
+    }
 }

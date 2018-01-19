@@ -13,7 +13,7 @@
     <h4><%= t('events.index.my_events')%></h4>
     <div class="tile-wrapper">
       <% current_user.all_events.each do |event| %>
-          <%= render partial: 'application/tile_template', locals: {title: event.name, image_url: 'https://owncloud.hpi.de/index.php/s/SygCflD2id5YJgp/download', description: event.description,
+          <%= render partial: 'application/tile_template', locals: {title: event.name, image_url: 'https://owncloud.hpi.de/index.php/s/SygCflD2id5YJgp/download', deadline: event.deadline, startdate: event.startdate,
           destination_path: event_path(event)} %>
       <% end %>
     </div>
@@ -22,7 +22,7 @@
     <h4><%= t('events.index.all_events') %></h4>
     <div class="tile-wrapper">
       <% @events.each do |event| %>
-          <%= render partial: 'application/tile_template', locals: {title: event.name, image_url: 'https://owncloud.hpi.de/index.php/s/Mjdi0UvHNgfzCTo/download', description: event.description,
+          <%= render partial: 'application/tile_template', locals: {title: event.name, image_url: 'https://owncloud.hpi.de/index.php/s/Mjdi0UvHNgfzCTo/download', deadline: event.deadline, startdate: event.startdate,
           destination_path: event_path(event)} %>
       <% end %>
     </div>
