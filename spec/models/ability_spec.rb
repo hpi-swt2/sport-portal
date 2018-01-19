@@ -118,7 +118,6 @@ RSpec.describe Ability, type: :model do
     ability = Ability.new(@user)
     team = FactoryBot.create :team
     team.owners << @user
-    team.members << @user
 
     expect(ability).to be_able_to(:destroy, team)
   end
@@ -131,9 +130,31 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:destroy, team)
   end
 
-  it 'should be able to destroy a team as an admin' do
+  it 'should not be able to destroy a team when participating in an event as a team owner' do
     ability = Ability.new(@user)
     team = FactoryBot.create :team
+    team.owners << @user
+
+    event = FactoryBot.create :event
+    event.teams << team
+
+    expect(ability).to_not be_able_to(:destroy, team)
+  end
+
+  it 'should be able to destroy a team as an admin' do
+    ability = Ability.new(@admin)
+    team = FactoryBot.create :team
+
+    expect(ability).to be_able_to(:destroy, team)
+  end
+
+  it 'should not be able to destroy a team when participating in an event as a admin' do
+    ability = Ability.new(@admin)
+    team = FactoryBot.create :team
+    team.owners << @admin
+
+    event = FactoryBot.create :event
+    event.teams << team
 
     expect(ability).to be_able_to(:destroy, team)
   end
