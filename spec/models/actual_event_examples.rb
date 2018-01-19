@@ -1,5 +1,5 @@
 shared_examples 'an actual event' do |for_class: :event|
-  let(:event) {FactoryBot.build(for_class)}
+  let(:event) { FactoryBot.build(for_class) }
   it 'should not validate without selection_type' do
     event.selection_type = nil
     expect(event.valid?).to eq(false)
@@ -42,4 +42,3 @@ shared_examples 'an actual event' do |for_class: :event|
     expect(event.duration).to eq(2)
   end
 end
-
