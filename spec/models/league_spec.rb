@@ -60,9 +60,9 @@ describe 'League model', type: :model do
   end
   describe 'Generating league schedule with default values' do
     let(:league) { league = FactoryBot.create(:league, :with_teams)
-    league.game_mode = League.game_modes[:round_robin]
-    league.generate_schedule
-    league }
+                   league.game_mode = League.game_modes[:round_robin]
+                   league.generate_schedule
+                   league }
     let(:matches) { league.matches }
     let(:home_teams) { matches.map(&:team_home) }
     let(:away_teams) { matches.map(&:team_away) }
