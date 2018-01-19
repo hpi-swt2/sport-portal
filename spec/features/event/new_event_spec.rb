@@ -48,7 +48,7 @@ describe 'new event page', type: :feature do
     it 'should have a field for league duration' do
       visit new_path
 
-      has_input_fields :event_duration
+      expect(page).to have_field 'event_duration'
     end
 
     let(:league) { FactoryBot.build(:league) }
@@ -135,10 +135,10 @@ describe 'new event page', type: :feature do
       has_input_fields :deadline, :startdate, :enddate
     end
 
-    it 'should have a field for league duration' do
+    it 'should have a field for tournament duration' do
       visit new_path
 
-      has_input_fields :event_duration
+      expect(page).to have_field 'event_duration'
     end
 
     let(:tournament) { FactoryBot.build(:tournament) }
