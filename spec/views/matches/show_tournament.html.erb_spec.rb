@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "matches/show", type: :view do
   before(:each) do
-    @tournament = FactoryBot.create :tournament_with_teams
+    @tournament = FactoryBot.create :tournament, :with_teams
     @tournament.generate_schedule
     @match = assign(:match, @tournament.finale)
   end
