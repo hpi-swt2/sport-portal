@@ -39,11 +39,7 @@ class Match < ApplicationRecord
   def has_points?
     points_home.present? && points_away.present?
   end
-
-  def has_scores?
-    score_home.present? && score_away.present?
-  end
-
+  
   def has_winner?
     has_points? && points_home != points_away
   end
