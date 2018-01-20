@@ -57,6 +57,12 @@ FactoryBot.define do
       deadline { Date.current - 1 }
     end
 
+    trait :with_image do
+      after(:build) do |event|
+        event.image = File.open("#{Rails.root}/spec/fixtures/valid_avatar.png")
+      end
+    end
+
     trait :with_teams do
       transient do
         teams_count 5

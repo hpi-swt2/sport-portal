@@ -10,12 +10,17 @@ describe "detailed event page", type: :feature do
 
   context "for any event" do
     before(:each) do
-      @event = FactoryBot.create :event
+      @event = FactoryBot.create :event, :with_image
     end
 
     it "should not have a join button if I am not logged in" do
       visit event_path(@event)
       expect(page).not_to have_link(:join_event_button)
+    end
+
+    it "should display an image" do
+      visit event_path(@event)
+      expect(page).to have_css("img[src='#{@event.image_url}']")
     end
   end
 
