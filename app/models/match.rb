@@ -104,7 +104,7 @@ class Match < ApplicationRecord
   def calculate_points
     return unless score_changed?
 
-    if score_home.nil? || score_away.nil?
+    if score_home.blank? || score_away.blank?
       set_points(nil, nil)
     elsif score_home > score_away
       set_points(3, 0)
