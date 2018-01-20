@@ -87,5 +87,9 @@ FactoryBot.define do
     trait :fcfs do
       selection_type Event.selection_types[:fcfs]
     end
+
+    after(:build) do |event|
+      event.image = File.open("#{Rails.root}/spec/fixtures/valid_avatar.png")
+    end
   end
 end

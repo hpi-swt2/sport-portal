@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107175546) do
+ActiveRecord::Schema.define(version: 20180118161255) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.integer "owner_id"
     t.float "initial_value"
     t.integer "selection_type", default: 0, null: false
+    t.text "image_data"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
