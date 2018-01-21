@@ -3,10 +3,9 @@ class EventsController < ApplicationController
                             :goals_difference, :points)
 
   helper EventsHelper
-  load_and_authorize_resource
 
+  authorize_resource :event
   before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join]
-
 
   # GET /events
   def index

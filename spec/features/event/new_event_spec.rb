@@ -65,7 +65,7 @@ describe 'new event page', type: :feature do
     it 'should be possible to create a league' do
       visit new_path
 
-      attach_file('league_image', "#{Rails.root}/spec/fixtures/valid_avatar.png")
+      attach_file('league_image', "/Volumes/Secondary/a.png")
       fill_in_fields_with valid_league_input_fields
       select_dropdowns_with valid_league_dropdowns
 
