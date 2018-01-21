@@ -10,7 +10,7 @@ describe "detailed event page", type: :feature do
 
   context "for any event" do
     before(:each) do
-      @event = FactoryBot.create :event, :with_image
+      @event = FactoryBot.create :event
     end
 
     it "should not have a join button if I am not logged in" do
