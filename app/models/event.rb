@@ -18,18 +18,19 @@
 #  gameday_duration :integer
 #  owner_id         :integer
 #  initial_value    :float
+#  selection_type   :integer          default("fcfs"), not null
 #
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order '"gameday" ASC, "index" ASC' }, dependent: :delete_all
+  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :delete_all
   has_and_belongs_to_many :teams
-  has_and_belongs_to_many :participants, class_name: 'User'
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
+  enum selection_type: [:fcfs, :fcfs_queue, :selection]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
 
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
@@ -90,6 +91,7 @@ class Event < ApplicationRecord
   end
 
   def team_slot_available?
+    return true unless max_teams.present?
     teams.count < max_teams
   end
 
@@ -101,12 +103,16 @@ class Event < ApplicationRecord
     (not has_participant?(user)) && team_slot_available?
   end
 
+  def can_join_fcfs?
+    team_slot_available? && selection_type == 'fcfs'
+  end
+
   def can_leave?(user)
     has_participant?(user)
   end
 
   def standing_of(team)
-    I18n.t 'events.overview.unkown_standing', team: team.id.to_s
+    I18n.t 'events.overview.unkown_standing'
   end
 
   # this is a method that simplifies manual testing, not intended for production use
@@ -117,6 +123,10 @@ class Event < ApplicationRecord
   #end
   #end
 
+  def human_selection_type
+    self.class.human_selection_type selection_type
+  end
+
   def human_player_type
     self.class.human_player_type player_type
   end
@@ -126,6 +136,10 @@ class Event < ApplicationRecord
   end
 
   class << self
+    def human_selection_type(type)
+      I18n.t("activerecord.attributes.event.selection_types.#{type}")
+    end
+
     def human_player_type(type)
       I18n.t("activerecord.attributes.event.player_types.#{type}")
     end

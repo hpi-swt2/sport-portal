@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "matches/_form", type: :view do
   before(:each) do
-    @match = assign(:match, FactoryBot.create(:match_with_results))
+    @match = assign(:match, FactoryBot.create(:match, :with_results))
   end
 
   it "renders a input form" do

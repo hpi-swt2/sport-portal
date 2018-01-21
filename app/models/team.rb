@@ -10,9 +10,11 @@
 #  kind_of_sport :string
 #  private       :boolean
 #  single        :boolean          default(FALSE)
+#  avatar_data   :text
 #
 
 class Team < ApplicationRecord
+  default_scope { order(created_at: :asc) }
   validates :name, presence: true
 
   validates :private, inclusion:  [true, false]
@@ -29,6 +31,8 @@ class Team < ApplicationRecord
   has_many :home_matches, as: :team_home, class_name: 'Match'
   has_many :away_matches, as: :team_away, class_name: 'Match'
 
+  include AvatarUploader::Attachment.new(:avatar)
+
   def matches
     home_matches.or away_matches
   end
@@ -44,8 +48,8 @@ class Team < ApplicationRecord
     events.exists?
   end
 
-  # these methods allow teams to be treated like matches. see Match model
-  def winner
+  # these methods allow teams to be treated like match results. see MatchResult model
+  def advancing_participant
     self
   end
 

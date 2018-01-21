@@ -18,6 +18,7 @@
 #  gameday_duration :integer
 #  owner_id         :integer
 #  initial_value    :float
+#  selection_type   :integer          default("fcfs"), not null
 #
 
 # For schema information see Event

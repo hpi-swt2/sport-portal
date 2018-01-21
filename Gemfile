@@ -93,6 +93,9 @@ gem 'font-awesome-rails'
 # Gem for nested fields inside forms
 # https://github.com/lailsonbm/awesome_nested_fields
 gem 'awesome_nested_fields'
+# Use the materializecss-library https://github.com/mkhairi/materialize-sass
+# A modern, responsive front-end-framework based on Material Design
+gem 'materialize-sass'
 
 group :development, :test do
   # Testing framework for Rails
@@ -170,7 +173,7 @@ end
 group :production do
   # Ruby interface to the PostgreSQL RDBMS
   # https://github.com/ged/ruby-pg
-  gem 'pg'
+  gem 'pg', '~> 0.21.0'
   # Exception tracking in production, report to Errbit
   # https://github.com/airbrake/airbrake
   # Errbit requires airbrake 5.0

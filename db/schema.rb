@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102181138) do
+ActiveRecord::Schema.define(version: 20180107175546) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.integer "gameday_duration"
     t.integer "owner_id"
     t.float "initial_value"
+    t.integer "selection_type", default: 0, null: false
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -54,6 +55,14 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["match_id"], name: "index_game_results_on_match_id"
+  end
+
+  create_table "match_results", force: :cascade do |t|
+    t.integer "match_id"
+    t.boolean "winner_advances"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_match_results_on_match_id"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -85,6 +94,7 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.integer "team_id", null: false
     t.integer "user_id", null: false
     t.boolean "is_owner"
+    t.datetime "created_at"
     t.index ["user_id", "team_id"], name: "index_team_users_on_user_id_and_team_id"
   end
 
@@ -95,6 +105,7 @@ ActiveRecord::Schema.define(version: 20180102181138) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
+    t.text "avatar_data"
     t.boolean "single", default: false
   end
 

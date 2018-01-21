@@ -18,9 +18,11 @@
 #  gameday_duration :integer
 #  owner_id         :integer
 #  initial_value    :float
+#  selection_type   :integer          default("fcfs"), not null
 #
 
 require 'rails_helper'
+require 'models/actual_event_examples'
 
 describe "Tournament model", type: :model do
 
@@ -28,5 +30,7 @@ describe "Tournament model", type: :model do
     tournament = FactoryBot.build(:tournament)
     expect(tournament).to be_valid
   end
+
+  it_should_behave_like 'an actual event', for_class: :tournament
 
 end

@@ -1,0 +1,113 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require bootstrap-datepicker3
+ *= require navbar
+ *= require footer
+ *= require bootstrap_and_overrides
+ *= require_self
+ *= require font-awesome
+ */
+
+/* Override colors of Materialize */
+@import "materialize/components/color";
+$primary-color: #01A8E8 !default;
+$secondary-color: #01A8E8 !default;
+
+@import "materialize";
+
+/* Load custom font families */
+@font-face {
+  font-family: 'Proxima Nova';
+  src: font_url('ProximaNova-Reg.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: font_url('ProximaNova-Bold.otf') format('opentype');
+  font-weight: 500;
+}
+
+@media screen and (max-width: 400px){
+  .create-button {
+      width: 100% !important;
+  }
+}
+
+/* Application wide style */
+* {
+  font-family: "Proxima Nova";
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.background-layer {
+  /* important for footer which sticks to the bottom of the page */
+  flex: 1 0 auto;
+}
+
+/* make sure footer is displayed in front of white background on sign in / up page */
+@media screen and (min-width: 992px) {
+  .background-layer {
+    padding-bottom: 120px;
+  }
+
+  * {
+    font-size: 1.4rem;
+  }
+
+  h1 {
+    font-size: 4.5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .background-layer {
+    padding-bottom: 50px;
+  }
+
+  * {
+    font-size: 1.2rem;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+}
+
+.navbar-overlap {
+  padding-top: 50px;
+}
+
+.btn {
+  font-size: 15px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  background: #1CA9E5;
+  border-radius: 100px;
+}
+

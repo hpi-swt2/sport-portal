@@ -18,6 +18,7 @@
 #
 
 require 'rails_helper'
+require 'byebug'
 
 RSpec.describe Match, type: :model do
   it 'is valid when produced by a factory' do
@@ -32,8 +33,51 @@ RSpec.describe Match, type: :model do
     match_a.save
     match_a.reload
     expect(match_a.team_home).to eq(match_b)
-    expect(match_b.home_matches).to contain_exactly(match_a)
-    expect(match_b.away_matches).to be_empty
-    expect(match_b.matches).to contain_exactly(match_a)
+  end
+
+  describe '#calculate_points' do
+    subject { -> { match.calculate_points } }
+
+    context 'no team has a score' do
+      let(:match) { FactoryBot.build(:match, :empty_points) }
+      it { is_expected.not_to change { match.points_home } }
+      it { is_expected.not_to change { match.points_away } }
+    end
+
+    context 'team home has a higher score' do
+      let(:match) { FactoryBot.create(:match, :empty_points, :with_results) }
+      before(:each) do
+        result = match.game_results.first
+        result.score_home = 1
+        result.score_away = 0
+        result.save!
+      end
+      it { is_expected.to change { match.points_home }.from(nil).to(3) }
+      it { is_expected.to change { match.points_away }.from(nil).to(0)  }
+    end
+
+    context 'team away has a higher score' do
+      let(:match) { FactoryBot.create(:match, :empty_points, :with_results) }
+      before(:each) do
+        result = match.game_results.first
+        result.score_home = 0
+        result.score_away = 1
+        result.save!
+      end
+      it { is_expected.to change { match.points_home }.from(nil).to(0) }
+      it { is_expected.to change { match.points_away }.from(nil).to(3)  }
+    end
+
+    context 'team home and team away have an equal score' do
+      let(:match) { FactoryBot.create(:match, :empty_points, :with_results) }
+      before(:each) do
+        result = match.game_results.first
+        result.score_home = 0
+        result.score_away = 0
+        result.save!
+      end
+      it { is_expected.to change { match.points_home }.from(nil).to(1) }
+      it { is_expected.to change { match.points_away }.from(nil).to(1) }
+    end
   end
 end

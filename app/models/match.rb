@@ -18,34 +18,34 @@
 #
 
 class Match < ApplicationRecord
-  has_many :home_matches, as: :team_home, class_name: 'Match'
-  has_many :away_matches, as: :team_away, class_name: 'Match'
-  def matches
-    home_matches.or away_matches
-  end
   belongs_to :team_home, polymorphic: true
   belongs_to :team_away, polymorphic: true
   belongs_to :event, dependent: :delete
   has_many :game_results, dependent: :delete_all
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
+  has_many :match_results, dependent: :destroy
 
-  def name
-    winner_team = winner
-    if winner_team.present?
-      return winner_team.name
-    end
-    round
-  end
+  after_validation :calculate_points
+
+  validates :points_home, :points_away, numericality: { allow_nil: true }
 
   def depth
-    event.max_match_level - gameday
+    event.finale_gameday - gameday
   end
 
   def round
     key = { 0 => 'zero', 1 => 'one', 2 => 'two', 3 => 'three' }[depth]
     key ||= 'other'
     I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
+  end
+
+  def score_home_total
+    game_results.inject(0) { |sum, result| sum + result.score_home }
+  end
+
+  def score_away_total
+    game_results.inject(0) { |sum, result| sum + result.score_away }
   end
 
   def select_results_by_score(score_comparison)
@@ -58,6 +58,19 @@ class Match < ApplicationRecord
 
   def wins_away
     select_results_by_score(:<).length
+  end
+
+  def has_points?
+    points_home.present? && points_away.present?
+  end
+
+  def has_scores?
+    game_results.each do |result|
+      if result.score_home.present? && result.score_away.present?
+        return true
+      end
+    end
+    return false
   end
 
   def has_winner?
@@ -77,11 +90,11 @@ class Match < ApplicationRecord
   end
 
   def team_home_recursive
-    team_home.winner
+    team_home.advancing_participant
   end
 
   def team_away_recursive
-    team_away.winner
+    team_away.advancing_participant
   end
 
   def is_team_recursive?(team)
@@ -106,5 +119,22 @@ class Match < ApplicationRecord
   def adjust_index_by(offset)
     self.index -= offset
     save!
+  end
+
+  def set_points(home, away)
+    self.points_home = home
+    self.points_away = away
+  end
+
+  def calculate_points
+    return if !has_scores? || has_points?
+
+    if wins_home > wins_away
+      set_points(3, 0)
+    elsif wins_home < wins_away
+      set_points(0, 3)
+    else
+      set_points(1, 1)
+    end
   end
 end

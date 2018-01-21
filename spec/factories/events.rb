@@ -18,6 +18,7 @@
 #  gameday_duration :integer
 #  owner_id         :integer
 #  initial_value    :float
+#  selection_type   :integer          default("fcfs"), not null
 #
 
 FactoryBot.define do
@@ -25,6 +26,7 @@ FactoryBot.define do
     sequence(:name) { |n| "name#{n}" }
     sequence(:description) { |n| "description#{n}" }
     sequence(:discipline) { |n| "discipline#{n}" }
+    selection_type Event.selection_types[Event.selection_types.keys.sample]
     player_type :team
     # game mode is only defined for leagues atm change this and refactor tests once they are streamlined
     game_mode League.game_modes[League.game_modes.keys.sample]
@@ -68,13 +70,8 @@ FactoryBot.define do
       end
     end
 
-    factory :event_with_teams do
-      transient do
-        teams_count 5
-      end
-      after(:create) do |event, evaluator|
-        FactoryBot.create_list(:team, evaluator.teams_count, events: [event])
-      end
+    trait :fcfs do
+      selection_type Event.selection_types[:fcfs]
     end
   end
 end
