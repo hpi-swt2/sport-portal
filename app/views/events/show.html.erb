@@ -81,6 +81,13 @@
     <dt><strong><%= model_class.human_attribute_name(:gameday_duration) %>:</strong></dt>
     <dd><%= @event.gameday_duration %></dd>
   <% end %>
+
+  <dt><strong><%= model_class.human_attribute_name(:organizers) %>:</strong></dt>
+  <dd>
+    <%= safe_join(@event.organizers.map {
+        |organizer| link_to(organizer.user.name, user_path(organizer.user)) }, ", ".html_safe) %>
+  </dd>
+
 </dl>
 
 <div class="table-responsive">
