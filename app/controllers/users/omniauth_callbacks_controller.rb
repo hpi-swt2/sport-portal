@@ -21,7 +21,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if user.persisted?
         sign_in_user user
       else
-        sign_up_user auth
+        sign_up_user auth, user
       end
     end
 
@@ -30,11 +30,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash_if_navigational :notice, :success, provider: 'OpenID'
     end
 
-    def sign_up_user(auth)
+    def sign_up_user(auth, user)
       session['omniauth.data'] = {
         uid: auth.uid,
         provider: auth.provider,
         email: auth.info.email,
+        first_name: auth.info.first_name,
+        last_name: auth.info.last_name,
         expires: Time.current + OMNIAUTH_SESSION_LIFETIME
       }
       redirect_to new_user_registration_path

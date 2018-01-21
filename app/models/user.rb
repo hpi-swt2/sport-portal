@@ -108,6 +108,8 @@ class User < ApplicationRecord
           data = session['omniauth.data']
           user.uid = data['uid']
           user.provider = data['provider']
+          user.first_name = data['first_name'] if user.first_name.blank?
+          user.last_name = data['last_name'] if user.last_name.blank?
           user.email = data['email'] if user.email.blank?
         end
       end
@@ -122,6 +124,9 @@ class User < ApplicationRecord
     def from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
         user.email = auth.info.email
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.password = Devise.friendly_token 32
       end
     end
   end
