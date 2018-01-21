@@ -69,7 +69,7 @@ end
 
 Then(/^the new user should be linked with the account$/) do
   account = single_account
-  user = User.find_by(email: account.info.email)
+  user = User.find_by!(email: account.info.email)
   expect(user.uid).to eq(account[:uid])
   expect(user.provider).to eq(account[:provider])
 end
@@ -195,4 +195,16 @@ end
 Then(/^his email should be '(.*)'$/) do |email|
   single_user.reload
   expect(single_user.email).to eq(email)
+end
+
+Then(/^the new user's first name should be '(.*)'$/) do |first_name|
+  account = single_account
+  user = User.find_by!(email: account.info.email)
+  expect(user.first_name).to eq(first_name)
+end
+
+Then(/^the new user's last name should be '(.*)'$/) do |last_name|
+  account = single_account
+  user = User.find_by!(email: account.info.email)
+  expect(user.last_name).to eq(last_name)
 end
