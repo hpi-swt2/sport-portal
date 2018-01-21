@@ -17,11 +17,6 @@ describe "detailed event page", type: :feature do
       visit event_path(@event)
       expect(page).not_to have_link(:join_event_button)
     end
-
-    it "should display an image" do
-      visit event_path(@event)
-      expect(page).to have_css("img[src='#{@event.image_url}']")
-    end
   end
 
   shared_examples "a single player event" do

@@ -34,7 +34,7 @@ describe 'new event page', type: :feature do
       select League.human_game_mode(:round_robin), from: Event.human_attribute_name(:game_mode)
       select Event.human_player_type(:single), from: Event.human_attribute_name(:player_type)
       fill_in Event.human_attribute_name(:max_teams), with: '5'
-      page.attach_file("event_image", "#{Rails.root}/spec/fixtures/valid_avatar.png")
+      page.attach_file("league_image", "#{Rails.root}/spec/fixtures/valid_avatar.png")
 
       fill_in Event.human_attribute_name(:deadline), with: Date.tomorrow.to_s
       fill_in Event.human_attribute_name(:startdate), with: (Date.tomorrow + 2).to_s
