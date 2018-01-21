@@ -60,9 +60,8 @@ $( document ).on('turbolinks:load', function() {
     });
 
     // Autofill of player count for an event
+    showPlayerCount();
     $("#event_player_type").on("change", showPlayerCount);
-    $("#event_min_players_per_team").hide();
-    $("#event_max_players_per_team").hide();
 
     function showPlayerCount()
     {

@@ -136,14 +136,19 @@ class Event < ApplicationRecord
   end
 
   def fitting_teams(user)
-    fitting_teams = user.owned_teams.multiplayer
-    fitting_teams.each do |team|
-      team_member_count = team.members.count
-      if not (min_players_per_team <= team_member_count && max_players_per_team >= team_member_count)
-        fitting_teams.delete(team)
+    all_teams = user.owned_teams.multiplayer
+    fitting_teams = []
+    all_teams.each do |team|
+      if is_fitting?(team)
+        fitting_teams << team
       end
     end
     fitting_teams
+  end
+
+  def is_fitting?(team)
+    team_member_count = team.members.count
+    min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
   end
 
   class << self

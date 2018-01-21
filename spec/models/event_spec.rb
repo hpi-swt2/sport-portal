@@ -100,21 +100,21 @@ describe 'Event model', type: :model do
       @team.owners << @user
     end
 
-    it "should be possible to join a team event if min/max players per team fits to team size" do
+    it "should be possible to join a team event if the team size fits min/max players per team" do
       @team_event.min_players_per_team = 6
       @team_event.max_players_per_team = 6
 
       expect(@team_event.fitting_teams(@user).count).to be(1)
     end
 
-    it "should be possible to join a team event if min/max players per team fits to team size" do
+    it "should not be possible to join a team event if the team size is smaller than min players per team" do
       @team_event.min_players_per_team = 7
       @team_event.max_players_per_team = 7
 
       expect(@team_event.fitting_teams(@user).count).to be(0)
     end
 
-    it "should be possible to join a team event if min/max players per team fits to team size" do
+    it "should not be possible to join a team event if the team size is bigger than max players per team" do
       @team_event.min_players_per_team = 5
       @team_event.max_players_per_team = 5
 
