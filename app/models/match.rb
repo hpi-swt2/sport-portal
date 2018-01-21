@@ -26,6 +26,9 @@ class Match < ApplicationRecord
 
   validates :points_home, :points_away, numericality: { allow_nil: true }
 
+  extend TimeSplitter::Accessors
+  split_accessor :start_time
+
   def depth
     event.finale_gameday - gameday
   end
