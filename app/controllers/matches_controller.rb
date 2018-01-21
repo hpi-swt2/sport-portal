@@ -20,6 +20,7 @@ class MatchesController < ApplicationController
 
     if @match.save
       redirect_to @match, notice: I18n.t('helpers.flash.created', resource_name: Match.model_name.human).capitalize
+      send_mails_when_scheduled
     else
       render :new
     end
@@ -54,6 +55,13 @@ class MatchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_match
       @match = Match.find(params[:id])
+    end
+
+    def send_mails_when_scheduled
+      players = @match.team_home.members + @match.team_away.members
+      players.each do |user|
+        EventMailer.deliver_match_scheduled(user, @match)
+      end
     end
 
     # Only allow a trusted parameter "white list" through.

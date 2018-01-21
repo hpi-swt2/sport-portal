@@ -5,9 +5,13 @@ class EventMailer < ApplicationMailer
   #
   #   en.event_mailer.match_scheduled.subject
   #
-  def match_scheduled
-    @greeting = "Hi"
+  def match_scheduled(user, match)
+    @user_name = user.name
+    @opponent = match.team_home
+    @event = match.event
+    @date = match.gameday
+    @event_url = events_url(match.event)
 
-    mail to: "to@example.org"
+    mail to: user.email
   end
 end
