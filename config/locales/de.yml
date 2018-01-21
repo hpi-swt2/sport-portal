@@ -284,6 +284,8 @@ de:
       preliminaries: "Vorrunde %{round}"
       to: "bis"
       appointment: "Termin"
+      time: "Zeit"
+      propose_new_appointment: "Neuen Termin vorschlagen"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"

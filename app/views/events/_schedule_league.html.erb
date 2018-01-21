@@ -72,15 +72,15 @@
           <%= form_for match, url: update_start_time_match_path(match), html: {method: "put"} do |f| %>
               <div class="modal-body">
                 <p>
-                  <%= t '.appointment' %>
+                  <%= t 'events.schedule.appointment' %>
                 </p>
                 <%= f.text_field :start_time, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "dd-mm-yyyy" } %>
                 <p>
-                  <%= t '.time'%>
+                  <%= t 'events.schedule.time'%>
                 </p>
                 <%= f.text_field :start_time, :class => 'form-control', :value => time %>
                 <p>
-                  <%= t '.place' %>
+                  <%= t 'events.schedule.place' %>
                 </p>
                 <%= f.text_field :place, :class => 'form-control', :value => match.place %>
               </div>
