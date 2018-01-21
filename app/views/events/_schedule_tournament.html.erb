@@ -70,11 +70,22 @@
                   <p>
                     <%= t 'events.schedule.appointment' %>
                   </p>
-                  <%= f.text_field :start_time, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "dd-mm-yyyy" } %>
+                  <div class="input-group bootstrap-datepicker datepicker">
+                    <%= f.text_field :start_time, :class => 'form-control', :value => date, :data => { :provide => 'datepicker', "date-format" => "dd-mm-yyyy" } %>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                  </div>
                   <p>
-                    <%= t 'events.schedule.time' %>
+                    <%= t '.time'%>
                   </p>
-                  <%= f.text_field :start_time, :class => 'form-control', :value => time %>
+
+                  <div class="input-group bootstrap-timepicker timepicker">
+                    <%= f.text_field :start_time, :class => 'form-control', :value => time, :data => { :provide => 'timepicker' }, :id => "time" %>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                  </div>
+
+                  <script type="text/javascript">
+                      $('#time').timepicker();
+                  </script>
                   <p>
                     <%= t 'events.schedule.place' %>
                   </p>
