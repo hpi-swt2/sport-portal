@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join, :overview]
   authorize_resource :event
 
   RankingEntry = Struct.new(:rank, :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against,
