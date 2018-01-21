@@ -9,8 +9,8 @@
     </tr>
 <% end %>
 <% @matches.each do |match| %>
-    <% if match.gameday != last_gameday %>
-        <% if @event.game_mode == League.game_modes[:two_halfs] && match.gameday == @event.teams.size + 1 %>
+    <% if match.gameday_number != last_gameday %>
+        <% if @event.game_mode == League.game_modes[:two_halfs] && match.gameday_number == @event.teams.size + 1 %>
             <tr class="gameday">
               <th colspan="6">
                 <b>
@@ -22,18 +22,18 @@
         <tr class="gameday">
           <th colspan="6">
             <b>
-              <%= t 'events.schedule.gameday' %> <%= match.gameday %>
+              <%= t 'events.schedule.gameday' %> <%= match.gameday_number %>
             </b>
             <b>
-              <%= "- #{ (@event.startdate_for_gameday match.gameday).to_s(:day_and_month) } " %>
+              <%= "- #{ (@event.startdate_for_gameday match.gameday_number).to_s(:day_and_month) } " %>
               <%= t 'events.schedule.to' %>
-              <%= " #{(@event.enddate_for_gameday match.gameday).to_s(:day_and_month)}" %>
+              <%= " #{(@event.enddate_for_gameday match.gameday_number).to_s(:day_and_month)}" %>
             </b>
             <%= link_to t('events.schedule.edit_date', default: t('helpers.links.edit')),
                         event_schedule_path(@event), class: 'btn btn-default btn-xs' %>
           </th>
         </tr>
-      <% last_gameday = match.gameday %>
+      <% last_gameday = match.gameday_number %>
     <% end %>
   <tr>
     <td><%= match.place %></td>

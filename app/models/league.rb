@@ -45,7 +45,7 @@ class League < Event
       day.each do |pairing|
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
-        matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1)
+        matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday_number: gameday + 1)
       end
     end
     save
@@ -59,9 +59,9 @@ class League < Event
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
         if gameday < teams.size
-          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1)
+          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday_number: gameday + 1)
         else
-          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1)
+          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday_number: gameday + 1)
         end
       end
     end
@@ -83,11 +83,11 @@ class League < Event
     games.map { |game| game.select { |match| !match[1].nil? } }
   end
 
-  def startdate_for_gameday(gameday)
-    ((gameday - 1) * gameday_duration).days.since startdate
+  def startdate_for_gameday(gameday_number)
+    ((gameday_number - 1) * gameday_duration).days.since startdate
   end
 
-  def enddate_for_gameday(gameday)
-    startdate_for_gameday(gameday.next) - 1.day
+  def enddate_for_gameday(gameday_number)
+    startdate_for_gameday(gameday_number.next) - 1.day
   end
 end
