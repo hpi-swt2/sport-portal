@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     member do
       patch :update_points
       put :update_points
+      patch :update_appointment
+      put :update_appointment
     end
   end
 

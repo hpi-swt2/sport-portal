@@ -70,6 +70,10 @@ gem 'jquery-ui-rails'
 # https://github.com/Nerian/bootstrap-datepicker-rails
 gem 'bootstrap-datepicker-rails'
 
+# Use Bootstrap timepicker
+# https://github.com/tispratik/bootstrap-timepicker-rails
+gem 'bootstrap-timepicker-rails'
+
 # Gem to easily split DateTimes
 # https://github.com/shekibobo/time_splitter
 gem "time_splitter"
