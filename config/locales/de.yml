@@ -175,6 +175,7 @@ de:
         deadline: "Anmeldefrist"
         startdate: "Beginn"
         enddate: "Ende"
+        organizers: "Organisatoren"
         duration: "Dauer in Tagen"
         selection_type: "Auswahlverfahren"
         metric: "Metrik"
