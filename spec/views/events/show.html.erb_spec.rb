@@ -12,6 +12,7 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_content(@event.deadline)
       expect(rendered).to have_content(@event.startdate)
       expect(rendered).to have_content(@event.enddate)
+      expect(rendered).to have_content(safe_join(@event.organizers.map { |organizer| organizer.user.name }, ", "))
     end
 
     it "renders an edit button for organizers" do
