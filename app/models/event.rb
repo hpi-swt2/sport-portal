@@ -34,7 +34,7 @@ class Event < ApplicationRecord
   has_many :editors, through: :organizers, source: 'user'
 
   include ImageUploader::Attachment.new(:image)
-  
+
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
   enum selection_type: [:fcfs, :fcfs_queue, :selection]
