@@ -58,5 +58,28 @@ $( document ).on('turbolinks:load', function() {
            $("#event_enddate").val(formattedDate);
        }
     });
+
+    // Autofill of player count for an event
+    showPlayerCount();
+    $("#event_player_type").on("change", showPlayerCount);
+
+    function showPlayerCount()
+    {
+      switch($("#event_player_type").val())
+      {
+        case "single":
+          $("#event_min_players_per_team").hide();
+          $("#event_max_players_per_team").hide();
+          break;
+        case "team":
+          $("#event_min_players_per_team").show();
+          $("#event_max_players_per_team").show();
+          break;
+        default: 
+          $("#event_min_players_per_team").hide();
+          $("#event_max_players_per_team").hide();
+          break;
+      }
+    }
 });
 
