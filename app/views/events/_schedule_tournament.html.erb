@@ -65,7 +65,7 @@
                 <%= t 'events.schedule.propose_new_appointment' %>
               </h4>
             </div>
-            <%= form_for match, url: update_start_time_match_path(match), html: {method: "put"} do |f| %>
+            <%= form_for match, url: update_appointment_match_path(match), html: {method: "put"} do |f| %>
                 <div class="modal-body">
                   <p>
                     <%= t 'events.schedule.appointment' %>

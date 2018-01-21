@@ -44,6 +44,15 @@ class MatchesController < ApplicationController
     end
   end
 
+  def update_appointment
+    path = event_schedule_path(@match.event)
+    if @match.update(match_time_params)
+      redirect_to path, notice: t('success.updated_appointment')
+    else
+      redirect_to path, notice: t('error.update_appointment')
+    end
+  end
+
   # DELETE /matches/1
   def destroy
     @match.destroy
@@ -58,11 +67,15 @@ class MatchesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def match_params
-      params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id)
+      params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id, :start_time)
         .merge(team_home_type: 'Team', team_away_type: 'Team')
     end
 
     def match_points_params
       params.require(:match).permit(:points_home, :points_away)
+    end
+
+    def match_appointment_params
+      params.require(:match).permit(:start_time, :place)
     end
 end
