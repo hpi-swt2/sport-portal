@@ -20,8 +20,8 @@
 class Match < ApplicationRecord
   belongs_to :team_home, polymorphic: true
   belongs_to :team_away, polymorphic: true
-  belongs_to :event, dependent: :delete
-  has_many :game_results, dependent: :delete_all
+  belongs_to :event
+  has_many :game_results, dependent: :destroy
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
@@ -70,7 +70,7 @@ class Match < ApplicationRecord
         return true
       end
     end
-    return false
+    false
   end
 
   def has_winner?

@@ -139,7 +139,7 @@ class EventsController < ApplicationController
       score_away_total = match.score_away_total
       points_home = match.points_home
       points_away = match.points_away
-	  match_has_result = match.has_scores? && match.has_points?
+      match_has_result = match.has_scores? && match.has_points?
       next unless match_has_result
 
       ranking_entry.match_count += 1

@@ -18,7 +18,6 @@
 #
 
 require 'rails_helper'
-require 'byebug'
 
 RSpec.describe Match, type: :model do
   it 'is valid when produced by a factory' do
