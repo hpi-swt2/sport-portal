@@ -20,6 +20,7 @@
 #
 
 require 'rails_helper'
+require 'models/actual_event_examples'
 
 describe 'League model', type: :model do
 
@@ -28,6 +29,8 @@ describe 'League model', type: :model do
     league = FactoryBot.build(:league)
     expect(league).to be_valid
   end
+
+  it_should_behave_like 'an actual event', for_class: :league
 
   describe 'gameday duration' do
     it 'should not validate without it' do
@@ -56,10 +59,10 @@ describe 'League model', type: :model do
     end
   end
   describe 'Generating league schedule with default values' do
-    let(:league) { league = FactoryBot.create(:league_with_teams)
+    let(:league) { league = FactoryBot.create(:league, :with_teams)
                    league.game_mode = League.game_modes[:round_robin]
                    league.generate_schedule
-                   league}
+                   league }
     let(:matches) { league.matches }
     let(:home_teams) { matches.map(&:team_home) }
     let(:away_teams) { matches.map(&:team_away) }
@@ -95,13 +98,13 @@ describe 'League model', type: :model do
       end
     end
 
-    it "uses round robin if its selected" do
+    it 'uses round robin if its selected' do
       # simple round robin has n((n-1)/2) games
       expect(matches.length).to be league.teams.length * ((league.teams.length - 1) / 2)
     end
 
-    it "has double the matches if double round robin is selected" do
-      new_league = FactoryBot.create(:league_with_teams)
+    it 'has double the matches if double round robin is selected' do
+      new_league = FactoryBot.create(:league, :with_teams)
       new_league.game_mode = League.game_modes[:two_halfs]
       new_league.generate_schedule
       # double round robin has n(n-1) games
