@@ -283,6 +283,7 @@ de:
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
       to: "bis"
+      appointment: "Termin"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
