@@ -18,6 +18,9 @@ RSpec.describe "matches/show", type: :view do
   it "renders correct link for a match of matches" do
     @match.team_home = FactoryBot.create :match
     @match.team_away = FactoryBot.create :match
+
+    FactoryBot.create :game_result, { score_home: 10, score_away: 5, match: @match.team_home }
+    FactoryBot.create :game_result, { score_home: 10, score_away: 5, match: @match.team_away }
     render
 
     expect(rendered).to have_css("a[href='#{match_path(@match.team_home)}']", count: 1)

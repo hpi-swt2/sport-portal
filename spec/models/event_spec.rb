@@ -105,4 +105,11 @@ describe 'Event model', type: :model do
     event = FactoryBot.build :event
     expect { event.generate_schedule }.to raise_error NotImplementedError
   end
+
+  it "has a method called max_match_level" do
+    pending("Method max_match_level has to be implemented")
+    event = FactoryBot.build :event
+    event.max_match_level
+  end
+
 end

@@ -49,7 +49,7 @@ class Match < ApplicationRecord
   end
 
   def select_results_by_score(score_comparison)
-    game_results.select { |current_result| (current_result.score_home.nil? || current_result.score_away.nil?) ? false : send(score_comparison, current_result.score_home, current_result.score_away) }
+    game_results.select { |current_result| (current_result.score_home.nil? || current_result.score_away.nil?) ? false : current_result.score_home.send(score_comparison, current_result.score_away) }
   end
 
   def wins_home
@@ -66,13 +66,13 @@ class Match < ApplicationRecord
 
   def winner
     if has_winner?
-      wins_home > wins_away
+      wins_home > wins_away ? team_home_recursive : team_away_recursive
     end
   end
 
   def loser
     if has_winner?
-      wins_home < wins_away
+      wins_home < wins_away ? team_home_recursive : team_away_recursive
     end
   end
 
