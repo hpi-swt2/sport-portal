@@ -23,13 +23,15 @@ class Team < ApplicationRecord
   has_many :owners, through: :team_owners, source: :user
 
   has_one :participant, as: :particable
+  after_create :add_participant
+
+  validates :participant, presence: true
 
   # validates :owners, presence: true
   # validates :members, presence: true
 
-  def initialize(*args)
-    participant = Participant.new
-    super
+  def add_participant
+    self.participant = Participant.new
   end
 
   def has_multiple_owners?
