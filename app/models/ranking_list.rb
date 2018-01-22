@@ -1,3 +1,4 @@
+# Contains logic for calculating an array containing ranking entries out of an array of teams and matches.
 class RankingList
   def initialize(teams, matches)
     @teams = teams
