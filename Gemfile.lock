@@ -390,7 +390,7 @@ DEPENDENCIES
   materialize-sass
   omniauth
   omniauth-openid
-  pg
+  pg (~> 0.21.0)
   pry
   pry-rails
   pry-rescue
@@ -416,4 +416,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

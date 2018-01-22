@@ -24,11 +24,13 @@ FactoryBot.define do
     sequence(:name) { |n| "name#{n}" }
     sequence(:description) { |n| "description#{n}" }
     sequence(:discipline) { |n| "discipline#{n}" }
+    selection_type Event.selection_types[Event.selection_types.keys.sample]
     player_type :team
     # game mode is only defined for leagues atm change this and refactor tests once they are streamlined
     game_mode League.game_modes[League.game_modes.keys.sample]
     max_teams { rand(1..30) }
-
+    min_players_per_team 1
+    max_players_per_team 1
     association :owner, factory: :user, strategy: :build
 
     trait :has_dates do
@@ -50,6 +52,8 @@ FactoryBot.define do
     end
 
     trait :with_teams do
+      min_players_per_team 11
+      max_players_per_team 15
       transient do
         teams_count 5
       end
@@ -67,13 +71,8 @@ FactoryBot.define do
       end
     end
 
-    factory :event_with_teams do
-      transient do
-        teams_count 5
-      end
-      after(:create) do |event, evaluator|
-        FactoryBot.create_list(:team, evaluator.teams_count, events: [event])
-      end
+    trait :fcfs do
+      selection_type Event.selection_types[:fcfs]
     end
   end
 end
