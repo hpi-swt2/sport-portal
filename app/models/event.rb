@@ -34,6 +34,7 @@ class Event < ApplicationRecord
   validates :name, :discipline, :game_mode, :player_type,  presence: true
 
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
 
   enum player_type: [:single, :team]
 
@@ -133,6 +134,22 @@ class Event < ApplicationRecord
 
   def human_game_mode
     self.class.human_game_mode game_mode
+  end
+
+  def fitting_teams(user)
+    all_teams = user.owned_teams.multiplayer
+    fitting_teams = []
+    all_teams.each do |team|
+      if is_fitting?(team)
+        fitting_teams << team
+      end
+    end
+    fitting_teams
+  end
+
+  def is_fitting?(team)
+    team_member_count = team.members.count
+    min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
   end
 
   class << self
