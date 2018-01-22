@@ -29,7 +29,8 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  enum selection_type: [:fcfs, :fcfs_queue, :selection]
+  # fcfs_queue and selection should be added in the future
+  enum selection_type: [:fcfs]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
 
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
@@ -103,7 +104,7 @@ class Event < ApplicationRecord
   end
 
   def can_join_fcfs?
-    team_slot_available? && selection_type == 0
+    team_slot_available? && selection_type == 'fcfs'
   end
 
   def can_leave?(user)
