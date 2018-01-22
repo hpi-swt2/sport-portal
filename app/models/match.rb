@@ -42,11 +42,7 @@ class Match < ApplicationRecord
   def has_points?
     points_home.present? && points_away.present?
   end
-
-  def has_scores?
-    score_home.present? && score_away.present?
-  end
-
+  
   def has_winner?
     has_points? && points_home != points_away
   end
@@ -100,10 +96,16 @@ class Match < ApplicationRecord
     self.points_away = away
   end
 
-  def calculate_points
-    return if !has_scores? || has_points?
+  def score_changed?
+    score_home_changed? || score_away_changed?
+  end
 
-    if score_home > score_away
+  def calculate_points
+    return unless score_changed?
+
+    if score_home.blank? || score_away.blank?
+      set_points(nil, nil)
+    elsif score_home > score_away
       set_points(3, 0)
     elsif score_home < score_away
       set_points(0, 3)

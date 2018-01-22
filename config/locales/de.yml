@@ -179,6 +179,8 @@ de:
         selection_type: "Auswahlverfahren"
         metric: "Metrik"
         initial_value: "Anfangswert"
+        min_players_per_team: "Min. Anzahl Spieler pro Team"
+        max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
           single: "Einzelteilnahme"
