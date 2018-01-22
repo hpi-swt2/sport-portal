@@ -87,6 +87,18 @@ a:link, a:visited, a:hover, a:active {
     min-width: 250px;
 }
 
+a.openIdButton {
+    margin-top: 1rem;
+    color: white;
+    height: auto;
+    padding: 8px 32px;
+}
+
+a.openIdButton:hover {
+    color: white;
+    background: #1CC3FF;
+}
+
 /* Mobile/desktop dependent: */
 
 @media screen and (min-width: 480px) {
