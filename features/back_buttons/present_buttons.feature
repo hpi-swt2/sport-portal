@@ -3,7 +3,7 @@ Feature: Working-"back" buttons
   I want to have working "back" buttons
   In order to navigate through the platform easily
 
-  Scenario: Visit show overview page
+  Scenario: Visit all pages
     Given a user
     And the user is logged in
     And a tournament 'MyTournament' with 4 teams
