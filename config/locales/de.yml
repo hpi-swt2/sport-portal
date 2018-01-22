@@ -119,6 +119,8 @@ de:
       match:
         one: "Spiel"
         other: "Spiele"
+        errors:
+          score_proposer_confirmer_team: "Die Bestätigung von Ergebnissen muss durch einen Spieler des anderen Teams erfolgen."
       team:
         one: "Team"
         other: "Teams"

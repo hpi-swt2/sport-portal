@@ -9,6 +9,8 @@
 #  description   :text
 #  kind_of_sport :string
 #  private       :boolean
+#  single        :boolean          default(FALSE)
+#  avatar_data   :text
 #
 
 require 'rails_helper'

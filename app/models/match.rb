@@ -2,18 +2,24 @@
 #
 # Table name: matches
 #
-#  id           :integer          not null, primary key
-#  place        :string
-#  score_home   :integer
-#  score_away   :integer
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  team_home_id :integer
-#  team_away_id :integer
-#  event_id     :integer
-#  points_home  :integer
-#  points_away  :integer
-#  gameday      :integer
+#  id                  :integer          not null, primary key
+#  place               :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  team_home_id        :integer
+#  team_away_id        :integer
+#  event_id            :integer
+#  points_home         :integer
+#  points_away         :integer
+#  gameday             :integer
+#  team_home_type      :string           default("Team")
+#  team_away_type      :string           default("Team")
+#  index               :integer
+#  start_time          :datetime
+#  proposed_score_home :integer
+#  proposed_score_away :integer
+#  proposed_by_id      :integer
+#  confirmed_by_id     :integer
 #
 
 class Match < ApplicationRecord
@@ -107,5 +113,26 @@ class Match < ApplicationRecord
     else
       set_points(1, 1)
     end
+  end
+
+  def propose_scores(user, score_home, score_away)
+    self.proposed_score_home = score_home
+    self.proposed_score_away = score_away
+    self.scores_proposed_by = user
+  end
+
+  def confirm_proposed_scores(user)
+    return unless self.scores_proposed_by.team == user.team
+    errors.add(:scores_confirmed_by, I18n.t('activerecord.models.match.errors.score_proposer_confirmer_team'))
+
+    self.score_home = self.proposed_score_home
+    self.score_away = self.proposed_score_away
+    self.proposed_score_home = nil
+    self.proposed_score_away = nil
+  end
+
+  def reject_proposed_scores(user)
+    self.proposed_score_home = nil
+    self.proposed_score_away = nil
   end
 end

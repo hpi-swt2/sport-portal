@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :destroy]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :destroy, :propose_scores, :confirm_proposed_scores, :reject_proposed_scores]
 
   # GET /matches/1
   def show
@@ -50,7 +50,29 @@ class MatchesController < ApplicationController
     redirect_to event_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
 
+  def propose_scores
+    score_home = match_propose_score_params[:match][:score_home]
+    score_away = match_propose_score_params[:match][:score_away]
+    @match.propose_scores(current_user, score_home, score_away)
+    redirect_back(fallback_location: '')
+  end
+
+  def confirm_proposed_scores
+    @match.confirm_scores(current_user)
+    redirect_back(fallback_location: '')
+  end
+
+  def reject_proposed_scores
+    @match.dismiss_scores(current_user)
+    redirect_back(fallback_location: '')
+  end
+
   private
+
+    def match_propose_score_params
+      params.require(:match).permit(:proposed_score_home, :proposed_score_away)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_match
       @match = Match.find(params[:id])
