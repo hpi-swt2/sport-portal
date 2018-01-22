@@ -50,6 +50,10 @@
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit t('view.user.update_profile'), class: 'btn btn-primary' %>
+      <%= link_to t('helpers.links.back'),
+                  root_path,
+                  class: 'btn btn-default'%>
     </div>
   </div>
 <% end %>
+

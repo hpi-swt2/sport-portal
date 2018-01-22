@@ -18,3 +18,7 @@
     <%= render ('schedule_' + @schedule_type), back_path: events_path %>
   </tbody>
 </table>
+
+<%= link_to t('helpers.links.back'),
+            event_path(@event),
+            class: 'btn btn-default'%>
