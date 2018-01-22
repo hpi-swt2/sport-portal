@@ -26,7 +26,5 @@ class RankingList
     @ranking_entries.each_with_index do |ranking_entry, index|
       ranking_entry.rank = index + 1
     end
-    # todo unnecessary return?
-    return @ranking_entries
   end
 end
