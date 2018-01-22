@@ -29,9 +29,11 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  validates :name, :discipline, :game_mode, :player_type,  presence: true
+  enum selection_type: [:fcfs, :fcfs_queue, :selection]
+  validates :name, :discipline, :game_mode, :player_type, presence: true
 
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
 
   enum player_type: [:single, :team]
 
@@ -101,6 +103,10 @@ class Event < ApplicationRecord
     (not has_participant?(user)) && team_slot_available?
   end
 
+  def can_join_fcfs?
+    team_slot_available? && selection_type == 'fcfs'
+  end
+
   def can_leave?(user)
     has_participant?(user)
   end
@@ -117,6 +123,10 @@ class Event < ApplicationRecord
   #end
   #end
 
+  def human_selection_type
+    self.class.human_selection_type selection_type
+  end
+
   def human_player_type
     self.class.human_player_type player_type
   end
@@ -125,7 +135,27 @@ class Event < ApplicationRecord
     self.class.human_game_mode game_mode
   end
 
+  def fitting_teams(user)
+    all_teams = user.owned_teams.multiplayer
+    fitting_teams = []
+    all_teams.each do |team|
+      if is_fitting?(team)
+        fitting_teams << team
+      end
+    end
+    fitting_teams
+  end
+
+  def is_fitting?(team)
+    team_member_count = team.members.count
+    min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
+  end
+
   class << self
+    def human_selection_type(type)
+      I18n.t("activerecord.attributes.event.selection_types.#{type}")
+    end
+
     def human_player_type(type)
       I18n.t("activerecord.attributes.event.player_types.#{type}")
     end

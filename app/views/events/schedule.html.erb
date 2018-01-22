@@ -6,6 +6,9 @@
 <table class="matches-table table" id="matches-table">
   <thead>
     <tr>
+      <% if @schedule_type == 'tournament' %>
+        <th></th>
+      <% end %>
       <th><%= t '.place' %></th>
       <th><%= t '.home' %></th>
       <th><%= t '.away' %></th>

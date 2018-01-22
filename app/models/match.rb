@@ -22,8 +22,12 @@ class Match < ApplicationRecord
   belongs_to :event, dependent: :delete
   has_many :match_results, dependent: :destroy
 
+  after_validation :calculate_points
+
+  validates :points_home, :points_away, numericality: { allow_nil: true }
+
   def depth
-    event.max_match_level - gameday
+    event.finale_gameday - gameday
   end
 
   def round
@@ -32,8 +36,12 @@ class Match < ApplicationRecord
     I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
   end
 
+  def has_points?
+    points_home.present? && points_away.present?
+  end
+  
   def has_winner?
-    points_home.present? && points_away.present? && points_home != points_away
+    has_points? && points_home != points_away
   end
 
   def winner
@@ -78,5 +86,28 @@ class Match < ApplicationRecord
   def adjust_index_by(offset)
     self.index -= offset
     save!
+  end
+
+  def set_points(home, away)
+    self.points_home = home
+    self.points_away = away
+  end
+
+  def score_changed?
+    score_home_changed? || score_away_changed?
+  end
+
+  def calculate_points
+    return unless score_changed?
+
+    if score_home.blank? || score_away.blank?
+      set_points(nil, nil)
+    elsif score_home > score_away
+      set_points(3, 0)
+    elsif score_home < score_away
+      set_points(0, 3)
+    else
+      set_points(1, 1)
+    end
   end
 end

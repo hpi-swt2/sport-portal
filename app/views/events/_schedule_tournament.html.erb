@@ -9,7 +9,9 @@
   <tr class="gameday">
     <th colspan="6">
       <b>
-        <% if this_level_matches[0].depth == 0 %>
+        <% if this_level_matches[0].depth == -1 %>
+          <%= t('events.schedule.place_3_match') %>
+        <% elsif this_level_matches[0].depth == 0 %>
           <%= t('events.schedule.finale') %>
         <% elsif this_level_matches[0].depth == 1 %>
           <%= t('events.schedule.semifinale') %>
@@ -27,7 +29,8 @@
   <% this_level_matches.each do |match| %>
 
     <tr>
-      <td><%= match.place %> <%= match.index %></td>
+      <td><%= match.index %></td>
+      <td><%= match.place %></td>
       <td><%= link_to_participant match.team_home %></td>
       <td><%= link_to_participant match.team_away %></td>
       <td>
@@ -37,9 +40,9 @@
       </td>
       <td>
         <%= form_for match, url: update_points_match_path(match), html: {method: "put"}, namespace: "match_#{match.id}" do |f| %>
-          <%= f.text_field :points_home, class: 'input-sm', style: 'width: 50px' %>
+          <%= f.number_field :points_home, class: 'input-sm', style: 'width: 50px' %>
           :
-          <%= f.text_field :points_away, class: 'input-sm', style: 'width: 50px' %>
+          <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
           <%= f.submit t('helpers.links.save'), class: 'btn btn-default btn-xs', id: "save_points_#{match.id}" %>
         <% end %>
       </td>

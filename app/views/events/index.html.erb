@@ -51,9 +51,13 @@
             <%= link_to t('.join', default: t("helpers.links.join")),
                         team_join_event_path(event),
                         remote: true, data: {toggle: "modal", target: "modal-window"},
-                        class: 'btn btn-xs btn-default',
+                        class: 'btn btn-xs btn-default trigger-modal',
                         id: :join_event_button %>
           <% end %>
+        <% end %>
+
+        <% if !event.can_join_fcfs? %>
+          <%= t('events.full') %>
         <% end %>
 
         <% if can? :edit, event %>
@@ -81,9 +85,4 @@
   </div>
 </form>
 
-<div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    </div>
-  </div>
-</div>
+<div id="modal-window" class="modal modal-fixed-footer" aria-labelledby="myModalLabel"></div>
