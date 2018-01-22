@@ -13,7 +13,7 @@
   <div class="form-group">
     <%= f.label :team_home_id, for: "team_home_id", :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <% if current_user!=nil and current_user.admin==true %>
+      <% if current_user&.admin? %>
       <%= f.collection_select :team_home_id, Team.all, :id, :name,
                               {selected: @match.team_home_id, include_blank: '---'},
                                :class => 'form-control'  %>
@@ -30,7 +30,7 @@
   <div class="form-group">
     <%= f.label :team_away_id, for: "team_away_id", :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-       <% if current_user!=nil and current_user.admin==true %>
+       <% if current_user&.admin? %>
       <%= f.collection_select :team_away_id, Team.all, :id, :name,
                               {selected: @match.team_away_id, include_blank: '---'},
                                :class => 'form-control'  %>
