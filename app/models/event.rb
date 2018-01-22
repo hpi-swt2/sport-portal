@@ -152,6 +152,10 @@ class Event < ApplicationRecord
     min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
   end
 
+  def get_ranking
+    RankingList.new(teams, matches).getRanking()
+  end
+
   class << self
     def human_selection_type(type)
       I18n.t("activerecord.attributes.event.selection_types.#{type}")
