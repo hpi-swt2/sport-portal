@@ -13,6 +13,16 @@
     </div>
 
     <div class="row">
+      <div class="col s6 offset-s3 center text">
+        <div class="divider-with-text">
+          <hr/>
+          <span><%= t('helpers.select.option_operator') %></span>
+          <hr/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="<%= if flash[:alert].present? then "input-field-error input-field" else "input-field" end%> col s6 offset-s3">
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true %>
