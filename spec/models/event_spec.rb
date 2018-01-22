@@ -78,4 +78,54 @@ describe 'Event model', type: :model do
     # But it is the only way I know of right now to somewhat document that this has to be implemented by subclasses.
     expect { event.generate_schedule }.to raise_error NotImplementedError
   end
+
+  it "should have the attributes min and max players per team" do
+    expect(event).to be_valid
+    event.min_players_per_team = nil
+    event.max_players_per_team = nil
+    expect(event).not_to be_valid
+  end
+
+  it "min players per team = max players per team = 1 if it is a single player event" do
+    single_player_event = FactoryBot.build :event, :single_player
+    expect(single_player_event.min_players_per_team).to eq(1)
+    expect(single_player_event.max_players_per_team).to eq(1)
+  end
+
+  it "should not be possible, that the min playercount per team is higher than the max playercount" do
+    team_event = FactoryBot.build :event, :with_teams
+    team_event.min_players_per_team = 15
+    team_event.max_players_per_team = 11
+    expect(team_event).not_to be_valid
+  end
+
+  context "with team event" do
+    before :each do
+      @team_event = FactoryBot.create :event, :with_teams
+      @team = FactoryBot.create :team, :with_five_members
+      @user = FactoryBot.create :user
+      @team.owners << @user
+    end
+
+    it "should be possible to join a team event if the team size fits min/max players per team" do
+      @team_event.min_players_per_team = 6
+      @team_event.max_players_per_team = 6
+
+      expect(@team_event.fitting_teams(@user).count).to be(1)
+    end
+
+    it "should not be possible to join a team event if the team size is smaller than min players per team" do
+      @team_event.min_players_per_team = 7
+      @team_event.max_players_per_team = 7
+
+      expect(@team_event.fitting_teams(@user).count).to be(0)
+    end
+
+    it "should not be possible to join a team event if the team size is bigger than max players per team" do
+      @team_event.min_players_per_team = 5
+      @team_event.max_players_per_team = 5
+
+      expect(@team_event.fitting_teams(@user).count).to be(0)
+    end
+  end
 end

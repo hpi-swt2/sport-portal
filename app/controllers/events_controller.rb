@@ -37,7 +37,6 @@ class EventsController < ApplicationController
   def create
     @event = event_type.new(event_params)
     set_associations
-
     if @event.save
       @event.editors << current_user
       redirect_to @event, notice: 'Event was successfully created.'
@@ -60,6 +59,7 @@ class EventsController < ApplicationController
     @event.destroy
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
+
 
   # PUT /events/1/join
   def join
@@ -184,6 +184,10 @@ class EventsController < ApplicationController
     def set_associations
       @event.owner = current_user
       @event.player_type ||= Event.player_types[:single]
+      if @event.player_type == Event.player_types[:single] || @event.type == 'Rankinglist'
+        @event.min_players_per_team = 1
+        @event.max_players_per_team = 1
+      end
     end
 
     # Get the type of event that should be created
@@ -225,6 +229,8 @@ class EventsController < ApplicationController
                                     :teams,
                                     :enddate,
                                     :initial_value,
+                                    :min_players_per_team,
+                                    :max_players_per_team,
                                     :gameday_duration,
                                     :image,
                                     :remove_image,

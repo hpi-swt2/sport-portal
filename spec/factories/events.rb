@@ -36,7 +36,8 @@ FactoryBot.define do
     # game mode is only defined for leagues atm change this and refactor tests once they are streamlined
     game_mode League.game_modes[League.game_modes.keys.sample]
     max_teams { rand(1..30) }
-
+    min_players_per_team 1
+    max_players_per_team 1
     association :owner, factory: :user, strategy: :build
 
     trait :has_dates do
@@ -58,6 +59,8 @@ FactoryBot.define do
     end
 
     trait :with_teams do
+      min_players_per_team 11
+      max_players_per_team 15
       transient do
         teams_count 5
       end
