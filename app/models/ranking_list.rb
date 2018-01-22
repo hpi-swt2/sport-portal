@@ -5,7 +5,7 @@ class RankingList
     @ranking_entries = []
   end
 
-  def getRanking
+  def get_ranking
     # Leaves the Array of RankingEntries empty when no teams participate in the event
     @teams.each do |team|
       # Considers only the team's away matches that belong to this ranking list
