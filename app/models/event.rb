@@ -28,6 +28,7 @@ class Event < ApplicationRecord
   has_many :editors, through: :organizers, source: 'user'
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
+  scope :started, -> { where('startdate >= ? OR type = ?', Date.current, "Rankinglist") }
 
   enum selection_type: [:fcfs, :fcfs_queue, :selection]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
@@ -112,6 +113,10 @@ class Event < ApplicationRecord
 
   def can_leave?(user)
     has_participant?(user)
+  end
+
+  def can_delete?(user)
+    (user.id === owner_id)
   end
 
   def standing_of(team)

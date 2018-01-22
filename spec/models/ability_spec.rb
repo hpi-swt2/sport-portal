@@ -145,7 +145,7 @@ RSpec.describe Ability, type: :model do
   end
 
   it 'should allow users to crud events they created' do
-    event = Event.new(owner: @user)
+    event = FactoryBot.create(:event, :has_dates, owner_id: @user.id)
     ability = Ability.new(@user)
     expect(ability).to be_able_to([:create, :read, :update, :destroy], event)
   end

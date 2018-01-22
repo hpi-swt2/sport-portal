@@ -30,7 +30,7 @@ RSpec.describe EventsController, type: :controller do
   # adjust the attributes here as well.
 
   let(:valid_event_attributes) {
-    FactoryBot.build(:event, owner: @user, max_teams: 20).attributes
+    FactoryBot.build(:event, :has_dates, owner: @user, max_teams: 20).attributes
   }
 
   let(:invalid_event_attributes) {

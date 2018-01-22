@@ -53,9 +53,10 @@ class Ability
       cannot :create, User
 
       # Event
-      can [:create, :read, :update, :destroy], Event, owner_id: user_id
+      can [:create, :read, :update], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
+      can_delete_event(user)
       can :ranking, Event
       can [:schedule, :team_join], Event
 
@@ -81,6 +82,12 @@ class Ability
     def can_leave_event(user)
       can :leave, Event do |event|
         event.can_leave?(user)
+      end
+    end
+
+    def can_delete_event(user)
+      can :destroy, Event.started do |event|
+        event.can_delete?(user)
       end
     end
 
