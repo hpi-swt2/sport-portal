@@ -30,7 +30,7 @@ class Event < ApplicationRecord
   has_and_belongs_to_many :teams
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
-  has_many :gamedays, dependent: :destroy
+  has_many :gamedays, dependent: :delete_all
 
   include ImageUploader::Attachment.new(:image)
 
