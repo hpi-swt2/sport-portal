@@ -24,6 +24,16 @@ class Match < ApplicationRecord
 
   after_validation :calculate_points
 
+  after_create :send_mails_when_scheduled
+ 
+  def send_mails_when_scheduled
+    self.team_away.members
+    players = self.team_home.members + self.team_away.members
+    players.each do |user|
+      # EventMailer.deliver_match_scheduled(user, @match)
+    end
+  end
+
   validates :points_home, :points_away, numericality: { allow_nil: true }
 
   def depth

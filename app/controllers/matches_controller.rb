@@ -57,13 +57,6 @@ class MatchesController < ApplicationController
       @match = Match.find(params[:id])
     end
 
-    def send_mails_when_scheduled
-      players = @match.team_home.members + @match.team_away.members
-      players.each do |user|
-        EventMailer.deliver_match_scheduled(user, @match)
-      end
-    end
-
     # Only allow a trusted parameter "white list" through.
     def match_params
       params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id)
