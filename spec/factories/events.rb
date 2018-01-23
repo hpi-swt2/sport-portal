@@ -71,6 +71,18 @@ FactoryBot.define do
       end
     end
 
+    trait :with_users do
+      transient do
+        user_count 5
+      end
+      after(:create) do |event, evaluator|
+        users = FactoryBot.create_list(:user, evaluator.user_count)
+        users.each do |user|
+          event.add_participant user
+        end
+      end
+    end
+
     trait :fcfs do
       selection_type Event.selection_types[:fcfs]
     end
