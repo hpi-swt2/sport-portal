@@ -112,6 +112,16 @@ describe 'League model', type: :model do
 
     context 'double round robin' do
       let(:gamemode){League.game_modes[:two_halfs]}
+      it 'creates the right amount of gamedays' do
+        expect(league.gamedays.length).to eq 10
+      end
+
+      it 'does only let half as many matches as teams play per gameday' do
+        10.times do |gameday|
+          expect(league.gamedays[gameday].matches.length).to eq 2
+        end
+      end
+
       it 'has double the matches if double round robin is selected' do
         # double round robin has n(n-1) games
         expect(league.matches.length).to eq(league.teams.length * (league.teams.length - 1))

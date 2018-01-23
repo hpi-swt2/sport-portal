@@ -58,15 +58,20 @@ class League < Event
   def calculate_two_halfs
     pairings_per_day = round_robin_pairings teams.to_a
     pairings_per_day += round_robin_pairings teams.to_a
-    pairings_per_day.each_with_index do |day, gameday|
+    pairings_per_day.each_with_index do |day, gameday_number|
+      gameday = Gameday.new(description: gameday_number.to_s, starttime: startdate_for_gameday(gameday_number), endtime: enddate_for_gameday(gameday_number))
+      gamedays << gameday
       day.each do |pairing|
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
-        if gameday < teams.size
-          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday_number: gameday + 1)
+        match = nil
+        if gameday_number < teams.size
+          match = Match.new(team_home: pairing[0], team_away: pairing[1], gameday_number: gameday_number + 1)
         else
-          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday_number: gameday + 1)
+          match = Match.new(team_home: pairing[1], team_away: pairing[0], gameday_number: gameday_number + 1)
         end
+        matches << match
+        gameday.matches << match
       end
     end
     save
