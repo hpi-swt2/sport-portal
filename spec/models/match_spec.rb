@@ -42,6 +42,18 @@ RSpec.describe Match, type: :model do
       it { is_expected.not_to change { match.points_away } }
     end
 
+    context 'only team home has a score' do
+      let(:match) { FactoryBot.build(:match, :empty_points, score_home: 1, score_away: nil) }
+      it { is_expected.not_to change { match.points_home } }
+      it { is_expected.not_to change { match.points_away } }
+    end
+
+    context 'only team away has a score' do
+      let(:match) { FactoryBot.build(:match, :empty_points, score_home: nil, score_away: 1) }
+      it { is_expected.not_to change { match.points_home } }
+      it { is_expected.not_to change { match.points_away } }
+    end
+
     context 'team home has a higher score' do
       let(:match) { FactoryBot.build(:match, :empty_points, score_home: 1, score_away: 0) }
       it { is_expected.to change { match.points_home }.from(nil).to(3) }
@@ -58,6 +70,18 @@ RSpec.describe Match, type: :model do
       let(:match) { FactoryBot.build(:match, :empty_points, score_home: 1, score_away: 1) }
       it { is_expected.to change { match.points_home }.from(nil).to(1) }
       it { is_expected.to change { match.points_away }.from(nil).to(1) }
+    end
+
+    context 'team home and team away have scores' do
+      let!(:match) { FactoryBot.create(:match, :with_home_winning) }
+
+      before(:each) do
+        match.score_home = 0
+        match.score_away = 1
+      end
+
+      it { is_expected.to change { match.points_home }.from(3).to(0) }
+      it { is_expected.to change { match.points_away }.from(0).to(3) }
     end
   end
 end

@@ -356,7 +356,7 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
-  #this test is only for leagues
+
   describe "GET League#schedule" do
     it "should generate schedule if not existing" do
       event = League.create! valid_league_attributes
@@ -512,5 +512,4 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to be_success
     end
   end
-
 end
