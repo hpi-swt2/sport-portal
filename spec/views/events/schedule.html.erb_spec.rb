@@ -4,11 +4,12 @@ RSpec.describe 'events/schedule', type: :view do
 
   describe 'page layout' do
     before :each do
-      @league = FactoryBot.create(:league, :with_matches,
+      @league = FactoryBot.create(:league, :with_teams,
                                   deadline: Date.parse('23.12.2017'),
                                   startdate: Date.parse('24.12.2017'),
                                   enddate: Date.parse('31.12.2017'),
                                   gameday_duration: 7)
+      @league.generate_schedule
       assign(:event, @league)
       assign(:schedule_type, 'league')
       assign(:matches, @league.matches)
