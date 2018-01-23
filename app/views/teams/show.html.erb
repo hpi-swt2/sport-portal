@@ -145,12 +145,38 @@
       </div>
       <div class="row">
         <% if @team.members.include? current_user %>
-            <!-- logic not ready yet to put real buttons here -->
+            <!--
+              The following code should apply an action to multiple participants.
+              Nevertheless the email of a specific member seems to get passed only, instead of a method that looks up all selected checkboxes.
+              The same applies to the other three buttons.
+            -->
+
             <div class="col s12">
-              <!--<a href="#" class="genericButton blueActionButton"><%= t('.email', :default => t("helpers.links.email")) %></a>
-              <a href="#" class="genericButton blueActionButton"><%= t('.delete_ownership', :default => t("helpers.links.delete_ownership")) %></a>
-              <a href="#" class="genericButton blueActionButton"><%= t('.assign_ownership', :default => t("helpers.links.assign_ownership")) %></a>
-              <a href="#" class="genericButton blueActionButton"><%= t('.delete_membership', :default => t("helpers.links.delete_membership")) %></a>-->
+              <% if can? :send_emails_to_team_members, @team %>
+                  <%= mail_to member.email,
+                              t('.email', :default => t("helpers.links.email")),
+                              :class => 'btn btn-default btn-xs genericButton blueActionButton' %>
+              <% end %>
+              <% if @team.owners.include? member %>
+                  <%= link_to t('.delete_ownership', :default => t("helpers.links.delete_ownership")),
+                              delete_ownership_team_path(@team, :team_member => member.id),
+                              :method => 'post',
+                              :class => 'btn btn-default btn-xs genericButton blueActionButton',
+                              :disabled => (cannot? :delete_ownership, @team) %>
+              <% else %>
+                  <%= link_to t('.assign_ownership', :default => t("helpers.links.assign_ownership")),
+                              assign_ownership_team_path(@team, :team_member => member.id),
+                              :method => 'post',
+                              :class => 'btn btn-default btn-xs genericButton blueActionButton',
+                              :disabled => (cannot? :assign_ownership, @team)%>
+              <% end %>
+              <% if !member.id.equal? current_user.id %>
+                  <%= link_to t('.delete_membership', :default => t("helpers.links.delete_membership")),
+                              delete_membership_team_path(@team, :team_member => member.id),
+                              :method => 'post',
+                              :class => 'btn btn-xs btn-danger genericButton blueActionButton',
+                              :disabled => (cannot? :delete_membership, @team, member.id)%>
+              <% end %>
             </div>
         <% end %>
       </div>
