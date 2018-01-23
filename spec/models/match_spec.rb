@@ -66,4 +66,48 @@ RSpec.describe Match, type: :model do
       it { is_expected.to change { match.points_away }.from(nil).to(1) }
     end
   end
+
+  describe '#propose_scores' do
+    let(:score_home) { 2 }
+    let(:score_away) { 1 }
+    let(:user) { FactoryBot.create(:user) }
+
+    subject { -> { match.propose_scores(user, score_home, score_away) } }
+
+    it 'should accept a proposal from a user of one of the teams' do
+
+    end
+
+    it 'not should accept a proposal from a user of arbitary team' do
+
+    end
+  end
+
+  describe '#confirm_proposed_scores' do
+    let(:user) { FactoryBot.create(:user) }
+
+    subject { -> { match.confirm_proposed_scores(user) } }
+
+    it 'cannot be confirmed from user of the same team' do
+
+    end
+
+    it 'can be confirmed from user of the other team' do
+
+    end
+  end
+  
+  describe '#reject_proposed_scores' do
+    let(:user) { FactoryBot.create(:user) }
+
+    subject { -> { match.reject_proposed_scores(user) } }
+
+    it 'cannot be rejected from user of the same team' do
+
+    end
+
+    it 'can be rejected from user of the other team' do
+
+    end
+  end
 end
