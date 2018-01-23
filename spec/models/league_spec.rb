@@ -67,7 +67,7 @@ describe 'League model', type: :model do
     league.game_mode = gamemode
     league.generate_schedule
     league }
-    let(:matches) { league.matches }
+    let(:matches) { league.all_matches }
     let(:home_teams) { matches.map(&:team_home) }
     let(:away_teams) { matches.map(&:team_away) }
     #The following line creates a hash in this matter {team=> occurrences of team} i.e. {Team:1 => 2, Team:2 =>2, etc.}
@@ -77,11 +77,11 @@ describe 'League model', type: :model do
       let(:gamemode){League.game_modes[:round_robin]}
 
       it 'does create matches' do
-        expect(matches.length).to be > 0
+        expect(subject.length).to be > 0
       end
 
       it 'does create the correct amount of matches' do
-        expect(matches.length).to be 10
+        expect(subject.length).to be 10
       end
 
       it 'incorporates all teams into the schedule' do
@@ -112,6 +112,13 @@ describe 'League model', type: :model do
 
     context 'double round robin' do
       let(:gamemode){League.game_modes[:two_halfs]}
+
+
+      let(:all_teams_with_home_occurences) { Hash[(home_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
+      let(:all_teams_with_away_occurences) { Hash[(away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
+      it 'makes each team play as home and away just as often' do
+        expect(all_teams_with_home_occurences).to eq all_teams_with_away_occurences
+      end
       it 'creates the right amount of gamedays' do
         expect(league.gamedays.length).to eq 10
       end
@@ -124,7 +131,7 @@ describe 'League model', type: :model do
 
       it 'has double the matches if double round robin is selected' do
         # double round robin has n(n-1) games
-        expect(league.matches.length).to eq(league.teams.length * (league.teams.length - 1))
+        expect(subject.length).to eq(league.teams.length * (league.teams.length - 1))
       end
     end
   end
