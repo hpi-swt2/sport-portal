@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :destroy]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :destroy, :add_game_result, :remove_game_result]
 
   # GET /matches/1
   def show
@@ -43,6 +43,22 @@ class MatchesController < ApplicationController
       redirect_to path, notice: t('error.update_match_points')
     end
   end
+
+  def add_game_result
+    result = GameResult.new
+    @match.game_results << result
+    result.save!
+    flash.notice = "Added new game result!"
+    render :edit
+  end
+
+  def remove_game_result
+    result = GameResult.find(params[:result_id])
+    result.destroy
+    flash.notice = "Removed game result!"
+    render :edit
+  end
+
 
   # DELETE /matches/1
   def destroy

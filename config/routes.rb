@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     member do
       patch :update_points
       put :update_points
+      get :add_game_result
+      get 'remove_game_result/:result_id', to: 'matches#remove_game_result', as: :remove_game_result
     end
   end
 
