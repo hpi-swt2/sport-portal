@@ -26,6 +26,11 @@ class Match < ApplicationRecord
 
   after_create :send_mails_when_scheduled
   after_destroy :send_mails_when_canceled
+  after_update :send_mails_when_date_changed, :if => :saved_change_to_start_time?
+
+  def send_mails_when_date_changed
+    puts "date has been changed"
+  end
  
   def send_mails_when_scheduled
     players = self.team_home.members + self.team_away.members
