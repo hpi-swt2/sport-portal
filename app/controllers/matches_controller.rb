@@ -12,6 +12,7 @@ class MatchesController < ApplicationController
 
   # GET /matches/1/edit
   def edit
+    authorize! :edit, @match
   end
 
   # POST /matches
