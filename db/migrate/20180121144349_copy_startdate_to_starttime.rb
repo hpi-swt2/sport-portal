@@ -1,8 +1,7 @@
 class CopyStartdateToStarttime < ActiveRecord::Migration[5.1]
-  def up
-    Match.update_all(:start_time => (Event.select(:startdate).where(Match.select(:event_id)==Event.select(:id))).to_s.to_datetime)
-  end
-
-  def down
+  def change
+    Event.find_each do | event |
+      event.matches.update_all(start_time: event.startdate).to_datetime
+    end
   end
 end
