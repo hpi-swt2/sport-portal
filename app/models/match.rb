@@ -25,12 +25,20 @@ class Match < ApplicationRecord
   after_validation :calculate_points
 
   after_create :send_mails_when_scheduled
+  after_destroy :send_mails_when_canceled
  
   def send_mails_when_scheduled
-    self.team_away.members
     players = self.team_home.members + self.team_away.members
     players.each do |user|
       # EventMailer.deliver_match_scheduled(user, @match)
+    end
+  end
+
+  def send_mails_when_canceled
+    players = self.team_home.members + self.team_away.members
+    players.each do |user|
+      puts "cancelllllled"
+      # EventMailer.deliver_match_canceled(user, @match)
     end
   end
 
