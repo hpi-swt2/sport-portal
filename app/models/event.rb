@@ -36,6 +36,16 @@ class Event < ApplicationRecord
 
   enum player_type: [:single, :team]
 
+  after_destroy :send_mails_when_canceled
+
+  def send_mails_when_canceled
+    players = self.matches.team_home.members + self.matches.team_away.members
+    players.each do |user|
+      puts user
+      # EventMailer.deliver_event_canceled(user, @match)
+    end
+  end
+
   def duration
     return if enddate.blank? || startdate.blank?
     enddate - startdate + 1
