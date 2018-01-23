@@ -79,6 +79,34 @@ a:link, a:visited, a:hover, a:active {
     min-width: 250px;
 }
 
+a.openIdButton {
+    margin-top: 1rem;
+    color: white;
+    height: auto;
+    padding: 8px 32px;
+}
+
+a.openIdButton:hover {
+    color: white;
+    background: #1CC3FF;
+}
+
+.divider-with-text {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.divider-with-text > hr {
+    flex-grow: 6;
+    border-color: #B4B4B4;
+}
+
+.divider-with-text > span {
+    flex-grow: 1;
+    color: #9e9e9e;
+}
+
 /* Mobile/desktop dependent: */
 
 @media screen and (min-width: 480px) {
