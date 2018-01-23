@@ -23,7 +23,7 @@ RSpec.describe 'events/schedule', type: :view do
   end
 
   it 'has correct gameday date for gamedays' do
-   render
+    render
     expect(rendered).to have_text "- 24.12. #{t 'events.schedule.to'} 30.12."
   end
 end
