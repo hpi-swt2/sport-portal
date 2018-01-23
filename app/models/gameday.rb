@@ -1,4 +1,4 @@
 class Gameday < ApplicationRecord
-  belongs_to :event, dependent: :delete
-  has_many :matches
+  belongs_to :event
+  has_many :matches, dependent: :delete_all
 end
