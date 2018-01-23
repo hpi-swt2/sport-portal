@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'events/schedule', type: :view do
 
-  describe 'schedule' do
+  describe 'page layout' do
     before :each do
       @league = FactoryBot.create(:league, :with_matches,
                                   deadline: Date.parse('23.12.2017'),
@@ -24,21 +24,30 @@ RSpec.describe 'events/schedule', type: :view do
     end
   end
 
-  describe "linktext" do
-    before(:each){
-      @league = FactoryBot.create :league, :single_player, :with_users
+  describe "linktext for single player league" do
+    before(:each) {
+      @league = FactoryBot.create :league, :single_player
+      @user = FactoryBot.create :user
+      @another_user = FactoryBot.create :user
+
+      @league.add_participant(@user)
+      @league.add_participant(@another_user)
       @league.generate_schedule
 
       assign(:event, @league)
       assign(:schedule_type, 'league')
       assign(:matches, @league.matches)
     }
-    context "single player league" do
-      it 'has link with player name' do
-        render
+    it 'has link with player name' do
+      render
 
-        expect(rendered).to have_selector(:link_or_button, @league.participants.first.name)
-      end
+      expect(rendered).to have_selector(:link_or_button, @user.name)
+    end
+
+    it 'links to player page' do
+      render
+
+      expect(rendered).to have_selector :link, @user.name, href: user_path(@user)
     end
   end
 end
