@@ -15,6 +15,7 @@ body > .background-layer > .container {
     background-position: bottom center;
     width: 100%;
     background-image: url(https://owncloud.hpi.de/index.php/s/fERWNGqZbm6ud1p/download);
+    background-repeat: no-repeat;
     min-height: calc(50vh + 300px);
 }
 
@@ -68,6 +69,14 @@ h1 {
     border: 10px solid #FFFFFF;
     border-radius: 5px;
     height: 80px;
+}
+
+[type="checkbox"].filled-in + label:after {
+    border-radius: 25px;
+}
+
+[type="checkbox"].filled-in:not(:checked) + label:after {
+    border-width: 1px;
 }
 
 .participant img {
