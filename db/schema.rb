@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20180107175546) do
     t.integer "owner_id"
     t.float "initial_value"
     t.integer "selection_type", default: 0, null: false
+    t.integer "min_players_per_team"
+    t.integer "max_players_per_team"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
