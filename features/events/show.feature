@@ -18,3 +18,11 @@ Feature: Detailed event page
     Given a league without max teams
     When the league's page is visited
     Then the page should show 'unbegrenzt'
+
+  Scenario: Organizer name displayed
+    Given an Event e
+    And user o is Organizer of this event
+    When visiting the event page of e
+    Then o should be listed as organizer
+    And clicking on the name should lead to the profile page of o
+
