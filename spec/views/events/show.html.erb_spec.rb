@@ -20,6 +20,12 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_content(@event.discipline)
     end
 
+    it "renders a maximum number of teams" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :max_teams)
+      expect(rendered).to have_content(@event.max_teams)
+    end
+
     it "renders a game mode" do
       render
       expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
@@ -94,12 +100,6 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(Event.human_attribute_name :deadline)
       expect(rendered).to have_content(@event.deadline)
-    end
-
-    it "renders a maximum number of teams" do
-      render
-      expect(rendered).to have_content(Event.human_attribute_name :max_teams)
-      expect(rendered).to have_content(@event.max_teams)
     end
   end
   before(:each) do
@@ -183,11 +183,6 @@ RSpec.describe "events/show", type: :view do
     it "does not render a deadline field" do
       render
       expect(rendered).not_to have_content(Event.human_attribute_name :deadline)
-    end
-
-    it "does not render a maximum number of teams field" do
-      render
-      expect(rendered).not_to have_content(Event.human_attribute_name :max_teams)
     end
 
     it "doesn't render a schedule button" do

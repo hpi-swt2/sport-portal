@@ -57,10 +57,10 @@
   <dt><strong><%= model_class.human_attribute_name((@event.type == 'Rankinglist') ? :metric : :game_mode) %>:</strong></dt>
   <dd><%= @event.human_game_mode %></dd>
 
-  <% if @event.type != 'Rankinglist' %>
-    <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
-    <dd><%= @event.max_teams.present? ? @event.max_teams : t('events.max_teams.infinite') %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
+  <dd><%= @event.max_teams.present? ? @event.max_teams : t('events.max_teams.infinite') %></dd>
 
+  <% if @event.type != 'Rankinglist' %>
     <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
     <dd><%= @event.human_player_type %></dd>
 
