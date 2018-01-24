@@ -4,5 +4,4 @@ class CopyStartdateToStarttime < ActiveRecord::Migration[5.1]
       event.matches.update_all(start_time: event.startdate).to_datetime
     end
   end
-
 end
