@@ -3,17 +3,28 @@ require 'rails_helper'
 RSpec.describe "events/show", type: :view do
 
   shared_examples "an event" do
-    it "renders attributes in <p>" do
+    it "renders a name" do
       render
+      expect(rendered).to have_content(Event.human_attribute_name :name)
       expect(rendered).to have_content(@event.name)
-      expect(rendered).to have_content(@event.description)
-      expect(rendered).to have_content(@event.discipline)
-      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
-      expect(rendered).to have_content(@event.max_teams)
-      expect(rendered).to have_content(@event.deadline)
-      expect(rendered).to have_content(@event.startdate)
-      expect(rendered).to have_content(@event.enddate)
     end
+    it "renders a description" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :description)
+      expect(rendered).to have_content(@event.description)
+    end
+
+    it "renders a description" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :discipline)
+      expect(rendered).to have_content(@event.discipline)
+    end
+
+    it "renders a game mode" do
+      render
+      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
+    end
+
 
     #not signed in user
     it "doesn't render the new button when not signed in" do
@@ -48,6 +59,37 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_content(t('events.show.to_ranking'))
     end
   end
+
+  shared_examples "a time-restricted multiplayer event" do
+    it "renders a game mode field" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :game_mode)
+    end
+
+    it "renders a start date" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :startdate)
+      expect(rendered).to have_content(@event.startdate)
+    end
+
+    it "renders an end date" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :enddate)
+      expect(rendered).to have_content(@event.enddate)
+    end
+
+    it "renders a deadline" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :deadline)
+      expect(rendered).to have_content(@event.deadline)
+    end
+
+    it "renders a maximum number of teams" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :max_teams)
+      expect(rendered).to have_content(@event.max_teams)
+    end
+  end
   before(:each) do
     @user = FactoryBot.create :user
     @other_user = FactoryBot.create :user
@@ -59,6 +101,7 @@ RSpec.describe "events/show", type: :view do
       @event.editors << @user
       @event.owner = @user
     end
+
 
     it "renders a schedule button" do
       render
@@ -77,6 +120,7 @@ RSpec.describe "events/show", type: :view do
     end
 
     include_examples "an event"
+    include_examples "a time-restricted multiplayer event"
   end
 
 
@@ -98,6 +142,7 @@ RSpec.describe "events/show", type: :view do
     end
 
     include_examples "an event"
+    include_examples "a time-restricted multiplayer event"
   end
 
   describe "Rankinglist" do
@@ -105,6 +150,31 @@ RSpec.describe "events/show", type: :view do
       @event = assign(:event, FactoryBot.create(:rankinglist))
       @event.editors << @user
       @event.owner = @user
+    end
+
+    it "renders a metric field" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :metric)
+    end
+
+    it "does not render a start date field" do
+      render
+      expect(rendered).not_to have_content(Event.human_attribute_name :startdate)
+    end
+
+    it "does not render an end date field" do
+      render
+      expect(rendered).not_to have_content(Event.human_attribute_name :enddate)
+    end
+
+    it "does not render a deadline field" do
+      render
+      expect(rendered).not_to have_content(Event.human_attribute_name :deadline)
+    end
+
+    it "does not render a maximum number of teams field" do
+      render
+      expect(rendered).not_to have_content(Event.human_attribute_name :max_teams)
     end
 
     it "doesn't render a schedule button" do
