@@ -17,9 +17,17 @@
 #  deadline         :date
 #  gameday_duration :integer
 #  owner_id         :integer
+#  initial_value    :float
+#  matchtype        :integer
+#  bestof_length    :integer          default(1)
+#  game_winrule     :integer
+#  points_for_win   :integer          default(3)
+#  points_for_draw  :integer          default(1)
+#  points_for_lose  :integer          default(0)
 #
 
 require 'rails_helper'
+require 'models/actual_event_examples'
 
 describe "Tournament model", type: :model do
 
@@ -27,5 +35,7 @@ describe "Tournament model", type: :model do
     tournament = FactoryBot.build(:tournament)
     expect(tournament).to be_valid
   end
+
+  it_should_behave_like 'an actual event', for_class: :tournament
 
 end

@@ -18,6 +18,12 @@
 #  gameday_duration :integer
 #  owner_id         :integer
 #  initial_value    :float
+#  matchtype        :integer
+#  bestof_length    :integer          default(1)
+#  game_winrule     :integer
+#  points_for_win   :integer          default(3)
+#  points_for_draw  :integer          default(1)
+#  points_for_lose  :integer          default(0)
 #
 
 class Event < ApplicationRecord
@@ -27,12 +33,16 @@ class Event < ApplicationRecord
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
+  include ImageUploader::Attachment.new(:image)
+
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  enum selection_type: [:fcfs, :fcfs_queue, :selection]
+  # fcfs_queue and selection should be added in the future
+  enum selection_type: [:fcfs]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
 
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
 
   enum player_type: [:single, :team]
 
@@ -132,6 +142,22 @@ class Event < ApplicationRecord
 
   def human_game_mode
     self.class.human_game_mode game_mode
+  end
+
+  def fitting_teams(user)
+    all_teams = user.owned_teams.multiplayer
+    fitting_teams = []
+    all_teams.each do |team|
+      if is_fitting?(team)
+        fitting_teams << team
+      end
+    end
+    fitting_teams
+  end
+
+  def is_fitting?(team)
+    team_member_count = team.members.count
+    min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
   end
 
   class << self
