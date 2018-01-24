@@ -179,8 +179,6 @@ de:
         selection_type: "Auswahlverfahren"
         metric: "Metrik"
         initial_value: "Anfangswert"
-        min_players_per_team: "Min. Anzahl Spieler pro Team"
-        max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
           single: "Einzelteilnahme"
@@ -276,8 +274,6 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
-      propose_new_appointment: "Neuen Termin vorschlagen"
-      time: "Zeit"
       first_half: "Hinrunde"
       second_half: "Rückrunde"
       finale: "Finale"
@@ -287,7 +283,6 @@ de:
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
       to: "bis"
-      appointment: "Termin"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"

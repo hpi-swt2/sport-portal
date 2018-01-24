@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :update_start_time, :destroy]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :destroy]
 
   # GET /matches/1
   def show
@@ -44,10 +44,6 @@ class MatchesController < ApplicationController
     end
   end
 
-  def update_start_time
-    redirect_to event_schedule_path(@match.event), notice: "Der Termin für das Spiel wurde aktualisiert."
-  end
-
   # DELETE /matches/1
   def destroy
     @match.destroy
@@ -69,5 +65,4 @@ class MatchesController < ApplicationController
     def match_points_params
       params.require(:match).permit(:points_home, :points_away)
     end
-
 end
