@@ -48,6 +48,18 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.edit'))
     end
 
+    it "does render the edit button when the user is an admin" do
+      sign_in @admin
+      render
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.edit'))
+    end
+
+    it "does render the delete button when the user is an admin" do
+      sign_in @admin
+      render
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
+    end
+
     it "doesn't render the delete button when the event doesn´t belong to the user" do
       sign_in @other_user
       render
@@ -93,6 +105,7 @@ RSpec.describe "events/show", type: :view do
   before(:each) do
     @user = FactoryBot.create :user
     @other_user = FactoryBot.create :user
+    @admin = FactoryBot.create :admin
   end
 
   describe "League" do

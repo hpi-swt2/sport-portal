@@ -37,6 +37,7 @@ en:
       update: "Update %{model}"
     select:
       prompt: "Please select"
+      option_operator: "or"
     teams:
       kind_of_sport: "Kind of sport"
       description: "Description"

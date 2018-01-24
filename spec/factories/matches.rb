@@ -27,6 +27,19 @@ FactoryBot.define do
     gameday 1
     points_away 3
     points_home 1
+    start_time DateTime.now
+
+    trait :empty_points do
+      points_away nil
+      points_home nil
+    end
+
+    trait :with_home_winning do
+      points_away 0
+      points_home 3
+      score_away 0
+      score_home 3
+    end
 
     trait :with_tournament do
       association :event, factory: :tournament

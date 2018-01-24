@@ -334,6 +334,7 @@ GEM
     thread (0.2.2)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    time_splitter (1.1.0)
     tins (1.16.3)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -390,7 +391,7 @@ DEPENDENCIES
   materialize-sass
   omniauth
   omniauth-openid
-  pg
+  pg (~> 0.21.0)
   pry
   pry-rails
   pry-rescue
@@ -406,6 +407,7 @@ DEPENDENCIES
   spring-watcher-listen
   sqlite3
   therubyracer
+  time_splitter
   turbolinks (~> 5)
   twitter-bootstrap-rails
   tzinfo-data
@@ -416,4 +418,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

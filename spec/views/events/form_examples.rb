@@ -49,4 +49,12 @@ shared_examples 'an event form' do |for_class: Event, path: :new, with: []|
       expect(rendered).to have_field(Event.human_attribute_name :gameday_duration)
     end
   end
+
+  if with.include? :selection
+    it 'has input for selection type' do
+      render
+
+      expect(rendered).to have_field(Event.human_attribute_name :selection_type)
+    end
+  end
 end
