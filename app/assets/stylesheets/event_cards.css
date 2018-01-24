@@ -1,0 +1,52 @@
+.genericButton {
+    border-radius: 100px;
+    font-size: 24px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    height: auto;
+}
+
+.createScheduleButton {
+    border: 1px solid #FFFFFF;
+    background: transparent;
+}
+
+.registerButton, .createScheduleButton {
+    padding: 20px 50px;
+}
+
+.card-button {
+    width: 70%;
+    padding: 10px 20px !important;
+    margin-bottom: 50px;
+    background: #1CA9E5;
+    border: 0;
+    font-size: 1.2rem;
+}
+
+.card-button:hover {
+    color: white;
+    background: #1CC3FF;
+}
+
+.info-card {
+    background-color: #F3F9FF;
+    margin: 0 10px;
+    padding: 20px 20px 50px 20px !important;
+    border-radius: 5px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.card-button-col {
+    background-color: #F3F9FF;
+    margin: 0 10px;
+    padding: 0 !important;
+}
+
+ul.gameModeList>li {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-left: 15px;
+    padding-left: 10px;
+}
