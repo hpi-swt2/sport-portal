@@ -31,7 +31,6 @@
 
 .info-card {
     background-color: #F3F9FF;
-    margin: 0 10px;
     padding: 20px 20px 50px 20px !important;
     border-radius: 5px;
     overflow: hidden;
@@ -40,7 +39,6 @@
 
 .card-button-col {
     background-color: #F3F9FF;
-    margin: 0 10px;
     padding: 0 !important;
 }
 
