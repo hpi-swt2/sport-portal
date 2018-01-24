@@ -1,0 +1,21 @@
+* {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 8em;
+    font-weight: bold;
+    color: #1CA9E5;
+    margin-bottom: 0;
+}
+
+.sideNotFound {
+    font-size: 1.5em;
+    color: #1CA9E5;
+}
+
+.eventOrganisation {
+    font-size: 2em;
+    font-weight: bold;
+}

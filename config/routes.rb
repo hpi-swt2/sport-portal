@@ -1,6 +1,9 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+  match '/404', :to => 'errors#not_found', :via => :all
+
   resources :events, except: [:create] do
     member do
       put :join
