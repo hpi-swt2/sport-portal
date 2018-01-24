@@ -39,7 +39,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :discipline, for: :event_discipline, class: 'control-label col-lg-2' %>
+    <%= f.label :discipline, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :discipline, list: "discipline", class: 'form-control' %>
       <datalist id = "discipline">
@@ -50,6 +50,7 @@
         <option value=<%= t('events.discipline.table_football')%>>
         <option value=<%= t('events.discipline.volleyball')%>>
       </datalist>
+      <%= f.error_span(:discipline) %>
     </div>
   </div>
 
