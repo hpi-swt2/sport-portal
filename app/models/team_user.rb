@@ -5,6 +5,7 @@
 #  team_id  :integer          not null
 #  user_id  :integer          not null
 #  is_owner :boolean
+#  id       :integer          not null, primary key
 #
 
 # Class for members of teams. They can be owners with advanced rights.
