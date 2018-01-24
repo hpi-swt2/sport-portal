@@ -334,6 +334,7 @@ GEM
     thread (0.2.2)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    time_splitter (1.1.0)
     tins (1.16.3)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -406,6 +407,7 @@ DEPENDENCIES
   spring-watcher-listen
   sqlite3
   therubyracer
+  time_splitter
   turbolinks (~> 5)
   twitter-bootstrap-rails
   tzinfo-data
