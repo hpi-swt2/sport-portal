@@ -10,9 +10,9 @@ Airbrake.configure do |config|
 end
 #ignore error catcher for 404 page not found
 Airbrake.add_filter do |notice|
-    if notice[:errors].any? { |error| error[:type] == 'ActiveRecord::RecordNotFound' || error[:type] =='ActionController::RoutingError' }
-        notice.ignore!
-    end
+  if notice[:errors].any? { |error| error[:type] == 'ActiveRecord::RecordNotFound' || error[:type] =='ActionController::RoutingError' }
+    notice.ignore!
+  end
 end
 
 # If the Errbit API key is not set, ignore all errors

@@ -142,20 +142,28 @@ RSpec.describe EventsController, type: :controller do
       get :edit, params: { id: event.to_param }
       expect(response).to_not be_success
     end
+
+    it "should allow admin to edit others created event" do
+      sign_out @user
+      sign_in @admin
+      event = Event.create! valid_event_attributes
+      get :edit, params: { id: event.to_param }
+      expect(response).to be_success
+    end
   end
 
   describe "POST #create" do
     context "with valid params" do
       let(:league_params) {
         {
-          event: valid_league_attributes,
-          type: League
+            event: valid_league_attributes,
+            type: League
         }
       }
       let(:tournament_params) {
         {
-          event: FactoryBot.build(:tournament, owner: @user).attributes,
-          type: Tournament
+            event: FactoryBot.build(:tournament, owner: @user).attributes,
+            type: Tournament
         }
       }
       it "creates a new Event" do
@@ -182,14 +190,14 @@ RSpec.describe EventsController, type: :controller do
     context "with invalid params" do
       let(:league_params) {
         {
-          event: invalid_league_attributes,
-          type: League
+            event: invalid_league_attributes,
+            type: League
         }
       }
       let(:tournament_params) {
         {
-          event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
-          type: Tournament
+            event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
+            type: Tournament
         }
       }
       it "returns success when creating a league" do
@@ -208,9 +216,9 @@ RSpec.describe EventsController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {
-          deadline: Date.new(2017, 11, 20),
-          startdate: Date.new(2017, 11, 21),
-          enddate: Date.new(2017, 11, 22)
+            deadline: Date.new(2017, 11, 20),
+            startdate: Date.new(2017, 11, 21),
+            enddate: Date.new(2017, 11, 22)
         }
       }
 
@@ -348,7 +356,7 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
-  #this test is only for leagues
+
   describe "GET League#schedule" do
     it "should generate schedule if not existing" do
       event = League.create! valid_league_attributes
@@ -504,5 +512,4 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to be_success
     end
   end
-
 end

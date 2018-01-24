@@ -43,6 +43,7 @@ de:
       delete: "Lösche %{model}"
     select:
       prompt: "Bitte wähle"
+      option_operator: "oder"
     teams:
       kind_of_sport: "Sportart"
       description: "Beschreibung"

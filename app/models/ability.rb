@@ -30,6 +30,7 @@ class Ability
     alias_action :update, :destroy, to: :modify
     alias_action :create_from_type, to: :create
     can :read, :all
+    cannot :read, User
     cannot :read, Team, private: true
     cannot :index, User
     can :create, User
@@ -47,7 +48,8 @@ class Ability
       can :create, :all
 
       # User
-      can [:show, :modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
+      can :show, User
+      can [:modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
       cannot :create, User
 
       # Event
