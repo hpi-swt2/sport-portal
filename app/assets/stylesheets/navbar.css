@@ -174,3 +174,7 @@ img.avatar {
     width: 100%;
 }
 
+.dropdown-menu > li > a {
+    text-align: left;
+}
+
