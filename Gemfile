@@ -70,6 +70,10 @@ gem 'jquery-ui-rails'
 # https://github.com/Nerian/bootstrap-datepicker-rails
 gem 'bootstrap-datepicker-rails'
 
+# Gem to easily split DateTimes
+# https://github.com/shekibobo/time_splitter
+gem "time_splitter"
+
 # Package Select2 dropdown replacement featuring autocomplete
 # https://github.com/argerim/select2-rails
 # gem 'select2-rails'

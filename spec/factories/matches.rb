@@ -29,6 +29,7 @@ FactoryBot.define do
     gameday 1
     points_away 3
     points_home 1
+    start_time DateTime.now
 
     trait :empty_points do
       points_away nil
