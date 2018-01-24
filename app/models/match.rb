@@ -27,6 +27,7 @@ class Match < ApplicationRecord
   after_validation :calculate_points
 
   validates :points_home, :points_away, numericality: { allow_nil: true }
+  validates :start_time, presence: true
 
   extend TimeSplitter::Accessors
   split_accessor :start_time
