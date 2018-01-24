@@ -1,4 +1,7 @@
 Feature: Detailed event page
+  As user of the platform
+  I want to see all event concerning details on a page
+  In order to inform myself about a specific event
 
   Scenario: Tournament
     Given a tournament with gamemode ko
@@ -21,7 +24,7 @@ Feature: Detailed event page
 
   Scenario: Organizer name displayed
     Given an Event e
-    And user o is Organizer of this event
+    And user o is organizer of this event
     When visiting the event page of e
     Then o should be listed as organizer
     And clicking on the name should lead to the profile page of o
