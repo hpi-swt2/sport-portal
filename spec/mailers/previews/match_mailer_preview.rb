@@ -1,36 +1,21 @@
 # Preview all emails at http://localhost:3000/rails/mailers/match_mailer
 class MatchMailerPreview < ActionMailer::Preview
 
+  def match_notification
+    MatchMailer.match_notification(User.first, Match.first)
+  end
+
   # Preview this email at http://localhost:3000/rails/mailers/match_mailer/match_scheduled
   def match_scheduled
-    fake
-    @mail = MatchMailer.match_scheduled(@user, @match)
-    delete_fakes
-    return @mail
+    MatchMailer.match_scheduled(User.first, Match.first)
   end
 
   def match_canceled
-    fake
-    @mail = MatchMailer.match_canceled(@user, @match)
-    delete_fakes
-    return @mail
+    MatchMailer.match_canceled(User.first, Match.first)
   end
 
   def match_date_changed
-    fake
-    @mail = MatchMailer.match_date_changed(@user, @match)
-    delete_fakes
-    return @mail
+    MatchMailer.match_date_changed(User.first, Match.first)
   end
-  private
-    def fake
-      @user = FactoryBot.create(:user)
-      @match = FactoryBot.build(:match)
-    end
-
-    def delete_fakes
-      @user.destroy
-      @match.destroy
-    end
 
 end
