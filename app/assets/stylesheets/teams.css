@@ -32,7 +32,7 @@ h1 {
     margin-top: 0;
 }
 
-.genericButton, a.genericButton:hover {
+.genericButton, a.genericButton:hover, a.genericButton:focus {
     border-radius: 100px;
     color: #FFFFFF;
     letter-spacing: 0;
