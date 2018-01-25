@@ -16,11 +16,17 @@ body > .background-layer > .container {
     width: 100%;
     background-image: url(https://owncloud.hpi.de/index.php/s/fERWNGqZbm6ud1p/download);
     background-repeat: no-repeat;
-    min-height: calc(50vh + 300px);
+    min-height: 50vh;
+    padding-bottom: 300px;
 }
 
 #teamProfileImage {
     width: 200px;
+}
+
+#teamDescription {
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 h1, h2 {
@@ -64,6 +70,10 @@ h1 {
     font-weight: 500;
 }
 
+#participantsSection {
+    margin-top: 50px;
+}
+
 .participant {
     background-color: #F3F9FF;
     border: 10px solid #FFFFFF;
@@ -95,8 +105,14 @@ h1 {
         font-size: 20px;
     }
 
-    a.genericButton {
-        display: block;
+    .whiteActionButton {
+        font-size: 14px;
+    }
+
+    input[type="submit"].blueActionButton, a.blueActionButton, button.blueActionButton {
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
     }
 
     #teamProfile {
