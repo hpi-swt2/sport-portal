@@ -20,4 +20,13 @@ RSpec.feature "User management", type: :feature do
 
     expect(page).to have_link(href: new_user_registration_path)
   end
+
+  scenario "User sees OpenID sign in button prominently placed at the top" do
+    visit new_user_session_path
+
+    expect(page).to have_css(
+      'form > .row:first-of-type a.openIdButton',
+      text: I18n.t('devise.registrations.sign_in_with_provider', provider: 'OpenID')
+    )
+  end
 end
