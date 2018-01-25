@@ -15,6 +15,7 @@
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
+#  start_time     :datetime         default(NULL)
 #
 
 class Match < ApplicationRecord
@@ -26,9 +27,10 @@ class Match < ApplicationRecord
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
 
-  after_validation :calculate_points
-
   validates :points_home, :points_away, numericality: { allow_nil: true }
+
+  extend TimeSplitter::Accessors
+  split_accessor :start_time
 
   def depth
     event.finale_gameday - gameday
@@ -127,9 +129,9 @@ class Match < ApplicationRecord
   end
 
   def calculate_points
-    return if !has_scores? || has_points?
-
-    if wins_home > wins_away
+    if !has_scores?
+      set_points(nil, nil)
+    elsif wins_home > wins_away
       set_points(3, 0)
     elsif wins_home < wins_away
       set_points(0, 3)
@@ -138,19 +140,21 @@ class Match < ApplicationRecord
     end
   end
 
+  def save_with_point_calculation
+    calculate_points
+    save
+  end
+
   def update_with_point_recalculation(attributes)
     winner_before = winner
     loser_before = loser
     success = update(attributes)
 
     if success && (winner != winner_before || loser != loser_before)
-      set_points(nil, nil)
       calculate_points
       success = success && save
     end
 
     success
   end
-
-
 end

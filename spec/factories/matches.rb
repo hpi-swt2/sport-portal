@@ -15,6 +15,7 @@
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
+#  start_time     :datetime         default(NULL)
 #
 
 FactoryBot.define do
@@ -26,6 +27,7 @@ FactoryBot.define do
     gameday 1
     points_away 3
     points_home 1
+    start_time DateTime.now
 
     transient do
       result_count 1

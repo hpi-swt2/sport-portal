@@ -9,8 +9,8 @@
 #  description   :text
 #  kind_of_sport :string
 #  private       :boolean
-#  single        :boolean          default(FALSE)
 #  avatar_data   :text
+#  single        :boolean          default(FALSE)
 #
 
 class Team < ApplicationRecord
@@ -31,7 +31,7 @@ class Team < ApplicationRecord
   has_many :home_matches, as: :team_home, class_name: 'Match'
   has_many :away_matches, as: :team_away, class_name: 'Match'
 
-  include AvatarUploader::Attachment.new(:avatar)
+  include ImageUploader::Attachment.new(:avatar)
 
   def matches
     home_matches.or away_matches

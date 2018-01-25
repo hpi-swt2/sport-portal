@@ -184,7 +184,7 @@ RSpec.describe MatchesController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {
-          "0" => { 
+          "0" => {
             "score_home" => 11,
             "score_away" => 33,
             "id" => ""

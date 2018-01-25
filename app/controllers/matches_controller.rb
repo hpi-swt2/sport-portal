@@ -18,7 +18,7 @@ class MatchesController < ApplicationController
   def create
     @match = Match.new(match_params)
 
-    if @match.save
+    if @match.save_with_point_calculation
       redirect_to @match, notice: I18n.t('helpers.flash.created', resource_name: Match.model_name.human).capitalize
     else
       render :new
@@ -98,5 +98,4 @@ class MatchesController < ApplicationController
     def match_results_params
       params.require(:match).permit(game_results_attributes: [:id, :_destroy, :score_home, :score_away])
     end
-
 end
