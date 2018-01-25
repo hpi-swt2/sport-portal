@@ -48,14 +48,14 @@ class MatchesController < ApplicationController
     result = GameResult.new
     @match.game_results << result
     result.save!
-    flash.notice = "Added new game result!"
+    flash.notice = I18n.t("view.match.added_game_result_notice")
     render :edit
   end
 
   def remove_game_result
     result = GameResult.find(params[:result_id])
     result.destroy
-    flash.notice = "Removed game result!"
+    flash.notice = I18n.t("view.match.removed_game_result_notice")
     render :edit
   end
 

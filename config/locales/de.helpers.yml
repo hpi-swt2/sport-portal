@@ -69,10 +69,3 @@ de:
         telephone_number: "Telefonnummer"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
-      game_result:
-        score_home: "Ergebnis Heim"
-      game_results:
-        score_home: "Test"
-      match:
-        game_result:
-          score_home: "Test"

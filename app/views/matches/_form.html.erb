@@ -33,11 +33,9 @@
   <div class="panel panel-default">
   <div class="panel-heading"><%= t("view.match.game_results") %></div>
     <div class="panel-body results">
-      <% if is_creation_form %>
-        <noscript>Javascript is disabled. To add results, first finish the match creation and visit the edit page of the match</noscript>
-      <% else %>
-        <noscript>Javascript is disabled. Please use (Noscript) buttons to add and remove results</noscript>
-      <% end %>
+      <noscript>
+        <%= is_creation_form ? t("view.match.noscript.add_results_notice.create_match") : t("view.match.noscript.add_results_notice.edit_match") %>
+      </noscript>
       <%= f.nested_fields_for :game_results do |builder| %>
         <div class="result">
           <div class="form-group">
@@ -57,9 +55,12 @@
             <%= builder.hidden_field :id %>
             <%= builder.hidden_field :_destroy %>
             <noscript>
-              <br/>
-              <% if !builder.object.id.nil? %>
-                <%= link_to("(Noscript) Remove Result", remove_game_result_match_path(id: @match.id, result_id: builder.object.id), class: 'col-xs-offset-1 btn btn-default') %>
+              <% if !builder.object.id.nil? && !is_creation_form %>
+                <br/>
+                <%= link_to(
+                  t("view.match.noscript.button_prefix") + t("view.match.remove_game_result"),
+                  remove_game_result_match_path(id: @match.id, result_id: builder.object.id),
+                  class: 'col-xs-offset-1 btn btn-default') %>
               <% end %>
             </noscript>
           </div>
@@ -70,8 +71,10 @@
     <div class="panel-footer">
       <a href="#" id="add_game_result" class="add btn btn-default"><%= t("view.match.add_game_result") %></a>
       <noscript>
-        <br/>
-        <%= link_to "(Noscript) Add Result", add_game_result_match_path(@match), class: 'btn btn-default' %>
+        <% if !is_creation_form %>
+          <br/>
+          <%= link_to t("view.match.noscript.button_prefix") + t("view.match.add_game_result"), add_game_result_match_path(@match), class: 'btn btn-default' %>
+        <% end %>
       </noscript>
     </div>
   </div>
