@@ -52,8 +52,7 @@ class League < Event
       return true
     end
 
-    last_gameday = matches.last.gameday
-    if enddate_for_gameday(last_gameday) < DateTime.now
+    if gamedays.last.endtime < DateTime.now
       false
     end
   end
@@ -65,18 +64,44 @@ class League < Event
   end
 
   def calculate_swiss_system_new_gameday
-    
+    gameday = add_gameday
+    gameday_number = gamedays.length
+
+    ranking = [] # TODO: get ranking here somehow
+
+    ranking.each do |team, index|
+      team_home = team
+      team_away = ranking[index + 1]
+
+      while have_already_played(team_home, team_away)
+        team_away = ranking[ranking.index(team_away) + 1]
+      end
+
+      add_match(team_home, team_away, gameday_number)
+
+      ranking.delete team_home
+      ranking.delete team_away
+    end
+  end
+
+  def have_already_played(team1, team2)
+    matches.detect { |match|
+      match.team_home == team1 and match.team_away == team2 or
+      match.team_home == team2 and match.team_away == team1
+    } != nil
   end
 
   # create a random first gameday for the swiss system
   def calculate_swiss_system_start
+    gameday = add_gameday
+
     temp = teams.dub
     temp.shuffle!
 
     temp.each do |team|
       team_away = temp[1 + rand(temp.size - 2)]
 
-      matches << Match.new(team_home: team_home, team_away: team_away, gameday: 1)
+      add_match(team_home, team_away, 0);
 
       temp.delete(team)
       temp.delete(team_away)

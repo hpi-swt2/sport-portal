@@ -164,24 +164,26 @@ describe 'League model', type: :model do
 
       let(:amount_playing_teams) { home_teams.length + away_teams.length }
 
-      it 'has an up-to-date schedule' do
-        expect(league.is_up_to_date).to be true
-      end
+      context 'initial gameday' do
+        it 'has an up-to-date schedule' do
+          expect(league.is_up_to_date).to be true
+        end
 
-      it 'creates 2 matches' do
-        expect(league.matches.length).to be 2
-      end
+        it 'creates 2 matches' do
+          expect(league.matches.length).to be 2
+        end
 
-      it 'creates a correct amount of matches' do
-        expect(league.matches.length).to be (league.teams.length / 2).floor
-      end
+        it 'creates a correct amount of matches' do
+          expect(league.matches.length).to be (league.teams.length / 2).floor
+        end
 
-      it 'incorporates each team to play on the first gameday if team amount is even' do
-        expect(amount_playing_teams.length).to be league.teams.length
-      end
+        it 'incorporates each team to play on the first gameday if team amount is even' do
+          expect(amount_playing_teams.length).to be league.teams.length
+        end
 
-      it 'incorporates each team except one to play on the first gameday if team amount is uneven' do
-        expect(amount_playing_teams.length).to be league.teams.length - 1
+        it 'incorporates each team except one to play on the first gameday if team amount is uneven' do
+          expect(amount_playing_teams.length).to be league.teams.length - 1
+        end
       end
     end
   end
