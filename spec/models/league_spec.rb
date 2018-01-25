@@ -68,33 +68,54 @@ describe 'League model', type: :model do
       expect(league.enddate_for_gameday 1).to eq Date.parse('30.12.2017')
     end
   end
+<<<<<<< HEAD
   describe 'Generating league schedule' do
     let(:league) { league = FactoryBot.create(:league, :with_teams)
                    league.game_mode = gamemode
                    league.generate_schedule
                    league }
+=======
+
+  describe 'Generating league schedule with default values' do
+
+    let(:league) { league = FactoryBot.create(:league_with_teams)
+    league.game_mode = gamemode
+    league.generate_schedule
+    league }
+
+>>>>>>> 98bf5ea... Rebased tests to Ref #295 gameday model branch. Ref #139
     let(:matches) { league.all_matches }
     let(:home_teams) { matches.map(&:team_home) }
     let(:away_teams) { matches.map(&:team_away) }
     #The following line creates a hash in this matter {team=> occurrences of team} i.e. {Team:1 => 2, Team:2 =>2, etc.}
     let(:all_teams_with_occurrences) { Hash[(home_teams + away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
     subject { matches }
+<<<<<<< HEAD
     context 'round robin' do
       let(:gamemode) { League.game_modes[:round_robin] }
+=======
+
+    context 'round robin' do
+      let(:gamemode){League.game_modes[:round_robin]}
+>>>>>>> 98bf5ea... Rebased tests to Ref #295 gameday model branch. Ref #139
 
       it 'does create matches' do
-        expect(matches.length).to be > 0
+        expect(subject.length).to be > 0
       end
 
-      it 'does create 10 matches' do
-        expect(matches.length).to be 10
+      it 'does create the correct amount of matches' do
+        expect(subject.length).to be 10
       end
 
       it 'incorporates all teams into the schedule' do
         expect(all_teams_with_occurrences.length).to be 5
       end
 
-      it 'makes every single team play exactly 4 times' do
+      it 'creates the right amount of gameday' do
+        expect(league.gamedays.length).to eq 5
+      end
+
+      it 'makes every single team play the right amount of games times' do
         all_teams_with_occurrences.each do |team, occurrence|
           expect(occurrence).to be 4
         end
@@ -102,9 +123,7 @@ describe 'League model', type: :model do
 
       it 'does only let half as many matches as teams play per gameday' do
         5.times do |gameday|
-          gameday += 1 #gamedays are from 1 to 5 not 0 to 4
-          gameday_matches = matches.select { |match| match.gameday == gameday }
-          expect(gameday_matches.length).to be 2
+          expect(league.gamedays[gameday].matches.length).to eq 2
         end
       end
 
@@ -117,55 +136,52 @@ describe 'League model', type: :model do
     context 'double round robin' do
       let(:gamemode) { League.game_modes[:two_halfs] }
 
-      let(:league) { league = FactoryBot.create(:league_with_teams)
-                     league.game_mode = League.game_modes[:two_halfs]
-                     league.generate_schedule
-                     league }
+      let(:all_teams_with_home_occurences) { Hash[(home_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
+      let(:all_teams_with_away_occurences) { Hash[(away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
 
-      it 'has double the matches' do
+      it 'makes each team play as home and away just as often' do
+        expect(all_teams_with_home_occurences).to eq all_teams_with_away_occurences
+      end
+
+      it 'creates the right amount of gamedays' do
+        expect(league.gamedays.length).to eq 10
+      end
+
+      it 'does only let half as many matches as teams play per gameday' do
+        10.times do |gameday|
+          expect(league.gamedays[gameday].matches.length).to eq 2
+        end
+      end
+
+      it 'has double the matches if double round robin is selected' do
         # double round robin has n(n-1) games
-        expect(league.matches.length).to eq(league.teams.length * (league.teams.length - 1))
+        expect(subject.length).to eq(league.teams.length * (league.teams.length - 1))
       end
     end
 
-    context 'uses swiss system' do
-      let(:league) { league = FactoryBot.create(:league_with_teams)
-                     league.game_mode = League.game_modes[:swiss]
-                     league }
+    context 'swiss system' do
+      let(:gamemod){League.game_modes[:swiss_system]}
 
-      it 'has correct amount of teams' do
-        expect(league.teams.length).to be 5
+      let(:amount_playing_teams) { home_teams.length + away_teams.length }
+
+      it 'has an up-to-date schedule' do
+        expect(league.is_up_to_date).to be true
       end
 
-      context 'creating the initial schedule' do
-        let(:league) { league.generate_schedule
-                       league }
-
-        let(:amount_playing_teams) { (league.matches.map { |match| [match.team_home, match.team_away] }).flatten }
-
-        it 'has a up-to-date schedule' do
-          expect(league.is_up_to_date).to be true
-        end
-
-        it 'creates 2 matches' do
-          expect(league.matches.length).to be 2
-        end
-
-        it 'creates a correct amount of matches' do
-          expect(league.matches.length).to be (league.teams.length / 2).floor
-        end
-
-        it 'incorporates each team to play on the first gameday if team amount is even' do
-          expect(amount_playing_teams.length).to be league.teams.length
-        end
-
-        it 'incorporates each team except one to play on the first gameday if team amount is uneven' do
-          expect(amount_playing_teams.length).to be league.teams.length - 1
-        end
+      it 'creates 2 matches' do
+        expect(league.matches.length).to be 2
       end
 
-      context 'updating the schedule' do
+      it 'creates a correct amount of matches' do
+        expect(league.matches.length).to be (league.teams.length / 2).floor
+      end
 
+      it 'incorporates each team to play on the first gameday if team amount is even' do
+        expect(amount_playing_teams.length).to be league.teams.length
+      end
+
+      it 'incorporates each team except one to play on the first gameday if team amount is uneven' do
+        expect(amount_playing_teams.length).to be league.teams.length - 1
       end
     end
   end
