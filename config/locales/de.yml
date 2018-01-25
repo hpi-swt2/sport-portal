@@ -218,6 +218,8 @@ de:
       must_be_after: "darf nicht vor %{other} sein."
 
   view:
+    event:
+      new: "Neues Event erstellen"
     user:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
@@ -240,6 +242,12 @@ de:
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
+    index:
+      my_events: "Deine Events"
+      all_events: "Alle Events"
+      start_date: "Startdatum"
+      registration_until: "Anmeldung bis"
+      max_players: "Max. Spielerzahl"
     create_event: "Event erstellen"
     choose_event_format: "Eventart wählen"
     new_league: "Neue Liga"

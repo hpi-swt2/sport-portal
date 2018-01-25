@@ -57,6 +57,8 @@ en:
         one: "event"
         other: "events"
   view:
+    event:
+      new: "Create new event"
     user:
       edit_profile: "Edit Profile Properties"
       update_profile: "Update Profile"

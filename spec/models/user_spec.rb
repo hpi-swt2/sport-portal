@@ -199,4 +199,16 @@ RSpec.describe User, type: :model do
     user = FactoryBot.build(:user)
     expect(user.admin).to eq(false)
   end
+
+  it "has a method all_events that returns all events the user participates in" do
+    user = FactoryBot.create(:user)
+    team = FactoryBot.create(:team)
+    event1 = FactoryBot.create(:event, :single_player)
+    event1.add_participant(user)
+    event2 = FactoryBot.create(:event, :team_player)
+    team.members << user
+    event2.add_team(team)
+    user.reload
+    expect(user.all_events.count).to eq(2)
+  end
 end

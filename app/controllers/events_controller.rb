@@ -9,11 +9,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    if get_shown_events_value == "on"
       @events = Event.all
-    else
-      @events = Event.active
-    end
   end
 
   # GET /events/1
