@@ -28,7 +28,8 @@ form.event {
 }
 
 #event_max_teams_div,
-#event_selection_type_div {
+#event_selection_type_div,
+#event_initial_value_div {
     order:3;
 }
 
