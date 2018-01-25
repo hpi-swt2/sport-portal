@@ -35,8 +35,8 @@
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_match_path(@match), :class => 'btn btn-default' %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")), edit_match_path(@match), :class => 'btn btn-default' %>
+<%= link_to t('view.match.edit_results'), edit_results_match_path(@match), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               match_path(@match),
               :method => 'delete',

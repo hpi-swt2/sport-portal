@@ -244,6 +244,9 @@ de:
           create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
           edit_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen oder zu löschen benutze bitte Buttons mit dem \"(Noscript)\" Präfix."
         button_prefix: "(Noscript) "
+      edit_results: "Ergebnisse bearbeiten"
+      error:
+        update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
 
   unauthorized:
         manage:

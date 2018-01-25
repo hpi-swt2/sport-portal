@@ -137,4 +137,20 @@ class Match < ApplicationRecord
       set_points(1, 1)
     end
   end
+
+  def update_with_point_recalculation(attributes)
+    winner_before = winner
+    loser_before = loser
+    success = update(attributes)
+
+    if success && (winner != winner_before || loser != loser_before)
+      set_points(nil, nil)
+      calculate_points
+      success = success && save
+    end
+
+    success
+  end
+
+
 end

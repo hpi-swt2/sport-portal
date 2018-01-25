@@ -180,4 +180,32 @@ RSpec.describe MatchesController, type: :controller do
     end
   end
 
+  describe "PUT #update_results" do
+    context "with valid params" do
+      let(:new_attributes) {
+        {
+          "0" => { 
+            "score_home" => 11,
+            "score_away" => 33,
+            "id" => ""
+          }
+        }
+      }
+      let(:match) { FactoryBot.create(:match) }
+
+      it "updates the requested match" do
+        put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
+        match.reload
+        result = match.game_results.first
+        expect(result.score_home).to eq(new_attributes["0"]["score_home"])
+        expect(result.score_away).to eq(new_attributes["0"]["score_away"])
+      end
+
+      it "redirects to the show match page" do
+        put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
+        expect(response).to redirect_to(match_path(match))
+      end
+    end
+  end
+
 end

@@ -47,5 +47,17 @@ RSpec.describe MatchesController, type: :routing do
       expect(get: "/matches/1/remove_game_result/1").to route_to("matches#remove_game_result", id: "1", result_id: "1")
     end
 
+    it "routes to #update_results via PUT" do
+      expect(put: "/matches/1/update_results").to route_to("matches#update_results", id: "1")
+    end
+
+    it "routes to #update_results via PATCH" do
+      expect(patch: "/matches/1/update_results").to route_to("matches#update_results", id: "1")
+    end
+
+    it "routes to #edit_results via GET" do
+      expect(get: "/matches/1/edit_results").to route_to("matches#edit_results", id: "1")
+    end
+
   end
 end

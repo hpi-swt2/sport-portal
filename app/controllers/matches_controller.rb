@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :destroy, :add_game_result, :remove_game_result]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result]
 
   # GET /matches/1
   def show
@@ -44,19 +44,32 @@ class MatchesController < ApplicationController
     end
   end
 
+  # GET /matches/1/edit_results
+  def edit_results
+  end
+
+  # PATCH/PUT /matches/1/update_results
+  def update_results
+    if @match.update_with_point_recalculation(match_results_params)
+      redirect_to @match, notice: I18n.t('helpers.flash.updated', resource_name: Match.model_name.human).capitalize
+    else
+      render :edit_results
+    end
+  end
+
   def add_game_result
     result = GameResult.new
     @match.game_results << result
     result.save!
     flash.notice = I18n.t("view.match.added_game_result_notice")
-    render :edit
+    render :edit_results
   end
 
   def remove_game_result
     result = GameResult.find(params[:result_id])
     result.destroy
     flash.notice = I18n.t("view.match.removed_game_result_notice")
-    render :edit
+    render :edit_results
   end
 
 
@@ -81,4 +94,9 @@ class MatchesController < ApplicationController
     def match_points_params
       params.require(:match).permit(:points_home, :points_away)
     end
+
+    def match_results_params
+      params.require(:match).permit(game_results_attributes: [:id, :_destroy, :score_home, :score_away])
+    end
+
 end

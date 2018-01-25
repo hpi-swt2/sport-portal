@@ -79,4 +79,25 @@ RSpec.describe Match, type: :model do
       it { is_expected.to change { match.points_away }.from(nil).to(1) }
     end
   end
+
+  it "using #update_with_point_recalculation recalculates points if winner changed and points are already known" do
+    match = FactoryBot.create(:match)
+    result = FactoryBot.build(:game_result, score_home: 1, score_away: 0)
+
+    match.game_results << result
+    match.save!
+    expect(match.points_home).to be_present
+    expect(match.points_away).to be_present
+
+    update_params = { game_results_attributes: { "0" => { id: result.id, score_home: "0", score_away: "1" } } }
+    match.update_with_point_recalculation(update_params)
+
+    match.reload
+    result.reload
+
+    expect(result.score_home).to eq(0)
+    expect(result.score_away).to eq(1)
+
+    expect(match.points_home).to be < match.points_away
+  end
 end
