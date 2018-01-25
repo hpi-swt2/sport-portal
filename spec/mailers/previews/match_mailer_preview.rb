@@ -6,4 +6,12 @@ class MatchMailerPreview < ActionMailer::Preview
     MatchMailerMailer.match_scheduled
   end
 
+  def match_canceled
+    MatchMailerMailer.match_canceled
+  end
+
+  def match_date_changed
+    MatchMailerMailer.match_date_changed
+  end
+
 end

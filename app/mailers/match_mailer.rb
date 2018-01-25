@@ -18,4 +18,21 @@ class MatchMailer < ApplicationMailer
 
     mail to: user.email
   end
+  def match_canceled(user, match)
+    @user_name = user.name
+    @opponent = match.team_home
+    @event = match.event
+    @event_url = events_url(match.event)
+
+    mail to: user.email
+  end
+  def match_date_changed(user, match)
+    @user_name = user.name
+    @opponent = match.team_home
+    @event = match.event
+    @date = match.gameday
+    @event_url = events_url(match.event)
+
+    mail to: user.email
+  end
 end
