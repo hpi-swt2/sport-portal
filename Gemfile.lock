@@ -48,6 +48,8 @@ GEM
       rake (>= 10.4, < 13.0)
     arel (8.0.0)
     ast (2.3.0)
+    awesome_nested_fields (0.6.4)
+      rails (>= 3.0.0)
     aws-partitions (1.53.0)
     aws-sdk-core (3.13.0)
       aws-partitions (~> 1.0)
@@ -368,6 +370,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake (~> 5.0)
   annotate
+  awesome_nested_fields
   aws-sdk-s3 (~> 1.2)
   better_errors
   binding_of_caller

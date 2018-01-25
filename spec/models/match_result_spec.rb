@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: match_results
+#
+#  id              :integer          not null, primary key
+#  match_id        :integer
+#  winner_advances :boolean
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe MatchResult, type: :model do
