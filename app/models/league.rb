@@ -47,14 +47,36 @@ class League < Event
     end
   end
 
+  def is_up_to_date
+    if game_mode != League.game_modes.key(2)
+      return true
+    end
+
+    last_gameday = matches.last.gameday
+    if enddate_for_gameday(last_gameday) < DateTime.now
+      false
+    end
+  end
+
+  def update_schedule
+    if game_mode == Leage.game_modes.key(2)
+      calculate_swiss_system_new_gameday
+    end
+  end
+
+  def calculate_swiss_system_new_gameday
+    
+  end
+
   # create a random first gameday for the swiss system
   def calculate_swiss_system_start
-    temp = teams
+    temp = teams.dub
+    temp.shuffle!
 
     temp.each do |team|
       team_away = temp[1 + rand(temp.size - 2)]
 
-      matches << Match.new(team_home: team, team_away: team_away, gameday: 1)
+      matches << Match.new(team_home: team_home, team_away: team_away, gameday: 1)
 
       temp.delete(team)
       temp.delete(team_away)
