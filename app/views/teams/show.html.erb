@@ -8,13 +8,19 @@
     }
     function sendMailToMultipleMembers() {
         var email_adresses = [];
-        $('table tr').filter(':has(:checkbox:checked)').each(function() {
+        $('.participant').filter(':has(:checkbox:checked)').each(function() {
             email_adresses.push($(this).find('a[href^="mailto:"]')[0].pathname);
         });
         if (email_adresses.length > 0) {
             window.location.href = 'mailto:' + email_adresses.join();
         }
     }
+    $(document).ready(function() {
+        $('#multipleMailLink').click(function (event) {
+            sendMailToMultipleMembers();
+            event.preventDefault();
+        });
+    });
 </script>
 
 <div id="teamProfile">
@@ -138,7 +144,11 @@
       </div>
       <div class="row">
         <% if @team.members.include? current_user %>
-
+            <% if can? :send_emails_to_team_members, @team %>
+                <%= link_to  t('.email', :default => t("helpers.links.email")), '#',
+                              :class => 'genericButton blueActionButton',
+                              :id => 'multipleMailLink' %>
+            <% end %>
         <% end %>
       </div>
     <% end %>
