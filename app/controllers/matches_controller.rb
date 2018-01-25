@@ -20,7 +20,6 @@ class MatchesController < ApplicationController
 
     if @match.save
       redirect_to @match, notice: I18n.t('helpers.flash.created', resource_name: Match.model_name.human).capitalize
-      send_mails_when_scheduled
     else
       render :new
     end
