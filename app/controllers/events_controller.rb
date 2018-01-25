@@ -134,17 +134,17 @@ class EventsController < ApplicationController
   def parse_matches_data_into_ranking_entry(team, ranking_entry, matches, parse_match_details_for_home_or_away)
     matches.each do |match|
       # Validate data since matches do not always have both goals (scores) and points assigned
-      score_home = match.score_home
-      score_away = match.score_away
+      score_home_total = match.score_home_total
+      score_away_total = match.score_away_total
       points_home = match.points_home
       points_away = match.points_away
-      match_has_result = score_home && score_away && points_home && points_away
+      match_has_result = match.has_scores? && match.has_points?
       next unless match_has_result
 
       ranking_entry.match_count += 1
       parse_match_result_into_ranking_entry team, match, ranking_entry
 
-      send(parse_match_details_for_home_or_away, ranking_entry, score_home, score_away, match)
+      send(parse_match_details_for_home_or_away, ranking_entry, score_home_total, score_away_total, match)
     end
   end
 
@@ -160,15 +160,15 @@ class EventsController < ApplicationController
     end
   end
 
-  def parse_match_details_for_home(ranking_entry, score_home, score_away, match)
-    ranking_entry.goals += score_home
-    ranking_entry.goals_against += score_away
+  def parse_match_details_for_home(ranking_entry, score_home_total, score_away_total, match)
+    ranking_entry.goals += score_home_total
+    ranking_entry.goals_against += score_away_total
     ranking_entry.points += match.points_home
   end
 
-  def parse_match_details_for_away(ranking_entry, score_home, score_away, match)
-    ranking_entry.goals += score_away
-    ranking_entry.goals_against += score_home
+  def parse_match_details_for_away(ranking_entry, score_home_total, score_away_total, match)
+    ranking_entry.goals += score_away_total
+    ranking_entry.goals_against += score_home_total
     ranking_entry.points += match.points_away
   end
 
