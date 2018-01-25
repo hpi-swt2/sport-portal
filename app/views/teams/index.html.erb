@@ -15,7 +15,7 @@
     <h4><%= t('teams.index.my_teams')%></h4>
     <div class="tile-wrapper">
       <% current_user.teams.each do |team| %>
-          <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/MF5ElupOS6N4eKC/download', description: team.kind_of_sport,
+          <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/Rtv2QMBLOKmGqiA/download', description: team.kind_of_sport,
           destination_path: team_path(team), description_class: ''} %>
       <% end %>
     </div>
@@ -24,7 +24,7 @@
 <h4><%= t('teams.index.all_teams')%></h4>
 <div class="tile-wrapper">
   <% @teams.each do |team| %>
-      <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/ZFilkMbpK7koelg/download', description: team.kind_of_sport, destination_path: team_path(team),
+      <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/EQQbD2gd8BzrSHN/download', description: team.kind_of_sport, destination_path: team_path(team),
       description_class: ''} %>
   <% end %>
 </div>
