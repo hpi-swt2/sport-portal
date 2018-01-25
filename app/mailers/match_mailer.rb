@@ -14,7 +14,8 @@ class MatchMailer < ApplicationMailer
     @opponent = match.team_home
     @event = match.event
     @date = match.gameday
-    @event_url = events_url(match.event)
+    @event_url = "wow"
+        #events_url(match.event)
 
     mail to: user.email
   end
