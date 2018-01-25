@@ -11,9 +11,9 @@ class MatchMailer < ApplicationMailer
   end
   def match_scheduled(user, match)
     @user_name = user.name
-    @opponent = match.team_home
-    @event = match.event
-    @date = match.gameday
+    @opponent = match.team_home.name
+    @event = match.event.name
+    @date = match.start_time
     @event_url = "wow"
         #events_url(match.event)
 
@@ -21,8 +21,8 @@ class MatchMailer < ApplicationMailer
   end
   def match_canceled(user, match)
     @user_name = user.name
-    @opponent = match.team_home
-    @event = match.event
+    @opponent = match.team_home.name
+    @event = match.event.name
     @event_url = "wow"
         #events_url(match.event)
 
@@ -30,9 +30,9 @@ class MatchMailer < ApplicationMailer
   end
   def match_date_changed(user, match)
     @user_name = user.name
-    @opponent = match.team_home
-    @event = match.event
-    @date = match.gameday
+    @opponent = match.team_home.name
+    @event = match.event.name
+    @date = match.start_time
     @event_url = "wow"
         #events_url(match.event)
 
