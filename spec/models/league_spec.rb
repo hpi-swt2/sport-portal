@@ -129,32 +129,43 @@ describe 'League model', type: :model do
     end
 
     context 'uses swiss system' do
-
       let(:league) { league = FactoryBot.create(:league_with_teams)
                      league.game_mode = League.game_modes[:swiss]
-                     league.generate_schedule
                      league }
-
-      let(:amount_playing_teams) { (league.matches.map { |match| [match.team_home, match.team_away] }).flatten }
 
       it 'has correct amount of teams' do
         expect(league.teams.length).to be 5
       end
 
-      it 'creates 2 matches' do
-        expect(league.matches.length).to be 2
+      context 'creating the initial schedule' do
+        let(:league) { league.generate_schedule
+                       league }
+
+        let(:amount_playing_teams) { (league.matches.map { |match| [match.team_home, match.team_away] }).flatten }
+
+        it 'has a up-to-date schedule' do
+          expect(league.is_up_to_date).to be true
+        end
+
+        it 'creates 2 matches' do
+          expect(league.matches.length).to be 2
+        end
+
+        it 'creates a correct amount of matches' do
+          expect(league.matches.length).to be (league.teams.length / 2).floor
+        end
+
+        it 'incorporates each team to play on the first gameday if team amount is even' do
+          expect(amount_playing_teams.length).to be league.teams.length
+        end
+
+        it 'incorporates each team except one to play on the first gameday if team amount is uneven' do
+          expect(amount_playing_teams.length).to be league.teams.length - 1
+        end
       end
 
-      it 'creates a correct amount of matches' do
-        expect(league.matches.length).to be (league.teams.length / 2).floor
-      end
+      context 'updating the schedule' do
 
-      it 'incorporates each team to play on the first gameday if team amount is even' do
-        expect(amount_playing_teams.length).to be league.teams.length
-      end
-
-      it 'incorporates each team except one to play on the first gameday if team amount is uneven' do
-        expect(amount_playing_teams.length).to be league.teams.length - 1
       end
     end
   end
