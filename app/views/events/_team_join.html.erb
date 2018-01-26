@@ -1,14 +1,15 @@
 <%= form_for @event, url: { action: "join"}, method: :put, :html => { class: "form-horizontal event" } do |f| %>
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
+    <button type="button" class="close modal-close" data-dismiss="modal">×</button>
     <h3 id="myModalLabel"><%= t('events.join_team_event', event: @event.name) %></h3>
   </div>
+  <% fitting_teams = @event.fitting_teams(current_user) %>
   <div class="modal-body">
     <div class="form-group">
-      <% if current_user.owned_teams.multiplayer.present? %>
+      <% if fitting_teams.present? %>
         <%= f.label :teams, class: 'control-label col-lg-2' %>
         <div class="col-lg-10">
-          <%= f.collection_select :teams, @event.fitting_teams(current_user), :id, :name,
+          <%= f.collection_select :teams, fitting_teams, :id, :name,
                                   { include_blank: t('events.choose_team') },
                                   class: 'form-control', id: 'event_team',
                                   required: true %>
@@ -20,8 +21,8 @@
   </div>
   <div class="modal-footer">
     <%= link_to t('.cancel', default: t("helpers.links.cancel")),
-                '#', data: { dismiss: "modal" }, class: 'btn btn-default' %>
-    <% if current_user.owned_teams.multiplayer.present? %>
+                '#', data: { dismiss: "modal" }, class: 'btn btn-default modal-close' %>
+    <% if fitting_teams.present? %>
       <%= f.submit t('helpers.links.join'), class: 'btn btn-primary' %>
     <% else %>
       <%= link_to t('.new', default: t("helpers.links.new")),

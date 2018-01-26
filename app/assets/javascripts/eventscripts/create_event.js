@@ -1,8 +1,7 @@
 $( document ).on('turbolinks:load', function() {
-    // Autofill for the dates of an event
-    $('#event_deadline').datepicker({ autoclose: true});
-    $('#event_startdate').datepicker({ autoclose: true});
-    $('#event_enddate').datepicker({ autoclose: true});
+    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
 
     $("#event_duration").val("");
   
@@ -61,9 +60,8 @@ $( document ).on('turbolinks:load', function() {
     });
 
     // Autofill of player count for an event
+    showPlayerCount();
     $("#event_player_type").on("change", showPlayerCount);
-    $("#event_min_players_per_team").hide();
-    $("#event_max_players_per_team").hide();
 
     function showPlayerCount()
     {

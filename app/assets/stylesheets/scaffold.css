@@ -45,3 +45,10 @@ div.actions {
 label {
   display: block;
 }
+
+label.required:after {
+  content: "*";
+  vertical-align: 0.5em;
+  font-size: 0.75em;
+  font-weight: normal;
+}

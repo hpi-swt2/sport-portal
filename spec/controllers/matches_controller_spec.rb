@@ -118,8 +118,8 @@ RSpec.describe MatchesController, type: :controller do
     context "with invalid params" do
       let(:invalid_attributes) {
         {
-            "points_home" => nil,
-            "points_away" => nil,
+            "points_home" => "potato",
+            "points_away" => "trololol",
         }
       }
 

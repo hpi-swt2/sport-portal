@@ -176,13 +176,13 @@ RSpec.describe User, type: :model do
   it 'is not valid with any other file type than image' do
     user = FactoryBot.build :user, :with_large_avatar
     expect(user).not_to be_valid
-    expect(user.errors[:avatar]).to include('isn\'t of allowed type (allowed types: image/jpeg, image/gif, image/png)')
+    expect(user.errors[:avatar]).to include(I18n.t('users.avatar.errors.mime_type_inclusion'))
   end
 
   it 'is not valid with an avatar of size >2mb' do
     user = FactoryBot.build :user, :with_large_avatar
     expect(user).not_to be_valid
-    expect(user.errors[:avatar]).to include('is too large (max is 2 MB)')
+    expect(user.errors[:avatar]).to include(I18n.t('users.avatar.errors.max_size'))
   end
 
   it "has the admin attribute" do
