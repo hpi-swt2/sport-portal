@@ -29,4 +29,8 @@ class Rankinglist < Event
 
   player_type = Event.player_types[:single]
   enum game_mode: [:elo, :win_loss, :true_skill]
+
+  def update_rankings(match)
+
+  end
 end

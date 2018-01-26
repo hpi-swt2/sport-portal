@@ -8,7 +8,8 @@ class MatchesController < ApplicationController
   # GET /matches/new
   def new
     @match = Match.new(new_match_params)
-    render :new
+    @match.save
+    render :show
   end
 
   # GET /matches/1/edit
