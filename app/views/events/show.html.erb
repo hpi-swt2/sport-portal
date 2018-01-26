@@ -54,29 +54,25 @@
   <dt><strong><%= model_class.human_attribute_name(:discipline) %>:</strong></dt>
   <dd><%= @event.discipline %></dd>
 
-  <dt><strong><%= model_class.human_attribute_name(:game_mode) %>:</strong></dt>
+  <dt><strong><%= model_class.human_attribute_name((@event.type == 'Rankinglist') ? :metric : :game_mode) %>:</strong></dt>
   <dd><%= @event.human_game_mode %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
-  <dd>
-    <% if @event.max_teams.present? %>
-      <%= @event.max_teams %>
-    <% else %>
-      <%= t 'events.max_teams.infinite' %>
-    <% end %>
-  </dd>
+  <dd><%= @event.max_teams.present? ? @event.max_teams : t('events.max_teams.infinite') %></dd>
 
-  <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
-  <dd><%= @event.human_player_type %></dd>
+  <% if @event.type != 'Rankinglist' %>
+    <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
+    <dd><%= @event.human_player_type %></dd>
 
-  <dt><strong><%= model_class.human_attribute_name(:deadline) %>:</strong></dt>
-  <dd><%= @event.deadline %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:deadline) %>:</strong></dt>
+    <dd><%= @event.deadline %></dd>
 
-  <dt><strong><%= model_class.human_attribute_name(:startdate) %>:</strong></dt>
-  <dd><%= @event.startdate %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:startdate) %>:</strong></dt>
+    <dd><%= @event.startdate %></dd>
 
-  <dt><strong><%= model_class.human_attribute_name(:enddate) %>:</strong></dt>
-  <dd><%= @event.enddate %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:enddate) %>:</strong></dt>
+    <dd><%= @event.enddate %></dd>
+  <% end %>
   <% unless @event.gameday_duration.nil? %>
     <dt><strong><%= model_class.human_attribute_name(:gameday_duration) %>:</strong></dt>
     <dd><%= @event.gameday_duration %></dd>
@@ -94,15 +90,15 @@
     </tbody>
   </table>
 </div>
+<% if @event.type != 'Rankinglist' %>
+  <%= link_to t('.to_schedule'),
+              event_schedule_path(@event),
+              class: 'btn btn-default'%>
 
-<%= link_to t('.to_schedule'),
-            event_schedule_path(@event),
-            class: 'btn btn-default'%>
-
-<%= link_to t('.to_overview'),
-            event_overview_path(@event),
-            class: 'btn btn-default' %>
-
+  <%= link_to t('.to_overview'),
+              event_overview_path(@event),
+              class: 'btn btn-default' %>
+<% end %>
 <%= link_to t('.to_ranking'),
             event_ranking_path(@event),
             class: 'btn btn-default' %>
