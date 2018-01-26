@@ -1,12 +1,9 @@
 class EventsController < ApplicationController
-  RankingEntry = Struct.new(:rank, :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against,
-                            :goals_difference, :points)
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join, :overview]
+  authorize_resource :event
+
 
   helper EventsHelper
-  load_and_authorize_resource
-
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join]
-
 
   # GET /events
   def index
@@ -163,6 +160,8 @@ class EventsController < ApplicationController
                                     :min_players_per_team,
                                     :max_players_per_team,
                                     :gameday_duration,
+                                    :image,
+                                    :remove_image,
                                     user_ids: [])
     end
 end

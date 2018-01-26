@@ -52,14 +52,14 @@ class Event
     end
 
     def parse_match_details_for_home(match)
-      @goals += match.score_home
-      @goals_against += match.score_away
+      @goals += match.score_home_total
+      @goals_against += match.score_away_total
       @points += match.points_home
     end
 
     def parse_match_details_for_away(match)
-      @goals += match.score_away
-      @goals_against += match.score_home
+      @goals += match.score_away_total
+      @goals_against += match.score_home_total
       @points += match.points_away
     end
   end
