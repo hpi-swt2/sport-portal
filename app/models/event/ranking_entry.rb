@@ -1,4 +1,4 @@
-# Smallest unit of a ranking list. Contains different data for one team and contains logic to parse those date out of
+# Smallest unit of a ranking list. Contains different data for one team and contains logic to parse this data out of
 # match objects.
 class Event
   class RankingEntry
