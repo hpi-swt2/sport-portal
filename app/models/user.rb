@@ -101,6 +101,10 @@ class User < ApplicationRecord
     name = first_name + " " + last_name
   end
 
+  def has_team_notifications_enabled?
+    true
+  end
+
   class << self
     def new_with_session(_, session)
       super.tap do |user|
