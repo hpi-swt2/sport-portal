@@ -1,8 +1,7 @@
-<h1>Event ist abgeschlossen</h1>
-
+<h1><%= t('mailer.hello', firstname: @user.first_name) %></h1>
 <p>
-  Hallo <%= @user_name %>,
-  das Event <%= @event %> ist abgeschlossen.
-  Viel Erfolg beim Training!
-  <%= @event_url %>
+  <%= t('event_mailer.event', event: @event.name) %>
+  <%= t('.info') %>
 </p>
+<p><%= t('mailer.have_fun') %></p>
+<%= link_to @event.name, @event %>

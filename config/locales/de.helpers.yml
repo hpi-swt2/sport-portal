@@ -70,9 +70,31 @@ de:
         telephone_number: "Telefonnummer"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+  mailer:
+    hello: "Hallo %{firstname},"
+    have_fun: "Viel Erfolg beim Training!"
   match_mailer:
+    next_game: "dein Spiel (%{team_home} vs. %{team_away}) im Event %{name}"
     match_notification:
-      hello: "Hallo %{firstname},"
-      next_game_info: "dein nächstes Spiel %{name} (%{team_home} vs. %{team_away}) startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
-      have_fun: "Viel Spaß beim Spiel!"
-      subject: "Ein Spiel startet morgen um %{start_time}"
+      info: "startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
+      subject: "Dein Spiel startet morgen um %{start_time}"
+    match_canceled:
+      info: "wurde abgesagt."
+      subject: "Dein Spiel wurde abgesagt"
+    match_scheduled:
+      info: "findet am %{start_time} statt."
+      subject: "Dein Match wurde geplant"
+    match_date_changed:
+      info: "wurde auf %{start_time} verschoben."
+      subject: "Dein Match wurde verschoben"
+  event_mailer:
+    event: "das Event %{event}"
+    event_canceled:
+      info: "wurde abgesagt."
+      subject: "Dein Event wurde abgesagt"
+    event_started:
+      info: "hat gestartet."
+      subject: "Dein Event hat gestartet"
+    event_finished:
+      info: "ist abgeschlossen."
+      subject: "Dein Event ist abgeschlossen"

@@ -1,4 +1,7 @@
-Hallo <%= @user_name %>,
-das Event <%= @event %> wurde abgesagt.
-Viel Erfolg beim Training!
-<%= @event_url %>
+<%= t('mailer.hello', firstname: @user.first_name) %>
+
+<%= t('event_mailer.event', event: @event.name) %>
+<%= t('.info') %>
+
+<%= t('mailer.have_fun') %>
+<%= event_overview_url(@event) %>
