@@ -1,9 +1,12 @@
 
-  <div onclick="location.href='<%= destination_path%>';" class="tile">
+<div class="tile">
+  <a href="<%= destination_path%>">
+  <div class="tile-content">
     <div class="tile-img-wrapper">
       <img class="tile-img mobile-img" src="<%= image_url %>"/>
     </div>
     <span class="tile-title mobile-title"> <%= title %></span>
-    <br>
-    <span class="<%= description_class %>"> <%= description %></span>
+    <span class="tile-description"> <%= description %></span>
   </div>
+  </a>
+</div>

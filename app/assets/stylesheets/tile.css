@@ -32,6 +32,10 @@
     cursor:pointer;
 }
 
+a {
+    color: inherit;
+}
+
 .tile-img {
     width: 300px;
     height: 150px;
