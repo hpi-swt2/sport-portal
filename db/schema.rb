@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
+  create_table "game_results", force: :cascade do |t|
+    t.integer "score_home"
+    t.integer "score_away"
+    t.integer "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_game_results_on_match_id"
+  end
+
   create_table "match_results", force: :cascade do |t|
     t.integer "match_id"
     t.boolean "winner_advances"
@@ -61,8 +70,6 @@ ActiveRecord::Schema.define(version: 20180124104518) do
 
   create_table "matches", force: :cascade do |t|
     t.string "place"
-    t.integer "score_home"
-    t.integer "score_away"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "team_home_id"
