@@ -31,6 +31,5 @@ class Rankinglist < Event
   enum game_mode: [:elo, :win_loss, :true_skill]
 
   def update_rankings(match)
-
   end
 end

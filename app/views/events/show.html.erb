@@ -93,7 +93,8 @@
                         new_match_path(team_home_id: participant,
                                    team_away_id: @event.team_of(current_user),
                                    event_id: @event),
-                        class: 'btn btn-default btn-xs' %>
+                        class: 'btn btn-default btn-xs',
+                        id: 'duel_participant'%>
           <% end %>
         </td>
       </tr>

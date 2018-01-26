@@ -53,6 +53,9 @@ class MatchesController < ApplicationController
   # PATCH/PUT /matches/1/update_results
   def update_results
     if @match.update_with_point_recalculation(match_results_params)
+      if @match.event.is_a? Rankinglist
+        @match.event.update_rankings(@match)
+      end
       redirect_to @match, notice: I18n.t('helpers.flash.updated', resource_name: Match.model_name.human).capitalize
     else
       render :edit_results

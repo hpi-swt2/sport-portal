@@ -44,7 +44,9 @@
       <a href="#" id="add_game_result" class="add btn btn-default"><%= t("view.match.add_game_result") %></a>
       <noscript>
         <br/>
-        <%= link_to t("view.match.noscript.button_prefix") + t("view.match.add_game_result"), add_game_result_match_path(@match), class: 'btn btn-default' %>
+        <%= link_to t("view.match.noscript.button_prefix") + t("view.match.add_game_result"),
+            add_game_result_match_path(@match),
+            class: 'btn btn-default' %>
       </noscript>
     </div>
   </div>
@@ -62,7 +64,7 @@
       <div class="col-lg-offset-2 col-lg-10">
         <%= f.submit nil, :class => 'btn btn-primary' %>
         <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                    events_path(@match.event), :class => 'btn btn-default' %>
+                    event_path(@match.event), :class => 'btn btn-default' %>
       </div>
     </div>
   <% end %>
