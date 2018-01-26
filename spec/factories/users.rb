@@ -51,6 +51,14 @@ FactoryBot.define do
     end
   end
 
+  trait :with_openid do
+    uid '1234567890'
+    provider 'hpiopenid'
+    after(:build) do |user|
+      user.skip_confirmation!
+    end
+  end
+
   factory :admin, class: User, parent: :user do
     sequence(:email) { |n| "#{n}admin@example.com" }
     admin true
