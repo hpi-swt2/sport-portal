@@ -180,8 +180,6 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:assign_membership_by_email, team)
   end
 
-  # If Event Ability tests become bigger than these 5 examples, consider using shared examples like done in the
-  # feature tests for index_event_spec and show_event_spec. Hardcoding for 5 cases doesn't seem too bad
   shared_examples "a past event" do
     before(:each) do
       @ability = Ability.new(@user)
