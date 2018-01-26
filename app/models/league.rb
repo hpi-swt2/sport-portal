@@ -53,9 +53,6 @@ class League < Event
 
   def invalidate_schedule
     super
-    gamedays.each do |gameday|
-      gameday.matches.delete_all
-    end
     gamedays.delete_all
   end
 
