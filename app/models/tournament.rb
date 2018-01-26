@@ -134,7 +134,7 @@ class Tournament < Event
     end
 
     def create_match(team_home, team_away, depth, index)
-      match = Match.new team_home: team_home, team_away: team_away, gameday_number: depth, index: index + 1, event: self
+      match = Match.new team_home: team_home, team_away: team_away, gameday_number: depth, index: index + 1, event: self, start_time: Time.now
       matches << match
       match.save!
       match
@@ -156,7 +156,7 @@ class Tournament < Event
 
     def create_place_3_match
       loser_home, loser_away = place_3_match_participants
-      match = Match.new team_home: loser_home, team_away: loser_away, gameday_number: finale_gameday + 1, index: 1, event: self
+      match = Match.new team_home: loser_home, team_away: loser_away, gameday_number: finale_gameday + 1, index: 1, event: self, start_time: Time.now
       matches << match
       match.save!
     end
