@@ -50,8 +50,8 @@
             <% if @team.members.include? current_user %>
               <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
             <% end %>
-            <th><%= model_class.human_attribute_name(:first_name) %></th>
-            <th><%= model_class.human_attribute_name(:last_name) %></th>
+            <th><%= User.human_attribute_name(:first_name) %></th>
+            <th><%= User.human_attribute_name(:last_name) %></th>
             <% if @team.members.include? current_user %>
               <th><%= t '.actions', :default => t("helpers.actions") %></th>
             <% end %>
