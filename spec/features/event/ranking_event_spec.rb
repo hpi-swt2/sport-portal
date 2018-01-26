@@ -20,13 +20,22 @@ describe 'Rankinglists', type: :feature do
     @event.add_participant @user2
     visit event_path(@event)
     click_link_or_button('duel_participant')
+    expect(current_path).to eq("/matches/new")
     click_link_or_button('edit_results')
+    expect(current_path).to match(/\/matches\/\d+\/edit_results/)
     click_link_or_button('add_game_result')
 
-    page.all('input')each do | each |
-      if each[:id].include? 'score_home' do
-        fill_in
+    page.all('input').each do |each|
+      if(each[:id] != nil)
+        if each[:id].include? 'score_home'
+          fill_in(each[:id], '11')
+        end
+        if each[:id].include? 'score_away'
+          fill_in(each[:id], '4')
+        end
       end
     end
+
+    click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
   end
 end
