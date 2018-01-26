@@ -135,7 +135,7 @@ RSpec.describe Ability, type: :model do
     team = FactoryBot.create :team
     team.owners << @user
 
-    event = FactoryBot.create :event
+    event = FactoryBot.create :event, :has_dates, :team_player
     event.teams << team
 
     expect(ability).to_not be_able_to(:destroy, team)
@@ -153,7 +153,7 @@ RSpec.describe Ability, type: :model do
     team = FactoryBot.create :team
     team.owners << @admin
 
-    event = FactoryBot.create :event
+    event = FactoryBot.create :event, :has_dates, :team_player
     event.teams << team
 
     expect(ability).to be_able_to(:destroy, team)
