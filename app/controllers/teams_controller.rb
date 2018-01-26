@@ -57,7 +57,6 @@ class TeamsController < ApplicationController
     # Finally destroy team
     @team.destroy
     redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
-
   end
 
   # Assigns team ownership to a specific team member

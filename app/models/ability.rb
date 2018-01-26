@@ -60,8 +60,7 @@ class Ability
       can [:schedule, :team_join], Event
 
       # Team
-      can :read, Team, private: true, members: { id: user_id }
-      can :update, Team, members: { id: user_id }
+      can_crud_team(user_id)
       can_destroy_team(user)
       can_assign_ownership(user)
       can_delete_ownership(user)
@@ -84,6 +83,11 @@ class Ability
       can :leave, Event do |event|
         event.can_leave?(user)
       end
+    end
+
+    def can_crud_team(user_id)
+      can :read, Team, private: true, members: { id: user_id }
+      can :update, Team, members: { id: user_id }
     end
 
     def can_destroy_team(user)
