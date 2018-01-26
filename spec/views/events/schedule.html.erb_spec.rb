@@ -25,7 +25,7 @@ RSpec.describe 'events/schedule', type: :view do
     end
   end
 
-  describe "linktext for single player league" do
+  describe 'linktext for single player league' do
     before(:each) {
       @league = FactoryBot.create :league, :single_player
       @user = FactoryBot.create :user
@@ -56,6 +56,12 @@ RSpec.describe 'events/schedule', type: :view do
     render
     expect(rendered).to have_field :start_time
     expect(rendered).to have_field :endtime_time
+  end
+
+  it 'has input field for gameday dates with correct dates' do
+    render
+    expect(rendered).to have_selector("input[value='2017-12-24']")
+    expect(rendered).to have_selector("input[value='2017-12-31']")
   end
 
   it 'has edit button for gameday dates' do

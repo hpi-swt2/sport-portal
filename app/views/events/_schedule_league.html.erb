@@ -24,12 +24,12 @@
       </b>
     </th>
   </tr>
-  <tr>
+  <tr class="gameday">
     <th colspan="6">
       <%= form_for gameday, url: update_dates_gameday_path(gameday), html: {method: 'put'} do |day| %>
-        <%= day.date_field :starttime, class: 'input-sm', style: 'width: 100px' %>
-        <%= t 'events.schedule.to' %>
-        <%= day.date_field :endtime, class: 'input-sm', sytle: 'width: 100px' %>
+        <%= day.date_field :starttime, style: 'width: 30%; float: left' %>
+        <b><%= t 'events.schedule.to' %></b>
+        <%= day.date_field :endtime, sytle: 'width: 30%; float: left' %>
         <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
       <%end%>
     </th>
