@@ -89,8 +89,6 @@
                         '#',
                         data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
                         class: 'btn btn-primary genericButton blueActionButton' %>
-
-            <%= render :partial => 'invite_user_by_email_modal' %>
         <% end %>
       </div>
     </div>
@@ -186,7 +184,10 @@
               <div class="col s12 center">
                 <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-xs btn-default genericButton blueActionButton" %>              </div>
             </div>
-  <% end %>
+        <% end %>
+    <% end %>
+    <% if can? :assign_membership_by_email, @team %>
+        <%= render :partial => 'invite_user_by_email_modal' %>
     <% end %>
   </section>
   <div class="row">
