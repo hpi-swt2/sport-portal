@@ -108,7 +108,8 @@ class Ability
       can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
         exist_owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
-        ((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete)
+        ((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete) 
+        player_per_team_border_exceeded?(team, "delete", 1)
       end
     end
 
@@ -127,5 +128,15 @@ class Ability
         owners_after_delete = owners
       end
       owners_after_delete.length
+    end
+
+    def player_per_team_border_exceeded?(team, update, update_count)
+      not_exceeded = true
+      team.events.each do |event|
+        if (event.min_players_per_team > team.members.count - update_count && update ==  "delete") || (event.max_players_per_team < team.members.count + update_count && update ==  "add")
+          not_exceeded = false
+        end
+      end
+      return not_exceeded
     end
 end
