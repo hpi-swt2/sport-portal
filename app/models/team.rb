@@ -43,7 +43,7 @@ class Team < ApplicationRecord
     owners.length > 1
   end
 
-  def in_event?
+  def associated_with_event?
     events.exists?
   end
 

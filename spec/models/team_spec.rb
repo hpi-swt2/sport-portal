@@ -61,11 +61,11 @@ RSpec.describe Team, type: :model do
 
   it "should be in event if an event is assigned" do
     team = FactoryBot.create :team
-    expect(team.in_event?).to be false
+    expect(team.associated_with_event?).to be false
 
     event = FactoryBot.create :event
     team.events << event
-    expect(team.in_event?).to be true
+    expect(team.associated_with_event?).to be true
   end
 
   it 'is valid with image as avatar' do
