@@ -25,8 +25,8 @@
     </th>
   </tr>
   <tr class="gameday">
-    <th colspan="6">
-      <%= form_for gameday, url: update_dates_gameday_path(gameday), html: {method: 'put'} do |day| %>
+    <th colspan="7">
+      <%= form_for gameday, url: gameday_path(gameday), html: {method: 'put'} do |day| %>
         <%= day.date_field :starttime, style: 'width: 30%; float: left' %>
         <b><%= t 'events.schedule.to' %></b>
         <%= day.date_field :endtime, sytle: 'width: 30%; float: left' %>
