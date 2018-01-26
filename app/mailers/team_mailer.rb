@@ -1,3 +1,4 @@
+# An ApplicationMailer subclass that is responsible for informing users about team-related changes via email
 class TeamMailer < ApplicationMailer
   after_action :prevent_delivery_to_unsubscribed_users
 
@@ -27,5 +28,4 @@ class TeamMailer < ApplicationMailer
         mail.perform_deliveries = false
       end
     end
-
 end
