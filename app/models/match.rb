@@ -36,17 +36,17 @@ class Match < ApplicationRecord
   end
  
   def send_mails_when_scheduled
-    players = self.team_home.members + self.team_away.members
-    players.each do |user|
-      # EventMailer.deliver_match_scheduled(user, @match)
-    end
+    #players = self.team_home.members + self.team_away.members
+    #players.each do |user|
+      # MatchMailer.deliver_match_scheduled(user, @match)
+    #end
   end
 
   def send_mails_when_canceled
     players = self.team_home.members + self.team_away.members
     players.each do |user|
       puts "cancelllllled"
-      # EventMailer.deliver_match_canceled(user, @match)
+      # MatchMailer.deliver_match_canceled(user, @match)
     end
   end
 

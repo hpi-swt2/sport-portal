@@ -47,10 +47,11 @@ class Event < ApplicationRecord
   after_destroy :send_mails_when_canceled
 
   def send_mails_when_canceled
-    players = self.matches.team_home.members + self.matches.team_away.members
-    players.each do |user|
-      puts user
-      # EventMailer.deliver_event_canceled(user, @match)
+    self.teams.each do |team|
+      team.members.each do |user|
+        puts user
+        # EventMailer.deliver_event_canceled(user, @match)
+      end
     end
   end
 
