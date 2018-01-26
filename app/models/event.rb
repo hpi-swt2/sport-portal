@@ -27,7 +27,8 @@
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
   has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :destroy
-  has_and_belongs_to_many :teams
+  has_many :participants
+  has_many :teams, through: :participants
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
@@ -65,7 +66,13 @@ class Event < ApplicationRecord
 
   def add_team(team)
     teams << team
+    set_initial_value(team)
     invalidate_schedule
+  end
+
+  def set_initial_value(team)
+    participant = participants.where("team_id = ?", team.id)
+    participant.first.update(rating: initial_value)
   end
 
   def remove_team(team)

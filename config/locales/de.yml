@@ -278,6 +278,7 @@ de:
     show_events: "Alle Events anzeigen"
     join_team_event: "Event %{event} mit einem Team beitreten"
     choose_team: "Ein Team auswählen"
+    add_match: "Spiel hinzufügen"
     participating: "Beigetreten"
     metric: "Metrik"
     full: "Voll"

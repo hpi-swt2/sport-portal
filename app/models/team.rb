@@ -21,7 +21,9 @@ class Team < ApplicationRecord
 
   scope :multiplayer, -> { where single: false }
 
-  has_and_belongs_to_many :events
+  has_many :participants
+  has_many :events, through: :participants
+
 
   has_many :team_members, source: :team_user, class_name: "TeamUser"
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"

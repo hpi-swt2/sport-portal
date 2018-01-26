@@ -56,7 +56,7 @@ describe 'Event model', type: :model do
 
   it 'should have an association teams' do
     relation = Event.reflect_on_association(:teams)
-    expect(relation.macro).to eq :has_and_belongs_to_many
+    expect(relation.macro).to eq :has_many
   end
 
   it 'should know if it is for single players' do
