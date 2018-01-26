@@ -27,24 +27,28 @@ class Match < ApplicationRecord
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
 
-  after_create :send_mails_when_scheduled
+  after_save :send_mails_when_scheduled
   after_destroy :send_mails_when_canceled
   after_update :send_mails_when_date_changed, :if => :saved_change_to_start_time?
 
   def send_mails_when_date_changed
+    players = self.team_home.members + self.team_away.members
+    players.each do |user|
+      MatchMailer.match_date_changed(user, self).deliver_now
+    end
   end
  
   def send_mails_when_scheduled
-    #players = self.team_home.members + self.team_away.members
-    #players.each do |user|
-      # MatchMailer.deliver_match_scheduled(user, @match)
-    #end
+    players = self.team_home.members + self.team_away.members
+    players.each do |user|
+      MatchMailer.match_scheduled(user, self).deliver_now
+    end
   end
 
   def send_mails_when_canceled
     players = self.team_home.members + self.team_away.members
     players.each do |user|
-      # MatchMailer.deliver_match_canceled(user, @match)
+      MatchMailer.match_canceled(user, self).deliver_now
     end
   end
 
