@@ -52,7 +52,13 @@ RSpec.describe 'events/schedule', type: :view do
     end
   end
 
-  it 'has edit button for gameday days' do
+  it 'has input fields for gameday dates' do
+    render
+    expect(rendered).to have_field :start_time
+    expect(rendered).to have_field :endtime_time
+  end
+
+  it 'has edit button for gameday dates' do
     render
     expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
   end

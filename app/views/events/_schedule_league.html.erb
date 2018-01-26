@@ -22,13 +22,16 @@
       <b>
         <%= t 'events.schedule.gameday' %> <%= gameday.description %>
       </b>
-      <b>
-        <%= "- #{ gameday.starttime.to_s(:day_and_month) } " %>
+    </th>
+  </tr>
+  <tr>
+    <th colspan="6">
+      <%= form_for gameday, url: update_dates_gameday_path(gameday), html: {method: 'put'} do |day| %>
+        <%= day.date_field :starttime, class: 'input-sm', style: 'width: 100px' %>
         <%= t 'events.schedule.to' %>
-        <%= " #{ gameday.endtime.to_s(:day_and_month) }" %>
-      </b>
-      <%= link_to t('events.schedule.edit_date', default: t('helpers.links.edit')),
-                  event_schedule_path(@event), class: 'btn btn-default btn-xs' %>
+        <%= day.date_field :endtime, class: 'input-sm', sytle: 'width: 100px' %>
+        <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
+      <%end%>
     </th>
   </tr>
   <% gameday.matches.each do |match| %>
