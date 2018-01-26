@@ -10,6 +10,8 @@ RSpec.describe "matches/show", type: :view do
   it "renders correct link for a match of matches" do
     @match.team_away.match.points_home = 3
     @match.team_away.match.points_away = 1
+    result = FactoryBot.create(:game_result, score_home: 1, score_away: 0)
+    @match.team_away.match.game_results << result
 
     render
 
