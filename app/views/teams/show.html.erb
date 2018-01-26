@@ -64,7 +64,8 @@
             <td><%= check_box_tag "members[]", member.id %></td>
           <% end %>
           <td><%= i + 1 %></td>
-          <td><%= member.first_name%></td>
+          <td><%= link_to member.first_name, user_path(member)%>
+          </td>
           <td><%= member.last_name%></td>
           <% if @team.members.include? current_user %>
             <td>
