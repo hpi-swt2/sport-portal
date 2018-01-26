@@ -412,7 +412,7 @@ RSpec.describe EventsController, type: :controller do
           @team1.home_matches << @match1
           @team2.away_matches << @match1
 
-          @match2 = FactoryBot.create(:match,team_home: @team2, team_away: @team1, gameday_number: 2,
+          @match2 = FactoryBot.create(:match, team_home: @team2, team_away: @team1, gameday_number: 2,
                               points_home: 1, points_away: 1)
           @result2 = FactoryBot.build(:game_result, score_home: 10, score_away: 10)
           @match2.game_results << @result2
@@ -420,7 +420,7 @@ RSpec.describe EventsController, type: :controller do
           @team2.home_matches << @match2
           @team1.away_matches << @match2
 
-          @match3 = FactoryBot.create(:match,team_home: @team1, team_away: @team3, gameday_number: 3,
+          @match3 = FactoryBot.create(:match, team_home: @team1, team_away: @team3, gameday_number: 3,
                               points_home: 0, points_away: 3)
           @result3 = FactoryBot.build(:game_result, score_home: 0, score_away: 1)
           @match3.game_results << @result3
@@ -428,7 +428,7 @@ RSpec.describe EventsController, type: :controller do
           @team1.home_matches << @match3
           @team3.away_matches << @match3
 
-          @match4 = FactoryBot.create(:match,team_home: @team2, team_away: @team3, gameday_number: 4,
+          @match4 = FactoryBot.create(:match, team_home: @team2, team_away: @team3, gameday_number: 4,
                               points_home: 1, points_away: 1)
           @result4 = FactoryBot.build(:game_result, score_home: 1, score_away: 1)
           @match4.game_results << @result4

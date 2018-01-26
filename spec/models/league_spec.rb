@@ -64,9 +64,9 @@ describe 'League model', type: :model do
   end
   describe 'Generating league schedule' do
     let(:league) { league = FactoryBot.create(:league, :with_teams)
-    league.game_mode = gamemode
-    league.generate_schedule
-    league }
+                   league.game_mode = gamemode
+                   league.generate_schedule
+                   league }
     let(:matches) { league.all_matches }
     let(:home_teams) { matches.map(&:team_home) }
     let(:away_teams) { matches.map(&:team_away) }
@@ -74,7 +74,7 @@ describe 'League model', type: :model do
     let(:all_teams_with_occurrences) { Hash[(home_teams + away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
     subject { matches }
     context 'round robin' do
-      let(:gamemode){League.game_modes[:round_robin]}
+      let(:gamemode) { League.game_modes[:round_robin] }
 
       it 'does create matches' do
         expect(subject.length).to be > 0
@@ -111,7 +111,7 @@ describe 'League model', type: :model do
     end
 
     context 'double round robin' do
-      let(:gamemode){League.game_modes[:two_halfs]}
+      let(:gamemode) { League.game_modes[:two_halfs] }
 
 
       let(:all_teams_with_home_occurences) { Hash[(home_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
