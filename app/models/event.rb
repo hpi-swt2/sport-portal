@@ -153,7 +153,7 @@ class Event < ApplicationRecord
   end
 
   def get_ranking
-    RankingList.new(teams, matches).get_ranking
+    Ranking.new(teams, matches).get_ranking
   end
 
   class << self
