@@ -71,7 +71,38 @@ de:
 
   welcome:
     index:
-      lead: "Wir bieten unglaubliche Lösungen für vielfältige Use Cases."
+      lead: "Organisiere deine Liga!"
+      lead-description: "Plane, erstelle und betreue mühelos sowohl Turniere als auch Ligen für deinen Sport. Du hast noch keine Erfahrung als Event-Organisator? Kein Problem! Baue dir jetzt mit wenigen Klicks problemlos deinen persönlichen Spielplan."
+      free-sign-up: "Kostenlos Anmelden"
+      soccer: "Fußball"
+      basketball: "Basketball"
+      volleyball: "Volleyball"
+      table-tennis: "Tischtennis"
+      others: "andere"
+      section1: "Was bieten wir?"
+      section1-description_html: |
+        Verwalte über unsere hochmoderne Plattform alle Sportereignisse. Unsere Benutzeroberfläche ermöglicht es dir, deine Ergebnisse mit allen deinen Freunden (auch wenn es nur 2 sind) zu teilen und sie für deinen Sport zu begeistern.<br /><br />
+        Dir ist das rudimentäre Ligensystem nicht genug? Wir bieten zusätzlich auch das Schweizer System, in dem auch große Differenzen zwischen den Fertigkeiten einzelner Spieler, ein faires und reizendes Erlebnis bieten.<br /><br />
+        Neben einer spielend leichten Ligenverwaltung bieten wir natürlich auch Hilfe bei der Organisation von Turnieren.
+      section2: "Wofür eigentlich?"
+      section2-description_html: |
+        Egal ob du eine Fußballliga, ein Tischtennisturnier oder vielleicht sogar ein Turnier für dein Lieblingsonlinespiel organisieren willst, auf unserer Plattform ist das alles kein Problem. Bei uns kannst du deiner Fantasie freien Lauf lassen.<br /><br />
+        Da auch für uns der Sport an erster Stelle steht, wollen wir dir natürlich so viel Mehraufwand wie nur möglich ersparen. Deswegen musst du nicht jedes einzelne Spiel selbst überwachen. Unser vollautomatisierter Email-Service erinnert alle Spieler selbstständig an ihre Spieltermine und das Eintragen ihrer Ergebnisse. Du musst dich also nicht ständig um den reibungslosen Ablauf deiner Liga kümmern und hast den Kopf frei für deinen Sport.<br /><br />
+      section3: "Hier nochmal im Detail:"
+      section3-card1-header: "Turnier"
+      section3-card1-description_html:
+        <li>K.O.-System</li><li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Automatische oder manuelle Paarungen</li>
+      section3-card2-header: "Liga"
+      section3-card2-description_html:
+        <li>Liga und Schweizer System</li><li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Automatische oder manuelle Paarungen</li><li>Automatische Spielplangenerierung</li><li>Erinnerung via Email</li><li>Automatische Punktevergabe</li><li>Statistiken</li>
+      section3-card3-header: "Rangliste"
+      section3-card3-description_html:
+        <li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Keine festen Paarungen</li><li>Metriken zur Bestimmung der Spielstärke (Elo, Trueskill, Verhältnis S./N.)</li><li>Keine festen Spieltage</li><li>Beitritt jederzeit möglich</li>
+      section4: "Und wer sind wir?"
+      section4-description_html: |
+        Wir sind ein Team ambitionierter Studenten, welche im Rahmen einer Bachelor-Lehrveranstaltung den Umgang mit großen Teams und Ruby-On-Rails lernen. Das Projekt begann im Oktober 2017 im Auftrag des Sportklubs des Hasso-Plattner-Institut Potsdam.<br /><br />
+        Unsere Vision ist es, den gesamten Organisationsprozess von Sportveranstaltungen zu vereinfachen. Um dir ein so angenehmes Erlebnis wie nur möglich zu ermöglichen, schwitzen wir Tag und Nacht, nicht nur beim Sport.<br /><br />
+      create-schedule: "Spielplan erstellen"
 
   navbar:
     drop-down:
@@ -113,6 +144,9 @@ de:
         one: "Event"
         other: "Events"
         id: "ID"
+      game_result:
+        one: "Ergebnis"
+        other: "Ergebnisse"
 
     attributes:
       match:
@@ -148,6 +182,8 @@ de:
         selection_type: "Auswahlverfahren"
         metric: "Metrik"
         initial_value: "Anfangswert"
+        min_players_per_team: "Min. Anzahl Spieler pro Team"
+        max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
           single: "Einzelteilnahme"
@@ -184,11 +220,35 @@ de:
     validations:
       must_be_after: "darf nicht vor %{other} sein."
 
+      game_result:
+        score_home: "Ergebnis Heim"
+        score_away: "Ergebnis Gast"
+
+      match/game_results:
+        score_home: "Ergebnis Heim"
+        score_away: "Ergebnis Gast"
+
+
   view:
     user:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
+    
+    match:
+      game_results: "Ergebnis(se)"
+      add_game_result: "Ergebnis hinzufügen"
+      remove_game_result: "Ergebnis entfernen"
+      added_game_result_notice: "Ergebnis hinzugefügt!"
+      removed_game_result_notice: "Ergebnis entfernt!"
+      noscript:
+        add_results_notice:
+          create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
+          edit_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen oder zu löschen benutze bitte Buttons mit dem \"(Noscript)\" Präfix."
+        button_prefix: "(Noscript) "
+      edit_results: "Ergebnisse bearbeiten"
+      error:
+        update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
 
   unauthorized:
         manage:
@@ -252,6 +312,7 @@ de:
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
       to: "bis"
+      appointment: "Termin"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
@@ -302,6 +363,10 @@ de:
     loser_of_match: "Verlierer %{match}"
 
   teams:
+    index:
+      my_teams: "Meine Teams"
+      all_teams: "Alle Teams"
+      create_team: "Ein Team erstellen"
     show:
       invite_user_to_team: "+"
       number: "#"

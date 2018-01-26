@@ -2,37 +2,45 @@
 #
 # Table name: events
 #
-#  id               :integer          not null, primary key
-#  name             :string
-#  description      :text
-#  discipline       :string
-#  player_type      :integer          not null
-#  max_teams        :integer
-#  game_mode        :integer          not null
-#  type             :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  startdate        :date
-#  enddate          :date
-#  deadline         :date
-#  gameday_duration :integer
-#  owner_id         :integer
-#  initial_value    :float
+#  id                   :integer          not null, primary key
+#  name                 :string
+#  description          :text
+#  discipline           :string
+#  player_type          :integer          not null
+#  max_teams            :integer
+#  game_mode            :integer          not null
+#  type                 :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  startdate            :date
+#  enddate              :date
+#  deadline             :date
+#  gameday_duration     :integer
+#  owner_id             :integer
+#  initial_value        :float
+#  selection_type       :integer          default("fcfs"), not null
+#  min_players_per_team :integer
+#  max_players_per_team :integer
+#  image_data           :text
 #
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :delete_all
+  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :destroy
   has_and_belongs_to_many :teams
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
 
+  include ImageUploader::Attachment.new(:image)
+
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  enum selection_type: [:fcfs, :fcfs_queue, :selection]
+  # fcfs_queue and selection should be added in the future
+  enum selection_type: [:fcfs]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
 
-  validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000, allow_nil: true }
+  validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
 
   enum player_type: [:single, :team]
 
@@ -103,7 +111,7 @@ class Event < ApplicationRecord
   end
 
   def can_join_fcfs?
-    team_slot_available? && selection_type == 0
+    team_slot_available? && selection_type == 'fcfs'
   end
 
   def can_leave?(user)
@@ -132,6 +140,22 @@ class Event < ApplicationRecord
 
   def human_game_mode
     self.class.human_game_mode game_mode
+  end
+
+  def fitting_teams(user)
+    all_teams = user.owned_teams.multiplayer
+    fitting_teams = []
+    all_teams.each do |team|
+      if is_fitting?(team)
+        fitting_teams << team
+      end
+    end
+    fitting_teams
+  end
+
+  def is_fitting?(team)
+    team_member_count = team.members.count
+    min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
   end
 
   class << self

@@ -2,25 +2,29 @@
 #
 # Table name: events
 #
-#  id               :integer          not null, primary key
-#  name             :string
-#  description      :text
-#  discipline       :string
-#  player_type      :integer          not null
-#  max_teams        :integer
-#  game_mode        :integer          not null
-#  type             :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  startdate        :date
-#  enddate          :date
-#  deadline         :date
-#  gameday_duration :integer
-#  owner_id         :integer
+#  id                   :integer          not null, primary key
+#  name                 :string
+#  description          :text
+#  discipline           :string
+#  player_type          :integer          not null
+#  max_teams            :integer
+#  game_mode            :integer          not null
+#  type                 :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  startdate            :date
+#  enddate              :date
+#  deadline             :date
+#  gameday_duration     :integer
+#  owner_id             :integer
+#  initial_value        :float
+#  selection_type       :integer          default("fcfs"), not null
+#  min_players_per_team :integer
+#  max_players_per_team :integer
+#  image_data           :text
 #
 
 class League < Event
-
   validates :deadline, :startdate, :enddate, :selection_type, presence: true
   validates :gameday_duration, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000 }
   validate :end_after_start, :start_after_deadline

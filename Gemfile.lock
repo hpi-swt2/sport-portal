@@ -48,6 +48,8 @@ GEM
       rake (>= 10.4, < 13.0)
     arel (8.0.0)
     ast (2.3.0)
+    awesome_nested_fields (0.6.4)
+      rails (>= 3.0.0)
     aws-partitions (1.53.0)
     aws-sdk-core (3.13.0)
       aws-partitions (~> 1.0)
@@ -334,6 +336,7 @@ GEM
     thread (0.2.2)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    time_splitter (1.1.0)
     tins (1.16.3)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -367,6 +370,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake (~> 5.0)
   annotate
+  awesome_nested_fields
   aws-sdk-s3 (~> 1.2)
   better_errors
   binding_of_caller
@@ -390,7 +394,7 @@ DEPENDENCIES
   materialize-sass
   omniauth
   omniauth-openid
-  pg
+  pg (~> 0.21.0)
   pry
   pry-rails
   pry-rescue
@@ -406,6 +410,7 @@ DEPENDENCIES
   spring-watcher-listen
   sqlite3
   therubyracer
+  time_splitter
   turbolinks (~> 5)
   twitter-bootstrap-rails
   tzinfo-data
