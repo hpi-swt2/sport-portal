@@ -21,7 +21,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if user.persisted?
         sign_in_user user
       else
-        sign_up_user auth, user
+        sign_up_user auth
       end
     end
 
@@ -30,7 +30,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash_if_navigational :notice, :success, provider: 'OpenID'
     end
 
-    def sign_up_user(auth, user)
+    def sign_up_user(auth)
       session['omniauth.data'] = {
         uid: auth.uid,
         provider: auth.provider,

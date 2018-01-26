@@ -60,7 +60,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     end
 
     context 'given no (logged in or linked) user' do
-      it 'should redirect to the registration from if information is missing' do
+      it 'should redirect to the registration form if information is missing' do
         @user.uid = nil
         @user.provider = nil
         @user.save!
