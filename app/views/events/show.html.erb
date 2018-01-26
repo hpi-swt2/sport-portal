@@ -54,13 +54,13 @@
   <dt><strong><%= model_class.human_attribute_name(:discipline) %>:</strong></dt>
   <dd><%= @event.discipline %></dd>
 
-  <dt><strong><%= model_class.human_attribute_name((@event.type == 'Rankinglist') ? :metric : :game_mode) %>:</strong></dt>
+  <dt><strong><%= model_class.human_attribute_name((@event.is_a? Rankinglist) ? :metric : :game_mode) %>:</strong></dt>
   <dd><%= @event.human_game_mode %></dd>
 
   <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
   <dd><%= @event.max_teams.present? ? @event.max_teams : t('events.max_teams.infinite') %></dd>
 
-  <% if @event.type != 'Rankinglist' %>
+  <% if not @event.is_a? Rankinglist %>
     <dt><strong><%= model_class.human_attribute_name(:player_type) %>:</strong></dt>
     <dd><%= @event.human_player_type %></dd>
 
@@ -90,7 +90,7 @@
     </tbody>
   </table>
 </div>
-<% if @event.type != 'Rankinglist' %>
+<% if not @event.is_a? Rankinglist %>
   <%= link_to t('.to_schedule'),
               event_schedule_path(@event),
               class: 'btn btn-default'%>
@@ -98,10 +98,10 @@
   <%= link_to t('.to_overview'),
               event_overview_path(@event),
               class: 'btn btn-default' %>
+  <%= link_to t('.to_ranking'),
+              event_ranking_path(@event),
+              class: 'btn btn-default' %>
 <% end %>
-<%= link_to t('.to_ranking'),
-            event_ranking_path(@event),
-            class: 'btn btn-default' %>
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
