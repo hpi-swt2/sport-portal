@@ -1,7 +1,7 @@
 # Smallest unit of a ranking list. Contains different data for one team and contains logic to parse those date out of
 # match objects.
 class RankingEntry
-  attr_reader :rank, :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against, :goals_difference, :points
+  attr_reader :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against, :goals_difference, :points
   attr_accessor :rank
 
   def initialize(team, home_matches, away_matches)
