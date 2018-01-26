@@ -32,7 +32,6 @@ class Match < ApplicationRecord
   after_update :send_mails_when_date_changed, :if => :saved_change_to_start_time?
 
   def send_mails_when_date_changed
-    puts "date has been changed"
   end
  
   def send_mails_when_scheduled
@@ -45,7 +44,6 @@ class Match < ApplicationRecord
   def send_mails_when_canceled
     players = self.team_home.members + self.team_away.members
     players.each do |user|
-      puts "cancelllllled"
       # MatchMailer.deliver_match_canceled(user, @match)
     end
   end

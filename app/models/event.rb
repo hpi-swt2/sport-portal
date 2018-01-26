@@ -49,7 +49,6 @@ class Event < ApplicationRecord
   def send_mails_when_canceled
     self.teams.each do |team|
       team.members.each do |user|
-        puts user
         # EventMailer.deliver_event_canceled(user, @match)
       end
     end
