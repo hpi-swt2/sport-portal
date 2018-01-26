@@ -87,7 +87,7 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:delete_membership, team, @user.id)
   end
 
-  it 'should allow team owners to delete the ownership & membership of onother team owner having multiple team owners left' do
+  it 'should allow team owners to delete the ownership & membership of another team owner having multiple team owners left' do
     ability = Ability.new(@user)
     team = FactoryBot.create :team, :private
     team.owners = [@user, @other_user]
@@ -156,7 +156,6 @@ RSpec.describe Ability, type: :model do
     ability = Ability.new(@user)
     expect(ability).to_not be_able_to(:modify, event)
   end
-
 
   it 'should allow admin to crud teams they did not create' do
     team = Team.new
@@ -229,5 +228,18 @@ RSpec.describe Ability, type: :model do
       let(:event) { FactoryBot.create(:rankinglist, :single_player) }
       include_examples "a single player event"
     end
+  end
+
+  it 'should allow to alter the size of a team so that the size is smaller or bigger than the min/max players per team requirement of any event the team is in.' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private, :with_five_members
+    team.owners << @user
+    event = FactoryBot.create :event
+    event.min_players_per_team = 6
+    event.max_players_per_team = 6
+    team.events << event
+    expect(ability).to_not be_able_to(:delete_membership, team, @user.id)
+    #expect(ability).no_not be_able_to(:assign_membership_by_email, team, @other_user.id)
+    #TODO
   end
 end
