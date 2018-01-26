@@ -135,4 +135,11 @@ RSpec.describe Match, type: :model do
 
     expect(match.points_home).to be < match.points_away
   end
+
+  it 'send notification emails to all members of teams when scheduled' do
+    expect(ActionMailer::Base.deliveries.length).to eq(0)
+    FactoryBot.create(:match) 
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect(ActionMailer::Base.deliveries.length).to eq(email_count)
+  end
 end

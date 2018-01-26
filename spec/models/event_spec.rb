@@ -126,4 +126,10 @@ describe 'Event model', type: :model do
       expect(@team_event.fitting_teams(@user).count).to be(0)
     end
   end
+
+  it "should notify all team members when cancelled" do
+    event = FactoryBot.create :event, :with_teams
+    email_count = event.teams.map(&:members).flatten(1).count
+    expect { event.destroy }.to change { ActionMailer::Base.deliveries.length }.from(0).to(email_count)
+  end
 end
