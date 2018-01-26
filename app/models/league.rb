@@ -107,7 +107,7 @@ class League < Event
   end
 
   def add_match(team_home, team_away, gameday_number)
-    match = Match.new(team_home: team_home, team_away: team_away, gameday_number: gameday_number +1)
+    match = Match.new(team_home: team_home, team_away: team_away, gameday_number: gameday_number +1, start_time: gamedays[gameday_number].starttime)
     gamedays[gameday_number].matches << match
     matches << match # deprecated but still used for gameday calculation, refactoring to be continued
     match

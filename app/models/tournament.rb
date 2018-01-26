@@ -142,7 +142,7 @@ class Tournament < Event
 
     def normalize_first_layer_match_indices
       matches.each do |match|
-        if match.gameday == 0
+        if match.gameday_number == 0
           match.adjust_index_by first_gameday_offset
         end
       end

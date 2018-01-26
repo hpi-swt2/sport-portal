@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180120234428) do
+ActiveRecord::Schema.define(version: 20180124104518) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 20180120234428) do
     t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
+  create_table "game_results", force: :cascade do |t|
+    t.integer "score_home"
+    t.integer "score_away"
+    t.integer "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_game_results_on_match_id"
+  end
+
   create_table "gamedays", force: :cascade do |t|
     t.string "description"
     t.datetime "starttime"
@@ -59,15 +68,6 @@ ActiveRecord::Schema.define(version: 20180120234428) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_gamedays_on_event_id"
-  end
-
-  create_table "game_results", force: :cascade do |t|
-    t.integer "score_home"
-    t.integer "score_away"
-    t.integer "match_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["match_id"], name: "index_game_results_on_match_id"
   end
 
   create_table "match_results", force: :cascade do |t|
@@ -91,8 +91,8 @@ ActiveRecord::Schema.define(version: 20180120234428) do
     t.string "team_home_type", default: "Team"
     t.string "team_away_type", default: "Team"
     t.integer "index"
-    t.datetime "start_time"
     t.integer "gameday_id"
+    t.datetime "start_time"
     t.index ["event_id"], name: "index_matches_on_event_id"
     t.index ["gameday_id"], name: "index_matches_on_gameday_id"
   end
