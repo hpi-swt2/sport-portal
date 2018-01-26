@@ -75,17 +75,13 @@ RSpec.describe TeamMailer, type: :mailer do
     it 'should send mails to users with enabled team notification settings' do
       allow(user).to receive(:has_team_notifications_enabled?).and_return(true)
       mail = TeamMailer.user_added_to_team(user, team)
-      mail.deliver_now
-
-      expect(ActionMailer::Base.deliveries).to have(1).items
+      expect { mail.deliver_now }.to change { ActionMailer::Base.deliveries.length }.by(1)
     end
 
     it 'should not send mails to users with disabled team notification settings' do
       allow(user).to receive(:has_team_notifications_enabled?).and_return(false)
       mail = TeamMailer.user_added_to_team(user, team)
-      mail.deliver_now
-
-      expect(ActionMailer::Base.deliveries).to be_empty
+      expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
     end
   end
 end
