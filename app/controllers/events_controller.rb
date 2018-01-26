@@ -1,12 +1,11 @@
 class EventsController < ApplicationController
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join, :overview]
+  authorize_resource :event
+
   RankingEntry = Struct.new(:rank, :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against,
                             :goals_difference, :points)
 
   helper EventsHelper
-  load_and_authorize_resource
-
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join]
-
 
   # GET /events
   def index
@@ -38,7 +37,6 @@ class EventsController < ApplicationController
   def create
     @event = event_type.new(event_params)
     set_associations
-
     if @event.save
       @event.editors << current_user
       redirect_to @event, notice: 'Event was successfully created.'
@@ -136,17 +134,17 @@ class EventsController < ApplicationController
   def parse_matches_data_into_ranking_entry(team, ranking_entry, matches, parse_match_details_for_home_or_away)
     matches.each do |match|
       # Validate data since matches do not always have both goals (scores) and points assigned
-      score_home = match.score_home
-      score_away = match.score_away
+      score_home_total = match.score_home_total
+      score_away_total = match.score_away_total
       points_home = match.points_home
       points_away = match.points_away
-      match_has_result = score_home && score_away && points_home && points_away
+      match_has_result = match.has_scores? && match.has_points?
       next unless match_has_result
 
       ranking_entry.match_count += 1
       parse_match_result_into_ranking_entry team, match, ranking_entry
 
-      send(parse_match_details_for_home_or_away, ranking_entry, score_home, score_away, match)
+      send(parse_match_details_for_home_or_away, ranking_entry, score_home_total, score_away_total, match)
     end
   end
 
@@ -162,15 +160,15 @@ class EventsController < ApplicationController
     end
   end
 
-  def parse_match_details_for_home(ranking_entry, score_home, score_away, match)
-    ranking_entry.goals += score_home
-    ranking_entry.goals_against += score_away
+  def parse_match_details_for_home(ranking_entry, score_home_total, score_away_total, match)
+    ranking_entry.goals += score_home_total
+    ranking_entry.goals_against += score_away_total
     ranking_entry.points += match.points_home
   end
 
-  def parse_match_details_for_away(ranking_entry, score_home, score_away, match)
-    ranking_entry.goals += score_away
-    ranking_entry.goals_against += score_home
+  def parse_match_details_for_away(ranking_entry, score_home_total, score_away_total, match)
+    ranking_entry.goals += score_away_total
+    ranking_entry.goals_against += score_home_total
     ranking_entry.points += match.points_away
   end
 
@@ -186,6 +184,10 @@ class EventsController < ApplicationController
     def set_associations
       @event.owner = current_user
       @event.player_type ||= Event.player_types[:single]
+      if @event.player_type == Event.player_types[:single] || @event.type == 'Rankinglist'
+        @event.min_players_per_team = 1
+        @event.max_players_per_team = 1
+      end
     end
 
     # Get the type of event that should be created
@@ -227,7 +229,11 @@ class EventsController < ApplicationController
                                     :teams,
                                     :enddate,
                                     :initial_value,
+                                    :min_players_per_team,
+                                    :max_players_per_team,
                                     :gameday_duration,
+                                    :image,
+                                    :remove_image,
                                     :has_place_3_match,
                                     user_ids: [])
     end

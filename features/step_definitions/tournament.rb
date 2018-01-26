@@ -75,11 +75,15 @@ def find_team_of_match(match_gameday, match_num, home_or_away)
   }[home_or_away.to_sym]
 end
 
-Then(/^the results for match (.+) (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_gameday, match_num, points_home, points_away|
+Then(/^the results for match (.+) (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_gameday, match_num, score_home, score_away|
   match = find_match_on_page match_gameday, match_num
-  fill_in "match_#{match.id}_match_points_home", with: points_home
-  fill_in "match_#{match.id}_match_points_away", with: points_away
-  click_on "save_points_#{match.id}"
+  visit edit_results_match_path match
+  find("a[href='#{add_game_result_match_path(id: match.id)}']").click
+
+  fill_in "match_game_results_attributes_0_score_home", with: score_home
+  fill_in "match_game_results_attributes_0_score_away", with: score_away
+  find('input[name="commit"]').click
+  visit event_schedule_path(match.event)
 end
 
 Then(/^the (home|away) team of match (.+) (\d+) comes to the next round$/) do |home_or_away, match_gameday, match_num|
