@@ -30,18 +30,12 @@ class Event
 
     def parse_matches_data(matches, parse_match_details_for_home_or_away)
       matches.each do |match|
-        # Validate data since matches do not always have both goals (scores) and points assigned
-        score_home = match.score_home
-        score_away = match.score_away
-        points_home = match.points_home
-        points_away = match.points_away
-        match_has_result = score_home && score_away && points_home && points_away
-        next unless match_has_result
+        next unless match.has_result?
 
         @match_count += 1
         parse_match_result match
 
-        send(parse_match_details_for_home_or_away, score_home, score_away, match)
+        send(parse_match_details_for_home_or_away, match)
       end
     end
 
@@ -57,15 +51,15 @@ class Event
       end
     end
 
-    def parse_match_details_for_home(score_home, score_away, match)
-      @goals += score_home
-      @goals_against += score_away
+    def parse_match_details_for_home(match)
+      @goals += match.score_home
+      @goals_against += match.score_away
       @points += match.points_home
     end
 
-    def parse_match_details_for_away(score_home, score_away, match)
-      @goals += score_away
-      @goals_against += score_home
+    def parse_match_details_for_away(match)
+      @goals += match.score_away
+      @goals_against += match.score_home
       @points += match.points_away
     end
   end

@@ -110,4 +110,8 @@ class Match < ApplicationRecord
       set_points(1, 1)
     end
   end
+
+  def has_result?
+    score_home && score_away && points_home && points_away
+  end
 end
