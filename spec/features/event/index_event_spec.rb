@@ -5,6 +5,7 @@ describe "index event page", type: :feature do
   shared_examples "a single player event" do
     context "which I participate in" do
       before(:each) do
+        sign_in(@user)
         @event = event
         @event.add_participant(@user)
         visit events_path
@@ -12,47 +13,6 @@ describe "index event page", type: :feature do
 
       it "should not have a join button" do
         expect(page).not_to have_link(:join_event_button)
-      end
-
-      it "should redirect me to itself when clicking the leave button" do
-        click_link(:leave_event_button)
-        expect(current_path).to eq(events_path)
-      end
-
-      it "should have a leave button" do
-        expect(page).to have_link(:leave_event_button)
-      end
-
-      it "should show that I am participating" do
-        expect(page).to have_content I18n.t('events.participating')
-      end
-
-      it "should let me join again after clicking the leave button" do
-        click_link(:leave_event_button)
-        expect(page).to have_link(:join_event_button)
-      end
-    end
-
-    context "which I do not participate in" do
-      before(:each) do
-        @event = event
-        visit events_path
-      end
-      it "should have a join button" do
-        expect(page).to have_link(:join_event_button)
-      end
-
-      it "should redirect me to itself when clicking the join button" do
-        expect(current_path).to eq(events_path)
-      end
-
-      it "should let me leave after clicking the join button" do
-        click_link(:join_event_button)
-        expect(page).to have_link(:leave_event_button)
-      end
-
-      it "should not have a leave button" do
-        expect(page).not_to have_link(:leave_event_button)
       end
     end
   end
@@ -68,9 +28,6 @@ describe "index event page", type: :feature do
     end
 
     context "which I do not participate in" do
-      it "should have a join button" do
-        expect(page).to have_link(:join_event_button)
-      end
 
       it "should not have a leave button" do
         expect(page).not_to have_link(:leave_event_button)
@@ -87,41 +44,9 @@ describe "index event page", type: :feature do
         expect(page).not_to have_link(:join_event_button)
       end
 
-      it "should have a leave button" do
-        expect(page).to have_link(:leave_event_button)
-      end
 
-      it "should show that I am participating" do
-        expect(page).to have_content I18n.t('events.participating')
-      end
-
-      context "with a team I own" do
-        before(:each) do
-          @team.owners << @user
-          visit events_path
-        end
-
-        it "should have a clickable leave button" do
-          leave_button = page.find_link(:leave_event_button)
-          expect(leave_button[:disabled]).to eq nil
-        end
-
-        it "should redirect me to itself when clicking the leave button" do
-          click_link(:leave_event_button)
-          expect(current_path).to eq(events_path)
-        end
-
-        it "should let me join again after clicking the leave button" do
-          click_link(:leave_event_button)
-          expect(page).to have_link(:join_event_button)
-        end
-      end
-
-      context "with a team I don't own" do
-        it "should have a leave button that is disabled" do
-          leave_button = page.find_link(:leave_event_button)
-          expect(leave_button[:disabled]).to eq 'disabled'
-        end
+      it "should show that I am participating in some events" do
+        expect(page).to have_content I18n.t('events.index.my_events')
       end
     end
   end
@@ -132,19 +57,11 @@ describe "index event page", type: :feature do
       @oldevent = event
     end
 
-    it "should show if the corresponding checkbox is enabled" do
-      visit "/events?showAll=on"
-      expect(page).to have_content(@oldevent.deadline.to_s)
-    end
 
-    it "should hide them if the corresponding checkbox is disabled" do
-      visit events_path
-      expect(page).not_to have_content(@oldevent.deadline.to_s)
-    end
 
     it "should not display a join button" do
       sign_in @user
-      visit "/events?showAll=on"
+      visit events_path
       expect(page).not_to have_link(:join_event_button)
     end
   end
