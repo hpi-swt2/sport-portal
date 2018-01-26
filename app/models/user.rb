@@ -98,7 +98,7 @@ class User < ApplicationRecord
   end
 
   def name
-    name = first_name + " " + last_name
+    "#{first_name} #{last_name}"
   end
 
   class << self
@@ -109,6 +109,7 @@ class User < ApplicationRecord
           user.uid = data['uid']
           user.provider = data['provider']
           user.email = data['email'] if user.email.blank?
+          user.skip_confirmation!
         end
       end
     end
@@ -122,6 +123,7 @@ class User < ApplicationRecord
     def from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
         user.email = auth.info.email
+        user.skip_confirmation!
       end
     end
   end
