@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124104518) do
+ActiveRecord::Schema.define(version: 20180126101234) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -131,6 +131,11 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.string "provider"
     t.string "uid"
     t.text "avatar_data"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
