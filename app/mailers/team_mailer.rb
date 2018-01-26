@@ -15,7 +15,6 @@ class TeamMailer < ApplicationMailer
     @user = user
     @team = team
     @event = event
-    p email_with_name(@user)
     mail to: email_with_name(@user),
          subject: t('mailer.team_mailer.team_registered_to_event.subject',
                     team_name: @team.name,
