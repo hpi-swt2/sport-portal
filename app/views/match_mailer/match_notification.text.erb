@@ -1,0 +1,3 @@
+<%= t('.hello', firstname: @user.first_name) %>
+<%= t('.next_game_info', name: @match.event.name, start_time: I18n.localize(@match.start_time), team_home: @match.team_home.name, team_away: @match.team_away.name, place: @match.place) %>
+<%= t('.have_fun') %>
