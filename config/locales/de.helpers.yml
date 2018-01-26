@@ -44,6 +44,7 @@ de:
       delete: "Lösche %{model}"
     select:
       prompt: "Bitte wähle"
+      option_operator: "oder"
     teams:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
@@ -70,3 +71,9 @@ de:
         telephone_number: "Telefonnummer"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+  match_mailer:
+    match_notification:
+      hello: "Hallo %{firstname},"
+      next_game_info: "dein nächstes Spiel %{name} (%{team_home} vs. %{team_away}) startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
+      have_fun: "Viel Spaß beim Spiel!"
+      subject: "Ein Spiel startet morgen um %{start_time}"
