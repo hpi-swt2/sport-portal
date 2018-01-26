@@ -17,6 +17,10 @@ RSpec.describe TeamsController, type: :controller do
     FactoryBot.build(:team, name: '').attributes
   }
 
+  let(:private_attributes) {
+    FactoryBot.attributes_for(:team, :private)
+  }
+
   before(:each) do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
