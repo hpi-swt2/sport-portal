@@ -37,18 +37,26 @@
     <td><%= match.place %></td>
     <td><%= match.team_home ? link_to(match.team_home.name, team_path(match.team_home)) : '---' %></td>
     <td><%= match.team_away ? link_to(match.team_away.name, team_path(match.team_away)) : '---' %></td>
-    <td>
-      <%= match.score_home ? match.score_home : '-' %>
-      :
-      <%= match.score_away ? match.score_away : '-' %>
+    <td class="text-center">
+      <% match.game_results.each do |result| %>
+        <%= result.score_home ? result.score_home : '-' %>
+        :
+        <%= result.score_away ? result.score_away : '-' %>
+        <br/>
+      <% end %>
     </td>
     <td>
       <%= form_for match, url: update_points_match_path(match), html: {method: "put"} do |f| %>
-        <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
-        :
         <%= f.number_field :points_home, class: 'input-sm', style: 'width: 50px' %>
+        :
+        <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
         <%= f.submit t('helpers.links.save'), :class => 'btn btn-default btn-xs' %>
       <% end %>
+    </td>
+    <td>
+      <!-- 32400 seconds so it is 09:00 as default time, otherwise it would be 00:00 -->
+      <%= date = (match.start_time_date+match.gameday-1).to_s(:day_and_month) %>
+      <%= time = (match.start_time_time+32400).to_s(:hours_and_minutes) %>
     </td>
     <td>
       <%= link_to t('.show', default: t('helpers.links.show')),
