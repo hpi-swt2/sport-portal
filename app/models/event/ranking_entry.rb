@@ -1,6 +1,6 @@
-# Smallest unit of a ranking. Contains different data for one team and contains logic to parse this data out of
-# match objects.
 class Event
+  # Smallest unit of a ranking. Contains different data for one team and contains logic to parse this data out of
+  # match objects.
   class RankingEntry
     attr_reader :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against, :goals_difference, :points
     attr_accessor :rank
