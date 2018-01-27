@@ -215,7 +215,29 @@ RSpec.describe Ability, type: :model do
   context "for single player" do
     describe "leagues" do
       let(:event) { FactoryBot.create(:league, :single_player) }
+      let(:ability) { Ability.new(user) }
       include_examples "a single player event"
+
+      describe 'gameday dates' do
+
+        let(:event) { FactoryBot.create(:league, :single_player, :with_gameday, organizers: organizers) }
+        let(:user) { @user }
+        context 'when the user is not an organizer' do
+          let(:organizers) { Array.new }
+          it 'should not allow to be changed' do
+            expect(ability).not_to be_able_to(:update, event.gamedays.first)
+          end
+        end
+
+        context 'when the user is an organizer' do
+          let(:organizers) { [Organizer.new(user: @user)] }
+          let(:user) { @user.organizers << organizers
+          @user }
+          it 'should allow to be changed' do
+            expect(ability).to be_able_to(:update, event.gamedays.first)
+          end
+        end
+      end
     end
 
     describe "tournaments" do
