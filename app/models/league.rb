@@ -64,12 +64,13 @@ class League < Event
   end
 
   def calculate_swiss_system_new_gameday
-    gameday = add_gameday
+    add_gameday
+
+    ranking = get_ranking
+    teams = ranking.map { |entry| entry.team }
     gameday_number = gamedays.length
 
-    ranking = [] # TODO: get ranking here somehow
-
-    ranking.each do |team, index|
+    teams.each do |team, index|
       team_home = team
       team_away = ranking[index + 1]
 
@@ -93,7 +94,7 @@ class League < Event
 
   # create a random first gameday for the swiss system
   def calculate_swiss_system_start
-    gameday = add_gameday
+    add_gameday
 
     temp = teams.dub
     temp.shuffle!
