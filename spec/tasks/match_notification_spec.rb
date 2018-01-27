@@ -17,6 +17,7 @@ describe 'rake match_notification:send_match_notification', type: :task do
 
     it 'should send a match notification to all participants' do
       email_count = match.event.teams.map(&:members).flatten(1).count
+      ActionMailer::Base.deliveries.clear
       expect { task.execute }.to change { ActionMailer::Base.deliveries.length }.from(0).to(email_count)
     end
   end
