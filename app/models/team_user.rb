@@ -2,9 +2,11 @@
 #
 # Table name: team_users
 #
-#  team_id  :integer          not null
-#  user_id  :integer          not null
-#  is_owner :boolean
+#  team_id    :integer          not null
+#  user_id    :integer          not null
+#  is_owner   :boolean
+#  id         :integer          not null, primary key
+#  created_at :datetime
 #
 
 # Class for members of teams. They can be owners with advanced rights.

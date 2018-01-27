@@ -9,6 +9,20 @@
     </div>
   </div>
 
+  <div class="form-group row">
+    <%= f.label :image, t('activerecord.models.image.one'), class: 'control-label col-lg-2'%>
+    <div class="col-lg-10">
+      <% unless @event.new_record? %>
+        <%= image_tag @event.image_url || image_path('missing_event_image.png'), id: 'preview', style: 'max-width:100px; max-height:100px'%>
+      <% end %>
+      <%= f.file_field :image, class: 'form-control-file' %>
+      <% if @event.image %>
+        <%= f.check_box :remove_image %>
+        <%= f.label :remove_image, t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %>
+      <% end %>
+    </div>
+  </div>
+
   <div class="form-group">
     <%= f.label :description, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
@@ -19,7 +33,7 @@
   <div class="form-group">
     <%= f.label :max_teams, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :max_teams, class: 'form-control' %>
+      <%= f.number_field :max_teams, class: 'form-control' %>
       <%= f.error_span(:max_teams) %>
     </div>
   </div>
@@ -27,7 +41,15 @@
   <div class="form-group">
     <%= f.label :discipline, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :discipline, class: 'form-control' %>
+      <%= f.text_field :discipline, list: "discipline", class: 'form-control' %>
+      <datalist id = "discipline">
+        <option value=<%= t('events.discipline.basketball') %>>
+        <option value=<%= t('events.discipline.soccer')%>>
+        <option value=<%= t('events.discipline.tennis')%>>
+        <option value=<%= t('events.discipline.table_tennis')%>>
+        <option value=<%= t('events.discipline.table_football')%>>
+        <option value=<%= t('events.discipline.volleyball')%>>
+      </datalist>
       <%= f.error_span(:discipline) %>
     </div>
   </div>

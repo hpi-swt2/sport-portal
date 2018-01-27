@@ -143,4 +143,6 @@ Rails.application.configure do
       user_name: ENV.fetch('SMTP_USERNAME'),
       password: ENV.fetch('SMTP_PASSWORD')
   }
+
+  ActionMailer::Base.default from: ENV.fetch('SENDER_EMAIL')
 end
