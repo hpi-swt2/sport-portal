@@ -1,3 +1,4 @@
+# as seen here: https://github.com/plataformatec/devise/wiki/How-To:-Add-:confirmable-to-Users
 class AddUnconfirmedEmail < ActiveRecord::Migration[5.1]
   def up
     add_column :users, :confirmation_token, :string

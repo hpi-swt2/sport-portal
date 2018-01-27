@@ -251,7 +251,7 @@ RSpec.describe UsersController, type: :controller do
       end
     end
 
-    context 'send mail only on email change' do
+    context 'send confirmation mails only on email change and signup' do
       let(:new_email_attributes) do
         { email: 'myNewMail@example.com',
           password_confirmation: ''
@@ -284,6 +284,26 @@ RSpec.describe UsersController, type: :controller do
         expect(confirmation_mail.to.first).to eq(new_mail) #that is our users new mail address
         expect(confirmation_mail.subject).to eq(I18n.t('devise.mailer.confirmation_instructions.subject'))
         expect(confirmation_mail_body).to have_link(I18n.t('devise.mailer.confirmation_instructions.action'))
+      end
+
+      it 'should receive a confirmation mail on sign-up' do
+        ActionMailer::Base.deliveries.clear
+        user = FactoryBot.build(:user)
+        user.save!
+        expect(ActionMailer::Base.deliveries.length).to eq(1)
+        confirmation_mail = ActionMailer::Base.deliveries.first
+        confirmation_mail_body = Capybara.string(confirmation_mail.body.encoded)
+        expect(confirmation_mail.to.length).to eq(1) #one receiver
+        expect(confirmation_mail.to.first).to eq(user.email) #that is our user
+        expect(confirmation_mail.subject).to eq(I18n.t('devise.mailer.confirmation_instructions.subject'))
+        expect(confirmation_mail_body).to have_link(I18n.t('devise.mailer.confirmation_instructions.action'))
+      end
+
+      it 'should receive no confirmation mail when signing up via omniauth' do
+        ActionMailer::Base.deliveries.clear
+        user = FactoryBot.build :user, :with_openid
+        user.save!
+        expect(ActionMailer::Base.deliveries.length).to eq(0)
       end
     end
   end
