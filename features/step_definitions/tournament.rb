@@ -41,14 +41,17 @@ When(/^the Spielplan page for (.*) is visited$/) do |tournamentName|
   visit event_schedule_path(tournament_named tournamentName)
 end
 
-And(/^the texts? (.+) (?:are|is)( not)? there\.?$/) do |texts_raw, _not|
+And(/^the texts? (.+) (?:are|is) there\.?$/) do |texts_raw|
   texts = texts_raw.split ', '
   texts.each do |text|
-    if _not.present?
-      expect(page).not_to have_text(text)
-    else
-      expect(page).to have_text(text)
-    end
+    expect(page).to have_text(text)
+  end
+end
+
+And(/^the texts? (.+) (?:are|is) not there\.?$/) do |texts_raw|
+  texts = texts_raw.split ', '
+  texts.each do |text|
+    expect(page).not_to have_text(text)
   end
 end
 
@@ -135,6 +138,7 @@ And(/^he fills in valid tournament data$/) do
   fill_in :tournament_discipline, with: 'DummySport'
   fill_in :tournament_max_teams, with: 8
   select I18n.t('activerecord.attributes.event.player_types.team'), from: :event_player_type
+  select I18n.t('activerecord.attributes.tournament.game_modes.ko'), from: :tournament_game_mode
   fill_in :event_deadline, with: Date.today + 1.day
   fill_in :event_startdate, with: Date.today + 2.day
   fill_in :event_enddate, with: Date.today + 3.day

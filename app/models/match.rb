@@ -32,6 +32,12 @@ class Match < ApplicationRecord
   extend TimeSplitter::Accessors
   split_accessor :start_time
 
+  before_create :set_default_start_time
+
+  def set_default_start_time
+    self.start_time = Time.now
+  end
+
   def depth
     event.finale_gameday - gameday
   end
