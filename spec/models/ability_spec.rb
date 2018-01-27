@@ -232,7 +232,7 @@ RSpec.describe Ability, type: :model do
         context 'when the user is an organizer' do
           let(:organizers) { [Organizer.new(user: @user)] }
           let(:user) { @user.organizers << organizers
-          @user }
+                       @user }
           it 'should allow to be changed' do
             expect(ability).to be_able_to(:update, event.gamedays.first)
           end
