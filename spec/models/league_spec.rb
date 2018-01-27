@@ -114,8 +114,8 @@ describe 'League model', type: :model do
 
   describe "#add_participant" do
     context 'single player event' do
-      let(:league) {FactoryBot.create(:league, :single_player)}
-      let(:user) {FactoryBot.create(:user)}
+      let(:league) { FactoryBot.create(:league, :single_player) }
+      let(:user) { FactoryBot.create(:user) }
 
       it 'creates a single player team' do
         league.add_participant user
