@@ -56,7 +56,7 @@ gem 'has_scope'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Used for file uploaded
-gem 'shrine', '~> 2.8.0'
+gem 'shrine', '~>2.8.0'
 
 # Packages the jQuery UI assets (JavaScripts, stylesheets, and images) for the Rails asset pipeline
 # https://github.com/jquery-ui-rails/jquery-ui-rails
@@ -69,6 +69,10 @@ gem 'jquery-ui-rails'
 # Use Bootstrap datepicker
 # https://github.com/Nerian/bootstrap-datepicker-rails
 gem 'bootstrap-datepicker-rails'
+
+# Gem to easily split DateTimes
+# https://github.com/shekibobo/time_splitter
+gem "time_splitter"
 
 # Package Select2 dropdown replacement featuring autocomplete
 # https://github.com/argerim/select2-rails

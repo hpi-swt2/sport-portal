@@ -2,18 +2,20 @@
 #
 # Table name: matches
 #
-#  id           :integer          not null, primary key
-#  place        :string
-#  score_home   :integer
-#  score_away   :integer
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  team_home_id :integer
-#  team_away_id :integer
-#  event_id     :integer
-#  points_home  :integer
-#  points_away  :integer
-#  gameday      :integer
+#  id             :integer          not null, primary key
+#  place          :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  team_home_id   :integer
+#  team_away_id   :integer
+#  event_id       :integer
+#  points_home    :integer
+#  points_away    :integer
+#  gameday        :integer
+#  team_home_type :string           default("Team")
+#  team_away_type :string           default("Team")
+#  index          :integer
+#  start_time     :datetime
 #
 
 class Match < ApplicationRecord
@@ -25,6 +27,9 @@ class Match < ApplicationRecord
   after_validation :calculate_points
 
   validates :points_home, :points_away, numericality: { allow_nil: true }
+
+  extend TimeSplitter::Accessors
+  split_accessor :start_time
 
   def depth
     event.finale_gameday - gameday
@@ -38,10 +43,6 @@ class Match < ApplicationRecord
 
   def has_points?
     points_home.present? && points_away.present?
-  end
-
-  def has_scores?
-    score_home.present? && score_away.present?
   end
 
   def has_winner?
@@ -97,10 +98,16 @@ class Match < ApplicationRecord
     self.points_away = away
   end
 
-  def calculate_points
-    return if !has_scores? || has_points?
+  def score_changed?
+    score_home_changed? || score_away_changed?
+  end
 
-    if score_home > score_away
+  def calculate_points
+    return unless score_changed?
+
+    if score_home.blank? || score_away.blank?
+      set_points(nil, nil)
+    elsif score_home > score_away
       set_points(3, 0)
     elsif score_home < score_away
       set_points(0, 3)
