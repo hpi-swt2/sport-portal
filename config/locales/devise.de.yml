@@ -22,7 +22,7 @@ de:
     mailer:
       confirmation_instructions:
         subject: "Anleitung zur Bestätigung Deines Accounts"
-        action: "Mein Konto bestätigen mama"
+        action: "Mein Konto bestätigen"
       reset_password_instructions:
         subject: "Anleitung um Dein Passwort zurückzusetzen"
         greeting: "Hallo %{name}!"
