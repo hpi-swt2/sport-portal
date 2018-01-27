@@ -30,3 +30,12 @@ Feature: Account editing
     And he clicks the link in the email he just received
     Then his email should be 'email@email.email'
 
+  Scenario: dangerous changes with password still need email verification
+    Given a user
+    And the user is logged in
+    When he views his account settings
+    And he enters the email 'email@email.email'
+    And he enters his current password
+    And the user submits the form
+    Then his email should not have changed
+
