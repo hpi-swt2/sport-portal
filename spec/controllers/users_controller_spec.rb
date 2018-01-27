@@ -252,12 +252,6 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context 'send confirmation mails only on email change and signup' do
-      let(:new_email_attributes) do
-        { email: 'myNewMail@example.com',
-          password_confirmation: ''
-        }
-      end
-
       it 'should receive a confirmation mail on email change' do
         @request.env["devise.mapping"] = Devise.mappings[:user]
         user = User.create! valid_attributes
