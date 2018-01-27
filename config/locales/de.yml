@@ -283,6 +283,14 @@ de:
     metric: "Metrik"
     full: "Voll"
     fcfs: "First Come First Serve"
+    discipline:
+      basketball: "Basketball"
+      soccer: "Fußball"
+      tennis: "Tennis"
+      table_tennis: "Tischtennis"
+      table_football: "Tischkicker"
+      volleyball: "Volleyball"
+      other: "Andere"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
@@ -295,6 +303,7 @@ de:
       select_player_type: "Spielertyp auswählen"
       select_selection_type: "Auswahlverfahren auswählen"
       select_metric: "Metrik auswählen"
+      select_discipline: "Sportart auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"
