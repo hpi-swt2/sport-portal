@@ -168,6 +168,34 @@ class Tournament < Event
       [loser_home, loser_away]
     end
 
+    def self.template_events
+      list = Array.new
+
+      tournament = Tournament.new
+      tournament.assign_attributes(
+          name: 'Will be replaced with PO data',
+          description: 'A very nice tournament.',
+          discipline: 'Tournament Discipline',
+          player_type: Event.player_types[:team],
+          max_teams: 12,
+          game_mode: Tournament.game_modes[:double_elimination],
+          type: 'Tournament',
+          created_at: Date.yesterday,
+          updated_at: Date.yesterday,
+          startdate: Date.yesterday,
+          enddate: Date.tomorrow,
+          deadline: Date.today,
+          gameday_duration: 1,
+          owner_id: nil,
+          selection_type: Event.selection_types[:fcfs],
+          min_players_per_team: 4,
+          max_players_per_team: 6,
+          image_data: File.open("#{Rails.root}/app/assets/images/missing_event_image.png"))
+      list << tournament
+
+      list
+    end
+
     class << self
       def split_teams_array(team_array)
         half_team_count = team_array.length / 2

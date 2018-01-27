@@ -176,4 +176,14 @@ class Event < ApplicationRecord
       I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
     end
   end
+
+  def self.template_events
+    list = Array.new
+
+    list.concat(League.template_events)
+    list.concat(Rankinglist.template_events)
+    list.concat(Tournament.template_events)
+
+    list
+  end
 end

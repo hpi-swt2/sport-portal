@@ -29,4 +29,24 @@ class Rankinglist < Event
 
   player_type = Event.player_types[:single]
   enum game_mode: [:elo, :win_loss, :true_skill]
+
+  def self.template_events
+    list = Array.new
+
+    rankinglist = Rankinglist.new
+    rankinglist.assign_attributes(
+        name: 'Will be replaced with PO data',
+        description: 'A very nice rankinglist.',
+        discipline: 'Rankinglist Discipline',
+        max_teams: 12,
+        game_mode: Rankinglist.game_modes[:true_skill],
+        type: 'Rankinglist',
+        created_at: Date.yesterday,
+        updated_at: Date.yesterday,
+        owner_id: nil,
+        image_data: File.open("#{Rails.root}/app/assets/images/missing_event_image.png"))
+    list << rankinglist
+
+    list
+  end
 end

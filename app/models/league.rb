@@ -90,4 +90,32 @@ class League < Event
   def enddate_for_gameday(gameday)
     startdate_for_gameday(gameday.next) - 1.day
   end
+
+  def self.template_events
+    list = Array.new
+
+    league = League.new
+    league.assign_attributes(
+        name: 'Will be replaced with PO data',
+        description: 'A very nice league.',
+        discipline: 'League Discipline',
+        player_type: Event.player_types[:team],
+        max_teams: 12,
+        game_mode: League.game_modes[:round_robin],
+        type: 'League',
+        created_at: Date.yesterday,
+        updated_at: Date.yesterday,
+        startdate: Date.yesterday,
+        enddate: Date.tomorrow,
+        deadline: Date.today,
+        gameday_duration: 1,
+        owner_id: nil,
+        selection_type: League.selection_types[:fcfs],
+        min_players_per_team: 4,
+        max_players_per_team: 6,
+        image_data: File.open("#{Rails.root}/app/assets/images/missing_event_image.png"))
+    list << league
+
+    list
+  end
 end
