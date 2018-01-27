@@ -78,7 +78,7 @@ describe 'League model', type: :model do
 
   describe 'Generating league schedule with default values' do
 
-    let(:league) { league = FactoryBot.create(:league_with_teams)
+    let(:league) { league = FactoryBot.create(:league, :with_teams)
     league.game_mode = gamemode
     league.generate_schedule
     league }
@@ -160,17 +160,96 @@ describe 'League model', type: :model do
     end
 
     context 'swiss system' do
-      let(:gamemod){League.game_modes[:swiss_system]}
+      let(:gamemode){League.game_modes[:swiss_system]}
 
       let(:amount_playing_teams) { home_teams.length + away_teams.length }
 
-      context 'initial gameday' do
-        it 'has an up-to-date schedule' do
-          expect(league.is_up_to_date).to be true
+      it 'does not have an up-to-date schedule if the last gameday is in the past' do
+        league = FactoryBot.create(:league_with_teams)
+        league.gamemode = League.game_modes[:swiss_system]
+
+        leage.add_gameday
+
+        last_gameday = league.gamedays.last
+        last_gameday.starttime = 2.days.ago
+        last_gameday.endtime = 1.day.ago
+
+        expect(league.is_up_to_date).to be false
+      end
+
+      it 'has an up-to-date schedule if the last gameday is not over yet' do
+        last_gameday = league.gamedays.last
+        last_gameday.starttime = Date.today.next_day
+        last_gameday.endtime = Date.today.next_day 2
+
+        expect(league.is_up_to_date).to be true
+      end
+
+      it 'allows to check if two teams have already played a match' do
+        teams = FactoryBot.create_list(:team, 2)
+
+        expect(league.have_already_played(teams[0], teams[1])).to be false
+        expect(league.have_already_played(teams[1], teams[0])).to be false
+
+        league.matches << Match.new(team_home: team[0], team_away: [1], gameday_number: 0)
+
+        expect(league.have_already_played(teams[0], teams[1])).to be true
+        expect(league.have_already_played(teams[1], teams[0])).to be true
+      end
+
+      context 'update schedule' do
+        it 'creates a new gameday' do
+          gameday_amount = league.gamedays.length
+          league.update_schedule
+          expect(league.gamedays.length).to be gameday_amount + 1
         end
 
-        it 'creates 2 matches' do
-          expect(league.matches.length).to be 2
+
+        it 'creates a correct amount of matches' do
+          matches_amount = league.matches.length
+          league.update_schedule
+          expect(league.matches.length).to be matches_amount + (league.teams.length / 2).floor
+        end
+
+        it 'does not create matches of teams that already played against each other' do
+          league.update_schedule
+          current_pairings = league.matches.map { |match| Set[match.team_home, match.team_away] }
+          expect(current_pairings.uniq.length == current_pairings.length).to be true
+        end
+
+        it 'creates the matches correctly by the ranking' do
+          # extensive scenario incoming
+
+          league = FactoryBot.create(:league)
+          teams = FactoryBot.create_list(:team, 6)
+          league.teams.append teams
+
+          league.add_gameday
+
+          match1 = league.add_match(teams[0], teams[1], 0)
+          match1.score_home = 20 # team 0
+          match1.score_away = 0 # team 1
+
+          match2 = league.add_match(teams[2], teams[3], 0)
+          match2.score_home = 18 # team 2
+          match2.score_away = 4 # team 3
+
+          match3 = league.add_match(teams[4], teams[5], 0)
+          match3.score_home = 15 # team 4
+          match3.score_away = 3 # team 5
+
+          league.save
+          league.update_schedule
+
+          expect(league.have_already_played(team[0], team[2])).to be true
+          expect(league.have_already_played(team[4], team[3])).to be true
+          expect(league.have_already_played(team[1], team[5])).to be true
+        end
+      end
+
+      context 'initial schedule' do
+        it 'has an up-to-date schedule' do
+          expect(league.is_up_to_date).to be true
         end
 
         it 'creates a correct amount of matches' do
