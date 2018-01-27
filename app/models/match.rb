@@ -35,7 +35,7 @@ class Match < ApplicationRecord
   before_create :set_default_start_time
 
   def set_default_start_time
-    self.start_time = Time.now
+    self.start_time = Time.now if self.start_time.blank?
   end
 
   def depth
