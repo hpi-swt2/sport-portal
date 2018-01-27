@@ -196,3 +196,12 @@ Then(/^his email should be '(.*)'$/) do |email|
   single_user.reload
   expect(single_user.email).to eq(email)
 end
+
+
+And(/^he clicks the link in the email he just received$/) do
+  path_regex = /(?:"https?\:\/\/.*?)(\/.*?)(?:")/
+
+  mail = ActionMailer::Base.deliveries.last
+  path = mail.body.match(path_regex)[1]
+  visit(path)
+end

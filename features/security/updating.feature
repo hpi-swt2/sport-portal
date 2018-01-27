@@ -27,5 +27,6 @@ Feature: Account editing
     And he enters the email 'email@email.email'
     And he enters his current password
     And the user submits the form
+    And he clicks the link in the email he just received
     Then his email should be 'email@email.email'
 
