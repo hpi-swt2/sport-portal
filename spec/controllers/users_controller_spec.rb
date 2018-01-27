@@ -31,31 +31,34 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET #index" do
-    it "returns a success response" do
-      # https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-%28and-RSpec%29#mappings
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      user = User.create! valid_attributes
+
+    it "should not allow normal user to view page" do
+      sign_in @user
+      get :index, params: {}
+      expect(response).to be_forbidden
+    end
+
+    it "should allow admin to view page" do
+      sign_in @admin
       get :index, params: {}
       expect(response).to be_success
     end
 
-    it "should allow normal user to view page" do
-      sign_in @user
-      get :index, params: {}
-      expect(response).to be_success
-    end
   end
 
   describe 'GET #show' do
-    it 'returns a success response' do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
-      user = User.create! valid_attributes
-      get :show, params: { id: user.to_param }
-      expect(response).to be_success
-    end
-
     it "should allow normal user to view his page" do
       sign_in @user
+      get :show, params: { id: @user.to_param }
+      expect(response).to be_success
+    end
+    it "should allow another user to view his page" do
+      sign_in @user
+      get :show, params: { id: @other_user.to_param }
+      expect(response).to be_success
+    end
+    it "should allow an admin to view his page" do
+      sign_in @admin
       get :show, params: { id: @user.to_param }
       expect(response).to be_success
     end
@@ -164,12 +167,6 @@ RSpec.describe UsersController, type: :controller do
         post :create, params: { user: valid_attributes }
       }.to change(User, :count).by(1)
     end
-
-    it "should allow normal user to view the page of other users" do
-      sign_in @user
-      get :show, params: { id: @other_user.to_param }
-      expect(response).to be_success
-    end
   end
 
   describe 'PUT #update' do
@@ -209,17 +206,17 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "GET #edit_profile" do
+  describe "GET #edit" do
     it "returns a success response" do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       user = User.create! valid_attributes
       sign_in user
-      get :edit_profile, params: { id: user.to_param }
+      get :edit, params: { id: user.to_param }
       expect(response).to be_success
     end
   end
 
-  describe "PATCH #update_profile" do
+  describe "PUT #update_profile" do
     context "with valid params" do
       let(:new_attributes) {
         { birthday: valid_attributes[:birthday] + 1.year,
@@ -232,7 +229,9 @@ RSpec.describe UsersController, type: :controller do
         @request.env["devise.mapping"] = Devise.mappings[:user]
         user = User.create! valid_attributes
         sign_in user
-        patch :update_profile, params: { id: user.to_param, user: new_attributes }
+        id = user.id
+        foo = new_attributes
+        put :update, params: { id: id, user: foo }
         user.reload
         expect(user.birthday).to eq(new_attributes[:birthday])
         expect(user.telephone_number).to eq(new_attributes[:telephone_number])
@@ -247,8 +246,8 @@ RSpec.describe UsersController, type: :controller do
         user = User.create! valid_attributes
         sign_in user
         new_attributes = { birthday: Date.today + 1.year }
-        patch :update_profile, params: { id: user.to_param, user: new_attributes }
-        expect(response).to render_template(:edit_profile)
+        put :update, params: { id: user.to_param, user: new_attributes }
+        expect(response).to render_template(:edit)
       end
     end
   end
@@ -308,14 +307,6 @@ RSpec.describe UsersController, type: :controller do
         get :unlink, params: { id: @user.to_param }
         expect(response).to be_unauthorized
       end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "should allow normal users to destroy themselves" do
-      sign_in @user
-      delete :destroy, params: { id: @user.to_param }
-      expect(response).to redirect_to(root_path)
     end
   end
 

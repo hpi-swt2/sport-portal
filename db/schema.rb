@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180115150927) do
+ActiveRecord::Schema.define(version: 20180124104518) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -28,12 +28,16 @@ ActiveRecord::Schema.define(version: 20180115150927) do
     t.integer "gameday_duration"
     t.integer "owner_id"
     t.float "initial_value"
+    t.integer "selection_type", default: 0, null: false
+    t.integer "min_players_per_team"
+    t.integer "max_players_per_team"
     t.integer "matchtype"
     t.integer "bestof_length", default: 1
     t.integer "game_winrule"
     t.integer "points_for_win", default: 3
     t.integer "points_for_draw", default: 1
     t.integer "points_for_lose", default: 0
+    t.text "image_data"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -62,6 +66,14 @@ ActiveRecord::Schema.define(version: 20180115150927) do
     t.index ["match_id"], name: "index_game_results_on_match_id"
   end
 
+  create_table "match_results", force: :cascade do |t|
+    t.integer "match_id"
+    t.boolean "winner_advances"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_match_results_on_match_id"
+  end
+
   create_table "matches", force: :cascade do |t|
     t.string "place"
     t.datetime "created_at", null: false
@@ -75,6 +87,7 @@ ActiveRecord::Schema.define(version: 20180115150927) do
     t.string "team_home_type", default: "Team"
     t.string "team_away_type", default: "Team"
     t.integer "index"
+    t.datetime "start_time"
     t.index ["event_id"], name: "index_matches_on_event_id"
   end
 
@@ -91,6 +104,7 @@ ActiveRecord::Schema.define(version: 20180115150927) do
     t.integer "team_id", null: false
     t.integer "user_id", null: false
     t.boolean "is_owner"
+    t.datetime "created_at"
     t.index ["user_id", "team_id"], name: "index_team_users_on_user_id_and_team_id"
   end
 
@@ -101,6 +115,7 @@ ActiveRecord::Schema.define(version: 20180115150927) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
+    t.text "avatar_data"
     t.boolean "single", default: false
   end
 

@@ -15,6 +15,7 @@
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
+#  start_time     :datetime         default(NULL)
 #
 
 FactoryBot.define do
@@ -26,11 +27,26 @@ FactoryBot.define do
     gameday 1
     points_away 3
     points_home 1
+    start_time DateTime.now
 
-    factory :match_with_results do
-      after(:create) do |match|
-        create_list(:game_result, 3, match: match)
+    transient do
+      result_count 1
+    end
+
+    trait :with_results do
+      after(:create) do |match, evaluator|
+        create_list(:game_result, evaluator.result_count, match: match)
+        match.reload
       end
+    end
+
+    trait :empty_points do
+      points_away nil
+      points_home nil
+    end
+
+    trait :with_tournament do
+      association :event, factory: :tournament
     end
   end
 

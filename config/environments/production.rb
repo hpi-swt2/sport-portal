@@ -10,9 +10,9 @@ Airbrake.configure do |config|
 end
 #ignore error catcher for 404 page not found
 Airbrake.add_filter do |notice|
-    if notice[:errors].any? { |error| error[:type] == 'ActiveRecord::RecordNotFound' || error[:type] =='ActionController::RoutingError' }
-        notice.ignore!
-    end
+  if notice[:errors].any? { |error| error[:type] == 'ActiveRecord::RecordNotFound' || error[:type] =='ActionController::RoutingError' }
+    notice.ignore!
+  end
 end
 
 # If the Errbit API key is not set, ignore all errors
@@ -55,6 +55,8 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
+
+  config.assets.prefix = '/dev-assets'
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -141,4 +143,6 @@ Rails.application.configure do
       user_name: ENV.fetch('SMTP_USERNAME'),
       password: ENV.fetch('SMTP_PASSWORD')
   }
+
+  ActionMailer::Base.default from: ENV.fetch('SENDER_EMAIL')
 end

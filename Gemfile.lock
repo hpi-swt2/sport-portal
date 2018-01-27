@@ -195,6 +195,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
+    materialize-sass (0.100.2)
+      sass (~> 3.3)
     method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -301,6 +303,11 @@ GEM
     ruby-openid (2.7.0)
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
+    sass (3.5.3)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
     shrine (2.8.0)
       down (~> 4.1)
     simplecov (0.14.1)
@@ -332,6 +339,7 @@ GEM
     thread (0.2.2)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    time_splitter (1.1.0)
     tins (1.16.3)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -387,9 +395,10 @@ DEPENDENCIES
   i18n-tasks
   jquery-rails
   jquery-ui-rails
+  materialize-sass
   omniauth
   omniauth-openid
-  pg
+  pg (~> 0.21.0)
   pry
   pry-rails
   pry-rescue
@@ -405,6 +414,7 @@ DEPENDENCIES
   spring-watcher-listen
   sqlite3
   therubyracer
+  time_splitter
   turbolinks (~> 5)
   twitter-bootstrap-rails
   tzinfo-data

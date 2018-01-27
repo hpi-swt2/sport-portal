@@ -41,6 +41,14 @@ class User < ApplicationRecord
   validates_format_of :telephone_number, with: /\A\d*\z/, message: I18n.t('activerecord.models.user.errors.telephone_number_invalid'), allow_nil: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
+  def update_without_password(params, *options)
+    unless has_omniauth?
+      #params.delete :email
+    end
+    params.delete :current_password
+    super params
+  end
+
   def password_complexity
     if password.present?
       not_only_numbers
@@ -62,7 +70,7 @@ class User < ApplicationRecord
   has_many :organizers
   has_many :organizing_events, through: :organizers, source: 'event'
 
-  include AvatarUploader::Attachment.new(:avatar)
+  include ImageUploader::Attachment.new(:avatar)
 
   has_many :team_users
   has_many :teams, through: :team_users, source: :team

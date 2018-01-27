@@ -37,17 +37,23 @@ en:
       update: "Update %{model}"
     select:
       prompt: "Please select"
+      option_operator: "or"
     teams:
       kind_of_sport: "Kind of sport"
       description: "Description"
       private: "Private"
       cant_destroy: "%{resource_name} can't be deleted, because it still participates in events."
+      filter: Show
+      show_all: All teams
+      show_mine: Only my teams
       multiple_actions:
         apply_action: "Apply action to selected:"
         select_all: "Select all"
         deselect_all: "Deselect all"
         confirmation: "Action successful"
         failure_on: "Action successful. %{user_names} could not be changed."
+    fields:
+      mandatory: "Mandatory field"
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."

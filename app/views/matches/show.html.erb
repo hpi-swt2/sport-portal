@@ -9,9 +9,9 @@
   <dt><strong><%= model_class.human_attribute_name(:place) %>:</strong></dt>
   <dd><%= @match.place %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team_home_id) %>:</strong></dt>
-  <dd><%= participant_link @match.team_home %></dd>
+  <dd><%= link_to_participant @match.team_home %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team_away_id) %>:</strong></dt>
-  <dd><%= participant_link @match.team_away %></dd>
+  <dd><%= link_to_participant @match.team_away %></dd>
 </dl>
 
 <h2><%= t("activerecord.models.game_result", count: @match.game_results.size) %></h2>
@@ -35,8 +35,8 @@
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_match_path(@match), :class => 'btn btn-default' %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")), edit_match_path(@match), :class => 'btn btn-default' %>
+<%= link_to t('view.match.edit_results'), edit_results_match_path(@match), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               match_path(@match),
               :method => 'delete',

@@ -118,8 +118,8 @@ RSpec.describe MatchesController, type: :controller do
     context "with invalid params" do
       let(:invalid_attributes) {
         {
-            "points_home" => nil,
-            "points_away" => nil,
+            "points_home" => "potato",
+            "points_away" => "trololol",
         }
       }
 
@@ -143,6 +143,68 @@ RSpec.describe MatchesController, type: :controller do
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
       expect(response).to redirect_to(event_schedule_url(match.event))
+    end
+  end
+
+  describe "GET #add_game_result" do
+    context "with a valid match" do
+      let(:match) { FactoryBot.create(:match) }
+
+      it "adds a game result to the match" do
+        expect {
+          get :add_game_result, params: { id: match.id }
+        }.to change(Match, :count).by(1)
+      end
+
+      it "returns a success response" do
+        get :add_game_result, params: { id: match.id }
+        expect(response).to be_success
+      end
+    end
+  end
+
+  describe "GET #remove_game_result" do
+    context "with valid params" do
+      let(:match) { FactoryBot.create(:match, :with_results, result_count: 1) }
+
+      it "deletes the game result" do
+        get :remove_game_result, params: { id: match.id, result_id: match.game_results.first.id }
+        match.reload
+        expect(match.game_results).to be_empty
+      end
+
+      it "returns a success response" do
+        get :remove_game_result, params: { id: match.id, result_id: match.game_results.first.id }
+        expect(response).to be_success
+      end
+    end
+  end
+
+  describe "PUT #update_results" do
+    context "with valid params" do
+      let(:new_attributes) {
+        {
+          "0" => {
+            "score_home" => 11,
+            "score_away" => 33,
+            "id" => ""
+          }
+        }
+      }
+      let(:match) { FactoryBot.create(:match) }
+
+      it "updates the requested match" do
+        put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
+        match.reload
+        result = match.game_results.first
+        expect(result.score_home).to eq(new_attributes["0"]["score_home"])
+        expect(result.score_away).to eq(new_attributes["0"]["score_away"])
+      end
+
+      it "redirects to the show match page" do
+        put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
+        expect(response).to redirect_to(match_path(match))
+      end
     end
   end
 

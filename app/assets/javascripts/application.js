@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
+//= require materialize
 //= require turbolinks
 //= require bootstrap/bootstrap-tooltip
 //= require_tree .

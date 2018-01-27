@@ -15,20 +15,22 @@
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
+#  start_time     :datetime         default(NULL)
 #
 
 class Match < ApplicationRecord
-  has_many :home_matches, as: :team_home, class_name: 'Match'
-  has_many :away_matches, as: :team_away, class_name: 'Match'
-  def matches
-    home_matches.or away_matches
-  end
   belongs_to :team_home, polymorphic: true
   belongs_to :team_away, polymorphic: true
-  belongs_to :event, dependent: :delete
-  has_many :game_results, dependent: :delete_all
+  belongs_to :event
+  has_many :game_results, dependent: :destroy
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
+  has_many :match_results, dependent: :destroy
+
+  validates :points_home, :points_away, numericality: { allow_nil: true }
+
+  extend TimeSplitter::Accessors
+  split_accessor :start_time
 
   @@has_winner_strategy = { "most_sets" => lambda { |match| match.wins_home != match.wins_away } }
   @@winner_strategy = { "most_sets" => lambda { |match| (match.wins_home > match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
@@ -43,7 +45,7 @@ class Match < ApplicationRecord
   end
 
   def depth
-    event.max_match_level - gameday
+    event.finale_gameday - gameday
   end
 
   def round
@@ -52,8 +54,16 @@ class Match < ApplicationRecord
     I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
   end
 
+  def score_home_total
+    game_results.inject(0) { |sum, result| sum + result.score_home }
+  end
+
+  def score_away_total
+    game_results.inject(0) { |sum, result| sum + result.score_away }
+  end
+
   def select_results_by_score(score_comparison)
-	  game_results.select { |current_result| (current_result.score_home.nil? || current_result.score_away.nil?) ? false : current_result.score_home.send(score_comparison, current_result.score_away) }
+    game_results.select { |current_result| (current_result.score_home.nil? || current_result.score_away.nil?) ? false : current_result.score_home.send(score_comparison, current_result.score_away) }
   end
 
   def wins_home
@@ -62,6 +72,19 @@ class Match < ApplicationRecord
 
   def wins_away
     select_results_by_score(:<).length
+  end
+
+  def has_points?
+    points_home.present? && points_away.present?
+  end
+
+  def has_scores?
+    game_results.each do |result|
+      if result.score_home.present? && result.score_away.present?
+        return true
+      end
+    end
+    false
   end
 
   def has_winner?
@@ -77,11 +100,11 @@ class Match < ApplicationRecord
   end
 
   def team_home_recursive
-    team_home.winner
+    team_home.advancing_participant
   end
 
   def team_away_recursive
-    team_away.winner
+    team_away.advancing_participant
   end
 
   def is_team_recursive?(team)
@@ -106,5 +129,40 @@ class Match < ApplicationRecord
   def adjust_index_by(offset)
     self.index -= offset
     save!
+  end
+
+  def set_points(home, away)
+    self.points_home = home
+    self.points_away = away
+  end
+
+  def calculate_points
+    if !has_scores?
+      set_points(nil, nil)
+    elsif wins_home > wins_away
+		set_points(event.points_for_win, event.points_for_lose)
+    elsif wins_home < wins_away
+		set_points(event.points_for_lose, event.points_for_win)
+    else
+		set_points(event.points_for_draw, event.points_for_draw)
+    end
+  end
+
+  def save_with_point_calculation
+    calculate_points
+    save
+  end
+
+  def update_with_point_recalculation(attributes)
+    winner_before = winner
+    loser_before = loser
+    success = update(attributes)
+
+    if success && (winner != winner_before || loser != loser_before)
+      calculate_points
+      success = success && save
+    end
+
+    success
   end
 end

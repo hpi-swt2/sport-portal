@@ -20,7 +20,7 @@ RSpec.describe GameResult, type: :model do
   it "fails validation with non-number scores" do
     result = FactoryBot.build(:game_result, score_home: "2a")
 
-    expect {result.valid?}.to change { result.errors[:score_home].count }.from(0).to(1)
+    expect { result.valid? }.to change { result.errors[:score_home].count }.from(0).to(1)
     expect(result).not_to be_valid
   end
 
