@@ -49,7 +49,7 @@ class MatchesController < ApplicationController
     @match.destroy
     redirect_to event_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
-  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_match
@@ -65,6 +65,4 @@ class MatchesController < ApplicationController
     def match_points_params
       params.require(:match).permit(:points_home, :points_away)
     end
-
-
 end
