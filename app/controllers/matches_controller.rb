@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :propose_scores, :confirm_proposed_scores, :reject_proposed_scores]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :propose_scores, :confirm_proposed_scores]
 
   # GET /matches/1
   def show
@@ -88,11 +88,6 @@ class MatchesController < ApplicationController
 
   def confirm_proposed_scores
     @match.confirm_scores(current_user)
-    redirect_back(fallback_location: '')
-  end
-
-  def reject_proposed_scores
-    @match.dismiss_scores(current_user)
     redirect_back(fallback_location: '')
   end
 

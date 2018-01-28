@@ -156,11 +156,6 @@ class Match < ApplicationRecord
     self.proposed_score_away = nil
   end
 
-  def reject_proposed_scores(user)
-    self.proposed_score_home = nil
-    self.proposed_score_away = nil
-  end
-
   def save_with_point_calculation
     calculate_points
     save
