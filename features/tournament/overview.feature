@@ -31,3 +31,19 @@ Feature: Tournament Overview Page
     Then the standing of the home team of match Viertelfinale 1 is 'Im Viertelfinalspiel 1 ausgeschieden'
     And the standing of the away team of match Viertelfinale 1 is 'Im Halbfinalspiel 2'
     And the standing of the home team of match Viertelfinale 2 is 'Im Viertelfinalspiel 2'
+
+  Scenario: Tournament overview page should link to matches
+    Given a tournament t with 6 teams
+
+    When the tournament overview page for t is visited
+    Then the standing of the home team of match Viertelfinale 1 links to Viertelfinale 1
+    And the standing of the away team of match Viertelfinale 1 links to Viertelfinale 1
+    And the standing of the home team of match Viertelfinale 2 links to Viertelfinale 2
+
+  Scenario: Tournament overview page should link to matches
+    Given a tournament t with 5 teams
+
+    When the tournament overview page for t is visited
+    Then the opponent of the home team of match Viertelfinale 1 links to the away team of match Viertelfinale 1
+    And the opponent of the away team of match Viertelfinale 1 links to the home team of match Viertelfinale 1
+    And the away team of match Halbfinale 1 links to no opponent
