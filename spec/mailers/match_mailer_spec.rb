@@ -136,6 +136,13 @@ RSpec.describe MatchMailer, type: :mailer do
     it 'assigns match team away name' do
       expect(mail.body.encoded).to match(match1.team_away.name)
     end
-
+  end
+  
+  it 'should not send mails to users with disabled event notification settings' do
+    match = FactoryBot.create(:match)
+    user = FactoryBot.create(:user)
+    allow(user).to receive(:has_event_notifications_enabled?).and_return(false)
+    mail = MatchMailer.match_scheduled(user, match)
+    expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
   end
 end

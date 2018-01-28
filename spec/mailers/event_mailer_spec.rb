@@ -68,4 +68,11 @@ RSpec.describe EventMailer, type: :mailer do
     end
   end
 
+  it 'should not send mails to users with disabled event notification settings' do
+    event = FactoryBot.create :event, :with_teams
+    user = FactoryBot.create(:user)
+    allow(user).to receive(:has_event_notifications_enabled?).and_return(false)
+    mail = EventMailer.event_canceled(user, event)
+    expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
+  end
 end
