@@ -86,9 +86,6 @@
     <tr>
       <th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th>
       <% if @event.is_a? Rankinglist %>
-        <th><%= t 'events.ranking.won_count' %></th>
-        <th><%= t 'events.ranking.draw_count' %></th>
-        <th><%= t 'events.ranking.lost_count' %></th>
         <th><%= @event.human_game_mode %></th>
       <% end %>
     </tr>
@@ -97,9 +94,6 @@
     <% @event.participants.order(rating: :desc).each do |participant| %>
       <tr><td><%= link_to_participant participant.team %></td>
         <% if @event.is_a? Rankinglist %>
-          <td><%= participant.number_of_wins %></td>
-          <td><%= participant.number_of_draws %></td>
-          <td><%= participant.number_of_losses %></td>
           <td><%= participant.rating %></td>
           <% if can? :leave, @event %>
             <td><%= link_to t('events.add_match'),

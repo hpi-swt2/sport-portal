@@ -31,4 +31,12 @@ RSpec.describe Rankinglist, type: :model do
     rankinglist = FactoryBot.build(:rankinglist)
     expect(rankinglist).to be_valid
   end
+
+  it "sets the initial value for participants correctly" do
+    rankinglist = FactoryBot.create(:rankinglist)
+    user = FactoryBot.create(:user)
+    rankinglist.add_participant(user)
+    participant = rankinglist.participants.first
+    expect(participant.rating).to eq(rankinglist.initial_value)
+  end
 end
