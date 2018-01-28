@@ -1,4 +1,6 @@
 class MatchMailer < ApplicationMailer
+  after_action :prevent_delivery_to_unsubscribed_users
+
   # Notifies a user about an upcoming match
   def match_notification(user, match)
     @user = user
@@ -26,5 +28,12 @@ class MatchMailer < ApplicationMailer
     @match = match
 
     mail to: user.email
+  end
+
+  private
+  def prevent_delivery_to_unsubscribed_users
+    if @user && (not @user.has_event_notifications_enabled?)
+      mail.perform_deliveries = false
+    end
   end
 end
