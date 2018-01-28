@@ -157,4 +157,8 @@ class Match < ApplicationRecord
 
     success
   end
+
+  def has_result?
+    has_scores? && has_points?
+  end
 end
