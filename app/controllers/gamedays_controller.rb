@@ -2,7 +2,7 @@ class GamedaysController < ApplicationController
   def update
     @gameday = Gameday.find(params[:id])
     @gameday.update(gameday_params)
-    redirect_to event_schedule_path(@gameday.event), notice: 'successfully changed gameday date'
+    redirect_to event_schedule_path(@gameday.event), notice: t('success.updated_gameday_dates')
   end
 
   def gameday_params
