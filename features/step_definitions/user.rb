@@ -43,6 +43,11 @@ Given(/^(\w+) is (?:logged|able to log)? in(?: again)?$/) do |name|
   sign_in user_named name
 end
 
+Given(/^(.*) is not admin/) do |name|
+  user = user_named(name)
+  !user.admin?
+end
+
 When(/^he views his account settings$/) do
   ensure_current_user!
   visit edit_user_path(@users.last)

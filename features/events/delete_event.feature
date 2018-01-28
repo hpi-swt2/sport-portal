@@ -12,7 +12,7 @@ Feature: Delete Events
     And a user u
     And u is not admin
     And u is not organizer of e
-    Then u should not be able to delete the event any time
+    Then u should not be able to delete the event e at any time
 
   Scenario: Admin and organizer can delete event that has not yet started
     Given an event that has not started yet

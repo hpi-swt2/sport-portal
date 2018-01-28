@@ -203,18 +203,6 @@ describe "detailed event page", type: :feature do
       end
     end
 
-    context "for events whose startdate has passed" do
-      before(:each) do
-        @ongoing_event = FactoryBot.create :event, startdate: Date.yesterday
-        sign_in @user
-        visit event_path(@ongoing_event)
-      end
-
-      it "should not display a delete button" do
-        expect(page).not_to have_css('a', :text => I18n.t('helpers.links.destroy'))
-      end
-    end
-
     context "participants" do
       before(:each) do
         @team = FactoryBot.create :team
