@@ -188,7 +188,7 @@ class Match < ApplicationRecord
     away_players = self.team_away.is_a?(Team) ? self.team_away.members : []
     players = home_players + away_players
     players
-  end
+  end 
 
   def has_result?
     has_scores? && has_points?
