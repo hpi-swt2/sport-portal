@@ -1,0 +1,1 @@
+Time::DATE_FORMATS[:hours_and_minutes] = "%H:%M"

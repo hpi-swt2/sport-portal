@@ -2,7 +2,7 @@
   <%= form.label :selection_type, for: :event_selection_type, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= form.select(:selection_type, Event.selection_types.map { |k, _| [Event.human_selection_type(k), k] },
-                    { selected: @event.selection_type, include_blank: t('events.new.select_selection_type')},
+                    { selected: @event.selection_type },
                     { class: 'form-control', id: :event_selection_type }) %>
   </div>
 </div>

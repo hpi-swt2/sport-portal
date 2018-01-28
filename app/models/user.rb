@@ -70,7 +70,7 @@ class User < ApplicationRecord
   has_many :organizers
   has_many :organizing_events, through: :organizers, source: 'event'
 
-  include AvatarUploader::Attachment.new(:avatar)
+  include ImageUploader::Attachment.new(:avatar)
 
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
