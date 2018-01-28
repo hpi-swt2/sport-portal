@@ -92,7 +92,7 @@ class Ability
 
     def can_assign_membership_by_email(user)
       can :assign_membership_by_email, Team, Team do |team|
-        ((team.members.include? user) || (team.owners.include? user)) && max_players_per_team_border_not_exceeded?(team, "add", 1)
+        ((team.members.include? user) || (team.owners.include? user)) && max_players_per_team_border_not_exceeded?(team, 1)
       end
     end
 
@@ -110,7 +110,7 @@ class Ability
       can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
         exist_owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
-        ((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member))) && min_players_per_team_border_not_exceeded?(team, "delete", 1)
+        (((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete)) && min_players_per_team_border_not_exceeded?(team, 1)
       end
     end
 
@@ -131,7 +131,7 @@ class Ability
       owners_after_delete.length
     end
 
-    def min_players_per_team_border_not_exceeded?(team, update_count, event)
+    def min_players_per_team_border_not_exceeded?(team, update_count)
       not_exceeded = true
       team.events.each do |event|
         not_exceeded = event.min_players_per_team <= team.members.count - update_count
@@ -139,7 +139,7 @@ class Ability
       not_exceeded
     end
 
-    def max_players_per_team_border_not_exceeded?(team, update_count, event)
+    def max_players_per_team_border_not_exceeded?(team, update_count)
       not_exceeded = true
       team.events.each do |event|
         not_exceeded = event.max_players_per_team >= team.members.count + update_count
