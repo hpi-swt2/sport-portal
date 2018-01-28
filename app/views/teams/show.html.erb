@@ -24,6 +24,18 @@
                 window.location.href = 'mailto:' + email_adresses.join();
             }
         });
+
+        // Make sure that the buttons for actions on multiple team members are visible when JavaScript is deactivated
+        // by hiding them not via CSS but via JavaScript
+        $('.only-show-when-participants-selected').hide();
+
+        $('.participant :checkbox').change(function(event){
+            if ($(this).is(':checked')) {
+                $('.only-show-when-participants-selected').fadeIn();
+            } else if ($('.participant :checked').length === 0) {
+                $('.only-show-when-participants-selected').hide();
+            }
+        });
     });
 </script>
 
@@ -141,12 +153,12 @@
             </button>
           </div>
         </div>
-        <div class="row" style="margin-top: 50px;">
+        <div class="row only-show-when-participants-selected" style="margin-top: 50px;">
           <div class="col s12" style="font-size: 80%;">
             <%= t('.apply_action', :default => t("helpers.teams.multiple_actions.apply_action")) %>
           </div>
         </div>
-        <div class="row hide-on-small-only">
+        <div class="row hide-on-small-only only-show-when-participants-selected">
           <% if can? :send_emails_to_team_members, @team %>
               <%= button_tag t('.email', :default => t("helpers.links.email")),
                              :type => 'button',
@@ -160,7 +172,7 @@
           <% end %>
         </div>
         <% if can? :send_emails_to_team_members, @team %>
-            <div class="row hide-on-med-and-up">
+            <div class="row hide-on-med-and-up only-show-when-participants-selected">
               <div class="col s12 center">
                 <%= button_tag t('.email', :default => t("helpers.links.email")),
                                :type => 'button',
@@ -170,7 +182,7 @@
             </div>
         <% end %>
         <% if (@team.owners.include? current_user) %>
-          <div class="row hide-on-med-and-up">
+          <div class="row hide-on-med-and-up only-show-when-participants-selected">
             <div class="col s12 center">
               <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
             </div>
