@@ -30,7 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 ---
 en:
-  appname: "Sport Portal"
+  appname: "Sportify"
 
   welcome:
     index:
