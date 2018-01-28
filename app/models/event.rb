@@ -32,7 +32,7 @@ class Event < ApplicationRecord
   has_many :editors, through: :organizers, source: 'user'
 
   include ImageUploader::Attachment.new(:image)
-  after_destroy :send_mails_when_canceled
+  before_destroy :send_mails_when_canceled
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
@@ -46,7 +46,7 @@ class Event < ApplicationRecord
   enum player_type: [:single, :team]
 
   def send_mails_when_canceled
-    player = self.teams.map(&:members).flatten(1)
+    players = self.teams.map(&:members).flatten(1)
     players.each do |user|
       EventMailer.event_canceled(user, self).deliver_now
     end
