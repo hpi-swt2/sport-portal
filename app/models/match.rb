@@ -32,21 +32,21 @@ class Match < ApplicationRecord
   after_update :send_mails_when_date_changed, :if => :saved_change_to_start_time?
 
   def send_mails_when_date_changed
-    players = self.team_home.members + self.team_away.members
+    players = self.all_players
     players.each do |user|
       MatchMailer.match_date_changed(user, self).deliver_now
     end
   end
  
   def send_mails_when_scheduled
-    players = self.team_home.members + self.team_away.members
+    players = self.all_players
     players.each do |user|
       MatchMailer.match_scheduled(user, self).deliver_now
     end
   end
 
   def send_mails_when_canceled
-    players = self.team_home.members + self.team_away.members
+    players = self.all_players
     players.each do |user|
       MatchMailer.match_canceled(user, self).deliver_now
     end
@@ -181,5 +181,12 @@ class Match < ApplicationRecord
     end
 
     success
+  end
+
+  def all_players
+    home_players = self.team_home.is_a?(Team) ? self.team_home.members : []
+    away_players = self.team_away.is_a?(Team) ? self.team_away.members : []
+    players = home_players + away_players
+    players
   end
 end
