@@ -76,7 +76,7 @@ RSpec.describe "teams/show", type: :view do
         expect(rendered).to have_field(User.human_attribute_name(:email))
         expect(rendered).to have_selector(:link_or_button, t('helpers.links.cancel'))
         expect(rendered).to have_selector(:link_or_button, t('helpers.links.send'))
-        expect(rendered).to have_link(@user.first_name, :href=>user_path(@user))
+        expect(rendered).to have_link(@user.first_name, href: user_path(@user))
       end
 
       it 'should not be rendered for users that are not members of the team' do
