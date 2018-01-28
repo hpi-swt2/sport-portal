@@ -54,7 +54,7 @@
       <% end %>
     </td>
     <td>
-      <% unless start_time_date.nil? %>
+      <% unless match.start_time.nil? %>
         <!-- 32400 seconds so it is 09:00 as default time, otherwise it would be 00:00 -->
         <%= date = (match.start_time_date+match.gameday-1).to_s(:day_and_month) %>
         <%= time = (match.start_time_time+32400).to_s(:hours_and_minutes) %>

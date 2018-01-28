@@ -28,7 +28,6 @@ class Match < ApplicationRecord
   has_many :match_results, dependent: :destroy
 
   validates :points_home, :points_away, numericality: { allow_nil: true }
-  validates :start_time, presence: true
 
   extend TimeSplitter::Accessors
   split_accessor :start_time
