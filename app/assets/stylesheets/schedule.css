@@ -1,0 +1,9 @@
+@media print {
+    nav, footer,
+    .matches-table .btn,
+    a[href]:after,
+    .matches-table thead th:last-child,
+    .matches-table tr td:last-child {
+        display:none;
+    }
+}
