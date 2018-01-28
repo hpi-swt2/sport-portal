@@ -93,6 +93,10 @@ class Event < ApplicationRecord
     teams.any? { |team| team.members.include?(user) }
   end
 
+  def participants
+    teams
+  end
+
   def owns_participating_teams?(user)
     (user.owned_teams & teams).present?
   end
@@ -156,6 +160,10 @@ class Event < ApplicationRecord
   def is_fitting?(team)
     team_member_count = team.members.count
     min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
+  end
+
+  def get_ranking
+    Ranking.new(teams, matches).get_ranking
   end
 
   class << self

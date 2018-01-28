@@ -30,7 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 ---
 de:
-  appname: "Sport-Portal"
+  appname: "Sportify"
 
   footer:
     hpi: "HASSO-PLATTNER-INSTITUT"
@@ -153,12 +153,16 @@ de:
         id: "ID"
         date: "Datum"
         place: "Ort"
-        score_home: "Heim-Ergebnis"
-        score_away: "Auswärts-Ergebnis"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
         team_away_id: "Auswärts-Team"
+      game_result:
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
+      game_results:
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
       team:
         id: "ID"
         name: "Name"
@@ -220,15 +224,6 @@ de:
     validations:
       must_be_after: "darf nicht vor %{other} sein."
 
-      game_result:
-        score_home: "Ergebnis Heim"
-        score_away: "Ergebnis Gast"
-
-      match/game_results:
-        score_home: "Ergebnis Heim"
-        score_away: "Ergebnis Gast"
-
-
   view:
     user:
       edit_profile: "Profilinformationen bearbeiten"
@@ -282,6 +277,14 @@ de:
     metric: "Metrik"
     full: "Voll"
     fcfs: "First Come First Serve"
+    discipline:
+      basketball: "Basketball"
+      soccer: "Fußball"
+      tennis: "Tennis"
+      table_tennis: "Tischtennis"
+      table_football: "Tischkicker"
+      volleyball: "Volleyball"
+      other: "Andere"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
@@ -294,6 +297,7 @@ de:
       select_player_type: "Spielertyp auswählen"
       select_selection_type: "Auswahlverfahren auswählen"
       select_metric: "Metrik auswählen"
+      select_discipline: "Sportart auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"

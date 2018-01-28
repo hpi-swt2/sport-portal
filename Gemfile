@@ -101,6 +101,10 @@ gem 'awesome_nested_fields'
 # A modern, responsive front-end-framework based on Material Design
 gem 'materialize-sass'
 
+# Gem to generate fake data for seeds and factories
+# https://github.com/stympy/faker
+gem 'faker'
+
 group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
