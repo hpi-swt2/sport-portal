@@ -69,7 +69,7 @@ $( document ).on('turbolinks:load', function() {
         {
             rounds = calcRounds(system,participants);
             var diff = calcDateDiff(start,end);
-            var gameday_duration = Math.round(diff/rounds);
+            var gameday_duration = Math.floor(diff/rounds);
             if(diff <= 0)
             {
                 $("#event_gameday_duration").val(1);
