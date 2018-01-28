@@ -105,6 +105,10 @@ class User < ApplicationRecord
     true
   end
 
+  def email_with_name
+    %('#{name}' <#{email}>)
+  end
+
   class << self
     def new_with_session(_, session)
       super.tap do |user|

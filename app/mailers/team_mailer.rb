@@ -6,7 +6,7 @@ class TeamMailer < ApplicationMailer
   def user_added_to_team(user, team)
     @user = user
     @team = team
-    mail to: email_with_name(@user),
+    mail to: @user.email_with_name,
          subject: t('mailer.team_mailer.user_added_to_team.subject',
                     team_name: @team.name)
   end
@@ -16,7 +16,7 @@ class TeamMailer < ApplicationMailer
     @user = user
     @team = team
     @event = event
-    mail to: email_with_name(@user),
+    mail to: @user.email_with_name,
          subject: t('mailer.team_mailer.team_registered_to_event.subject',
                     team_name: @team.name,
                     event_name: @event.name)
