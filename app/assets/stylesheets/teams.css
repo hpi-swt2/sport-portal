@@ -22,6 +22,7 @@ body > .background-layer > .container {
 
 #teamProfileImage {
     width: 200px;
+    height: 200px;
 }
 
 #teamDescription {
@@ -90,6 +91,7 @@ h1 {
 }
 
 .participant img {
+    width: 35px;
     height: 35px;
 }
 
