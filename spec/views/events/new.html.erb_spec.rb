@@ -8,7 +8,7 @@ RSpec.describe 'events/new', type: :view do
       assign(:event, FactoryBot.build(:league))
     end
 
-    it_should_behave_like 'an event form', for_class: League, with: [:dates, :capacity, :gameday_duration, :selection]
+    it_should_behave_like 'an event form', for_class: League, with: [:dates, :capacity, :gameday_duration, :selection, :player_type]
   end
 
   context 'new tournament' do
@@ -16,7 +16,7 @@ RSpec.describe 'events/new', type: :view do
       assign(:event, FactoryBot.build(:tournament))
     end
 
-    it_should_behave_like 'an event form', for_class: Tournament, with: [:dates, :capacity, :selection]
+    it_should_behave_like 'an event form', for_class: Tournament, with: [:dates, :capacity, :selection, :player_type]
   end
 
   context 'new rankinglist' do
