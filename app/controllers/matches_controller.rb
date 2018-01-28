@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :destroy]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :update_appointment, :destroy]
 
   # GET /matches/1
   def show
@@ -46,7 +46,7 @@ class MatchesController < ApplicationController
 
   def update_appointment
     path = event_schedule_path(@match.event)
-    if @match.update(match_time_params)
+    if @match.update(match_appointment_params)
       redirect_to path, notice: t('success.updated_appointment')
     else
       redirect_to path, notice: t('error.update_appointment')
