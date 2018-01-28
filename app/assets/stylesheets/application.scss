@@ -55,7 +55,6 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
-  margin-top: -50px;
 }
 
 .background-layer {
@@ -101,7 +100,7 @@ body {
 }
 
 .navbar-overlap {
-  padding-top: 50px;
+  margin-top: -64px;
 }
 
 .btn {

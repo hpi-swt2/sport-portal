@@ -36,6 +36,9 @@ changeNavbarTransparency = function() {
      if($('body > div').hasClass('background')){
          $('.navbar').addClass('transparent');
          $('.navbar').removeClass('not-transparent');
+     } else if (window.location.pathname == '/'){
+         $('.navbar').addClass('transparent');
+         $('.navbar').removeClass('not-transparent');
      } else {
          $('.navbar').removeClass('transparent');
          $('.navbar').addClass('not-transparent');
