@@ -11,18 +11,21 @@ class MatchMailer < ApplicationMailer
       )
     end
   end
+
   def match_scheduled(user, match)
     @user = user
     @match = match
 
     mail to: user.email
   end
+
   def match_canceled(user, match)
     @user = user
     @match = match
 
     mail to: user.email
   end
+
   def match_date_changed(user, match)
     @user = user
     @match = match
@@ -31,9 +34,9 @@ class MatchMailer < ApplicationMailer
   end
 
   private
-  def prevent_delivery_to_unsubscribed_users
-    if @user && (not @user.has_event_notifications_enabled?)
-      mail.perform_deliveries = false
+    def prevent_delivery_to_unsubscribed_users
+      if @user && (not @user.has_event_notifications_enabled?)
+        mail.perform_deliveries = false
+      end
     end
-  end
 end

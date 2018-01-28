@@ -29,7 +29,7 @@ class Match < ApplicationRecord
 
   after_create :send_mails_when_scheduled
   after_destroy :send_mails_when_canceled
-  after_update :send_mails_when_date_changed, :if => :saved_change_to_start_time?
+  after_update :send_mails_when_date_changed, if: :saved_change_to_start_time?
 
   def send_mails_when_date_changed
     players = self.all_players
@@ -37,7 +37,7 @@ class Match < ApplicationRecord
       MatchMailer.match_date_changed(user, self).deliver_now
     end
   end
- 
+
   def send_mails_when_scheduled
     players = self.all_players
     players.each do |user|
@@ -184,11 +184,10 @@ class Match < ApplicationRecord
   end
 
   def all_players
-    home_players = self.team_home.is_a?(Team) ? self.team_home.members : []
-    away_players = self.team_away.is_a?(Team) ? self.team_away.members : []
-    players = home_players + away_players
-    players
-  end 
+    team_home = self.team_home
+    team_away = self.team_away
+    players = (team_home.is_a?(Team) ? team_home.members : []) + (team_away.is_a?(Team) ? team_away.members : [])
+  end
 
   def has_result?
     has_scores? && has_points?

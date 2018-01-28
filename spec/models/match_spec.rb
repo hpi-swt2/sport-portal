@@ -151,7 +151,7 @@ RSpec.describe Match, type: :model do
   it 'send notification emails to all members of teams when starttime is changed' do
     match = FactoryBot.create(:match)
     email_count = match.team_home.members.count + match.team_away.members.count
-    expect { 
+    expect {
       match.start_time = Time.now
       match.save
     }.to change { ActionMailer::Base.deliveries.length }.by(email_count)
@@ -160,7 +160,7 @@ RSpec.describe Match, type: :model do
   it 'should not send notifications if anything but the starttime is changed' do
     match = FactoryBot.create(:match)
     email_count = match.team_home.members.count + match.team_away.members.count
-    expect { 
+    expect {
       match.place = "Here"
       match.save
     }.to change { ActionMailer::Base.deliveries.length }.by(0)

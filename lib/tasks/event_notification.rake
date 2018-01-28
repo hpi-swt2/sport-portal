@@ -22,4 +22,3 @@ namespace :event_notification do
     end
   end
 end
-  
