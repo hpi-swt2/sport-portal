@@ -101,6 +101,8 @@ gem 'awesome_nested_fields'
 # A modern, responsive front-end-framework based on Material Design
 gem 'materialize-sass'
 
+gem 'faker'
+
 group :development, :test do
   # Testing framework for Rails
   # https://github.com/rspec/rspec-rails
