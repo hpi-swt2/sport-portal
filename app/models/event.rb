@@ -2,30 +2,36 @@
 #
 # Table name: events
 #
-#  id               :integer          not null, primary key
-#  name             :string
-#  description      :text
-#  discipline       :string
-#  player_type      :integer          not null
-#  max_teams        :integer
-#  game_mode        :integer          not null
-#  type             :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  startdate        :date
-#  enddate          :date
-#  deadline         :date
-#  gameday_duration :integer
-#  owner_id         :integer
-#  initial_value    :float
+#  id                   :integer          not null, primary key
+#  name                 :string
+#  description          :text
+#  discipline           :string
+#  player_type          :integer          not null
+#  max_teams            :integer
+#  game_mode            :integer          not null
+#  type                 :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  startdate            :date
+#  enddate              :date
+#  deadline             :date
+#  gameday_duration     :integer
+#  owner_id             :integer
+#  initial_value        :float
+#  selection_type       :integer          default("fcfs"), not null
+#  min_players_per_team :integer
+#  max_players_per_team :integer
+#  image_data           :text
 #
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :delete_all
+  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :destroy
   has_and_belongs_to_many :teams
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
+
+  include ImageUploader::Attachment.new(:image)
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
@@ -33,7 +39,7 @@ class Event < ApplicationRecord
   enum selection_type: [:fcfs]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
 
-  validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000, allow_nil: true }
   validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
 
   enum player_type: [:single, :team]
@@ -154,6 +160,10 @@ class Event < ApplicationRecord
   def is_fitting?(team)
     team_member_count = team.members.count
     min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
+  end
+
+  def get_ranking
+    Ranking.new(teams, matches).get_ranking
   end
 
   class << self

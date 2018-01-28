@@ -54,3 +54,20 @@ User.new(
   telephone_number: '12345654321',
   avatar: File.open("#{Rails.root}/db/seed_data/avatar3.png"),
   favourite_sports: 'Hardcore-Couching').save(validate: false)
+
+# Some exmaple event entries
+League.new(
+  name: 'Old League',
+  description: 'A league, that is outdated.',
+  discipline: 'Soccer',
+  player_type: 1,
+  max_teams: 20,
+  game_mode: 1,
+  type: 'League',
+  created_at: Date.yesterday,
+  updated_at: Date.yesterday,
+  startdate: Date.yesterday,
+  enddate: Date.yesterday,
+  deadline: Date.yesterday,
+  gameday_duration: 1,
+  owner_id: nil).save(validate: false)

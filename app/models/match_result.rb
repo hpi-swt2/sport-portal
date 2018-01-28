@@ -2,9 +2,11 @@
 #
 # Table name: match_results
 #
-#  id               :integer          not null, primary key
-#  match            :integer          (points to a Match Object)
-#  winner_advances  :boolean
+#  id              :integer          not null, primary key
+#  match_id        :integer
+#  winner_advances :boolean
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 class MatchResult < ApplicationRecord
