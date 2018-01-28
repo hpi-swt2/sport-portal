@@ -150,6 +150,26 @@ class Event < ApplicationRecord
     self.class.human_game_mode game_mode
   end
 
+  def fitting_teams(user)
+    all_teams = user.owned_teams.multiplayer
+    fitting_teams = []
+    all_teams.each do |team|
+      if is_fitting?(team)
+        fitting_teams << team
+      end
+    end
+    fitting_teams
+  end
+
+  def is_fitting?(team)
+    team_member_count = team.members.count
+    min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
+  end
+
+  def get_ranking
+    Ranking.new(teams, matches).get_ranking
+  end
+
   class << self
     def human_selection_type(type)
       I18n.t("activerecord.attributes.event.selection_types.#{type}")

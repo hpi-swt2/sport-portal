@@ -189,4 +189,8 @@ class Match < ApplicationRecord
     players = home_players + away_players
     players
   end
+
+  def has_result?
+    has_scores? && has_points?
+  end
 end
