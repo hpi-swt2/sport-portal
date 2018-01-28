@@ -7,13 +7,13 @@ h1 {
     text-align: center;
 }
 
-.sideNotFound {
+p {
     font-size: 1.5em;
     color: #1CA9E5;
     text-align: center;
 }
 
-.eventOrganisation {
+h2 {
     font-size: 2em;
     font-weight: bold;
     text-align: center;
