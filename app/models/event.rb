@@ -93,6 +93,10 @@ class Event < ApplicationRecord
     teams.any? { |team| team.members.include?(user) }
   end
 
+  def participants
+    teams
+  end
+
   def owns_participating_teams?(user)
     (user.owned_teams & teams).present?
   end
