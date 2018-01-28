@@ -153,12 +153,16 @@ de:
         id: "ID"
         date: "Datum"
         place: "Ort"
-        score_home: "Heim-Ergebnis"
-        score_away: "Auswärts-Ergebnis"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
         team_away_id: "Auswärts-Team"
+      game_result:
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
+      game_results:
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
       team:
         id: "ID"
         name: "Name"
@@ -220,15 +224,6 @@ de:
         created_at: "Erstellt am"
     validations:
       must_be_after: "darf nicht vor %{other} sein."
-
-      game_result:
-        score_home: "Ergebnis Heim"
-        score_away: "Ergebnis Gast"
-
-      match/game_results:
-        score_home: "Ergebnis Heim"
-        score_away: "Ergebnis Gast"
-
 
   view:
     user:
