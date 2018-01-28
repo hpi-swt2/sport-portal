@@ -377,7 +377,8 @@ de:
       all_teams: "Alle Teams"
       create_team: "Ein Team erstellen"
     show:
-      invite_user_to_team: "+"
+      team_plays_kind_of_sports: 'Das Team spielt folgende Sportarten'
+      invite_user_to_team: "Spieler einladen"
       number: "#"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
