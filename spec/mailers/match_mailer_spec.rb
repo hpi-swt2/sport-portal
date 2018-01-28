@@ -72,10 +72,6 @@ RSpec.describe MatchMailer, type: :mailer do
     it 'assigns match team away name' do
       expect(mail.body.encoded).to match(match1.team_away.name)
     end
-
-    it 'assigns event\'s startdate' do
-      expect(mail.body.encoded).to match(I18n.localize(match1.start_time))
-    end
   end
   describe 'match date changed' do
     let(:user) { FactoryBot.create(:user) }
