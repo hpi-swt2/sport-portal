@@ -1,4 +1,5 @@
 class EventMailer < ApplicationMailer
+  after_action :prevent_delivery_to_unsubscribed_users
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
