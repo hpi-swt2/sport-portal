@@ -6,13 +6,13 @@
         $('.check_all').each(function (index) {
             $( this ).on("click", function() {
                 var cbxs = $('input[type="checkbox"]');
-                cbxs.prop("checked", true);
+                cbxs.prop("checked", true).change(); // Trigger "change" event to show/hide multi-member action buttons
             });
         });
         $('.uncheck_all').each(function (index) {
             $( this ).on("click", function() {
                 var cbxs = $('input[type="checkbox"]');
-                cbxs.prop("checked", false);
+                cbxs.prop("checked", false).change(); // Trigger "change" event to show/hide multi-member action buttons
             });
         });
         $('#send_email_to_multiple_members').on("click", function() {
