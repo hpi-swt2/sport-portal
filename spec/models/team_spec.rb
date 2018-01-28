@@ -9,6 +9,8 @@
 #  description   :text
 #  kind_of_sport :string
 #  private       :boolean
+#  avatar_data   :text
+#  single        :boolean          default(FALSE)
 #
 
 require 'rails_helper'
@@ -84,6 +86,7 @@ RSpec.describe Team, type: :model do
     expect(team).not_to be_valid
     expect(team.errors[:avatar]).to include(I18n.t('users.avatar.errors.max_size'))
   end
+
   it "by default return teams ordered by their date of creation" do
     team = FactoryBot.create :team
     another_team = FactoryBot.create :team

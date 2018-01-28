@@ -23,8 +23,8 @@ Feature: Detailed event page
     Then the page should show 'unbegrenzt'
 
   Scenario: Organizer name displayed
-    Given an Event e
-    And user o is organizer of this event
+    Given an event e
+    And user o is organizer of event e
     When visiting the event page of e
     Then o should be listed as organizer
     And clicking on the name should lead to the profile page of o
