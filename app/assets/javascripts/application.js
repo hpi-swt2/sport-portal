@@ -17,3 +17,5 @@
 //= require materialize
 //= require turbolinks
 //= require_tree .
+//= require jquery.nested-fields
+
