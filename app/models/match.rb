@@ -27,7 +27,7 @@ class Match < ApplicationRecord
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
 
-  after_save :send_mails_when_scheduled
+  after_create :send_mails_when_scheduled
   after_destroy :send_mails_when_canceled
   after_update :send_mails_when_date_changed, :if => :saved_change_to_start_time?
 
