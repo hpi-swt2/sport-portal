@@ -57,7 +57,7 @@
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit nil, :class => 'btn btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                event_schedule_path(@match.event), :class => 'btn btn-default' %>
+                :back, :class => 'btn btn-default' %>
     </div>
   </div>
 <% end %>
