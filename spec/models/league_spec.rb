@@ -2,21 +2,26 @@
 #
 # Table name: events
 #
-#  id               :integer          not null, primary key
-#  name             :string
-#  description      :text
-#  discipline       :string
-#  player_type      :integer          not null
-#  max_teams        :integer
-#  game_mode        :integer          not null
-#  type             :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  startdate        :date
-#  enddate          :date
-#  deadline         :date
-#  gameday_duration :integer
-#  owner_id         :integer
+#  id                   :integer          not null, primary key
+#  name                 :string
+#  description          :text
+#  discipline           :string
+#  player_type          :integer          not null
+#  max_teams            :integer
+#  game_mode            :integer          not null
+#  type                 :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  startdate            :date
+#  enddate              :date
+#  deadline             :date
+#  gameday_duration     :integer
+#  owner_id             :integer
+#  initial_value        :float
+#  selection_type       :integer          default("fcfs"), not null
+#  min_players_per_team :integer
+#  max_players_per_team :integer
+#  image_data           :text
 #
 
 require 'rails_helper'
@@ -109,6 +114,19 @@ describe 'League model', type: :model do
       new_league.generate_schedule
       # double round robin has n(n-1) games
       expect(new_league.matches.length).to eq(new_league.teams.length * (new_league.teams.length - 1))
+    end
+  end
+
+  describe "#add_participant" do
+    context 'single player event' do
+      let(:league) { FactoryBot.create(:league, :single_player) }
+      let(:user) { FactoryBot.create(:user) }
+
+      it 'creates a single player team' do
+        league.add_participant user
+
+        expect(league.participants.first.single?).to eq true
+      end
     end
   end
 end

@@ -1,4 +1,4 @@
-class AvatarUploader < Shrine
+class ImageUploader < Shrine
   plugin :validation_helpers, default_messages: {
       max_size: ->(max) { I18n.t("users.avatar.errors.max_size", max: max) },
       mime_type_inclusion: ->(whitelist) { I18n.t("users.avatar.errors.mime_type_inclusion", whitelist: whitelist) },
