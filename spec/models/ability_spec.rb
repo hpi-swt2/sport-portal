@@ -230,16 +230,51 @@ RSpec.describe Ability, type: :model do
     end
   end
 
-  it 'should allow to alter the size of a team so that the size is smaller or bigger than the min/max players per team requirement of any event the team is in.' do
+  it 'should allow to reduce the size of a team if the min players per team requirement of any event the team is in is still met afterwards.' do
     ability = Ability.new(@user)
     team = FactoryBot.create :team, :private, :with_five_members
-    team.owners << @user
     event = FactoryBot.create :event
+    team.members << @user
+    event.min_players_per_team = 5
+    event.max_players_per_team = 6
+    team.events << event
+
+    expect(ability).to be_able_to(:delete_membership, team, @user.id)
+  end
+
+  it 'should allow to increase the size of a team if the max players per team requirement of any event the team is in is still met afterwards.' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private, :with_five_members
+    event = FactoryBot.create :event
+    team.members << @user
+    event.min_players_per_team = 6
+    event.max_players_per_team = 7
+    team.events << event
+
+    expect(ability).to be_able_to(:assign_membership_by_email, team, @other_user.id)
+  end
+
+  it 'should not allow to reduce the size of a team so that the size is smaller than the min players per team requirement of any event the team is in.' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private, :with_five_members
+    event = FactoryBot.create :event
+    team.members << @user
     event.min_players_per_team = 6
     event.max_players_per_team = 6
     team.events << event
+
     expect(ability).to_not be_able_to(:delete_membership, team, @user.id)
-    #expect(ability).no_not be_able_to(:assign_membership_by_email, team, @other_user.id)
-    #TODO
+  end
+
+  it 'should not allow to increase the size of a team so that the size is bigger than the max players per team requirement of any event the team is in.' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team, :private, :with_five_members
+    event = FactoryBot.create :event
+    team.members << @user
+    event.min_players_per_team = 6
+    event.max_players_per_team = 6
+    team.events << event
+
+    expect(ability).to_not be_able_to(:assign_membership_by_email, team, @other_user.id)
   end
 end

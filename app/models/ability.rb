@@ -91,9 +91,9 @@ class Ability
     end
 
     def can_assign_membership_by_email(user)
-      can :assign_membership_by_email, Team, members: { id: user.id }#Team do |team|
-        #player_per_team_border_exceeded?(team, "add", 1)
-      #end
+      can :assign_membership_by_email, Team, Team do |team|
+        ((team.members.include? user) || (team.owners.include? user)) && player_per_team_border_not_exceeded?(team, "add", 1)
+      end
     end
 
     def can_send_emails_to_team_members(user)
@@ -111,7 +111,6 @@ class Ability
         user_id = user.id
         exist_owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
         ((team.owners.include? user) && exist_owners_after_delete && player_per_team_border_not_exceeded?(team, "delete", 1)) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete && player_per_team_border_not_exceeded?(team, "delete", 1))
-        #TODO update_count --> other Team (which?) blocks
       end
     end
 
