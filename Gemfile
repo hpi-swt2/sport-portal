@@ -94,6 +94,9 @@ gem "time_splitter"
 # https://github.com/bokmann/font-awesome-rails
 gem 'font-awesome-rails'
 
+# Gem for nested fields inside forms
+# https://github.com/lailsonbm/awesome_nested_fields
+gem 'awesome_nested_fields'
 # Use the materializecss-library https://github.com/mkhairi/materialize-sass
 # A modern, responsive front-end-framework based on Material Design
 gem 'materialize-sass'

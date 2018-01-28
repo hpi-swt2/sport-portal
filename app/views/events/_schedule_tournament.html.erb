@@ -33,10 +33,13 @@
       <td><%= match.place %></td>
       <td><%= link_to_participant match.team_home %></td>
       <td><%= link_to_participant match.team_away %></td>
-      <td>
-        <%= match.score_home ? match.score_home : '-' %>
-        :
-        <%= match.score_away ? match.score_away : '-' %>
+      <td class="text-center">
+        <% match.game_results.each do |result| %>
+          <%= result.score_home ? result.score_home : '-' %>
+          :
+          <%= result.score_away ? result.score_away : '-' %>
+          <br/>
+        <% end %>
       </td>
       <td>
         <%= form_for match, url: update_points_match_path(match), html: {method: "put"}, namespace: "match_#{match.id}" do |f| %>

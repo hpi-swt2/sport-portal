@@ -30,7 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 ---
 de:
-  appname: "Sport-Portal"
+  appname: "Sportify"
 
   footer:
     hpi: "HASSO-PLATTNER-INSTITUT"
@@ -144,6 +144,9 @@ de:
         one: "Event"
         other: "Events"
         id: "ID"
+      game_result:
+        one: "Ergebnis"
+        other: "Ergebnisse"
 
     attributes:
       match:
@@ -217,6 +220,15 @@ de:
     validations:
       must_be_after: "darf nicht vor %{other} sein."
 
+      game_result:
+        score_home: "Ergebnis Heim"
+        score_away: "Ergebnis Gast"
+
+      match/game_results:
+        score_home: "Ergebnis Heim"
+        score_away: "Ergebnis Gast"
+
+
   view:
     event:
       new: "Neues Event erstellen"
@@ -224,6 +236,21 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
+    
+    match:
+      game_results: "Ergebnis(se)"
+      add_game_result: "Ergebnis hinzufügen"
+      remove_game_result: "Ergebnis entfernen"
+      added_game_result_notice: "Ergebnis hinzugefügt!"
+      removed_game_result_notice: "Ergebnis entfernt!"
+      noscript:
+        add_results_notice:
+          create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
+          edit_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen oder zu löschen benutze bitte Buttons mit dem \"(Noscript)\" Präfix."
+        button_prefix: "(Noscript) "
+      edit_results: "Ergebnisse bearbeiten"
+      error:
+        update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
 
   unauthorized:
         manage:
@@ -263,6 +290,14 @@ de:
     metric: "Metrik"
     full: "Voll"
     fcfs: "First Come First Serve"
+    discipline:
+      basketball: "Basketball"
+      soccer: "Fußball"
+      tennis: "Tennis"
+      table_tennis: "Tischtennis"
+      table_football: "Tischkicker"
+      volleyball: "Volleyball"
+      other: "Andere"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
@@ -275,6 +310,7 @@ de:
       select_player_type: "Spielertyp auswählen"
       select_selection_type: "Auswahlverfahren auswählen"
       select_metric: "Metrik auswählen"
+      select_discipline: "Sportart auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"
