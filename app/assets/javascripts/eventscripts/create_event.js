@@ -12,7 +12,7 @@ $( document ).on('turbolinks:load', function() {
        }
     });
 
-    $("#event_startdate").on("change", changeDur);
+    $("#event_startdate").on("change", callChanged);
 
 
     $("#event_enddate").datepicker({
@@ -21,16 +21,28 @@ $( document ).on('turbolinks:load', function() {
         }
     });
 
-    $("#event_enddate").on("change", changeDur);
+    $("#event_enddate").on("change", adaptDuration);
 
-    function changeDur()
+    $("#event_gameday_duration").on("change",durationChanged);
+
+    $("#event_game_mode").on("change",callChanged);
+
+    $("#event_max_teams").on("change",callChanged);
+
+    function callChanged()
     {
+        durationChanged();
+        adaptDuration();
+    }
+    function durationChanged()
+    {
+        console.log("durationChange");
         var start = $("#event_startdate").val();
         var end = $("#event_enddate").val();
         var system = $("#event_game_mode").val();
         var gameday_dur =$("#event_gameday_duration").val();
         var participants = $("#event_max_teams").val();
-        var rounds = 0;
+
         if(start != "" && gameday_dur != "" && system != "")
         {
             rounds = calcRounds(system,participants);
@@ -39,14 +51,37 @@ $( document ).on('turbolinks:load', function() {
             $("#event_enddate").val(addDays(start,number_of_days));
 
         }
+        changeDur();
+    }
+    function adaptDuration() {
+
+        console.log("gamedayCHange");
+        var start = $("#event_startdate").val();
+        var end = $("#event_enddate").val();
+        var system = $("#event_game_mode").val();
+        var gameday_dur =$("#event_gameday_duration").val();
+        var participants = $("#event_max_teams").val();
         if(start != "" && end != "" && system != "")
         {
             rounds = calcRounds(system,participants);
             var diff = calcDateDiff(start,end);
-            var gameday_duration = Math.ceil(rounds/diff);
-            $("#event_gameday_duration").val(gameday_duration);
+            var gameday_duration = Math.ceil(diff/rounds);
+            if(diff <= 0)
+            {
+                $("#event_gameday_duration").val(1);
+            }
+            else {
+                $("#event_gameday_duration").val(gameday_duration);
+            }
 
         }
+        changeDur();
+    }
+    function changeDur()
+    {
+        var start = $("#event_startdate").val();
+        var end = $("#event_enddate").val();
+
         if(start != "" && end != "") {
             diff = calcDateDiff(start,end);
             if (diff <= 0){
@@ -60,7 +95,7 @@ $( document ).on('turbolinks:load', function() {
         var result = new Date(date);
         result.setDate(result.getDate() + parseInt(days));
         var dd = result.getDate();
-        var mm = result.getMonth();
+        var mm = result.getMonth()+1;
         var y = result.getFullYear();
         var formattedDate = y + '-' + mm + '-' + dd;
         return formattedDate;
