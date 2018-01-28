@@ -266,7 +266,7 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:delete_membership, team, @user.id)
   end
 
-  it 'should not allow to increase the size of a team so that the size is bigger than the max players per team requirement of any event the team is in.' do
+  it 'hould not allow to increase the size of a team so that the size is bigger than the max players per team requirement of any event the team is in.' do
     ability = Ability.new(@user)
     team = FactoryBot.create :team, :private, :with_five_members
     event = FactoryBot.create :event
