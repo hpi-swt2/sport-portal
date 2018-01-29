@@ -67,6 +67,7 @@ en:
   mailer:
     hello: "Hey %{firstname},"
     have_fun: "Good luck with your training!"
+    closing: "%{appname} Team"
   match_mailer:
     next_game: "your match (%{team_home} vs. %{team_away}) in the event %{name}"
     match_notification:
@@ -92,3 +93,10 @@ en:
     event_finished:
       info: "has finished."
       subject: "Your event has finished"
+  team_mailer:
+    user_added_to_team:
+      added_to_team_info_html: 'you joined the team %{team_link}.'
+      subject: "You joined the team %{team_name}"
+    team_registered_to_event:
+      registered_to_event_info_html: 'your team %{team_link} now participates in the event %{event_link}.'
+      subject: "Your team %{team_name} now participates in the event %{event_name}"
