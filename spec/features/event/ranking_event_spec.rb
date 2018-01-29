@@ -6,10 +6,6 @@ describe 'Rankinglists', type: :feature do
     @event = FactoryBot.create :rankinglist
   end
 
-  it 'should render without an error' do
-    visit event_ranking_path(@event)
-  end
-
   it 'can have matches that influence the score of a participant' do
     @user = FactoryBot.create :user
     @user2 = FactoryBot.create :user
