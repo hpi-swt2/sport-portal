@@ -349,10 +349,10 @@ de:
       won_count: "Siege"
       draw_count: "Unentschieden"
       lost_count: "Niederlagen"
-      goals: "Tore"
-      goals_against: "Gegentore"
-      goals_difference: "Tordifferenz"
-      points: "Punkte"
+      goals: "Punkte"
+      goals_against: "Gegenpunkte"
+      goals_difference: "Punktdifferenz"
+      points: "Ligapunkte"
     max_teams:
       infinite: "unbegrenzt"
 
