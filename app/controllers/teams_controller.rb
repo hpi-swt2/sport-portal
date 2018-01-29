@@ -7,9 +7,9 @@ class TeamsController < ApplicationController
   def index
     multi_teams = Team.multiplayer
     if params[:filter] == "true"
-      @teams = @teams - (@teams - multi_teams.includes(:team_members).where(team_users: { user_id: current_user }))
+      @teams = @teams & multi_teams.includes(:team_members).where(team_users: { user_id: current_user })
     else
-      @teams = @teams - (@teams - multi_teams)
+      @teams = @teams & multi_teams
     end
   end
 
