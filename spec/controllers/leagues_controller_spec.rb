@@ -79,32 +79,32 @@ RSpec.describe LeaguesController, type: :controller do
           @league.add_team(@team2)
           @league.add_team(@team3)
 
-          @match1 = Match.new(team_home: @team1, team_away: @team2, gameday: 1,
-                              points_home: 3, points_away: 0)
+          @match1 = FactoryBot.create(:match, team_home: @team1, team_away: @team2, gameday_number: 1,
+                                      points_home: 3, points_away: 0)
           @result1 = FactoryBot.build(:game_result, score_home: 10, score_away: 0)
           @match1.game_results << @result1
           @league.matches << @match1
           @team1.home_matches << @match1
           @team2.away_matches << @match1
 
-          @match2 = Match.new(team_home: @team2, team_away: @team1, gameday: 2,
-                              points_home: 1, points_away: 1)
+          @match2 = FactoryBot.create(:match, team_home: @team2, team_away: @team1, gameday_number: 2,
+                                      points_home: 1, points_away: 1)
           @result2 = FactoryBot.build(:game_result, score_home: 10, score_away: 10)
           @match2.game_results << @result2
           @league.matches << @match2
           @team2.home_matches << @match2
           @team1.away_matches << @match2
 
-          @match3 = Match.new(team_home: @team1, team_away: @team3, gameday: 3,
-                              points_home: 0, points_away: 3)
+          @match3 = FactoryBot.create(:match, team_home: @team1, team_away: @team3, gameday_number: 3,
+                                      points_home: 0, points_away: 3)
           @result3 = FactoryBot.build(:game_result, score_home: 0, score_away: 1)
           @match3.game_results << @result3
           @league.matches << @match3
           @team1.home_matches << @match3
           @team3.away_matches << @match3
 
-          @match4 = Match.new(team_home: @team2, team_away: @team3, gameday: 4,
-                              points_home: 1, points_away: 1)
+          @match4 = FactoryBot.create(:match, team_home: @team2, team_away: @team3, gameday_number: 4,
+                                      points_home: 1, points_away: 1)
           @result4 = FactoryBot.build(:game_result, score_home: 1, score_away: 1)
           @match4.game_results << @result4
           @league.matches << @match4

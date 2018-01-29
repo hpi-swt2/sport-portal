@@ -95,11 +95,6 @@ class EventsController < ApplicationController
     @schedule_type = @event.type.downcase!
   end
 
-  # GET /events/1/ranking
-  def ranking
-    @ranking_entries = @event.get_ranking
-  end
-
   def overview
   end
 
