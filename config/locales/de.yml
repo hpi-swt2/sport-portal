@@ -253,6 +253,7 @@ de:
 
   success:
     updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
+    updated_gameday_dates: "Die Daten dieses Spieltages wurden erfolgreich aktualisiert"
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
@@ -260,6 +261,7 @@ de:
 
   error:
     update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
+    updated_gameday_dates: "Die Daten dieses Spieltages konnten nicht aktualisiert werden, Versuchen Sie es erneut"
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
@@ -303,6 +305,7 @@ de:
       title: "Spielplan"
       gameday: "Spieltag"
       date: "Datum"
+      edit_date: "Datum ändern"
       place: "Ort"
       home: "Team 1"
       away: "Team 2"

@@ -111,10 +111,6 @@ module DataHelper
     add_named_object name, create_tournament(options)
   end
 
-  def league_named(name)
-    get_named_object name, League
-  end
-
   def tournament_named(name)
     get_named_object name, Tournament
   end
