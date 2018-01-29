@@ -55,11 +55,8 @@ And(/^user (.*) who is not organizer should not be able to do so$/) do |userName
   step "#{userName} is logged in"
 
   visit event_schedule_path(league_named 'l')
-  within :css, "#edit_gameday_3" do
-    fill_in :gameday_starttime, with: '10.05.2013'
-    fill_in :gameday_endtime, with: '15.05.2013'
-
-    click_button( I18n.t('events.schedule.edit_date'))
-  end
+  first(:css, "#gameday_starttime").set '10.05.2013'
+  first(:css, "#gameday_endtime").set '15.05.2013'
+  first( :button, I18n.t('events.schedule.edit_date')).click
   expect(page.status_code).to eq 403
 end

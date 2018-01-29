@@ -182,12 +182,9 @@ And(/^he enters the first name '(.*)'$/) do |name|
 end
 
 Then(/^(.*) should be able to enter start and end date for each gameday$/) do |user|
-  within :css, "#edit_gameday_3" do
-    fill_in :gameday_starttime, with: '10.05.2013'
-    fill_in :gameday_endtime, with: '15.05.2013'
-
-    click_button( I18n.t('events.schedule.edit_date'))
-  end
+  first(:css, "#gameday_starttime").set '10.05.2013'
+  first(:css, "#gameday_endtime").set '15.05.2013'
+  first( :button, I18n.t('events.schedule.edit_date')).click
 end
 
 
