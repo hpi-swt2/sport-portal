@@ -78,6 +78,10 @@ class Event < ApplicationRecord
     invalidate_schedule
   end
 
+  def team_of(user)
+    teams.detect { |team| team.has_member?(user) }
+  end
+
   def generate_schedule
     raise NotImplementedError
   end
