@@ -111,11 +111,6 @@ class EventsController < ApplicationController
 
     def set_associations
       @event.owner = current_user
-      @event.player_type ||= Event.player_types[:single]
-      if @event.player_type == Event.player_types[:single] || @event.type == 'Rankinglist'
-        @event.min_players_per_team = 1
-        @event.max_players_per_team = 1
-      end
     end
 
     # Get the type of event that should be created
