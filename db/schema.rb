@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124104518) do
+ActiveRecord::Schema.define(version: 20180128145059) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -109,8 +109,8 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
-    t.text "avatar_data"
     t.boolean "single", default: false
+    t.text "avatar_data"
   end
 
   create_table "users", force: :cascade do |t|
@@ -123,14 +123,16 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "provider"
+    t.string "uid"
     t.boolean "admin", default: false
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
-    t.string "provider"
-    t.string "uid"
     t.text "avatar_data"
+    t.boolean "team_notifications_enabled", default: true
+    t.boolean "event_notifications_enabled", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
