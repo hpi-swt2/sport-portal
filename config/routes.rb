@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
   resources :rankinglists, controller: 'events', only: [:show, :new, :create, :update], type: Rankinglist
 
+  resources :gamedays, only: [:update]
+
   root 'welcome#index'
   resources :teams
   resources :matches, except: [:index] do

@@ -41,11 +41,11 @@ class Tournament < Event
   end
 
   def finale
-    matches.find_by(gameday: finale_gameday)
+    matches.find_by(gameday_number: finale_gameday)
   end
 
   def place_3_match
-    matches.find_by(gameday: finale_gameday + 1)
+    matches.find_by(gameday_number: finale_gameday + 1)
   end
 
   def generate_schedule
@@ -134,7 +134,7 @@ class Tournament < Event
     end
 
     def create_match(team_home, team_away, depth, index)
-      match = Match.new team_home: team_home, team_away: team_away, gameday: depth, index: index + 1, event: self
+      match = Match.new team_home: team_home, team_away: team_away, gameday_number: depth, index: index + 1, event: self, start_time: Time.now
       matches << match
       match.save!
       match
@@ -142,7 +142,7 @@ class Tournament < Event
 
     def normalize_first_layer_match_indices
       matches.each do |match|
-        if match.gameday == 0
+        if match.gameday_number == 0
           match.adjust_index_by first_gameday_offset
         end
       end
@@ -156,7 +156,7 @@ class Tournament < Event
 
     def create_place_3_match
       loser_home, loser_away = place_3_match_participants
-      match = Match.new team_home: loser_home, team_away: loser_away, gameday: finale_gameday + 1, index: 1, event: self
+      match = Match.new team_home: loser_home, team_away: loser_away, gameday_number: finale_gameday + 1, index: 1, event: self, start_time: Time.now
       matches << match
       match.save!
     end

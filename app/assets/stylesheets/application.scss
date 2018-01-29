@@ -112,3 +112,32 @@ body {
   border-radius: 100px;
 }
 
+.gameday-wrapper {
+  display: flex;
+  align-items: center;
+
+  .gameday-name {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 20px;
+  }
+
+  form {
+    width: 100%;
+
+    .input-daterange {
+      width: auto;
+      display: inline-block;
+    }
+
+    input[type=text] {
+      width: 120px;
+      text-align: center;
+    }
+
+    input[type=text], input[type=submit] {
+      display: inline-block;
+      margin: 0;
+    }
+  }
+}
