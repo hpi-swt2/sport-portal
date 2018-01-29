@@ -28,7 +28,7 @@ describe 'rake event_notification:send_event_start_notification', type: :task do
     it 'should send no event start notification to all participants' do
       event.startdate = Date.tomorrow
       event.save
-      expect{ task.execute }.to change { ActionMailer::Base.deliveries.length }.by(0)
+      expect { task.execute }.to change { ActionMailer::Base.deliveries.length }.by(0)
     end
   end
 end
@@ -61,7 +61,7 @@ describe 'rake event_notification:send_event_end_notification', type: :task do
       it 'should send no event end notification to all participants' do
         event.enddate = Date.tomorrow
         event.save
-        expect{ task.execute }.to change { ActionMailer::Base.deliveries.length }.by(0)
+        expect { task.execute }.to change { ActionMailer::Base.deliveries.length }.by(0)
       end
     end
   end

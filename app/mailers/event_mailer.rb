@@ -1,6 +1,5 @@
 # Sends mails for events: event_canceled, event_started, event_finished
 class EventMailer < ApplicationMailer
-
   def send_mail(user, event, template)
     @user = user
     @event = event
