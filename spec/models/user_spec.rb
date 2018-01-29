@@ -199,4 +199,14 @@ RSpec.describe User, type: :model do
     user = FactoryBot.build(:user)
     expect(user.admin).to eq(false)
   end
+
+  it "has event notifications enabled by default" do
+    user = FactoryBot.build(:user)
+    expect(user.event_notifications_enabled?).to eq(true)
+  end
+
+  it "has team notifications enabled by default" do
+    user = FactoryBot.build(:user)
+    expect(user.team_notifications_enabled?).to eq(true)
+  end
 end
