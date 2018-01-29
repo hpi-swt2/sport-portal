@@ -209,4 +209,13 @@ RSpec.describe User, type: :model do
     user = FactoryBot.build(:user)
     expect(user.team_notifications_enabled?).to eq(true)
   end
+
+  it 'should produce pretty to-fields for emails' do
+    user = FactoryBot.create :user
+    user.first_name = 'Hans'
+    user.last_name = 'Mueller'
+    user.email = 'hans@example.org'
+    email_with_name = user.email_with_name
+    expect(email_with_name).to eq("'Hans Mueller' <hans@example.org>")
+  end
 end

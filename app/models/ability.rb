@@ -58,6 +58,7 @@ class Ability
       can_leave_event(user)
       can :ranking, Event
       can [:schedule, :team_join], Event
+      can_update_gameday(user)
 
       # Team
       can_crud_team(user_id)
@@ -81,6 +82,12 @@ class Ability
     def can_leave_event(user)
       can :leave, Event do |event|
         event.can_leave?(user)
+      end
+    end
+
+    def can_update_gameday(user)
+      can :update, Gameday do |gameday|
+        not (gameday.event.organizers & user.organizers).empty?
       end
     end
 
