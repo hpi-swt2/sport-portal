@@ -33,7 +33,7 @@ describe 'Rankinglists', type: :feature do
     click_link_or_button('no_script_add_game_result')
 
     page.all('input').each do |each|
-      if(each[:id] != nil)
+      if (each[:id] != nil)
         if each[:id].include? 'score_home'
           fill_in(each[:id], with: '11')
         end
