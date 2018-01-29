@@ -12,6 +12,7 @@ Given(/^a league (.*) with (\d+) teams$/) do |leagueName, numTeams|
     league.teams << create_team
   end
   league.generate_schedule
+  league.save
 end
 
 Then(/^it should link to league schedule for (.*)$/) do |leagueName|
@@ -24,7 +25,7 @@ When(/^the league page for (.*) is visited$/) do |leagueName|
 end
 
 When(/^the schedule page for (.*) is visited$/) do |leagueName|
-  visit event_schedule_path(league_named leagueName)
+  visit event_schedule_path (league_named leagueName)
 end
 
 Then (/^there should be gameday dates$/) do
@@ -32,7 +33,33 @@ Then (/^there should be gameday dates$/) do
   expect(page).to have_selector("input[value='24.12.2017']")
 end
 
+And (/^the change should be saved$/) do
+  expect(page).to have_selector("input[value='10.05.2013']")
+  expect(page).to have_selector("input[value='15.05.2013']")
+end
 
 Given(/^a league without max teams$/) do
   create_league(max_teams: nil)
+end
+
+And(/^the joining phase of (.*) is finished, so the playing schedule has been calculated$/) do |league|
+  (league_named league).generate_schedule
+end
+
+When('visiting the game schedule') do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+And(/^user (.*) who is not organizer should not be able to do so$/) do |userName|
+  step "a user #{userName}"
+  step "#{userName} is logged in"
+
+  visit event_schedule_path(league_named 'l')
+  within :css, "#edit_gameday_3" do
+    fill_in :gameday_starttime, with: '10.05.2013'
+    fill_in :gameday_endtime, with: '15.05.2013'
+
+    click_button( I18n.t('events.schedule.edit_date'))
+  end
+  expect(page.status_code).to eq 403
 end
