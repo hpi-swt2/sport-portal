@@ -253,7 +253,7 @@ de:
 
   success:
     updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
-    updated_gameday_points: "Die Daten dieses Spieltages wurden erfolgreich aktualisiert"
+    updated_gameday_dates: "Die Daten dieses Spieltages wurden erfolgreich aktualisiert"
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
