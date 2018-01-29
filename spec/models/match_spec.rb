@@ -135,4 +135,34 @@ RSpec.describe Match, type: :model do
 
     expect(match.points_home).to be < match.points_away
   end
+
+  it 'send notification emails to all members of teams when scheduled' do
+    match = FactoryBot.create(:match)
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect { FactoryBot.create(:match) }.to change { ActionMailer::Base.deliveries.length }.by(email_count * 2)
+  end
+
+  it 'send notification emails to all members of teams when canceled' do
+    match = FactoryBot.create(:match)
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect { match.destroy }.to change { ActionMailer::Base.deliveries.length }.by(email_count)
+  end
+
+  it 'send notification emails to all members of teams when starttime is changed' do
+    match = FactoryBot.create(:match)
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect {
+      match.start_time = Time.now
+      match.save
+    }.to change { ActionMailer::Base.deliveries.length }.by(email_count)
+  end
+
+  it 'should not send notifications if anything but the starttime is changed' do
+    match = FactoryBot.create(:match)
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect {
+      match.place = "Here"
+      match.save
+    }.to change { ActionMailer::Base.deliveries.length }.by(0)
+  end
 end
