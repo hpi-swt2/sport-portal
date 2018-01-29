@@ -133,7 +133,7 @@ h1, h2, h3 {
     border: none;
 }
 
-.gameModeCollapsible>li>.collapsible-header {
+.gameModeCollapsible > li > .collapsible-header {
     border: none;
     background-color: #F3F9FF;
     margin-top: 15px;
@@ -141,7 +141,7 @@ h1, h2, h3 {
     align-items: center;
 }
 
-.gameModeCollapsible>li>.collapsible-body {
+.gameModeCollapsible > li > .collapsible-body {
     border: none;
     background-color: #F3F9FF;
 }
@@ -157,7 +157,7 @@ h1, h2, h3 {
     justify-content: center;
 }
 
-ul.gameModeList>li {
+ul.gameModeList > li {
     list-style-type: disc;
     list-style-position: outside;
     padding-left: 10px;
