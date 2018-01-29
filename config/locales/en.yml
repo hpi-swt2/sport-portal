@@ -65,6 +65,7 @@ en:
         settings: "Notifications"
         enable_team_notifications: "Enable team notifications"
         enable_event_notifications: "Enable event notifications"
+        update_settings: "Update"
 
   unauthorized:
       manage:
