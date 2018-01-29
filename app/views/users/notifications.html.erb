@@ -4,7 +4,7 @@
 <%= form_for(@user, url: user_path(@user), method: :patch) do |f| %>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.check_box :team_notifications_enabled %>
+      <%= f.check_box :team_notifications_enabled, class: 'filled-in' %>
       <%= f.label :team_notifications_enabled, t('view.user.notifications.enable_team_notifications') %> <br>
 
     </div>
@@ -12,7 +12,7 @@
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.check_box :event_notifications_enabled %>
+      <%= f.check_box :event_notifications_enabled, class: 'filled-in' %>
       <%= f.label :event_notifications_enabled, t('view.user.notifications.enable_event_notifications') %> <br>
     </div>
   </div>
