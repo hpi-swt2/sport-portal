@@ -9,7 +9,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-      @events = Event.all
+    @events = Event.all
   end
 
   # GET /events/1
@@ -172,64 +172,60 @@ class EventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
-    def set_associations
-      @event.owner = current_user
-      @event.player_type ||= Event.player_types[:single]
-      if @event.player_type == Event.player_types[:single] || @event.type == 'Rankinglist'
-        @event.min_players_per_team = 1
-        @event.max_players_per_team = 1
-      end
+  def set_associations
+    @event.owner = current_user
+    @event.player_type ||= Event.player_types[:single]
+    if @event.player_type == Event.player_types[:single] || @event.type == 'Rankinglist'
+      @event.min_players_per_team = 1
+      @event.max_players_per_team = 1
     end
+  end
 
-    # Get the type of event that should be created
-    def event_type
-      return League if params[:type] == 'League'
-      return Tournament if params[:type] == 'Tournament'
-      return Rankinglist if params[:type] == 'Rankinglist'
-      params[:type]
-    end
+  # Get the type of event that should be created
+  def event_type
+    return League if params[:type] == 'League'
+    return Tournament if params[:type] == 'Tournament'
+    return Rankinglist if params[:type] == 'Rankinglist'
+    params[:type]
+  end
 
-    def get_shown_events_value
-      params[:showAll]
+  def map_event_on_event_types
+    [:league, :tournament, :rankinglist].each do |value|
+      delete_mapping_parameter value
     end
+  end
 
-    def map_event_on_event_types
-      [:league, :tournament, :rankinglist].each do |value|
-        delete_mapping_parameter value
-      end
+  def delete_mapping_parameter(event_class)
+    if params.has_key? event_class
+      params[:event] = params.delete event_class
     end
+  end
 
-    def delete_mapping_parameter(event_class)
-      if params.has_key? event_class
-        params[:event] = params.delete event_class
-      end
-    end
-
-    # Only allow a trusted parameter "white list" through.
-    def event_params
-      map_event_on_event_types
-      params.require(:event).permit(:name,
-                                    :description,
-                                    :discipline,
-                                    :type,
-                                    :game_mode,
-                                    :max_teams,
-                                    :player_type,
-                                    :deadline,
-                                    :startdate,
-                                    :teams,
-                                    :enddate,
-                                    :initial_value,
-                                    :min_players_per_team,
-                                    :max_players_per_team,
-                                    :gameday_duration,
-                                    :image,
-                                    :remove_image,
-                                    user_ids: [])
-    end
+  # Only allow a trusted parameter "white list" through.
+  def event_params
+    map_event_on_event_types
+    params.require(:event).permit(:name,
+                                  :description,
+                                  :discipline,
+                                  :type,
+                                  :game_mode,
+                                  :max_teams,
+                                  :player_type,
+                                  :deadline,
+                                  :startdate,
+                                  :teams,
+                                  :enddate,
+                                  :initial_value,
+                                  :min_players_per_team,
+                                  :max_players_per_team,
+                                  :gameday_duration,
+                                  :image,
+                                  :remove_image,
+                                  user_ids: [])
+  end
 end
