@@ -125,12 +125,17 @@ body {
   form {
     width: 100%;
 
+    .input-daterange {
+      width: auto;
+      display: inline-block;
+    }
+
     input[type=text] {
       width: 120px;
       text-align: center;
     }
 
-    input[type=text], button {
+    input[type=text], input[type=submit] {
       display: inline-block;
       margin: 0;
     }

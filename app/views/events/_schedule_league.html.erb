@@ -30,8 +30,8 @@
               <%= t 'events.schedule.to' %>
             </b>
             <%= day.text_field :endtime, value: gameday.endtime.to_s(:day_and_month) %>
-            <%= day.button t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
           </div>
+          <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
         <%end%>
       </div>
     </th>
