@@ -5,11 +5,11 @@ class EventMailer < ApplicationMailer
   def send_mail(user, event, template)
     @user = user
     @event = event
+    output = render template
 
     mail(to: @user.email) do |format|
-      format.html { render template }
-      format.text { render template }
+      format.html { output }
+      format.text { output }
     end
   end
-
 end
