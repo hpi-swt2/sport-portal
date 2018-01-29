@@ -91,8 +91,8 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.string "team_home_type", default: "Team"
     t.string "team_away_type", default: "Team"
     t.integer "index"
-    t.datetime "start_time"
     t.integer "gameday_id"
+    t.datetime "start_time"
     t.index ["event_id"], name: "index_matches_on_event_id"
     t.index ["gameday_id"], name: "index_matches_on_gameday_id"
   end
