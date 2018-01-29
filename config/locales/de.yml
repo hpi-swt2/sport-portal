@@ -269,9 +269,9 @@ de:
   events:
     create_event: "Event erstellen"
     choose_event_format: "Eventart wählen"
-    new_league: "Neue Liga"
-    new_tournament: "Neues Turnier"
-    new_rankinglist: "Neue Rangliste"
+    new_league: "Liga erstellen"
+    new_tournament: "Turnier erstellen"
+    new_rankinglist: "Rangliste erstellen"
     Tournament: "Turnier"
     League: "Liga"
     Rankinglist: "Rangliste"
