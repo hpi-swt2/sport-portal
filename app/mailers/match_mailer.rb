@@ -6,7 +6,7 @@ class MatchMailer < ApplicationMailer
     @user = user
     @match = match
 
-    mail(to: @user.email,
+    mail(to: user.email,
          subject: t("match_mailer.#{template}.subject")) do |format|
       format.html { render template }
       format.text { render template }

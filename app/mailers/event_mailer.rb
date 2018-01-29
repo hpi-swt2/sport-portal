@@ -6,7 +6,7 @@ class EventMailer < ApplicationMailer
     @user = user
     @event = event
 
-    mail(to: @user.email) do |format|
+    mail(to: user.email) do |format|
       format.html { render template }
       format.text { render template }
     end
