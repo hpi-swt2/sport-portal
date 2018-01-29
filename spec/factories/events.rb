@@ -67,6 +67,15 @@ FactoryBot.define do
       end
     end
 
+    trait :with_gameday do
+      transient do
+        gameday_count 5
+      end
+      after(:create) do |event, evaluator|
+        FactoryBot.create_list(:gameday, evaluator.gameday_count, event: event)
+      end
+    end
+
     trait :with_matches do
       transient do
         matches_count 10

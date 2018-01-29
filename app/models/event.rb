@@ -26,12 +26,14 @@
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :destroy
+  has_many :matches, -> { order gameday_number: :asc, index: :asc }, dependent: :destroy
   has_and_belongs_to_many :teams
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
+  has_many :gamedays, dependent: :delete_all
 
   include ImageUploader::Attachment.new(:image)
+  before_destroy :send_mails_when_canceled
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
@@ -43,6 +45,13 @@ class Event < ApplicationRecord
   validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
 
   enum player_type: [:single, :team]
+
+  def send_mails_when_canceled
+    players = self.teams.map(&:members).flatten(1)
+    players.each do |user|
+      EventMailer.send_mail(user, self, :event_canceled).deliver_now
+    end
+  end
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -66,6 +75,7 @@ class Event < ApplicationRecord
   def add_team(team)
     teams << team
     invalidate_schedule
+    send_mails_when_adding_team(team)
   end
 
   def remove_team(team)
@@ -74,6 +84,10 @@ class Event < ApplicationRecord
       team.destroy
     end
     invalidate_schedule
+  end
+
+  def team_of(user)
+    teams.detect { |team| team.has_member?(user) }
   end
 
   def generate_schedule
@@ -91,6 +105,10 @@ class Event < ApplicationRecord
 
   def has_participant?(user)
     teams.any? { |team| team.members.include?(user) }
+  end
+
+  def participants
+    teams
   end
 
   def owns_participating_teams?(user)
@@ -158,6 +176,10 @@ class Event < ApplicationRecord
     min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
   end
 
+  def get_ranking
+    Ranking.new(teams, matches).get_ranking
+  end
+
   class << self
     def human_selection_type(type)
       I18n.t("activerecord.attributes.event.selection_types.#{type}")
@@ -172,4 +194,11 @@ class Event < ApplicationRecord
       I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
     end
   end
+
+  private
+    def send_mails_when_adding_team(team)
+      team.members.each do |member|
+        TeamMailer.team_registered_to_event(member, team, self).deliver_now
+      end
+    end
 end

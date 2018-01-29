@@ -30,7 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 ---
 en:
-  appname: "Sport Portal"
+  appname: "Sportify"
 
   welcome:
     index:
@@ -82,6 +82,14 @@ en:
     new_tournament: "New tournament"
     show:
       to_ranking: "Ranking table"
+    discipline:
+          basketball: "Basketball"
+          soccer: "Soccer"
+          tennis: "Tennis"
+          table_tennis: "Table tennis"
+          table_football: "Foosball"
+          volleyball: "Volleyball"
+          other: "Other"
     new:
       name: "Name"
       description: "Description"
@@ -97,6 +105,7 @@ en:
       select_type: "Select type"
       select_game_mode: "Select game mode"
       select_player_type: "Spielertyp auswählen"
+      select_discipline: "Select discipline"
     show_events: "Show all events"
     ranking:
           title: "Ranking table"

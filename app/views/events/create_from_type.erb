@@ -1,9 +1,6 @@
-<h1><%= t 'events.choose_event_format' %></h1>
+<div class="page-header">
+  <h1><%= t('events.choose_event_format') %></h1>
+  <p style="color: #01A8E8"><%= t('welcome.index.lead-description') %></p>
+</div>
 
-<%= link_to t('.new', default: t('events.new_league')),
-            new_league_path, :class => 'btn btn-default' %>
-<%= link_to t('.new', default: t('events.new_tournament')),
-            new_tournament_path, class: 'btn btn-default' %>
-<%= link_to t('.new', default: t('events.new_rankinglist')),
-            new_rankinglist_path, class: 'btn btn-default' %>
-
+<%= render partial: 'events/event_cards' %>
