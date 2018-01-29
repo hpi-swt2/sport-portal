@@ -1,6 +1,5 @@
 #Sends mails for matches: match_notifcation, match_scheduled, match_canceled, match_date_changed
 class MatchMailer < ApplicationMailer
-  after_action :prevent_delivery_to_unsubscribed_users
 
   def send_mail(user, match, template)
     @user = user
@@ -11,5 +10,6 @@ class MatchMailer < ApplicationMailer
       format.html { render template }
       format.text { render template }
     end
+    prevent_delivery_to_unsubscribed_users(user)
   end
 end

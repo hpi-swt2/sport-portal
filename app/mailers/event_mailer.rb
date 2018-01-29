@@ -1,6 +1,5 @@
 # Sends mails for events: event_canceled, event_started, event_finished
 class EventMailer < ApplicationMailer
-  after_action :prevent_delivery_to_unsubscribed_users
 
   def send_mail(user, event, template)
     @user = user
@@ -11,5 +10,6 @@ class EventMailer < ApplicationMailer
       format.html { render template }
       format.text { render template }
     end
+    prevent_delivery_to_unsubscribed_users(user)
   end
 end
