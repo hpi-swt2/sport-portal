@@ -45,7 +45,11 @@ h1 {
     letter-spacing: 0;
     height: auto;
     padding: 15px 50px;
-    text-decoration: none;
+}
+
+a.genericButton:hover {
+    opacity: 0.8;
+    color: black;
 }
 
 #membershipButton {

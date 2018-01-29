@@ -111,7 +111,7 @@
                   <%= image_tag member.avatar_url || image_path('https://owncloud.hpi.de/index.php/s/rd14acG6qOlAHHJ/download'), class: 'circle' %>
                 </div>
                 <div class="col s6 xl8 truncate" style="font-size: 120%;">
-                  <%= member.first_name %> <%= member.last_name %>
+                  <%= link_to member.first_name + ' ' + member.last_name, user_path(member)%>
                 </div>
                 <div class="col s2">
                   <% if @team.members.include? current_user %>
@@ -207,7 +207,7 @@
                         team_path(@team),
                         :method => 'delete',
                         :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm"))},
-                        :class => 'btn btn-danger genericButton  blueActionButton red',
+                        :class => 'btn btn-danger genericButton blueActionButton red',
                         :style => 'margin-left: 20px;' %>
         <% end %>
       </div>
