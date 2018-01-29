@@ -63,14 +63,6 @@ class Match < ApplicationRecord
   @@winner_strategy = { "most_sets" => lambda { |match| (match.wins_home > match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
   @@loser_strategy = { "most_sets" => lambda { |match| (match.wins_home < match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
 
-  def name
-    winner_team = winner
-    if winner_team.present?
-      return winner_team.name
-    end
-    round
-  end
-
   def depth
     event.finale_gameday - gameday_number
   end
@@ -119,11 +111,11 @@ class Match < ApplicationRecord
   end
 
   def winner
-	  @@winner_strategy[event.game_winrule].call(self)
+    @@winner_strategy[event.game_winrule].call(self)
   end
 
   def loser
-	  @@loser_strategy[event.game_winrule].call(self)
+    @@loser_strategy[event.game_winrule].call(self)
   end
 
   def team_home_recursive
@@ -167,11 +159,11 @@ class Match < ApplicationRecord
     if !has_scores?
       set_points(nil, nil)
     elsif wins_home > wins_away
-		set_points(event.points_for_win, event.points_for_lose)
+      set_points(event.points_for_win, event.points_for_lose)
     elsif wins_home < wins_away
-		set_points(event.points_for_lose, event.points_for_win)
+      set_points(event.points_for_lose, event.points_for_win)
     else
-		set_points(event.points_for_draw, event.points_for_draw)
+      set_points(event.points_for_draw, event.points_for_draw)
     end
   end
 
