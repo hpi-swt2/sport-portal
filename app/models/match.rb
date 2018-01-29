@@ -11,7 +11,7 @@
 #  event_id       :integer
 #  points_home    :integer
 #  points_away    :integer
-#  gameday        :integer
+#  gameday_number        :integer
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
@@ -23,6 +23,7 @@ class Match < ApplicationRecord
   belongs_to :team_away, polymorphic: true
   belongs_to :event
   has_many :game_results, dependent: :destroy
+  belongs_to :gameday, optional: true
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
@@ -33,13 +34,13 @@ class Match < ApplicationRecord
   split_accessor :start_time
 
   def depth
-    event.finale_gameday - gameday
+    event.finale_gameday - gameday_number
   end
 
   def round
     key = { 0 => 'zero', 1 => 'one', 2 => 'two', 3 => 'three' }[depth]
     key ||= 'other'
-    I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
+    I18n.t('matches.round_name.' + key, round: (gameday_number + 1).to_s, gameid: index.to_s)
   end
 
   def score_home_total
@@ -156,5 +157,9 @@ class Match < ApplicationRecord
     end
 
     success
+  end
+
+  def has_result?
+    has_scores? && has_points?
   end
 end

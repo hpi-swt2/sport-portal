@@ -206,6 +206,23 @@ RSpec.describe MatchesController, type: :controller do
         expect(response).to redirect_to(match_path(match))
       end
     end
+    context "with invalid params" do
+      let(:new_attributes) {
+        {
+            "0" => {
+                "score_home" => 'asdf',
+                "score_away" => 'dddd',
+                "id" => ""
+            }
+        }
+      }
+      let(:match) { FactoryBot.create(:match) }
+
+      it "redirects to the edit results page" do
+        put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
+        expect(response).to render_template :edit_results
+      end
+    end
   end
 
 end
