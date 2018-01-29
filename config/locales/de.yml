@@ -236,8 +236,8 @@ de:
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
       notifications:
             settings: "Benachrichtigungseinstellungen"
-            enable_team_notifications: "Team Benachrichtigungen erhalten"
-            enable_event_notifications: "Event Benachrichtigung erhalten"
+            enable_team_notifications: "Team-Benachrichtigungen erhalten"
+            enable_event_notifications: "Event-Benachrichtigung erhalten"
             update_settings: "Aktualisieren"
 
 
