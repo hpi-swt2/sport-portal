@@ -57,7 +57,6 @@ RSpec.describe TeamsController, type: :controller do
 
   it "should not show  private teams to not-logged in user" do
     team = Team.create! private_attributes
-    team.owners << @user
     sign_out @user
     get :index, params: {}
     teams = controller.instance_variable_get(:@teams)
@@ -66,7 +65,6 @@ RSpec.describe TeamsController, type: :controller do
 
   it "should not show  private teams to a user who is not part of the team" do
     team = Team.create! private_attributes
-    team.owners << @other_user
     get :index, params: {}
     teams = controller.instance_variable_get(:@teams)
     expect(teams).to be_empty
