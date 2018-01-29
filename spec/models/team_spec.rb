@@ -94,4 +94,22 @@ RSpec.describe Team, type: :model do
     team.name = "New Name"
     expect(Team.all).to eq([team, another_team])
   end
+
+  it 'should notify newly added team members' do
+    team = FactoryBot.create :team
+
+    user = FactoryBot.create :user
+    expect { team.members << user }.to change { ActionMailer::Base.deliveries.length }.by(1)
+  end
+
+  it 'should notify its members when it participates in an event' do
+    team = FactoryBot.create :team
+    user1 = FactoryBot.create :user
+    user2 = FactoryBot.create :user
+    team.members << [user1, user2]
+    team_members_count = team.members.length
+
+    event = FactoryBot.create :event
+    expect { event.add_team team }.to change { ActionMailer::Base.deliveries.length }.by(team_members_count)
+  end
 end

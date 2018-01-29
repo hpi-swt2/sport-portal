@@ -66,6 +66,7 @@ class Event < ApplicationRecord
   def add_team(team)
     teams << team
     invalidate_schedule
+    send_mails_when_adding_team(team)
   end
 
   def remove_team(team)
@@ -180,4 +181,11 @@ class Event < ApplicationRecord
       I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
     end
   end
+
+  private
+    def send_mails_when_adding_team(team)
+      team.members.each do |member|
+        TeamMailer.team_registered_to_event(member, team, self).deliver_now
+      end
+    end
 end
