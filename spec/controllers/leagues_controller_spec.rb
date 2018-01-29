@@ -71,8 +71,6 @@ RSpec.describe LeaguesController, type: :controller do
       end
       describe 'when at least two matches have been played already' do
         before (:each) do
-          @league
-
           @team1 = FactoryBot.create(:team)
           @team2 = FactoryBot.create(:team)
           @team3 = FactoryBot.create(:team)
