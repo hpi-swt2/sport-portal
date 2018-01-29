@@ -45,6 +45,4 @@ RSpec.describe GamedaysController, type: :controller do
       end
     end
   end
-
-
 end

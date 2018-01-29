@@ -28,8 +28,8 @@ When(/^the schedule page for (.*) is visited$/) do |leagueName|
 end
 
 Then (/^there should be gameday dates$/) do
-  expect(page).to have_selector("input[value='2017-12-24']")
-  expect(page).to have_selector("input[value='2017-12-31']")
+  expect(page).to have_selector("input[value='24.12.17']")
+  expect(page).to have_selector("input[value='24.12.17']")
 end
 
 
