@@ -24,10 +24,6 @@ Given(/^a tournament (.*)\.$/) do |tournamentName|
   create_tournament_named tournamentName
 end
 
-When(/^the tournament overview page for (.*) is visited$/) do |tournamentName|
-  visit event_overview_path (tournament_named tournamentName)
-end
-
 When(/^the event page for (.*) is visited$/) do |tournamentName|
   visit event_path (tournament_named tournamentName)
 end
@@ -92,13 +88,6 @@ Then(/^the (home|away) team of match (.+) (\d+) (is|isn't) in match (.+) (\d+)$/
   team = find_team_of_match match_gameday, match_num, home_or_away
   target_match = find_match_on_page target_match_gameday, target_match_num
   expect(target_match.is_team_recursive? team).to be(is_or_isnt == 'is')
-end
-
-Then(/^the standing of the (home|away) team of match (.+) (\d+) is '(.+)'$/) do |home_or_away, match_gameday, match_num, standing|
-  visit event_schedule_path single_tournament
-  team = find_team_of_match match_gameday, match_num, home_or_away
-  visit event_overview_path single_tournament
-  expect(page).to have_text("#{team.name} #{standing}")
 end
 
 Given(/^a tournament with gamemode (.*)$/) do |mode|
