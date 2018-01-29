@@ -18,20 +18,22 @@
     </tr>
   <% end %>
   <tr class="gameday">
-    <th colspan="6">
-      <b>
-        <%= t 'events.schedule.gameday' %> <%= gameday.description %>
-      </b>
-    </th>
-  </tr>
-  <tr class="gameday">
     <th colspan="7">
-      <%= form_for gameday, url: gameday_path(gameday), html: {method: 'put'} do |day| %>
-        <%= day.date_field :starttime, style: 'width: 30%; float: left' %>
-        <b><%= t 'events.schedule.to' %></b>
-        <%= day.date_field :endtime, sytle: 'width: 30%; float: left' %>
-        <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
-      <%end%>
+      <div class="gameday-wrapper">
+        <span class="gameday-name">
+          <%= t 'events.schedule.gameday' %> <%= gameday.description %>
+        </span>
+        <%= form_for gameday, url: gameday_path(gameday), html: {method: 'put'} do |day| %>
+          <div class="input-group input-daterange">
+            <%= day.text_field :starttime, value: gameday.starttime.to_s(:day_and_month) %>
+            <b>
+              <%= t 'events.schedule.to' %>
+            </b>
+            <%= day.text_field :endtime, value: gameday.endtime.to_s(:day_and_month) %>
+            <%= day.button t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
+          </div>
+        <%end%>
+      </div>
     </th>
   </tr>
   <% gameday.matches.each do |match| %>
