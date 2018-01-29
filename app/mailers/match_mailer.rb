@@ -1,36 +1,15 @@
 class MatchMailer < ApplicationMailer
   after_action :prevent_delivery_to_unsubscribed_users
 
-  # Notifies a user about an upcoming match
-  def match_notification(user, match)
+  #Sends mails for matches: match_notifcation, match_scheduled, match_canceled, match_date_changed
+  def send_mail(user, match, template)
     @user = user
     @match = match
-    I18n.with_locale(I18n.default_locale) do
-      mail(to: @user.email,
-           subject: I18n.t('match_mailer.match_notification.subject', start_time: I18n.localize(@match.start_time))
-      )
+
+    mail(to: @user.email,
+         subject: t("match_mailer.#{template}.subject")) do |format|
+      format.html { render template }
+      format.text { render template }
     end
   end
-
-  def match_scheduled(user, match)
-    @user = user
-    @match = match
-
-    mail to: user.email
-  end
-
-  def match_canceled(user, match)
-    @user = user
-    @match = match
-
-    mail to: user.email
-  end
-
-  def match_date_changed(user, match)
-    @user = user
-    @match = match
-
-    mail to: user.email
-  end
-
 end

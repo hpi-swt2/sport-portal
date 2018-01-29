@@ -4,7 +4,7 @@ RSpec.describe EventMailer, type: :mailer do
   describe "event_canceled" do
     let(:user) { FactoryBot.create(:user) }
     let(:event1) { FactoryBot.create(:event) }
-    let(:mail) { EventMailer.event_canceled(user, event1) }
+    let(:mail) { EventMailer.send_mail(user, event1, :event_canceled) }
     before(:each) { mail.deliver_now }
 
     it 'renders the receiver email' do
@@ -26,7 +26,7 @@ RSpec.describe EventMailer, type: :mailer do
   describe "event_started" do
     let(:user) { FactoryBot.create(:user) }
     let(:event1) { FactoryBot.create(:event) }
-    let(:mail) { EventMailer.event_started(user, event1) }
+    let(:mail) { EventMailer.send_mail(user, event1, :event_started) }
     before(:each) { mail.deliver_now }
 
     it 'renders the receiver email' do
@@ -48,7 +48,7 @@ RSpec.describe EventMailer, type: :mailer do
   describe "event_finished" do
     let(:user) { FactoryBot.create(:user) }
     let(:event1) { FactoryBot.create(:event) }
-    let(:mail) { EventMailer.event_finished(user, event1) }
+    let(:mail) { EventMailer.send_mail(user, event1, :event_finished) }
     before(:each) { mail.deliver_now }
 
     it 'renders the receiver email' do
@@ -72,7 +72,7 @@ RSpec.describe EventMailer, type: :mailer do
     event = FactoryBot.create :event, :with_teams
     user = FactoryBot.create(:user)
     allow(user).to receive(:has_event_notifications_enabled?).and_return(false)
-    mail = EventMailer.event_canceled(user, event)
+    mail = EventMailer.send_mail(user, event, :event_canceled)
     expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
   end
 end

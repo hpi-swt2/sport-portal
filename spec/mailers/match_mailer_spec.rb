@@ -4,12 +4,8 @@ RSpec.describe MatchMailer, type: :mailer do
   describe 'match notification' do
     let(:user) { FactoryBot.create(:user) }
     let(:match1) { FactoryBot.create(:match) }
-    let(:mail) { MatchMailer.match_notification(user, match1) }
+    let(:mail) { MatchMailer.send_mail(user, match1, :match_notification) }
     before(:each) { mail.deliver_now }
-
-    it 'renders the startdate in the subject' do
-      expect(mail.subject).to match(I18n.localize(match1.start_time))
-    end
 
     it 'renders the receiver email' do
       expect(mail.to).to eq([user.email])
@@ -46,7 +42,7 @@ RSpec.describe MatchMailer, type: :mailer do
   describe 'match scheduled' do
     let(:user) { FactoryBot.create(:user) }
     let(:match1) { FactoryBot.create(:match) }
-    let(:mail) { MatchMailer.match_scheduled(user, match1) }
+    let(:mail) { MatchMailer.send_mail(user, match1, :match_scheduled) }
     before(:each) { mail.deliver_now }
 
     it 'renders the receiver email' do
@@ -76,7 +72,7 @@ RSpec.describe MatchMailer, type: :mailer do
   describe 'match date changed' do
     let(:user) { FactoryBot.create(:user) }
     let(:match1) { FactoryBot.create(:match) }
-    let(:mail) { MatchMailer.match_date_changed(user, match1) }
+    let(:mail) { MatchMailer.send_mail(user, match1, :match_date_changed) }
     before(:each) { mail.deliver_now }
 
     it 'renders the receiver email' do
@@ -110,7 +106,7 @@ RSpec.describe MatchMailer, type: :mailer do
   describe 'match canceled' do
     let(:user) { FactoryBot.create(:user) }
     let(:match1) { FactoryBot.create(:match) }
-    let(:mail) { MatchMailer.match_canceled(user, match1) }
+    let(:mail) { MatchMailer.send_mail(user, match1, :match_canceled) }
     before(:each) { mail.deliver_now }
 
     it 'renders the receiver email' do
@@ -142,7 +138,7 @@ RSpec.describe MatchMailer, type: :mailer do
     match = FactoryBot.create(:match)
     user = FactoryBot.create(:user)
     allow(user).to receive(:has_event_notifications_enabled?).and_return(false)
-    mail = MatchMailer.match_scheduled(user, match)
+    mail = MatchMailer.send_mail(user, match, :match_canceled)
     expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
   end
 end

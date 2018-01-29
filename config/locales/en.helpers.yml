@@ -71,7 +71,7 @@ en:
     next_game: "your match (%{team_home} vs. %{team_away}) in the event %{name}"
     match_notification:
       info: "begins tomorrow at %{start_time}. You will meet at this place: %{place}"
-      subject: "Your game begins tomorrow at %{start_time}"
+      subject: "Your game begins tomorrow"
     match_canceled:
       info: "has been canceled."
       subject: "Your match has been canceled"

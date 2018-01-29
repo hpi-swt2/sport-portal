@@ -77,7 +77,7 @@ de:
     next_game: "dein Spiel (%{team_home} vs. %{team_away}) im Event %{name}"
     match_notification:
       info: "startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
-      subject: "Dein Spiel startet morgen um %{start_time}"
+      subject: "Dein Spiel startet morgen"
     match_canceled:
       info: "wurde abgesagt."
       subject: "Dein Spiel wurde abgesagt"

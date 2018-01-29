@@ -5,7 +5,7 @@ namespace :event_notification do
     events.find_each(batch_size: 10) do |event|
       event.teams.find_each(batch_size: 10) do |team|
         team.members.each do |participant|
-          EventMailer.event_started(participant, event).deliver_now
+          EventMailer.send_mail(participant, event, :event_started).deliver_now
         end
       end
     end
@@ -16,7 +16,7 @@ namespace :event_notification do
     events.find_each(batch_size: 10) do |event|
       event.teams.find_each(batch_size: 10) do |team|
         team.members.each do |participant|
-          EventMailer.event_finished(participant, event).deliver_now
+          EventMailer.send_mail(participant, event, :event_finished).deliver_now
         end
       end
     end

@@ -34,21 +34,21 @@ class Match < ApplicationRecord
   def send_mails_when_date_changed
     players = self.all_players
     players.each do |user|
-      MatchMailer.match_date_changed(user, self).deliver_now
+      MatchMailer.send_mail(user, self, :match_date_changed).deliver_now
     end
   end
 
   def send_mails_when_scheduled
     players = self.all_players
     players.each do |user|
-      MatchMailer.match_scheduled(user, self).deliver_now
+      MatchMailer.send_mail(user, self, :match_scheduled).deliver_now
     end
   end
 
   def send_mails_when_canceled
     players = self.all_players
     players.each do |user|
-      MatchMailer.match_canceled(user, self).deliver_now
+      MatchMailer.send_mail(user, self, :match_canceled).deliver_now
     end
   end
 

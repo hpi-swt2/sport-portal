@@ -48,7 +48,7 @@ class Event < ApplicationRecord
   def send_mails_when_canceled
     players = self.teams.map(&:members).flatten(1)
     players.each do |user|
-      EventMailer.event_canceled(user, self).deliver_now
+      EventMailer.send_mail(user, self, :event_canceled).deliver_now
     end
   end
 
