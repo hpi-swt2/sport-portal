@@ -20,22 +20,32 @@ describe 'Rankinglists', type: :feature do
     @event.add_participant @user2
     visit event_path(@event)
     click_link_or_button('duel_participant')
+
+    @match = Match.new(team_home: @event.team_of(@user), team_away: @event.team_of(@user2), event_id: @event)
+    puts @match.event_id
+    @event.matches << @match
     expect(current_path).to eq("/matches/new")
+    @match.save
+    visit match_path(@match)
+
     click_link_or_button('edit_results')
     expect(current_path).to match(/\/matches\/\d+\/edit_results/)
-    click_link_or_button('add_game_result')
+    click_link_or_button('no_script_add_game_result')
 
     page.all('input').each do |each|
       if(each[:id] != nil)
         if each[:id].include? 'score_home'
-          fill_in(each[:id], '11')
+          fill_in(each[:id], with: '11')
         end
         if each[:id].include? 'score_away'
-          fill_in(each[:id], '4')
+          fill_in(each[:id], with: '4')
         end
       end
     end
-
+    expect(@event.matches.first).to equal(@match)
+    visit edit_results_match_path(@match)
+    expect(current_path).to match(/\/matches\/\d+\/edit_results/)
+    expect(@match).not_to equal(nil)
     click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
   end
 end
