@@ -71,11 +71,6 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
     end
-
-    it 'has a ranking button' do
-      render
-      expect(rendered).to have_content(t('events.show.to_ranking'))
-    end
   end
 
   shared_examples "a time-restricted multiplayer event" do
@@ -115,7 +110,6 @@ RSpec.describe "events/show", type: :view do
       @event.owner = @user
     end
 
-
     it "renders a schedule button" do
       render
       expect(rendered).to have_selector(:link_or_button, t('events.show.to_schedule'))
@@ -130,6 +124,11 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content Event.human_attribute_name :gameday_duration
       expect(rendered).to have_content @event.gameday_duration
+    end
+
+    it 'has a ranking button' do
+      render
+      expect(rendered).to have_content(t('events.show.to_ranking'))
     end
 
     include_examples "an event"

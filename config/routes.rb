@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :leagues, controller: 'leagues', only: [:show, :new, :create, :update], type: League
+  resources :leagues, controller: 'events', only: [:show, :new, :create, :update], type: League
   resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
   resources :rankinglists, controller: 'events', only: [:show, :new, :create, :update], type: Rankinglist
 
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   #get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
   get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
-  get '/league/:id/ranking', to: 'leagues#ranking', as: 'leagues_ranking'
+  get '/leagues/:id/ranking', to: 'leagues#ranking', as: 'leagues_ranking'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {
