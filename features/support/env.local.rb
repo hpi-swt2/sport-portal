@@ -9,6 +9,7 @@ module DataHelper
     @users = []
     @accounts = []
     @named = {}
+    @events = []
     @tournaments = []
     @leagues = []
     @current_user = nil
@@ -55,6 +56,19 @@ module DataHelper
 
   def single_user
     get_single_object(@users)
+  end
+
+  def create_event(options = {})
+    @events << FactoryBot.create(:event, options)
+    @events.last
+  end
+
+  def create_event_named(name, options = {})
+    add_named_object name, create_event(options)
+  end
+
+  def event_named(name)
+    get_named_object name, Event
   end
 
   def create_league(options = {})
