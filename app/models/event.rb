@@ -122,6 +122,10 @@ class Event < ApplicationRecord
     I18n.t 'events.overview.unkown_standing'
   end
 
+  def last_match_of(team)
+    nil
+  end
+
   # this is a method that simplifies manual testing, not intended for production use
   # method not used at the moment since it is now testet with joined users
   #def add_test_teams

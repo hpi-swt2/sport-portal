@@ -66,6 +66,12 @@ class Match < ApplicationRecord
     points_home.present? && points_away.present?
   end
 
+  def opponent_of(participant)
+    return team_home if participant == team_away
+    return team_away if participant == team_home
+    nil
+  end
+
   def has_scores?
     game_results.each do |result|
       if result.score_home.present? && result.score_away.present?

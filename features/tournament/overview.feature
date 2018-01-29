@@ -46,4 +46,4 @@ Feature: Tournament Overview Page
     When the tournament overview page for t is visited
     Then the opponent of the home team of match Viertelfinale 1 links to the away team of match Viertelfinale 1
     And the opponent of the away team of match Viertelfinale 1 links to the home team of match Viertelfinale 1
-    And the away team of match Halbfinale 1 links to no opponent
+    And the home team of match Halbfinale 2 links to no opponent

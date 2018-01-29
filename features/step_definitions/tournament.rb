@@ -122,7 +122,7 @@ Then(/^the standing of the (home|away) team of match (\w+) (\d+) links to (\w+) 
   team = find_team_of_match match_gameday, match_num, home_or_away
   visit event_overview_path single_tournament
   within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
-    expect(page).to have_link(match_path(match))
+    expect(page).to have_link(href: match_path(match))
   end
 end
 
@@ -133,7 +133,7 @@ Then(/^the opponent of the (home|away) team of match (\w+) (\d+) links to the (h
   visit event_overview_path single_tournament
   within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
     expect(page).to have_text("gegen #{opponent.name}")
-    expect(page).to have_link(team_path(opponent))
+    expect(page).to have_link(href: team_path(opponent))
   end
 end
 
