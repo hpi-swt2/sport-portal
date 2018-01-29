@@ -7,8 +7,8 @@ RSpec.describe GamedaysController, type: :controller do
   user }
   let(:gameday) { FactoryBot.create(:gameday) }
   describe '#update' do
-    let(:new_dates) { { starttime: '05.05.12',
-                        endtime: '12.05.12' } }
+    let(:new_dates) { { starttime: '05.05.2012',
+                        endtime: '12.05.2012' } }
     let(:invalid_input) { { starttime: 'asdf', endtime: 'dddd' } }
 
     context 'when user is an organizer' do
@@ -20,8 +20,8 @@ RSpec.describe GamedaysController, type: :controller do
       it 'changes the date of a gameday if requested' do
         put :update, params: { id: gameday.id, gameday: new_dates }
         gameday.reload
-        expect(gameday.starttime).to eq Date.strptime(new_dates[:starttime], '%d.%m.%y')
-        expect(gameday.endtime).to eq Date.strptime(new_dates[:endtime], '%d.%m.%y')
+        expect(gameday.starttime).to eq Date.strptime(new_dates[:starttime], '%d.%m.%Y')
+        expect(gameday.endtime).to eq Date.strptime(new_dates[:endtime], '%d.%m.%Y')
       end
 
       it 'doesnt change anything with invalid params' do

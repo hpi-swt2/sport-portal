@@ -10,6 +10,6 @@ document.addEventListener("turbolinks:load", function() {
 
 $(function() {
     $('.input-daterange').datepicker({
-        format: 'dd.mm.yy'
+        format: 'dd.mm.yyyy'
     });
 });

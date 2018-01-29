@@ -60,8 +60,8 @@ RSpec.describe 'events/schedule', type: :view do
 
   it 'has input field for gameday dates with correct dates' do
     render
-    expect(rendered).to have_selector("input[value='24.12.17']")
-    expect(rendered).to have_selector("input[value='31.12.17']")
+    expect(rendered).to have_selector("input[value='24.12.2017']")
+    expect(rendered).to have_selector("input[value='31.12.2017']")
   end
 
   it 'has edit button for gameday dates' do
