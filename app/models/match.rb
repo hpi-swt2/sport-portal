@@ -28,6 +28,31 @@ class Match < ApplicationRecord
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
 
+  after_create :send_mails_when_scheduled
+  after_destroy :send_mails_when_canceled
+  after_update :send_mails_when_date_changed, if: :saved_change_to_start_time?
+
+  def send_mails_when_date_changed
+    players = self.all_players
+    players.each do |user|
+      MatchMailer.send_mail(user, self, :match_date_changed).deliver_now
+    end
+  end
+
+  def send_mails_when_scheduled
+    players = self.all_players
+    players.each do |user|
+      MatchMailer.send_mail(user, self, :match_scheduled).deliver_now
+    end
+  end
+
+  def send_mails_when_canceled
+    players = self.all_players
+    players.each do |user|
+      MatchMailer.send_mail(user, self, :match_canceled).deliver_now
+    end
+  end
+
   validates :points_home, :points_away, numericality: { allow_nil: true }
 
   extend TimeSplitter::Accessors
@@ -157,6 +182,12 @@ class Match < ApplicationRecord
     end
 
     success
+  end
+
+  def all_players
+    team_home = self.team_home
+    team_away = self.team_away
+    players = (team_home.is_a?(Team) ? team_home.members : []) + (team_away.is_a?(Team) ? team_away.members : [])
   end
 
   def has_result?

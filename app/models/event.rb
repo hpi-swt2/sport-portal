@@ -34,6 +34,7 @@ class Event < ApplicationRecord
   has_many :gamedays, dependent: :delete_all
 
   include ImageUploader::Attachment.new(:image)
+  before_destroy :send_mails_when_canceled
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
@@ -45,6 +46,13 @@ class Event < ApplicationRecord
   validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
 
   enum player_type: [:single, :team]
+
+  def send_mails_when_canceled
+    players = self.teams.map(&:members).flatten(1)
+    players.each do |user|
+      EventMailer.send_mail(user, self, :event_canceled).deliver_now
+    end
+  end
 
   def duration
     return if enddate.blank? || startdate.blank?

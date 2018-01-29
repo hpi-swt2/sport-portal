@@ -1,12 +1,14 @@
+#Sends mails for matches: match_notifcation, match_scheduled, match_canceled, match_date_changed
 class MatchMailer < ApplicationMailer
-  # Notifies a user about an upcoming match
-  def match_notification(user, match)
+  def send_mail(user, match, template)
     @user = user
     @match = match
-    I18n.with_locale(I18n.default_locale) do
-      mail(to: @user.email,
-           subject: I18n.t('mailer.match_mailer.match_notification.subject', start_time: I18n.localize(@match.start_time))
-      )
+
+    mail(to: user.email,
+         subject: t("match_mailer.#{template}.subject")) do |format|
+      format.html { render template }
+      format.text { render template }
     end
+    prevent_delivery_to_event_unsubscribed_users(user)
   end
 end
