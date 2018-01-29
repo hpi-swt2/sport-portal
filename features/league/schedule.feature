@@ -15,3 +15,5 @@ Feature: Schedule for league
   Scenario: schedule should use gamedayduration to calculate gamedays
     When the schedule page for l is visited
     Then there should be gameday dates
+
+
