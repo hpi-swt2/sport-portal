@@ -146,4 +146,7 @@ Rails.application.configure do
   }
 
   ActionMailer::Base.default from: ENV.fetch('SENDER_EMAIL')
+
+  # Tell Action Mailer where URLs should point to
+  config.action_mailer.default_url_options = { :host => ENV['HOST_URL'] }
 end

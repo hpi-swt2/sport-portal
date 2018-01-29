@@ -31,7 +31,6 @@ describe 'League model', type: :model do
 
   let(:league) { FactoryBot.build(:league) }
   it 'is valid when produced by a factory' do
-    league = FactoryBot.build(:league)
     expect(league).to be_valid
   end
 
@@ -63,57 +62,90 @@ describe 'League model', type: :model do
       expect(league.enddate_for_gameday 1).to eq Date.parse('30.12.2017')
     end
   end
-  describe 'Generating league schedule with default values' do
+  describe 'Generating league schedule' do
     let(:league) { league = FactoryBot.create(:league, :with_teams)
-                   league.game_mode = League.game_modes[:round_robin]
+                   league.game_mode = gamemode
                    league.generate_schedule
                    league }
-    let(:matches) { league.matches }
+    let(:matches) { league.all_matches }
     let(:home_teams) { matches.map(&:team_home) }
     let(:away_teams) { matches.map(&:team_away) }
     #The following line creates a hash in this matter {team=> occurrences of team} i.e. {Team:1 => 2, Team:2 =>2, etc.}
     let(:all_teams_with_occurrences) { Hash[(home_teams + away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
     subject { matches }
+    context 'round robin' do
+      let(:gamemode) { League.game_modes[:round_robin] }
 
-    it 'has correct amount of teams' do
-      expect(league.teams.length).to be 5
-    end
-    it 'does create matches' do
-      expect(matches.length).to be > 0
-    end
+      it 'does create matches' do
+        expect(subject.length).to be > 0
+      end
 
-    it 'does create 10 matches' do
-      expect(matches.length).to be 10
-    end
-    it 'incorporates all teams into the schedule' do
-      expect(all_teams_with_occurrences.length).to be 5
-    end
+      it 'does create the correct amount of matches' do
+        expect(subject.length).to be 10
+      end
 
-    it 'makes every single team play exactly 4 times' do
-      all_teams_with_occurrences.each do |team, occurrence|
-        expect(occurrence).to be 4
+      it 'incorporates all teams into the schedule' do
+        expect(all_teams_with_occurrences.length).to be 5
+      end
+
+      it 'creates the right amount of gameday' do
+        expect(league.gamedays.length).to eq 5
+      end
+
+      it 'makes every single team play the right amount of games times' do
+        all_teams_with_occurrences.each do |team, occurrence|
+          expect(occurrence).to be 4
+        end
+      end
+
+      it 'does only let half as many matches as teams play per gameday' do
+        5.times do |gameday|
+          expect(league.gamedays[gameday].matches.length).to eq 2
+        end
+      end
+
+      it 'uses round robin if its selected' do
+        # simple round robin has n((n-1)/2) games
+        expect(matches.length).to be league.teams.length * ((league.teams.length - 1) / 2)
       end
     end
 
-    it 'does only let half as many matches as teams play per gameday' do
-      5.times do |gameday|
-        gameday += 1 #gamedays are from 1 to 5 not 0 to 4
-        gameday_matches = matches.select { |match| match.gameday == gameday }
-        expect(gameday_matches.length).to be 2
+    context 'double round robin' do
+      let(:gamemode) { League.game_modes[:two_halfs] }
+
+
+      let(:all_teams_with_home_occurences) { Hash[(home_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
+      let(:all_teams_with_away_occurences) { Hash[(away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
+      it 'makes each team play as home and away just as often' do
+        expect(all_teams_with_home_occurences).to eq all_teams_with_away_occurences
+      end
+      it 'creates the right amount of gamedays' do
+        expect(league.gamedays.length).to eq 10
+      end
+
+      it 'does only let half as many matches as teams play per gameday' do
+        10.times do |gameday|
+          expect(league.gamedays[gameday].matches.length).to eq 2
+        end
+      end
+
+      it 'has double the matches if double round robin is selected' do
+        # double round robin has n(n-1) games
+        expect(subject.length).to eq(league.teams.length * (league.teams.length - 1))
       end
     end
+  end
 
-    it 'uses round robin if its selected' do
-      # simple round robin has n((n-1)/2) games
-      expect(matches.length).to be league.teams.length * ((league.teams.length - 1) / 2)
-    end
+  describe "#add_participant" do
+    context 'single player event' do
+      let(:league) { FactoryBot.create(:league, :single_player) }
+      let(:user) { FactoryBot.create(:user) }
 
-    it 'has double the matches if double round robin is selected' do
-      new_league = FactoryBot.create(:league, :with_teams)
-      new_league.game_mode = League.game_modes[:two_halfs]
-      new_league.generate_schedule
-      # double round robin has n(n-1) games
-      expect(new_league.matches.length).to eq(new_league.teams.length * (new_league.teams.length - 1))
+      it 'creates a single player team' do
+        league.add_participant user
+
+        expect(league.participants.first.single?).to eq true
+      end
     end
   end
 end
