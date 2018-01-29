@@ -103,7 +103,6 @@ h1, h2, h3 {
 }
 
 .card-button {
-    width: 70%;
     padding: 10px 20px !important;
     margin-bottom: 50px;
     background: #1CA9E5;
@@ -124,12 +123,6 @@ h1, h2, h3 {
     text-transform: uppercase;
     color: #FFFFFF;
     line-height: 3rem;
-}
-
-.content-is-cards {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0px;
 }
 
 .gameModeCollapsible {
@@ -164,26 +157,11 @@ h1, h2, h3 {
     justify-content: center;
 }
 
-.info-card {
-    background-color: #F3F9FF;
-    margin: 0 10px;
-    padding: 20px 20px 50px 20px !important;
-    border-radius: 5px;
-    overflow: hidden;
-    word-wrap: break-word;
-}
-
-.card-button-col {
-    background-color: #F3F9FF;
-    margin: 0 10px;
-    padding: 0 !important;
-}
-
 ul.gameModeList>li {
     list-style-type: disc;
-    list-style-position: inside;
-    margin-left: 15px;
+    list-style-position: outside;
     padding-left: 10px;
+    margin-left: 20px;
 }
 
 .rotated {
@@ -224,11 +202,6 @@ ul.gameModeList>li {
 
     .section.darkblue-soccer {
         padding-top: 8%;
-    }
-
-    .card-button {
-        font-size: 1rem;
-        width: 90%;
     }
 
     .sport-image {
