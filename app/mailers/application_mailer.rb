@@ -5,8 +5,13 @@ class ApplicationMailer < ActionMailer::Base
 
   #General mailer class
   private
-    def prevent_delivery_to_unsubscribed_users(user)
+    def prevent_delivery_to_event_unsubscribed_users(user)
       if user && (not user.has_event_notifications_enabled?)
+        mail.perform_deliveries = false
+      end
+    end
+    def prevent_delivery_to_team_unsubscribed_users(user)
+      if @user && (not @user.has_team_notifications_enabled?)
         mail.perform_deliveries = false
       end
     end

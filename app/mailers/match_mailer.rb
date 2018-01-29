@@ -9,6 +9,6 @@ class MatchMailer < ApplicationMailer
       format.html { render template }
       format.text { render template }
     end
-    prevent_delivery_to_unsubscribed_users(user)
+    prevent_delivery_to_event_unsubscribed_users(user)
   end
 end

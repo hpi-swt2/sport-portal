@@ -1,7 +1,5 @@
 # An ApplicationMailer subclass that is responsible for informing users about team-related changes via email
 class TeamMailer < ApplicationMailer
-  after_action :prevent_delivery_to_unsubscribed_users
-
   # Notifies a user that he/she was added to a team
   def user_added_to_team(user, team)
     @user = user
@@ -9,6 +7,7 @@ class TeamMailer < ApplicationMailer
     mail to: @user.email_with_name,
          subject: t('team_mailer.user_added_to_team.subject',
                     team_name: @team.name)
+    prevent_delivery_to_team_unsubscribed_users(user)
   end
 
   # Notifies members of a team that their team was registered to an event
@@ -20,12 +19,7 @@ class TeamMailer < ApplicationMailer
          subject: t('team_mailer.team_registered_to_event.subject',
                     team_name: @team.name,
                     event_name: @event.name)
+    prevent_delivery_to_team_unsubscribed_users(user)
   end
 
-  private
-    def prevent_delivery_to_unsubscribed_users
-      if @user && (not @user.has_team_notifications_enabled?)
-        mail.perform_deliveries = false
-      end
-    end
 end
