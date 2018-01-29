@@ -13,11 +13,11 @@
           <div class="form-group">
             <%= builder.label :score_home, GameResult.human_attribute_name(:score_home), class: 'control-label col-xs-2' %>
             <div class="col-xs-2">
-              <%= builder.text_field :score_home, class: 'form-control' %>
+              <%= builder.text_field :score_home, class: 'form-control', required: :true %>
             </div>
           </div>
           <div class="form-group">
-            <%= builder.label :score_away, GameResult.human_attribute_name(:score_away), class: 'control-label col-xs-2' %>
+            <%= builder.label :score_away, GameResult.human_attribute_name(:score_away), class: 'control-label col-xs-2',required: :true %>
             <div class="col-xs-2">
               <%= builder.text_field :score_away, class: 'form-control' %>
             </div>
