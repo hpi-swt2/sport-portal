@@ -5,7 +5,7 @@ namespace :match_notification do
     matches.find_each(batch_size: 10) do |match|
       match.event.teams.find_each(batch_size: 10) do |team|
         team.members.each do |participant|
-          MatchMailer.match_notification(participant, match).deliver_now
+          MatchMailer.send_mail(participant, match, :match_notification).deliver_now
         end
       end
     end

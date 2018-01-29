@@ -8,7 +8,7 @@ RSpec.describe TeamMailer, type: :mailer do
     before(:each) { mail.deliver_now }
 
     it 'renders the team name in the subject' do
-      expect(mail.subject).to eq(I18n.t('mailer.team_mailer.user_added_to_team.subject',
+      expect(mail.subject).to eq(I18n.t('team_mailer.user_added_to_team.subject',
                                         team_name: team.name))
     end
 
@@ -37,7 +37,7 @@ RSpec.describe TeamMailer, type: :mailer do
     before(:each) { mail.deliver_now }
 
     it 'renders the team name and event name in the subject' do
-      expect(mail.subject).to eq(I18n.t('mailer.team_mailer.team_registered_to_event.subject',
+      expect(mail.subject).to eq(I18n.t('team_mailer.team_registered_to_event.subject',
                                         team_name: team.name,
                                         event_name: event.name))
     end
