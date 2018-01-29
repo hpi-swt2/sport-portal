@@ -407,3 +407,7 @@ de:
       user:
         destroyed: "Dieser Account wurde gelöscht"
         not_destroyed: "Dieser Account wurde nicht gelöscht, weil du ein falsches Passwort eingegeben hast"
+
+  errorpage:
+    site_not_found: "Die Seite wurde nicht gefunden"
+    organize_event: "Aber du kannst eigene Events organisieren!"
