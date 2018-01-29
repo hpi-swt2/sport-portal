@@ -70,9 +70,20 @@ de:
         telephone_number: "Telefonnummer"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
-  match_mailer:
-    match_notification:
-      hello: "Hallo %{firstname},"
-      next_game_info: "dein nächstes Spiel %{name} (%{team_home} vs. %{team_away}) startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
-      have_fun: "Viel Spaß beim Spiel!"
-      subject: "Ein Spiel startet morgen um %{start_time}"
+  mailer:
+    hello: "Hallo %{firstname},"
+    closing: "%{appname} Team"
+    match_mailer:
+      match_notification:
+        next_game_info: "dein nächstes Spiel %{name} (%{team_home} vs. %{team_away}) startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
+        have_fun: "Viel Spaß beim Spiel!"
+        subject: "Ein Spiel startet morgen um %{start_time}"
+    team_mailer:
+      user_added_to_team:
+        added_to_team_info_html: 'du bist dem Team %{team_link} beigetreten.'
+        have_fun: "Viel Spaß beim Sport!"
+        subject: "Du bist dem Team %{team_name} beigetreten"
+      team_registered_to_event:
+        registered_to_event_info_html: 'dein Team %{team_link} nimmt jetzt an dem Event %{event_link} teil.'
+        have_fun: "Viel Erfolg beim Spielen!"
+        subject: "Dein Team %{team_name} nimmt jetzt an dem Event %{event_name} teil"
