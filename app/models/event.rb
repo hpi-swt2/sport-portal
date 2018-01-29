@@ -26,11 +26,12 @@
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :destroy
+  has_many :matches, -> { order gameday_number: :asc, index: :asc }, dependent: :destroy
   has_many :participants
   has_many :teams, through: :participants
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
+  has_many :gamedays, dependent: :delete_all
 
   include ImageUploader::Attachment.new(:image)
 
@@ -68,6 +69,7 @@ class Event < ApplicationRecord
     teams << team
     set_initial_value(team)
     invalidate_schedule
+    send_mails_when_adding_team(team)
   end
 
   def set_initial_value(team)
@@ -98,6 +100,10 @@ class Event < ApplicationRecord
 
   def has_participant?(user)
     teams.any? { |team| team.members.include?(user) }
+  end
+
+  def participants
+    teams
   end
 
   def owns_participating_teams?(user)
@@ -183,4 +189,11 @@ class Event < ApplicationRecord
       I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
     end
   end
+
+  private
+    def send_mails_when_adding_team(team)
+      team.members.each do |member|
+        TeamMailer.team_registered_to_event(member, team, self).deliver_now
+      end
+    end
 end
