@@ -1,7 +1,13 @@
 <%# Bootstrap navbar helper provided by twitter-bootstrap-rails gem  %>
 <%# https://github.com/seyhunak/twitter-bootstrap-rails#navbar-helper %>
 
-<%= nav_bar brand: (image_tag 'https://owncloud.hpi.de/index.php/s/Ap9E74hcMbV7Vp5/download', class: 'logo-img'), responsive: true, fluid: true, fixed: :top do %>
+<%= nav_bar brand:
+  content_tag(:div, class: 'brand-content') {
+    image_tag('https://owncloud.hpi.de/index.php/s/duKOws3U4vHTnFk/download', class: 'logo-img') +
+    content_tag(:span, t('appname'), class: 'wordmark')
+  },
+  responsive: true, fluid: true, fixed: :top do
+%>
 
     <% if (request.user_agent =~ /Mobile|webOS/).present? # check if user is moving a mobile device     %>
         <%= menu_group pull: :right do %>

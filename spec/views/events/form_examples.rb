@@ -34,6 +34,24 @@ shared_examples 'an event form' do |for_class: Event, path: :new, with: []|
     end
   end
 
+  if with.include? :player_type
+    it 'has input for player_type' do
+      render
+
+      expect(rendered).to have_field(Event.human_attribute_name :player_type)
+    end
+
+    it 'has default input for player_type field' do
+      render
+
+      if path == :edit
+        expect(rendered).to have_field(Event.human_attribute_name :player_type, with: t(Event.human_player_type(@event.player_type)))
+      elsif path == :new
+        expect(rendered).to have_field(Event.human_attribute_name :player_type, with: t('events.new.select_player_type'))
+      end
+    end
+  end
+
   if with.include? :capacity
     it 'has input for capacity' do
       render
