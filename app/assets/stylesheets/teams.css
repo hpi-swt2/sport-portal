@@ -44,7 +44,8 @@ h1 {
     color: #FFFFFF;
     letter-spacing: 0;
     height: auto;
-    padding: 15px 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 a.genericButton:hover {
@@ -67,6 +68,11 @@ a.genericButton:hover {
     border: 1px solid darkgrey;
     background-color: transparent;
     color: black;
+}
+
+button.blueActionButton, input[type=submit].blueActionButton {
+    width: 100%;
+    font-size: 12px;
 }
 
 #kindOfSports {
@@ -137,6 +143,27 @@ a.genericButton:hover {
         box-shadow: none;
     }
 
+    .participant img {
+        width: 45px;
+        height: 45px;
+    }
+
+}
+
+/* Tablet */
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+    .myRow > .col {
+        margin-top: 20px;
+    }
+
+    .participant img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .avatarCol {
+        margin-right: -10px;
+    }
 }
 
 /* for background only, 1200px is width of all bg-images */
