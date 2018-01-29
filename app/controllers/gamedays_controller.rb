@@ -1,8 +1,13 @@
 class GamedaysController < ApplicationController
   def update
     @gameday = Gameday.find(params[:id])
-    @gameday.update(gameday_params)
-    redirect_to event_schedule_path(@gameday.event), notice: t('success.updated_gameday_dates')
+    authorize! :update, @gameday
+    if @gameday.update(starttime: Date.strptime(gameday_params[:starttime],'%d.%m.%y'), endtime: Date.strptime(gameday_params[:endtime], '%d.%m.%y'))
+      redirect_to event_schedule_path(@gameday.event), notice: t('success.updated_gameday_dates')
+    else
+      redirect_to event_schedule_path(@gameday.event), notice: t('failure.updated_gameday_dates')
+    end
+
   end
 
   def gameday_params
