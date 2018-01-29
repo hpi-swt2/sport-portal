@@ -39,15 +39,16 @@ class Team < ApplicationRecord
     home_matches.or away_matches
   end
 
-  # validates :owners, presence: true
-  # validates :members, presence: true
-
   def has_multiple_owners?
     owners.length > 1
   end
 
   def in_event?
     events.exists?
+  end
+
+  def has_member?(user)
+    members.include?(user)
   end
 
   # these methods allow teams to be treated like match results. see MatchResult model
