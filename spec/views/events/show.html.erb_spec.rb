@@ -76,6 +76,11 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(t('events.show.to_ranking'))
     end
+
+    it "doesn't render a overview button" do
+      render
+      expect(rendered).to_not have_selector(:link_or_button, t('events.show.to_overview'))
+    end
   end
 
   shared_examples "a time-restricted multiplayer event" do
@@ -121,11 +126,6 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_selector(:link_or_button, t('events.show.to_schedule'))
     end
 
-    it "renders an overview button" do
-      render
-      expect(rendered).to have_selector(:link_or_button, t('events.show.to_overview'))
-    end
-
     it "renders the gameday duration" do
       render
       expect(rendered).to have_content Event.human_attribute_name :gameday_duration
@@ -147,11 +147,6 @@ RSpec.describe "events/show", type: :view do
     it "renders a schedule button" do
       render
       expect(rendered).to have_selector(:link_or_button, t('events.show.to_schedule'))
-    end
-
-    it "renders an overview button" do
-      render
-      expect(rendered).to have_selector(:link_or_button, t('events.show.to_overview'))
     end
 
     include_examples "an event"
@@ -188,11 +183,6 @@ RSpec.describe "events/show", type: :view do
     it "doesn't render a schedule button" do
       render
       expect(rendered).to_not have_selector(:link_or_button, t('events.show.to_schedule'))
-    end
-
-    it "doesn't render an overview button" do
-      render
-      expect(rendered).to_not have_selector(:link_or_button, t('events.show.to_overview'))
     end
 
     include_examples "an event"
