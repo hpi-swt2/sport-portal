@@ -26,7 +26,7 @@ class Ability
   # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
   def initialize(user)
-    alias_action :schedule, :overview, to: :read
+    alias_action :schedule, to: :read
     alias_action :update, :destroy, to: :modify
     alias_action :create_from_type, to: :create
     can :read, :all

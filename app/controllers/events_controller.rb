@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join, :overview]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join]
   authorize_resource :event
 
 
@@ -98,9 +98,6 @@ class EventsController < ApplicationController
   # GET /events/1/ranking
   def ranking
     @ranking_entries = @event.get_ranking
-  end
-
-  def overview
   end
 
   private
