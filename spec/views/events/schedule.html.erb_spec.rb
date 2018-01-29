@@ -19,9 +19,15 @@ RSpec.describe 'events/schedule', type: :view do
       render
     end
 
-    it 'has correct gameday date for gamedays' do
+    it 'has input field for gameday dates with correct dates' do
       render
-      expect(rendered).to have_text "- 24.12. #{t 'events.schedule.to'} 30.12."
+      expect(rendered).to have_selector("input[value='24.12.2017']")
+      expect(rendered).to have_selector("input[value='31.12.2017']")
+    end
+
+    it 'has edit button for gameday dates' do
+      render
+      expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
     end
   end
 
@@ -52,20 +58,5 @@ RSpec.describe 'events/schedule', type: :view do
     end
   end
 
-  it 'has input fields for gameday dates' do
-    render
-    expect(rendered).to have_field :start_time
-    expect(rendered).to have_field :endtime_time
-  end
 
-  it 'has input field for gameday dates with correct dates' do
-    render
-    expect(rendered).to have_selector("input[value='24.12.2017']")
-    expect(rendered).to have_selector("input[value='31.12.2017']")
-  end
-
-  it 'has edit button for gameday dates' do
-    render
-    expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
-  end
 end

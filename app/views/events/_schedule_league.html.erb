@@ -39,8 +39,8 @@
   <% gameday.matches.each do |match| %>
     <tr>
       <td><%= match.place %></td>
-      <td><%= match.team_home ? link_to(match.team_home.name, team_path(match.team_home)) : '---' %></td>
-      <td><%= match.team_away ? link_to(match.team_away.name, team_path(match.team_away)) : '---' %></td>
+      <td><%= match.team_home ? link_to(match.team_home.name, team_or_user_path(match.team_home)) : '---' %></td>
+      <td><%= match.team_away ? link_to(match.team_away.name, team_or_user_path(match.team_away)) : '---' %></td>
       <td class="text-center">
         <% match.game_results.each do |result| %>
           <%= result.score_home ? result.score_home : '-' %>
