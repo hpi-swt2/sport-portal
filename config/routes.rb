@@ -28,7 +28,6 @@ Rails.application.routes.draw do
   end
 
   #get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
-  get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
   get '/events/:id/ranking', to: 'events#ranking', as: 'event_ranking'
 
