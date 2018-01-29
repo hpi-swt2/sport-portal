@@ -73,13 +73,13 @@ RSpec.describe TeamMailer, type: :mailer do
     let(:team) { FactoryBot.create(:team) }
 
     it 'should send mails to users with enabled team notification settings' do
-      allow(user).to receive(:has_team_notifications_enabled?).and_return(true)
+      user.team_notifications_enabled = true
       mail = TeamMailer.user_added_to_team(user, team)
       expect { mail.deliver_now }.to change { ActionMailer::Base.deliveries.length }.by(1)
     end
 
     it 'should not send mails to users with disabled team notification settings' do
-      allow(user).to receive(:has_team_notifications_enabled?).and_return(false)
+      user.team_notifications_enabled = false
       mail = TeamMailer.user_added_to_team(user, team)
       expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
     end

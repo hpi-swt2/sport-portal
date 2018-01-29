@@ -101,14 +101,6 @@ class User < ApplicationRecord
     name = first_name + " " + last_name
   end
 
-  def has_event_notifications_enabled?
-    true
-  end
-
-  def has_team_notifications_enabled?
-    true
-  end
-
   def email_with_name
     %('#{name}' <#{email}>)
   end
