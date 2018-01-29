@@ -102,7 +102,7 @@ class EventsController < ApplicationController
 
   def overview
     if @event.type == 'League'
-      redirect_to @event, error: 'No overview available for leagues.'
+      redirect_to @event, error: t('events.overview.not_available_for_leagues')
     end
   end
 
