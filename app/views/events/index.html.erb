@@ -13,7 +13,7 @@
     <h4><b><%= t('events.index.my_events')%></b></h4>
     <div class="tile-wrapper">
       <% current_user.all_events.each do |event| %>
-          <%= render partial: 'application/tile_template', locals: {title: event.name, image_url: 'https://windowsunited.de/wp-content/uploads/2016/07/Sierra_HDR_Panorama_DFX8048_2280x819_Q40_wm_mini.jpg', description: event.build_description_string,
+          <%= render partial: 'application/tile_template', locals: {title: event.name, image_url: event.image_url || 'https://owncloud.hpi.de/index.php/s/Mjdi0UvHNgfzCTo/download', description: event.build_description_string,
           destination_path: event_path(event), description_class: 'event-details mobile-event-details'} %>
       <% end %>
     </div>
