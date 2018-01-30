@@ -155,6 +155,11 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_selector(:link_or_button, t('events.show.to_overview'))
     end
 
+    it "doesn't have a ranking button" do
+      render
+      expect(rendered).to_not have_content(t('events.show.to_ranking'))
+    end
+
     include_examples "an event"
     include_examples "a time-restricted multiplayer event"
   end
@@ -194,6 +199,11 @@ RSpec.describe "events/show", type: :view do
     it "doesn't render an overview button" do
       render
       expect(rendered).to_not have_selector(:link_or_button, t('events.show.to_overview'))
+    end
+
+    it "doesn't have a ranking button" do
+      render
+      expect(rendered).to_not have_content(t('events.show.to_ranking'))
     end
 
     include_examples "an event"

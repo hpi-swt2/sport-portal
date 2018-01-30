@@ -51,6 +51,14 @@ RSpec.describe LeaguesController, type: :controller do
     @user.destroy
   end
 
+  describe "GET #rankings" do
+    it "returns a success response for a League" do
+      league = League.create! valid_league_attributes
+      get :ranking, params: { id: league.to_param }, session: valid_session
+      expect(response).to be_success
+    end
+  end
+
   describe 'a League' do
     it 'should calculate an empty ranking when no participant has joined the league' do
       get :ranking, params: { id: @league.to_param }, session: valid_session
