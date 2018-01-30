@@ -26,8 +26,8 @@
         background-color: #0f3157 !important;
     }
 
-    img.logo-img{
-        height: 38px;
+    .brand-content {
+        margin-top: -6px;
     }
 
     li {
@@ -86,9 +86,15 @@
     margin-bottom: 0px !important;
 }
 
-.navbar-default{
-    border: none !important;
-    border-radius: 0px !important;
+.brand-content {
+    display: flex;
+    align-items: center;
+}
+
+.wordmark {
+    text-transform: uppercase;
+    margin-left: 10px;
+    color: white;
 }
 
 .mobile-avatar {
@@ -126,6 +132,8 @@ ul.nav.navbar-nav.navbar-right {
     text-align: center;
 }
 .navbar-default {
+    border: none !important;
+    border-radius: 0px !important;
     background-color: transparent;
     border-color: transparent;
     width: 100%;

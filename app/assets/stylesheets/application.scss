@@ -14,8 +14,10 @@
  *= require navbar
  *= require footer
  *= require bootstrap_and_overrides
+ *= require bootstrap/bootstrap-tooltip
  *= require_self
  *= require font-awesome
+ *= require schedule
  */
 
 /* Override colors of Materialize */
@@ -92,6 +94,9 @@ body {
 
   h1 {
     font-size: 3.5rem;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
 
   h2 {
@@ -107,3 +112,32 @@ body {
   border-radius: 100px;
 }
 
+.gameday-wrapper {
+  display: flex;
+  align-items: center;
+
+  .gameday-name {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 20px;
+  }
+
+  form {
+    width: 100%;
+
+    .input-daterange {
+      width: auto;
+      display: inline-block;
+    }
+
+    input[type=text] {
+      width: 120px;
+      text-align: center;
+    }
+
+    input[type=text], input[type=submit] {
+      display: inline-block;
+      margin: 0;
+    }
+  }
+}

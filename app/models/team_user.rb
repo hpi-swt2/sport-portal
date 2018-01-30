@@ -2,10 +2,11 @@
 #
 # Table name: team_users
 #
-#  team_id  :integer          not null
-#  user_id  :integer          not null
-#  is_owner :boolean
-#  id       :integer          not null, primary key
+#  team_id    :integer          not null
+#  user_id    :integer          not null
+#  is_owner   :boolean
+#  id         :integer          not null, primary key
+#  created_at :datetime
 #
 
 # Class for members of teams. They can be owners with advanced rights.
@@ -15,6 +16,7 @@ class TeamUser < ApplicationRecord
   belongs_to :team
   belongs_to :user
   before_create :init
+  after_create :send_mail_when_created
 
   def init
     self.is_owner ||= false # New team members are by default no team owners
@@ -29,4 +31,9 @@ class TeamUser < ApplicationRecord
     self.is_owner = false
     self.save
   end
+
+  private
+    def send_mail_when_created
+      TeamMailer.user_added_to_team(User.find(user_id), Team.find(team_id)).deliver_now
+    end
 end

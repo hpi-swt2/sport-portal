@@ -64,7 +64,7 @@ gem 'jquery-ui-rails'
 
 # Use Bootstrap Tooltips
 # https://github.com/brandonhilkert/bootstrap-tooltip-rails
-# gem 'bootstrap-tooltip-rails'
+gem 'bootstrap-tooltip-rails'
 
 # Use Bootstrap datepicker
 # https://github.com/Nerian/bootstrap-datepicker-rails
@@ -94,9 +94,16 @@ gem "time_splitter"
 # https://github.com/bokmann/font-awesome-rails
 gem 'font-awesome-rails'
 
+# Gem for nested fields inside forms
+# https://github.com/lailsonbm/awesome_nested_fields
+gem 'awesome_nested_fields'
 # Use the materializecss-library https://github.com/mkhairi/materialize-sass
 # A modern, responsive front-end-framework based on Material Design
 gem 'materialize-sass'
+
+# Gem to generate fake data for seeds and factories
+# https://github.com/stympy/faker
+gem 'faker'
 
 group :development, :test do
   # Testing framework for Rails
