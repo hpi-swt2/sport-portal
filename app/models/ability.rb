@@ -70,7 +70,8 @@ class Ability
       can_send_emails_to_team_members(user)
 
       # Match
-      can_modify_match(user)
+      can :modify, Match
+      # can_modify_match(user)
 
       if user.admin?
         can :manage, :all
