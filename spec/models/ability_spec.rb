@@ -114,6 +114,51 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:delete_membership, team, @other_user.id)
   end
 
+  it 'should be able to destroy a team as a team owner' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team
+    team.owners << @user
+
+    expect(ability).to be_able_to(:destroy, team)
+  end
+
+  it 'should be able to destroy a team as a team member' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team
+    team.members << @user
+
+    expect(ability).to_not be_able_to(:destroy, team)
+  end
+
+  it 'should not be able to destroy a team when participating in an event as a team owner' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team
+    team.owners << @user
+
+    event = FactoryBot.create :event, :has_dates, :team_player
+    event.teams << team
+
+    expect(ability).to_not be_able_to(:destroy, team)
+  end
+
+  it 'should be able to destroy a team as an admin' do
+    ability = Ability.new(@admin)
+    team = FactoryBot.create :team
+
+    expect(ability).to be_able_to(:destroy, team)
+  end
+
+  it 'should be able to destroy a team when participating in an event as a admin' do
+    ability = Ability.new(@admin)
+    team = FactoryBot.create :team
+    team.owners << @admin
+
+    event = FactoryBot.create :event, :has_dates, :team_player
+    event.teams << team
+
+    expect(ability).to be_able_to(:destroy, team)
+  end
+
   it 'should have admin permissions, if the user is admin' do
     ability = Ability.new(@admin)
 

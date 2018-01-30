@@ -230,7 +230,7 @@ end
       team.owners << subject.current_user
       team.events << FactoryBot.create(:event)
       delete :destroy, params: { id: team.to_param }
-      expect(response).to redirect_to(team)
+      expect(response).to be_forbidden
     end
   end
 
