@@ -41,18 +41,18 @@ Rails.application.routes.draw do
   # Sets the devise scope to be used in the controller.
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
   devise_scope :user do
-    get '/users/:id/profile', to: 'users#show', as: 'user'
     get '/users/:id', to: redirect('/users/%{id}/profile')
-    put '/users/:id/profile', to: 'users#update'
-    delete '/users/:id/profile', to: 'users#destroy'
 
     resources :users, except: [:new, :create] do
       member do
+        get 'profile', to: 'users#show'
+        put 'profile', to: 'users#update'
         get 'dashboard'
         get 'notifications'
         get 'link'
         get 'unlink'
         post 'delete', to: 'users#confirm_destroy'
+        delete 'profile', to: 'users#destroy'
       end
     end
 
