@@ -11,10 +11,11 @@
 #  event_id       :integer
 #  points_home    :integer
 #  points_away    :integer
-#  gameday        :integer
+#  gameday_number :integer
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
+#  gameday_id     :integer
 #  start_time     :datetime         default(NULL)
 #
 
@@ -23,23 +24,53 @@ class Match < ApplicationRecord
   belongs_to :team_away, polymorphic: true
   belongs_to :event
   has_many :game_results, dependent: :destroy
+  belongs_to :gameday, optional: true
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
+
+  after_create :send_mails_when_scheduled
+  after_destroy :send_mails_when_canceled
+  after_update :send_mails_when_date_changed, if: :saved_change_to_start_time?
+
+  def send_mails_when_date_changed
+    players = self.all_players
+    players.each do |user|
+      MatchMailer.send_mail(user, self, :match_date_changed).deliver_now
+    end
+  end
+
+  def send_mails_when_scheduled
+    players = self.all_players
+    players.each do |user|
+      MatchMailer.send_mail(user, self, :match_scheduled).deliver_now
+    end
+  end
+
+  def send_mails_when_canceled
+    players = self.all_players
+    players.each do |user|
+      MatchMailer.send_mail(user, self, :match_canceled).deliver_now
+    end
+  end
 
   validates :points_home, :points_away, numericality: { allow_nil: true }
 
   extend TimeSplitter::Accessors
   split_accessor :start_time
 
+  @@has_winner_strategy = { "most_sets" => lambda { |match| match.wins_home != match.wins_away } }
+  @@winner_strategy = { "most_sets" => lambda { |match| (match.wins_home > match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
+  @@loser_strategy = { "most_sets" => lambda { |match| (match.wins_home < match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
+
   def depth
-    event.finale_gameday - gameday
+    event.finale_gameday - gameday_number
   end
 
   def round
     key = { 0 => 'zero', 1 => 'one', 2 => 'two', 3 => 'three' }[depth]
     key ||= 'other'
-    I18n.t('matches.round_name.' + key, round: (gameday + 1).to_s, gameid: index.to_s)
+    I18n.t('matches.round_name.' + key, round: (gameday_number + 1).to_s, gameid: index.to_s)
   end
 
   def score_home_total
@@ -76,19 +107,15 @@ class Match < ApplicationRecord
   end
 
   def has_winner?
-    wins_home != wins_away
+    @@has_winner_strategy[event.game_winrule].call(self)
   end
 
   def winner
-    if has_winner?
-      wins_home > wins_away ? team_home_recursive : team_away_recursive
-    end
+    @@winner_strategy[event.game_winrule].call(self)
   end
 
   def loser
-    if has_winner?
-      wins_home < wins_away ? team_home_recursive : team_away_recursive
-    end
+    @@loser_strategy[event.game_winrule].call(self)
   end
 
   def team_home_recursive
@@ -132,11 +159,11 @@ class Match < ApplicationRecord
     if !has_scores?
       set_points(nil, nil)
     elsif wins_home > wins_away
-      set_points(3, 0)
+      set_points(event.points_for_win, event.points_for_lose)
     elsif wins_home < wins_away
-      set_points(0, 3)
+      set_points(event.points_for_lose, event.points_for_win)
     else
-      set_points(1, 1)
+      set_points(event.points_for_draw, event.points_for_draw)
     end
   end
 
@@ -156,5 +183,15 @@ class Match < ApplicationRecord
     end
 
     success
+  end
+
+  def all_players
+    team_home = self.team_home
+    team_away = self.team_away
+    players = (team_home.is_a?(Team) ? team_home.members : []) + (team_away.is_a?(Team) ? team_away.members : [])
+  end
+
+  def has_result?
+    has_scores? && has_points?
   end
 end

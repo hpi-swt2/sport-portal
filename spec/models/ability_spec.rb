@@ -114,6 +114,51 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:delete_membership, team, @other_user.id)
   end
 
+  it 'should be able to destroy a team as a team owner' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team
+    team.owners << @user
+
+    expect(ability).to be_able_to(:destroy, team)
+  end
+
+  it 'should be able to destroy a team as a team member' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team
+    team.members << @user
+
+    expect(ability).to_not be_able_to(:destroy, team)
+  end
+
+  it 'should not be able to destroy a team when participating in an event as a team owner' do
+    ability = Ability.new(@user)
+    team = FactoryBot.create :team
+    team.owners << @user
+
+    event = FactoryBot.create :event, :has_dates, :team_player
+    event.teams << team
+
+    expect(ability).to_not be_able_to(:destroy, team)
+  end
+
+  it 'should be able to destroy a team as an admin' do
+    ability = Ability.new(@admin)
+    team = FactoryBot.create :team
+
+    expect(ability).to be_able_to(:destroy, team)
+  end
+
+  it 'should be able to destroy a team when participating in an event as a admin' do
+    ability = Ability.new(@admin)
+    team = FactoryBot.create :team
+    team.owners << @admin
+
+    event = FactoryBot.create :event, :has_dates, :team_player
+    event.teams << team
+
+    expect(ability).to be_able_to(:destroy, team)
+  end
+
   it 'should have admin permissions, if the user is admin' do
     ability = Ability.new(@admin)
 
@@ -180,8 +225,6 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:assign_membership_by_email, team)
   end
 
-  # If Event Ability tests become bigger than these 5 examples, consider using shared examples like done in the
-  # feature tests for index_event_spec and show_event_spec. Hardcoding for 5 cases doesn't seem too bad
   shared_examples "a past event" do
     before(:each) do
       @ability = Ability.new(@user)
@@ -217,7 +260,29 @@ RSpec.describe Ability, type: :model do
   context "for single player" do
     describe "leagues" do
       let(:event) { FactoryBot.create(:league, :single_player) }
+      let(:ability) { Ability.new(user) }
       include_examples "a single player event"
+
+      describe 'gameday dates' do
+
+        let(:event) { FactoryBot.create(:league, :single_player, :with_gameday, organizers: organizers) }
+        let(:user) { @user }
+        context 'when the user is not an organizer' do
+          let(:organizers) { Array.new }
+          it 'should not allow to be changed' do
+            expect(ability).not_to be_able_to(:update, event.gamedays.first)
+          end
+        end
+
+        context 'when the user is an organizer' do
+          let(:organizers) { [Organizer.new(user: @user)] }
+          let(:user) { @user.organizers << organizers
+                       @user }
+          it 'should allow to be changed' do
+            expect(ability).to be_able_to(:update, event.gamedays.first)
+          end
+        end
+      end
     end
 
     describe "tournaments" do
