@@ -63,6 +63,10 @@ module DataHelper
     @events.last
   end
 
+  def single_event
+    get_single_object(@events)
+  end
+
   def create_event_named(name, options = {})
     add_named_object name, create_event(options)
   end

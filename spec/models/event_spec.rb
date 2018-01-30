@@ -105,12 +105,6 @@ describe 'Event model', type: :model do
     expect(passed_deadline_event.deadline_has_passed?).to be true
   end
 
-  it 'should know if its startdate has passed' do
-    passed_startdate_event = FactoryBot.build :event
-    passed_startdate_event.startdate = Date.current - 1
-    expect(passed_startdate_event.startdate_has_passed?).to be true
-  end
-
   it "generate_Schedule? should raise a NotImplementedError" do
     event = FactoryBot.build :event
     expect { event.generate_schedule }.to raise_error NotImplementedError

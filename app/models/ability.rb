@@ -86,7 +86,7 @@ class Ability
     end
 
     def can_delete_event(user)
-      can :destroy, Event.started do |event|
+      can :destroy, Event.not_started_yet do |event|
         event.can_delete?(user)
       end
     end

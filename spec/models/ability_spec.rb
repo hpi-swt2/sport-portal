@@ -144,10 +144,16 @@ RSpec.describe Ability, type: :model do
     expect(ability).to_not be_able_to(:dashboard, @other_user)
   end
 
-  it 'should allow users to crud events they created' do
+  it 'should allow users to create, read and update events they created' do
+    event = Event.new(owner: @user)
+    ability = Ability.new(@user)
+    expect(ability).to be_able_to([:create, :read, :update], event)
+  end
+
+  it 'should allow users to delete events they created that havent started yet' do
     event = FactoryBot.create(:event, :has_dates, owner_id: @user.id)
     ability = Ability.new(@user)
-    expect(ability).to be_able_to([:create, :read, :update, :destroy], event)
+    expect(ability).to be_able_to(:destroy, event)
   end
 
   it 'should not allow users to modify events they did not create' do

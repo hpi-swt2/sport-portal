@@ -28,7 +28,7 @@ class Event < ApplicationRecord
   has_many :editors, through: :organizers, source: 'user'
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
-  scope :started, -> { where('startdate >= ? OR type = ?', Date.current, "Rankinglist") }
+  scope :not_started_yet, -> { where('startdate >= ? OR type = ?', Date.current, "Rankinglist") }
 
   enum selection_type: [:fcfs, :fcfs_queue, :selection]
   validates :name, :discipline, :game_mode, :player_type,  presence: true
@@ -54,10 +54,6 @@ class Event < ApplicationRecord
 
   def deadline_has_passed?
     deadline < Date.current
-  end
-
-  def startdate_has_passed?
-    startdate < Date.current
   end
 
   def add_team(team)
