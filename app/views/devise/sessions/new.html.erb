@@ -4,6 +4,25 @@
 <div class="row">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: 'form' }) do |f| %>
     <div class="row">
+      <div class="col s6 offset-s3 center">
+        <%= link_to t('devise.registrations.sign_in_with_provider', provider: 'OpenID'),
+                    omniauth_authorize_path(:user, :hpiopenid),
+                    class: 'btn openIdButton'
+        %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s6 offset-s3 center text">
+        <div class="divider-with-text">
+          <hr/>
+          <span><%= t('helpers.select.option_operator') %></span>
+          <hr/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="<%= if flash[:alert].present? then "input-field-error input-field" else "input-field" end%> col s6 offset-s3">
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true %>
@@ -31,15 +50,9 @@
           <%= f.submit t('.sign_in'), class: 'btn btn-primary' %>
       </div>
     </div>
-    <div class="row">
-      <div class="center">
-        <%= link_to t('devise.registrations.sign_in_with_provider', provider: 'OpenID'),
-                    omniauth_authorize_path(:user, :hpiopenid) %>
-      </div>
-    </div>
   <% end %>
 </div>
-<div class="row" style="margin-top: 10px">
+<div class="row" style="margin-top: 50px">
   <div class="center text">
     <%= render 'devise/shared/links' %>
   </div>
