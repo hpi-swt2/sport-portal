@@ -152,9 +152,9 @@ RSpec.describe LeaguesController, type: :controller do
         it 'should calculate the number of points of a participant correctly' do
           expect(@ranking_entries.first.points).to eq(4)
         end
-        it 'should calculate the rank of two participants with the same points based on the number of goals correctly' do
+        it 'should calculate the rank of two participants with the same points based on their goal differences correctly' do
           expect(@ranking_entries.first.points).to be == @ranking_entries.second.points
-          expect(@ranking_entries.first.goals).to be > @ranking_entries.second.goals
+          expect(@ranking_entries.first.goals_difference).to be > @ranking_entries.second.goals_difference
           expect(@ranking_entries.first.rank).to be < @ranking_entries.second.rank
         end
       end
