@@ -16,4 +16,7 @@
 //= require bootstrap-datepicker
 //= require materialize
 //= require turbolinks
+//= require bootstrap/bootstrap-tooltip
 //= require_tree .
+//= require jquery.nested-fields
+
