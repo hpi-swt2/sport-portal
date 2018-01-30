@@ -1,67 +1,82 @@
-<% last_gameday = nil %>
 <% if @event.game_mode == League.game_modes[:two_halfs] %>
+  <tr class="gameday">
+    <th colspan="6">
+      <b>
+        <%= t('events.schedule.first_half') %>
+      </b>
+    </th>
+  </tr>
+<% end %>
+<% @event.gamedays.each do |gameday| %>
+  <% if @event.game_mode == League.game_modes[:two_halfs] && @event.gamedays.index(gameday) == @event.teams.size %>
     <tr class="gameday">
       <th colspan="6">
         <b>
-          <%= t('events.schedule.first_half') %>
+          <%= t('events.schedule.second_half') %>
         </b>
       </th>
     </tr>
-<% end %>
-<% @matches.each do |match| %>
-    <% if match.gameday != last_gameday %>
-        <% if @event.game_mode == League.game_modes[:two_halfs] && match.gameday == @event.teams.size + 1 %>
-            <tr class="gameday">
-              <th colspan="6">
-                <b>
-                  <%= t('events.schedule.second_half') %>
-                </b>
-              </th>
-            </tr>
-        <% end %>
-        <tr class="gameday">
-          <th colspan="6">
+  <% end %>
+  <tr class="gameday">
+    <th colspan="7">
+      <div class="gameday-wrapper">
+        <span class="gameday-name">
+          <%= t 'events.schedule.gameday' %> <%= gameday.description %>
+        </span>
+        <%= form_for gameday, url: gameday_path(gameday), html: {method: 'put'} do |day| %>
+          <div class="input-group input-daterange">
+            <%= day.text_field :starttime, value: gameday.starttime.strftime('%d.%m.%Y') %>
             <b>
-              <%= t 'events.schedule.gameday' %> <%= match.gameday %>
-            </b>
-            <b>
-              <%= "- #{ (@event.startdate_for_gameday match.gameday).to_s(:day_and_month) } " %>
               <%= t 'events.schedule.to' %>
-              <%= " #{(@event.enddate_for_gameday match.gameday).to_s(:day_and_month)}" %>
             </b>
-          </th>
-        </tr>
-      <% last_gameday = match.gameday %>
-    <% end %>
-  <tr>
-    <td><%= match.place %></td>
-    <td><%= match.team_home ? link_to(match.team_home.name, team_path(match.team_home)) : '---' %></td>
-    <td><%= match.team_away ? link_to(match.team_away.name, team_path(match.team_away)) : '---' %></td>
-    <td>
-      <%= match.score_home ? match.score_home : '-' %>
-      :
-      <%= match.score_away ? match.score_away : '-' %>
-    </td>
-    <td>
-      <%= form_for match, url: update_points_match_path(match), html: {method: "put"} do |f| %>
-        <%= f.number_field :points_home, class: 'input-sm', style: 'width: 50px' %>
-        :
-        <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
-        <%= f.submit t('helpers.links.save'), :class => 'btn btn-default btn-xs' %>
-      <% end %>
-    </td>
-    <td>
-      <%= link_to t('.show', default: t('helpers.links.show')),
-                  match_path(match), :class => 'btn btn-default btn-xs' %>
-      <% if can? :edit, match %>
-        <%= link_to t('.edit', default: t('helpers.links.edit')),
-                    edit_match_path(match), :class => 'btn btn-default btn-xs' %>
-      <% end %>
-      <%= link_to t('.destroy', default: t('helpers.links.destroy')),
-                  match_path(match),
-                  :method => :delete,
-                  :data => { :confirm => t('.confirm', default: t('helpers.links.confirm')) },
-                  :class => 'btn btn-xs btn-danger' %>
-    </td>
+            <%= day.text_field :endtime, value: gameday.endtime.strftime('%d.%m.%Y') %>
+          </div>
+          <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
+        <%end%>
+      </div>
+    </th>
   </tr>
+  <% gameday.matches.each do |match| %>
+    <tr>
+      <td><%= match.place %></td>
+      <td><%= match.team_home ? link_to(match.team_home.name, team_or_user_path(match.team_home)) : '---' %></td>
+      <td><%= match.team_away ? link_to(match.team_away.name, team_or_user_path(match.team_away)) : '---' %></td>
+      <td class="text-center">
+        <% match.game_results.each do |result| %>
+          <%= result.score_home ? result.score_home : '-' %>
+          :
+          <%= result.score_away ? result.score_away : '-' %>
+          <br/>
+        <% end %>
+      </td>
+      <td>
+        <%= form_for match, url: update_points_match_path(match), html: { method: "put" } do |f| %>
+          <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
+          :
+          <%= f.number_field :points_home, class: 'input-sm', style: 'width: 50px' %>
+          <%= f.submit t('helpers.links.save'), :class => 'btn btn-default btn-xs' %>
+        <% end %>
+      </td>
+      <td>
+        <% unless match.start_time.nil? %>
+          <!-- 32400 seconds so it is 09:00 as default time, otherwise it would be 00:00 -->
+          <%= date = (match.start_time_date + match.gameday_number - 1).to_s(:day_and_month) %>
+          <%= time = (match.start_time_time + 32400).to_s(:hours_and_minutes) %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to t('.show', default: t('helpers.links.show')),
+                    match_path(match), :class => 'btn btn-default btn-xs' %>
+        <% if can? :edit, match %>
+          <%= link_to t('.edit', default: t('helpers.links.edit')),
+                      edit_match_path(match), :class => 'btn btn-default btn-xs' %>
+        <% end %>
+        <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+                    match_path(match),
+                    :method => :delete,
+                    :data => { :confirm => t('.confirm', default: t('helpers.links.confirm')) },
+                    :class => 'btn btn-xs btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
 <% end %>

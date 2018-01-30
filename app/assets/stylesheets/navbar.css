@@ -25,9 +25,8 @@
         background-color: #0f3157 !important;
     }
 
-    img.logo-img{
-        height: 38px;
-        margin-top: -2px !important;
+    .brand-content {
+        margin-top: -6px;
     }
 
     li {
@@ -72,6 +71,17 @@
     .navbar-toggle.expanded .icon-bar {
         display: none;
     }
+}
+
+.brand-content {
+    display: flex;
+    align-items: center;
+}
+
+.wordmark {
+    text-transform: uppercase;
+    margin-left: 10px;
+    color: white;
 }
 
 .mobile-avatar {

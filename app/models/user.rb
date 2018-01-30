@@ -70,7 +70,7 @@ class User < ApplicationRecord
   has_many :organizers
   has_many :organizing_events, through: :organizers, source: 'event'
 
-  include AvatarUploader::Attachment.new(:avatar)
+  include ImageUploader::Attachment.new(:avatar)
 
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
@@ -99,6 +99,18 @@ class User < ApplicationRecord
 
   def name
     name = first_name + " " + last_name
+  end
+
+  def has_event_notifications_enabled?
+    true
+  end
+
+  def has_team_notifications_enabled?
+    true
+  end
+
+  def email_with_name
+    %('#{name}' <#{email}>)
   end
 
   class << self

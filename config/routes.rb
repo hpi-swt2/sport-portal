@@ -1,6 +1,9 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+  match '/404', :to => 'errors#not_found', :via => :all
+
   resources :events, except: [:create] do
     member do
       put :join
@@ -13,12 +16,19 @@ Rails.application.routes.draw do
   resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
   resources :rankinglists, controller: 'events', only: [:show, :new, :create, :update], type: Rankinglist
 
+  resources :gamedays, only: [:update]
+
   root 'welcome#index'
   resources :teams
   resources :matches, except: [:index] do
     member do
       patch :update_points
       put :update_points
+      get :add_game_result
+      get 'remove_game_result/:result_id', to: 'matches#remove_game_result', as: :remove_game_result
+      get :edit_results
+      patch :update_results
+      put :update_results
     end
   end
 

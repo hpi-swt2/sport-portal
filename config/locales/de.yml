@@ -30,7 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 ---
 de:
-  appname: "Sport-Portal"
+  appname: "Sportify"
 
   footer:
     hpi: "HASSO-PLATTNER-INSTITUT"
@@ -144,18 +144,25 @@ de:
         one: "Event"
         other: "Events"
         id: "ID"
+      game_result:
+        one: "Ergebnis"
+        other: "Ergebnisse"
 
     attributes:
       match:
         id: "ID"
         date: "Datum"
         place: "Ort"
-        score_home: "Heim-Ergebnis"
-        score_away: "Auswärts-Ergebnis"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
         team_away_id: "Auswärts-Team"
+      game_result:
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
+      game_results:
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
       team:
         id: "ID"
         name: "Name"
@@ -175,6 +182,7 @@ de:
         deadline: "Anmeldefrist"
         startdate: "Beginn"
         enddate: "Ende"
+        organizers: "Organisatoren"
         duration: "Dauer in Tagen"
         selection_type: "Auswahlverfahren"
         metric: "Metrik"
@@ -185,6 +193,11 @@ de:
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
+        bestof_length: "Spielart"
+        game_winrule: "Gewinnregel"
+        points_for_win: "Punkte für Gewinn"
+        points_for_draw: "Punkte für Unentschieden"
+        points_for_lose: "Punkte für Niederlage"
         selection_types:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
@@ -222,6 +235,24 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
+    
+    match:
+      game_results: "Ergebnis(se)"
+      add_game_result: "Ergebnis hinzufügen"
+      remove_game_result: "Ergebnis entfernen"
+      added_game_result_notice: "Ergebnis hinzugefügt!"
+      removed_game_result_notice: "Ergebnis entfernt!"
+      noscript:
+        add_results_notice:
+          create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
+          edit_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen oder zu löschen benutze bitte Buttons mit dem \"(Noscript)\" Präfix."
+        button_prefix: "(Noscript) "
+      edit_results: "Ergebnisse bearbeiten"
+      error:
+        update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
+
+    event:
+      point_distribution: "Punkteverteilung"
 
   unauthorized:
         manage:
@@ -230,6 +261,7 @@ de:
 
   success:
     updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
+    updated_gameday_dates: "Die Daten dieses Spieltages wurden erfolgreich aktualisiert"
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
@@ -237,6 +269,7 @@ de:
 
   error:
     update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
+    updated_gameday_dates: "Die Daten dieses Spieltages konnten nicht aktualisiert werden, Versuchen Sie es erneut"
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
@@ -251,10 +284,22 @@ de:
     show_events: "Alle Events anzeigen"
     join_team_event: "Event %{event} mit einem Team beitreten"
     choose_team: "Ein Team auswählen"
+    add_match: "Spiel hinzufügen"
     participating: "Beigetreten"
     metric: "Metrik"
+    best_of: "Best-of-"
+    winrule_tooltip: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"
+    advanced: "Erweitert"
     full: "Voll"
     fcfs: "First Come First Serve"
+    discipline:
+      basketball: "Basketball"
+      soccer: "Fußball"
+      tennis: "Tennis"
+      table_tennis: "Tischtennis"
+      table_football: "Tischkicker"
+      volleyball: "Volleyball"
+      other: "Andere"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
@@ -267,10 +312,12 @@ de:
       select_player_type: "Spielertyp auswählen"
       select_selection_type: "Auswahlverfahren auswählen"
       select_metric: "Metrik auswählen"
+      select_discipline: "Sportart auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"
       date: "Datum"
+      edit_date: "Datum ändern"
       place: "Ort"
       home: "Team 1"
       away: "Team 2"
@@ -285,6 +332,7 @@ de:
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
       to: "bis"
+      appointment: "Termin"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
@@ -371,3 +419,7 @@ de:
       user:
         destroyed: "Dieser Account wurde gelöscht"
         not_destroyed: "Dieser Account wurde nicht gelöscht, weil du ein falsches Passwort eingegeben hast"
+
+  errorpage:
+    site_not_found: "Die Seite wurde nicht gefunden"
+    organize_event: "Aber du kannst eigene Events organisieren!"
