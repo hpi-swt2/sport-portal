@@ -58,7 +58,7 @@ end
 
 
 Then(/^there should be a back button on all pages except the start page$/) do
-  excludedrouts = ['/', '/cable', '/tournaments/new', '/leagues/new', '/leagues/1/edit', '/tournaments/1/edit', '/events/1/edit', '/rankinglists/new', '/teams/new', '/teams/1/edit', '/matches/1/edit', '/my/users/sign_in', '/my/users/password/edit', '/my/users/cancel', '/my/users/sign_up', '/users/1/dashboard', '/users/1/edit']
+  excludedrouts = ['/', '/cable', '/tournaments/new', '/leagues/new', '/leagues/1/edit', '/tournaments/1/edit', '/events/1/edit', '/rankinglists/new', '/teams/new', '/teams/1/edit', '/matches/1/edit', '/my/users/sign_in', '/my/users/password/edit', '/my/users/cancel', '/my/users/sign_up', '/users/1/dashboard', '/users/1/edit', 'events/1']
   temporarywedontknowwhattodorouts = ['/my/users/password/new', '/users']
   Rails.application.routes.routes.each do |route|
     currentpath = route.path.spec.to_s
