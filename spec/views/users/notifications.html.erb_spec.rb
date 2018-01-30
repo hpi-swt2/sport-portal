@@ -8,7 +8,7 @@ RSpec.describe "users/notifications", type: :view do
 
   it "renders headline" do
     render
-    expect(rendered).to have_text(I18n.t('view.user.notifications.settings_html'))
+    expect(rendered).to have_text(I18n.t('view.user.notifications.settings'))
   end
   it "has team notifications checkbox" do
     render
