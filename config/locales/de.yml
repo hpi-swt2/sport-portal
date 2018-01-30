@@ -193,6 +193,11 @@ de:
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
+        bestof_length: "Spielart"
+        game_winrule: "Gewinnregel"
+        points_for_win: "Punkte für Gewinn"
+        points_for_draw: "Punkte für Unentschieden"
+        points_for_lose: "Punkte für Niederlage"
         selection_types:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
@@ -246,6 +251,9 @@ de:
       error:
         update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
 
+    event:
+      point_distribution: "Punkteverteilung"
+
   unauthorized:
         manage:
           all: "Fehlende Berechtigung für %{action} %{subject}."
@@ -253,6 +261,7 @@ de:
 
   success:
     updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
+    updated_gameday_dates: "Die Daten dieses Spieltages wurden erfolgreich aktualisiert"
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
@@ -260,6 +269,7 @@ de:
 
   error:
     update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
+    updated_gameday_dates: "Die Daten dieses Spieltages konnten nicht aktualisiert werden, Versuchen Sie es erneut"
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
@@ -276,6 +286,9 @@ de:
     choose_team: "Ein Team auswählen"
     participating: "Beigetreten"
     metric: "Metrik"
+    best_of: "Best-of-"
+    winrule_tooltip: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"
+    advanced: "Erweitert"
     full: "Voll"
     fcfs: "First Come First Serve"
     discipline:
@@ -303,6 +316,7 @@ de:
       title: "Spielplan"
       gameday: "Spieltag"
       date: "Datum"
+      edit_date: "Datum ändern"
       place: "Ort"
       home: "Team 1"
       away: "Team 2"
@@ -404,3 +418,7 @@ de:
       user:
         destroyed: "Dieser Account wurde gelöscht"
         not_destroyed: "Dieser Account wurde nicht gelöscht, weil du ein falsches Passwort eingegeben hast"
+
+  errorpage:
+    site_not_found: "Die Seite wurde nicht gefunden"
+    organize_event: "Aber du kannst eigene Events organisieren!"

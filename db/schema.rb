@@ -31,6 +31,12 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.integer "selection_type", default: 0, null: false
     t.integer "min_players_per_team"
     t.integer "max_players_per_team"
+    t.integer "matchtype"
+    t.integer "bestof_length", default: 1
+    t.integer "game_winrule"
+    t.integer "points_for_win", default: 3
+    t.integer "points_for_draw", default: 1
+    t.integer "points_for_lose", default: 0
     t.text "image_data"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
@@ -60,6 +66,16 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.index ["match_id"], name: "index_game_results_on_match_id"
   end
 
+  create_table "gamedays", force: :cascade do |t|
+    t.string "description"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.integer "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_gamedays_on_event_id"
+  end
+
   create_table "match_results", force: :cascade do |t|
     t.integer "match_id"
     t.boolean "winner_advances"
@@ -77,12 +93,14 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.integer "event_id"
     t.integer "points_home"
     t.integer "points_away"
-    t.integer "gameday"
+    t.integer "gameday_number"
     t.string "team_home_type", default: "Team"
     t.string "team_away_type", default: "Team"
     t.integer "index"
+    t.integer "gameday_id"
     t.datetime "start_time"
     t.index ["event_id"], name: "index_matches_on_event_id"
+    t.index ["gameday_id"], name: "index_matches_on_gameday_id"
   end
 
   create_table "organizers", force: :cascade do |t|
