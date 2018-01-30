@@ -21,6 +21,12 @@
 #  selection_type       :integer          default("fcfs"), not null
 #  min_players_per_team :integer
 #  max_players_per_team :integer
+#  matchtype            :integer
+#  bestof_length        :integer          default(1)
+#  game_winrule         :integer
+#  points_for_win       :integer          default(3)
+#  points_for_draw      :integer          default(1)
+#  points_for_lose      :integer          default(0)
 #  image_data           :text
 #
 
@@ -37,12 +43,19 @@ class Event < ApplicationRecord
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  # fcfs_queue and selection should be added in the future
-  enum selection_type: [:fcfs]
-  validates :name, :discipline, :game_mode, :player_type,  presence: true
-
+  validates :name, :discipline, :game_mode, :player_type, :matchtype, :game_winrule, presence: true
   validates :max_teams, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000, allow_nil: true }
   validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
+  validates :points_for_win,
+            :points_for_draw,
+            :points_for_lose,
+            :bestof_length,
+            numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  enum matchtype: [:bestof]
+  enum game_winrule: [:most_sets]
+  # fcfs_queue and selection should be added in the future
+  enum selection_type: [:fcfs]
 
   enum player_type: [:single, :team]
 
