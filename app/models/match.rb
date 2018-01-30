@@ -11,10 +11,11 @@
 #  event_id       :integer
 #  points_home    :integer
 #  points_away    :integer
-#  gameday_number        :integer
+#  gameday_number :integer
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
+#  gameday_id     :integer
 #  start_time     :datetime         default(NULL)
 #
 
@@ -57,6 +58,10 @@ class Match < ApplicationRecord
 
   extend TimeSplitter::Accessors
   split_accessor :start_time
+
+  @@has_winner_strategy = { "most_sets" => lambda { |match| match.wins_home != match.wins_away } }
+  @@winner_strategy = { "most_sets" => lambda { |match| (match.wins_home > match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
+  @@loser_strategy = { "most_sets" => lambda { |match| (match.wins_home < match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
 
   def depth
     event.finale_gameday - gameday_number
@@ -102,19 +107,15 @@ class Match < ApplicationRecord
   end
 
   def has_winner?
-    wins_home != wins_away
+    @@has_winner_strategy[event.game_winrule].call(self)
   end
 
   def winner
-    if has_winner?
-      wins_home > wins_away ? team_home_recursive : team_away_recursive
-    end
+    @@winner_strategy[event.game_winrule].call(self)
   end
 
   def loser
-    if has_winner?
-      wins_home < wins_away ? team_home_recursive : team_away_recursive
-    end
+    @@loser_strategy[event.game_winrule].call(self)
   end
 
   def team_home_recursive
@@ -158,11 +159,11 @@ class Match < ApplicationRecord
     if !has_scores?
       set_points(nil, nil)
     elsif wins_home > wins_away
-      set_points(3, 0)
+      set_points(event.points_for_win, event.points_for_lose)
     elsif wins_home < wins_away
-      set_points(0, 3)
+      set_points(event.points_for_lose, event.points_for_win)
     else
-      set_points(1, 1)
+      set_points(event.points_for_draw, event.points_for_draw)
     end
   end
 

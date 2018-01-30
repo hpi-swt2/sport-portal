@@ -22,7 +22,6 @@ describe 'Rankinglists', type: :feature do
     click_link_or_button('duel_participant')
 
     @match = Match.new(team_home: @event.team_of(@user), team_away: @event.team_of(@user2), event_id: @event)
-    puts @match.event_id
     @event.matches << @match
     expect(current_path).to eq("/matches/new")
     @match.save
@@ -43,8 +42,8 @@ describe 'Rankinglists', type: :feature do
       end
     end
     expect(@event.matches.first).to equal(@match)
-    visit edit_results_match_path(@match)
-    expect(current_path).to match(/\/matches\/\d+\/edit_results/)
+    visit add_game_result_match_path(@match)
+    expect(current_path).to match(/\/matches\/\d+\/add_game_result/)
     expect(@match).not_to equal(nil)
     click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
   end
