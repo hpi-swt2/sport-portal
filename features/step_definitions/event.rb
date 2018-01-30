@@ -30,13 +30,13 @@ Then(/^the admin should be able to delete it$/) do
   expect(page).to have_css('a', :text => I18n.t('helpers.links.destroy'))
 end
 
+
 Given(/^the organizer should be able to delete it$/) do
   user = single_user
-  organizer = Organizer.new(user_id: user.id)
   event = single_event
-  event.organizers << organizer
+  event.organizers << user
 
-  sign_in organizer
+  sign_in user
   visit event_path(event)
   expect(page).to have_css('a', :text => I18n.t('helpers.links.destroy'))
 end
