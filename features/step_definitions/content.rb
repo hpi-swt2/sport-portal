@@ -74,8 +74,8 @@ Then(/^there should be a back button on all pages except the start page$/) do
     begin
       visit currentpath
     rescue Exception
-      currentpath = '/tournaments/1'
-      # visit '/tournaments/1'
+      currentpath = '/imprint'
+      visit '/imprint'
     end
     puts currentpath
     unless (excludedrouts.include? currentpath) || (temporarywedontknowwhattodorouts.include? currentpath)
