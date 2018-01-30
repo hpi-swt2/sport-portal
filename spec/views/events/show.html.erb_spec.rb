@@ -18,6 +18,8 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(Event.human_attribute_name :discipline)
       expect(rendered).to have_content(@event.discipline)
+      expect(rendered).to have_content(@event.enddate)
+      expect(rendered).to have_content(safe_join(@event.organizers.map { |organizer| organizer.user.name }, ", "))
     end
 
     it "renders a maximum number of teams" do
