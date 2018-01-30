@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124104518) do
+ActiveRecord::Schema.define(version: 20180126103538) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -31,6 +31,12 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.integer "selection_type", default: 0, null: false
     t.integer "min_players_per_team"
     t.integer "max_players_per_team"
+    t.integer "matchtype"
+    t.integer "bestof_length", default: 1
+    t.integer "game_winrule"
+    t.integer "points_for_win", default: 3
+    t.integer "points_for_draw", default: 1
+    t.integer "points_for_lose", default: 0
     t.text "image_data"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
@@ -104,6 +110,14 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.integer "event_id"
     t.index ["event_id"], name: "index_organizers_on_event_id"
     t.index ["user_id"], name: "index_organizers_on_user_id"
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "team_id"
+    t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "team_users", force: :cascade do |t|
