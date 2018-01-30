@@ -66,7 +66,9 @@
       <%= f.label :bestof_length, for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: t('events.winrule_tooltip') %>
       <div id="matchtype" class="col-lg-10">
         <%= t('events.best_of') %>
-        <%= f.select(:bestof_length, (1..8).map { |n| ["#{n}", n] }, selected: f.object.bestof_length) %>
+        <%= f.select(:bestof_length, (1..8).map { |n| ["#{n}", n] },
+                     { selected: f.object.bestof_length },
+                     { class: 'form-control'}) %>
       </div>
     </div>
     
@@ -74,7 +76,8 @@
       <%= f.label :game_winrule, for: :game_winrule, :class => 'control-label col-lg-2'  %>
       <div class="col-lg-10">
         <%= f.select(:game_winrule, Event.game_winrules.map {|k, v| [k.humanize, k]},
-                     { :class => 'form-control' }) %>
+                     { selected: f.object.game_winrule },
+                     { class: 'form-control' }) %>
       </div>
     </div>
 
