@@ -36,6 +36,27 @@ class Rankinglist < Event
   enum game_mode: [:elo, :win_loss, :true_skill]
 
   def update_rankings(match)
+    if (game_mode == 'elo')
+      home_participant = Participant.where("team_id = ? AND event_id = ?", match.team_home_id, self).first
+      away_participant = Participant.where("team_id = ? AND event_id = ?", match.team_away_id, self).first
+      case match.winner
+        when home_participant.team
+          match_result = 1.0
+        when away_participant.team
+          match_result = 0.0
+        else
+          match_result = 0.5
+      end
+      new_home_elo = calculate_elo(home_participant, away_participant, match_result)
+      new_away_elo = calculate_elo(away_participant, home_participant, 1.0 - match_result)
+      home_participant.update(rating: new_home_elo)
+      away_participant.update(rating: new_away_elo)
+    end
+  end
+
+  def calculate_elo(current_team, opposing_team, match_result)
+    expectation = 1.0 / (1.0 + (10.0 **((opposing_team.rating - current_team.rating)/200.0)))
+    current_team.rating + 15.0 * (match_result - expectation)
   end
 
   before_validation do
