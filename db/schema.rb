@@ -31,6 +31,12 @@ ActiveRecord::Schema.define(version: 20180128145059) do
     t.integer "selection_type", default: 0, null: false
     t.integer "min_players_per_team"
     t.integer "max_players_per_team"
+    t.integer "matchtype"
+    t.integer "bestof_length", default: 1
+    t.integer "game_winrule"
+    t.integer "points_for_win", default: 3
+    t.integer "points_for_draw", default: 1
+    t.integer "points_for_lose", default: 0
     t.text "image_data"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
@@ -106,6 +112,14 @@ ActiveRecord::Schema.define(version: 20180128145059) do
     t.index ["user_id"], name: "index_organizers_on_user_id"
   end
 
+  create_table "participants", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "team_id"
+    t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "team_users", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
@@ -121,8 +135,8 @@ ActiveRecord::Schema.define(version: 20180128145059) do
     t.text "description"
     t.string "kind_of_sport"
     t.boolean "private"
-    t.boolean "single", default: false
     t.text "avatar_data"
+    t.boolean "single", default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -135,13 +149,13 @@ ActiveRecord::Schema.define(version: 20180128145059) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "provider"
-    t.string "uid"
     t.boolean "admin", default: false
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
+    t.string "provider"
+    t.string "uid"
     t.text "avatar_data"
     t.boolean "team_notifications_enabled", default: true
     t.boolean "event_notifications_enabled", default: true

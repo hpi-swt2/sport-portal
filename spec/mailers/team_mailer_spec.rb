@@ -17,7 +17,7 @@ RSpec.describe TeamMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns the user\'s firstname' do
@@ -47,7 +47,7 @@ RSpec.describe TeamMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns the user\'s firstname' do

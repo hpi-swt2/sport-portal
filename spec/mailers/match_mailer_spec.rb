@@ -12,7 +12,7 @@ RSpec.describe MatchMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns user\'s firstname' do
@@ -50,7 +50,7 @@ RSpec.describe MatchMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns user\'s firstname' do
@@ -80,7 +80,7 @@ RSpec.describe MatchMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns user\'s firstname' do
@@ -114,7 +114,7 @@ RSpec.describe MatchMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns user\'s firstname' do
