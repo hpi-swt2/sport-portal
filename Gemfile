@@ -170,7 +170,7 @@ end
 group :production do
   # Ruby interface to the PostgreSQL RDBMS
   # https://github.com/ged/ruby-pg
-  # gem 'pg', '~> 0.18'
+  gem 'pg', '~> 0.18'
   # Exception tracking in production, report to Errbit
   # https://github.com/airbrake/airbrake
   # Errbit requires airbrake 5.0
