@@ -94,6 +94,9 @@ body {
 
   h1 {
     font-size: 3.5rem;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
 
   h2 {

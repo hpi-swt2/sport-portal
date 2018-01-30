@@ -38,6 +38,8 @@ Rails.application.configure do
   # Tell Action Mailer where URLs should point to
   config.action_mailer.default_url_options = { :host => ENV['HOST_URL'] }
 
+  ActionMailer::Base.default from: 'sport.portal@gmx.de'
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
