@@ -34,6 +34,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = event_type.new(event_params)
+    @event.matchtype = :bestof
     set_associations
     if @event.save
       @event.editors << current_user
@@ -95,12 +96,10 @@ class EventsController < ApplicationController
     @schedule_type = @event.type.downcase!
   end
 
-  # GET /events/1/ranking
-  def ranking
-    @ranking_entries = @event.get_ranking
-  end
-
   def overview
+    if @event.type == 'League'
+      redirect_to @event, error: t('events.overview.not_available_for_leagues')
+    end
   end
 
   private
@@ -151,6 +150,12 @@ class EventsController < ApplicationController
                                     :startdate,
                                     :teams,
                                     :enddate,
+                                    :matchtype,
+                                    :bestof_length,
+                                    :game_winrule,
+                                    :points_for_win,
+                                    :points_for_draw,
+                                    :points_for_lose,
                                     :initial_value,
                                     :min_players_per_team,
                                     :max_players_per_team,

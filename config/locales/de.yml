@@ -193,6 +193,11 @@ de:
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
+        bestof_length: "Spielart"
+        game_winrule: "Gewinnregel"
+        points_for_win: "Punkte für Gewinn"
+        points_for_draw: "Punkte für Unentschieden"
+        points_for_lose: "Punkte für Niederlage"
         selection_types:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
@@ -230,7 +235,13 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
-    
+      notifications:
+            settings: "Benachrichtigungs-Einstellungen"
+            enable_team_notifications: "Team-Benachrichtigungen erhalten"
+            enable_event_notifications: "Event-Benachrichtigung erhalten"
+            update_settings: "Aktualisieren"
+
+
     match:
       game_results: "Ergebnis(se)"
       add_game_result: "Ergebnis hinzufügen"
@@ -245,6 +256,9 @@ de:
       edit_results: "Ergebnisse bearbeiten"
       error:
         update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
+
+    event:
+      point_distribution: "Punkteverteilung"
 
   unauthorized:
         manage:
@@ -276,8 +290,12 @@ de:
     show_events: "Alle Events anzeigen"
     join_team_event: "Event %{event} mit einem Team beitreten"
     choose_team: "Ein Team auswählen"
+    add_match: "Spiel hinzufügen"
     participating: "Beigetreten"
     metric: "Metrik"
+    best_of: "Best-of-"
+    winrule_tooltip: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"
+    advanced: "Erweitert"
     full: "Voll"
     fcfs: "First Come First Serve"
     discipline:
@@ -340,6 +358,7 @@ de:
       out: "Im %{match_name} ausgeschieden"
       in_place_3_match: "Im Spiel um Platz 3"
       in: "Im %{match_name}"
+      not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
@@ -353,10 +372,10 @@ de:
       won_count: "Siege"
       draw_count: "Unentschieden"
       lost_count: "Niederlagen"
-      goals: "Tore"
-      goals_against: "Gegentore"
-      goals_difference: "Tordifferenz"
-      points: "Punkte"
+      goals: "Punkte"
+      goals_against: "Gegenpunkte"
+      goals_difference: "Punktdifferenz"
+      points: "Ligapunkte"
     max_teams:
       infinite: "unbegrenzt"
 
