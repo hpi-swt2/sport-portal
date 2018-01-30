@@ -4,9 +4,13 @@
 
 /* Overwrite container from application.html.erb for background image only*/
 body>.background-layer>.container {
+    margin-top: -64px;
     width: 100%;
     max-width: 100% !important;
     padding: 0 0;
+}
+#placeholderForNavbar{
+    height: 64px;
 }
 
 .section {
