@@ -1,0 +1,6 @@
+<h1><%= t('mailer.hello', firstname: @user.first_name) %></h1>
+<p>
+  <%= t('match_mailer.next_game', name: @match.event.name, team_home: @match.team_home.name, team_away: @match.team_away.name) %>
+</p>
+<p><%= t('mailer.have_fun') %></p>
+<%= link_to @match.event.name, @match.event %>
