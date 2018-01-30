@@ -54,7 +54,6 @@ class TeamsController < ApplicationController
     # Delete all team ownerships and team memberships associated with the team to destroy
     team_id = @team.id
     TeamUser.where(team_id: team_id).delete_all
-    # Finally destroy team
     @team.destroy
     redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
   end
