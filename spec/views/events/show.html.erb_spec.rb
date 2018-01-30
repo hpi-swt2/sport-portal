@@ -18,6 +18,8 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(Event.human_attribute_name :discipline)
       expect(rendered).to have_content(@event.discipline)
+      expect(rendered).to have_content(@event.enddate)
+      expect(rendered).to have_content(safe_join(@event.organizers.map { |organizer| organizer.user.name }, ", "))
     end
 
     it "renders a maximum number of teams" do
@@ -121,9 +123,9 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_selector(:link_or_button, t('events.show.to_schedule'))
     end
 
-    it "renders an overview button" do
+    it "doesn't have an overview button" do
       render
-      expect(rendered).to have_selector(:link_or_button, t('events.show.to_overview'))
+      expect(rendered).not_to have_selector(:link_or_button, t('events.show.to_overview'))
     end
 
     it "renders the gameday duration" do

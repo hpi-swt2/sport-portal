@@ -1,0 +1,6 @@
+<%= t('mailer.hello', firstname: @user.first_name) %>
+
+<%= t('match_mailer.next_game', name: @match.event.name, team_home: @match.team_home.name, team_away: @match.team_away.name) %>
+
+<%= t('mailer.have_fun') %>
+<%= event_overview_url(@match.event) %>
