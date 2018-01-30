@@ -35,13 +35,15 @@
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>
-<% if can? :edit, @match && !@match.event.is_a? Rankinglist %>
+<% if (can? :edit, @match) && (!@match.event.is_a? Rankinglist) %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_match_path(@match), :class => 'btn btn-default' %>
 <% end %>
-<%= link_to t('view.match.edit_results'),
-            edit_results_match_path(@match),
-            class: 'btn btn-default',
-            id: 'edit_results' %>
+<% if (can? :edit, @match) %>
+  <%= link_to t('view.match.edit_results'),
+              edit_results_match_path(@match),
+              class: 'btn btn-default',
+              id: 'edit_results' %>
+<% end %>
 <% if !@match.event.is_a? Rankinglist %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               match_path(@match),

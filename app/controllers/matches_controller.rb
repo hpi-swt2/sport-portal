@@ -20,7 +20,6 @@ class MatchesController < ApplicationController
   # POST /matches
   def create
     @match = Match.new(match_params)
-
     if @match.save_with_point_calculation
       redirect_to @match, notice: I18n.t('helpers.flash.created', resource_name: Match.model_name.human).capitalize
     else
@@ -30,6 +29,7 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1
   def update
+    authorize! :edit, @match
     if @match.update(match_params)
       redirect_to @match, notice: I18n.t('helpers.flash.updated', resource_name: Match.model_name.human).capitalize
     else
@@ -49,10 +49,12 @@ class MatchesController < ApplicationController
 
   # GET /matches/1/edit_results
   def edit_results
+    authorize! :edit, @match
   end
 
   # PATCH/PUT /matches/1/update_results
   def update_results
+    authorize! :edit, @match
     if @match.update_with_point_recalculation(match_results_params)
       event = @match.event
       if event.is_a? Rankinglist
