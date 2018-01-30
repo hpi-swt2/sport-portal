@@ -127,6 +127,8 @@ en:
     join_team_event: "Join event %{event} as a team"
     max_teams:
       infinite: "unlimited"
+    overview:
+      not_available_for_leagues: 'No overview available for leagues.'
 
   teams:
       show:
