@@ -1,0 +1,60 @@
+.card-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-container > .info-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #F3F9FF;
+    padding: 10px 30px !important;
+    margin: 20px 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.card-container > .info-card > .row > .card-button {
+    border-radius: 100px;
+    padding: 10px 20px !important;
+    background: #1CA9E5;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    min-width: 70%;
+    max-width: 95%;
+    height: auto;
+}
+
+.card-container > .info-card > .row > .card-button:hover {
+    color: #FFFFFF;
+    background: #1CC3FF;
+}
+
+.card-container > .info-card > .row > ul.gameModeList > li {
+    list-style-type: disc;
+    list-style-position: outside;
+    padding-left: 10px;
+    margin-left: 20px;
+}
+
+@media only screen and (min-width : 852px) {
+    .card-container {
+        flex-direction: row;
+    }
+
+    .card-container > .info-card {
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width : 851px) {
+    .card-container {
+        flex-direction: column;
+    }
+
+    .card-container > .info-card {
+        width: 95%;
+    }
+}

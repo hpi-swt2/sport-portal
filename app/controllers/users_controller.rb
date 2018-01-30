@@ -1,7 +1,7 @@
 class UsersController < Devise::RegistrationsController
   # https://github.com/CanCanCommunity/cancancan/wiki/authorizing-controller-actions
   helper_method :error_detector
-  load_and_authorize_resource :user, only: [:index, :show, :edit, :destroy, :confirm_destroy, :dashboard]
+  load_and_authorize_resource :user, only: [:index, :show, :edit, :destroy, :confirm_destroy, :dashboard, :notifications]
   load_resource only: [:link, :unlink]
 
   attr_reader :user
@@ -67,6 +67,10 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
+  # GET /users/1/notifications
+  def notifications
+  end
+
   # GET /users/1/dashboard
   # View: app/views/devise/registrations/dashboard.html.erb
   def dashboard
@@ -99,11 +103,11 @@ class UsersController < Devise::RegistrationsController
     # Overridden methods of `Devise::RegistrationsController` to permit additional model params
     def sign_up_params
       generate_random_password if get_omniauth_data
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, :team_notifications_enabled, :event_notifications_enabled, event_ids: [])
     end
 
     def account_update_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, :team_notifications_enabled, :event_notifications_enabled, event_ids: [])
     end
 
     def admin_update_params

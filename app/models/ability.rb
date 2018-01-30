@@ -49,7 +49,7 @@ class Ability
 
       # User
       can :show, User
-      can [:modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
+      can [:modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy, :notifications], User, id: user_id
       cannot :create, User
 
       # Event
@@ -58,9 +58,11 @@ class Ability
       can_leave_event(user)
       can :ranking, Event
       can [:schedule, :team_join], Event
+      can_update_gameday(user)
 
       # Team
       can_crud_team(user_id)
+      can_destroy_team(user)
       can_assign_ownership(user)
       can_delete_ownership(user)
       can_delete_membership(user)
@@ -84,10 +86,21 @@ class Ability
       end
     end
 
+    def can_update_gameday(user)
+      can :update, Gameday do |gameday|
+        not (gameday.event.organizers & user.organizers).empty?
+      end
+    end
+
     def can_crud_team(user_id)
       can :read, Team, private: true, members: { id: user_id }
       can :update, Team, members: { id: user_id }
-      can :destroy, Team, owners: { id: user_id }
+    end
+
+    def can_destroy_team(user)
+      can :destroy, Team, Team do |team|
+        (team.owners.include? user) && (!team.associated_with_event?)
+      end
     end
 
     def can_assign_membership_by_email(user)
