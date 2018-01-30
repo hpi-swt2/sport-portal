@@ -193,6 +193,11 @@ de:
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
+        bestof_length: "Spielart"
+        game_winrule: "Gewinnregel"
+        points_for_win: "Punkte für Gewinn"
+        points_for_draw: "Punkte für Unentschieden"
+        points_for_lose: "Punkte für Niederlage"
         selection_types:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
@@ -246,6 +251,9 @@ de:
       error:
         update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
 
+    event:
+      point_distribution: "Punkteverteilung"
+
   unauthorized:
         manage:
           all: "Fehlende Berechtigung für %{action} %{subject}."
@@ -279,6 +287,9 @@ de:
     add_match: "Spiel hinzufügen"
     participating: "Beigetreten"
     metric: "Metrik"
+    best_of: "Best-of-"
+    winrule_tooltip: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"
+    advanced: "Erweitert"
     full: "Voll"
     fcfs: "First Come First Serve"
     discipline:
