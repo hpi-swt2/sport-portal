@@ -231,13 +231,11 @@ de:
       must_be_after: "darf nicht vor %{other} sein."
 
   view:
-    event:
-      new: "Neues Event erstellen"
     user:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
-    
+
     match:
       game_results: "Ergebnis(se)"
       add_game_result: "Ergebnis hinzufügen"
@@ -276,6 +274,7 @@ de:
 
   events:
     index:
+      new: "Neues Event erstellen"
       my_events: "Deine Events"
       all_events: "Alle Events"
       start_date: "Startdatum"
