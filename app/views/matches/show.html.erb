@@ -24,7 +24,7 @@
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_match_path(@match), :class => 'btn btn-default' %>
 <% end %>
-<% if can) :edit, @match %>
+<% if current_user.admin %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                 match_path(@match),
                 :method => 'delete',
