@@ -40,12 +40,6 @@ RSpec.describe "teams/index", type: :view do
     expect(rendered).to have_selector(:link_or_button, t('teams.index.create_team'))
   end
 
-  it "renders the delete button when signed in and you are an admin" do
-    sign_in @admin
-    render
-    expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
-  end
-
   it "renders the filter select input field when user is signed in" do
     sign_in @user
     render
