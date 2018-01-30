@@ -39,7 +39,7 @@ RSpec.describe MatchesController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      match = Match.create! authorized_attributes
+      match = Match.create! valid_attributes
       get :show, params: { id: match.to_param }
       expect(response).to be_success
     end
@@ -54,7 +54,7 @@ RSpec.describe MatchesController, type: :controller do
 
   describe "GET #edit" do
     it "should allow team members to edit a match" do
-      match = Match.create! valid_attributes
+      match = Match.create! authorized_attributes
       get :edit, params: { id: match.to_param }
       expect(response).to be_success
     end
@@ -62,7 +62,7 @@ RSpec.describe MatchesController, type: :controller do
     it "shouldn't allow other users to edit a match" do
       sign_out @user
       sign_in @other_user
-      match = Match.create! valid_attributes
+      match = Match.create! authorized_attributes
       get :edit, params: { id: match.to_param }
       expect(response).not_to be_success
     end
@@ -70,7 +70,7 @@ RSpec.describe MatchesController, type: :controller do
     it "should allow admin to edit a match" do
       sign_out @user
       sign_in @admin
-      match = Match.create! valid_attributes
+      match = Match.create! authorized_attributes
       get :edit, params: { id: match.to_param }
       expect(response).to be_success
     end
