@@ -98,8 +98,8 @@ class Match < ApplicationRecord
   end
 
   def opponent_of(participant)
-    return team_home if participant == team_away
-    return team_away if participant == team_home
+    return team_home_recursive if participant == team_away
+    return team_away_recursive if participant == team_home
     nil
   end
 
