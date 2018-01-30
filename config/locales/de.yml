@@ -235,7 +235,13 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
-    
+      notifications:
+            settings: "Benachrichtigungs-Einstellungen"
+            enable_team_notifications: "Team-Benachrichtigungen erhalten"
+            enable_event_notifications: "Event-Benachrichtigung erhalten"
+            update_settings: "Aktualisieren"
+
+
     match:
       game_results: "Ergebnis(se)"
       add_game_result: "Ergebnis hinzufügen"
