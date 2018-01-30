@@ -49,7 +49,7 @@ class Ability
 
       # User
       can :show, User
-      can [:modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
+      can [:modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy, :notifications], User, id: user_id
       cannot :create, User
 
       # Event

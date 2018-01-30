@@ -12,7 +12,7 @@ RSpec.describe EventMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns user\'s firstname' do
@@ -34,7 +34,7 @@ RSpec.describe EventMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns user\'s firstname' do
@@ -56,7 +56,7 @@ RSpec.describe EventMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['from@example.com'])
+      expect(mail.from).to eq(['sport.portal@gmx.de'])
     end
 
     it 'assigns user\'s firstname' do
@@ -71,7 +71,7 @@ RSpec.describe EventMailer, type: :mailer do
   it 'should not send mails to users with disabled event notification settings' do
     event = FactoryBot.create :event, :with_teams
     user = FactoryBot.create(:user)
-    allow(user).to receive(:has_event_notifications_enabled?).and_return(false)
+    user.event_notifications_enabled = false
     mail = EventMailer.send_mail(user, event, :event_canceled)
     expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
   end
