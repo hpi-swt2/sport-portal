@@ -17,6 +17,10 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: nil, team_away: nil).attributes
   }
 
+  let(:authorized_attributes) {
+    FactoryBot.build(:match, team_home: @team).attributes
+  }
+
   before(:each) do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
@@ -35,7 +39,7 @@ RSpec.describe MatchesController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      match = Match.create! valid_attributes
+      match = Match.create! authorized_attributes
       get :show, params: { id: match.to_param }
       expect(response).to be_success
     end
