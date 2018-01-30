@@ -6,6 +6,11 @@ describe "Index team page", type: :feature do
     visit teams_path
   end
 
+  it "should have team tiles" do
+    visit teams_path
+    expect(page).to have_css('img')
+  end
+
   it "should only show teams current user is member of if filter is set" do
     @team = FactoryBot.create :team
     @team.name = "First"

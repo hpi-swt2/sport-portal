@@ -10,6 +10,7 @@
 #  kind_of_sport :string
 #  private       :boolean
 #  avatar_data   :text
+#  single        :boolean          default(FALSE)
 #
 
 FactoryBot.define do
