@@ -8,3 +8,7 @@
 <h2><%= t('errorpage.organize_event') %></h2>
 
 <%= render partial: 'events/event_cards' %>
+
+<%= link_to t('helpers.links.back'),
+            root_path,
+            class: 'btn btn-default'%>

@@ -59,7 +59,7 @@ end
 
 Then(/^there should be a back button on all pages except the start page$/) do
   # These routes were excluded in accordance with our PO
-  excludedrouts = ['/', '/cable', '/tournaments/new', '/leagues/new', '/leagues/1/edit', '/tournaments/1/edit', '/events/1/edit', '/rankinglists/new', '/teams/new', '/teams/1/edit', '/matches/1/edit', '/my/users/sign_in', '/my/users/password/edit', '/my/users/cancel', '/my/users/sign_up', '/users/1/dashboard', '/users/1/edit']
+  excludedrouts = ['/', '/cable', '/tournaments/new', '/leagues/new', '/leagues/1/edit', '/tournaments/1/edit', '/events/1/edit', '/rankinglists/new', '/teams/new', '/teams/1/edit', '/matches/1/edit', '/my/users/sign_in', '/my/users/password/edit', '/my/users/cancel', '/my/users/sign_up', '/users/1/dashboard', '/users/1/edit', '/matches/1/add_game_result', '/matches/1/edit_results']
   # For the first route we really don't know, why this fails. The second route could only be visited as an administrator
   temporarywedontknowwhattodorouts = ['/my/users/password/new', '/users']
 
