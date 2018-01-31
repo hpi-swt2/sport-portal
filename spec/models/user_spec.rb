@@ -76,6 +76,12 @@ RSpec.describe User, type: :model do
     expect(user2).to be_valid
   end
 
+  it 'has notifications enabled' do
+    user = FactoryBot.create(:user)
+    expect(user.has_event_notifications_enabled?).to be(true)
+    expect(user.has_team_notifications_enabled?).to be(true)
+  end
+
   describe 'self#from_omniauth' do
     it 'should return an existing user' do
       user = FactoryBot.create :user, provider: 'mock', uid: '1234567890'
