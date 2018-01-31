@@ -81,7 +81,7 @@ Then(/^there should be a back button on all pages except the start page$/) do
     end
     puts currentpath
     unless (excludedrouts.include? currentpath) || (temporarywedontknowwhattodorouts.include? currentpath)
-       expect(page).to have_link('Zurück')
+       expect(page).to have_link(I18n.t ('helpers.links.back'))
     end
   end;nil
 end
