@@ -77,15 +77,44 @@
     <dt><strong><%= model_class.human_attribute_name(:gameday_duration) %>:</strong></dt>
     <dd><%= @event.gameday_duration %></dd>
   <% end %>
+
+  <dt><strong><%= model_class.human_attribute_name(:organizers) %>:</strong></dt>
+  <dd>
+    <%= safe_join(@event.organizers.map {
+        |organizer| link_to(organizer.user.name, user_path(organizer.user)) }, ", ".html_safe) %>
+  </dd>
+
 </dl>
 
 <div class="table-responsive">
   <h3><%= t("events.show.participants") %></h3>
   <table class="table">
-    <thead><tr><th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th></tr></thead>
+    <thead>
+    <tr>
+      <th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th>
+      <% if @event.is_a? Rankinglist %>
+        <th><%= @event.human_game_mode %></th>
+      <% end %>
+    </tr>
+    </thead>
     <tbody>
-    <% @event.teams.each do |participant| %>
-      <tr><td><%= link_to_participant participant %></td></tr>
+    <% @event.participants.order(rating: :desc).each do |participant| %>
+      <tr>
+        <td><%= link_to_participant participant.team %></td>
+        <% if @event.is_a? Rankinglist %>
+          <td><%= participant.rating %></td>
+          <td>
+            <% if (@event.is_a? Rankinglist) and (@event.has_participant? current_user) and (participant.team.owners.first.name != current_user.name) %>
+              <%= link_to t('.create', default: t('helpers.links.duel')),
+                          new_match_path(team_home_id: participant.team,
+                                         team_away_id: @event.team_of(current_user),
+                                         event_id: @event),
+                          class: 'btn btn-default btn-xs',
+                          id: 'duel_participant'%>
+            <% end %>
+          </td>
+          </tr>
+        <% end %>
     <% end %>
     </tbody>
   </table>
