@@ -69,7 +69,7 @@ end
 
 Then(/^the new user should be linked with the account$/) do
   account = single_account
-  user = User.find_by(email: account.info.email)
+  user = User.find_by!(email: account.info.email)
   expect(user.uid).to eq(account[:uid])
   expect(user.provider).to eq(account[:provider])
 end
@@ -95,6 +95,12 @@ end
 Then(/^(.*) should not be able to sign up$/) do |username|
   user = User.find_by(first_name: user_named(username).first_name, last_name: user_named(username).last_name, email: user_named(username).email)
   expect(user).to be_nil
+end
+
+And(/^a User (.*) who is Organizer of (.*)$/) do |username, event|
+  user = create_user_named(username)
+  (event_named event).organizers << Organizer.new(user: user, event: event_named(event))
+  sign_in user
 end
 
 And(/^the page should show '(.*)'$/) do |message|
@@ -175,6 +181,12 @@ And(/^he enters the first name '(.*)'$/) do |name|
   fill_in User.human_attribute_name(:first_name), with: name
 end
 
+Then(/^(.*) should be able to enter start and end date for each gameday$/) do |user|
+  first(:css, "#gameday_starttime").set '10.05.2013'
+  first(:css, "#gameday_endtime").set '15.05.2013'
+  first( :button, I18n.t('events.schedule.edit_date')).click
+end
+
 
 Then(/^his first name should be '(.*)'$/) do |name|
   single_user.reload
@@ -195,4 +207,23 @@ end
 Then(/^his email should be '(.*)'$/) do |email|
   single_user.reload
   expect(single_user.email).to eq(email)
+end
+
+Then(/^the new user's first name should be '(.*)'$/) do |first_name|
+  account = single_account
+  user = User.find_by!(email: account.info.email)
+  expect(user.first_name).to eq(first_name)
+end
+
+Then(/^the new user's last name should be '(.*)'$/) do |last_name|
+  account = single_account
+  user = User.find_by!(email: account.info.email)
+  expect(user.last_name).to eq(last_name)
+end
+
+Then(/^(.*) should be able to change the dates of the game days$/) do |userName|
+  step 'the schedule page for l is visited'
+  step "#{userName} should be able to enter start and end date for each gameday"
+  step 'the change should be saved'
+  sign_out
 end

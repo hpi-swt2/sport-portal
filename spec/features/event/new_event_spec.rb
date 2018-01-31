@@ -64,6 +64,8 @@ describe 'new event page', type: :feature do
 
     it 'should be possible to create a league' do
       visit new_path
+
+      attach_file('league_image', "#{Rails.root}/spec/fixtures/valid_avatar.png")
       fill_in_fields_with valid_league_input_fields
       select_dropdowns_with valid_league_dropdowns
 
@@ -155,6 +157,8 @@ describe 'new event page', type: :feature do
 
       fill_in_fields_with valid_tournament_input_fields
       select_dropdowns_with valid_tournament_dropdowns
+      attach_file('tournament_image', "#{Rails.root}/spec/fixtures/valid_avatar.png")
+
       find('input[type="submit"]').click
 
       expect(page).to have_current_path(/.*\/tournaments\/\d+/)
