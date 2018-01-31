@@ -142,5 +142,9 @@ And(/^he fills in valid tournament data$/) do
   fill_in :event_deadline, with: Date.today + 1.day
   fill_in :event_startdate, with: Date.today + 2.day
   fill_in :event_enddate, with: Date.today + 3.day
-  single_tournament
+end
+
+And(/^he creates the tournament$/) do
+  click_on I18n.t('helpers.submit.create', model: Tournament.model_name.human)
+  add_tournament Tournament.last
 end

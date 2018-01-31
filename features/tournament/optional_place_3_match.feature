@@ -10,7 +10,7 @@ Feature: Tournament optional place 3 match
     And he clicks 'New tournament'
     And he fills in valid tournament data
     And he unchecks the checkbox 'Spiel um Platz 3'
-    And he clicks 'Create tournament'
+    And he creates the tournament
 
     When 8 teams join the tournament
     And the schedule page is visited
@@ -24,7 +24,7 @@ Feature: Tournament optional place 3 match
     And he clicks 'New tournament'
     And he fills in valid tournament data
     And he checks the checkbox 'Spiel um Platz 3'
-    And he clicks 'Create tournament'
+    And he creates the tournament
 
     When 8 teams join the tournament
     And the schedule page is visited

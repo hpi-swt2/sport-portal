@@ -20,6 +20,10 @@ module DataHelper
     @named[name] = object
   end
 
+  def add_tournament(tournament)
+    @tournaments << tournament
+  end
+
   def get_named_object(name, klass = Object)
     raise StandardError, "No #{klass.name.downcase} named '#{name}' exists." unless @named[name]
     raise StandardError, "'#{name}' is not a #{klass.name.humanize}" unless @named[name].is_a?(klass)
@@ -116,9 +120,6 @@ module DataHelper
   end
 
   def single_tournament
-    if @tournaments.empty?
-      return Tournament.last
-    end
     get_single_object @tournaments
   end
 
