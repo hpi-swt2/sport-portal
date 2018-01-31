@@ -28,7 +28,6 @@ setupPage = function() {
         })
     }
 
-    $('.navbar').removeClass("navbar-fixed-top");
     changeNavbarTransparency();
 }
 
@@ -36,10 +35,6 @@ changeNavbarTransparency = function() {
      if($('body > div').hasClass('background')){
          $('.navbar').addClass('transparent');
          $('.navbar').removeClass('not-transparent');
-     }
-     else {
-         $('.navbar').removeClass('transparent');
-         $('.navbar').addClass('not-transparent');
      }
 }
 

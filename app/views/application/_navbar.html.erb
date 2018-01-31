@@ -6,7 +6,7 @@
     image_tag('https://owncloud.hpi.de/index.php/s/duKOws3U4vHTnFk/download', class: 'logo-img') +
     content_tag(:span, t('appname'), class: 'wordmark')
   },
-  responsive: true, fluid: true, fixed: :top do
+  responsive: true, fluid: true do
 %>
 
     <% if (request.user_agent =~ /Mobile|webOS/).present? # check if user is moving a mobile device     %>
