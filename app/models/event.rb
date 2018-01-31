@@ -156,7 +156,7 @@ class Event < ApplicationRecord
     I18n.t 'events.overview.unkown_standing'
   end
 
-  def last_match_of(team)
+  def last_match_of(_)
   end
 
   # this is a method that simplifies manual testing, not intended for production use
