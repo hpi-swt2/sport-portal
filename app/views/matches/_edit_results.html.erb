@@ -22,12 +22,19 @@
               <%= builder.number_field :score_away, in: -2e9..2e9, step: 1, class: 'form-control' %>
             </div>
           </div>
+          <% unless builder.object.new_record? %>
+            <div class="form-group">
+              <% if builder.object&.can_confirm_scores?(current_user) %>
+                <%= link_to 'Bestätigen', confirm_scores_match_path(id: @match.id, result_id: builder.object.id), class: 'btn btn-default' %>
+              <% end %>
+            </div>
+          <% end %>
           <div class="form-group">
             <a href="#" class="remove col-xs-offset-1 btn btn-default"><%= t("view.match.remove_game_result") %></a>
             <%= builder.hidden_field :id %>
             <%= builder.hidden_field :_destroy %>
             <noscript>
-              <% if !builder.object.id.nil? %>
+              <% unless builder.object.new_record? %>
                 <br/>
                 <%= link_to(
                         t("view.match.noscript.button_prefix") + t("view.match.remove_game_result"),
@@ -52,12 +59,12 @@
     </div>
   </div>
 
-  <% if !@match.event.is_a? Rankinglist %>
+  <% if @match.event.is_a? Rankinglist %>
     <div class="form-group">
       <div class="col-lg-offset-2 col-lg-10">
         <%= f.submit nil, :class => 'btn btn-primary' %>
         <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                    :back, :class => 'btn btn-default' %>
+                    event_path(@match.event), :class => 'btn btn-default' %>
       </div>
     </div>
   <% else %>
@@ -65,7 +72,7 @@
       <div class="col-lg-offset-2 col-lg-10">
         <%= f.submit nil, :class => 'btn btn-primary' %>
         <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                    event_path(@match.event), :class => 'btn btn-default' %>
+                    :back, :class => 'btn btn-default' %>
       </div>
     </div>
   <% end %>
