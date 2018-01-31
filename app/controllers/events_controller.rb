@@ -67,6 +67,7 @@ class EventsController < ApplicationController
     else
       @event.add_team(Team.find(event_params[:teams]))
     end
+    
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
@@ -96,12 +97,10 @@ class EventsController < ApplicationController
     @schedule_type = @event.type.downcase!
   end
 
-  # GET /events/1/ranking
-  def ranking
-    @ranking_entries = @event.get_ranking
-  end
-
   def overview
+    if @event.type == 'League'
+      redirect_to @event, error: t('events.overview.not_available_for_leagues')
+    end
   end
 
   private

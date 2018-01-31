@@ -4,6 +4,12 @@
 <div class="page-header">
   <h1><%= t '.title', default: model_class.model_name.human(count: :many).titleize %></h1>
 </div>
+<% if user_signed_in? %>
+  <%= form_tag('/teams', method: :get) do %>
+    <%= label_tag(:filter, t("helpers.teams.filter")) %>
+    <%= select_tag(:filter, options_for_select([[t("helpers.teams.show_all"), false], [t("helpers.teams.show_mine"), true]]), {:class=>'filterSelect', onchange: "this.form.submit();"}) %>
+  <% end %>
+<% end %>
 
 <% if can? :create, Team %>
     <%= link_to t('.new', :default => t('teams.index.create_team')),
