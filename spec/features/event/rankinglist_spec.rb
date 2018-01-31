@@ -99,6 +99,8 @@ describe 'Rankinglists', type: :feature do
     end
 
     it 'can have matches that adjust the elo if the game is a draw' do
+      participant = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user)).first
+      participant.update(rating: 1200)
       page.all('input').each do |each|
         if (each[:id] != nil)
           if each[:id].include? 'score_home'
@@ -112,8 +114,8 @@ describe 'Rankinglists', type: :feature do
       click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
       participant = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user)).first
       participant2 = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user2)).first
-      expect(participant.rating).to eq(1000)
-      expect(participant2.rating).to eq(1000)
+      expect(participant.rating).to eq(26265.0 / 22.0)
+      expect(participant2.rating).to eq(22135.0 / 22.0)
     end
   end
 end
