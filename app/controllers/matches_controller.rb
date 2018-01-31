@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :propose_scores, :confirm_proposed_scores]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :confirm_scores]
 
   # GET /matches/1
   def show
@@ -58,7 +58,7 @@ class MatchesController < ApplicationController
   end
 
   def add_game_result
-    result = GameResult.new
+    result = GameResult.new(scores_proposed_by: current_user)
     @match.game_results << result
     result.save!
     flash.notice = I18n.t("view.match.added_game_result_notice")
@@ -79,23 +79,13 @@ class MatchesController < ApplicationController
     redirect_to event_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
 
-  def propose_scores
-    score_home = match_propose_score_params[:match][:score_home]
-    score_away = match_propose_score_params[:match][:score_away]
-    @match.propose_scores(current_user, score_home, score_away)
-    redirect_back(fallback_location: '')
-  end
-
-  def confirm_proposed_scores
-    @match.confirm_scores(current_user)
-    redirect_back(fallback_location: '')
+  def confirm_scores
+    @result = GameResult.find_by(id: params[:result_id], match_id: @match.id)
+    @result.confirm_scores(current_user)
+    redirect_back(fallback_location: edit_results)
   end
 
   private
-
-    def match_propose_score_params
-      params.require(:match).permit(:proposed_score_home, :proposed_score_away)
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_match

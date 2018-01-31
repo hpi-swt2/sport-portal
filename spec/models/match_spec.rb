@@ -101,7 +101,7 @@ RSpec.describe Match, type: :model do
       it "should give both 1 points for a draw" do
         result = match.game_results.first
         result.score_home = 1
-        result_score_away = 1
+        result.score_away = 1
         result.save!
         match.reload
 
@@ -138,20 +138,6 @@ RSpec.describe Match, type: :model do
     end
 
     it 'can be confirmed from user of the other team' do
-
-    end
-  end
-  
-  describe '#reject_proposed_scores' do
-    let(:user) { FactoryBot.create(:user) }
-
-    subject { -> { match.reject_proposed_scores(user) } }
-
-    it 'cannot be rejected from user of the same team' do
-
-    end
-
-    it 'can be rejected from user of the other team' do
 
     end
   end

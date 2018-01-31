@@ -17,10 +17,7 @@ Rails.application.routes.draw do
   resources :teams
   resources :matches, except: [:index] do
     member do
-      put :propose_scores
-      patch :propose_scores
-      post :confirm_proposed_scores
-      post :reject_proposed_scores
+      get 'game_results/:result_id/confirm', to: 'matches#confirm_scores', as: :confirm_scores
       patch :update_points
       put :update_points
       get :add_game_result

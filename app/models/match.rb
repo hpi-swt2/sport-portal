@@ -140,22 +140,6 @@ class Match < ApplicationRecord
     end
   end
 
-  def propose_scores(user, score_home, score_away)
-    self.proposed_score_home = score_home
-    self.proposed_score_away = score_away
-    self.scores_proposed_by = user
-  end
-
-  def confirm_proposed_scores(user)
-    return unless self.scores_proposed_by.team == user.team
-    errors.add(:scores_confirmed_by, I18n.t('activerecord.models.match.errors.score_proposer_confirmer_team'))
-
-    self.score_home = self.proposed_score_home
-    self.score_away = self.proposed_score_away
-    self.proposed_score_home = nil
-    self.proposed_score_away = nil
-  end
-
   def save_with_point_calculation
     calculate_points
     save
