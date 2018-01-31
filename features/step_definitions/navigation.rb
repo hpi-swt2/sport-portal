@@ -13,3 +13,8 @@ end
 When(/^the league's page is visited$/) do
   visit event_path single_league
 end
+
+When(/^visiting the event page of (.*)$/) do |eventName|
+  event = event_named eventName
+  visit event_path event
+end

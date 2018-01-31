@@ -33,6 +33,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
   config.action_mailer.perform_caching = false
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { :host => ENV['HOST_URL'] }
+
+  # Tell Action Mailer where URLs should point to
+  config.action_mailer.default_url_options = { :host => ENV['HOST_URL'] }
+
+  ActionMailer::Base.default from: 'sport.portal@gmx.de'
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
