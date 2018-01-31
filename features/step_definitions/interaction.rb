@@ -4,9 +4,11 @@ When (/^he clicks '(.*)'$/) do |text|
     'Disconnect from OpenID' => ['devise.registrations.unlink_provider', provider: 'OpenID'],
     'New tournament' => ['events.new_tournament'],
     'New league' => ['events.new_league'],
-    'Create' => ['helpers.links.create']
+    'Create tournament' => ['helpers.submit.create', model: Tournament.model_name.human],
+    'Create league' => ['helpers.submit.create', model: League.model_name.human]
   }
   translations.default = 'No translation found'
+
 
   click_on I18n.t(*translations[text])
 end
