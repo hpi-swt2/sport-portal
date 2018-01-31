@@ -33,12 +33,16 @@ Feature: Tournament Overview Page
     And the standing of the home team of match Viertelfinale 2 is 'Im Viertelfinalspiel 2'
 
   Scenario: Tournament overview page should link to matches
-    Given a tournament t with 6 teams
+    Given a tournament t with 5 teams
 
     When the tournament overview page for t is visited
     Then the standing of the home team of match Viertelfinale 1 links to Viertelfinale 1
     And the standing of the away team of match Viertelfinale 1 links to Viertelfinale 1
-    And the standing of the home team of match Viertelfinale 2 links to Viertelfinale 2
+
+    When the Spielplan page for t is visited
+    And the results for match Viertelfinale 1 (6 : 7) got inserted
+    Then the standing of the away team of match Halbfinale 2 links to Halbfinale 2
+    And the standing of the home team of match Halbfinale 2 links to Halbfinale 2
 
   Scenario: Tournament overview page should link to opponents
     Given a tournament t with 5 teams
