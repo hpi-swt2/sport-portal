@@ -4,11 +4,11 @@
     }
 
     .navbar {
-        background-color: transparent;
+        background-color: #0f3157 !important;
     }
 
-    .navbar-fixed-top{
-        background-color: #0f3157 !important;
+    .transparent{
+        background-color: transparent !important;
     }
 
     .navbar-collapse {
@@ -21,7 +21,8 @@
         display: none;
     }
 
-    .navbar.navbar-fixed-top {
+    .navbar {
+        height: 57px !important;
         background-color: #0f3157 !important;
     }
 
@@ -44,7 +45,14 @@
     .navbar-collapse {
         background-color: #0f3157 !important;
         padding-top: 5px;
+        margin-top: 6px;
         max-height: 600px !important;
+        position: relative;
+        z-index: 10;
+    }
+
+    .navbar-collapse.collapsing {
+        margin-top: 3px;
     }
 
     .navbar-nav > li {
@@ -56,6 +64,7 @@
     }
 
     .navbar-toggle{
+        margin-top: 12px !important;
         border-color: transparent !important;
         background-color: transparent !important;
     }
@@ -64,13 +73,17 @@
         background-image: url('https://owncloud.hpi.de/index.php/s/bWdfeewNyoUK9Kt/download');
         background-size: cover;
         background-repeat: no-repeat;
-        margin-top: 1.8vh;
+        margin-top: 18px !important;
         margin-right: 3vh;
     }
 
     .navbar-toggle.expanded .icon-bar {
         display: none;
     }
+}
+
+.navbar{
+    margin-bottom: 0px !important;
 }
 
 .brand-content {
@@ -91,14 +104,11 @@
 
 .navbar-nav a{
     background-color: transparent !important;
+    font-size: large;
 }
 
 .navbar-nav a:hover{
     color: #1ba9e5 !important;
-}
-
-.transparent{
-    background-color: transparent !important;
 }
 
 img.logo-img{
@@ -122,6 +132,8 @@ ul.nav.navbar-nav.navbar-right {
     text-align: center;
 }
 .navbar-default {
+    border: none !important;
+    border-radius: 0px !important;
     background-color: transparent;
     border-color: transparent;
     width: 100%;
@@ -165,5 +177,9 @@ img.avatar {
 }
 .dropdown-menu >li {
     width: 100%;
+}
+
+.dropdown-menu > li > a {
+    text-align: left;
 }
 
