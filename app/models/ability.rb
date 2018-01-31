@@ -79,7 +79,7 @@ class Ability
 
 
     def can_modify_match(user)
-      user_team_ids = user.team_users.map {|team_user| team_user.id}
+      user_team_ids = user.team_users.map { |team_user| team_user.id }
       can :modify, Match do |match|
         (user_team_ids & [match.team_home.id, match.team_away.id]).any?
       end
