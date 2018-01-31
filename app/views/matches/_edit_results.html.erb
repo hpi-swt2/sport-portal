@@ -25,7 +25,7 @@
           <% unless builder.object.new_record? %>
             <div class="form-group">
               <% if builder.object&.can_confirm_scores?(current_user) %>
-                <%= link_to 'Bestätigen', confirm_scores_match_path(id: @match.id, result_id: builder.object.id), class: 'btn btn-default' %>
+                <%= link_to t("view.match.confirm_game_result"), confirm_scores_match_path(id: @match.id, result_id: builder.object.id), class: 'btn btn-default' %>
               <% end %>
             </div>
           <% end %>
