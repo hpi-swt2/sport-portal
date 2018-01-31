@@ -2,24 +2,26 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  first_name             :string
-#  last_name              :string
-#  provider               :string
-#  uid                    :string
-#  admin                  :boolean          default(FALSE)
-#  birthday               :date
-#  telephone_number       :string
-#  telegram_username      :string
-#  favourite_sports       :string
-#  avatar_data            :text
+#  id                          :integer          not null, primary key
+#  email                       :string           default(""), not null
+#  encrypted_password          :string           default(""), not null
+#  reset_password_token        :string
+#  reset_password_sent_at      :datetime
+#  remember_created_at         :datetime
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  first_name                  :string
+#  last_name                   :string
+#  admin                       :boolean          default(FALSE)
+#  birthday                    :date
+#  telephone_number            :string
+#  telegram_username           :string
+#  favourite_sports            :string
+#  provider                    :string
+#  uid                         :string
+#  avatar_data                 :text
+#  team_notifications_enabled  :boolean          default(TRUE)
+#  event_notifications_enabled :boolean          default(TRUE)
 #
 
 class User < ApplicationRecord
@@ -28,6 +30,8 @@ class User < ApplicationRecord
   # https://github.com/plataformatec/devise
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid], password_length: 8..128
+
+  OMNIAUTH_PASSWORD_LENGTH = 32
 
   validate :password_complexity
 
@@ -126,6 +130,8 @@ class User < ApplicationRecord
           data = session['omniauth.data']
           user.uid = data['uid']
           user.provider = data['provider']
+          user.first_name = data['first_name'] if user.first_name.blank?
+          user.last_name = data['last_name'] if user.last_name.blank?
           user.email = data['email'] if user.email.blank?
         end
       end
@@ -140,6 +146,9 @@ class User < ApplicationRecord
     def from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
         user.email = auth.info.email
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.password = Devise.friendly_token OMNIAUTH_PASSWORD_LENGTH
       end
     end
   end

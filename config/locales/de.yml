@@ -235,6 +235,12 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
+      notifications:
+            settings: "Benachrichtigungs-Einstellungen"
+            enable_team_notifications: "Team-Benachrichtigungen erhalten"
+            enable_event_notifications: "Event-Benachrichtigung erhalten"
+            update_settings: "Aktualisieren"
+
 
     match:
       game_results: "Ergebnis(se)"
@@ -282,9 +288,9 @@ de:
       max_players: "Max. Spielerzahl"
     create_event: "Event erstellen"
     choose_event_format: "Eventart wählen"
-    new_league: "Neue Liga"
-    new_tournament: "Neues Turnier"
-    new_rankinglist: "Neue Rangliste"
+    new_league: "Liga erstellen"
+    new_tournament: "Turnier erstellen"
+    new_rankinglist: "Rangliste erstellen"
     Tournament: "Turnier"
     League: "Liga"
     Rankinglist: "Rangliste"
@@ -359,6 +365,7 @@ de:
       out: "Im %{match_name} ausgeschieden"
       in_place_3_match: "Im Spiel um Platz 3"
       in: "Im %{match_name}"
+      not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
@@ -372,10 +379,10 @@ de:
       won_count: "Siege"
       draw_count: "Unentschieden"
       lost_count: "Niederlagen"
-      goals: "Tore"
-      goals_against: "Gegentore"
-      goals_difference: "Tordifferenz"
-      points: "Punkte"
+      goals: "Punkte"
+      goals_against: "Gegenpunkte"
+      goals_difference: "Punktdifferenz"
+      points: "Ligapunkte"
     max_teams:
       infinite: "unbegrenzt"
 
