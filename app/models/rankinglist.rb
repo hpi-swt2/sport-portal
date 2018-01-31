@@ -37,25 +37,22 @@ class Rankinglist < Event
 
   def update_rankings(match)
     if (game_mode == 'elo')
-      calculate_elo(match)
+      elo_adjustments_of(match)
     end
   end
 
-  def calculate_elo(match)
+  def elo_adjustments_of(match)
     home_participant = Participant.where("team_id = ? AND event_id = ?", match.team_home_id, self).first
     away_participant = Participant.where("team_id = ? AND event_id = ?", match.team_away_id, self).first
     case match.winner
-      when home_participant.team
-        match_result = 1.0
-      when away_participant.team
-        match_result = 0.0
-      else
-        match_result = 0.5
+    when home_participant.team
+      match_result = 1.0
+    when away_participant.team
+      match_result = 0.0
+    else
+      match_result = 0.5
     end
-    expectation = 1.0 / (1.0 + (10.0**((away_participant.rating - home_participant.rating) / 200.0)))
-    home_participant.update(rating: home_participant.rating + 15.0 * (match_result - expectation))
-    away_participant.update(rating: away_participant.rating + 15.0 * (expectation - match_result))
-
+    home_participant.update_elo(match_result, away_participant)
   end
 
   before_validation do
