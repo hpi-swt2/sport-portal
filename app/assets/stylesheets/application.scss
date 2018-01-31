@@ -71,7 +71,7 @@ body {
   }
 
   * {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 
   h1 {
@@ -80,6 +80,10 @@ body {
 
   h2 {
     font-size: 4rem;
+  }
+
+  h3 {
+    font-size: 2.2rem;
   }
 }
 
@@ -94,15 +98,18 @@ body {
 
   h1 {
     font-size: 3.5rem;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
 
   h2 {
     font-size: 3rem;
   }
-}
 
-.navbar-overlap {
-  padding-top: 50px;
+  h3 {
+    font-size: 2.2rem;
+  }
 }
 
 .btn {

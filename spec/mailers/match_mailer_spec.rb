@@ -137,7 +137,7 @@ RSpec.describe MatchMailer, type: :mailer do
   it 'should not send mails to users with disabled event notification settings' do
     match = FactoryBot.create(:match)
     user = FactoryBot.create(:user)
-    allow(user).to receive(:has_event_notifications_enabled?).and_return(false)
+    user.event_notifications_enabled = false
     mail = MatchMailer.send_mail(user, match, :match_canceled)
     expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
   end

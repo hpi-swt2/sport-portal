@@ -61,6 +61,11 @@ en:
       edit_profile: "Edit Profile Properties"
       update_profile: "Update Profile"
       favourite_sports_placeholder: "Football, Basketball, Table football, ..."
+      notifications:
+        settings: "Notifications"
+        enable_team_notifications: "Enable team notifications"
+        enable_event_notifications: "Enable event notifications"
+        update_settings: "Update"
 
   unauthorized:
       manage:
@@ -115,10 +120,10 @@ en:
           won_count: "won"
           draw_count: "draw"
           lost_count: "lost"
-          goals: "goals"
-          goals_against: "goals against"
-          goals_difference: "goal difference"
-          points: "points"
+          goals: "points"
+          goals_against: "points against"
+          goals_difference: "points difference"
+          points: "league points"
     join_team_event: "Join event %{event} as a team"
     max_teams:
       infinite: "unlimited"
