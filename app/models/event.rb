@@ -224,4 +224,5 @@ class Event < ApplicationRecord
         TeamMailer.team_registered_to_event(member, team, self).deliver_now
       end
     end
+  end
 end
