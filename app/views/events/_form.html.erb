@@ -13,7 +13,7 @@
     <%= f.label :image, t('activerecord.models.image.one'), class: 'control-label col-lg-2'%>
     <div class="col-lg-10">
       <% unless @event.new_record? %>
-        <%= image_tag @event.image_url || image_path('missing_event_image.png'), id: 'preview', style: 'max-width:100px; max-height:100px'%>
+        <%= image_tag @event.image_url || image_path('missing_event_image.jpg'), id: 'preview', style: 'max-width:100px; max-height:100px'%>
       <% end %>
       <%= f.file_field :image, class: 'form-control-file' %>
       <% if @event.image %>
@@ -89,21 +89,21 @@
         <div class="form-group">
           <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
           <div class="col-lg-10">
-          <%= f.number_field :points_for_win, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_win %>
+          <%= f.number_field :points_for_win, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_win %>
           </div>
         </div>
 
         <div class="form-group">
           <%= f.label :points_for_draw, :class => 'control-label col-lg-2' %>
           <div class="col-lg-10">
-          <%= f.number_field :points_for_draw, :class => 'form-control' ,:style=> 'width:60px', :value=> f.object.points_for_draw %>
+          <%= f.number_field :points_for_draw, in: 0..2e9, step: 1, :class => 'form-control' ,:style=> 'width:60px', :value=> f.object.points_for_draw %>
           </div>
         </div>
 
         <div class="form-group">
           <%= f.label :points_for_lose, :class => 'control-label col-lg-2' %>
           <div class="col-lg-10">
-          <%= f.number_field :points_for_lose, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_lose %>
+          <%= f.number_field :points_for_lose, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_lose %>
           </div>
         </div>
          
