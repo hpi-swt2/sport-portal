@@ -110,7 +110,7 @@ class EventsController < ApplicationController
       @event.owner = current_user
     end
 
-  # Get the type of event that should be created
+    # Get the type of event that should be created
     def event_type
       return League if params[:type] == 'League'
       return Tournament if params[:type] == 'Tournament'
@@ -130,7 +130,7 @@ class EventsController < ApplicationController
       end
     end
 
-      # Only allow a trusted parameter "white list" through.
+    # Only allow a trusted parameter "white list" through.
     def event_params
       map_event_on_event_types
       params.require(:event).permit(:name,

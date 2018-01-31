@@ -103,7 +103,6 @@ class User < ApplicationRecord
 
   def all_events
     all_events = self.events
-    all_team = self.teams + self.owned_teams
     all_teams.map { |team| all_events += team.events }
     self.organizing_events.map { |event| all_events << event }
     all_events.uniq
