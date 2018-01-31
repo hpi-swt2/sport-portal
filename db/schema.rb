@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124104518) do
+ActiveRecord::Schema.define(version: 20180128145059) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.integer "selection_type", default: 0, null: false
     t.integer "min_players_per_team"
     t.integer "max_players_per_team"
+    t.integer "matchtype"
+    t.integer "bestof_length", default: 1
+    t.integer "game_winrule"
+    t.integer "points_for_win", default: 3
+    t.integer "points_for_draw", default: 1
+    t.integer "points_for_lose", default: 0
+    t.text "image_data"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -50,6 +57,25 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.index ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
   end
 
+  create_table "game_results", force: :cascade do |t|
+    t.integer "score_home"
+    t.integer "score_away"
+    t.integer "match_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_game_results_on_match_id"
+  end
+
+  create_table "gamedays", force: :cascade do |t|
+    t.string "description"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.integer "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_gamedays_on_event_id"
+  end
+
   create_table "match_results", force: :cascade do |t|
     t.integer "match_id"
     t.boolean "winner_advances"
@@ -60,8 +86,6 @@ ActiveRecord::Schema.define(version: 20180124104518) do
 
   create_table "matches", force: :cascade do |t|
     t.string "place"
-    t.integer "score_home"
-    t.integer "score_away"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "team_home_id"
@@ -69,12 +93,14 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.integer "event_id"
     t.integer "points_home"
     t.integer "points_away"
-    t.integer "gameday"
+    t.integer "gameday_number"
     t.string "team_home_type", default: "Team"
     t.string "team_away_type", default: "Team"
     t.integer "index"
+    t.integer "gameday_id"
     t.datetime "start_time"
     t.index ["event_id"], name: "index_matches_on_event_id"
+    t.index ["gameday_id"], name: "index_matches_on_gameday_id"
   end
 
   create_table "organizers", force: :cascade do |t|
@@ -84,6 +110,14 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.integer "event_id"
     t.index ["event_id"], name: "index_organizers_on_event_id"
     t.index ["user_id"], name: "index_organizers_on_user_id"
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "team_id"
+    t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "team_users", force: :cascade do |t|
@@ -123,6 +157,8 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.string "provider"
     t.string "uid"
     t.text "avatar_data"
+    t.boolean "team_notifications_enabled", default: true
+    t.boolean "event_notifications_enabled", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
