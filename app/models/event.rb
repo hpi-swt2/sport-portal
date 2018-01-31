@@ -157,7 +157,6 @@ class Event < ApplicationRecord
   end
 
   def last_match_of(team)
-    nil
   end
 
   # this is a method that simplifies manual testing, not intended for production use
