@@ -14,7 +14,7 @@ class GameResult < ApplicationRecord
   belongs_to :match
 
   validates :score_home, :score_away, numericality: { only_integer: true, greather_than_or_equal_to: 0 }, allow_nil: true
-  belongs_to :scores_proposed_by, class_name: 'User'
+  belongs_to :scores_proposed_by, class_name: 'User', optional: true
 
   def can_confirm_scores?(user)
     # TODO: Dont let a random person propose scores
