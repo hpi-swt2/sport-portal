@@ -35,6 +35,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         uid: auth.uid,
         provider: auth.provider,
         email: auth.info.email,
+        first_name: auth.info.first_name,
+        last_name: auth.info.last_name,
         expires: Time.current + OMNIAUTH_SESSION_LIFETIME
       }
       redirect_to new_user_registration_path
