@@ -101,22 +101,13 @@ class EventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
   def set_event
     @event = Event.find(params[:id])
   end
 
   def set_associations
     @event.owner = current_user
-  end
-
-  def set_associations
-    @event.owner = current_user
-    @event.player_type ||= Event.player_types[:single]
-    if @event.player_type == Event.player_types[:single] || @event.type == 'Rankinglist'
-      @event.min_players_per_team = 1
-      @event.max_players_per_team = 1
-    end
   end
 
   # Get the type of event that should be created
@@ -140,31 +131,31 @@ class EventsController < ApplicationController
   end
 
     # Only allow a trusted parameter "white list" through.
-    def event_params
-      map_event_on_event_types
-      params.require(:event).permit(:name,
-                                    :description,
-                                    :discipline,
-                                    :type,
-                                    :game_mode,
-                                    :max_teams,
-                                    :player_type,
-                                    :deadline,
-                                    :startdate,
-                                    :teams,
-                                    :enddate,
-                                    :matchtype,
-                                    :bestof_length,
-                                    :game_winrule,
-                                    :points_for_win,
-                                    :points_for_draw,
-                                    :points_for_lose,
-                                    :initial_value,
-                                    :min_players_per_team,
-                                    :max_players_per_team,
-                                    :gameday_duration,
-                                    :image,
-                                    :remove_image,
-                                    user_ids: [])
-    end
+  def event_params
+    map_event_on_event_types
+    params.require(:event).permit(:name,
+                                  :description,
+                                  :discipline,
+                                  :type,
+                                  :game_mode,
+                                  :max_teams,
+                                  :player_type,
+                                  :deadline,
+                                  :startdate,
+                                  :teams,
+                                  :enddate,
+                                  :matchtype,
+                                  :bestof_length,
+                                  :game_winrule,
+                                  :points_for_win,
+                                  :points_for_draw,
+                                  :points_for_lose,
+                                  :initial_value,
+                                  :min_players_per_team,
+                                  :max_players_per_team,
+                                  :gameday_duration,
+                                  :image,
+                                  :remove_image,
+                                  user_ids: [])
+  end
 end
