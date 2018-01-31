@@ -368,4 +368,20 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'GET #notifications' do
+    context 'given a logged in useer' do
+      it 'should show notifications settings page successfully' do
+        sign_in @user
+        get :notifications, params: { id: @user.to_param }
+        expect(response).to be_success
+      end
+    end
+    context 'given no logged in user' do
+      it 'should deny access' do
+        get :notifications, params: { id: @user.to_param }
+        expect(response).to be_unauthorized
+      end
+    end
+  end
+
 end

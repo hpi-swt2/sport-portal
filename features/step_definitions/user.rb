@@ -97,6 +97,12 @@ Then(/^(.*) should not be able to sign up$/) do |username|
   expect(user).to be_nil
 end
 
+And(/^a User (.*) who is Organizer of (.*)$/) do |username, event|
+  user = create_user_named(username)
+  (event_named event).organizers << Organizer.new(user: user, event: event_named(event))
+  sign_in user
+end
+
 And(/^the page should show '(.*)'$/) do |message|
   expect(page).to have_text(message)
 end
@@ -175,6 +181,12 @@ And(/^he enters the first name '(.*)'$/) do |name|
   fill_in User.human_attribute_name(:first_name), with: name
 end
 
+Then(/^(.*) should be able to enter start and end date for each gameday$/) do |user|
+  first(:css, "#gameday_starttime").set '10.05.2013'
+  first(:css, "#gameday_endtime").set '15.05.2013'
+  first( :button, I18n.t('events.schedule.edit_date')).click
+end
+
 
 Then(/^his first name should be '(.*)'$/) do |name|
   single_user.reload
@@ -197,7 +209,6 @@ Then(/^his email should be '(.*)'$/) do |email|
   expect(single_user.email).to eq(email)
 end
 
-
 And(/^he clicks the link in the email he just received$/) do
   # as seen here: https://stackoverflow.com/questions/25240102/how-to-visit-a-link-inside-an-email-using-capybara
   path_regex = /(?:"https?\:\/\/.*?)(\/.*?)(?:")/
@@ -205,4 +216,10 @@ And(/^he clicks the link in the email he just received$/) do
   mail = ActionMailer::Base.deliveries.last
   path = mail.body.match(path_regex)[1]
   visit(path)
+  
+Then(/^(.*) should be able to change the dates of the game days$/) do |userName|
+  step 'the schedule page for l is visited'
+  step "#{userName} should be able to enter start and end date for each gameday"
+  step 'the change should be saved'
+  sign_out
 end
