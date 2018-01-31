@@ -1,6 +1,9 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+  match '/404', :to => 'errors#not_found', :via => :all
+
   resources :events, except: [:create] do
     member do
       put :join
@@ -12,6 +15,8 @@ Rails.application.routes.draw do
   resources :leagues, controller: 'events', only: [:show, :new, :create, :update], type: League
   resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
   resources :rankinglists, controller: 'events', only: [:show, :new, :create, :update], type: Rankinglist
+
+  resources :gamedays, only: [:update]
 
   root 'welcome#index'
   resources :teams
@@ -31,7 +36,7 @@ Rails.application.routes.draw do
   #get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
   get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
-  get '/events/:id/ranking', to: 'events#ranking', as: 'event_ranking'
+  get '/leagues/:id/ranking', to: 'leagues#ranking', as: 'leagues_ranking'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {

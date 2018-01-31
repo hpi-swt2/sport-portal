@@ -7,7 +7,9 @@ class MatchesController < ApplicationController
 
   # GET /matches/new
   def new
-    @match = Match.new
+    @match = Match.new(new_match_params)
+    @match.save
+    render :show
   end
 
   # GET /matches/1/edit
@@ -51,6 +53,10 @@ class MatchesController < ApplicationController
   # PATCH/PUT /matches/1/update_results
   def update_results
     if @match.update_with_point_recalculation(match_results_params)
+      event = @match.event
+      if event.is_a? Rankinglist
+        event.update_rankings(@match)
+      end
       redirect_to @match, notice: I18n.t('helpers.flash.updated', resource_name: Match.model_name.human).capitalize
     else
       render :edit_results
@@ -90,6 +96,10 @@ class MatchesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_match
       @match = Match.find(params[:id])
+    end
+
+    def new_match_params
+      params.permit(:team_home_id, :team_away_id, :event_id)
     end
 
     # Only allow a trusted parameter "white list" through.

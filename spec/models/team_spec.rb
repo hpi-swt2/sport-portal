@@ -63,11 +63,11 @@ RSpec.describe Team, type: :model do
 
   it "should be in event if an event is assigned" do
     team = FactoryBot.create :team
-    expect(team.in_event?).to be false
+    expect(team.associated_with_event?).to be false
 
     event = FactoryBot.create :event
     team.events << event
-    expect(team.in_event?).to be true
+    expect(team.associated_with_event?).to be true
   end
 
   it 'is valid with image as avatar' do
@@ -86,11 +86,30 @@ RSpec.describe Team, type: :model do
     expect(team).not_to be_valid
     expect(team.errors[:avatar]).to include(I18n.t('users.avatar.errors.max_size'))
   end
+
   it "by default return teams ordered by their date of creation" do
     team = FactoryBot.create :team
     another_team = FactoryBot.create :team
     # update team name to be able to check that updated_at is not used to order teams
     team.name = "New Name"
     expect(Team.all).to eq([team, another_team])
+  end
+
+  it 'should notify newly added team members' do
+    team = FactoryBot.create :team
+
+    user = FactoryBot.create :user
+    expect { team.members << user }.to change { ActionMailer::Base.deliveries.length }.by(1)
+  end
+
+  it 'should notify its members when it participates in an event' do
+    team = FactoryBot.create :team
+    user1 = FactoryBot.create :user
+    user2 = FactoryBot.create :user
+    team.members << [user1, user2]
+    team_members_count = team.members.length
+
+    event = FactoryBot.create :event
+    expect { event.add_team team }.to change { ActionMailer::Base.deliveries.length }.by(team_members_count)
   end
 end

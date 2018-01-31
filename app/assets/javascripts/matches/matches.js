@@ -7,3 +7,9 @@ document.addEventListener("turbolinks:load", function() {
     itemSelector: '.result',
   });
 });
+
+$(function() {
+    $('.input-daterange').datepicker({
+        format: 'dd.mm.yyyy'
+    });
+});
