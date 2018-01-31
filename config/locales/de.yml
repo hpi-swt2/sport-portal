@@ -30,7 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 ---
 de:
-  appname: "Sport-Portal"
+  appname: "Sportify"
 
   footer:
     hpi: "HASSO-PLATTNER-INSTITUT"
@@ -71,12 +71,44 @@ de:
 
   welcome:
     index:
-      lead: "Wir bieten unglaubliche Lösungen für vielfältige Use Cases."
+      lead: "Organisiere deine Liga!"
+      lead-description: "Plane, erstelle und betreue mühelos sowohl Turniere als auch Ligen für deinen Sport. Du hast noch keine Erfahrung als Event-Organisator? Kein Problem! Baue dir jetzt mit wenigen Klicks problemlos deinen persönlichen Spielplan."
+      free-sign-up: "Kostenlos Anmelden"
+      soccer: "Fußball"
+      basketball: "Basketball"
+      volleyball: "Volleyball"
+      table-tennis: "Tischtennis"
+      others: "andere"
+      section1: "Was bieten wir?"
+      section1-description_html: |
+        Verwalte über unsere hochmoderne Plattform alle Sportereignisse. Unsere Benutzeroberfläche ermöglicht es dir, deine Ergebnisse mit allen deinen Freunden (auch wenn es nur 2 sind) zu teilen und sie für deinen Sport zu begeistern.<br /><br />
+        Dir ist das rudimentäre Ligensystem nicht genug? Wir bieten zusätzlich auch das Schweizer System, in dem auch große Differenzen zwischen den Fertigkeiten einzelner Spieler, ein faires und reizendes Erlebnis bieten.<br /><br />
+        Neben einer spielend leichten Ligenverwaltung bieten wir natürlich auch Hilfe bei der Organisation von Turnieren.
+      section2: "Wofür eigentlich?"
+      section2-description_html: |
+        Egal ob du eine Fußballliga, ein Tischtennisturnier oder vielleicht sogar ein Turnier für dein Lieblingsonlinespiel organisieren willst, auf unserer Plattform ist das alles kein Problem. Bei uns kannst du deiner Fantasie freien Lauf lassen.<br /><br />
+        Da auch für uns der Sport an erster Stelle steht, wollen wir dir natürlich so viel Mehraufwand wie nur möglich ersparen. Deswegen musst du nicht jedes einzelne Spiel selbst überwachen. Unser vollautomatisierter Email-Service erinnert alle Spieler selbstständig an ihre Spieltermine und das Eintragen ihrer Ergebnisse. Du musst dich also nicht ständig um den reibungslosen Ablauf deiner Liga kümmern und hast den Kopf frei für deinen Sport.<br /><br />
+      section3: "Hier nochmal im Detail:"
+      section3-card1-header: "Turnier"
+      section3-card1-description_html:
+        <li>K.O.-System</li><li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Automatische oder manuelle Paarungen</li>
+      section3-card2-header: "Liga"
+      section3-card2-description_html:
+        <li>Liga und Schweizer System</li><li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Automatische oder manuelle Paarungen</li><li>Automatische Spielplangenerierung</li><li>Erinnerung via Email</li><li>Automatische Punktevergabe</li><li>Statistiken</li>
+      section3-card3-header: "Rangliste"
+      section3-card3-description_html:
+        <li>Jeder gegen Jeden</li><li>Einzel oder Teams</li><li>Keine festen Paarungen</li><li>Metriken zur Bestimmung der Spielstärke (Elo, Trueskill, Verhältnis S./N.)</li><li>Keine festen Spieltage</li><li>Beitritt jederzeit möglich</li>
+      section4: "Und wer sind wir?"
+      section4-description_html: |
+        Wir sind ein Team ambitionierter Studenten, welche im Rahmen einer Bachelor-Lehrveranstaltung den Umgang mit großen Teams und Ruby-On-Rails lernen. Das Projekt begann im Oktober 2017 im Auftrag des Sportklubs des Hasso-Plattner-Institut Potsdam.<br /><br />
+        Unsere Vision ist es, den gesamten Organisationsprozess von Sportveranstaltungen zu vereinfachen. Um dir ein so angenehmes Erlebnis wie nur möglich zu ermöglichen, schwitzen wir Tag und Nacht, nicht nur beim Sport.<br /><br />
+      create-schedule: "Spielplan erstellen"
 
   navbar:
     drop-down:
       dashboard: "Mein Dashboard"
-      edit_profile: "Mein Profil"
+      my_profile: "Mein Profil"
+      edit_profile: "Profil bearbeiten"
       notification_settings: "Benachrichtigungseinstellungen"
 
   dashboard:
@@ -112,18 +144,25 @@ de:
         one: "Event"
         other: "Events"
         id: "ID"
+      game_result:
+        one: "Ergebnis"
+        other: "Ergebnisse"
 
     attributes:
       match:
         id: "ID"
         date: "Datum"
         place: "Ort"
-        score_home: "Heim-Ergebnis"
-        score_away: "Auswärts-Ergebnis"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
         team_away_id: "Auswärts-Team"
+      game_result:
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
+      game_results:
+        score_home: "Heim-Ergebnis"
+        score_away: "Auswärts-Ergebnis"
       team:
         id: "ID"
         name: "Name"
@@ -143,13 +182,26 @@ de:
         deadline: "Anmeldefrist"
         startdate: "Beginn"
         enddate: "Ende"
+        organizers: "Organisatoren"
         duration: "Dauer in Tagen"
+        selection_type: "Auswahlverfahren"
         metric: "Metrik"
         initial_value: "Anfangswert"
+        min_players_per_team: "Min. Anzahl Spieler pro Team"
+        max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
           single: "Einzelteilnahme"
           team: "Teamteilnahme"
+        bestof_length: "Spielart"
+        game_winrule: "Gewinnregel"
+        points_for_win: "Punkte für Gewinn"
+        points_for_draw: "Punkte für Unentschieden"
+        points_for_lose: "Punkte für Niederlage"
+        selection_types:
+          fcfs: "First Come First Serve"
+          fcfs_queue: "Warteschlange"
+          selection: "Teilnehmer auswählen"
       tournament:
         game_modes:
           ko: "K.-o.-System"
@@ -170,6 +222,9 @@ de:
         first_name: "Vorname"
         last_name: "Nachname"
         telephone_number: "Telefonnummer"
+        birthday: "Geburtstag"
+        telegram_username: "Telegram Benutzername"
+        favourite_sports: "Lieblingssportarten"
         id: "ID"
         created_at: "Erstellt am"
     validations:
@@ -180,6 +235,30 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
+      notifications:
+            settings: "Benachrichtigungs-Einstellungen"
+            enable_team_notifications: "Team-Benachrichtigungen erhalten"
+            enable_event_notifications: "Event-Benachrichtigung erhalten"
+            update_settings: "Aktualisieren"
+
+
+    match:
+      game_results: "Ergebnis(se)"
+      add_game_result: "Ergebnis hinzufügen"
+      remove_game_result: "Ergebnis entfernen"
+      added_game_result_notice: "Ergebnis hinzugefügt!"
+      removed_game_result_notice: "Ergebnis entfernt!"
+      noscript:
+        add_results_notice:
+          create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
+          edit_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen oder zu löschen benutze bitte Buttons mit dem \"(Noscript)\" Präfix."
+        button_prefix: "(Noscript) "
+      edit_results: "Ergebnisse bearbeiten"
+      error:
+        update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
+
+    event:
+      point_distribution: "Punkteverteilung"
 
   unauthorized:
         manage:
@@ -188,6 +267,7 @@ de:
 
   success:
     updated_match_points: "Die Punkte dieses Matches wurden erfolgreich aktualisiert."
+    updated_gameday_dates: "Die Daten dieses Spieltages wurden erfolgreich aktualisiert"
     join_event: "Du bist dem Event %{event} erfolgreich beigetreten."
     join_team_event: "Du bist dem Event %{event} erfolgreich mit deinem Team %{team} beigetreten."
     leave_event: "Du hast das Event %{event} erfolgreich verlassen."
@@ -195,22 +275,37 @@ de:
 
   error:
     update_match_points: "Die Punkte dieses Matches konnten nicht aktualsiert werden, versuchen Sie es erneut."
+    updated_gameday_dates: "Die Daten dieses Spieltages konnten nicht aktualisiert werden, Versuchen Sie es erneut"
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
     create_event: "Event erstellen"
     choose_event_format: "Eventart wählen"
-    new_league: "Neue Liga"
-    new_tournament: "Neues Turnier"
-    new_rankinglist: "Neue Rangliste"
+    new_league: "Liga erstellen"
+    new_tournament: "Turnier erstellen"
+    new_rankinglist: "Rangliste erstellen"
     Tournament: "Turnier"
     League: "Liga"
     Rankinglist: "Rangliste"
     show_events: "Alle Events anzeigen"
     join_team_event: "Event %{event} mit einem Team beitreten"
     choose_team: "Ein Team auswählen"
+    add_match: "Spiel hinzufügen"
     participating: "Beigetreten"
     metric: "Metrik"
+    best_of: "Best-of-"
+    winrule_tooltip: "z.B. Fussball = Best-of-1, Tennis = Best-of-3"
+    advanced: "Erweitert"
+    full: "Voll"
+    fcfs: "First Come First Serve"
+    discipline:
+      basketball: "Basketball"
+      soccer: "Fußball"
+      tennis: "Tennis"
+      table_tennis: "Tischtennis"
+      table_football: "Tischkicker"
+      volleyball: "Volleyball"
+      other: "Andere"
     show:
       to_schedule: "zum Spielplan"
       to_overview: "zur Übersicht"
@@ -221,11 +316,14 @@ de:
       select_type: "Eventtyp auswählen"
       select_game_mode: "Spieltyp auswählen"
       select_player_type: "Spielertyp auswählen"
+      select_selection_type: "Auswahlverfahren auswählen"
       select_metric: "Metrik auswählen"
+      select_discipline: "Sportart auswählen"
     schedule:
       title: "Spielplan"
       gameday: "Spieltag"
       date: "Datum"
+      edit_date: "Datum ändern"
       place: "Ort"
       home: "Team 1"
       away: "Team 2"
@@ -240,6 +338,7 @@ de:
       eighthfinale: "Achtelfinale"
       preliminaries: "Vorrunde %{round}"
       to: "bis"
+      appointment: "Termin"
     gamemode:
       ko: "KO"
       ko_group: "Gruppen-KO"
@@ -256,9 +355,10 @@ de:
       teamColumn: "Team"
       standingColumn: "Platzierung"
       unkown_standing: "Platzierung Unbekannt"
-      out: "In %{match_name} ausgeschieden"
-      in_place_3_match: "In Spiel um Platz 3"
-      in: "In %{match_name}"
+      out: "Im %{match_name} ausgeschieden"
+      in_place_3_match: "Im Spiel um Platz 3"
+      in: "Im %{match_name}"
+      not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
@@ -272,16 +372,16 @@ de:
       won_count: "Siege"
       draw_count: "Unentschieden"
       lost_count: "Niederlagen"
-      goals: "Tore"
-      goals_against: "Gegentore"
-      goals_difference: "Tordifferenz"
-      points: "Punkte"
+      goals: "Punkte"
+      goals_against: "Gegenpunkte"
+      goals_difference: "Punktdifferenz"
+      points: "Ligapunkte"
     max_teams:
       infinite: "unbegrenzt"
 
   matches:
     round_name:
-      zero: "Finalspiel %{gameid}"
+      zero: "Finalspiel"
       one: "Halbfinalspiel %{gameid}"
       two: "Viertelfinalspiel %{gameid}"
       three: "Achtelfinalspiel %{gameid}"
@@ -290,6 +390,10 @@ de:
     loser_of_match: "Verlierer %{match}"
 
   teams:
+    index:
+      my_teams: "Meine Teams"
+      all_teams: "Alle Teams"
+      create_team: "Ein Team erstellen"
     show:
       invite_user_to_team: "+"
       number: "#"
@@ -322,3 +426,7 @@ de:
       user:
         destroyed: "Dieser Account wurde gelöscht"
         not_destroyed: "Dieser Account wurde nicht gelöscht, weil du ein falsches Passwort eingegeben hast"
+
+  errorpage:
+    site_not_found: "Die Seite wurde nicht gefunden"
+    organize_event: "Aber du kannst eigene Events organisieren!"

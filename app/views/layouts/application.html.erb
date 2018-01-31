@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= favicon_link_tag %>
+  <title><%= t('appname') %></title>
+  <%= csrf_meta_tags %>
 
-    <title><%= t('appname') %></title>
-    <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
+  <% if (action_name === "new" && controller_name == "sessions" or controller_name === "users" && action_name == "new" or controller_name === "users" && action_name == "create") %>
+      <%= stylesheet_link_tag 'navbar', media: 'all', 'data-turbolinks-track' => 'reload' %>
+  <% end %>
+  <% if (action_name == "index" && controller_name == "teams" or controller_name == "events") %>
+      <%= stylesheet_link_tag 'tile', media: 'all', 'data-turbolinks-track' => 'reload' %>
+  <% end %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track'=>'reload' %>
-    <% if (action_name === "new" && controller_name == "sessions" or controller_name === "users" && action_name == "new" or controller_name === "users" && action_name == "create") %>
-        <%= stylesheet_link_tag 'navbar', media: 'all', 'data-turbolinks-track'=>'reload' %>
-    <% end %>
 
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
+</head>
 
-    <%= javascript_include_tag 'application', 'data-turbolinks-track'=> 'reload' %>
-  </head>
+<!--Display the background -->
+<body>
+<div class="background-layer <%= render partial: "application/background" %>">
+  <%= render partial: "application/navbar" %>
+  <div class="container">
+    <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
+    <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
+    <%= if controller_name != "sessions" and action_name != "new" then
+          bootstrap_flash
+        end %>
 
-  <!--Display the background -->
-  <body>
-    <div class="background-layer <%= render partial: "application/background"%>">
-      <div class="container">
-        <%= render partial: "application/navbar" %>
-
-        <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
-        <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
-        <%= if controller_name != "sessions" and action_name != "new" then bootstrap_flash end%>
-
-        <%# Render content of views %>
-        <%= yield %>
-      </div>
-    </div>
-    <%= render partial: "application/footer"%>
-  </body>
+    <%# Render content of views %>
+    <%= yield %>
+  </div>
+</div>
+<%= render partial: "application/footer" %>
+</body>
 </html>

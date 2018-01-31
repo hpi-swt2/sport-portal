@@ -5,7 +5,7 @@
   <%= render partial: "application/validation_errors", locals: {model: @team} %>
 
   <div class="form-group">
-    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <%= f.label :name, :class => 'control-label col-lg-2 required', :required => true %>
     <div class="col-lg-10">
       <%= f.text_field :name, :class => 'form-control' %>
       <%= f.error_span(:name) %>

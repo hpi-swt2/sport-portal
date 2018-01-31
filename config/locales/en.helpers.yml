@@ -37,6 +37,7 @@ en:
       update: "Update %{model}"
     select:
       prompt: "Please select"
+      option_operator: "or"
     teams:
       kind_of_sport: "Kind of sport"
       description: "Description"
@@ -63,3 +64,39 @@ en:
         telephone_number: "Telephone Number"
         telegram_username: "Telegram Username"
         favourite_sports: "Favourite Sports"
+  mailer:
+    hello: "Hey %{firstname},"
+    have_fun: "Good luck with your training!"
+    closing: "%{appname} Team"
+  match_mailer:
+    next_game: "your match (%{team_home} vs. %{team_away}) in the event %{name}"
+    match_notification:
+      info: "begins tomorrow at %{start_time}. You will meet at this place: %{place}"
+      subject: "Your game begins tomorrow"
+    match_canceled:
+      info: "has been canceled."
+      subject: "Your match has been canceled"
+    match_scheduled:
+      info: "has been scheduled."
+      subject: "Your match has been scheduled"
+    match_date_changed:
+      info: "is rescheduled for %{start_time}."
+      subject: "The date for your match has changed"
+  event_mailer:
+    event: "the event %{event}"
+    event_canceled:
+      info: "has been canceled."
+      subject: "Your event has been canceled"
+    event_started:
+      info: "has started."
+      subject: "Your event has started"
+    event_finished:
+      info: "has finished."
+      subject: "Your event has finished"
+  team_mailer:
+    user_added_to_team:
+      added_to_team_info_html: 'you joined the team %{team_link}.'
+      subject: "You joined the team %{team_name}"
+    team_registered_to_event:
+      registered_to_event_info_html: 'your team %{team_link} now participates in the event %{event_link}.'
+      subject: "Your team %{team_name} now participates in the event %{event_name}"

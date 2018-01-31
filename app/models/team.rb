@@ -10,6 +10,7 @@
 #  kind_of_sport :string
 #  private       :boolean
 #  avatar_data   :text
+#  single        :boolean          default(FALSE)
 #
 
 class Team < ApplicationRecord
@@ -20,7 +21,9 @@ class Team < ApplicationRecord
 
   scope :multiplayer, -> { where single: false }
 
-  has_and_belongs_to_many :events
+  has_many :participants
+  has_many :events, through: :participants
+
 
   has_many :team_members, source: :team_user, class_name: "TeamUser"
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
@@ -30,21 +33,22 @@ class Team < ApplicationRecord
   has_many :home_matches, as: :team_home, class_name: 'Match'
   has_many :away_matches, as: :team_away, class_name: 'Match'
 
-  include AvatarUploader::Attachment.new(:avatar)
+  include ImageUploader::Attachment.new(:avatar)
 
   def matches
     home_matches.or away_matches
   end
 
-  # validates :owners, presence: true
-  # validates :members, presence: true
-
   def has_multiple_owners?
     owners.length > 1
   end
 
-  def in_event?
+  def associated_with_event?
     events.exists?
+  end
+
+  def has_member?(user)
+    members.include?(user)
   end
 
   # these methods allow teams to be treated like match results. see MatchResult model

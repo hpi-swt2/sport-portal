@@ -1,6 +1,6 @@
 <% level = 0 %>
 <% while true %>
-  <% this_level_matches = @matches.select { |match| match.gameday == level } %>
+  <% this_level_matches = @matches.select { |match| match.gameday_number == level } %>
   <% if this_level_matches.length == 0 %>
     <% break %>
   <% end %>
@@ -29,20 +29,31 @@
   <% this_level_matches.each do |match| %>
 
     <tr>
-      <td><%= match.place %> <%= match.index %></td>
+      <td><%= match.index %></td>
+      <td><%= match.place %></td>
       <td><%= link_to_participant match.team_home %></td>
       <td><%= link_to_participant match.team_away %></td>
-      <td>
-        <%= match.score_home ? match.score_home : '-' %>
-        :
-        <%= match.score_away ? match.score_away : '-' %>
+      <td class="text-center">
+        <% match.game_results.each do |result| %>
+          <%= result.score_home ? result.score_home : '-' %>
+          :
+          <%= result.score_away ? result.score_away : '-' %>
+          <br/>
+        <% end %>
       </td>
       <td>
-        <%= form_for match, url: update_points_match_path(match), html: {method: "put"}, namespace: "match_#{match.id}" do |f| %>
-          <%= f.text_field :points_home, class: 'input-sm', style: 'width: 50px' %>
+        <%= form_for match, url: update_points_match_path(match), html: { method: "put" }, namespace: "match_#{match.id}" do |f| %>
+          <%= f.number_field :points_home, class: 'input-sm', style: 'width: 50px' %>
           :
-          <%= f.text_field :points_away, class: 'input-sm', style: 'width: 50px' %>
+          <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
           <%= f.submit t('helpers.links.save'), class: 'btn btn-default btn-xs', id: "save_points_#{match.id}" %>
+        <% end %>
+      </td>
+      <td>
+        <% unless match.start_time.nil? %>
+          <!-- 32400 seconds so it is 09:00 as default time, otherwise it would be 00:00 -->
+          <%= date = (match.start_time_date + match.gameday_number - 1).to_s(:day_and_month) %>
+          <%= time = (match.start_time_time + 32400).to_s(:hours_and_minutes) %>
         <% end %>
       </td>
       <td>

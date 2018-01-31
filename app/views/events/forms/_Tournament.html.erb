@@ -1,5 +1,7 @@
 <%= render 'events/forms/parts/dates', form: form%>
 <%= render 'events/forms/parts/player_type', form: form %>
+<%= render 'events/forms/parts/min_max_players_per_team', form: form %>
+<%= render 'events/forms/parts/selection_type', form: form %>
 
 <div class="form-group" id="event_game_modes">
   <%= form.label :game_mode, class: 'control-label col-lg-2' %>

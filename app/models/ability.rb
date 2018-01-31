@@ -30,6 +30,7 @@ class Ability
     alias_action :update, :destroy, to: :modify
     alias_action :create_from_type, to: :create
     can :read, :all
+    cannot :read, User
     cannot :read, Team, private: true
     cannot :index, User
     can :create, User
@@ -47,7 +48,8 @@ class Ability
       can :create, :all
 
       # User
-      can [:show, :modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy], User, id: user_id
+      can :show, User
+      can [:modify, :edit_profile, :update_profile, :dashboard, :confirm_destroy, :notifications], User, id: user_id
       cannot :create, User
 
       # Event
@@ -56,9 +58,11 @@ class Ability
       can_leave_event(user)
       can :ranking, Event
       can [:schedule, :team_join], Event
+      can_update_gameday(user)
 
       # Team
       can_crud_team(user_id)
+      can_destroy_team(user)
       can_assign_ownership(user)
       can_delete_ownership(user)
       can_delete_membership(user)
@@ -82,14 +86,27 @@ class Ability
       end
     end
 
+    def can_update_gameday(user)
+      can :update, Gameday do |gameday|
+        not (gameday.event.organizers & user.organizers).empty?
+      end
+    end
+
     def can_crud_team(user_id)
       can :read, Team, private: true, members: { id: user_id }
       can :update, Team, members: { id: user_id }
-      can :destroy, Team, owners: { id: user_id }
+    end
+
+    def can_destroy_team(user)
+      can :destroy, Team, Team do |team|
+        (team.owners.include? user) && (!team.associated_with_event?)
+      end
     end
 
     def can_assign_membership_by_email(user)
-      can :assign_membership_by_email, Team, members: { id: user.id }
+      can :assign_membership_by_email, Team, Team do |team|
+        ((team.members.include? user) || (team.owners.include? user)) && max_players_per_team_border_not_exceeded?(team, 1)
+      end
     end
 
     def can_send_emails_to_team_members(user)
@@ -106,7 +123,7 @@ class Ability
       can :delete_membership, Team, Team do |team, team_member|
         user_id = user.id
         exist_owners_after_delete = Ability.number_of_owners_after_delete(team, team_member) > 0
-        ((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete)
+        (((team.owners.include? user) && exist_owners_after_delete) || ((team.members.include? user) && (user_id == Integer(team_member)) && exist_owners_after_delete)) && min_players_per_team_border_not_exceeded?(team, 1)
       end
     end
 
@@ -125,5 +142,21 @@ class Ability
         owners_after_delete = owners
       end
       owners_after_delete.length
+    end
+
+    def min_players_per_team_border_not_exceeded?(team, update_count)
+      not_exceeded = true
+      team.events.each do |event|
+        not_exceeded = event.min_players_per_team <= team.members.count - update_count
+      end
+      not_exceeded
+    end
+
+    def max_players_per_team_border_not_exceeded?(team, update_count)
+      not_exceeded = true
+      team.events.each do |event|
+        not_exceeded = event.max_players_per_team >= team.members.count + update_count
+      end
+      not_exceeded
     end
 end

@@ -8,4 +8,5 @@ RSpec.describe "matches/new", type: :view do
     render
     expect(rendered).to have_css("form[action='#{matches_path}'][method='post']", count: 1)
   end
+
 end

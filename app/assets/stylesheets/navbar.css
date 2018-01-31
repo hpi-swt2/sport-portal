@@ -2,26 +2,145 @@
     .navbar .dropdown:hover .dropdown-menu {
         display: block;
     }
+
+    .navbar {
+        background-color: #0f3157 !important;
+    }
+
+    .transparent{
+        background-color: transparent !important;
+    }
+
+    .navbar-collapse {
+        background-color: transparent;
+    }
 }
+
 @media screen and (max-width : 768px) {
     .nav > .divider-vertical {
         display: none;
     }
+
+    .navbar {
+        height: 57px !important;
+        background-color: #0f3157 !important;
+    }
+
+    .brand-content {
+        margin-top: -6px;
+    }
+
+    li {
+        width: 100%;
+    }
+
+    .navbar-collapse ul {
+        margin-top: 0px;
+    }
+
+    .navbar-header {
+        padding-bottom: 7px;
+    }
+
+    .navbar-collapse {
+        background-color: #0f3157 !important;
+        padding-top: 5px;
+        margin-top: 6px;
+        max-height: 600px !important;
+        position: relative;
+        z-index: 10;
+    }
+
+    .navbar-collapse.collapsing {
+        margin-top: 3px;
+    }
+
+    .navbar-nav > li {
+        text-align: center;
+    }
+
+    .icon-bar {
+        background-color: #1ba9e5 !important;
+    }
+
+    .navbar-toggle{
+        margin-top: 12px !important;
+        border-color: transparent !important;
+        background-color: transparent !important;
+    }
+
+    .navbar-toggle.expanded {
+        background-image: url('https://owncloud.hpi.de/index.php/s/bWdfeewNyoUK9Kt/download');
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-top: 18px !important;
+        margin-right: 3vh;
+    }
+
+    .navbar-toggle.expanded .icon-bar {
+        display: none;
+    }
 }
+
+.navbar{
+    margin-bottom: 0px !important;
+}
+
+.brand-content {
+    display: flex;
+    align-items: center;
+}
+
+.wordmark {
+    text-transform: uppercase;
+    margin-left: 10px;
+    color: white;
+}
+
+.mobile-avatar {
+    height: 48px;
+    width: 48px;
+}
+
+.navbar-nav a{
+    background-color: transparent !important;
+    font-size: large;
+}
+
+.navbar-nav a:hover{
+    color: #1ba9e5 !important;
+}
+
+img.logo-img{
+    height: 38px;
+}
+
+img.login-img{
+    height: 38px;
+    margin-top: -9px;
+}
+
+ul.nav.navbar-nav.navbar-right {
+    margin-top: 7px;
+}
+
+.nav.navbar-nav.navbar-right li.active{
+    background-color: transparent;
+}
+
 .navbar .dropdown-menu li {
     text-align: center;
 }
 .navbar-default {
+    border: none !important;
+    border-radius: 0px !important;
     background-color: transparent;
     border-color: transparent;
     width: 100%;
 }
-.navbar-default .navbar-brand {
-    color: white;
-}
 
 .navbar-default .navbar-nav > li > a {
-    color: white;
+    color: white !important;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -43,7 +162,23 @@
 }
 
 img.avatar {
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
     object-fit: cover;
 }
+
+.container, .container-fluid{
+    max-width: 1200px;
+}
+
+.dropdown-menu > li.active {
+    background-color: #1ba9e5 !important;
+}
+.dropdown-menu >li {
+    width: 100%;
+}
+
+.dropdown-menu > li > a {
+    text-align: left;
+}
+

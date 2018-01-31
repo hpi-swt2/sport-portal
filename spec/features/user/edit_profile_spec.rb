@@ -6,7 +6,7 @@ RSpec.feature "Edit profile", type: :feature do
   before(:each) { sign_in user }
 
   scenario "User edits profile informations" do
-    visit user_profile_edit_path(user)
+    visit edit_user_path(user)
 
     new_params = FactoryBot.attributes_for(:user)
     new_params[:birthday] = new_params[:birthday] - 1.year
@@ -32,13 +32,13 @@ RSpec.feature "Edit profile", type: :feature do
   scenario "User sees delete checkbox for his avatar" do
     user = FactoryBot.create :user, :with_avatar
     sign_in user
-    visit user_profile_edit_path(user)
+    visit edit_user_path(user)
 
     expect(page).to have_css("input[id='user_remove_avatar']")
   end
 
   scenario "User sees no delete checkbox for his avatar" do
-    visit user_profile_edit_path(user)
+    visit edit_user_path(user)
     expect(page).not_to have_css("input[id='user_remove_avatar']")
   end
 
