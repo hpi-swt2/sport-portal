@@ -5,7 +5,7 @@
     }
 }
 
-@media screen and (max-width : 799px) and (min-width: 400px){
+@media screen and (max-width : 899px) and (min-width: 400px){
     .tile-wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr
@@ -34,7 +34,6 @@
         background: #1CA9E5;
         border-radius: 100px;
         padding: 0.81em 1.88em 0.94em;
-
     }
     .mobile-img {
         margin: 0 auto;
@@ -85,17 +84,19 @@ a {
 }
 
 .tile-title {
-    font-size: 120%;
+    font-size: 1.7rem;
     font-weight: bold;
     display: inline-block;
-    width: 150px;
+    width: 250px;
+    padding-top: 10px;
+    margin-bottom: -10px;
 }
 
 .tile-description {
-    font-size: 70%;
+    font-size: 0.9rem;
     font-weight: bold;
     display: inline-block;
-    width: 150px;
+    width: 240px;
     white-space: nowrap;
 }
 
