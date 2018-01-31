@@ -16,6 +16,17 @@ RSpec.describe "teams/index", type: :view do
     expect(rendered).to have_content(@teams.second.name, count: 1)
   end
 
+  it "redirects to new team when clicking new button" do
+    render
+    click_link_or_button(t('teams.index.create_team'))
+    expect(response).to redirect_to(Team.new)
+  end
+
+  it "always shows 'All Teams'" do
+    render
+    expect(rendered).to have_text(t('teams.index.all_teams'))
+  end
+
   it "doesn't render the new button when not signed in" do
     render
     expect(rendered).to_not have_selector(:link_or_button, t('teams.index.create_team'))
