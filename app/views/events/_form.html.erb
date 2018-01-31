@@ -13,7 +13,7 @@
     <%= f.label :image, t('activerecord.models.image.one'), class: 'control-label col-lg-2'%>
     <div class="col-lg-10">
       <% unless @event.new_record? %>
-        <%= image_tag @event.image_url || image_path('missing_event_image.png'), id: 'preview', style: 'max-width:100px; max-height:100px'%>
+        <%= image_tag @event.image_url || image_path('missing_event_image.jpg'), id: 'preview', style: 'max-width:100px; max-height:100px'%>
       <% end %>
       <%= f.file_field :image, class: 'form-control-file' %>
       <% if @event.image %>
