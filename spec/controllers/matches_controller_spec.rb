@@ -17,6 +17,12 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: nil, team_away: nil).attributes
   }
 
+  let(:admin) { FactoryBot.create(:admin) }
+
+  before(:each) do
+    sign_in admin
+  end
+
   describe "GET #show" do
     it "returns a success response" do
       match = Match.create! valid_attributes
