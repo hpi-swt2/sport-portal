@@ -57,8 +57,6 @@ ActiveRecord::Schema.define(version: 20180124104518) do
     t.integer "match_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "proposed_score_home"
-    t.integer "proposed_score_away"
     t.integer "scores_proposed_by_id"
     t.index ["match_id"], name: "index_game_results_on_match_id"
     t.index ["scores_proposed_by_id"], name: "index_game_results_on_scores_proposed_by_id"

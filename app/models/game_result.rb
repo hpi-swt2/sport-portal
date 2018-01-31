@@ -18,7 +18,7 @@ class GameResult < ApplicationRecord
 
   def can_confirm_scores?(user)
     # TODO: Dont let a random person propose scores
-     !is_confirmed? && (match.team_home.members.include?(user) && match.team_away.members.include?(scores_proposed_by) ||
+    !is_confirmed? && (match.team_home.members.include?(user) && match.team_away.members.include?(scores_proposed_by) ||
             match.team_away.members.include?(user) && match.team_home.members.include?(scores_proposed_by))
   end
 

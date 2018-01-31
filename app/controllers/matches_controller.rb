@@ -82,7 +82,7 @@ class MatchesController < ApplicationController
   def confirm_scores
     @result = GameResult.find_by(id: params[:result_id], match_id: @match.id)
     @result.confirm_scores(current_user)
-    redirect_back(fallback_location: edit_results)
+    redirect_back(fallback_location: edit_results_path(@match))
   end
 
   private

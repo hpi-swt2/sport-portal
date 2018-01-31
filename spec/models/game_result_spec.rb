@@ -29,4 +29,21 @@ RSpec.describe GameResult, type: :model do
 
     expect(GameResult.new(match: match)).to be_valid
   end
+
+  describe '#confirm_scores' do
+    let(:user) { FactoryBot.create(:user) }
+    subject { -> { match.confirm_scores(user) } }
+
+    it 'cannot be confirmed if already confirmed' do
+
+    end
+
+    it 'cannot be confirmed from user of the same team' do
+
+    end
+
+    it 'can be confirmed from user of the other team' do
+
+    end
+  end
 end
