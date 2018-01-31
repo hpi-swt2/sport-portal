@@ -181,6 +181,7 @@ class Event < ApplicationRecord
       "#{I18n.t('events.index.registration_until')}: #{self.deadline} <br> #{I18n.t('events.index.start_date')}: #{self.startdate}"
     else
       "#{I18n.t('events.index.max_players')}: #{self.max_teams}"
+    end
   end
 
   def fitting_teams(user)
@@ -224,5 +225,4 @@ class Event < ApplicationRecord
         TeamMailer.team_registered_to_event(member, team, self).deliver_now
       end
     end
-  end
 end
