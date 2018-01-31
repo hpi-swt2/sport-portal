@@ -132,7 +132,7 @@ Then(/^the opponent of the (home|away) team of match (\w+) (\d+) links to the (h
   opponent = find_team_of_match target_match_gameday, target_match_num, home_or_away_opponent
   visit event_overview_path single_tournament
   within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
-    expect(page).to have_text("gegen #{opponent.name}")
+    expect(page).to have_text("#{I18n.t('events.overview.against')} #{opponent.name}")
     expect(page).to have_link(href: team_path(opponent))
   end
 end
@@ -143,6 +143,6 @@ And(/^the (home|away) team of match (\w+) (\d+) links to no opponent$/) do |home
   team = find_team_of_match match_gameday, match_num, home_or_away
   visit event_overview_path single_tournament
   within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
-    expect(page).to_not have_text('gegen')
+    expect(page).to_not have_text(I18n.t('events.overview.against'))
   end
 end

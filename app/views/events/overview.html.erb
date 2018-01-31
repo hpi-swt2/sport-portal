@@ -20,7 +20,7 @@
             <%= link_to @event.standing_of(team), match_path(@event.last_match_of(team)) %>
             <% opponent = match.opponent_of(team) %>
             <% if opponent.is_a? Team %>
-              gegen
+              <%= t('events.overview.against') %>
               <%= link_to opponent.name, team_path(opponent) %>
             <% end %>
           <% else %>
