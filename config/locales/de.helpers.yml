@@ -84,7 +84,7 @@ de:
       info: "wurde abgesagt."
       subject: "Dein Spiel wurde abgesagt"
     match_scheduled:
-      info: "findet am %{start_time} statt."
+      info: "wurde geplant."
       subject: "Dein Match wurde geplant"
     match_date_changed:
       info: "wurde auf %{start_time} verschoben."

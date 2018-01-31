@@ -89,22 +89,32 @@
 <div class="table-responsive">
   <h3><%= t("events.show.participants") %></h3>
   <table class="table">
-    <thead><tr><th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th></tr></thead>
+    <thead>
+    <tr>
+      <th><%=t '.title', default: @event.participant_model.model_name.human.titleize %></th>
+      <% if @event.is_a? Rankinglist %>
+        <th><%= @event.human_game_mode %></th>
+      <% end %>
+    </tr>
+    </thead>
     <tbody>
-    <% @event.teams.each do |participant| %>
+    <% @event.participants.order(rating: :desc).each do |participant| %>
       <tr>
-        <td><%= link_to_participant participant %></td>
-        <td>
-          <% if (@event.is_a? Rankinglist) and (@event.has_participant? current_user) and (participant.name != current_user.name) %>
-            <%= link_to t('.create', default: t('helpers.links.duel')),
-                        new_match_path(team_home_id: participant,
-                                   team_away_id: @event.team_of(current_user),
-                                   event_id: @event),
-                        class: 'btn btn-default btn-xs',
-                        id: 'duel_participant'%>
-          <% end %>
-        </td>
-      </tr>
+        <td><%= link_to_participant participant.team %></td>
+        <% if @event.is_a? Rankinglist %>
+          <td><%= participant.rating %></td>
+          <td>
+            <% if (@event.is_a? Rankinglist) and (@event.has_participant? current_user) and (participant.team.owners.first.name != current_user.name) %>
+              <%= link_to t('.create', default: t('helpers.links.duel')),
+                          new_match_path(team_home_id: participant.team,
+                                         team_away_id: @event.team_of(current_user),
+                                         event_id: @event),
+                          class: 'btn btn-default btn-xs',
+                          id: 'duel_participant'%>
+            <% end %>
+          </td>
+          </tr>
+        <% end %>
     <% end %>
     </tbody>
   </table>
@@ -113,14 +123,17 @@
   <%= link_to t('.to_schedule'),
               event_schedule_path(@event),
               class: 'btn btn-default'%>
-
-  <%= link_to t('.to_overview'),
-              event_overview_path(@event),
-              class: 'btn btn-default' %>
+  <% if @event.type != 'League' %>
+    <%= link_to t('.to_overview'),
+                event_overview_path(@event),
+                class: 'btn btn-default' %>
+  <% end %>
 <% end %>
+<% if @event.type == 'League' %>
 <%= link_to t('.to_ranking'),
-            event_ranking_path(@event),
+            leagues_ranking_path(@event),
             class: 'btn btn-default' %>
+<% end %>
 
 <%# app/helpers/button_helper.rb %>
 <%= back_btn %>

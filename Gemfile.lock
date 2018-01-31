@@ -74,8 +74,11 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-datepicker-rails (1.7.1.1)
       railties (>= 3.0)
+    bootstrap-tooltip-rails (0.1)
+      rails (>= 3.1)
+      thor
     builder (3.2.3)
-    byebug (9.1.0)
+    byebug (10.0.0)
     cancancan (2.1.3)
     capybara (2.17.0)
       addressable
@@ -131,7 +134,7 @@ GEM
     devise-bootstrap-views (0.0.11)
     diff-lcs (1.3)
     docile (1.1.5)
-    down (4.2.0)
+    down (4.2.1)
     easy_translate (0.5.1)
       thread
       thread_safe
@@ -201,11 +204,11 @@ GEM
     mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.11.2)
+    minitest (5.11.3)
     multi_json (1.13.1)
     multi_test (0.1.2)
     nio4r (2.2.0)
-    nokogiri (1.8.1)
+    nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     omniauth (1.8.1)
       hashie (>= 3.4.6, < 3.6.0)
@@ -290,7 +293,7 @@ GEM
       rspec-expectations (~> 3.7.0)
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
-    rspec-support (3.7.0)
+    rspec-support (3.7.1)
     rubocop (0.52.1)
       parallel (~> 1.10)
       parser (>= 2.4.0.2, < 3.0)
@@ -349,7 +352,7 @@ GEM
       railties (~> 5.0, >= 5.0.1)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    uglifier (4.1.4)
+    uglifier (4.1.5)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.3.0)
     warden (1.2.7)
@@ -376,6 +379,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-datepicker-rails
+  bootstrap-tooltip-rails
   byebug
   cancancan
   capybara

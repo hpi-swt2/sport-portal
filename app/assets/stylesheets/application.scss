@@ -14,6 +14,7 @@
  *= require navbar
  *= require footer
  *= require bootstrap_and_overrides
+ *= require bootstrap/bootstrap-tooltip
  *= require_self
  *= require font-awesome
  *= require schedule
@@ -70,7 +71,7 @@ body {
   }
 
   * {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 
   h1 {
@@ -79,6 +80,10 @@ body {
 
   h2 {
     font-size: 4rem;
+  }
+
+  h3 {
+    font-size: 2.2rem;
   }
 }
 
@@ -93,10 +98,17 @@ body {
 
   h1 {
     font-size: 3.5rem;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
 
   h2 {
     font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 2.2rem;
   }
 }
 
