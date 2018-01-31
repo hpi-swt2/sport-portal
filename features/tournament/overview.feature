@@ -40,10 +40,15 @@ Feature: Tournament Overview Page
     And the standing of the away team of match Viertelfinale 1 links to Viertelfinale 1
     And the standing of the home team of match Viertelfinale 2 links to Viertelfinale 2
 
-  Scenario: Tournament overview page should link to matches
+  Scenario: Tournament overview page should link to opponents
     Given a tournament t with 5 teams
 
     When the tournament overview page for t is visited
     Then the opponent of the home team of match Viertelfinale 1 links to the away team of match Viertelfinale 1
     And the opponent of the away team of match Viertelfinale 1 links to the home team of match Viertelfinale 1
     And the home team of match Halbfinale 2 links to no opponent
+
+    When the Spielplan page for t is visited
+    And the results for match Viertelfinale 1 (6 : 7) got inserted
+    Then the opponent of the home team of match Halbfinale 2 links to the away team of match Halbfinale 2
+    And the opponent of the away team of match Halbfinale 2 links to the home team of match Halbfinale 2
