@@ -18,16 +18,14 @@ RSpec.describe MatchesController, type: :controller do
   }
 
   let(:authorized_attributes) {
-    FactoryBot.build(:match, team_home: @team, team_away: @other_team, event: @event).attributes
+    FactoryBot.build(:match, team_home: @team).attributes
   }
 
   before(:each) do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
     @admin = FactoryBot.create(:admin)
-    @event = FactoryBot.create(:event)
     @team = FactoryBot.create(:team)
-    @other_team = FactoryBot.create(:team)
     @team.members << @user
     sign_in @user
   end
