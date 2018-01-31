@@ -2,12 +2,13 @@
 #
 # Table name: game_results
 #
-#  id         :integer          not null, primary key
-#  score_home :integer
-#  score_away :integer
-#  match_id   :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                    :integer          not null, primary key
+#  score_home            :integer
+#  score_away            :integer
+#  match_id              :integer
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  scores_proposed_by_id :integer
 #
 
 class GameResult < ApplicationRecord
@@ -18,8 +19,8 @@ class GameResult < ApplicationRecord
 
   def can_confirm_scores?(user)
     # TODO: Dont let a random person propose scores
-    !is_confirmed? && (match.team_home.members.include?(user) && match.team_away.members.include?(scores_proposed_by) ||
-            match.team_away.members.include?(user) && match.team_home.members.include?(scores_proposed_by))
+    !is_confirmed? && match.team_home.members.where(user: [user, scores_proposed_by]).count != 2 &&
+        match.team_away.members.where(user: [user, scores_proposed_by]).count != 2
   end
 
   def is_confirmed?

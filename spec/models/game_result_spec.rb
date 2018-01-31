@@ -2,12 +2,13 @@
 #
 # Table name: game_results
 #
-#  id         :integer          not null, primary key
-#  score_home :integer
-#  score_away :integer
-#  match_id   :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                    :integer          not null, primary key
+#  score_home            :integer
+#  score_away            :integer
+#  match_id              :integer
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  scores_proposed_by_id :integer
 #
 
 require 'rails_helper'
@@ -31,19 +32,46 @@ RSpec.describe GameResult, type: :model do
   end
 
   describe '#confirm_scores' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:scores_proposed_by) { FactoryBot.create(:user) }
+    let(:confirmer) { FactoryBot.create(:user) }
+    let(:game_result) { FactoryBot.create(:game_result, scores_proposed_by: user) }
+
     subject { -> { match.confirm_scores(user) } }
 
-    it 'cannot be confirmed if already confirmed' do
+    context 'scores_proposed_by is in team home' do
+      before(:each) do
+        game_result.match.team_home.members << scores_proposed_by
+      end
 
+      context 'confirmer is in team home' do
+        before(:each) do
+          game_result.match.team_home.members << confirmer
+        end
+      end
+
+      context 'confirmer is in team away' do
+        before(:each) do
+          game_result.match.team_away.members << confirmer
+        end
+      end
     end
 
-    it 'cannot be confirmed from user of the same team' do
+    context 'scores_proposed_by is in team away' do
+      before(:each) do
+        game_result.match.team_away.members << scores_proposed_by
+      end
 
-    end
+      context 'confirmer is in team home' do
+        before(:each) do
+          game_result.match.team_home.members << confirmer
+        end
+      end
 
-    it 'can be confirmed from user of the other team' do
-
+      context 'confirmer is in team away' do
+        before(:each) do
+          game_result.match.team_away.members << confirmer
+        end
+      end
     end
   end
 end
