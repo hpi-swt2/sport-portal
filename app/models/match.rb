@@ -193,4 +193,9 @@ class Match < ApplicationRecord
   def has_result?
     has_scores? && has_points?
   end
+
+  def users_in_same_team(user1, user2)
+    team_home.members.where('"team_users"."user_id" IN (?)', [user1, user2]).count == 2 &&
+        team_away.members.where('"team_users"."user_id" IN (?)', [user1, user2]).count == 2
+  end
 end

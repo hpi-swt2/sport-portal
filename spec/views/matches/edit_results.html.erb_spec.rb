@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "matches/edit_results", type: :view do
   before(:each) do
     @match = assign(:match, FactoryBot.create(:match, :with_results))
+
   end
 
   it "renders a input form" do
@@ -28,5 +29,4 @@ RSpec.describe "matches/edit_results", type: :view do
     expect(rendered).to have_xpath("//a[@href='#{add_game_result_match_path(@match)}']")
     expect(rendered).to have_xpath("//a[@href='#{remove_game_result_match_path(id: @match.id, result_id: @match.game_results.first.id)}']")
   end
-
 end

@@ -18,7 +18,6 @@ describe 'Rankinglists', type: :feature do
     click_link_or_button('duel_participant')
 
     @match = Match.new(team_home: @event.team_of(@user), team_away: @event.team_of(@user2), event_id: @event)
-    puts @match.event_id
     @event.matches << @match
     expect(current_path).to eq("/matches/new")
     @match.save
