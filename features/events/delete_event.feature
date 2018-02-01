@@ -15,9 +15,9 @@ Feature: Delete Events
     Then u should not be able to delete the event e at any time
 
   Scenario: Admin and organizer can delete event that has not yet started
-    Given an event that has not started yet
-    Then the admin should be able to delete it
-    And the organizer should be able to delete it
+    Given an event e that has not started yet
+    Then admin a should be able to delete e
+    And user u who is an organizer should be able to delete e
 
   Scenario: Admin can delete event any time, organizer does not
     Given an event that has started
