@@ -75,8 +75,9 @@ class UsersController < Devise::RegistrationsController
   def update_notifications
     @user = User.find(params[:id])
     authorize! :update, @user
-    @user.update(event_notifications_enabled: params[:user][:event_notifications_enabled],
-                team_notifications_enabled: params[:user][:team_notifications_enabled])
+    user_params = params[:user]
+    @user.update(event_notifications_enabled: user_params[:event_notifications_enabled],
+                team_notifications_enabled: user_params[:team_notifications_enabled])
     redirect_to notifications_user_path(@user)
   end
 
