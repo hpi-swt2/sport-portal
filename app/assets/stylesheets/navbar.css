@@ -169,6 +169,7 @@ img.avatar {
 
 .container, .container-fluid{
     max-width: 1200px;
+    width: 100% !important;
 }
 
 .dropdown-menu > li.active {

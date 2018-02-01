@@ -34,6 +34,7 @@ $secondary-color: #01A8E8 !default;
   src: font_url('ProximaNova-Reg.otf') format('opentype');
 }
 
+
 @font-face {
   font-family: 'Proxima Nova';
   src: font_url('ProximaNova-Bold.otf') format('opentype');
@@ -58,6 +59,11 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+}
+
+.container, .container-fluid{
+  max-width: 1200px;
+  width: 100% !important;
 }
 
 .background-layer {
