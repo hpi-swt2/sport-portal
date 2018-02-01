@@ -1,5 +1,3 @@
-<%=$background%>
-
 <%-
   $background = "navbar-overlap"
   $new_background = "navbar-overlap background"
@@ -26,13 +24,10 @@
               $background = $no_background
           end
         when "welcome"
-          case action_name
-            when "index" then $background = $new_background
-          end
+          $background = $new_background
         else
           $background = $no_background
       end
   end
 %>
-
 <%=$background%>

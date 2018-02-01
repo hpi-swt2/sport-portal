@@ -24,14 +24,6 @@ a:link, a:visited, a:hover, a:active {
     color: #01A8E8;
 }
 
-.btn {
-    font-size: 15px;
-    color: #FFFFFF;
-    letter-spacing: 0;
-    background: #1CA9E5;
-    border-radius: 100px;
-}
-
 .input-field {
     font-family: Proxima Nova;
     font-size: 16px;
@@ -87,11 +79,39 @@ a:link, a:visited, a:hover, a:active {
     min-width: 250px;
 }
 
+a.openIdButton {
+    margin-top: 1rem;
+    color: white;
+    height: auto;
+    padding: 8px 32px;
+}
+
+a.openIdButton:hover {
+    color: white;
+    background: #1CC3FF;
+}
+
+.divider-with-text {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.divider-with-text > hr {
+    flex-grow: 6;
+    border-color: #B4B4B4;
+}
+
+.divider-with-text > span {
+    flex-grow: 1;
+    color: #9e9e9e;
+}
+
 /* Mobile/desktop dependent: */
 
 @media screen and (min-width: 480px) {
     .background {
-        background: url(https://owncloud.hpi.de/index.php/s/siSJzCTBN5U3pbf/download);
+        background-image: url(https://owncloud.hpi.de/index.php/s/siSJzCTBN5U3pbf/download);
         background-repeat: no-repeat;
         background-position: bottom left;
         -webkit-background-size: cover;

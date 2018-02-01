@@ -14,8 +14,11 @@
  *= require navbar
  *= require footer
  *= require bootstrap_and_overrides
+ *= require bootstrap/bootstrap-tooltip
  *= require_self
  *= require font-awesome
+ *= require events
+ *= require schedule
  */
 
 /* Override colors of Materialize */
@@ -31,10 +34,17 @@ $secondary-color: #01A8E8 !default;
   src: font_url('ProximaNova-Reg.otf') format('opentype');
 }
 
+
 @font-face {
   font-family: 'Proxima Nova';
   src: font_url('ProximaNova-Bold.otf') format('opentype');
   font-weight: 500;
+}
+
+@media screen and (max-width: 400px){
+  .create-button {
+      width: 100% !important;
+  }
 }
 
 /* Application wide style */
@@ -51,6 +61,11 @@ body {
   flex-direction: column;
 }
 
+.container, .container-fluid{
+  max-width: 1200px;
+  width: 100% !important;
+}
+
 .background-layer {
   /* important for footer which sticks to the bottom of the page */
   flex: 1 0 auto;
@@ -63,7 +78,7 @@ body {
   }
 
   * {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 
   h1 {
@@ -72,6 +87,10 @@ body {
 
   h2 {
     font-size: 4rem;
+  }
+
+  h3 {
+    font-size: 2.2rem;
   }
 }
 
@@ -86,14 +105,54 @@ body {
 
   h1 {
     font-size: 3.5rem;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
 
   h2 {
     font-size: 3rem;
   }
+
+  h3 {
+    font-size: 2.2rem;
+  }
 }
 
-.navbar-overlap {
-  padding-top: 50px;
+.btn {
+  font-size: 15px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+  background: #1CA9E5;
+  border-radius: 100px;
 }
 
+.gameday-wrapper {
+  display: flex;
+  align-items: center;
+
+  .gameday-name {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 20px;
+  }
+
+  form {
+    width: 100%;
+
+    .input-daterange {
+      width: auto;
+      display: inline-block;
+    }
+
+    input[type=text] {
+      width: 120px;
+      text-align: center;
+    }
+
+    input[type=text], input[type=submit] {
+      display: inline-block;
+      margin: 0;
+    }
+  }
+}

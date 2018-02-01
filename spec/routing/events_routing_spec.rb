@@ -43,16 +43,16 @@ RSpec.describe EventsController, type: :routing do
       expect(get: "/events/1/schedule").to route_to("events#schedule", id: "1")
     end
 
-    it 'routes to #ranking' do
-      expect(get: "/events/1/ranking").to route_to("events#ranking", id: "1")
-    end
-
     it "routes to #join" do
       expect(put: "/events/1/join").to route_to("events#join", id: "1")
     end
 
     it "routes to #leave" do
       expect(put: "/events/1/leave").to route_to("events#leave", id: "1")
+    end
+
+    it "doesn't route to #ranking" do
+      expect(get: "/events/1/ranking").to_not route_to("events#ranking", id: "1")
     end
   end
 end

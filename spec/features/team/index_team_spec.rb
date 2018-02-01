@@ -6,28 +6,9 @@ describe "Index team page", type: :feature do
     visit teams_path
   end
 
-  it "should have a select box to filter teams" do
+  it "should have team tiles" do
     visit teams_path
-    expect(page).to have_select('filter')
-  end
-
-  it "should only show teams current user is member of if filter is set" do
-    @team = FactoryBot.create :team
-    @team.name = "First"
-    @team.save
-
-    @another_team = FactoryBot.create :team
-    @another_team.name = "Second"
-    @another_team.save
-
-    @user = FactoryBot.create :user
-    @team.members << @user
-    sign_in @user
-
-    visit teams_path(filter: "true")
-
-    expect(page).to have_text("First")
-    expect(page).to_not have_text("Second")
+    expect(page).to have_css('img')
   end
 
   it "should not contain an id column" do
