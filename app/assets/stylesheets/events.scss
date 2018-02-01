@@ -8,7 +8,11 @@ form.event {
     flex-direction:column;
 }
 
-@for $i from 1 through 5 {
+#event-erweitert {
+  width:100%;
+}
+
+@for $i from 1 through 7 {
     .order-#{$i} {
         order: $i;
     }

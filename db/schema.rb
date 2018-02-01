@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 20180128145059) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-  
+
   create_table "team_users", force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "user_id", null: false
