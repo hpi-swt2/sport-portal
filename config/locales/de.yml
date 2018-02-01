@@ -110,6 +110,7 @@ de:
       my_profile: "Mein Profil"
       edit_profile: "Profil bearbeiten"
       notification_settings: "Benachrichtigungseinstellungen"
+      notifications: "Benachrichtigungen"
 
   dashboard:
     title: "Dashboard für %{name}"
