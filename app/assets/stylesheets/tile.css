@@ -90,7 +90,7 @@ a {
     font-weight: bold;
     display: inline-block;
     width: 250px;
-    padding-top: 10px;
+    padding-top: 4px;
     margin-bottom: -10px;
 }
 
@@ -100,6 +100,7 @@ a {
     display: inline-block;
     width: 240px;
     white-space: nowrap;
+    padding-bottom: 16px;
 }
 
 

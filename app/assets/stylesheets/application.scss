@@ -60,6 +60,11 @@ body {
   flex-direction: column;
 }
 
+.container, .container-fluid{
+  max-width: 1200px;
+  width: 100% !important;
+}
+
 .background-layer {
   /* important for footer which sticks to the bottom of the page */
   flex: 1 0 auto;
@@ -111,10 +116,6 @@ body {
   h3 {
     font-size: 2.2rem;
   }
-}
-
-.navbar-overlap {
-  padding-top: 50px;
 }
 
 .btn {
