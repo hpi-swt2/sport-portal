@@ -120,7 +120,7 @@ class UsersController < Devise::RegistrationsController
     end
 
     def generate_random_password
-      token = Devise.friendly_token 32
+      token = Devise.friendly_token User::OMNIAUTH_PASSWORD_LENGTH
       user_params = params[:user]
       user_params[:password] = token
       user_params[:password_confirmation] = token
