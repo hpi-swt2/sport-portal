@@ -51,4 +51,10 @@ RSpec.describe "teams/index", type: :view do
     expect(rendered).to_not have_select('filter')
   end
 
+  it 'should not show single-player teams' do
+    team = @user.create_single_team
+    sign_in @user
+    render
+    expect(rendered).to_not have_text(team.name)
+  end
 end
