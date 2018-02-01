@@ -7,11 +7,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    if get_shown_events_value == "on"
-      @events = Event.all
-    else
-      @events = Event.active
-    end
+    @events = Event.all
   end
 
   # GET /events/1
@@ -119,10 +115,6 @@ class EventsController < ApplicationController
       return Tournament if params[:type] == 'Tournament'
       return Rankinglist if params[:type] == 'Rankinglist'
       params[:type]
-    end
-
-    def get_shown_events_value
-      params[:showAll]
     end
 
     def map_event_on_event_types

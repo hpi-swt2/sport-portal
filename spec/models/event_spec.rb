@@ -138,4 +138,10 @@ describe 'Event model', type: :model do
     email_count = event.teams.map(&:members).flatten(1).count
     expect { event.destroy }.to change { ActionMailer::Base.deliveries.length }.by(email_count)
   end
+
+  it "should return correct description text" do
+    event = FactoryBot.create :rankinglist
+    event.deadline = Date.current
+    expect(event.build_description_string.include? "#{ event.deadline }").to be(true)
+  end
 end
