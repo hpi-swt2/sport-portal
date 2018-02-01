@@ -105,6 +105,20 @@ class User < ApplicationRecord
     name = first_name + " " + last_name
   end
 
+  def all_events
+    all_events = self.events + self.organizing_events
+    (self.teams + self.owned_teams).map { |team| all_events += team.events }
+    all_events.uniq
+  end
+
+  def has_event_notifications_enabled?
+    true
+  end
+
+  def has_team_notifications_enabled?
+    true
+  end
+
   def email_with_name
     %('#{name}' <#{email}>)
   end
