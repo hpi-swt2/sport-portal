@@ -6,11 +6,7 @@ class TeamsController < ApplicationController
   # GET /teams
   def index
     multi_teams = Team.multiplayer
-    if params[:filter] == "true"
-      @teams = @teams & multi_teams.includes(:team_members).where(team_users: { user_id: current_user })
-    else
-      @teams = @teams & multi_teams
-    end
+    @teams = @teams & multi_teams
   end
 
   # GET /teams/1
@@ -106,63 +102,63 @@ class TeamsController < ApplicationController
   end
 
   private
-    def ensure_current_user_is_last (target_members)
-      current_user_id_string = current_user.id.to_s
-      if target_members.include? current_user_id_string
-        target_members = (target_members - [current_user_id_string]) + [current_user_id_string]
-      end
-      target_members
+  def ensure_current_user_is_last (target_members)
+    current_user_id_string = current_user.id.to_s
+    if target_members.include? current_user_id_string
+      target_members = (target_members - [current_user_id_string]) + [current_user_id_string]
     end
+    target_members
+  end
 
-    def inform_about_unaffected_users (unaffected_users)
-      unaffected_users_names = unaffected_users.map { |user| User.find(user).first_name }
-      if unaffected_users_names.empty?
-        flash[:success] = I18n.t('helpers.teams.multiple_actions.confirmation')
-      else
-        flash[:error] = I18n.t('helpers.teams.multiple_actions.failure_on', user_names: unaffected_users_names.join(", "))
-      end
+  def inform_about_unaffected_users (unaffected_users)
+    unaffected_users_names = unaffected_users.map {|user| User.find(user).first_name}
+    if unaffected_users_names.empty?
+      flash[:success] = I18n.t('helpers.teams.multiple_actions.confirmation')
+    else
+      flash[:error] = I18n.t('helpers.teams.multiple_actions.failure_on', user_names: unaffected_users_names.join(", "))
     end
+  end
 
-    def assign_ownership_to_member(member_id)
-      authorize! :assign_ownership, @team
-      member_to_become_owner = TeamUser.find_by(user_id: member_id, team_id: @team.id)
-      unless member_to_become_owner.nil?
-        member_to_become_owner.assign_ownership
-      end
+  def assign_ownership_to_member(member_id)
+    authorize! :assign_ownership, @team
+    member_to_become_owner = TeamUser.find_by(user_id: member_id, team_id: @team.id)
+    unless member_to_become_owner.nil?
+      member_to_become_owner.assign_ownership
     end
+  end
 
-    def assign_membership_to_user (new_member)
-      team_members = @team.members
-      unless team_members.include? new_member
-        team_members << new_member
-        # todo: send mail
-        flash[:success] = I18n.t('teams.invite_user_to_team.assignment_successful')
-      else
-        flash[:error] = I18n.t('teams.invite_user_to_team.user_already_in_team')
-      end
+  def assign_membership_to_user (new_member)
+    team_members = @team.members
+    unless team_members.include? new_member
+      team_members << new_member
+      # todo: send mail
+      flash[:success] = I18n.t('teams.invite_user_to_team.assignment_successful')
+    else
+      flash[:error] = I18n.t('teams.invite_user_to_team.user_already_in_team')
     end
+  end
 
-    def delete_ownership_from_member(member_id)
-      authorize! :delete_ownership, Team.find(params[:id])
-      member_to_become_owner = TeamUser.find_by(user_id: member_id, team_id: @team.id)
-      unless member_to_become_owner.nil?
-        member_to_become_owner.delete_ownership
-      end
+  def delete_ownership_from_member(member_id)
+    authorize! :delete_ownership, Team.find(params[:id])
+    member_to_become_owner = TeamUser.find_by(user_id: member_id, team_id: @team.id)
+    unless member_to_become_owner.nil?
+      member_to_become_owner.delete_ownership
     end
+  end
 
-    def delete_membership_from_member(member_id)
-      authorize! :delete_membership, @team, member_id
-      member = User.find(member_id)
-      @team.members.delete(member)
-    end
+  def delete_membership_from_member(member_id)
+    authorize! :delete_membership, @team, member_id
+    member = User.find(member_id)
+    @team.members.delete(member)
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_team
-      @team = Team.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_team
+    @team = Team.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def team_params
-      params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members, :avatar, :remove_avatar)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def team_params
+    params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members, :avatar, :remove_avatar)
+  end
 end
