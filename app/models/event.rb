@@ -177,7 +177,7 @@ class Event < ApplicationRecord
   end
 
   def build_description_string
-    if self.type == 'RankingList'
+    if self.type == 'Rankinglist'
       "#{I18n.t('events.index.registration_until')}: #{self.deadline} <br> #{I18n.t('events.index.start_date')}: #{self.startdate}"
     else
       "#{I18n.t('events.index.max_players')}: #{self.max_teams}"
