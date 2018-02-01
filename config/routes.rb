@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       member do
         put 'profile', to: 'users#update'
         get 'dashboard'
+        patch 'update_notifications'
         get 'notifications'
         get 'link'
         get 'unlink'
