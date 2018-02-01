@@ -172,6 +172,8 @@ de:
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
       event:
+        basic_information: "Basisinformation"
+        dates: "Termine"
         name: "Name"
         description: "Beschreibung"
         event_type: "Eventtyp"
