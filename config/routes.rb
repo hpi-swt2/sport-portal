@@ -54,6 +54,7 @@ Rails.application.routes.draw do
         put 'profile', to: 'users#update'
         get 'dashboard'
         get 'notifications'
+        patch 'update_notifications'
         get 'link'
         get 'unlink'
         post 'delete', to: 'users#confirm_destroy'
