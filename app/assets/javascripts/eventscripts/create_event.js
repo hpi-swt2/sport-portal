@@ -39,13 +39,13 @@ $( document ).on('turbolinks:load', function() {
 
         var start = $("#event_startdate").val();
         var end = $("#event_enddate").val();
-        var system = $("#event_game_mode").val();
-        var gameday_dur =$("#event_gameday_duration").val();
-        var participants = $("#event_max_teams").val();
+        var system = $("#league_game_mode").val();
+        var gameday_dur =$("#league_gameday_duration").val();
+        var participants = $("#league_max_teams").val();
         console.log("durationChange");
         console.log($("#event_enddate").val());
 
-        if(start != "" && gameday_dur != "" && system != "")
+        if(start != "" && gameday_dur != "" && system != "" && gameday_dur != undefined && system != undefined)
         {
             rounds = calcRounds(system,participants);
             var number_of_days = rounds * parseInt(gameday_dur);
@@ -60,22 +60,22 @@ $( document ).on('turbolinks:load', function() {
 
         var start = $("#event_startdate").val();
         var end = $("#event_enddate").val();
-        var system = $("#event_game_mode").val();
-        var gameday_dur =$("#event_gameday_duration").val();
-        var participants = $("#event_max_teams").val();
+        var system = $("#league_game_mode").val();
+        var gameday_dur =$("#league_gameday_duration").val();
+        var participants = $("#league_max_teams").val();
         console.log("gamedayCHange");
         console.log(end);
-        if(start != "" && end != "" && system != "")
+        if(start != "" && end != "" && system != "" && gameday_dur != undefined && system != undefined)
         {
             rounds = calcRounds(system,participants);
             var diff = calcDateDiff(start,end);
             var gameday_duration = Math.floor(diff/rounds);
             if(diff <= 0)
             {
-                $("#event_gameday_duration").val(1);
+                $("#league_gameday_duration").val(1);
             }
             else {
-                $("#event_gameday_duration").val(gameday_duration);
+                $("#league_gameday_duration").val(gameday_duration);
             }
 
         }

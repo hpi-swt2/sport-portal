@@ -55,10 +55,10 @@ describe 'new event page', type: :feature do
     let(:valid_league_input_fields) { { name: league.name,
                                         discipline: league.discipline,
                                         max_teams: league.max_teams,
+                                        gameday_duration: league.gameday_duration,
                                         deadline: league.deadline,
                                         startdate: league.startdate,
-                                        enddate: league.enddate,
-                                        gameday_duration: league.gameday_duration } }
+                                        enddate: league.enddate} }
     let(:valid_league_dropdowns) { { Event.human_attribute_name(:game_mode) => League.human_game_mode(:round_robin),
                                      Event.human_attribute_name(:player_type) => Event.human_player_type(:single) } }
 
@@ -66,8 +66,9 @@ describe 'new event page', type: :feature do
       visit new_path
 
       attach_file('league_image', "#{Rails.root}/spec/fixtures/valid_avatar.png")
-      fill_in_fields_with valid_league_input_fields
       select_dropdowns_with valid_league_dropdowns
+      fill_in_fields_with valid_league_input_fields
+
 
       find('input[type="submit"]').click
       has_content valid_league_input_fields

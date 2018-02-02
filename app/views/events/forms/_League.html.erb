@@ -8,7 +8,7 @@
   <div class="col-lg-10">
     <%= form.select(:game_mode, League.game_modes.map { |k, _| [League.human_game_mode(k), k] },
                             { selected: @event.game_mode, include_blank: t('events.new.select_game_mode') },
-                            { class: 'form-control' , id: :event_game_mode }) %>
+                            { class: 'form-control' }) %>
   </div>
 </div>
 
@@ -18,6 +18,6 @@
 <div class="form-group order-5">
   <%= form.label :gameday_duration, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
-    <%= form.number_field :gameday_duration, id: :event_gameday_duration, class: 'form-control' %>
+    <%= form.number_field :gameday_duration, class: 'form-control' %>
   </div>
 </div>
