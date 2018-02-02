@@ -1,7 +1,10 @@
 <%= form_for @event, html: { class: 'form-horizontal event' } do |f| %>
   <%= render partial: 'application/validation_errors', locals: {model: @event} %>
 
-  <div class="form-group">
+  <div class="form-group order-1">
+    <h3 class="form-group__title"><%= t('activerecord.attributes.event.basic_information') %></h3>
+  </div>
+  <div class="form-group order-1">
     <%= f.label :name, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :name, class: 'form-control' %>
@@ -9,7 +12,7 @@
     </div>
   </div>
 
-  <div class="form-group row">
+  <div class="form-group order-1 row">
     <%= f.label :image, t('activerecord.models.image.one'), class: 'control-label col-lg-2'%>
     <div class="col-lg-10">
       <% unless @event.new_record? %>
@@ -23,14 +26,14 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group order-1">
     <%= f.label :description, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_area :description, class: 'form-control' %>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group order-3">
     <%= f.label :max_teams, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.number_field :max_teams, class: 'form-control' %>
@@ -38,7 +41,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group order-1">
     <%= f.label :discipline, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :discipline, list: "discipline", class: 'form-control' %>
@@ -57,62 +60,67 @@
   <%# Rendering the correct template depending on the event type %>
   <%= render "events/forms/#{@event.model_name}", form: f %>
 
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAdvancedOptions" aria-expanded="false" aria-controls="collapseAdvancedOptions">
-    <%= t('events.advanced') %>
-  </button>
+  <div class="form-group order-6">
+    <div class="col-lg-12">
+      <button class="btn btn-primary" id="event-erweitert" type="button" data-toggle="collapse" data-target="#collapseAdvancedOptions" aria-expanded="false" aria-controls="collapseAdvancedOptions">
+        <%= t('events.advanced') %>
+      </button>
 
-  <div class="collapse" id="collapseAdvancedOptions">
-    <div class="form-group">
-      <%= f.label :bestof_length, for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: t('events.winrule_tooltip') %>
-      <div id="matchtype" class="col-lg-10">
-        <%= t('events.best_of') %>
-        <%= f.select(:bestof_length, (1..8).map { |n| ["#{n}", n] },
-                     { selected: f.object.bestof_length },
-                     { class: 'form-control'}) %>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <%= f.label :game_winrule, for: :game_winrule, :class => 'control-label col-lg-2'  %>
-      <div class="col-lg-10">
-        <%= f.select(:game_winrule, Event.game_winrules.map {|k, v| [k.humanize, k]},
-                     { selected: f.object.game_winrule },
-                     { class: 'form-control' }) %>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <%= t('view.event.point_distribution') %>
-      </div>
-      <div class="panel-body">
+      <div class="collapse" id="collapseAdvancedOptions">
         <div class="form-group">
-          <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
-          <div class="col-lg-10">
-          <%= f.number_field :points_for_win, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_win %>
+          <%= f.label :bestof_length, for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: t('events.winrule_tooltip') %>
+          <div id="matchtype" class="col-lg-10">
+            <%= t('events.best_of') %>
+            <%= f.select(:bestof_length, (1..8).map { |n| ["#{n}", n] },
+                         { selected: f.object.bestof_length },
+                         { class: 'form-control'}) %>
           </div>
         </div>
 
         <div class="form-group">
-          <%= f.label :points_for_draw, :class => 'control-label col-lg-2' %>
+          <%= f.label :game_winrule, for: :game_winrule, :class => 'control-label col-lg-2'  %>
           <div class="col-lg-10">
-          <%= f.number_field :points_for_draw, in: 0..2e9, step: 1, :class => 'form-control' ,:style=> 'width:60px', :value=> f.object.points_for_draw %>
+            <%= f.select(:game_winrule, Event.game_winrules.map {|k, v| [k.humanize, k]},
+                         { selected: f.object.game_winrule },
+                         { class: 'form-control' }) %>
           </div>
         </div>
 
-        <div class="form-group">
-          <%= f.label :points_for_lose, :class => 'control-label col-lg-2' %>
-          <div class="col-lg-10">
-          <%= f.number_field :points_for_lose, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_lose %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <%= t('view.event.point_distribution') %>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
+              <div class="col-lg-10">
+                <%= f.number_field :points_for_win, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_win %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :points_for_draw, :class => 'control-label col-lg-2' %>
+              <div class="col-lg-10">
+                <%= f.number_field :points_for_draw, in: 0..2e9, step: 1, :class => 'form-control' ,:style=> 'width:60px', :value=> f.object.points_for_draw %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :points_for_lose, :class => 'control-label col-lg-2' %>
+              <div class="col-lg-10">
+                <%= f.number_field :points_for_lose, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_lose %>
+              </div>
+            </div>
+
           </div>
         </div>
-         
+
       </div>
     </div>
-  
   </div>
 
-  <div class="form-group">
+
+  <div class="form-group order-7">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.submit nil,
                    class: 'btn btn-primary' %>

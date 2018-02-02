@@ -176,6 +176,14 @@ class Event < ApplicationRecord
     self.class.human_game_mode game_mode
   end
 
+  def build_description_string
+    if self.type == 'Rankinglist'
+      "#{I18n.t('events.index.registration_until')}: #{self.deadline} <br> #{I18n.t('events.index.start_date')}: #{self.startdate}"
+    else
+      "#{I18n.t('events.index.max_players')}: #{self.max_teams}"
+    end
+  end
+
   def fitting_teams(user)
     all_teams = user.owned_teams.multiplayer
     fitting_teams = []
