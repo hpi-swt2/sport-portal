@@ -193,8 +193,8 @@ de:
         max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
-          single: "Einzelteilnahme"
-          team: "Teamteilnahme"
+          single: "Einzel"
+          team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
         points_for_win: "Punkte für Gewinn"
@@ -204,6 +204,7 @@ de:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
+        has_place_3_match: "Spiel um Platz 3"
       tournament:
         game_modes:
           ko: "K.-o.-System"
@@ -368,6 +369,7 @@ de:
       in_place_3_match: "Im Spiel um Platz 3"
       in: "Im %{match_name}"
       not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
+      against: "gegen"
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"

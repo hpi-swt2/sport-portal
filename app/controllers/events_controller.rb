@@ -42,6 +42,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
+    @event.invalidate_schedule if event_params[:has_place_3_match].to_i.zero? == @event.has_place_3_match
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -54,7 +55,6 @@ class EventsController < ApplicationController
     @event.destroy
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
-
 
   # PUT /events/1/join
   def join
@@ -155,6 +155,7 @@ class EventsController < ApplicationController
                                     :gameday_duration,
                                     :image,
                                     :remove_image,
+                                    :has_place_3_match,
                                     user_ids: [])
     end
 end
