@@ -75,11 +75,12 @@ $( document ).on('turbolinks:load', function() {
           $("#event_min_players_per_team").show();
           $("#event_max_players_per_team").show();
           break;
-        default: 
-          $("#event_min_players_per_team").hide();
-          $("#event_max_players_per_team").hide();
-          break;
+        default:
+            $("#event_min_players_per_team").hide();
+            $("#event_max_players_per_team").hide();
+              break;
       }
+      return false;
     }
 });
 
