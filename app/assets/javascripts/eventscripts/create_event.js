@@ -84,22 +84,26 @@ $( document ).on('turbolinks:load', function() {
 
     //rankinglist_game_mode -> rankinglist_initial_value
     showInitialValue();
-    var initial_value_elo = 1000;
-    var initial_value_trueskill = 1000;
-    var initial_value_win_loss = 0;
+    var initial_value_elo = "1000";
+    var initial_value_trueskill = "1000";
+    var initial_value_win_loss = "0";
     $("#rankinglist_game_mode").on("change", showInitialValue);
     function showInitialValue()
     {
+        console.log(initial_value_win_loss + initial_value_trueskill + initial_value_elo);
         switch($("#rankinglist_game_mode").val())
         {
-            case "ELO":
+            case "elo":
                 $("#rankinglist_initial_value").val(initial_value_elo);
                 break;
-            case "TrueSkill":
+            case "true_skill":
                 $("#rankinglist_initial_value").val(initial_value_trueskill);
                 break;
-            default:
+            case "win_loss":
                 $("#rankinglist_initial_value").val(initial_value_win_loss);
+                break;
+            default:
+                $("#rankinglist_initial_value").val("0");
                 break;
         }
     }
@@ -108,14 +112,16 @@ $( document ).on('turbolinks:load', function() {
     function saveInitialValue()
     {
         switch($("#rankinglist_game_mode").val()) {
-            case "ELO":
-                initial_value_elo = ("#rankinglist_initial_value").val();
+            case "elo":
+                initial_value_elo = $("#rankinglist_initial_value").val();
                 break;
-            case "True Skill":
+            case "true_skill":
                 initial_value_trueskill = $("#rankinglist_initial_value").val();
                 break;
-            default:
+            case "win_loss":
                 initial_value_win_loss = $("#rankinglist_initial_value").val();
+                break;
+            default:
                 break;
         }
     }
