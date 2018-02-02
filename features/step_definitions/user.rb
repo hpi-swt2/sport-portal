@@ -210,7 +210,7 @@ Then(/^his email should be '(.*)'$/) do |email|
 end
 
 And(/^he clicks the link in the email he just received at his new mail account$/) do
-  single_user.reload!
+  single_user.reload
   open_email(single_user.unconfirmed_email)
   current_email.click_link
 end
