@@ -74,8 +74,7 @@ Then(/^there should be a back button on all pages except the start page$/) do
     begin
       visit current_path
     rescue Exception
-      current_path = '/imprint'
-      visit '/imprint'
+      next
     end
     unless excluded_routes.include? current_path
        expect(page).to have_link(I18n.t ('helpers.links.back'))
