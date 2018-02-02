@@ -119,10 +119,6 @@ module DataHelper
     get_named_object name, Tournament
   end
 
-  def tournament_count
-    @tournaments.size
-  end
-
   def single_tournament
     get_single_object @tournaments
   end

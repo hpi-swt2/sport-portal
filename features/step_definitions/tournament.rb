@@ -145,8 +145,9 @@ When(/^he fills in valid tournament data$/) do
 end
 
 When(/^he creates the tournament$/) do
-  click_on I18n.t('helpers.submit.create', model: Tournament.model_name.human)
-  prevCount = tournament_count
+  expect {
+    click_on I18n.t('helpers.submit.create', model: Tournament.model_name.human)
+  }.to change { Tournament.count }.by(1)
+
   add_tournament Tournament.last
-  expect(tournament_count).to be(prevCount + 1)
 end
