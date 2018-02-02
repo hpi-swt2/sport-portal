@@ -70,7 +70,7 @@ body {
     padding-bottom: 120px;
   }
 
-  * {
+  *, .form-horizontal .form-group input.form-control {
     font-size: 1.2rem;
   }
 
@@ -92,7 +92,7 @@ body {
     padding-bottom: 50px;
   }
 
-  * {
+  *, .form-horizontal .form-group input.form-control {
     font-size: 1.2rem;
   }
 
@@ -109,6 +109,12 @@ body {
 
   h3 {
     font-size: 2.2rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .form-horizontal .form-group input.form-control {
+    margin-top: -10px;
   }
 }
 
