@@ -79,7 +79,6 @@ describe 'League model', type: :model do
     #The following line creates a hash in this matter {team=> occurrences of team} i.e. {Team:1 => 2, Team:2 =>2, etc.}
     let(:all_teams_with_occurrences) { Hash[(home_teams + away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
     subject { matches }
-    
     context 'round robin' do
       let(:gamemode) { League.game_modes[:round_robin] }
 
@@ -144,7 +143,7 @@ describe 'League model', type: :model do
     end
 
     context 'swiss system' do
-      let(:gamemode){League.game_modes[:swiss]}
+      let(:gamemode) { League.game_modes[:swiss] }
 
       it 'does not have an up-to-date schedule if the last gameday is in the past' do
         league.gamedays << FactoryBot.create(:gameday)

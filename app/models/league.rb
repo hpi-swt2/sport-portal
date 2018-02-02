@@ -66,6 +66,7 @@ class League < Event
     gameday_number = gamedays.length - 1
     ranking = get_ranking
     teams = ranking.map { |entry| entry.team }
+    teams_amount = teams.length
     teams_matched = []
 
     teams.each_with_index do |team, index|
@@ -77,12 +78,12 @@ class League < Event
       team_away_index = index.next
       team_away = teams[team_away_index]
 
-      while team_away_index < teams.length and (have_already_played(team_home, team_away) or teams_matched.include? team_away)
+      while team_away_index < teams_amount && (have_already_played(team_home, team_away) || teams_matched.include?(team_away))
         team_away_index = team_away_index.next
         team_away = teams[team_away_index]
       end
 
-      if team_away_index < teams.length
+      if team_away_index < teams_amount
         add_match(team_home, team_away, gameday_number)
         teams_matched << team_home
         teams_matched << team_away
@@ -92,7 +93,7 @@ class League < Event
   end
 
   def have_already_played(team1, team2)
-    pairings = matches.map{ |match| Set[match.team_home, match.team_away] }
+    pairings = matches.map { |match| Set[match.team_home, match.team_away] }
     pairings.include? Set[team1, team2]
   end
 
