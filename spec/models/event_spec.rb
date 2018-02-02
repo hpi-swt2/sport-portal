@@ -75,6 +75,13 @@ describe 'Event model', type: :model do
     expect(passed_deadline_event.deadline_has_passed?).to be true
   end
 
+  it 'cannot be left if its deadline has passed' do
+    user = FactoryBot.create :user
+    passed_deadline_event = FactoryBot.create :event, :passed_deadline
+    passed_deadline_event.add_participant user
+    expect(passed_deadline_event.can_leave? user).to be false
+  end
+
   it 'generate_Schedule? should raise a NotImplementedError' do
     event = FactoryBot.build :event
     # This is apparently not the correct way to implement an abstract method in ruby.
@@ -137,5 +144,11 @@ describe 'Event model', type: :model do
     event = FactoryBot.create :event, :with_teams
     email_count = event.teams.map(&:members).flatten(1).count
     expect { event.destroy }.to change { ActionMailer::Base.deliveries.length }.by(email_count)
+  end
+
+  it "should return correct description text" do
+    event = FactoryBot.create :rankinglist
+    event.deadline = Date.current
+    expect(event.build_description_string.include? "#{ event.deadline }").to be(true)
   end
 end

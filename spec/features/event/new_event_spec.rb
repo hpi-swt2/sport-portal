@@ -115,7 +115,7 @@ describe 'new event page', type: :feature do
 
     it 'should be possible to create a rankinglist' do
       fill_in_fields_with ranking_list_input_fields
-      select Rankinglist.human_game_mode(:true_skill), from: Event.human_attribute_name(:game_mode)
+      select Rankinglist.human_game_mode(:elo), from: Event.human_attribute_name(:game_mode)
 
       find('input[type="submit"]').click
 
