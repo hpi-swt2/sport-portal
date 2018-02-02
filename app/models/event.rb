@@ -110,20 +110,6 @@ class Event < ApplicationRecord
     teams.detect { |team| team.has_member?(user) }
   end
 
-  def min_amount_team_members
-    if min_players_per_team.try :nonzero?
-      return 1
-    end
-    min_players_per_team
-  end
-
-  def max_amount_team_members
-    if max_players_per_team.try :nonzero?
-      return 1
-    end
-    max_players_per_team
-  end
-
   def generate_schedule
     raise NotImplementedError
   end
