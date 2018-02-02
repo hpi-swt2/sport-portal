@@ -54,7 +54,7 @@ $( document ).on('turbolinks:load', function() {
            var dd = startdate.getDate();
            var mm = startdate.getMonth() + 1;
            var y = startdate.getFullYear();
-           var formattedDate = y + '-' + mm + '-' + dd;
+           var formattedDate = dd + '.' + mm + '.' + y;
            $("#event_enddate").val(formattedDate);
        }
     });
