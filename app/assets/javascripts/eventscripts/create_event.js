@@ -61,9 +61,7 @@ $( document ).on('turbolinks:load', function() {
 
     // Autofill of player count for an event
     showPlayerCount();
-    changeAdvancedSettings();
     $("#event_player_type").on("change", showPlayerCount);
-    $("#rankinglist_game_mode").on("change", changeAdvancedSettings);
 
 
     function showPlayerCount()
@@ -78,18 +76,25 @@ $( document ).on('turbolinks:load', function() {
           $("#event_min_players_per_team").show();
           $("#event_max_players_per_team").show();
           break;
-        default: 
+        default:
           $("#event_min_players_per_team").hide();
           $("#event_max_players_per_team").hide();
           break;
       }
     }
 
-    function changeAdvancedSettings()
+    //rankinglist_game_mode -> rankinglist_initial_value
+    showInitialValue();
+    var initial_value_elo = "1000";
+    var initial_value_trueskill = "25";
+    var initial_value_win_loss = "0";
+    $("#rankinglist_game_mode").on("change", showInitialValue);
+    function showInitialValue()
     {
         switch($("#rankinglist_game_mode").val())
         {
             case "elo":
+                $("#rankinglist_initial_value").val(initial_value_elo);
                 $("#default_point_distribution").hide();
                 var default_elo_change = $("#rankinglist_maximum_elo_change");
                 if(default_elo_change.val() == "")
@@ -98,9 +103,34 @@ $( document ).on('turbolinks:load', function() {
                 }
                 $("#elo_point_distribution").show();
                 break;
+            case "true_skill":
+                $("#rankinglist_initial_value").val(initial_value_trueskill);
+                break;
+            case "win_loss":
+                $("#rankinglist_initial_value").val(initial_value_win_loss);
+                break;
             default:
+                $("#rankinglist_initial_value").val("0");
                 $("#default_point_distribution").show();
                 $("#elo_point_distribution").hide();
+                break;
+        }
+    }
+
+    $("#rankinglist_initial_value").on("change", saveInitialValue);
+    function saveInitialValue()
+    {
+        switch($("#rankinglist_game_mode").val()) {
+            case "elo":
+                initial_value_elo = $("#rankinglist_initial_value").val();
+                break;
+            case "true_skill":
+                initial_value_trueskill = $("#rankinglist_initial_value").val();
+                break;
+            case "win_loss":
+                initial_value_win_loss = $("#rankinglist_initial_value").val();
+                break;
+            default:
                 break;
         }
     }

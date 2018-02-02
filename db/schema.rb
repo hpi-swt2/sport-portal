@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20180202145542) do
     t.integer "points_for_win", default: 3
     t.integer "points_for_draw", default: 1
     t.integer "points_for_lose", default: 0
-    t.text "image_data"
     t.boolean "has_place_3_match", default: true
+    t.text "image_data"
     t.integer "maximum_elo_change"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
@@ -152,12 +152,12 @@ ActiveRecord::Schema.define(version: 20180202145542) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "admin", default: false
+    t.string "provider"
+    t.string "uid"
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
-    t.string "provider"
-    t.string "uid"
     t.text "avatar_data"
     t.boolean "team_notifications_enabled", default: true
     t.boolean "event_notifications_enabled", default: true

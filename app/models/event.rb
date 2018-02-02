@@ -151,7 +151,7 @@ class Event < ApplicationRecord
   end
 
   def can_leave?(user)
-    has_participant?(user)
+    has_participant?(user) && !deadline_has_passed?
   end
 
   def standing_of(team)
