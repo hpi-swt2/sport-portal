@@ -2,7 +2,7 @@
 
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
-Rails.application.config.assets.precompile += %w( sign_in.css navbar.css welcome.css footer.css  teams.css tile.css event_cards.css errors.css)
+Rails.application.config.assets.precompile += %w( sign_in.css navbar.css welcome.css footer.css  teams.css tile.css event_cards.css errors.css devise.css)
 Rails.application.config.assets.precompile << /\.(?:svg|eot|woff|ttf|otf)$/
 Rails.application.config.assets.precompile += %w( event_cards.css )
 

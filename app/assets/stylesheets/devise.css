@@ -1,0 +1,45 @@
+.page-header {
+    margin-bottom: 0;
+}
+
+.profile-image {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    margin: 0 auto 30px auto;
+    object-fit: cover;
+}
+
+.description-tag {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #7C7C7C;
+    margin: 0;
+}
+
+.description-text {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.edit-btn {
+    font-size: 1.2rem;
+    padding: 10px 40px;
+    margin-top: 20px;
+    height: auto;
+    width: auto;
+}
+
+.edit-btn:hover {
+    color: #FFFFFF;
+    background: #1CC3FF;
+}
+
+@media screen and (max-width : 500px) {
+    .profile-image {
+        height: 160px;
+        width: 160px;
+    }
+}
+
+
