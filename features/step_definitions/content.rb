@@ -59,28 +59,25 @@ end
 
 Then(/^there should be a back button on all pages except the start page$/) do
   # These routes were excluded in accordance with our PO
-  excludedrouts = ['/', '/cable', '/tournaments/new', '/leagues/new', '/leagues/1/edit', '/tournaments/1/edit', '/events/1/edit', '/rankinglists/new', '/teams/new', '/teams/1/edit', '/matches/1/edit', '/my/users/sign_in', '/my/users/password/edit', '/my/users/cancel', '/my/users/sign_up', '/users/1/dashboard', '/users/1/edit', '/matches/1/add_game_result', '/matches/1/edit_results']
-  # For the first route we really don't know, why this fails. The second route could only be visited as an administrator
-  temporarywedontknowwhattodorouts = ['/my/users/password/new', '/users']
+  excluded_routes = ['/', '/cable', '/tournaments/new', '/leagues/new', '/leagues/1/edit', '/tournaments/1/edit', '/events/1/edit', '/rankinglists/new', '/teams/new', '/teams/1/edit', '/matches/1/edit', '/my/users/sign_in', '/my/users/password/edit', '/my/users/cancel', '/my/users/sign_up', '/users/1/dashboard', '/users/1/edit', '/matches/1/add_game_result', '/matches/1/edit_results', '/users', '/my/users/password/new']
 
   Rails.application.routes.routes.each do |route|
-    currentpath = route.path.spec.to_s
-    if currentpath.include? '(.:format)'
-      currentpath['(.:format)'] = ''
+    current_path = route.path.spec.to_s
+    if current_path.include? '(.:format)'
+      current_path['(.:format)'] = ''
     end
-    if currentpath.include? ':id'
-      currentpath[':id'] = '1'
+    if current_path.include? ':id'
+      current_path[':id'] = '1'
     end
 
-    # There are a lot of routs in Rails, that can't be visited in general
+    # There are a lot of routes in Rails, that can't be visited in general
     begin
-      visit currentpath
+      visit current_path
     rescue Exception
-      currentpath = '/imprint'
+      current_path = '/imprint'
       visit '/imprint'
     end
-    puts currentpath
-    unless (excludedrouts.include? currentpath) || (temporarywedontknowwhattodorouts.include? currentpath)
+    unless excluded_routes.include? current_path
        expect(page).to have_link(I18n.t ('helpers.links.back'))
     end
   end;nil
