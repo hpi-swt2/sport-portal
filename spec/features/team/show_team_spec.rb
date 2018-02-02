@@ -61,4 +61,19 @@ describe 'Show team page', type: :feature do
       expect(page).to have_link(I18n.t("helpers.links.email"), href: mailto_link_for_user)
     end
   end
+
+  describe 'display team members only for logged in users' do
+
+    it 'should not display team member table for users who are not logged in ' do
+      sign_out @user
+      visit team_path @team
+      expect(page).to_not have_css("table.table-striped")
+    end
+
+    it 'should display team members table for users who are logged in' do
+      sign_in @user
+      visit team_path @team
+      expect(page).to have_css("table.table-striped")
+    end
+  end
 end
