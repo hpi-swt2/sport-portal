@@ -41,6 +41,10 @@ class Rankinglist < Event
     end
   end
 
+  def can_leave?(user)
+    has_participant? user
+  end
+
   before_validation do
     self.player_type = Event.player_types[:single]
     self.min_players_per_team = 1
