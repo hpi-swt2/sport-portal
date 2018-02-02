@@ -52,58 +52,56 @@ class League < Event
       return true
     end
 
-    if gamedays.last.endtime < DateTime.now
-      false
-    end
+    gamedays.last.endtime > DateTime.now
   end
 
   def update_schedule
-    if game_mode == Leage.game_modes.key(2)
+    if game_mode == League.game_modes.key(2)
       calculate_swiss_system_new_gameday
     end
   end
 
   def calculate_swiss_system_new_gameday
     add_gameday
-
+    gameday_number = gamedays.length - 1
     ranking = get_ranking
     teams = ranking.map { |entry| entry.team }
-    gameday_number = gamedays.length
-
-    teams.each do |team, index|
-      team_home = team
-      team_away = ranking[index + 1]
-
-      while have_already_played(team_home, team_away)
-        team_away = ranking[ranking.index(team_away) + 1]
+    teams_matched = []
+    teams.each_with_index do |team, index|
+      if teams_matched.include? team
+        next
       end
 
-      add_match(team_home, team_away, gameday_number)
+      team_home = team
+      team_away_index = index.next
+      team_away = teams[team_away_index]
 
-      ranking.delete team_home
-      ranking.delete team_away
+      while team_away_index < teams.length and (have_already_played(team_home, team_away) or teams_matched.include? team_away)
+        team_away_index = team_away_index.next
+        team_away = teams[team_away_index]
+      end
+
+      if team_away_index < teams.length
+        add_match(team_home, team_away, gameday_number)
+        teams_matched << team_home
+        teams_matched << team_away
+      end
     end
+    save
   end
 
   def have_already_played(team1, team2)
-    matches.detect { |match|
-      match.team_home == team1 and match.team_away == team2 or
-      match.team_home == team2 and match.team_away == team1
-    } != nil
+    pairings = matches.map{ |match| Set[match.team_home, match.team_away] }
+    pairings.include? Set[team1, team2]
   end
 
   # create a random first gameday for the swiss system
   def calculate_swiss_system_start
     add_gameday
-
-    temp = teams.dub
-    temp.shuffle!
-
+    temp = teams.to_a.shuffle
     temp.each do |team|
       team_away = temp[1 + rand(temp.size - 2)]
-
-      add_match(team_home, team_away, 0);
-
+      add_match(team, team_away, 0)
       temp.delete(team)
       temp.delete(team_away)
     end

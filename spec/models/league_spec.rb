@@ -68,36 +68,20 @@ describe 'League model', type: :model do
       expect(league.enddate_for_gameday 1).to eq Date.parse('30.12.2017')
     end
   end
-<<<<<<< HEAD
   describe 'Generating league schedule' do
     let(:league) { league = FactoryBot.create(:league, :with_teams)
                    league.game_mode = gamemode
                    league.generate_schedule
                    league }
-=======
-
-  describe 'Generating league schedule with default values' do
-
-    let(:league) { league = FactoryBot.create(:league, :with_teams)
-    league.game_mode = gamemode
-    league.generate_schedule
-    league }
-
->>>>>>> 98bf5ea... Rebased tests to Ref #295 gameday model branch. Ref #139
     let(:matches) { league.all_matches }
     let(:home_teams) { matches.map(&:team_home) }
     let(:away_teams) { matches.map(&:team_away) }
     #The following line creates a hash in this matter {team=> occurrences of team} i.e. {Team:1 => 2, Team:2 =>2, etc.}
     let(:all_teams_with_occurrences) { Hash[(home_teams + away_teams).group_by { |x| x }.map { |k, v| [k, v.count] }] }
     subject { matches }
-<<<<<<< HEAD
+    
     context 'round robin' do
       let(:gamemode) { League.game_modes[:round_robin] }
-=======
-
-    context 'round robin' do
-      let(:gamemode){League.game_modes[:round_robin]}
->>>>>>> 98bf5ea... Rebased tests to Ref #295 gameday model branch. Ref #139
 
       it 'does create matches' do
         expect(subject.length).to be > 0
@@ -160,15 +144,10 @@ describe 'League model', type: :model do
     end
 
     context 'swiss system' do
-      let(:gamemode){League.game_modes[:swiss_system]}
-
-      let(:amount_playing_teams) { home_teams.length + away_teams.length }
+      let(:gamemode){League.game_modes[:swiss]}
 
       it 'does not have an up-to-date schedule if the last gameday is in the past' do
-        league = FactoryBot.create(:league_with_teams)
-        league.gamemode = League.game_modes[:swiss_system]
-
-        leage.add_gameday
+        league.add_gameday
 
         last_gameday = league.gamedays.last
         last_gameday.starttime = 2.days.ago
@@ -178,6 +157,8 @@ describe 'League model', type: :model do
       end
 
       it 'has an up-to-date schedule if the last gameday is not over yet' do
+        league.add_gameday
+
         last_gameday = league.gamedays.last
         last_gameday.starttime = Date.today.next_day
         last_gameday.endtime = Date.today.next_day 2
@@ -191,7 +172,7 @@ describe 'League model', type: :model do
         expect(league.have_already_played(teams[0], teams[1])).to be false
         expect(league.have_already_played(teams[1], teams[0])).to be false
 
-        league.matches << Match.new(team_home: team[0], team_away: [1], gameday_number: 0)
+        league.matches << Match.new(team_home: teams[0], team_away: teams[1], gameday_number: 0)
 
         expect(league.have_already_played(teams[0], teams[1])).to be true
         expect(league.have_already_played(teams[1], teams[0])).to be true
@@ -219,31 +200,35 @@ describe 'League model', type: :model do
 
         it 'creates the matches correctly by the ranking' do
           # extensive scenario incoming
-
           league = FactoryBot.create(:league)
+          league.game_mode = League.game_modes[:swiss]
           teams = FactoryBot.create_list(:team, 6)
           league.teams.append teams
-
           league.add_gameday
 
           match1 = league.add_match(teams[0], teams[1], 0)
-          match1.score_home = 20 # team 0
-          match1.score_away = 0 # team 1
+          match1.game_results << FactoryBot.build(:game_result,
+                                      score_home: 20, # team 0
+                                      score_away: 0   # team 1
+          )
 
           match2 = league.add_match(teams[2], teams[3], 0)
-          match2.score_home = 18 # team 2
-          match2.score_away = 4 # team 3
+          match2.game_results << FactoryBot.build(:game_result,
+                                                  score_home: 18, # team 2
+                                                  score_away: 4   # team 3
+          )
 
           match3 = league.add_match(teams[4], teams[5], 0)
-          match3.score_home = 15 # team 4
-          match3.score_away = 3 # team 5
+          match3.game_results << FactoryBot.build(:game_result,
+                                                  score_home: 15, # team 4
+                                                  score_away: 3   # team 5
+          )
 
-          league.save
           league.update_schedule
 
-          expect(league.have_already_played(team[0], team[2])).to be true
-          expect(league.have_already_played(team[4], team[3])).to be true
-          expect(league.have_already_played(team[1], team[5])).to be true
+          expect(league.have_already_played(teams[0], teams[2])).to be true
+          expect(league.have_already_played(teams[4], teams[3])).to be true
+          expect(league.have_already_played(teams[1], teams[5])).to be true
         end
       end
 
@@ -256,12 +241,22 @@ describe 'League model', type: :model do
           expect(league.matches.length).to be (league.teams.length / 2).floor
         end
 
+        let(:amount_playing_teams) { home_teams.length + away_teams.length }
+
         it 'incorporates each team to play on the first gameday if team amount is even' do
-          expect(amount_playing_teams.length).to be league.teams.length
+          league = FactoryBot.create(:league)
+          league.teams = FactoryBot.create_list(:team, 4)
+          league.generate_schedule
+
+          expect(amount_playing_teams).to be league.teams.length
         end
 
         it 'incorporates each team except one to play on the first gameday if team amount is uneven' do
-          expect(amount_playing_teams.length).to be league.teams.length - 1
+          league = FactoryBot.create(:league)
+          league.teams = FactoryBot.create_list(:team, 5)
+          league.generate_schedule
+
+          expect(amount_playing_teams).to be league.teams.length - 1
         end
       end
     end
