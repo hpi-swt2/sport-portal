@@ -210,16 +210,10 @@ Then(/^his email should be '(.*)'$/) do |email|
 end
 
 And(/^he clicks the link in the email he just received$/) do
-  # as seen here: https://stackoverflow.com/questions/25240102/how-to-visit-a-link-inside-an-email-using-capybara
+  open_email(single_user.email)
+  current_email.click_link
+end
 
-  open_email()
-
-  path_regex = /(?:"https?\:\/\/.*?)(\/.*?)(?:")/
-
-  mail = ActionMailer::Base.deliveries.last
-  path = mail.body.match(path_regex)[1]
-  visit(path)
-  
 Then(/^(.*) should be able to change the dates of the game days$/) do |userName|
   step 'the schedule page for l is visited'
   step "#{userName} should be able to enter start and end date for each gameday"
