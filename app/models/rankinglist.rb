@@ -33,7 +33,7 @@
 class Rankinglist < Event
   validates :deadline, :startdate, :enddate, presence: false
 
-  enum game_mode: [:elo, :win_loss, :true_skill]
+  enum game_mode: [:elo]
 
   def update_rankings(match)
     if (elo?)
