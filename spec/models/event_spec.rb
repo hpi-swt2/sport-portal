@@ -77,7 +77,7 @@ describe 'Event model', type: :model do
 
   it 'cannot be left if its deadline has passed' do
     user = FactoryBot.create :user
-    passed_deadline_event = FactoryBot.create  :event, :passed_deadline
+    passed_deadline_event = FactoryBot.create :event, :passed_deadline
     passed_deadline_event.add_participant user
     expect(passed_deadline_event.can_leave? user).to be false
   end
