@@ -147,7 +147,7 @@ describe 'League model', type: :model do
       let(:gamemode){League.game_modes[:swiss]}
 
       it 'does not have an up-to-date schedule if the last gameday is in the past' do
-        league.add_gameday
+        league.gamedays << FactoryBot.create(:gameday)
 
         last_gameday = league.gamedays.last
         last_gameday.starttime = 2.days.ago
@@ -157,7 +157,7 @@ describe 'League model', type: :model do
       end
 
       it 'has an up-to-date schedule if the last gameday is not over yet' do
-        league.add_gameday
+        league.gamedays << FactoryBot.create(:gameday)
 
         last_gameday = league.gamedays.last
         last_gameday.starttime = Date.today.next_day
@@ -199,13 +199,11 @@ describe 'League model', type: :model do
         end
 
         it 'creates the matches correctly by the ranking' do
-          # extensive scenario incoming
-
           league = FactoryBot.create(:league)
           league.game_mode = League.game_modes[:swiss]
           teams = FactoryBot.create_list(:team, 6)
           league.teams.append teams
-          league.add_gameday
+          league.gamedays << FactoryBot.create(:gameday)
 
           match1 = FactoryBot.create(:match, team_home: teams[0], team_away: teams[1], gameday_number: 1,
                                       points_home: 3, points_away: 0)
@@ -232,10 +230,27 @@ describe 'League model', type: :model do
           league.matches << match3
 
           league.update_schedule
-
           expect(league.have_already_played(teams[0], teams[2])).to be true
           expect(league.have_already_played(teams[4], teams[3])).to be true
           expect(league.have_already_played(teams[1], teams[5])).to be true
+        end
+
+        it 'should not match teams that have already played against each other' do
+          league = FactoryBot.create(:league)
+          league.game_mode = League.game_modes[:swiss]
+          teams = FactoryBot.create_list(:team, 2)
+          league.teams.append teams
+          league.gamedays << FactoryBot.create(:gameday)
+
+          match = FactoryBot.create(:match, team_home: teams[0], team_away: teams[1], gameday_number: 1,
+                                     points_home: 3, points_away: 0)
+          match.game_results << FactoryBot.build(:game_result,
+                                                  score_home: 20, # team 0
+                                                  score_away: 0   # team 1
+          )
+          league.matches << match
+          league.update_schedule
+          expect(league.matches.length).to be 1
         end
       end
 

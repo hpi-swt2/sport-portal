@@ -108,21 +108,6 @@ class League < Event
     end
   end
 
-  def add_match(team_home, team_away, gameday_number)
-    match = Match.new(team_home: team_home, team_away: team_away, gameday_number: gameday_number + 1, start_time: gamedays[gameday_number].starttime)
-    gamedays[gameday_number].matches << match
-    matches << match # deprecated but still used for gameday calculation, refactoring to be continued
-    match
-  end
-
-  def add_gameday
-    next_gameday_index = gamedays.length
-    gamedays << Gameday.new(description: next_gameday_index.to_s,
-                            starttime: startdate_for_gameday(next_gameday_index),
-                            endtime: enddate_for_gameday(next_gameday_index))
-    gamedays.last
-  end
-
   def startdate_for_gameday(gameday_number)
     ((gameday_number - 1) * gameday_duration).days.since startdate
   end
@@ -185,6 +170,21 @@ class League < Event
 
       # remove all matches that include a nil object
       games.map { |game| game.select { |match| !match[1].nil? } }
+    end
+
+    def add_match(team_home, team_away, gameday_number)
+      match = Match.new(team_home: team_home, team_away: team_away, gameday_number: gameday_number + 1, start_time: gamedays[gameday_number].starttime)
+      gamedays[gameday_number].matches << match
+      matches << match # deprecated but still used for gameday calculation, refactoring to be continued
+      match
+    end
+
+    def add_gameday
+      next_gameday_index = gamedays.length
+      gamedays << Gameday.new(description: next_gameday_index.to_s,
+                              starttime: startdate_for_gameday(next_gameday_index),
+                              endtime: enddate_for_gameday(next_gameday_index))
+      gamedays.last
     end
 
     def switch_team_home_away(match)
