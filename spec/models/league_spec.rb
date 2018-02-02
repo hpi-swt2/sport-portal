@@ -200,29 +200,36 @@ describe 'League model', type: :model do
 
         it 'creates the matches correctly by the ranking' do
           # extensive scenario incoming
+
           league = FactoryBot.create(:league)
           league.game_mode = League.game_modes[:swiss]
           teams = FactoryBot.create_list(:team, 6)
           league.teams.append teams
           league.add_gameday
 
-          match1 = league.add_match(teams[0], teams[1], 0)
+          match1 = FactoryBot.create(:match, team_home: teams[0], team_away: teams[1], gameday_number: 1,
+                                      points_home: 3, points_away: 0)
           match1.game_results << FactoryBot.build(:game_result,
-                                      score_home: 20, # team 0
-                                      score_away: 0   # team 1
+                                                  score_home: 20, # team 0
+                                                  score_away: 0   # team 1
           )
+          league.matches << match1
 
-          match2 = league.add_match(teams[2], teams[3], 0)
+          match2 = FactoryBot.create(:match, team_home: teams[2], team_away: teams[3], gameday_number: 1,
+                                     points_home: 3, points_away: 0)
           match2.game_results << FactoryBot.build(:game_result,
                                                   score_home: 18, # team 2
                                                   score_away: 4   # team 3
           )
+          league.matches << match2
 
-          match3 = league.add_match(teams[4], teams[5], 0)
+          match3 = FactoryBot.create(:match, team_home: teams[4], team_away: teams[5], gameday_number: 1,
+                                     points_home: 3, points_away: 0)
           match3.game_results << FactoryBot.build(:game_result,
                                                   score_home: 15, # team 4
                                                   score_away: 3   # team 5
           )
+          league.matches << match3
 
           league.update_schedule
 
