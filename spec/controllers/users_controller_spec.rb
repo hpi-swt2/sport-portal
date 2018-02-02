@@ -167,6 +167,20 @@ RSpec.describe UsersController, type: :controller do
         post :create, params: { user: valid_attributes }
       }.to change(User, :count).by(1)
     end
+
+    it 'sends a mail confirmation mail to new users' do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      mock_confirmation_mail = double
+      expect(Devise.mailer).to receive(:confirmation_instructions).and_return(mock_confirmation_mail)
+      expect(mock_confirmation_mail).to receive(:deliver)
+      post :create, params: { user: valid_attributes }
+    end
+
+    it 'sends no mail confirmation mail to new omniauth users' do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      expect(Devise.mailer).to_not receive(:confirmation_instructions)
+      FactoryBot.build(:user, :with_openid).save!
+    end
   end
 
   describe 'PUT #update' do
