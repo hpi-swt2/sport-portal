@@ -123,6 +123,36 @@ Then(/^the (first|second) place of the tournament is the (home|away) team of (.+
   expect(page).to have_text("#{placing_to_display_string placing} #{team.name}")
 end
 
+Then(/^the standing of the (home|away) team of match (\w+) (\d+) links to (\w+) (\d+)$/) do |home_or_away, match_gameday, match_num, target_match_gameday, target_match_num|
+  visit event_schedule_path single_tournament
+  match = find_match_on_page target_match_gameday, target_match_num
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  visit event_overview_path single_tournament
+  within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
+    expect(page).to have_link(href: match_path(match))
+  end
+end
+
+Then(/^the opponent of the (home|away) team of match (\w+) (\d+) links to the (home|away) team of match (\w+) (\d+)$/) do |home_or_away, match_gameday, match_num, home_or_away_opponent, target_match_gameday, target_match_num|
+  visit event_schedule_path single_tournament
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  opponent = find_team_of_match target_match_gameday, target_match_num, home_or_away_opponent
+  visit event_overview_path single_tournament
+  within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
+    expect(page).to have_text("#{I18n.t('events.overview.against')} #{opponent.name}")
+    expect(page).to have_link(href: team_path(opponent))
+  end
+end
+
+And(/^the (home|away) team of match (\w+) (\d+) links to no opponent$/) do |home_or_away, match_gameday, match_num|
+  visit event_schedule_path single_tournament
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  visit event_overview_path single_tournament
+  within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
+    expect(page).to_not have_text(I18n.t('events.overview.against'))
+  end
+end
+
 When(/^the schedule page is visited$/) do
   visit event_schedule_path(single_tournament)
 end

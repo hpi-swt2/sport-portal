@@ -194,8 +194,8 @@ de:
         max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
-          single: "Einzelteilnahme"
-          team: "Teamteilnahme"
+          single: "Einzel"
+          team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
         points_for_win: "Punkte für Gewinn"
@@ -370,6 +370,7 @@ de:
       in_place_3_match: "Im Spiel um Platz 3"
       in: "Im %{match_name}"
       not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
+      against: "gegen"
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
