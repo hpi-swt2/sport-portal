@@ -101,7 +101,7 @@ class Match < ApplicationRecord
     home = team_home_recursive
     away = team_away_recursive
     return home if participant == away
-    away if participant == home
+    return away if participant == home
   end
 
   def has_scores?
