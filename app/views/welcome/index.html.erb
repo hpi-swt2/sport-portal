@@ -2,6 +2,7 @@
 <%= stylesheet_link_tag 'welcome' %>
 
 <div class="section darkblue-soccer">
+  <div id="placeholderForNavbar"></div>
   <div class="container">
     <div class="row">
       <div class="col s12">
@@ -190,48 +191,8 @@
         </li>
       </ul>
     </div>
-    <div class="row hide-on-small-only content-is-cards">
-      <div class="info-card col m4">
-        <h3><%= t('welcome.index.section3-card1-header') %></h3>
-        <div class="row">
-          <ul class="gameModeList"><%= t('welcome.index.section3-card1-description_html') %></ul>
-        </div>
-      </div>
-      <div class="info-card col m4">
-        <h3><%= t('welcome.index.section3-card2-header') %></h3>
-        <div class="row">
-          <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
-        </div>
-      </div>
-      <div class="info-card col m4">
-        <h3><%= t('welcome.index.section3-card3-header') %></h3>
-        <div class="row">
-          <ul class="gameModeList"><%= t('welcome.index.section3-card3-description_html') %></ul>
-        </div>
-      </div>
-    </div>
-    <div class="row hide-on-small-only" style="display: flex;">
-      <div class="col m4 center card-button-col">
-        <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
-        <% else %>
-            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
-        <% end %>
-      </div>
-      <div class="col m4 center card-button-col">
-        <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
-        <% else %>
-            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
-        <% end %>
-      </div>
-      <div class="col m4 center card-button-col">
-        <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
-        <% else %>
-            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
-        <% end %>
-      </div>
+    <div class="row hide-on-small-only">
+      <%= render partial: 'events/event_cards' %>
     </div>
   </div>
 </div>

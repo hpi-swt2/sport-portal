@@ -334,4 +334,19 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'PATCH #update_notifications' do
+    it 'should update notifications settings successfully' do
+      sign_in @user
+      patch :update_notifications, params: { id: @user.to_param, user: { event_notifications_enabled: false, team_notifications_enabled: false } }
+      @user.reload
+      expect(@user.event_notifications_enabled?).to eq(false)
+      expect(@user.team_notifications_enabled).to eq(false)
+    end
+
+    it 'redirect to notification settings' do
+      sign_in @user
+      patch :update_notifications, params: { id: @user.to_param, user: { event_notifications_enabled: false, team_notifications_enabled: false } }
+      response.should redirect_to :notifications_user
+    end
+  end
 end
