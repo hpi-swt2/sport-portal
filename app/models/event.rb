@@ -224,8 +224,10 @@ class Event < ApplicationRecord
 
   private
     def send_mails_when_adding_team(team)
-      team.members.each do |member|
-        TeamMailer.team_registered_to_event(member, team, self).deliver_now
+      unless team.is_qualified_to_receive_notifications?
+        team.members.each do |member|
+          TeamMailer.team_registered_to_event(member, team, self).deliver_now
+        end
       end
     end
 end
