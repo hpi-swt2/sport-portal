@@ -86,5 +86,5 @@ Then(/^there should be a back button on all pages except the start page$/) do
     unless excluded_routes.include? current_path
        expect(page).to have_link(I18n.t ('helpers.links.back'))
     end
-  end;nil
+  end
 end
