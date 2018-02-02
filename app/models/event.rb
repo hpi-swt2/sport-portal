@@ -111,14 +111,14 @@ class Event < ApplicationRecord
   end
 
   def min_amount_team_members
-    if min_players_per_team == nil
-        return 1
+    if min_players_per_team.nil?
+      return 1
     end
     min_players_per_team
   end
 
   def max_amount_team_members
-    if max_players_per_team == nil
+    if max_players_per_team.nil?
       return 1
     end
     max_players_per_team
