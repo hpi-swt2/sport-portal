@@ -56,8 +56,11 @@ class MatchesController < ApplicationController
       event = @match.event
       if event.is_a? Rankinglist
         event.update_rankings(@match)
+        redirect_to event
+      else
+        redirect_to @match
       end
-      redirect_to @match, notice: I18n.t('helpers.flash.updated', resource_name: Match.model_name.human).capitalize
+      flash.notice = I18n.t('helpers.flash.updated', resource_name: Match.model_name.human).capitalize
     else
       render :edit_results
     end
