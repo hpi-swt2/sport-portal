@@ -56,7 +56,7 @@ class Team < ApplicationRecord
   end
 
   def is_qualified_to_receive_notifications?
-    self.is_single?
+    !self.is_single?
   end
 
   # these methods allow teams to be treated like match results. see MatchResult model

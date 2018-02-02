@@ -35,7 +35,7 @@ class TeamUser < ApplicationRecord
   private
     def send_mail_when_created
       team = Team.find(team_id)
-      unless team.is_qualified_to_receive_notifications?
+      if team.is_qualified_to_receive_notifications?
         TeamMailer.user_added_to_team(User.find(user_id), team).deliver_now
       end
     end
