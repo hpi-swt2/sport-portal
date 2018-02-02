@@ -1,16 +1,18 @@
 # as seen here: https://github.com/plataformatec/devise/wiki/How-To:-Add-:confirmable-to-Users
 class AddUnconfirmedEmail < ActiveRecord::Migration[5.1]
-  def up
-    add_column :users, :confirmation_token, :string
-    add_column :users, :confirmed_at, :datetime
-    add_column :users, :confirmation_sent_at, :datetime
-    add_column :users, :unconfirmed_email, :string
-    add_index :users, :confirmation_token, unique: true
-    User.all.update_all confirmed_at: DateTime.now
-  end
+  def change
+    change_table :users do |t|
+      t.string :confirmation_token, :unconfirmed_email
+      t.datetime :confirmed_at, :confirmation_sent_at
+      t.index :confirmation_token, unique: true
+    end
 
-  def down
-    remove_columns :users, :confirmation_token, :confirmed_at, :confirmation_sent_at
-    remove_columns :users, :unconfirmed_email
+    reversible do |dir|
+      dir.up do
+        say_with_time 'Confirming all existing users' do
+          User.all.update_all confirmed_at: DateTime.now
+        end
+      end
+    end
   end
 end
