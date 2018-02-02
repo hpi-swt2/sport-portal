@@ -1,7 +1,7 @@
 $( document ).on('turbolinks:load', function() {
-    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
-    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
-    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
+    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
+    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
 
     $("#event_duration").val("");
   
