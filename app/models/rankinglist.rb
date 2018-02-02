@@ -36,7 +36,7 @@ class Rankinglist < Event
   enum game_mode: [:elo, :win_loss, :true_skill]
 
   def update_rankings(match)
-    if (game_mode == 'elo')
+    if (elo?)
       match.apply_elo
     end
   end
