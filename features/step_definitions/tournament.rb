@@ -41,7 +41,7 @@ When(/^the Spielplan page for (.*) is visited$/) do |tournamentName|
   visit event_schedule_path(tournament_named tournamentName)
 end
 
-And(/^the texts? (.+) (?:are|is) there\.?$/) do |texts_raw|
+Then(/^the texts? (.+) (?:are|is) there\.?$/) do |texts_raw|
   texts = texts_raw.split ', '
   texts.each do |text|
     expect(page).to have_text(text)
@@ -133,7 +133,7 @@ Given(/^(\d+) teams join the tournament$/) do |num_teams|
   end
 end
 
-And(/^he fills in valid tournament data$/) do
+When(/^he fills in valid tournament data$/) do
   fill_in :tournament_name, with: 'Dummy'
   fill_in :tournament_discipline, with: 'DummySport'
   fill_in :tournament_max_teams, with: 8
@@ -144,7 +144,9 @@ And(/^he fills in valid tournament data$/) do
   fill_in :event_enddate, with: Date.today + 3.day
 end
 
-And(/^he creates the tournament$/) do
+When(/^he creates the tournament$/) do
   click_on I18n.t('helpers.submit.create', model: Tournament.model_name.human)
+  prevCount = tournament_count
   add_tournament Tournament.last
+  expect(tournament_count).to be(prevCount + 1)
 end
