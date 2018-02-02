@@ -103,6 +103,13 @@ class Match < ApplicationRecord
     points_home.present? && points_away.present?
   end
 
+  def opponent_of(participant)
+    home = team_home_recursive
+    away = team_away_recursive
+    return home if participant == away
+    return away if participant == home
+  end
+
   def has_scores?
     game_results.each do |result|
       if result.score_home.present? && result.score_away.present?
