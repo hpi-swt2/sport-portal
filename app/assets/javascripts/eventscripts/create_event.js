@@ -42,9 +42,6 @@ $( document ).on('turbolinks:load', function() {
         var system = $("#league_game_mode").val();
         var gameday_dur =$("#league_gameday_duration").val();
         var participants = $("#league_max_teams").val();
-        console.log("durationChange");
-        console.log($("#event_enddate").val());
-
         if(start != "" && gameday_dur != "" && system != "" && gameday_dur != undefined && system != undefined)
         {
             rounds = calcRounds(system,participants);
@@ -52,7 +49,6 @@ $( document ).on('turbolinks:load', function() {
             $("#event_enddate").val(addDays(start,number_of_days));
 
         }
-        console.log($("#event_enddate").val());
         changeDur();
     }
     function adaptDuration() {
@@ -63,8 +59,6 @@ $( document ).on('turbolinks:load', function() {
         var system = $("#league_game_mode").val();
         var gameday_dur =$("#league_gameday_duration").val();
         var participants = $("#league_max_teams").val();
-        console.log("gamedayCHange");
-        console.log(end);
         if(start != "" && end != "" && system != "" && gameday_dur != undefined && system != undefined)
         {
             rounds = calcRounds(system,participants);
