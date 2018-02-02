@@ -78,6 +78,7 @@ class User < ApplicationRecord
 
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
+  has_many :non_single_teams, -> { where single: false }, through: :team_users, source: :team
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
   has_many :owned_teams, through: :team_owners, source: :team
 
@@ -103,6 +104,20 @@ class User < ApplicationRecord
 
   def name
     name = first_name + " " + last_name
+  end
+
+  def all_events
+    all_events = self.events + self.organizing_events
+    (self.teams + self.owned_teams).map { |team| all_events += team.events }
+    all_events.uniq
+  end
+
+  def has_event_notifications_enabled?
+    true
+  end
+
+  def has_team_notifications_enabled?
+    true
   end
 
   def email_with_name

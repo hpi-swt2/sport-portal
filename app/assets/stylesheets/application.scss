@@ -17,6 +17,7 @@
  *= require bootstrap/bootstrap-tooltip
  *= require_self
  *= require font-awesome
+ *= require events
  *= require schedule
  */
 
@@ -32,6 +33,7 @@ $secondary-color: #01A8E8 !default;
   font-family: 'Proxima Nova';
   src: font_url('ProximaNova-Reg.otf') format('opentype');
 }
+
 
 @font-face {
   font-family: 'Proxima Nova';
@@ -57,6 +59,11 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+}
+
+.container, .container-fluid{
+  max-width: 1200px;
+  width: 100% !important;
 }
 
 .background-layer {
@@ -110,10 +117,6 @@ body {
   h3 {
     font-size: 2.2rem;
   }
-}
-
-.navbar-overlap {
-  padding-top: 50px;
 }
 
 .btn {
