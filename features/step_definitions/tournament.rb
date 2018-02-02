@@ -1,5 +1,5 @@
 Given(/^a tournament (.*) with (\d+) (teams|users)$/) do |tournamentName, numTeams, teams_or_users|
-  create_tournament_named tournamentName, max_teams: numTeams, player_type: (teams_or_users != 'teams' ? :team : :single)
+  create_tournament_named tournamentName, max_teams: numTeams, has_place_3_match: true, player_type: (teams_or_users != 'teams' ? :team : :single)
   tournament = tournament_named tournamentName
   for each in 1..numTeams do
     if teams_or_users == 'teams'
@@ -41,10 +41,17 @@ When(/^the Spielplan page for (.*) is visited$/) do |tournamentName|
   visit event_schedule_path(tournament_named tournamentName)
 end
 
-And(/^the texts? (.+) (?:are|is) there\.$/) do |texts_raw|
+Then(/^the texts? (.+) (?:are|is) there\.?$/) do |texts_raw|
   texts = texts_raw.split ', '
   texts.each do |text|
     expect(page).to have_text(text)
+  end
+end
+
+And(/^the texts? (.+) (?:are|is) not there\.?$/) do |texts_raw|
+  texts = texts_raw.split ', '
+  texts.each do |text|
+    expect(page).not_to have_text(text)
   end
 end
 
@@ -137,7 +144,6 @@ Then(/^the opponent of the (home|away) team of match (\w+) (\d+) links to the (h
   end
 end
 
-
 And(/^the (home|away) team of match (\w+) (\d+) links to no opponent$/) do |home_or_away, match_gameday, match_num|
   visit event_schedule_path single_tournament
   team = find_team_of_match match_gameday, match_num, home_or_away
@@ -145,4 +151,33 @@ And(/^the (home|away) team of match (\w+) (\d+) links to no opponent$/) do |home
   within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
     expect(page).to_not have_text(I18n.t('events.overview.against'))
   end
+end
+
+When(/^the schedule page is visited$/) do
+  visit event_schedule_path(single_tournament)
+end
+
+Given(/^(\d+) teams join the tournament$/) do |num_teams|
+  for each in 1..num_teams do
+    single_tournament.add_team create_team
+  end
+end
+
+When(/^he fills in valid tournament data$/) do
+  fill_in :tournament_name, with: 'Dummy'
+  fill_in :tournament_discipline, with: 'DummySport'
+  fill_in :tournament_max_teams, with: 8
+  select I18n.t('activerecord.attributes.event.player_types.team'), from: :event_player_type
+  select I18n.t('activerecord.attributes.tournament.game_modes.ko'), from: :tournament_game_mode
+  fill_in :event_deadline, with: Date.today + 1.day
+  fill_in :event_startdate, with: Date.today + 2.day
+  fill_in :event_enddate, with: Date.today + 3.day
+end
+
+When(/^he creates the tournament$/) do
+  expect {
+    click_on I18n.t('helpers.submit.create', model: Tournament.model_name.human)
+  }.to change { Tournament.count }.by(1)
+
+  add_tournament Tournament.last
 end

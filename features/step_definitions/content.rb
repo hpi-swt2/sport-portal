@@ -16,6 +16,13 @@ Then(/^there should be a '(.*)' link/) do |text|
   expect(page).to have_link(text)
 end
 
+When(/^he (checks|unchecks) the checkbox '(.*)'$/) do |action, checkbox_name|
+  if action == 'unchecks'
+    uncheck checkbox_name
+  else
+    check checkbox_name
+  end
+end
 
 Then(/^there should be a table$/) do
   expect(page).to have_table
