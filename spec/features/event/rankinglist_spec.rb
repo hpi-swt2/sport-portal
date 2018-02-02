@@ -46,7 +46,7 @@ describe 'Rankinglists', type: :feature do
 
   context 'elo ranking lists' do
     before(:each) do
-      @elo_event = FactoryBot.create :rankinglist, game_mode: Rankinglist.game_modes[:elo], initial_value: 1000
+      @elo_event = FactoryBot.create :rankinglist, game_mode: Rankinglist.game_modes[:elo], initial_value: 1000, maximum_elo_change: 32
       @user = FactoryBot.create :user
       @user2 = FactoryBot.create :user
       sign_in @user

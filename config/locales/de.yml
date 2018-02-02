@@ -205,6 +205,7 @@ de:
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
         has_place_3_match: "Spiel um Platz 3"
+        maximum_elo_change: "Maximaler Änderungsfaktor"
       tournament:
         game_modes:
           ko: "K.-o.-System"

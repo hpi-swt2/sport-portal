@@ -61,7 +61,10 @@ $( document ).on('turbolinks:load', function() {
 
     // Autofill of player count for an event
     showPlayerCount();
+    changeAdvancedSettings();
     $("#event_player_type").on("change", showPlayerCount);
+    $("#rankinglist_game_mode").on("change", changeAdvancedSettings);
+
 
     function showPlayerCount()
     {
@@ -80,6 +83,26 @@ $( document ).on('turbolinks:load', function() {
           $("#event_max_players_per_team").hide();
           break;
       }
+    }
+
+    function changeAdvancedSettings()
+    {
+        switch($("#rankinglist_game_mode").val())
+        {
+            case "elo":
+                $("#default_point_distribution").hide();
+                var default_elo_change = $("#rankinglist_maximum_elo_change");
+                if(default_elo_change.val() == "")
+                {
+                    default_elo_change.val(32);
+                }
+                $("#elo_point_distribution").show();
+                break;
+            default:
+                $("#default_point_distribution").show();
+                $("#elo_point_distribution").hide();
+                break;
+        }
     }
 });
 
