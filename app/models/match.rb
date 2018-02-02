@@ -198,14 +198,18 @@ class Match < ApplicationRecord
   def apply_elo
     home_participant = Participant.where("team_id = ? AND event_id = ?", team_home_id, event).first
     away_participant = Participant.where("team_id = ? AND event_id = ?", team_away_id, event).first
+    home_participant.update_elo_for(get_match_result, away_participant)
+  end
+
+  def get_match_result
     case winner
-      when home_participant.team
-        match_result = 1.0
-      when away_participant.team
-        match_result = 0.0
-      else
-        match_result = 0.5
+    when home_participant.team
+      match_result = 1.0
+    when away_participant.team
+      match_result = 0.0
+    else
+      match_result = 0.5
     end
-    home_participant.update_elo_for(match_result, away_participant)
+    match_result
   end
 end
