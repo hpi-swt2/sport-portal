@@ -80,7 +80,44 @@ $( document ).on('turbolinks:load', function() {
           $("#event_max_players_per_team").hide();
           break;
       }
-      return false;
+    }
+
+    //rankinglist_game_mode -> rankinglist_initial_value
+    showInitialValue();
+    var initial_value_elo = 1000;
+    var initial_value_trueskill = 1000;
+    var initial_value_win_loss = 0;
+    $("#rankinglist_game_mode").on("change", showInitialValue);
+    function showInitialValue()
+    {
+        switch($("#rankinglist_game_mode").val())
+        {
+            case "ELO":
+                $("#rankinglist_initial_value").val(initial_value_elo);
+                break;
+            case "TrueSkill":
+                $("#rankinglist_initial_value").val(initial_value_trueskill);
+                break;
+            default:
+                $("#rankinglist_initial_value").val(initial_value_win_loss);
+                break;
+        }
+    }
+
+    $("#rankinglist_initial_value").on("change", saveInitialValue);
+    function saveInitialValue()
+    {
+        switch($("#rankinglist_game_mode").val()) {
+            case "ELO":
+                initial_value_elo = ("#rankinglist_initial_value").val();
+                break;
+            case "True Skill":
+                initial_value_trueskill = $("#rankinglist_initial_value").val();
+                break;
+            default:
+                initial_value_win_loss = $("#rankinglist_initial_value").val();
+                break;
+        }
     }
 });
 
