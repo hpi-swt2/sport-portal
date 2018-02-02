@@ -59,7 +59,7 @@ class Tournament < Event
     return if team_count < 2
     create_matches filled_teams, finale_gameday, 0
     normalize_first_layer_match_indices
-    create_place_3_match if team_count >= 4
+    create_place_3_match if team_count >= 4 && has_place_3_match
   end
 
   def finale_gameday
