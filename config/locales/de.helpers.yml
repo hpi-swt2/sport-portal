@@ -40,7 +40,7 @@ de:
     submit:
       create: "Erstelle %{model}"
       submit: "Speichere %{model}"
-      update: "Aktualisiere %{model}"
+      update: "Speichern"
       delete: "Lösche %{model}"
     select:
       prompt: "Bitte wähle"
