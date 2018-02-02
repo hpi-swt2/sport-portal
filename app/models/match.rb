@@ -59,6 +59,12 @@ class Match < ApplicationRecord
   extend TimeSplitter::Accessors
   split_accessor :start_time
 
+  before_create :set_default_start_time
+
+  def set_default_start_time
+    self.start_time = Time.now if self.start_time.blank?
+  end
+
   @@has_winner_strategy = { "most_sets" => lambda { |match| match.wins_home != match.wins_away } }
   @@winner_strategy = { "most_sets" => lambda { |match| (match.wins_home > match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
   @@loser_strategy = { "most_sets" => lambda { |match| (match.wins_home < match.wins_away ? match.team_home_recursive : match.team_away_recursive) if match.has_winner? } }
@@ -95,6 +101,13 @@ class Match < ApplicationRecord
 
   def has_points?
     points_home.present? && points_away.present?
+  end
+
+  def opponent_of(participant)
+    home = team_home_recursive
+    away = team_away_recursive
+    return home if participant == away
+    return away if participant == home
   end
 
   def has_scores?
