@@ -69,7 +69,7 @@ end
 
 Then(/^the new user should be linked with the account$/) do
   account = single_account
-  user = User.find_by(email: account.info.email)
+  user = User.find_by!(email: account.info.email)
   expect(user.uid).to eq(account[:uid])
   expect(user.provider).to eq(account[:provider])
 end
@@ -212,6 +212,18 @@ end
 And(/^he clicks the link in the email he just received$/) do
   open_email(single_user.email)
   current_email.click_link
+end
+
+Then(/^the new user's first name should be '(.*)'$/) do |first_name|
+  account = single_account
+  user = User.find_by!(email: account.info.email)
+  expect(user.first_name).to eq(first_name)
+end
+
+Then(/^the new user's last name should be '(.*)'$/) do |last_name|
+  account = single_account
+  user = User.find_by!(email: account.info.email)
+  expect(user.last_name).to eq(last_name)
 end
 
 Then(/^(.*) should be able to change the dates of the game days$/) do |userName|

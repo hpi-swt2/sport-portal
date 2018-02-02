@@ -261,7 +261,10 @@ Devise.setup do |config|
                   name: 'hpiopenid',
                   identifier: 'https://openid.hpi.uni-potsdam.de/serve',
                   required: [OmniAuth::Strategies::OpenID::AX[:email]],
-                  optional: []
+                  optional: [
+                    OmniAuth::Strategies::OpenID::AX[:first_name],
+                    OmniAuth::Strategies::OpenID::AX[:last_name]
+                  ]
 
   require 'certified'
   require 'openid/fetchers'

@@ -1,9 +1,12 @@
+<div class="form-group order-4">
+  <h3 class="form-group__title"><%= t('activerecord.attributes.event.dates') %></h3>
+</div>
 <%= render 'events/forms/parts/dates', form: form%>
 <%= render 'events/forms/parts/player_type', form: form %>
 <%= render 'events/forms/parts/min_max_players_per_team', form: form %>
 <%= render 'events/forms/parts/selection_type', form: form %>
 
-<div class="form-group" id="event_game_modes">
+<div class="form-group order-1">
   <%= form.label :game_mode, class: 'control-label col-lg-2' %>
   <div class="col-lg-10">
     <%= form.select(:game_mode, Tournament.game_modes.map {|k, _| [Tournament.human_game_mode(k), k]},
