@@ -38,75 +38,29 @@ class League < Event
   enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
 
   def generate_schedule
-    if game_mode == League.game_modes.key(0)
+    if game_mode == League.game_modes[:round_robin]
       calculate_round_robin
-    elsif game_mode == League.game_modes.key(1)
+    elsif game_mode == League.game_modes[:two_halfs]
       calculate_two_halfs
-    elsif game_mode == League.game_modes.key(2)
+    elsif game_mode == League.game_modes[:swiss]
       calculate_swiss_system_start
     end
   end
 
   def is_up_to_date
-    if game_mode != League.game_modes.key(2)
-      return true
-    end
-
-    gamedays.last.endtime > DateTime.now
+    (return true) unless game_mode == League.game_modes[:swiss]
+    gamedays.last.endtime > DateTime.current
   end
 
   def update_schedule
-    if game_mode == League.game_modes.key(2)
+    if game_mode == League.game_modes[:swiss]
       calculate_swiss_system_new_gameday
     end
-  end
-
-  def calculate_swiss_system_new_gameday
-    add_gameday
-    gameday_number = gamedays.length - 1
-    ranking = get_ranking
-    teams = ranking.map { |entry| entry.team }
-    teams_amount = teams.length
-    teams_matched = []
-
-    teams.each_with_index do |team, index|
-      if teams_matched.include? team
-        next
-      end
-
-      team_home = team
-      team_away_index = index.next
-      team_away = teams[team_away_index]
-
-      while team_away_index < teams_amount && (have_already_played(team_home, team_away) || teams_matched.include?(team_away))
-        team_away_index = team_away_index.next
-        team_away = teams[team_away_index]
-      end
-
-      if team_away_index < teams_amount
-        add_match(team_home, team_away, gameday_number)
-        teams_matched << team_home
-        teams_matched << team_away
-      end
-    end
-    save
   end
 
   def have_already_played(team1, team2)
     pairings = matches.map { |match| Set[match.team_home, match.team_away] }
     pairings.include? Set[team1, team2]
-  end
-
-  # create a random first gameday for the swiss system
-  def calculate_swiss_system_start
-    add_gameday
-    temp = teams.to_a.shuffle
-    temp.each do |team|
-      team_away = temp[1 + rand(temp.size - 2)]
-      add_match(team, team_away, 0)
-      temp.delete(team)
-      temp.delete(team_away)
-    end
   end
 
   def startdate_for_gameday(gameday_number)
@@ -171,6 +125,43 @@ class League < Event
 
       # remove all matches that include a nil object
       games.map { |game| game.select { |match| !match[1].nil? } }
+    end
+
+    def calculate_swiss_system_new_gameday
+      add_gameday
+      gameday_number = gamedays.length - 1
+      ranking = get_ranking
+      teams = ranking.map { |entry| entry.team }
+      teams_amount = teams.length
+      teams_matched = []
+      teams.each_with_index do |team, index|
+        next if teams_matched.include? team
+        team_home = team
+        team_away_index = index.next
+        team_away = teams[team_away_index]
+
+        while team_away_index < teams_amount && (have_already_played(team_home, team_away) || teams_matched.include?(team_away))
+          team_away_index = team_away_index.next
+          team_away = teams[team_away_index]
+        end
+
+        if team_away_index < teams_amount
+          add_match(team_home, team_away, gameday_number)
+          teams_matched << team_home
+          teams_matched << team_away
+        end
+      end
+    end
+
+    # create a random first gameday for the swiss system
+    def calculate_swiss_system_start
+      add_gameday
+      shuffledTeams = teams.to_a.shuffle
+      middle_index = (teams.length / 2).floor
+      shuffledTeams.first(middle_index).each_with_index do |team, index|
+        team_away = shuffledTeams[middle_index + index]
+        add_match(team, team_away, 0)
+      end
     end
 
     def add_match(team_home, team_away, gameday_number)

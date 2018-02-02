@@ -370,11 +370,12 @@ RSpec.describe EventsController, type: :controller do
     end
 
     it "should update schedule if it is not up-to-date" do
+      league.generate_schedule
       league.gamedays << FactoryBot.create(:gameday)
 
       last_gameday = league.gamedays.last
-      last_gameday.starttime = Date.today.next_day
-      last_gameday.endtime = Date.today.next_day 2
+      last_gameday.starttime = Date.current + 1.day
+      last_gameday.endtime = Date.current + 2.days
 
       get :schedule, params: { id: league.to_param }, session: valid_session
       expect(league.is_up_to_date).to be true
