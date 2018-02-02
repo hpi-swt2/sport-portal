@@ -150,8 +150,7 @@ describe 'new event page', type: :feature do
                                             deadline: tournament.deadline,
                                             startdate: tournament.startdate,
                                             enddate: tournament.enddate } }
-    let(:valid_tournament_dropdowns) { { Event.human_attribute_name(:game_mode) => Tournament.human_game_mode(tournament.game_mode),
-                                         Event.human_attribute_name(:player_type) => Event.human_player_type(:single) } }
+    let(:valid_tournament_dropdowns) { { Event.human_attribute_name(:player_type) => Event.human_player_type(:single) } }
     it 'should be possible to create a tournament' do
       visit new_path
 
