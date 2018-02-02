@@ -158,9 +158,9 @@ ActiveRecord::Schema.define(version: 20180128145059) do
     t.string "uid"
     t.text "avatar_data"
     t.string "confirmation_token"
+    t.string "unconfirmed_email"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.boolean "team_notifications_enabled", default: true
     t.boolean "event_notifications_enabled", default: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
