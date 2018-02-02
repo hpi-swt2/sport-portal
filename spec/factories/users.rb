@@ -36,6 +36,11 @@ FactoryBot.define do
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
     favourite_sports "Football, Basketball, Tennis"
 
+
+    after(:create) do |user|
+      puts 'foo'
+    end
+
     factory :invalid_user do
       last_name nil
     end

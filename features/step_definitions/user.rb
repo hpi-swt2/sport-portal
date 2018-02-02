@@ -211,6 +211,9 @@ end
 
 And(/^he clicks the link in the email he just received$/) do
   # as seen here: https://stackoverflow.com/questions/25240102/how-to-visit-a-link-inside-an-email-using-capybara
+
+  open_email()
+
   path_regex = /(?:"https?\:\/\/.*?)(\/.*?)(?:")/
 
   mail = ActionMailer::Base.deliveries.last
