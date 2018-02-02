@@ -4,10 +4,9 @@ Feature: Detailed event page
   In order to inform myself about a specific event
 
   Scenario: Tournament
-    Given a tournament with gamemode ko
+    Given a tournament
     When the tournament's page is visited
     Then the page header should show 'Tournament'
-    And the page should show 'K.-o.-System'
     And the page should show 'Teamteilnahme'
 
   Scenario: League

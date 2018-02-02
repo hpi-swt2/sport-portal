@@ -108,10 +108,6 @@ Then(/^the standing of the (home|away) team of match (.+) (\d+) is '(.+)'$/) do 
   expect(page).to have_text("#{team.name} #{standing}")
 end
 
-Given(/^a tournament with gamemode (.*)$/) do |mode|
-  create_tournament game_mode: mode
-end
-
 def placing_to_display_string(placing)
   I18n.t "events.placing.#{placing}"
 end
@@ -138,7 +134,6 @@ When(/^he fills in valid tournament data$/) do
   fill_in :tournament_discipline, with: 'DummySport'
   fill_in :tournament_max_teams, with: 8
   select I18n.t('activerecord.attributes.event.player_types.team'), from: :event_player_type
-  select I18n.t('activerecord.attributes.tournament.game_modes.ko'), from: :tournament_game_mode
   fill_in :event_deadline, with: Date.today + 1.day
   fill_in :event_startdate, with: Date.today + 2.day
   fill_in :event_enddate, with: Date.today + 3.day
