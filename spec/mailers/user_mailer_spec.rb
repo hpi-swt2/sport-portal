@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DeviseMailer, type: :mailer do
+RSpec.describe 'DeviseMailer', type: :mailer do
   describe 'confirmation mails' do
     it 'should receive a confirmation mail on sign-up' do
       ActionMailer::Base.deliveries.clear
