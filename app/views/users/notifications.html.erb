@@ -1,7 +1,7 @@
 <div class="page-header">
   <h1><%= t 'view.user.notifications.settings' %></h1>
 </div>
-<%= form_for(@user, url: user_path(@user), method: :patch) do |f| %>
+<%= form_for(@user, url: update_notifications_user_path(@user), method: :patch) do |f| %>
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
       <%= f.check_box :team_notifications_enabled, class: 'filled-in' %>
