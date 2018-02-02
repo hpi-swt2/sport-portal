@@ -250,6 +250,27 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to render_template(:edit)
       end
     end
+
+    context '(re)confirmable' do
+      it 'should send a confirmation and a notification mail on email change' do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+        user = User.create! valid_attributes
+        sign_in user
+        Devise.mailer.deliveries.clear
+
+        new_mail = 'my_new_mail@example.com'
+        new_attributes = { email: new_mail,
+                           current_password: user.password }
+
+        mock_confirmation_mail = double
+        mock_notification_mail = double
+        expect(Devise.mailer).to receive(:confirmation_instructions).and_return(mock_confirmation_mail)
+        expect(Devise.mailer).to receive(:email_changed).and_return(mock_notification_mail)
+        expect(mock_confirmation_mail).to receive(:deliver)
+        expect(mock_notification_mail).to receive(:deliver)
+        put :update, params: { id: user.to_param, user: new_attributes }
+      end
+    end
   end
 
   describe 'GET #link' do
