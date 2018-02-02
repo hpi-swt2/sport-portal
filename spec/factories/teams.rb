@@ -40,4 +40,8 @@ FactoryBot.define do
   trait :private do
     private true
   end
+
+  trait :single do
+    single true
+  end
 end
