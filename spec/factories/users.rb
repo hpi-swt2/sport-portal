@@ -40,10 +40,6 @@ FactoryBot.define do
     after(:create) do |user|
       puts 'foo'
     end
-
-    factory :invalid_user do
-      last_name nil
-    end
   end
 
   trait :with_avatar do
@@ -64,6 +60,11 @@ FactoryBot.define do
     after(:build) do |user|
       user.skip_confirmation!
     end
+  end
+
+
+  factory :invalid_user, class: User, parent: :user do
+    last_name nil
   end
 
   factory :admin, class: User, parent: :user do

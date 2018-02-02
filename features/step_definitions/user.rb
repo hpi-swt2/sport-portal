@@ -209,8 +209,9 @@ Then(/^his email should be '(.*)'$/) do |email|
   expect(single_user.email).to eq(email)
 end
 
-And(/^he clicks the link in the email he just received$/) do
-  open_email(single_user.email)
+And(/^he clicks the link in the email he just received at his new mail account$/) do
+  single_user.reload!
+  open_email(single_user.unconfirmed_email)
   current_email.click_link
 end
 
