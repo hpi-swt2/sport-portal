@@ -34,9 +34,7 @@
 
 
 <%# app/helpers/button_helper.rb %>
-<%= link_to t('helpers.links.back'),
-        event_schedule_path(@match.event_id),
-        class: 'btn btn-default'%>
+<%= back_btn event_schedule_path(@match.event_id) %>
 
 <% if !@match.event.is_a? Rankinglist %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_match_path(@match), :class => 'btn btn-default' %>

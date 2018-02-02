@@ -12,9 +12,7 @@
 
       <%= f.submit t('devise.registrations.reset_password'), class: 'btn btn-primary' %>
 
-        <%= link_to t('helpers.links.back'),
-                new_user_session_path,
-                class: 'btn btn-default'%>
+      <%= back_btn new_user_session_path %>
     <% end %>
   </div>
 </div>

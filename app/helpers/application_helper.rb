@@ -19,4 +19,8 @@ module ApplicationHelper
       team_path(participant)
     end
   end
+
+  def back_btn(path = :back)
+    link_to t('helpers.links.back'), path, class: 'btn btn-default'
+  end
 end

@@ -2,8 +2,6 @@
   <h1><%= t('events.create_event') %></h1>
   <p style="color: #01A8E8"><%= t('welcome.index.lead-description') %></p>
 </div>
-<%= link_to t('helpers.links.back'),
-            events_path,
-            class: 'btn btn-default'%>
+<%= back_btn events_path %>
 
 <%= render partial: 'events/event_cards' %>
