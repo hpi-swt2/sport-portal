@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20180202093132) do
     t.integer "selection_type", default: 0, null: false
     t.integer "min_players_per_team"
     t.integer "max_players_per_team"
+    t.text "image_data"
     t.integer "matchtype"
     t.integer "bestof_length", default: 1
     t.integer "game_winrule"
@@ -38,7 +39,6 @@ ActiveRecord::Schema.define(version: 20180202093132) do
     t.integer "points_for_draw", default: 1
     t.integer "points_for_lose", default: 0
     t.boolean "has_place_3_match", default: true
-    t.text "image_data"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"

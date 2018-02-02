@@ -76,8 +76,8 @@ describe 'Rankinglists', type: :feature do
       click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
       participant = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user)).first
       participant2 = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user2)).first
-      expect(participant.rating).to eq(1007.5)
-      expect(participant2.rating).to eq(992.5)
+      expect(participant.rating).to eq(1016)
+      expect(participant2.rating).to eq(984)
     end
 
     it 'can have matches that adjust the elo if the away participant wins' do
@@ -94,8 +94,8 @@ describe 'Rankinglists', type: :feature do
       click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
       participant = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user)).first
       participant2 = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user2)).first
-      expect(participant.rating).to eq(992.5)
-      expect(participant2.rating).to eq(1007.5)
+      expect(participant.rating).to eq(984)
+      expect(participant2.rating).to eq(1016)
     end
 
     it 'can have matches that adjust the elo if the game is a draw' do
