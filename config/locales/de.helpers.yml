@@ -105,6 +105,8 @@ de:
     user_added_to_team:
       added_to_team_info_html: 'du bist dem Team %{team_link} beigetreten.'
       subject: "Du bist dem Team %{team_name} beigetreten"
+      have_fun: "Viel Erfolg beim Sport!"
     team_registered_to_event:
       registered_to_event_info_html: 'dein Team %{team_link} nimmt jetzt an dem Event %{event_link} teil.'
       subject: "Dein Team %{team_name} nimmt jetzt an dem Event %{event_name} teil"
+      have_fun: "Viel Erfolg beim Spielen!"
