@@ -35,6 +35,7 @@ FactoryBot.define do
     telephone_number "00491731117843"
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
     favourite_sports "Football, Basketball, Tennis"
+    sequence(:contact_information) { |n| "Homepage: http://user#{n}.com" }
 
     factory :invalid_user do
       last_name nil
