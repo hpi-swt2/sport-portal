@@ -71,6 +71,7 @@ de:
         telephone_number: "Telefonnummer"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+        contact_information: "Kontaktinformationen"
   mailer:
     hello: "Hallo %{firstname},"
     have_fun: "Viel Erfolg beim Training!"
