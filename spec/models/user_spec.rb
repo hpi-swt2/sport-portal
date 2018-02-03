@@ -242,7 +242,7 @@ RSpec.describe User, type: :model do
   it 'can keep general contacting information' do
     user = FactoryBot.create :user
     contact_info = 'You can find me on TrueYou: @maxMustermann97'
-    user.contact_information = 'Hans'
+    user.contact_information = contact_info
     user.save!
     user.reload
     expect(user.contact_information).to eq(contact_info)
