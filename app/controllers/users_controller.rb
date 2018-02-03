@@ -71,6 +71,16 @@ class UsersController < Devise::RegistrationsController
   def notifications
   end
 
+  # PATCH /users/1/update_notifications
+  def update_notifications
+    @user = User.find(params[:id])
+    authorize! :update, @user
+    user_params = params[:user]
+    @user.update(event_notifications_enabled: user_params[:event_notifications_enabled],
+                team_notifications_enabled: user_params[:team_notifications_enabled])
+    redirect_to notifications_user_path(@user)
+  end
+
   # GET /users/1/dashboard
   # View: app/views/devise/registrations/dashboard.html.erb
   def dashboard

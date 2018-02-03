@@ -149,11 +149,14 @@ class Event < ApplicationRecord
   end
 
   def can_leave?(user)
-    has_participant?(user)
+    has_participant?(user) && !deadline_has_passed?
   end
 
   def standing_of(team)
     I18n.t 'events.overview.unkown_standing'
+  end
+
+  def last_match_of(_)
   end
 
   # this is a method that simplifies manual testing, not intended for production use
