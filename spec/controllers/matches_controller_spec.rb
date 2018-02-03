@@ -78,7 +78,7 @@ RSpec.describe MatchesController, type: :controller do
 
   describe "GET #edit_results" do
     it "should allow team members to edit the results of a match" do
-      match = Match.create! valid_attributes
+      match = Match.create! authorized_attributes
       get :edit_results, params: { id: match.to_param }
       expect(response).to be_success
     end
@@ -129,14 +129,14 @@ RSpec.describe MatchesController, type: :controller do
       }
 
       it "updates the requested match" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: new_attributes }
         match.reload
         expect(match.place).to eq(new_attributes["place"])
       end
 
       it "redirects to the match" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: valid_attributes }
         expect(response).to redirect_to(match)
       end
@@ -144,7 +144,7 @@ RSpec.describe MatchesController, type: :controller do
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: invalid_attributes }
         expect(response).to be_success
       end
@@ -251,6 +251,8 @@ RSpec.describe MatchesController, type: :controller do
   end
 
   describe "PUT #update_results" do
+
+    let(:match) { Match.create! authorized_attributes }
     context "with valid params" do
       let(:new_attributes) {
         {
@@ -261,7 +263,6 @@ RSpec.describe MatchesController, type: :controller do
           }
         }
       }
-      let(:match) { FactoryBot.create(:match) }
 
       it "updates the requested match" do
         put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
@@ -286,7 +287,6 @@ RSpec.describe MatchesController, type: :controller do
             }
         }
       }
-      let(:match) { FactoryBot.create(:match) }
 
       it "redirects to the edit results page" do
         put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }

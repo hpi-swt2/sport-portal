@@ -79,13 +79,8 @@ class Ability
 
 
     def can_modify_match(user)
-      user_team_ids = user.team_users.map {|team_user| team_user.id}
       can :modify, Match do |match|
-        puts "new"
-        puts "user team: " + user_team_ids.to_s
-        puts "home id: " + match.team_home.id.to_s
-        puts "away id: " + match.team_away.id.to_s
-        (user_team_ids & [match.team_home.id, match.team_away.id]).any?
+        user.teams.include? match.team_home or user.teams.include? match.team_away
       end
     end
 
