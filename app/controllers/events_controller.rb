@@ -7,11 +7,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    if get_shown_events_value == "on"
-      @events = Event.all
-    else
-      @events = Event.active
-    end
+    @events = Event.all
   end
 
   # GET /events/1
@@ -34,6 +30,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = event_type.new(event_params)
+    @event.matchtype = :bestof
     set_associations
     if @event.save
       @event.editors << current_user
@@ -66,6 +63,7 @@ class EventsController < ApplicationController
     else
       @event.add_team(Team.find(event_params[:teams]))
     end
+    
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
@@ -95,12 +93,10 @@ class EventsController < ApplicationController
     @schedule_type = @event.type.downcase!
   end
 
-  # GET /events/1/ranking
-  def ranking
-    @ranking_entries = @event.get_ranking
-  end
-
   def overview
+    if @event.type == 'League'
+      redirect_to @event, error: t('events.overview.not_available_for_leagues')
+    end
   end
 
   private
@@ -119,10 +115,6 @@ class EventsController < ApplicationController
       return Tournament if params[:type] == 'Tournament'
       return Rankinglist if params[:type] == 'Rankinglist'
       params[:type]
-    end
-
-    def get_shown_events_value
-      params[:showAll]
     end
 
     def map_event_on_event_types
@@ -151,6 +143,12 @@ class EventsController < ApplicationController
                                     :startdate,
                                     :teams,
                                     :enddate,
+                                    :matchtype,
+                                    :bestof_length,
+                                    :game_winrule,
+                                    :points_for_win,
+                                    :points_for_draw,
+                                    :points_for_lose,
                                     :initial_value,
                                     :min_players_per_team,
                                     :max_players_per_team,
