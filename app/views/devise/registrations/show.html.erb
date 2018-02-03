@@ -11,7 +11,7 @@
   <div class="row">
     <% if @user.birthday.present? %>
         <p class="description-tag"><%= model_class.human_attribute_name(:birthday) %></p>
-        <p class="description-text"><%= @user.birthday %></p>
+        <p class="description-text"><%= @user.birthday.strftime("%d.%m.%Y") %></p>
     <% end %>
   </div>
   <div class="row">
