@@ -28,12 +28,6 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_content(@event.max_teams)
     end
 
-    it "renders a game mode" do
-      render
-      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
-    end
-
-
     #not signed in user
     it "doesn't render the new button when not signed in" do
       render
@@ -76,11 +70,6 @@ RSpec.describe "events/show", type: :view do
   end
 
   shared_examples "a time-restricted multiplayer event" do
-    it "renders a game mode field" do
-      render
-      expect(rendered).to have_content(Event.human_attribute_name :game_mode)
-    end
-
     it "renders a start date" do
       render
       expect(rendered).to have_content(Event.human_attribute_name :startdate)
@@ -110,6 +99,16 @@ RSpec.describe "events/show", type: :view do
       @event = assign(:event, FactoryBot.create(:league))
       @event.editors << @user
       @event.owner = @user
+    end
+
+    it "renders a game mode" do
+      render
+      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
+    end
+
+    it "renders a game mode field" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :game_mode)
     end
 
     it "renders a schedule button" do
@@ -169,6 +168,11 @@ RSpec.describe "events/show", type: :view do
       @event = assign(:event, FactoryBot.create(:rankinglist))
       @event.editors << @user
       @event.owner = @user
+    end
+
+    it "renders a game mode" do
+      render
+      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
     end
 
     it "renders a metric field" do
