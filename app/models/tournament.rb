@@ -50,6 +50,10 @@ class Tournament < Event
     final_match.last_match_of(team).standing_string_of team
   end
 
+  def last_match_of(team)
+    finale.last_match_of(team) || place_3_match.last_match_of(team)
+  end
+
   def finale
     matches.find_by(gameday_number: finale_gameday)
   end

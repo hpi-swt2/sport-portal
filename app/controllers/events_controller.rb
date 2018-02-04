@@ -31,6 +31,8 @@ class EventsController < ApplicationController
   def create
     @event = event_type.new(event_params)
     @event.matchtype = :bestof
+    @event.min_players_per_team = 1
+    @event.max_players_per_team = 1
     set_associations
     if @event.save
       @event.editors << current_user
