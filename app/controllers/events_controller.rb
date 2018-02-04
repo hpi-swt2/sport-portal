@@ -160,7 +160,9 @@ class EventsController < ApplicationController
                                     :min_players_per_team,
                                     :max_players_per_team,
                                     :gameday_duration,
+                                    :selection_type,
                                     :image,
+                                    :image_data,
                                     :remove_image,
                                     :has_place_3_match,
                                     user_ids: [])
