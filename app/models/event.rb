@@ -179,7 +179,7 @@ class Event < ApplicationRecord
   def build_description_string
     registration_until =  "#{I18n.t('events.index.registration_until')}: #{self.deadline}" if self.deadline.present?
     start_date = "#{I18n.t('events.index.start_date')}: #{self.startdate}" if self.startdate.present?
-    return "#{registration_until} | #{start_date}" if registration_until.present?
+    return ("#{registration_until} <br> #{start_date}").html_safe if registration_until.present?
     "#{I18n.t('events.index.max_players')}: #{self.max_teams}" if self.max_teams.present?
   end
 
