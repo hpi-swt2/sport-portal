@@ -50,9 +50,9 @@ de:
       description: "Beschreibung"
       private: "Privat"
       cant_destroy: "%{resource_name} kann nicht gelöscht werden, da es noch an Events teilnimmt."
-      filter: Zeige
-      show_all: Alle Teams
-      show_mine: Nur meine Teams
+      filter: "Zeige"
+      show_all: "Alle Teams"
+      show_mine: "Nur meine Teams"
       multiple_actions:
         apply_action: "Wende folgende Aktion auf Ausgewählte an:"
         select_all: "Alle auswählen"
@@ -81,14 +81,23 @@ de:
       info: "startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
       subject: "Dein Spiel startet morgen"
     match_canceled:
-      info: "wurde abgesagt."
-      subject: "Dein Spiel wurde abgesagt"
+      info_html: "dein Spiel gegen %{team_link} im Event %{event_link} am %{start_date} um %{start_time} in %{place} wurde abgesagt."
+      info_txt: "dein Spiel gegen %{team_name} im Event %{event_link} am %{start_date} um %{start_time} in %{place} wurde abgesagt."
+      subject: "Dein Spiel gegen %{team_name} im Event %{event_name} am %{start_date} um %{start_time} in %{place} wurde abgesagt."
+      have_fun: "Viel Erfolg!"
+      make_modifications: "%{match_link} kannst du die Änderungen vornehmen."
     match_scheduled:
-      info: "wurde geplant."
-      subject: "Dein Match wurde geplant"
+      info_html: "dein Spiel gegen %{team_link} im Event %{event_link} findet am %{start_date} um %{start_time} in %{place} statt."
+      info_txt: "dein Spiel gegen %{team_name} im Event %{event_name} findet am %{start_date} um %{start_time} in %{place} statt."
+      subject: "Dein Spiel gegen %{team_name} im Event %{event_name} findet am %{start_date} um %{start_time} in %{place} statt."
+      have_fun: "Viel Erfolg beim Spielen!"
+      add_results: "%{match_link} kannst du die Ergebnisse eintragen."
     match_date_changed:
-      info: "wurde auf %{start_time} verschoben."
-      subject: "Dein Match wurde verschoben"
+      info_html: "dein Spiel gegen %{team_link} im Event %{event_link} wurde auf den %{start_date} um %{start_time} in %{place} verschoben."
+      info_txt: "dein Spiel gegen %{team_name} im Event %{event_name} wurde auf den %{start_date} um %{start_time} in %{place} verschoben."
+      subject: "Dein Spiel gegen %{team_name} im Event %{event_name} wurde auf den %{start_date} um %{start_time} in %{place} verschoben."
+      have_fun: "Viel Erfolg beim Spielen!"
+      add_results: "%{match_link} kannst du die Ergebnisse eintragen."
   event_mailer:
     event: "das Event %{event}"
     event_canceled:
