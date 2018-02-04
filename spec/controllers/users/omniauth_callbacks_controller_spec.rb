@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Users::OmniauthCallbacksController, type: :controller do
   describe 'GET #hpiopenid' do
     before :each do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
+      mock_devise
       @user = FactoryBot.create(:user, uid: '1234567890', provider: 'hpiopenid')
       @auth = OmniAuth::AuthHash.new(
         provider: @user.provider,

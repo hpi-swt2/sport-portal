@@ -29,7 +29,6 @@ RSpec.describe 'User mailer', type: :mailer do
       confirmation_link = mail_body.find_link(I18n.t('devise.mailer.confirmation_instructions.action'))
       expect(confirmation_link['href']).to include('unneeded_confirmation_token')
     end
-
   end
 
   describe 'email changed notification mail' do

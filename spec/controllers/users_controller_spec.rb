@@ -21,7 +21,7 @@ RSpec.describe UsersController, type: :controller do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
     @admin = FactoryBot.create(:admin)
-    @request.env['devise.mapping'] = Devise.mappings[:user]
+    mock_devise
   end
 
   after(:each) do
