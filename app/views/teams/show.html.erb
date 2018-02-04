@@ -43,7 +43,7 @@
 
 <% if user_signed_in? %>
   <%= form_tag perform_action_on_multiple_members_team_path(@team) do %>
-    <table class="table table-striped">
+    <table class="table table-striped" id="members">
         <thead>
             <tr>
               <th><%= t '.select', :default => t("helpers.select.prompt") %></th>
