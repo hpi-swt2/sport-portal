@@ -216,7 +216,6 @@ de:
           round_robin: "Jeder gegen Jeden"
           two_halfs: "Hin- und Rückrunde"
           swiss: "Schweizer System"
-          danish: "Dänisches System"
       rankinglist:
         game_modes:
           elo: "ELO"
@@ -357,7 +356,6 @@ de:
       round_robin: "Jeder gegen Jeden"
       two_halfs: "Hin- und Rückrunde"
       swiss: "Schweizer System"
-      danish: "Dänisches System"
       elo: "ELO"
       win_loss: "Gewinne-Niederlagen"
       true_skill: "True Skill"
