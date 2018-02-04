@@ -34,9 +34,25 @@ RSpec.describe GameResult, type: :model do
   describe '#confirm_scores' do
     let(:scores_proposed_by) { FactoryBot.create(:user) }
     let(:confirmer) { FactoryBot.create(:user) }
-    let(:game_result) { FactoryBot.create(:game_result, scores_proposed_by: user) }
+    let(:game_result) { FactoryBot.create(:game_result, scores_proposed_by: scores_proposed_by) }
 
-    subject { -> { match.confirm_scores(user) } }
+    subject { -> { game_result.confirm_scores(confirmer) } }
+
+    it { is_expected.to change { game_result.scores_proposed_by}.from(scores_proposed_by).to(nil) }
+  end
+
+  describe '#can_confirm_scores?' do
+    let(:scores_proposed_by) { FactoryBot.create(:user) }
+    let(:confirmer) { FactoryBot.create(:user) }
+    let(:game_result) { FactoryBot.create(:game_result, scores_proposed_by: scores_proposed_by) }
+
+    subject { game_result.can_confirm_scores?(confirmer) }
+
+    context 'is already confirmed' do
+      let(:game_result) { FactoryBot.create(:game_result, scores_proposed_by: nil) }
+
+      it { is_expected.to be_falsey }
+    end
 
     context 'scores_proposed_by is in team home' do
       before(:each) do
@@ -47,12 +63,16 @@ RSpec.describe GameResult, type: :model do
         before(:each) do
           game_result.match.team_home.members << confirmer
         end
+
+        it { is_expected.to be_falsey }
       end
 
       context 'confirmer is in team away' do
         before(:each) do
           game_result.match.team_away.members << confirmer
         end
+
+        it { is_expected.to be_truthy }
       end
     end
 
@@ -65,12 +85,16 @@ RSpec.describe GameResult, type: :model do
         before(:each) do
           game_result.match.team_home.members << confirmer
         end
+
+        it { is_expected.to be_truthy }
       end
 
       context 'confirmer is in team away' do
         before(:each) do
           game_result.match.team_away.members << confirmer
         end
+
+        it { is_expected.to be_falsey }
       end
     end
   end

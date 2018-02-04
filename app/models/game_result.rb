@@ -26,12 +26,8 @@ class GameResult < ApplicationRecord
     scores_proposed_by.nil?
   end
 
-  def confirm_scores(user)
-    if can_confirm_scores?(user)
-      self.scores_proposed_by = nil
-    else
-      errors.add(:scores_proposed_by, I18n.t('activerecord.models.match.errors.score_proposer_confirmer_team'))
-    end
+  def confirm_scores
+    self.scores_proposed_by = nil
     save
   end
 end
