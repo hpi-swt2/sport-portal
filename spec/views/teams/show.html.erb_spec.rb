@@ -4,6 +4,7 @@ RSpec.describe "teams/show", type: :view do
   before(:each) do
     @team = assign(:team, FactoryBot.create(:team))
     @user = FactoryBot.build :user
+    @admin = FactoryBot.create(:admin)
     FactoryBot.build(:user)
   end
 
@@ -48,6 +49,12 @@ RSpec.describe "teams/show", type: :view do
     expect(rendered).to_not have_content(t("helpers.links.assign_ownership"))
   end
 
+  it "renders the delete button when signed in and you are an admin" do
+    sign_in @admin
+    render
+    expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
+  end
+
   describe 'invite user to team' do
     before(:each) do
       @user = FactoryBot.create :user
@@ -76,6 +83,7 @@ RSpec.describe "teams/show", type: :view do
         expect(rendered).to have_field(User.human_attribute_name(:email))
         expect(rendered).to have_selector(:link_or_button, t('helpers.links.cancel'))
         expect(rendered).to have_selector(:link_or_button, t('helpers.links.send'))
+        expect(rendered).to have_link(@user.first_name, href: user_path(@user))
       end
 
       it 'should not be rendered for users that are not members of the team' do

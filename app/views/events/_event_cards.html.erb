@@ -8,7 +8,7 @@
     </div>
     <div class="row center">
       <% if not user_signed_in? %>
-        <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn card-button truncate'%>
+        <%= link_to t('welcome.index.sign-up-now'), new_user_session_path , class: 'btn card-button truncate'%>
       <% else %>
         <%= link_to t('events.new_tournament'), new_tournament_path, class: 'btn card-button truncate' %>
       <% end %>
@@ -21,7 +21,7 @@
     </div>
     <div class="row center">
       <% if not user_signed_in? %>
-        <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn card-button truncate'%>
+        <%= link_to t('welcome.index.sign-up-now'), new_user_session_path , class: 'btn card-button truncate'%>
       <% else %>
         <%= link_to t('events.new_league'), new_league_path, class: 'btn card-button truncate' %>
       <% end %>
@@ -34,7 +34,7 @@
     </div>
     <div class="row center">
       <% if not user_signed_in? %>
-        <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn card-button truncate'%>
+        <%= link_to t('welcome.index.sign-up-now'), new_user_session_path , class: 'btn card-button truncate'%>
       <% else %>
         <%= link_to t('events.new_rankinglist'), new_rankinglist_path, class: 'btn card-button truncate' %>
       <% end %>

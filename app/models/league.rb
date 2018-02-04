@@ -21,12 +21,18 @@
 #  selection_type       :integer          default("fcfs"), not null
 #  min_players_per_team :integer
 #  max_players_per_team :integer
+#  matchtype            :integer
+#  bestof_length        :integer          default(1)
+#  game_winrule         :integer
+#  points_for_win       :integer          default(3)
+#  points_for_draw      :integer          default(1)
+#  points_for_lose      :integer          default(0)
 #  image_data           :text
 #
 
 class League < Event
   validates :deadline, :startdate, :enddate, :selection_type, presence: true
-  validates :gameday_duration, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000 }
+  validates :gameday_duration, presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 1000}
   validate :end_after_start, :start_after_deadline
 
   enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
@@ -39,13 +45,33 @@ class League < Event
     end
   end
 
+  def startdate_for_gameday(gameday_number)
+    ((gameday_number - 1) * gameday_duration).days.since startdate
+  end
+
+  def enddate_for_gameday(gameday_number)
+    startdate_for_gameday(gameday_number.next) - 1.day
+  end
+
+  def all_matches
+    gamedays.map(&:matches).flatten
+  end
+
+  def invalidate_schedule
+    super
+    gamedays.delete_all
+  end
+
+  private
+
   def calculate_round_robin
     pairings_per_day = round_robin_pairings teams.to_a
-    pairings_per_day.each_with_index do |day, gameday|
+    pairings_per_day.each_with_index do |day, gameday_number|
+      add_gameday
       day.each do |pairing|
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
-        matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1)
+        add_match pairing[0], pairing[1], gameday_number
       end
     end
     save
@@ -54,14 +80,14 @@ class League < Event
   def calculate_two_halfs
     pairings_per_day = round_robin_pairings teams.to_a
     pairings_per_day += round_robin_pairings teams.to_a
-    pairings_per_day.each_with_index do |day, gameday|
+    pairings_per_day.each_with_index do |day, gameday_number|
+      gameday = add_gameday
       day.each do |pairing|
         # Creating a match for every pairing if one of the teams is nil (which happens if there is an odd number of teams)
         # the other team will have to wait for this day
-        if gameday < teams.size
-          matches << Match.new(team_home: pairing[0], team_away: pairing[1], gameday: gameday + 1)
-        else
-          matches << Match.new(team_home: pairing[1], team_away: pairing[0], gameday: gameday + 1)
+        match = add_match pairing[0], pairing[1], gameday_number
+        if gameday_number >= teams.size
+          switch_team_home_away match
         end
       end
     end
@@ -76,19 +102,26 @@ class League < Event
 
     games = (n - 1).times.map do
       teams_array.rotate!
-      [[teams_array.first, pivot]] + (1...(n / 2)).map { |j| [teams_array[j], teams_array[n - 1 - j]] }
+      [[teams_array.first, pivot]] + (1...(n / 2)).map {|j| [teams_array[j], teams_array[n - 1 - j]]}
     end
 
     # remove all matches that include a nil object
-    games.map { |game| game.select { |match| !match[1].nil? } }
+    games.map {|game| game.select {|match| !match[1].nil?}}
   end
 
-  def startdate_for_gameday(gameday)
-    ((gameday - 1) * gameday_duration).days.since startdate
+  def add_match(team_home, team_away, gameday_number)
+    match = Match.new(team_home: team_home, team_away: team_away, gameday_number: gameday_number + 1, start_time: gamedays[gameday_number].starttime)
+    gamedays[gameday_number].matches << match
+    matches << match # deprecated but still used for gameday calculation, refactoring to be continued
+    match
   end
 
-  def enddate_for_gameday(gameday)
-    startdate_for_gameday(gameday.next) - 1.day
+  def add_gameday
+    next_gameday_index = gamedays.length
+    gamedays << Gameday.new(description: next_gameday_index.to_s,
+                            starttime: startdate_for_gameday(next_gameday_index),
+                            endtime: enddate_for_gameday(next_gameday_index))
+    gamedays.last
   end
 
   def self.template_events
@@ -113,9 +146,16 @@ class League < Event
         selection_type: League.selection_types[:fcfs],
         min_players_per_team: 4,
         max_players_per_team: 6,
-        image_data: File.open("#{Rails.root}/app/assets/images/missing_event_image.png"))
+        image_data: File.open("#{Rails.root}/app/assets/images/missing_event_image.jpg"))
     list << league
 
     list
+  end
+
+  def switch_team_home_away(match)
+    home = match.team_home
+    match.team_home = match.team_away
+    match.team_away = home
+    match
   end
 end

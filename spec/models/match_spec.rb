@@ -11,10 +11,11 @@
 #  event_id       :integer
 #  points_home    :integer
 #  points_away    :integer
-#  gameday        :integer
+#  gameday_number :integer
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
+#  gameday_id     :integer
 #  start_time     :datetime         default(NULL)
 #
 
@@ -112,6 +113,54 @@ RSpec.describe Match, type: :model do
     end
   end
 
+  describe '#opponent_of' do
+    before :each do
+      @other_team = FactoryBot.create(:team)
+    end
+
+    describe 'given a match with explicit participants' do
+      before :each do
+        @match = FactoryBot.create(:match)
+      end
+
+      it 'should return the opponent of a participant' do
+        expect(@match.opponent_of(@match.team_home)).to eq(@match.team_away)
+        expect(@match.opponent_of(@match.team_away)).to eq(@match.team_home)
+      end
+
+      it 'should return nil given an unrelated team' do
+        expect(@match.opponent_of(@other_team)).to be_nil
+      end
+    end
+
+    describe 'given a match with implicit participants' do
+      before :each do
+        @match_result_a =  FactoryBot.create(:match_result)
+        @match_result_b =  FactoryBot.create(:match_result)
+        @match = FactoryBot.create(:match, team_home: @match_result_a, team_away: @match_result_b)
+      end
+
+      it 'should return nil given any team' do
+        expect(@match.opponent_of(@match_result_a.match.team_home)).to be_nil
+        expect(@match.opponent_of(@match_result_a.match.team_away)).to be_nil
+        expect(@match.opponent_of(@match_result_b.match.team_home)).to be_nil
+        expect(@match.opponent_of(@match_result_b.match.team_away)).to be_nil
+        expect(@match.opponent_of(@other_team)).to be_nil
+      end
+
+      describe 'given scores have been entered' do
+        before :each do
+          @game_result_a = FactoryBot.create(:game_result, score_home: 3, score_away: 1, match: @match_result_a.match)
+          @game_result_b = FactoryBot.create(:game_result, score_home: 3, score_away: 1, match: @match_result_b.match)
+        end
+
+        it 'should return the opponent of a participant' do
+          expect(@match.opponent_of(@match_result_a.advancing_participant)).to eq(@match_result_b.advancing_participant)
+          expect(@match.opponent_of(@match_result_b.advancing_participant)).to eq(@match_result_a.advancing_participant)
+        end
+      end
+    end
+  end
 
   it "using #update_with_point_recalculation recalculates points if winner changed and points are already known" do
     match = FactoryBot.create(:match)
@@ -134,5 +183,35 @@ RSpec.describe Match, type: :model do
     expect(result.score_away).to eq(1)
 
     expect(match.points_home).to be < match.points_away
+  end
+
+  it 'send notification emails to all members of teams when scheduled' do
+    match = FactoryBot.create(:match)
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect { FactoryBot.create(:match) }.to change { ActionMailer::Base.deliveries.length }.by(email_count * 2)
+  end
+
+  it 'send notification emails to all members of teams when canceled' do
+    match = FactoryBot.create(:match)
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect { match.destroy }.to change { ActionMailer::Base.deliveries.length }.by(email_count)
+  end
+
+  it 'send notification emails to all members of teams when starttime is changed' do
+    match = FactoryBot.create(:match)
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect {
+      match.start_time = Time.now
+      match.save
+    }.to change { ActionMailer::Base.deliveries.length }.by(email_count)
+  end
+
+  it 'should not send notifications if anything but the starttime is changed' do
+    match = FactoryBot.create(:match)
+    email_count = match.team_home.members.count + match.team_away.members.count
+    expect {
+      match.place = "Here"
+      match.save
+    }.to change { ActionMailer::Base.deliveries.length }.by(0)
   end
 end
