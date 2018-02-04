@@ -392,21 +392,21 @@ de:
     max_teams:
       infinite: "unbegrenzt"
     templates:
-      1:
+      league1:
         name: "Tischkickerliga"
-        description: "In dieser mitreißenden Tischkickerliga tritts du gegen deine Freunde und Kollegen an und der beste Spieler wird in epischen Duellen ermittelt. Trete jetzt bei, um teil dieses unvergesslichen Erlebnisses zu sein!"
-      2:
+        description: "In dieser mitreißenden Tischkickerliga tritts du gegen deine Freunde und Kollegen an und der beste Spieler wird in epischen Duellen ermittelt. Trete jetzt bei, um Teil dieses unvergesslichen Erlebnisses zu sein!"
+      league2:
         name: "Fußballliga"
-      3:
+      tournament1:
         name: "Volleyball Turnier"
         description: "Sonne, Sand und jede Menge Spaß, das diesjährige Volleyball Turnier lässt keine Wünsche offen. Meldet euch jetzt an!"
         discipline: "Beachvolleyball"
-      4:
+      tournament2:
         name: "Tischtennistturnier"
-      5:
+      rankinglist1:
         name: "Schachrangliste"
         discipline: "Schach"
-      6:
+      rankinglist2:
         name: "Tischkickerrangliste"
 
 
