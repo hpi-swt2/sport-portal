@@ -32,14 +32,9 @@ FactoryBot.define do
     sequence(:password) { |n| "password#{n}" }
     password_confirmation { password }
     birthday Date.new(1995, 10, 20)
-    telephone_number "00491731117843"
+    telephone_number '00491731117843'
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
-    favourite_sports "Football, Basketball, Tennis"
-
-
-    after(:create) do |user|
-      puts 'foo'
-    end
+    favourite_sports 'Football, Basketball, Tennis'
   end
 
   trait :with_avatar do
