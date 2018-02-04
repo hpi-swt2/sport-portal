@@ -26,7 +26,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # https://github.com/plataformatec/devise
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid], password_length: 8..128
 
   OMNIAUTH_PASSWORD_LENGTH = 32
@@ -101,7 +101,7 @@ class User < ApplicationRecord
   end
 
   def name
-    name = first_name + " " + last_name
+    "#{first_name} #{last_name}"
   end
 
   def all_events
@@ -132,6 +132,7 @@ class User < ApplicationRecord
           user.first_name = data['first_name'] if user.first_name.blank?
           user.last_name = data['last_name'] if user.last_name.blank?
           user.email = data['email'] if user.email.blank?
+          user.skip_confirmation!
         end
       end
     end
@@ -145,6 +146,7 @@ class User < ApplicationRecord
     def from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
         user.email = auth.info.email
+        user.skip_confirmation!
         user.first_name = auth.info.first_name
         user.last_name = auth.info.last_name
         user.password = Devise.friendly_token OMNIAUTH_PASSWORD_LENGTH

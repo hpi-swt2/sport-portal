@@ -186,9 +186,9 @@ RSpec.describe Match, type: :model do
   end
 
   it 'send notification emails to all members of teams when scheduled' do
-    match = FactoryBot.create(:match)
-    email_count = match.team_home.members.count + match.team_away.members.count
-    expect { FactoryBot.create(:match) }.to change { ActionMailer::Base.deliveries.length }.by(email_count * 2)
+    email_count = 2
+    ActionMailer::Base.deliveries.clear
+    expect { FactoryBot.create(:match) }.to change { ActionMailer::Base.deliveries.length }.by(email_count * 4)
   end
 
   it 'send notification emails to all members of teams when canceled' do
