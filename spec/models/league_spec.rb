@@ -179,7 +179,7 @@ describe 'League model', type: :model do
 
       context 'update schedule' do
         it 'creates a new gameday' do
-          expect{ league.update_schedule }.to change { league.gamedays.length }.by 1
+          expect { league.update_schedule }.to change { league.gamedays.length }.by 1
         end
 
         it 'creates a correct amount of matches' do
@@ -241,7 +241,7 @@ describe 'League model', type: :model do
 
           describe "Round 2" do
             let(:gameday2) {
-              gameday2 = league.gamedays.last 
+              gameday2 = league.gamedays.last
               gameday2.matches[0].game_results << FactoryBot.build(:game_result,
                                                       score_home: 0, # team 2
                                                       score_away: 1000   # team 0

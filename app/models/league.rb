@@ -129,7 +129,7 @@ class League < Event
 
     def penalty(ranked_teams, matches)
       (return Float::INFINITY) if matches.flatten.uniq.length != matches.flatten.length
-      matches.inject(0) {|sum, match| sum + penalty_for_match(ranked_teams, match) }
+      matches.inject(0) { |sum, match| sum + penalty_for_match(ranked_teams, match) }
     end
 
     def penalty_for_match(ranked_teams, match)
