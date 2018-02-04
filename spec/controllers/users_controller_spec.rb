@@ -5,6 +5,7 @@ require 'rails_helper'
 # added back in via the `rails-controller-testing` gem.
 
 RSpec.describe UsersController, type: :controller do
+  mock_devise
 
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
@@ -21,7 +22,6 @@ RSpec.describe UsersController, type: :controller do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
     @admin = FactoryBot.create(:admin)
-    mock_devise
   end
 
   after(:each) do
