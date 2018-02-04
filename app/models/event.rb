@@ -119,7 +119,7 @@ class Event < ApplicationRecord
   end
 
   def add_participant(user)
-    team = user.create_single_team
+    team = user.create_team_for_event
     add_team(team)
   end
 
@@ -188,7 +188,7 @@ class Event < ApplicationRecord
   end
 
   def fitting_teams(user)
-    all_teams = user.owned_teams.multiplayer
+    all_teams = user.owned_teams.created_by_user
     fitting_teams = []
     all_teams.each do |team|
       if is_fitting?(team)

@@ -19,7 +19,7 @@ class Team < ApplicationRecord
 
   validates :private, inclusion:  [true, false]
 
-  scope :multiplayer, -> { where created_by_event: false }
+  scope :created_by_user, -> { where created_by_event: false }
   scope :created_by_event, -> { where created_by_event: true }
 
   has_many :participants
