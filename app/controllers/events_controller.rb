@@ -17,7 +17,11 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     if event_type
-      @event = event_type.new
+      if params.has_key?('event')
+        @event = event_type.new(event_params)
+      else
+        @event = event_type.new
+      end
     else
       @template_events = Event.template_events
       render :create_from_type
@@ -75,18 +79,6 @@ class EventsController < ApplicationController
   def team_join
     respond_to do |format|
       format.js
-    end
-  end
-
-  # GET /events/1/create_from_template
-  def create_from_template
-    @event = event_type.new(event_params)
-    set_associations
-    if @event.save
-      @event.editors << current_user
-      redirect_to @event, notice: 'Event was successfully created.'
-    else
-      render :new
     end
   end
 
