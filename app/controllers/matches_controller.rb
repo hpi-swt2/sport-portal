@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :confirm_game_result]
 
   # GET /matches/1
   def show
@@ -89,7 +89,7 @@ class MatchesController < ApplicationController
     @result = GameResult.find_by(id: params[:result_id], match_id: @match.id)
     authorize! :confirm, @result
     @result.confirm_scores
-    redirect_back(fallback_location: edit_results_path(@match))
+    redirect_back(fallback_location: edit_results_match_path(@match))
   end
 
   private

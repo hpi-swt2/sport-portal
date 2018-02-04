@@ -38,7 +38,7 @@ RSpec.describe GameResult, type: :model do
 
     subject { -> { game_result.confirm_scores(confirmer) } }
 
-    it { is_expected.to change { game_result.scores_proposed_by}.from(scores_proposed_by).to(nil) }
+    it { is_expected.to change { game_result.scores_proposed_by }.from(scores_proposed_by).to(nil) }
   end
 
   describe '#can_confirm_scores?' do
