@@ -73,7 +73,7 @@ de:
     index:
       lead: "Organisiere deine Liga!"
       lead-description: "Plane, erstelle und betreue mühelos sowohl Turniere als auch Ligen für deinen Sport. Du hast noch keine Erfahrung als Event-Organisator? Kein Problem! Baue dir jetzt mit wenigen Klicks problemlos deinen persönlichen Spielplan."
-      free-sign-up: "Kostenlos Anmelden"
+      sign-up-now: "Jetzt Anmelden"
       soccer: "Fußball"
       basketball: "Basketball"
       volleyball: "Volleyball"
@@ -110,6 +110,7 @@ de:
       my_profile: "Mein Profil"
       edit_profile: "Profil bearbeiten"
       notification_settings: "Benachrichtigungseinstellungen"
+      notifications: "Benachrichtigungen"
 
   dashboard:
     title: "Dashboard für %{name}"
@@ -179,7 +180,7 @@ de:
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Teilnehmeranzahl"
+        max_teams: "Maximale Teilnehmerzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
@@ -193,8 +194,8 @@ de:
         max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
-          single: "Einzelteilnahme"
-          team: "Teamteilnahme"
+          single: "Einzel"
+          team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
         points_for_win: "Punkte für Gewinn"
@@ -369,6 +370,7 @@ de:
       in_place_3_match: "Im Spiel um Platz 3"
       in: "Im %{match_name}"
       not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
+      against: "gegen"
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
