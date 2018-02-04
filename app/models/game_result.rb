@@ -18,7 +18,6 @@ class GameResult < ApplicationRecord
   belongs_to :scores_proposed_by, class_name: 'User', optional: true
 
   def can_confirm_scores?(user)
-    # TODO: Dont let a random person propose scores
     !(is_confirmed? || match.users_in_same_team(user, scores_proposed_by))
   end
 
