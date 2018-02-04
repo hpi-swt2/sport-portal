@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :confirm_scores]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result]
 
   # GET /matches/1
   def show
@@ -85,8 +85,9 @@ class MatchesController < ApplicationController
     redirect_to event_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
 
-  def confirm_scores
+  def confirm_game_result
     @result = GameResult.find_by(id: params[:result_id], match_id: @match.id)
+    authorize! :confirm, @result
     @result.confirm_scores(current_user)
     redirect_back(fallback_location: edit_results_path(@match))
   end
@@ -113,6 +114,8 @@ class MatchesController < ApplicationController
     end
 
     def match_results_params
-      params.require(:match).permit(game_results_attributes: [:id, :_destroy, :score_home, :score_away])
+      results = params.require(:match).permit(game_results_attributes: [:id, :_destroy, :score_home, :score_away])
+      results[:game_results_attributes].each { |_, v| v[:scores_proposed_by] = current_user }
+      results
     end
 end

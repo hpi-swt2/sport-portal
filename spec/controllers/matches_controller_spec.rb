@@ -17,6 +17,11 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: nil, team_away: nil).attributes
   }
 
+  before(:each) do
+    @user = FactoryBot.create(:user)
+    sign_in @user
+  end
+
   describe "GET #show" do
     it "returns a success response" do
       match = Match.create! valid_attributes
@@ -199,6 +204,7 @@ RSpec.describe MatchesController, type: :controller do
         result = match.game_results.first
         expect(result.score_home).to eq(new_attributes["0"]["score_home"])
         expect(result.score_away).to eq(new_attributes["0"]["score_away"])
+        expect(result.scores_proposed_by).to eq(@user)
       end
 
       it "redirects to the show match page" do
@@ -225,4 +231,13 @@ RSpec.describe MatchesController, type: :controller do
     end
   end
 
+  describe "POST #confirm_game_result" do
+    context "proposed by participant from same team" do
+
+    end
+
+    context "proposed by partipant from other team" do
+
+    end
+  end
 end
