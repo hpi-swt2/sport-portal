@@ -136,13 +136,10 @@ class League < Event
         max_teams: 12,
         game_mode: League.game_modes[:round_robin],
         type: 'League',
-        created_at: Date.today,
-        updated_at: Date.today,
         startdate: Date.today + (7 * 2),
         enddate: Date.today + (7 * 6),
         deadline: Date.today + (7 * 1),
         gameday_duration: 1,
-        owner_id: nil,
         selection_type: League.selection_types[:fcfs],
         image: open('https://owncloud.hpi.de/index.php/s/HPHEQZIDE6NjixX/download'))
     list << league1
@@ -156,13 +153,10 @@ class League < Event
         max_teams: 16,
         game_mode: League.game_modes[:two_halfs],
         type: 'League',
-        created_at: Date.today,
-        updated_at: Date.today,
         startdate: Date.today + (7 * 2),
         enddate: Date.today + (7 * 6),
         deadline: Date.today + (7 * 1),
         gameday_duration: 1,
-        owner_id: nil,
         selection_type: League.selection_types[:fcfs],
         image: open('https://owncloud.hpi.de/index.php/s/vKltqmRNoyjABjR/download'))
     list << league2

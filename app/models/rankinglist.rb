@@ -63,9 +63,6 @@ class Rankinglist < Event
         initial_value: 20,
         game_mode: Rankinglist.game_modes[:elo],
         type: 'Rankinglist',
-        created_at: Date.today,
-        updated_at: Date.today,
-        owner_id: nil,
         image: open('https://owncloud.hpi.de/index.php/s/hkq3TILn6b4zeXp/download'))
     list << rankinglist1
 
@@ -77,9 +74,6 @@ class Rankinglist < Event
         initial_value: 20,
         game_mode: Rankinglist.game_modes[:elo],
         type: 'Rankinglist',
-        created_at: Date.today,
-        updated_at: Date.today,
-        owner_id: nil,
         image: open('https://owncloud.hpi.de/index.php/s/HPHEQZIDE6NjixX/download'))
     list << rankinglist2
 
