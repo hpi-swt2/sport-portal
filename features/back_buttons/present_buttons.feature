@@ -8,5 +8,8 @@ Feature: Working-"back" buttons
     And the user is logged in
     And a tournament 'MyTournament' with 4 teams
     And a tournament 'Tourney2' with 2 users
-    And the Spielplan page for 'MyTournament' is visited
-    Then there should be a back button on all pages except the start page
+    # Ensure Schedule is generated
+    When the Spielplan page for 'MyTournament' is visited
+    # In case of errors, adjust this step
+    Given all relevant routes
+    Then there should be a back button on all relevant pages
