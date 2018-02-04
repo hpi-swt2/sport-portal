@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     member do
       put :join
       put :leave
-      put :create_from_template
       get :team_join
     end
   end
