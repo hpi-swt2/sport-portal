@@ -127,27 +127,45 @@ class League < Event
   def self.template_events
     list = Array.new
 
-    league = League.new
-    league.assign_attributes(
-        name: 'Will be replaced with PO data',
-        description: 'A very nice league.',
-        discipline: 'League Discipline',
-        player_type: Event.player_types[:team],
+    league1 = League.new
+    league1.assign_attributes(
+        name: I18n.t('events.templates.league1.name'),
+        description: I18n.t('events.templates.league1.description'),
+        discipline: I18n.t('events.discipline.table_football'),
+        player_type: Event.player_types[:single],
         max_teams: 12,
         game_mode: League.game_modes[:round_robin],
         type: 'League',
-        created_at: Date.yesterday,
-        updated_at: Date.yesterday,
-        startdate: Date.yesterday,
-        enddate: Date.tomorrow,
-        deadline: Date.today,
+        created_at: Date.today,
+        updated_at: Date.today,
+        startdate: Date.today + (7 * 2),
+        enddate: Date.today + (7 * 6),
+        deadline: Date.today + (7 * 1),
         gameday_duration: 1,
         owner_id: nil,
         selection_type: League.selection_types[:fcfs],
-        min_players_per_team: 4,
-        max_players_per_team: 6,
-        image_data: File.open("#{Rails.root}/app/assets/images/missing_event_image.jpg"))
-    list << league
+        image: open('https://owncloud.hpi.de/index.php/s/HPHEQZIDE6NjixX/download'))
+    list << league1
+
+    league2 = League.new
+    league2.assign_attributes(
+        name: I18n.t('events.templates.league2.name'),
+        description: '',
+        discipline: I18n.t('events.discipline.soccer'),
+        player_type: Event.player_types[:team],
+        max_teams: 16,
+        game_mode: League.game_modes[:two_halfs],
+        type: 'League',
+        created_at: Date.today,
+        updated_at: Date.today,
+        startdate: Date.today + (7 * 2),
+        enddate: Date.today + (7 * 6),
+        deadline: Date.today + (7 * 1),
+        gameday_duration: 1,
+        owner_id: nil,
+        selection_type: League.selection_types[:fcfs],
+        image: open('https://owncloud.hpi.de/index.php/s/vKltqmRNoyjABjR/download'))
+    list << league2
 
     list
   end

@@ -29,6 +29,7 @@
 #  points_for_lose      :integer          default(0)
 #  image_data           :text
 #
+require 'open-uri'
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'

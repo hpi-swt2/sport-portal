@@ -54,20 +54,36 @@ class Rankinglist < Event
   def self.template_events
     list = Array.new
 
-    rankinglist = Rankinglist.new
-    rankinglist.assign_attributes(
-        name: 'Will be replaced with PO data',
-        description: 'A very nice rankinglist.',
-        discipline: 'Rankinglist Discipline',
-        max_teams: 12,
-        game_mode: Rankinglist.game_modes[:true_skill],
+    rankinglist1 = Rankinglist.new
+    rankinglist1.assign_attributes(
+        name: I18n.t('events.templates.rankinglist1.name'),
+        description: '',
+        discipline: I18n.t('events.templates.rankinglist1.discipline'),
+        max_teams: 100,
+        initial_value: 20,
+        game_mode: Rankinglist.game_modes[:elo],
         type: 'Rankinglist',
-        created_at: Date.yesterday,
-        updated_at: Date.yesterday,
+        created_at: Date.today,
+        updated_at: Date.today,
         owner_id: nil,
-        image_data: File.open("#{Rails.root}/app/assets/images/missing_event_image.jpg"))
-    list << rankinglist
+        image: open('https://owncloud.hpi.de/index.php/s/hkq3TILn6b4zeXp/download'))
+    list << rankinglist1
+
+    rankinglist2 = Rankinglist.new
+    rankinglist2.assign_attributes(
+        name: I18n.t('events.templates.rankinglist2.name'),
+        description: '',
+        discipline: I18n.t('events.discipline.table_football'),
+        initial_value: 20,
+        game_mode: Rankinglist.game_modes[:elo],
+        type: 'Rankinglist',
+        created_at: Date.today,
+        updated_at: Date.today,
+        owner_id: nil,
+        image: open('https://owncloud.hpi.de/index.php/s/HPHEQZIDE6NjixX/download'))
+    list << rankinglist2
 
     list
+
   end
 end

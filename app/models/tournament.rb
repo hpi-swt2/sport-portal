@@ -181,27 +181,49 @@ class Tournament < Event
     def self.template_events
       list = Array.new
 
-      tournament = Tournament.new
-      tournament.assign_attributes(
-          name: 'Will be replaced with PO data',
-          description: 'A very nice tournament.',
-          discipline: 'Tournament Discipline',
+      tournament1 = Tournament.new
+      tournament1.assign_attributes(
+          name: I18n.t('events.templates.tournament1.name'),
+          description: I18n.t('events.templates.tournament1.description'),
+          discipline: I18n.t('events.templates.tournament1.discipline'),
           player_type: Event.player_types[:team],
-          max_teams: 12,
-          game_mode: Tournament.game_modes[:double_elimination],
+          max_teams: 8,
+          game_mode: Tournament.game_modes[:ko],
           type: 'Tournament',
-          created_at: Date.yesterday,
-          updated_at: Date.yesterday,
-          startdate: Date.yesterday,
-          enddate: Date.tomorrow,
-          deadline: Date.today,
+          created_at: Date.today,
+          updated_at: Date.today,
+          startdate: Date.today + (7 * 2),
+          enddate: Date.today + (7 * 6),
+          deadline: Date.today + (7 * 1),
           gameday_duration: 1,
           owner_id: nil,
           selection_type: Event.selection_types[:fcfs],
-          min_players_per_team: 4,
-          max_players_per_team: 6,
-          image_data: File.open("#{Rails.root}/app/assets/images/missing_event_image.jpg"))
-      list << tournament
+          min_players_per_team: 6,
+          max_players_per_team: 12,
+          image: open('https://owncloud.hpi.de/index.php/s/ped4LMBi3vKldWu/download'))
+      list << tournament1
+
+      tournament2 = Tournament.new
+      tournament2.assign_attributes(
+          name: I18n.t('events.templates.tournament2.name'),
+          description: '',
+          discipline: I18n.t('events.discipline.table_tennis'),
+          player_type: Event.player_types[:single],
+          max_teams: 16,
+          game_mode: Tournament.game_modes[:ko],
+          type: 'Tournament',
+          created_at: Date.today,
+          updated_at: Date.today,
+          startdate: Date.today + (7 * 2),
+          enddate: Date.today + (7 * 6),
+          deadline: Date.today + (7 * 1),
+          gameday_duration: 1,
+          owner_id: nil,
+          selection_type: Event.selection_types[:fcfs],
+          min_players_per_team: 1,
+          max_players_per_team: 1,
+          image: open('https://owncloud.hpi.de/index.php/s/eA7FWt6AMrC1otJ/download'))
+      list << tournament2
 
       list
     end
