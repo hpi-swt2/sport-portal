@@ -103,7 +103,7 @@ RSpec.describe Team, type: :model do
   end
 
   it 'should not notify newly added team members when team is a single' do
-    team = FactoryBot.create :team, :single
+    team = FactoryBot.create :team, :created_by_event
 
     user = FactoryBot.create :user
     expect { team.members << user }.to change { ActionMailer::Base.deliveries.length }.by(0)
@@ -121,7 +121,7 @@ RSpec.describe Team, type: :model do
   end
 
   it 'should not notify its members when it participates in an event' do
-    team = FactoryBot.create :team, :single
+    team = FactoryBot.create :team, :created_by_event
 
     event = FactoryBot.create :event
     expect { event.add_team team }.to change { ActionMailer::Base.deliveries.length }.by(0)

@@ -19,7 +19,8 @@ class Team < ApplicationRecord
 
   validates :private, inclusion:  [true, false]
 
-  scope :multiplayer, -> { where single: false }
+  scope :multiplayer, -> { where created_by_event: false }
+  scope :created_by_event, -> { where created_by_event: true }
 
   has_many :participants
   has_many :events, through: :participants
@@ -52,7 +53,7 @@ class Team < ApplicationRecord
   end
 
   def is_qualified_to_receive_notifications?
-    !self.single?
+    !self.created_by_event?
   end
 
   # these methods allow teams to be treated like match results. see MatchResult model

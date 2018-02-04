@@ -150,7 +150,7 @@ describe 'League model', type: :model do
       it 'creates a single player team' do
         league.add_participant user
 
-        expect(league.teams.first.single?).to eq true
+        expect(league.teams.first.created_by_event?).to eq true
       end
     end
   end

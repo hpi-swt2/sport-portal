@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def team_or_user_path(participant)
-    if participant.single?
+    if participant.created_by_event?
       user_path(participant.owners.first)
     else
       team_path(participant)

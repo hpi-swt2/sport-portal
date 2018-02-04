@@ -41,7 +41,7 @@ FactoryBot.define do
     private true
   end
 
-  trait :single do
-    single true
+  trait :created_by_event do
+    created_by_event true
   end
 end
