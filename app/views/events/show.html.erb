@@ -54,7 +54,7 @@
   <dt><strong><%= model_class.human_attribute_name(:discipline) %>:</strong></dt>
   <dd><%= @event.discipline %></dd>
 
-  <% if @event.type != 'Tournament' %>
+  <% unless @event.is_a? Tournament %>
     <dt><strong><%= model_class.human_attribute_name((@event.type == 'Rankinglist') ? :metric : :game_mode) %>:</strong></dt>
     <dd><%= @event.human_game_mode %></dd>
   <% end %>
