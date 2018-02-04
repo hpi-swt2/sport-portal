@@ -35,7 +35,7 @@
   <div class="row">
     <% if can? :edit, @user %>
         <%= link_to t('.edit', :default => t('navbar.drop-down.edit_profile')),
-                    edit_user_path(@user), :class => 'btn btn-default edit-btn' %>
+                    edit_user_path(@user), :class => 'btn btn-default btn-save-edit-user btn-centered' %>
     <% end %>
   </div>
 </div>
