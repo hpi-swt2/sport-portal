@@ -57,4 +57,11 @@ RSpec.describe "teams/index", type: :view do
     render
     expect(rendered).to have_selector(:link_or_button, t('teams.index.create_team'))
   end
+
+  it 'should not show single-player teams' do
+    team = @user.create_single_team
+    sign_in @user
+    render
+    expect(rendered).to_not have_text(team.name)
+  end
 end

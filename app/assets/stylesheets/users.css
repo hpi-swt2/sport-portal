@@ -1,0 +1,37 @@
+.btn-save-edit-user, .btn-cancel-edit-user {
+    border-radius: 100px;
+    padding: 10px 60px;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+    height: auto;
+}
+
+.btn-save-edit-user {
+    color: #FFFFFF;
+    background: #1CA9E5;
+    margin-right: 25px;
+}
+
+.btn-save-edit-user:hover {
+    color: #FFFFFF;
+    background: #1CC3FF;
+}
+
+.btn-cancel-edit-user {
+    color: #737373;
+    background: #FFFFFF;
+    border: 1px solid #9E9E9E;
+}
+
+.btn-cancel-edit-user:hover {
+    color: #FFFFFF;
+    background: #9E9E9E;
+}
+
+#save-cancel-section > div > * {
+    margin-top: 30px;
+}
+
+#delete-account-section {
+    margin-top: 50px;
+}

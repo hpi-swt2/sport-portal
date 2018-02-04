@@ -6,11 +6,10 @@
 <%= render 'events/forms/parts/min_max_players_per_team', form: form %>
 <%= render 'events/forms/parts/selection_type', form: form %>
 
-<div class="form-group order-1">
-  <%= form.label :game_mode, class: 'control-label col-lg-2' %>
+<div class="form-group" id="event_has_place_3_match">
+  <label class="control-label col-lg-2"></label>
   <div class="col-lg-10">
-    <%= form.select(:game_mode, Tournament.game_modes.map {|k, _| [Tournament.human_game_mode(k), k]},
-                 { selected: @event.game_mode, include_blank: t('events.new.select_game_mode')},
-                 { class: 'form-control' }) %>
+    <%= form.check_box :has_place_3_match %>
+    <%= form.label :has_place_3_match %>
   </div>
 </div>

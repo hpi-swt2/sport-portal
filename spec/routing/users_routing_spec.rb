@@ -23,6 +23,10 @@ RSpec.describe UsersController, type: :routing do
       expect(get: "/users/1/notifications").to route_to("users#notifications", id: "1")
     end
 
+    it "routes to #update_notifications via PATCH" do
+      expect(patch: "/users/1/update_notifications").to route_to("users#update_notifications", id: "1")
+    end
+
     it "routes to #sign_up to #new" do
       expect(get: "/my/users/sign_up").to route_to("users#new")
     end

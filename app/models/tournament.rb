@@ -34,7 +34,11 @@ class Tournament < Event
   validates :deadline, :startdate, :enddate, :selection_type, presence: true
   validate :end_after_start, :start_after_deadline
 
-  enum game_mode: [:ko, :ko_group, :double_elimination]
+  before_validation :set_game_mode
+
+  def set_game_mode
+    self.game_mode = 0
+  end
 
   def standing_of(team)
     final_match = finale
@@ -44,6 +48,10 @@ class Tournament < Event
     return special_standing if special_standing.present?
 
     final_match.last_match_of(team).standing_string_of team
+  end
+
+  def last_match_of(team)
+    finale.last_match_of(team) || place_3_match.last_match_of(team)
   end
 
   def finale
@@ -59,7 +67,7 @@ class Tournament < Event
     return if team_count < 2
     create_matches filled_teams, finale_gameday, 0
     normalize_first_layer_match_indices
-    create_place_3_match if team_count >= 4
+    create_place_3_match if team_count >= 4 && has_place_3_match
   end
 
   def finale_gameday
