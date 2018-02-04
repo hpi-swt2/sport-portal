@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Devise.mailer, type: :mailer do
+RSpec.describe 'User mailer', type: :mailer do
   let(:user) { FactoryBot.create :user, unconfirmed_email: 'my_new_email@example.com' }
-
 
   describe 'confirmation mail' do
     let(:mail) { Devise.mailer.confirmation_instructions(user, 'unneeded_confirmation_token',
@@ -27,7 +26,8 @@ RSpec.describe Devise.mailer, type: :mailer do
 
     it 'has a confirmation link' do
       mail_body = Capybara.string(mail.body.encoded)
-      expect(mail_body).to have_link(I18n.t('devise.mailer.confirmation_instructions.action'))
+      confirmation_link = mail_body.find_link(I18n.t('devise.mailer.confirmation_instructions.action'))
+      expect(confirmation_link['href']).to include('unneeded_confirmation_token')
     end
 
   end
