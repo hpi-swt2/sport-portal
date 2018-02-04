@@ -236,7 +236,7 @@ RSpec.describe MatchesController, type: :controller do
 
     context "user can confirm" do
       before(:each) do
-        allow(game_result).to receive(:can_confirm_scores?).and_return(true)
+        allow_any_instance_of(GameResult).to receive(:can_confirm_scores?).and_return(true)
       end
 
       it "should confirm the game result" do
@@ -254,7 +254,7 @@ RSpec.describe MatchesController, type: :controller do
 
     context "user cannot confirm" do
       before(:each) do
-        allow(game_result).to receive(:can_confirm_scores?).and_return(false)
+        allow_any_instance_of(GameResult).to receive(:can_confirm_scores?).and_return(false)
       end
 
       it "should not confirm the game result" do
@@ -266,7 +266,7 @@ RSpec.describe MatchesController, type: :controller do
 
       it "redirects to the edit results page" do
         post :confirm_game_result, params: { id: game_result.match.id, result_id: game_result.id }
-        expect(response).to redirect_to edit_results_match_path(game_result.match)
+        expect(response).to be_forbidden
       end
     end
   end
