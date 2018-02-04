@@ -115,7 +115,7 @@ class MatchesController < ApplicationController
 
     def match_results_params
       results = params.require(:match).permit(game_results_attributes: [:id, :_destroy, :score_home, :score_away])
-      results[:game_results_attributes].each { |_, v| v[:scores_proposed_by] = current_user }
+      results[:game_results_attributes].each { |_, value| value[:scores_proposed_by] = current_user }
       results
     end
 end

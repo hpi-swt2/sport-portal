@@ -22,7 +22,7 @@ class GameResult < ApplicationRecord
   end
 
   def is_confirmed?
-    scores_proposed_by.nil?
+    scores_proposed_by.blank?
   end
 
   def confirm_scores
