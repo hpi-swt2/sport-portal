@@ -41,7 +41,6 @@ Then(/^there should be a back button on all relevant pages$/) do
     rescue Exception
       next
     end
-    puts path
     expect(page).to have_link(I18n.t ('helpers.links.back'))
   end
 end
