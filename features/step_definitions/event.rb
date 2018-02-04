@@ -36,6 +36,7 @@ Given(/^user (.*) who is an organizer of (.*) should be able to delete it$/) do 
   event = event_named(eventname)
   event.organizers << Organizer.new(user: user)
 
+  sign_out
   sign_in user
   visit event_path(event)
   expect(page).to have_css('a', :text => I18n.t('helpers.links.destroy'))
@@ -50,6 +51,7 @@ Given(/^user (.*) who is an organizer of (.*) should not be able to delete it$/)
   event = event_named(eventname)
   event.organizers << Organizer.new(user: user)
 
+  sign_out
   sign_in user
   visit event_path(event)
   expect(page).not_to have_css('a', :text => I18n.t('helpers.links.destroy'))

@@ -2,6 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "events/show", type: :view do
 
+  before(:each) do
+    @user = FactoryBot.create :user
+    @other_user = FactoryBot.create :user
+    @admin = FactoryBot.create :admin
+  end
+
   shared_examples "an event" do
     it "renders attributes in <p>" do
       render
@@ -57,7 +63,7 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
     end
 
-    it "doesn't render the delete button when the event doesn´t belong to the user" do
+    it "doesn't render the delete button when the event doesn't belong to the user" do
       sign_in @other_user
       render
       expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
@@ -67,11 +73,6 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to have_content(t('events.show.to_ranking'))
     end
-  end
-  before(:each) do
-    @user = FactoryBot.create :user
-    @other_user = FactoryBot.create :user
-    @admin = FactoryBot.create :admin
   end
 
   describe "League" do
