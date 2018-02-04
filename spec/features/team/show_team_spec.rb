@@ -65,9 +65,8 @@ describe 'Show team page', type: :feature do
   describe 'display team members only for logged in users' do
 
     it 'should not display team member table for users who are not logged in ' do
-      sign_out @user
       visit team_path @team
-      expect(page).to_not have_css("table.table-striped")
+      expect(page).to_not have_css("table#members")
     end
 
     it 'should display team members table for users who are logged in' do
