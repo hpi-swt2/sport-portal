@@ -151,12 +151,12 @@ ActiveRecord::Schema.define(version: 20180202093132) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "admin", default: false
-    t.string "provider"
-    t.string "uid"
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
+    t.string "provider"
+    t.string "uid"
     t.text "avatar_data"
     t.boolean "team_notifications_enabled", default: true
     t.boolean "event_notifications_enabled", default: true
