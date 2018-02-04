@@ -31,6 +31,8 @@ class EventsController < ApplicationController
   def create
     @event = event_type.new(event_params)
     @event.matchtype = :bestof
+    @event.min_players_per_team = 1
+    @event.max_players_per_team = 1
     set_associations
     if @event.save
       @event.editors << current_user
@@ -42,6 +44,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
+    @event.invalidate_schedule if event_params[:has_place_3_match].to_i.zero? == @event.has_place_3_match
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -54,7 +57,6 @@ class EventsController < ApplicationController
     @event.destroy
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
-
 
   # PUT /events/1/join
   def join
@@ -155,6 +157,7 @@ class EventsController < ApplicationController
                                     :gameday_duration,
                                     :image,
                                     :remove_image,
+                                    :has_place_3_match,
                                     user_ids: [])
     end
 end
