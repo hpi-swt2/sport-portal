@@ -31,6 +31,17 @@ RSpec.describe 'events/schedule', type: :view do
     end
   end
 
+  describe 'authorization for delete button' do
+    before(:each) {
+      @user = FactoryBot.create(:user)
+      sign_in @user
+    }
+
+    it 'has no delete button for normal signed in user' do
+      expect(rendered).not_to have_button(:destroy)
+    end
+  end
+
   describe 'linktext for single player league' do
     before(:each) {
       @league = FactoryBot.create :league, :single_player

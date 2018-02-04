@@ -145,6 +145,13 @@ RSpec.describe MatchesController, type: :controller do
       }.to change(Match, :count).by(-1)
     end
 
+    it "destroys the requested match, but the event still exists" do
+      match = Match.create! valid_attributes
+      expect {
+        delete :destroy, params: { id: match.to_param }
+      }.to change(Event, :count).by(0)
+    end
+
     it "redirects to the event schedule page" do
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
