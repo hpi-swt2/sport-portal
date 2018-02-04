@@ -58,7 +58,7 @@ describe 'new event page', type: :feature do
                                         gameday_duration: league.gameday_duration,
                                         deadline: league.deadline,
                                         startdate: league.startdate,
-                                        enddate: league.enddate} }
+                                        enddate: league.enddate } }
     let(:valid_league_dropdowns) { { Event.human_attribute_name(:game_mode) => League.human_game_mode(:round_robin),
                                      Event.human_attribute_name(:player_type) => Event.human_player_type(:single) } }
 
