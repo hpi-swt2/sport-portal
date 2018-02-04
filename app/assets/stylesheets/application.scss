@@ -17,6 +17,7 @@
  *= require bootstrap/bootstrap-tooltip
  *= require_self
  *= require font-awesome
+ *= require events
  *= require schedule
  */
 
@@ -32,6 +33,7 @@ $secondary-color: #01A8E8 !default;
   font-family: 'Proxima Nova';
   src: font_url('ProximaNova-Reg.otf') format('opentype');
 }
+
 
 @font-face {
   font-family: 'Proxima Nova';
@@ -59,6 +61,11 @@ body {
   flex-direction: column;
 }
 
+.container, .container-fluid{
+  max-width: 1200px;
+  width: 100% !important;
+}
+
 .background-layer {
   /* important for footer which sticks to the bottom of the page */
   flex: 1 0 auto;
@@ -70,7 +77,7 @@ body {
     padding-bottom: 120px;
   }
 
-  * {
+  *, .form-horizontal .form-group input.form-control {
     font-size: 1.2rem;
   }
 
@@ -92,7 +99,7 @@ body {
     padding-bottom: 50px;
   }
 
-  * {
+  *, .form-horizontal .form-group input.form-control {
     font-size: 1.2rem;
   }
 
@@ -112,8 +119,10 @@ body {
   }
 }
 
-.navbar-overlap {
-  padding-top: 50px;
+@media screen and (min-width: 1200px) {
+  .form-horizontal .form-group input.form-control {
+    margin-top: -10px;
+  }
 }
 
 .btn {

@@ -73,7 +73,7 @@ de:
     index:
       lead: "Organisiere deine Liga!"
       lead-description: "Plane, erstelle und betreue mühelos sowohl Turniere als auch Ligen für deinen Sport. Du hast noch keine Erfahrung als Event-Organisator? Kein Problem! Baue dir jetzt mit wenigen Klicks problemlos deinen persönlichen Spielplan."
-      free-sign-up: "Kostenlos Anmelden"
+      sign-up-now: "Jetzt Anmelden"
       soccer: "Fußball"
       basketball: "Basketball"
       volleyball: "Volleyball"
@@ -110,6 +110,7 @@ de:
       my_profile: "Mein Profil"
       edit_profile: "Profil bearbeiten"
       notification_settings: "Benachrichtigungseinstellungen"
+      notifications: "Benachrichtigungen"
 
   dashboard:
     title: "Dashboard für %{name}"
@@ -174,12 +175,14 @@ de:
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
       event:
+        basic_information: "Basisinformation"
+        dates: "Termine"
         name: "Name"
         description: "Beschreibung"
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Teilnehmeranzahl"
+        max_teams: "Maximale Teilnehmerzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
@@ -193,8 +196,8 @@ de:
         max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
-          single: "Einzelteilnahme"
-          team: "Teamteilnahme"
+          single: "Einzel"
+          team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
         points_for_win: "Punkte für Gewinn"
@@ -204,6 +207,7 @@ de:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
+        has_place_3_match: "Spiel um Platz 3"
       tournament:
         game_modes:
           ko: "K.-o.-System"
@@ -214,7 +218,6 @@ de:
           round_robin: "Jeder gegen Jeden"
           two_halfs: "Hin- und Rückrunde"
           swiss: "Schweizer System"
-          danish: "Dänisches System"
       rankinglist:
         game_modes:
           elo: "ELO"
@@ -282,6 +285,13 @@ de:
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
+    index:
+      new: "Neues Event erstellen"
+      my_events: "Deine Events"
+      all_events: "Alle Events"
+      start_date: "Startdatum"
+      registration_until: "Anmeldung bis"
+      max_players: "Max. Spielerzahl"
     create_event: "Event erstellen"
     choose_event_format: "Eventart wählen"
     new_league: "Liga erstellen"
@@ -349,7 +359,6 @@ de:
       round_robin: "Jeder gegen Jeden"
       two_halfs: "Hin- und Rückrunde"
       swiss: "Schweizer System"
-      danish: "Dänisches System"
       elo: "ELO"
       win_loss: "Gewinne-Niederlagen"
       true_skill: "True Skill"
@@ -362,6 +371,7 @@ de:
       in_place_3_match: "Im Spiel um Platz 3"
       in: "Im %{match_name}"
       not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
+      against: "gegen"
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"

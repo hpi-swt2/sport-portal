@@ -29,7 +29,7 @@ class League < Event
   validates :gameday_duration, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000 }
   validate :end_after_start, :start_after_deadline
 
-  enum game_mode: [:round_robin, :two_halfs, :swiss, :danish]
+  enum game_mode: [:round_robin, :two_halfs, :swiss]
 
   def generate_schedule
     if game_mode == League.game_modes.key(0)

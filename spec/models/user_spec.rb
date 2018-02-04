@@ -74,6 +74,12 @@ RSpec.describe User, type: :model do
     expect(user2).to be_valid
   end
 
+  it 'has notifications enabled' do
+    user = FactoryBot.create(:user)
+    expect(user.has_event_notifications_enabled?).to be(true)
+    expect(user.has_team_notifications_enabled?).to be(true)
+  end
+
   describe 'self#from_omniauth' do
     it 'should return an existing user' do
       user = FactoryBot.create :user, provider: 'mock', uid: '1234567890'
@@ -198,6 +204,18 @@ RSpec.describe User, type: :model do
   it "has the admin attribute set to false, if it is not an admin" do
     user = FactoryBot.build(:user)
     expect(user.admin).to eq(false)
+  end
+
+  it "has a method all_events that returns all events the user participates in" do
+    user = FactoryBot.create(:user)
+    team = FactoryBot.create(:team)
+    event1 = FactoryBot.create(:event, :single_player)
+    event1.add_participant(user)
+    event2 = FactoryBot.create(:event, :team_player)
+    team.members << user
+    event2.add_team(team)
+    user.reload
+    expect(user.all_events.count).to eq(2)
   end
 
   it "has event notifications enabled by default" do

@@ -29,6 +29,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:hpiopenid], password_length: 8..128
 
+  OMNIAUTH_PASSWORD_LENGTH = 32
+
   validate :password_complexity
 
   validates :first_name, :last_name, presence: true
@@ -74,6 +76,7 @@ class User < ApplicationRecord
 
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
+  has_many :non_single_teams, -> { where single: false }, through: :team_users, source: :team
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
   has_many :owned_teams, through: :team_owners, source: :team
 
@@ -101,6 +104,20 @@ class User < ApplicationRecord
     name = first_name + " " + last_name
   end
 
+  def all_events
+    all_events = self.events + self.organizing_events
+    (self.teams + self.owned_teams).map { |team| all_events += team.events }
+    all_events.uniq
+  end
+
+  def has_event_notifications_enabled?
+    true
+  end
+
+  def has_team_notifications_enabled?
+    true
+  end
+
   def email_with_name
     %('#{name}' <#{email}>)
   end
@@ -112,6 +129,8 @@ class User < ApplicationRecord
           data = session['omniauth.data']
           user.uid = data['uid']
           user.provider = data['provider']
+          user.first_name = data['first_name'] if user.first_name.blank?
+          user.last_name = data['last_name'] if user.last_name.blank?
           user.email = data['email'] if user.email.blank?
         end
       end
@@ -126,6 +145,9 @@ class User < ApplicationRecord
     def from_omniauth(auth)
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
         user.email = auth.info.email
+        user.first_name = auth.info.first_name
+        user.last_name = auth.info.last_name
+        user.password = Devise.friendly_token OMNIAUTH_PASSWORD_LENGTH
       end
     end
   end
