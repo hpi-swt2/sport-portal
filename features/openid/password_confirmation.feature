@@ -13,4 +13,4 @@ Feature:
     When he views his account settings
     And he changes his email
     And the user submits the form
-    And the page should show 'Deine Daten wurden aktualisiert.'
+    And the page should show 'Deine Daten wurden aktualisiert'
