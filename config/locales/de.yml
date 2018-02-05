@@ -344,6 +344,7 @@ de:
       preliminaries: "Vorrunde %{round}"
       to: "bis"
       appointment: "Termin"
+      insert_results: "Ergebnisse eintragen"
     gamemode:
       round_robin: "Jeder gegen Jeden"
       two_halfs: "Hin- und Rückrunde"
