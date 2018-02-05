@@ -206,6 +206,7 @@ de:
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
         has_place_3_match: "Spiel um Platz 3"
+        maximum_elo_change: "Maximaler Änderungsfaktor"
       league:
         game_modes:
           round_robin: "Jeder gegen Jeden"
@@ -344,6 +345,7 @@ de:
       preliminaries: "Vorrunde %{round}"
       to: "bis"
       appointment: "Termin"
+      insert_results: "Ergebnisse eintragen"
     gamemode:
       round_robin: "Jeder gegen Jeden"
       two_halfs: "Hin- und Rückrunde"
@@ -397,8 +399,10 @@ de:
       all_teams: "Alle Teams"
       create_team: "Ein Team erstellen"
     show:
-      invite_user_to_team: "+"
+      team_plays_kind_of_sports: 'Das Team spielt folgende Sportarten'
+      invite_user_to_team: "Spieler einladen"
       number: "#"
+      captain: "Kapitän"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
       no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'

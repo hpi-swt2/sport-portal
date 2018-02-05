@@ -131,10 +131,12 @@ en:
       infinite: "unlimited"
     overview:
       not_available_for_leagues: 'No overview available for leagues.'
+    schedule:
+      insert_results: "Insert result"
 
   teams:
       show:
-        invite_user_to_team: "+"
+        invite_user_to_team: "Invite player"
         number: "#"
       invite_user_to_team:
         title: "Invite new player"

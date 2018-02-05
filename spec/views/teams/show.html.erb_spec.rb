@@ -22,15 +22,6 @@ RSpec.describe "teams/show", type: :view do
     expect(rendered).to_not have_content(t("helpers.links.delete_ownership"))
   end
 
-  it "shows delete ownership button for owners" do
-    @team.owners << @user
-    another_user = FactoryBot.create :user
-    @team.owners << another_user
-    sign_in @user
-    render
-    expect(rendered).to have_content(t('helpers.links.delete_ownership'))
-  end
-
   it "shows the leave button when user can leave team" do
     another_user = FactoryBot.create :user
     @team.owners << another_user
