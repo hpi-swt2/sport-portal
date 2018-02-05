@@ -126,6 +126,8 @@ en:
       infinite: "unlimited"
     overview:
       not_available_for_leagues: 'No overview available for leagues.'
+    schedule:
+      insert_results: "Insert result"
 
   teams:
       show:
