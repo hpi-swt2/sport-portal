@@ -5,6 +5,7 @@ require 'rails_helper'
 # added back in via the `rails-controller-testing` gem.
 
 RSpec.describe UsersController, type: :controller do
+  mock_devise
 
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
@@ -21,7 +22,6 @@ RSpec.describe UsersController, type: :controller do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
     @admin = FactoryBot.create(:admin)
-    @request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
   after(:each) do
@@ -66,7 +66,6 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #new' do
     before :each do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
       @auth_session = {
           'provider' => 'mock',
           'uid' => '1234567890',
@@ -102,7 +101,6 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #edit' do
     before :each do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
       @user = User.create! valid_attributes
     end
 
@@ -162,10 +160,21 @@ RSpec.describe UsersController, type: :controller do
 
   describe "POST #create" do
     it "creates a new user with valid params" do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
       expect {
         post :create, params: { user: valid_attributes }
       }.to change(User, :count).by(1)
+    end
+
+    it 'sends a mail confirmation mail to new users' do
+      mock_confirmation_mail = double
+      expect(Devise.mailer).to receive(:confirmation_instructions).and_return(mock_confirmation_mail)
+      expect(mock_confirmation_mail).to receive(:deliver)
+      post :create, params: { user: valid_attributes }
+    end
+
+    it 'sends no mail confirmation mail to new omniauth users' do
+      expect(Devise.mailer).to_not receive(:confirmation_instructions)
+      FactoryBot.build(:user, :with_openid).save!
     end
   end
 
@@ -181,7 +190,6 @@ RSpec.describe UsersController, type: :controller do
       }
 
       it 'updates the requested user' do
-        @request.env['devise.mapping'] = Devise.mappings[:user]
         user = User.create! valid_attributes
         sign_in user
         put :update, params: { id: user.to_param, user: new_attributes }
@@ -208,7 +216,6 @@ RSpec.describe UsersController, type: :controller do
 
   describe "GET #edit" do
     it "returns a success response" do
-      @request.env["devise.mapping"] = Devise.mappings[:user]
       user = User.create! valid_attributes
       sign_in user
       get :edit, params: { id: user.to_param }
@@ -226,7 +233,6 @@ RSpec.describe UsersController, type: :controller do
       }
 
       it "updates the requested user" do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
         user = User.create! valid_attributes
         sign_in user
         id = user.id
@@ -242,7 +248,6 @@ RSpec.describe UsersController, type: :controller do
 
     context "with invalid params" do
       it "rerenders the edit page with erors" do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
         user = User.create! valid_attributes
         sign_in user
         new_attributes = { birthday: Date.today + 1.year }
@@ -250,11 +255,30 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to render_template(:edit)
       end
     end
+
+    context '(re)confirmable' do
+      it 'should send a confirmation and a notification mail on email change' do
+        user = User.create! valid_attributes
+        sign_in user
+        Devise.mailer.deliveries.clear
+
+        new_mail = 'my_new_mail@example.com'
+        new_attributes = { email: new_mail,
+                           current_password: user.password }
+
+        mock_confirmation_mail = double
+        mock_notification_mail = double
+        expect(Devise.mailer).to receive(:confirmation_instructions).and_return(mock_confirmation_mail)
+        expect(Devise.mailer).to receive(:email_changed).and_return(mock_notification_mail)
+        expect(mock_confirmation_mail).to receive(:deliver)
+        expect(mock_notification_mail).to receive(:deliver)
+        put :update, params: { id: user.to_param, user: new_attributes }
+      end
+    end
   end
 
   describe 'GET #link' do
     before :each do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
       @user = User.create! valid_attributes
     end
 
@@ -276,7 +300,6 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #unlink' do
     before :each do
-      @request.env['devise.mapping'] = Devise.mappings[:user]
       @user = User.create! valid_attributes
     end
 
@@ -318,4 +341,35 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe 'GET #notifications' do
+    context 'given a logged in useer' do
+      it 'should show notifications settings page successfully' do
+        sign_in @user
+        get :notifications, params: { id: @user.to_param }
+        expect(response).to be_success
+      end
+    end
+    context 'given no logged in user' do
+      it 'should deny access' do
+        get :notifications, params: { id: @user.to_param }
+        expect(response).to be_unauthorized
+      end
+    end
+  end
+
+  describe 'PATCH #update_notifications' do
+    it 'should update notifications settings successfully' do
+      sign_in @user
+      patch :update_notifications, params: { id: @user.to_param, user: { event_notifications_enabled: false, team_notifications_enabled: false } }
+      @user.reload
+      expect(@user.event_notifications_enabled?).to eq(false)
+      expect(@user.team_notifications_enabled).to eq(false)
+    end
+
+    it 'redirect to notification settings' do
+      sign_in @user
+      patch :update_notifications, params: { id: @user.to_param, user: { event_notifications_enabled: false, team_notifications_enabled: false } }
+      response.should redirect_to :notifications_user
+    end
+  end
 end

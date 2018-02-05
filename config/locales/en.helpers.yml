@@ -34,7 +34,7 @@ en:
       delete: "Delete %{model}"
       create: "Create %{model}"
       submit: "Save %{model}"
-      update: "Update %{model}"
+      update: "Save"
     select:
       prompt: "Please select"
       option_operator: "or"
@@ -77,7 +77,7 @@ en:
       info: "has been canceled."
       subject: "Your match has been canceled"
     match_scheduled:
-      info: "is scheduled for %{start_time}."
+      info: "has been scheduled."
       subject: "Your match has been scheduled"
     match_date_changed:
       info: "is rescheduled for %{start_time}."
@@ -97,6 +97,8 @@ en:
     user_added_to_team:
       added_to_team_info_html: 'you joined the team %{team_link}.'
       subject: "You joined the team %{team_name}"
+      have_fun: "Have fun!"
     team_registered_to_event:
       registered_to_event_info_html: 'your team %{team_link} now participates in the event %{event_link}.'
       subject: "Your team %{team_name} now participates in the event %{event_name}"
+      have_fun: "Have fun!"

@@ -74,7 +74,7 @@ RSpec.describe LeaguesController, type: :controller do
           @league.add_team(team2)
           get :ranking, params: { id: @league.to_param }, session: valid_session
           ranking_entries = controller.instance_variable_get(:@ranking_entries)
-          expect(ranking_entries.first.name).to be < ranking_entries.second.name
+          expect(ranking_entries.first.team.name).to be < ranking_entries.second.team.name
         end
       end
       describe 'when at least two matches have been played already' do
@@ -129,7 +129,7 @@ RSpec.describe LeaguesController, type: :controller do
         end
 
         it "should pass on the participant's name correctly" do
-          expect(@ranking_entries.first.name).to eq(@team1.name)
+          expect(@ranking_entries.first.team.name).to eq(@team1.name)
         end
         it 'should sum up the number of played games of a participant correctly' do
           expect(@ranking_entries.first.match_count).to eq(3)
@@ -168,7 +168,7 @@ RSpec.describe LeaguesController, type: :controller do
           @league.add_participant(user2)
           get :ranking, params: { id: @league.to_param }, session: valid_session
           ranking_entries = controller.instance_variable_get(:@ranking_entries)
-          expect(ranking_entries.first.name).to be < ranking_entries.second.name
+          expect(ranking_entries.first.team.name).to be < ranking_entries.second.team.name
         end
       end
     end

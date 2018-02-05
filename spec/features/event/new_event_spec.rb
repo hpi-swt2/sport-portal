@@ -115,7 +115,7 @@ describe 'new event page', type: :feature do
 
     it 'should be possible to create a rankinglist' do
       fill_in_fields_with ranking_list_input_fields
-      select Rankinglist.human_game_mode(:true_skill), from: Event.human_attribute_name(:game_mode)
+      select Rankinglist.human_game_mode(:elo), from: Event.human_attribute_name(:game_mode)
 
       find('input[type="submit"]').click
 
@@ -150,8 +150,7 @@ describe 'new event page', type: :feature do
                                             deadline: tournament.deadline,
                                             startdate: tournament.startdate,
                                             enddate: tournament.enddate } }
-    let(:valid_tournament_dropdowns) { { Event.human_attribute_name(:game_mode) => Tournament.human_game_mode(tournament.game_mode),
-                                         Event.human_attribute_name(:player_type) => Event.human_player_type(:single) } }
+    let(:valid_tournament_dropdowns) { { Event.human_attribute_name(:player_type) => Event.human_player_type(:single) } }
     it 'should be possible to create a tournament' do
       visit new_path
 

@@ -3,6 +3,20 @@
   They will automatically be included in application.css.
 */
 
+label.required:after {
+  content: "*";
+  vertical-align: 0.5em;
+  font-size: 0.75em;
+  font-weight: normal;
+}
+
+label.required {
+  margin-top: -0.5px;
+}
+
+select.filterSelect {
+    display: block;
+}
 /* Overwrite container from application.html.erb for background image only*/
 body > .background-layer > .container {
     width: 100%;
@@ -39,6 +53,15 @@ h1 {
     margin-top: 0;
 }
 
+.genericButton:focus {
+    opacity: 0.8;
+    color: black;
+}
+
+.genericButton, .genericButton:hover, .genericButton:focus {
+    outline: none !important;
+}
+
 .genericButton, a.genericButton:hover, a.genericButton:focus {
     border-radius: 100px;
     color: #FFFFFF;
@@ -70,9 +93,12 @@ a.genericButton:hover {
     color: black;
 }
 
+.blueHover:hover {
+    color: #1CA9E5 !important;
+}
+
 button.blueActionButton, input[type=submit].blueActionButton {
     width: 100%;
-    font-size: 12px;
 }
 
 #kindOfSports {
@@ -171,5 +197,11 @@ button.blueActionButton, input[type=submit].blueActionButton {
 
     #teamProfile {
         padding-bottom: calc(190 / 875 * 100%);
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+    button.blueActionButton, input[type=submit].blueActionButton {
+        font-size: 12px;
     }
 }
