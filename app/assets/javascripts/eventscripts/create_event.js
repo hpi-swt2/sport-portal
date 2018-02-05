@@ -38,9 +38,11 @@ $( document ).on('turbolinks:load', function() {
 
     function calcDateDiff(startdatestr, enddatestr)
     {
-      var start = new Date(startdatestr);
-      var end = new Date(enddatestr);
-
+      var splittetStart = startdatestr.split(".");
+      var splittetEnd = enddatestr.split(".");
+      // Es muss 1 vom Monat abgezogen werden, da diese 0 indiziert sind
+      var start = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
+      var end = new Date(splittetEnd[2],splittetEnd[1]-1,splittetEnd[0]);
       return  Math.round((end-start)/(1000*60*60*24)) + 1;
     }
 
@@ -48,12 +50,19 @@ $( document ).on('turbolinks:load', function() {
 
        var start = $("#event_startdate").val();
        if(start != "") {
-           var startdate = new Date(start);
+           var splittetStart = start.split(".");
+           var startdate = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
            startdate.setDate(startdate.getDate() + parseInt(this.value - 1));
 
            var dd = startdate.getDate();
            var mm = startdate.getMonth() + 1;
            var y = startdate.getFullYear();
+           if(mm < 10){
+               mm = "0"+ mm;
+           }
+           if(dd < 10){
+               dd = "0" + dd;
+           }
            var formattedDate = dd + '.' + mm + '.' + y;
            $("#event_enddate").val(formattedDate);
        }
