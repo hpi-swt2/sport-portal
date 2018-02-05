@@ -90,7 +90,7 @@
           <div class="panel-heading">
             <%= t('view.event.point_distribution') %>
           </div>
-          <div class="panel-body">
+          <div class="panel-body" id="default_point_distribution">
             <div class="form-group">
               <%= f.label :points_for_win, :class => 'control-label col-lg-2' %>
               <div class="col-lg-10">
@@ -111,7 +111,14 @@
                 <%= f.number_field :points_for_lose, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> f.object.points_for_lose %>
               </div>
             </div>
-
+          </div>
+          <div class="panel-body" id="elo_point_distribution">
+            <div class="form-group">
+              <%= f.label :maximum_elo_change, :class => 'control-label col-lg-2' %>
+              <div class="col-lg-10">
+                <%= f.number_field :maximum_elo_change, in: 1..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> f.object.maximum_elo_change %>
+              </div>
+            </div>
           </div>
         </div>
 
