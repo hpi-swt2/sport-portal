@@ -358,18 +358,32 @@ RSpec.describe EventsController, type: :controller do
   end
 
   describe "GET League#schedule" do
+    let(:league) { league = League.create! valid_league_attributes
+                   league }
+
     it "should generate schedule if not existing" do
-      event = League.create! valid_league_attributes
-      event.add_participant(@user)
-      event.add_participant(@other_user)
-      event.generate_schedule
-      get :schedule, params: { id: event.to_param }, session: valid_session
-      expect(event.matches).not_to be_empty
+      league.add_participant(@user)
+      league.add_participant(@other_user)
+      league.generate_schedule
+      get :schedule, params: { id: league.to_param }, session: valid_session
+      expect(league.all_matches).not_to be_empty
+    end
+
+    it "should update schedule if it is not up-to-date" do
+      league.game_mode = League.game_modes[:swiss]
+      league.teams = FactoryBot.create_list(:team, 4)
+      league.generate_schedule
+      league.save
+      last_gameday = league.gamedays.last
+      last_gameday.update(starttime: Date.current - 2.days, endtime: Date.current - 1.day)
+
+      get :schedule, params: { id: league.to_param }, session: valid_session
+      league.reload
+      expect(league.is_up_to_date).to be true
     end
 
     it "returns a success response" do
-      event = League.create! valid_league_attributes
-      get :schedule, params: { id: event.to_param }, session: valid_session
+      get :schedule, params: { id: league.to_param }, session: valid_session
       expect(response).to be_success
     end
   end

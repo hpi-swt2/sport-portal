@@ -22,7 +22,7 @@ class Event
       #   1. DESCENDING by points
       #   2. DESCENDING by goal difference
       #   3. ASCENDING by name
-      @ranking_entries = @ranking_entries.sort_by { | ranking_entry | [-ranking_entry.points, -ranking_entry.goals_difference, ranking_entry.name] }
+      @ranking_entries = @ranking_entries.sort_by { | ranking_entry | [-ranking_entry.points, -ranking_entry.goals_difference, ranking_entry.team.name] }
 
       # Adds a rank to each RankingEntry based on its position in the Array
       @ranking_entries.each_with_index do |ranking_entry, index|
