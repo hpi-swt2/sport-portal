@@ -79,7 +79,6 @@ class User < ApplicationRecord
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
   has_many :teams_created_by_user, -> { where created_by_event: false }, through: :team_users, source: :team
-  has_many :teams_created_by_event, -> { where created_by_event: true }, through: :team_users, source: :team
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
   has_many :owned_teams, through: :team_owners, source: :team
 
