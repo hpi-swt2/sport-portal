@@ -73,6 +73,10 @@ class Ability
       end
     end
 
+    def play_matches
+      # TODO
+    end
+
     def can_join_event(user)
       can :join, Event.active do |event|
         event.can_join?(user)

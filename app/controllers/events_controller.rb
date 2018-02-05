@@ -87,6 +87,7 @@ class EventsController < ApplicationController
 
   # GET /events/1/schedule
   def schedule
+    authorize! :play_matches, @event
     if @event.matches.empty?
       @event.generate_schedule
       @event.save
