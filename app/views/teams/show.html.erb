@@ -116,7 +116,18 @@
                   <%= image_tag member.avatar_url || image_path('https://owncloud.hpi.de/index.php/s/rd14acG6qOlAHHJ/download'), class: 'circle' %>
                 </div>
                 <div class="col s6 xl8 truncate" style="font-size: 120%;">
-                  <%= link_to member.first_name + ' ' + member.last_name, user_path(member)%>
+                  <div class="row" style="margin-bottom: 0;">
+                    <div class="col s12">
+                      <%= link_to member.first_name + ' ' + member.last_name, user_path(member)%>
+                    </div>
+                  </div>
+                  <% if @team.owners.include? member %>
+                    <div class="row red-text" style="margin-bottom: 0;">
+                      <div class="col s12" style="font-size: 80%;">
+                        <%= t('teams.show.captain') %>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
                 <div class="col s2">
                   <% if @team.members.include? current_user %>
