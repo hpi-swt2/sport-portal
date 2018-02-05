@@ -137,8 +137,8 @@
             class: 'btn btn-default' %>
 <% end %>
 
-<%# app/helpers/button_helper.rb %>
-<%= back_btn %>
+<%= back_btn events_path %>
+
 <% if can? :leave, @event %>
   <%= link_to t('.leave', default: t('helpers.links.leave')),
               leave_event_path(@event),
