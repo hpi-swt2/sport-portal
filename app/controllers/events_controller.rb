@@ -90,7 +90,11 @@ class EventsController < ApplicationController
     if @event.matches.empty?
       @event.generate_schedule
       @event.save
+    elsif not @event.is_up_to_date
+      @event.update_schedule
+      @event.save
     end
+
     @matches = @event.matches
     @schedule_type = @event.type.downcase!
   end
@@ -158,6 +162,7 @@ class EventsController < ApplicationController
                                     :image,
                                     :remove_image,
                                     :has_place_3_match,
+                                    :maximum_elo_change,
                                     user_ids: [])
     end
 end

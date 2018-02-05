@@ -35,3 +35,41 @@
 #delete-account-section {
     margin-top: 50px;
 }
+
+.page-header {
+    margin-bottom: 0;
+}
+
+.btn-centered {
+    margin: 20px 0 0 0;
+}
+
+#profile-image {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    margin: 0 auto 30px auto;
+    object-fit: cover;
+}
+
+.description-tag {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #7C7C7C;
+    margin: 0;
+}
+
+.description-text {
+    font-size: 36px;
+    font-weight: bold;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width : 500px) {
+    #profile-image {
+        height: 160px;
+        width: 160px;
+    }
+}
+
