@@ -100,7 +100,7 @@
       </div>
     </div>
     <% if user_signed_in? %>
-      <%= form_tag perform_action_on_multiple_members_team_path(@team) do %>
+      <%= form_tag perform_action_on_multiple_members_team_path(@team), id: 'membersForm' do %>
           <% @team.members.each_with_index do | member, iMember | %>
               <% if (iMember % 2) == 0 %>
                   <div class="row">

@@ -60,13 +60,13 @@ describe 'Show team page', type: :feature do
 
     it 'should not display team member table for users who are not logged in ' do
       visit team_path @team
-      expect(page).to_not have_css("table#members")
+      expect(page).to_not have_css("#membersForm")
     end
 
     it 'should display team members table for users who are logged in' do
       sign_in @user
       visit team_path @team
-      expect(page).to have_css("table#members")
+      expect(page).to have_css("#membersForm")
     end
   end
 end
