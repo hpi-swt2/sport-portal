@@ -145,7 +145,6 @@
   <%= render :partial => 'invite_user_by_email_modal' %>
 <% end %>
 
-<%# app/helpers/button_helper.rb %>
 <%= back_btn %>
 <% if can? :edit, @team %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
