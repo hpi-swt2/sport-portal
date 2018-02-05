@@ -4,12 +4,19 @@
 */
 
 label.required:after {
-    content: "*";
-    vertical-align: 0.5em;
-    font-size: 0.75em;
-    font-weight: normal;
+  content: "*";
+  vertical-align: 0.5em;
+  font-size: 0.75em;
+  font-weight: normal;
 }
 
+label.required {
+  margin-top: -0.5px;
+}
+
+select.filterSelect {
+    display: block;
+}
 /* Overwrite container from application.html.erb for background image only*/
 body > .background-layer > .container {
     width: 100%;
