@@ -19,7 +19,7 @@ Given /^all relevant routes$/ do
     '/matches/1/edit_results',
     # List of all users and teams, no return path
     '/users',
-    '/teams',
+    '/teams'
   ]
 
   @relevant_paths = []
