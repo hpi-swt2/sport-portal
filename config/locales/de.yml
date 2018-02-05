@@ -113,7 +113,8 @@ de:
       notifications: "Benachrichtigungen"
 
   dashboard:
-    title: "Dashboard für %{name}"
+    title: "Hallo %{name}!"
+    show_all: "Alle anzeigem"
 
   activerecord:
     models:
