@@ -53,7 +53,7 @@ class Team < ApplicationRecord
   end
 
   def is_qualified_to_receive_notifications?
-    !self.created_by_event?
+    not self.created_by_event?
   end
 
   # these methods allow teams to be treated like match results. see MatchResult model
