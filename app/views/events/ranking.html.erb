@@ -21,7 +21,7 @@
     <% @ranking_entries.each do |entry| %>
     <tr>
       <td><%= entry.rank %></td>
-      <td><%= entry.name %></td>
+      <td><%= entry.team.name %></td>
       <td><%= entry.match_count %></td>
       <td><%= entry.won_count%></td>
       <td><%= entry.draw_count%></td>

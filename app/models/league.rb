@@ -48,7 +48,9 @@ class League < Event
   end
 
   def is_up_to_date
-    (return true) unless self.swiss?
+    return true unless self.swiss?
+    return true if triangular(teams.length) == all_matches.length
+
     gamedays.last.endtime > DateTime.current
   end
 
@@ -81,6 +83,10 @@ class League < Event
   end
 
   private
+
+    def triangular(n)
+      n * (n - 1) / 2
+    end
 
     def calculate_round_robin
       pairings_per_day = round_robin_pairings teams.to_a
@@ -128,12 +134,12 @@ class League < Event
     end
 
     def penalty(ranked_teams, matches)
-      (return Float::INFINITY) if matches.flatten.uniq.length != matches.flatten.length
+      return Float::INFINITY if matches.flatten.uniq.length != matches.flatten.length
       matches.inject(0) { |sum, match| sum + penalty_for_match(ranked_teams, match) }
     end
 
     def penalty_for_match(ranked_teams, match)
-      (return Float::INFINITY) if have_already_played(match[0], match[1])
+      return Float::INFINITY if have_already_played(match[0], match[1])
       (ranked_teams.index(match[0]) - ranked_teams.index(match[1])).abs
     end
 
@@ -144,8 +150,8 @@ class League < Event
       ranked_teams = ranking.map(&:team)
 
       all_matches = ranked_teams.to_a.combination(2).to_a.combination((ranked_teams.length / 2).floor)
-      best_matches = all_matches.reduce do |best_matches, current_matches|
-        (penalty(ranked_teams, best_matches) < penalty(ranked_teams, current_matches)) ? best_matches : current_matches
+      best_matches = all_matches.min_by do |matches|
+        penalty(ranked_teams, matches)
       end
       best_matches.each do |match|
         add_match(match[0], match[1], gameday_number)

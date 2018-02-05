@@ -366,7 +366,7 @@ RSpec.describe EventsController, type: :controller do
       league.add_participant(@other_user)
       league.generate_schedule
       get :schedule, params: { id: league.to_param }, session: valid_session
-      expect(league.matches).not_to be_empty
+      expect(league.all_matches).not_to be_empty
     end
 
     it "should update schedule if it is not up-to-date" do

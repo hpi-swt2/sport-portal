@@ -155,6 +155,18 @@ describe 'League model', type: :model do
         expect(league.is_up_to_date).to be false
       end
 
+      it 'does have an up-to-date schedule if all teams have played against each other' do
+        league = FactoryBot.create(:league)
+        league.teams = teams = FactoryBot.create_list(:team, 3)
+        gamedays = FactoryBot.create_list(:gameday, 3)
+        gamedays[0].matches << Match.new(team_home: teams[0], team_away: teams[1], gameday_number: 0)
+        gamedays[1].matches << Match.new(team_home: teams[1], team_away: teams[2], gameday_number: 1)
+        gamedays[2].matches << Match.new(team_home: teams[0], team_away: teams[2], gameday_number: 2)
+        league.gamedays << gamedays
+
+        expect(league.is_up_to_date).to be true
+      end
+
       it 'has an up-to-date schedule if the last gameday is not over yet' do
         league.gamedays << FactoryBot.create(:gameday)
 
@@ -201,19 +213,19 @@ describe 'League model', type: :model do
 
         describe "Round 1" do
           let(:gameday) {
-            gameday = FactoryBot.create(:gameday)
+            gameday = FactoryBot.build(:gameday)
             teams = league.teams
-            match1 = FactoryBot.create(:match, team_home: teams[0], team_away: teams[1], gameday_number: 1, points_home: 3, points_away: 0)
+            match1 = FactoryBot.build(:match, team_home: teams[0], team_away: teams[1], gameday_number: 1, points_home: 3, points_away: 0)
             match1.game_results << FactoryBot.build(:game_result,
                                                     score_home: 25, # team 0
                                                     score_away: 5  # team 1
             )
-            match2 = FactoryBot.create(:match, team_home: teams[2], team_away: teams[3], gameday_number: 1, points_home: 3, points_away: 0)
+            match2 = FactoryBot.build(:match, team_home: teams[2], team_away: teams[3], gameday_number: 1, points_home: 3, points_away: 0)
             match2.game_results << FactoryBot.build(:game_result,
                                                     score_home: 26, # team 2
                                                     score_away: 2   # team 3
             )
-            match3 = FactoryBot.create(:match, team_home: teams[4], team_away: teams[5], gameday_number: 1, points_home: 3, points_away: 0)
+            match3 = FactoryBot.build(:match, team_home: teams[4], team_away: teams[5], gameday_number: 1, points_home: 3, points_away: 0)
             match3.game_results << FactoryBot.build(:game_result,
                                                     score_home: 15, # team 4
                                                     score_away: 0   # team 5
