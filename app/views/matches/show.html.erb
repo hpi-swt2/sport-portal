@@ -39,9 +39,8 @@
   </tbody>
 </table>
 
+<%= back_btn event_schedule_path(@match.event_id) %>
 
-<%# app/helpers/button_helper.rb %>
-<%= back_btn %>
 <% if !@match.event.is_a? Rankinglist %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_match_path(@match), :class => 'btn btn-default' %>
 <%end%>
