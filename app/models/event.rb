@@ -55,6 +55,10 @@ class Event < ApplicationRecord
             :bestof_length,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  validates :startdate, presence: true
+  validates :enddate, presence: true
+  validates :deadline, presence: true
+
   enum matchtype: [:bestof]
   enum game_winrule: [:most_sets]
   # fcfs_queue and selection should be added in the future

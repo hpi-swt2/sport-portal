@@ -51,11 +51,10 @@ FactoryBot.define do
     max_players_per_team 1
     association :owner, factory: :user, strategy: :build
 
-    trait :has_dates do
-      deadline { Date.current + 1 }
-      startdate { Date.current + 2 }
-      enddate { Date.current + 3 }
-    end
+    deadline { Date.current + 1 }
+    startdate { Date.current + 2 }
+    enddate { Date.current + 3 }
+
 
     trait :single_player do
       player_type Event.player_types[:single]
