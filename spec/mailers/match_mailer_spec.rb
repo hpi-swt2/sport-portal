@@ -36,7 +36,7 @@ RSpec.describe MatchMailer, type: :mailer do
     end
 
     it 'assigns event\'s startdate' do
-      expect(mail.body.encoded).to match(I18n.localize(match1.start_time))
+      expect(mail.body.encoded).to match(I18n.localize(match1.start_time.to_date))
     end
   end
   describe 'match scheduled' do
@@ -100,7 +100,7 @@ RSpec.describe MatchMailer, type: :mailer do
     end
 
     it 'assigns event\'s startdate' do
-      expect(mail.body.encoded).to match(I18n.localize(match1.start_time))
+      expect(mail.body.encoded).to match(I18n.localize(match1.start_time.to_date))
     end
   end
   describe 'match canceled' do

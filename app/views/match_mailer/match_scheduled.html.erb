@@ -4,7 +4,7 @@
         event_link: link_to(@match.event.name, event_url(@match.event))) %></p>
 <% if @match.start_time %>
   <p><%= t('match_mailer.start_time',
-           start_date: @match.start_time.to_date,
+           start_date: I18n.localize(@match.start_time.to_date),
            start_time: @match.start_time.to_s(:time)) %></p>
 <% end %>
 <% if @match.place %>

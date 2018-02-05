@@ -6,7 +6,7 @@
 
 <% if @match.start_time %>
 <%= t('match_mailer.start_time',
-      start_date: @match.start_time.to_date,
+      start_date: I18n.localize(@match.start_time.to_date),
       start_time: @match.start_time.to_s(:time)) %>
 <% end %>
 <% if @match.place %>
