@@ -41,7 +41,7 @@ describe 'Rankinglists', type: :feature do
     visit edit_results_match_path(@match)
     expect(current_path).to match(/\/matches\/\d+\/edit_results/)
     expect(@match).not_to equal(nil)
-    click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
+    click_link_or_button(I18n.t("helpers.submit.update"))
   end
 
   context 'elo ranking lists' do
@@ -73,7 +73,7 @@ describe 'Rankinglists', type: :feature do
           end
         end
       end
-      click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
+      click_link_or_button(I18n.t("helpers.submit.update"))
       participant = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user)).first
       participant2 = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user2)).first
       expect(participant.rating).to eq(1016)
@@ -91,7 +91,7 @@ describe 'Rankinglists', type: :feature do
           end
         end
       end
-      click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
+      click_link_or_button(I18n.t("helpers.submit.update"))
       participant = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user)).first
       participant2 = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user2)).first
       expect(participant.rating).to eq(984)
@@ -109,7 +109,7 @@ describe 'Rankinglists', type: :feature do
           end
         end
       end
-      click_link_or_button(I18n.t("helpers.submit.update", model: Match.model_name.human))
+      click_link_or_button(I18n.t("helpers.submit.update"))
       participant = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user)).first
       participant2 = @elo_event.participants.where("team_id = ?", @elo_event.team_of(@user2)).first
       expect(participant.rating).to eq(1000)

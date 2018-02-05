@@ -2,7 +2,7 @@ class Event
   # Smallest unit of a ranking. Contains different data for one team and contains logic to parse this data out of
   # match objects.
   class RankingEntry
-    attr_reader :name, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against, :goals_difference, :points
+    attr_reader :team, :match_count, :won_count, :draw_count, :lost_count, :goals, :goals_against, :goals_difference, :points
     attr_accessor :rank
 
     def initialize(team, home_matches, away_matches)
@@ -11,7 +11,6 @@ class Event
       @away_matches = away_matches
 
       @rank = 0
-      @name = @team.name
       @match_count = 0
       @won_count = 0
       @draw_count = 0
