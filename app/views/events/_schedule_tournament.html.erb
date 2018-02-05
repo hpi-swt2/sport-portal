@@ -49,11 +49,11 @@
       <td>
         <%= date = (match.start_time_date+match.gameday-1).to_s(:day_and_month) %>
         <%= time = (match.start_time_time).to_s(:hours_and_minutes) %>
-        <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">
+        <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-time-<%= match.id %>">
           <%= t 'events.schedule.propose_new_appointment' %>
         </button>
         <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
+        <div id="modal-time-<%= match.id %>" class="modal fade" role="dialog">
           <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -76,11 +76,11 @@
                     </p>
 
                     <div class="input-group bootstrap-timepicker timepicker">
-                      <%= f.text_field :start_time, :class => 'form-control', :value => time, :data => { :provide => 'timepicker' }, :id => "time" %>
+                      <%= f.text_field :start_time, :class => 'form-control', :value => time, :data => { :provide => 'timepicker' }, :id => "#time-#{match.id}" %>
                     </div>
 
                     <script type="text/javascript">
-                        $('#time').timepicker();
+                        $('#time-<%= match.id %>').timepicker();
                     </script>
                     <p>
                       <%= t 'events.schedule.place' %>

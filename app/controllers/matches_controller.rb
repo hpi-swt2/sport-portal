@@ -76,6 +76,6 @@ class MatchesController < ApplicationController
     end
 
     def match_appointment_params
-      params.require(:match).permit(:start_time, :place)
+      params.require(:match).permit(:start_time_time, :start_time_date, :place)
     end
 end
