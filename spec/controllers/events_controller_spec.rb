@@ -373,6 +373,7 @@ RSpec.describe EventsController, type: :controller do
       league.game_mode = League.game_modes[:swiss]
       league.teams = FactoryBot.create_list(:team, 4)
       league.generate_schedule
+      league.save
       last_gameday = league.gamedays.last
       last_gameday.update(starttime: Date.current - 2.days, endtime: Date.current - 1.day)
 
