@@ -158,6 +158,7 @@ de:
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
         team_away_id: "Auswärts-Team"
+        gameday_number: "Spieltag"
       game_result:
         score_home: "Heim-Ergebnis"
         score_away: "Auswärts-Ergebnis"
@@ -254,6 +255,7 @@ de:
       edit_results: "Ergebnisse bearbeiten"
       error:
         update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
+
 
     event:
       point_distribution: "Punkteverteilung"
@@ -390,6 +392,9 @@ de:
       other: "Vorrunde %{round} - Spiel %{gameid}"
     winner_of_match: "Gewinner %{match}"
     loser_of_match: "Verlierer %{match}"
+    show:
+      timeframe: "Zeitraum"
+      to: "bis"
 
   teams:
     index:
