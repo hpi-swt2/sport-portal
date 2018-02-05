@@ -25,7 +25,6 @@
                   <%= menu_item t('navbar.drop-down.dashboard'), dashboard_user_path(current_user), class: 'text-center' %>
                   <%= menu_item t('navbar.drop-down.my_profile'), profile_user_path(current_user), class: 'text-center' %>
                   <%= menu_item t('navbar.drop-down.edit_profile'), edit_user_path(current_user), class: 'text-center' %>
-                  <%= menu_item t('navbar.drop-down.notifications'), notifications_user_path(current_user), class: 'text-center' %>
                   <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete, class: 'text-center' %>
                 </div>
             <% else %>
@@ -52,7 +51,6 @@
                     <%= menu_item t('navbar.drop-down.dashboard'), dashboard_user_path(current_user) %>
                     <%= menu_item t('navbar.drop-down.my_profile'), profile_user_path(current_user) %>
                     <%= menu_item t('navbar.drop-down.edit_profile'), edit_user_path(current_user) %>
-                    <%= menu_item t('navbar.drop-down.notifications'), notifications_user_path(current_user) %>
                     <%= drop_down_divider %>
                     <%= menu_item t('devise.registrations.sign_out'), destroy_user_session_path, method: :delete %>
                 <% end %>
