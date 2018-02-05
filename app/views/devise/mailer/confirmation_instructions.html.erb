@@ -1,6 +1,6 @@
-<p><%= t('.greeting', recipient: @resource.email, default: "Welcome #{@resource.email}!") %></p>
+<p><%= t('.greeting', recipient: @resource.first_name.capitalize, default: "Welcome #{@resource.first_name.capitalize}!") %></p>
 
 <p><%= t('.instruction', default: 'You can confirm your account email through the link below:') %></p>
 
 <p><%= link_to t('.action', default: 'Confirm my account'),
-         confirmation_url(@resource, confirmation_token: @token, locale: I18n.locale) %></p>
+         confirmation_url(@resource, host: ENV['HOST_URL'], confirmation_token: @token, locale: I18n.locale) %></p>
