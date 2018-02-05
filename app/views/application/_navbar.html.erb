@@ -38,7 +38,6 @@
               <% end %>
               <%= menu_item Team.model_name.human(:count => :many).titleize, teams_path, class: 'text-center' %>
               <%= menu_item Event.model_name.human(:count => :many).titleize, events_path, class: 'text-center' %>
-              <%= menu_item t('events.create_event'), new_event_path, class: 'text-center' %>
             </div>
         <% end %>
     <% else %>
