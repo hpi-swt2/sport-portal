@@ -53,6 +53,11 @@ h1 {
     margin-top: 0;
 }
 
+.genericButton:focus {
+    opacity: 0.8;
+    color: black;
+}
+
 .genericButton, .genericButton:hover, .genericButton:focus {
     outline: none !important;
 }
