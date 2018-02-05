@@ -31,7 +31,9 @@
             </b>
             <%= day.text_field :endtime, value: gameday.endtime.strftime('%d.%m.%Y') %>
           </div>
-          <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
+          <% if can? :edit, gameday %>
+            <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
+          <% end %>
         <%end%>
       </div>
     </th>
@@ -51,9 +53,9 @@
       </td>
       <td>
         <%= form_for match, url: update_points_match_path(match), html: { method: "put" } do |f| %>
-          <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
-          :
           <%= f.number_field :points_home, class: 'input-sm', style: 'width: 50px' %>
+          :
+          <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
           <%= f.submit t('helpers.links.save'), :class => 'btn btn-default btn-xs' %>
         <% end %>
       </td>
