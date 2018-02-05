@@ -162,6 +162,7 @@ class EventsController < ApplicationController
                                     :image,
                                     :remove_image,
                                     :has_place_3_match,
+                                    :maximum_elo_change,
                                     user_ids: [])
     end
 end

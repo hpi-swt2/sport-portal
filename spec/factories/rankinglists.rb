@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :rankinglist, parent: :event, class: Rankinglist do
     game_mode Rankinglist.game_modes.keys.sample
     initial_value 1.3
+    maximum_elo_change 32
     player_type Event.player_types[:single]
   end
 

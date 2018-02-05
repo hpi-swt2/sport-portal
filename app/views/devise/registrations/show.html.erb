@@ -1,35 +1,43 @@
 <%- model_class = User -%>
-<div class="page-header">
-  <h1><%=@user.name %></h1>
+<%= stylesheet_link_tag 'users' %>
+
+<div class="container text-center">
+  <div class="page-header">
+    <h1><%= @user.name %></h1>
+  </div>
+  <div class="row">
+    <%= image_tag @user.avatar_url || image_path("missing_avatar.png"), id: 'profile-image'%>
+  </div>
+  <div class="row">
+    <% if @user.birthday.present? %>
+        <p class="description-tag"><%= model_class.human_attribute_name(:birthday) %></p>
+        <p class="description-text"><%= @user.birthday.strftime("%d.%m.%Y") %></p>
+    <% end %>
+  </div>
+  <div class="row">
+    <% if @user.telephone_number.present? %>
+        <p class="description-tag"><%= model_class.human_attribute_name(:telephone_number) %></p>
+        <p class="description-text"><%= @user.telephone_number %></p>
+    <% end %>
+  </div>
+  <div class="row">
+    <% if @user.telegram_username.present? %>
+        <p class="description-tag"><%= model_class.human_attribute_name(:telegram_username) %></p>
+        <p class="description-text"><%= @user.telegram_username %></p>
+    <% end %>
+  </div>
+  <div class="row">
+    <% if @user.favourite_sports.present? %>
+        <p class="description-tag"><%= model_class.human_attribute_name(:favourite_sports) %></p>
+        <p class="description-text"><%= @user.favourite_sports %></p>
+    <% end %>
+  </div>
+  <div class="row">
+    <% if can? :edit, @user %>
+        <%= link_to t('.edit', :default => t('navbar.drop-down.edit_profile')),
+                    edit_user_path(@user), :class => 'btn btn-save-edit-user btn-centered' %>
+    <% end %>
+  </div>
 </div>
 
-<br>
-<div class="text-center">
-<%= image_tag @user.avatar_url || image_path('missing_avatar.png'), id: 'preview', style: 'max-width:500px; max-height:500px'%>
-</div>
-<br>
-<dl class="dl-horizontal">
-  <% if @user.birthday.present? %>
-    <dt style="width:165px"><strong><%= model_class.human_attribute_name(:birthday) %>:</strong></dt>
-    <dd><%= @user.birthday %></dd>
-  <% end %>
-  <% if @user.telephone_number.present? %>
-    <dt style="width:165px"><strong><%= model_class.human_attribute_name(:telephone_number) %>:</strong></dt>
-    <dd><%= @user.telephone_number %></dd>
-  <% end %>
-  <% if @user.telegram_username.present? %>
-    <dt style="width:165px"><strong><%= model_class.human_attribute_name(:telegram_username) %>:</strong></dt>
-    <dd><%= @user.telegram_username %></dd>
-  <% end %>
-  <% if @user.favourite_sports.present? %>
-    <dt style="width:165px"><strong><%= model_class.human_attribute_name(:favourite_sports) %>:</strong></dt>
-    <dd><%= @user.favourite_sports %></dd>
-  <% end %>
-</dl>
-
-<%# app/helpers/button_helper.rb %>
 <%= back_btn %>
-<% if can? :edit, @user %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_user_path(@user), :class => 'btn btn-default' %>
-<% end %>
