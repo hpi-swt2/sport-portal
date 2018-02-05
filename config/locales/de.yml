@@ -206,17 +206,12 @@ de:
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
         has_place_3_match: "Spiel um Platz 3"
-      tournament:
-        game_modes:
-          ko: "K.-o.-System"
-          ko_group: "K.-o.-System mit Gruppenphase"
-          double_elimination: "Double Elimination"
+        maximum_elo_change: "Maximaler Änderungsfaktor"
       league:
         game_modes:
           round_robin: "Jeder gegen Jeden"
           two_halfs: "Hin- und Rückrunde"
           swiss: "Schweizer System"
-          danish: "Dänisches System"
       rankinglist:
         game_modes:
           elo: "ELO"
@@ -351,13 +346,9 @@ de:
       to: "bis"
       appointment: "Termin"
     gamemode:
-      ko: "KO"
-      ko_group: "Gruppen-KO"
-      double_elimination: "Doppel-KO-System"
       round_robin: "Jeder gegen Jeden"
       two_halfs: "Hin- und Rückrunde"
       swiss: "Schweizer System"
-      danish: "Dänisches System"
       elo: "ELO"
       win_loss: "Gewinne-Niederlagen"
       true_skill: "True Skill"

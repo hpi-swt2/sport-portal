@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202093132) do
+ActiveRecord::Schema.define(version: 20180202145542) do
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180202093132) do
     t.integer "points_for_lose", default: 0
     t.boolean "has_place_3_match", default: true
     t.text "image_data"
+    t.integer "maximum_elo_change"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
     t.index ["player_type"], name: "index_events_on_player_type"
@@ -151,15 +152,20 @@ ActiveRecord::Schema.define(version: 20180202093132) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "admin", default: false
-    t.string "provider"
-    t.string "uid"
     t.date "birthday"
     t.string "telephone_number"
     t.string "telegram_username"
     t.string "favourite_sports"
+    t.string "provider"
+    t.string "uid"
     t.text "avatar_data"
+    t.string "confirmation_token"
+    t.string "unconfirmed_email"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.boolean "team_notifications_enabled", default: true
     t.boolean "event_notifications_enabled", default: true
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
