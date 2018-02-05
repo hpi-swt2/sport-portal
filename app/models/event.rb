@@ -69,6 +69,10 @@ class Event < ApplicationRecord
     end
   end
 
+  def is_up_to_date
+    true
+  end
+
   def duration
     return if enddate.blank? || startdate.blank?
     enddate - startdate + 1
