@@ -206,6 +206,7 @@ de:
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
         has_place_3_match: "Spiel um Platz 3"
+        maximum_elo_change: "Maximaler Änderungsfaktor"
       league:
         game_modes:
           round_robin: "Jeder gegen Jeden"

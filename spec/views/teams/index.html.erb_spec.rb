@@ -59,7 +59,7 @@ RSpec.describe "teams/index", type: :view do
   end
 
   it 'should not show single-player teams' do
-    team = @user.create_single_team
+    team = @user.create_team_for_event
     sign_in @user
     render
     expect(rendered).to_not have_text(team.name)
