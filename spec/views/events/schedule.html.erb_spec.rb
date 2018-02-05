@@ -13,6 +13,9 @@ RSpec.describe 'events/schedule', type: :view do
       assign(:event, @league)
       assign(:schedule_type, 'league')
       assign(:matches, @league.matches)
+      @user = FactoryBot.create(:user)
+      sign_in @user
+      @league.organizers << Organizer.new(user: @user)
     end
 
     it 'renders without errors' do
