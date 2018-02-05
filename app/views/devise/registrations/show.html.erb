@@ -6,7 +6,7 @@
     <h1><%= @user.name %></h1>
   </div>
   <div class="row">
-    <%= image_tag @user.avatar_url || image_path("missing_avatar.png"), id: 'preview', class: 'profile-image'%>
+    <%= image_tag @user.avatar_url || image_path("missing_avatar.png"), id: 'profile-image'%>
   </div>
   <div class="row">
     <% if @user.birthday.present? %>
@@ -35,7 +35,7 @@
   <div class="row">
     <% if can? :edit, @user %>
         <%= link_to t('.edit', :default => t('navbar.drop-down.edit_profile')),
-                    edit_user_path(@user), :class => 'btn btn-default btn-save-edit-user btn-centered' %>
+                    edit_user_path(@user), :class => 'btn btn-save-edit-user btn-centered' %>
     <% end %>
   </div>
 </div>
