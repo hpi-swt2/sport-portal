@@ -34,3 +34,9 @@
     <% end %>
   </tbody>
 </table>
+
+<%# this didnt work here %>
+<%# app/helpers/button_helper.rb %>
+<%= back_btn %>
+<%# this did, kind of reimplementing the feature but what do you say?%>
+<a class="btn btn-default" href="javascript:history.back()" ><%= t('helpers.links.back') %></a>
