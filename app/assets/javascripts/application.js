@@ -21,7 +21,7 @@
 //= require jquery.nested-fields
 
 $(document).ready(function() {
-    const notification = $('div.alert');
+    var notification = $('div.alert');
     if (notification.length !== 0) {
         setTimeout(function() {
             notification.remove();
