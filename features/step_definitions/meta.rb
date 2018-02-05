@@ -17,9 +17,9 @@ Given /^all relevant routes$/ do
     '/my/users/cancel',
     '/matches/1/add_game_result',
     '/matches/1/edit_results',
-    # List of all users, no return path
+    # List of all users and teams, no return path
     '/users',
-    '/teams'
+    '/teams',
   ]
 
   @relevant_paths = []
