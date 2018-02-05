@@ -23,5 +23,7 @@ module SportPortal
     # Add custom fonts-asset route
     Rails.application.config.assets.paths << "#{Rails.root}/app/assets/fonts"
     Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf .otf)
+
+    config.time_zone = 'Berlin'
   end
 end
