@@ -24,6 +24,7 @@ RSpec.describe 'devise/registrations/show', type: :view do
 
   it 'does not show any contact information if none is available' do
     @user.contact_information = nil
+    render
     expect(rendered).to have_content(I18n.t('activerecord.attributes.user.contact_information'), count: 0)
   end
 end
