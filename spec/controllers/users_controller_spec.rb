@@ -222,7 +222,8 @@ RSpec.describe UsersController, type: :controller do
         { birthday: valid_attributes[:birthday] + 1.year,
           telephone_number: "01766668734",
           telegram_username: valid_attributes[:telegram_username] + "_new",
-          favourite_sports: valid_attributes[:favourite_sports] + ", Riding" }
+          favourite_sports: valid_attributes[:favourite_sports] + ", Riding",
+          contact_information: valid_attributes[:contact_information] + ", Skype: @myAwesomeUsername" }
       }
 
       it "updates the requested user" do
@@ -237,6 +238,7 @@ RSpec.describe UsersController, type: :controller do
         expect(user.telephone_number).to eq(new_attributes[:telephone_number])
         expect(user.telegram_username).to eq(new_attributes[:telegram_username])
         expect(user.favourite_sports).to eq(new_attributes[:favourite_sports])
+        expect(user.contact_information).to eq(new_attributes[:contact_information])
       end
     end
 
