@@ -20,3 +20,11 @@
 //= require_tree .
 //= require jquery.nested-fields
 
+$(document).ready(function() {
+    const notification = $('div.alert');
+    if (notification.length !== 0) {
+        setTimeout(function() {
+            notification.remove();
+        }, 5000);
+    }
+});
