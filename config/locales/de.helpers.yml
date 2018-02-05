@@ -77,12 +77,14 @@ de:
     closing: "%{appname} Team"
   match_mailer:
     next_game: "dein Spiel (%{team_home} vs. %{team_away}) im Event %{name}"
+    here: "Hier"
+    in: "Hier"
     match_notification:
       info: "startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
       subject: "Dein Spiel startet morgen"
     match_canceled:
       info_html: "dein Spiel gegen %{team_link} im Event %{event_link} am %{start_date} um %{start_time} in %{place} wurde abgesagt."
-      info_txt: "dein Spiel gegen %{team_name} im Event %{event_link} am %{start_date} um %{start_time} in %{place} wurde abgesagt."
+      info_txt: "dein Spiel gegen %{team_name} im Event %{event_name} am %{start_date} um %{start_time} in %{place} wurde abgesagt."
       subject: "Dein Spiel gegen %{team_name} im Event %{event_name} am %{start_date} um %{start_time} in %{place} wurde abgesagt."
       have_fun: "Viel Erfolg!"
       make_modifications: "%{match_link} kannst du die Änderungen vornehmen."

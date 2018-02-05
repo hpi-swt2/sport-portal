@@ -1,7 +1,7 @@
 <%= t('mailer.hello', firstname: @user.first_name) %>
 
 <%= t('.info_txt',
-        team_name: @match.team_home.name,
+        team_name: @opponent_team.name,
         event_name: @match.event.name,
         start_date: @match.start_time.to_date,
         start_time: @match.start_time.to_s(:time),

@@ -1,18 +1,12 @@
 <h1><%= t('mailer.hello', firstname: @user.first_name) %></h1>
 <p>
-  <!-- TODO: Calculate opponent team -->
-  <!-- TODO: Check if place is present -->
   <%= t('.info_html',
-        team_link: link_to(@match.team_home.name, team_url(@match.team_home)),
+        team_link: link_to(@opponent_team.name, team_url(@opponent_team)),
         event_link: link_to(@match.event.name, event_url(@match.event)),
         start_date: @match.start_time.to_date,
         start_time: @match.start_time.to_s(:time),
         place: @match.place) %>
 </p>
 <p><%= t('.have_fun') %></p>
-<!-- TODO: Add translation for 'Hier' -->
-<p>
-  <%= t('.make_modifications',
-        match_link: link_to('Hier', match_url(@match))) %>
-</p>
+<p><%= t('.make_modifications', match_link: link_to(t('match_mailer.here'), match_url(@match))) %></p>
 <p><%= t('mailer.closing', appname: t('appname')) %></p>
