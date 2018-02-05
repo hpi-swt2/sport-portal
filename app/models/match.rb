@@ -62,7 +62,7 @@ class Match < ApplicationRecord
   before_create :set_default_start_time
 
   def set_default_start_time
-    self.start_time = self.event&.startdate.to_datetime || Time.now if self.start_time.blank?
+    self.start_time = self.event&.startdate.to_datetime || DateTime.now if self.start_time.blank?
   end
 
   @@has_winner_strategy = { "most_sets" => lambda { |match| match.wins_home != match.wins_away } }
