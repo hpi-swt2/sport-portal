@@ -1,5 +1,6 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result]
+  authorize_resource :event
 
   # GET /matches/1
   def show
@@ -14,7 +15,6 @@ class MatchesController < ApplicationController
 
   # GET /matches/1/edit
   def edit
-    authorize! :edit, @match
   end
 
   # POST /matches
