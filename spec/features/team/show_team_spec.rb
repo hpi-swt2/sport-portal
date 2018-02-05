@@ -72,7 +72,7 @@ describe 'Show team page', type: :feature do
     it 'should display team members table for users who are logged in' do
       sign_in @user
       visit team_path @team
-      expect(page).to have_css("table.table-striped")
+      expect(page).to have_css("table#members")
     end
   end
 end
