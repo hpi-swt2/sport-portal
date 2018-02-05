@@ -25,7 +25,7 @@
           <% unless builder.object.new_record? %>
             <div class="form-group">
               <% if can? :confirm, builder.object %>
-                <%= link_to t("view.match.confirm_game_result"), confirm_scores_match_path(id: @match.id, result_id: builder.object.id), class: 'btn btn-default' %>
+                <%= link_to t("view.match.confirm_game_result"), confirm_game_result_match_path(id: @match.id, result_id: builder.object.id), class: 'btn btn-default' %>
               <% end %>
             </div>
           <% end %>
