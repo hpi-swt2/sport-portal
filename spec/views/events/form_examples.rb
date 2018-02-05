@@ -20,8 +20,15 @@ shared_examples 'an event form' do |for_class: Event, path: :new, with: []|
 
     expect(rendered).to have_field(Event.human_attribute_name :name)
     expect(rendered).to have_field(Event.human_attribute_name :description)
-    expect(rendered).to have_field(Event.human_attribute_name :game_mode)
     expect(rendered).to have_field(Event.human_attribute_name :discipline)
+  end
+
+  if with.include? :game_mode
+    it 'has input for gamemode' do
+      render
+
+      expect(rendered).to have_field(Event.human_attribute_name :game_mode)
+    end
   end
 
   if with.include? :dates

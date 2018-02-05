@@ -34,7 +34,7 @@ en:
       delete: "Delete %{model}"
       create: "Create %{model}"
       submit: "Save %{model}"
-      update: "Update %{model}"
+      update: "Save"
     select:
       prompt: "Please select"
       option_operator: "or"
