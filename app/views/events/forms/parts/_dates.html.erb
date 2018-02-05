@@ -4,7 +4,7 @@
     <%= form.text_field :deadline,
                      id: :event_deadline,
                      class: 'form-control',
-                     data: {provide: 'datepicker', 'date-format': 'yyyy-mm-dd'} %>
+                     data: {provide: 'datepicker', 'date-format': 'dd.mm.yyyy'} %>
     <%= form.error_span(:deadline) %>
   </div>
 </div>
@@ -15,7 +15,7 @@
     <%= form.text_field :startdate,
                      id: :event_startdate,
                      class: 'form-control',
-                     data: {provide: 'datepicker', 'date-format': 'yyyy-mm-dd'} %>
+                     data: {provide: 'datepicker', 'date-format': 'dd.mm.yyyy'} %>
     <%= form.error_span(:startdate) %>
   </div>
 </div>
@@ -26,7 +26,7 @@
     <%= form.text_field :enddate,
                      id: :event_enddate,
                      class: 'form-control',
-                     data: {provide: 'datepicker', 'date-format': 'yyyy-mm-dd'} %>
+                     data: {provide: 'datepicker', 'date-format': 'dd.mm.yyyy'} %>
     <%= form.error_span(:enddate) %>
   </div>
 </div>

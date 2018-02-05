@@ -33,14 +33,10 @@ FactoryBot.define do
     sequence(:password) { |n| "password#{n}" }
     password_confirmation { password }
     birthday Date.new(1995, 10, 20)
-    telephone_number "00491731117843"
+    telephone_number '00491731117843'
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
-    favourite_sports "Football, Basketball, Tennis"
+    favourite_sports 'Football, Basketball, Tennis'
     sequence(:contact_information) { |n| "Homepage: http://user#{n}.com" }
-
-    factory :invalid_user do
-      last_name nil
-    end
   end
 
   trait :with_avatar do
@@ -53,6 +49,18 @@ FactoryBot.define do
     after(:build) do |user|
       user.avatar = File.open("#{Rails.root}/spec/fixtures/some_file.bin")
     end
+  end
+
+  trait :with_openid do
+    uid '1234567890'
+    provider 'hpiopenid'
+    after(:build) do |user|
+      user.skip_confirmation!
+    end
+  end
+
+  factory :invalid_user, class: User, parent: :user do
+    last_name nil
   end
 
   factory :admin, class: User, parent: :user do

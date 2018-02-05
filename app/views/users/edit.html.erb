@@ -1,25 +1,26 @@
 <%= render partial: "application/validation_errors", locals: {model: @user} %>
 
+<%= stylesheet_link_tag 'users' %>
 <div class="page-header">
   <h1><%= t 'view.user.edit_profile' %></h1>
 </div>
 
 <%= form_for(@user, url: user_path(@user), html: { class: 'form-horizontal user', method: :put }) do |f| %>
-  <div class="form-group">
+  <div class="form-group row">
     <%= f.label :first_name, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :first_name, autofocus: true, class: 'form-control' %>
       <%= f.error_span(:first_name) %>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group row">
     <%= f.label :last_name, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :last_name, class: 'form-control' %>
       <%= f.error_span(:last_name) %>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group row">
     <%= f.label :email, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.email_field :email, class: 'form-control' %>
@@ -52,12 +53,7 @@
   <div class="form-group row">
     <%= f.label :telegram_username, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <div class="input-group">
-        <div class="input-group-addon">
-          <i class="fa fa-telegram fa-lg"></i>
-        </div>
-        <%= f.text_field :telegram_username, class: 'form-control' %>
-      </div>
+      <%= f.text_field :telegram_username, class: 'form-control' %>
     </div>
   </div>
   <div class="form-group row">
@@ -73,7 +69,7 @@
     </div>
   </div>
   <% unless @user.has_omniauth? %>
-    <div class="form-group">
+    <div class="form-group row">
       <%= f.label :password, class: 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
@@ -81,7 +77,7 @@
         <p class="help-block"><i><%= t('.leave_blank_if_you_don_t_want_to_change_it') %></i></p>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group row">
       <%= f.label :password_confirmation, class: 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.password_field :password_confirmation, class: 'form-control'  %>
@@ -89,7 +85,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group row">
       <%= f.label :current_password, class: 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <% if @user.errors.include? :current_password %>
@@ -102,7 +98,7 @@
       </div>
     </div>
   <% end %>
-  <div class="form-group">
+  <div class="form-group row">
     <label class="control-label col-lg-2">OpenID</label>
     <div class="col-lg-10">
       <% if @user.has_omniauth? %>
@@ -120,12 +116,17 @@
       <% end %>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group row" id="save-cancel-section">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, class: 'btn btn-primary' %>
+      <%= f.submit nil, class: 'btn btn-save-edit-user' %>
       <%= link_to t('.cancel', default: t('helpers.links.cancel')),
-                user_path(@user), class: 'btn btn-default' %>
+                user_path(@user), class: 'btn btn-cancel-edit-user' %>
+    </div>
+  </div>
+  <div class="form-group row" id="delete-account-section">
+    <div class="col-lg-offset-2 col-lg-10">
       <%= t('.unhappy') %>? <%= link_to t('.cancel_this_account'), user_path(@user), method: :delete %>.
+      <%= back_btn root_path %>
     </div>
   </div>
 <% end %>

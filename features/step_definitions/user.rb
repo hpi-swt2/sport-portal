@@ -112,12 +112,12 @@ When(/^he visits the password recovery page$/) do
   visit new_user_password_path
 end
 
-And(/^(.+) inserts his email address$/) do |username|
+When(/^(.+) inserts his email address$/) do |username|
   user = user_named(username)
   fill_in :user_email, with: user.email
 end
 
-And(/^submits$/) do
+When(/^submits$/) do
   click_button I18n.t('devise.registrations.reset_password')
 end
 
@@ -132,7 +132,7 @@ When(/^he clicks the recovery link$/) do
   current_email.click_link I18n.t('devise.mailer.reset_password_instructions.action')
 end
 
-And(/^he enters a new password$/) do
+When(/^he enters a new password$/) do
   fill_in :user_password, with: '12345678_my_new_password'
   fill_in :user_password_confirmation, with: '12345678_my_new_password'
   click_button I18n.t('devise.registrations.confirm_new_password')
@@ -143,11 +143,11 @@ When(/^(\w+) is stored in the database$/) do |username|
   user.save!
 end
 
-And(/^he logs out$/) do
+When(/^he logs out$/) do
   sign_out
 end
 
-And (/^he changes his email/) do
+When (/^he changes his email/) do
   fill_in :user_email, with: 'new' + single_user.email
 end
 
@@ -157,11 +157,11 @@ When(/^the user wants to delete his account$/) do
   click_on I18n.t('users.edit.cancel_this_account')
 end
 
-And(/^he enters his password$/) do
+When(/^he enters his password$/) do
   fill_in :password, with: single_user.password
 end
 
-And(/^he enters his current password$/) do
+When(/^he enters his current password$/) do
   fill_in User.human_attribute_name(:current_password), with: single_user.password
 end
 
@@ -169,7 +169,7 @@ Then(/^the user should be deleted$/) do
   expect(User.find_by_id(single_user.id)).to be_nil
 end
 
-And(/^he enters a wrong password$/) do
+When(/^he enters a wrong password$/) do
   fill_in :password, with: single_user.password + 'potato'
 end
 
@@ -177,7 +177,7 @@ Then(/^the user should not be deleted$/) do
   expect(User.find_by_id(single_user.id)).to_not be_nil
 end
 
-And(/^he enters the first name '(.*)'$/) do |name|
+When(/^he enters the first name '(.*)'$/) do |name|
   fill_in User.human_attribute_name(:first_name), with: name
 end
 
@@ -193,7 +193,7 @@ Then(/^his first name should be '(.*)'$/) do |name|
   expect(single_user.first_name).to eq(name)
 end
 
-And(/^he enters the email '(.*)'$/) do |email|
+When(/^he enters the email '(.*)'$/) do |email|
   fill_in User.human_attribute_name(:email), with: email
 end
 
@@ -207,6 +207,12 @@ end
 Then(/^his email should be '(.*)'$/) do |email|
   single_user.reload
   expect(single_user.email).to eq(email)
+end
+
+When(/^he clicks the link in the email he just received at his new mail account$/) do
+  single_user.reload
+  open_email(single_user.unconfirmed_email)
+  current_email.click_link
 end
 
 Then(/^the new user's first name should be '(.*)'$/) do |first_name|
