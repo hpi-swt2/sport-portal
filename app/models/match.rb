@@ -209,7 +209,7 @@ class Match < ApplicationRecord
 
   def users_in_same_team(users)
     teams = [team_home, team_away]
-    TeamUser.where('user_id IN (?) AND team_id IN (?)', users, teams)
+    TeamUser.unscoped.where('user_id IN (?) AND team_id IN (?)', users, teams)
         .group(:team_id).count.size == 1
   end
 
