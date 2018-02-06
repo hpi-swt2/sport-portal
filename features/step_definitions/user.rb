@@ -238,3 +238,7 @@ Then(/^(.*) should be able to change the dates of the game days$/) do |userName|
   step 'the change should be saved'
   sign_out
 end
+
+Then /^he should see his profile page$/ do
+  expect(page.current_url).to end_with(profile_user_path(single_user))
+end
