@@ -76,12 +76,12 @@ class User < ApplicationRecord
 
   has_many :team_users
   has_many :teams, through: :team_users, source: :team
-  has_many :non_single_teams, -> { where single: false }, through: :team_users, source: :team
+  has_many :teams_created_by_user, -> { where created_by_event: false }, through: :team_users, source: :team
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
   has_many :owned_teams, through: :team_owners, source: :team
 
-  def create_single_team
-    team = Team.create(Hash[name: name, private: true, single: true])
+  def create_team_for_event
+    team = Team.create(Hash[name: name, private: true, created_by_event: true])
     team.owners << self
     team
   end
