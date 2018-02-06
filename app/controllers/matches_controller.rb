@@ -88,7 +88,8 @@ class MatchesController < ApplicationController
   def confirm_game_result
     @result = GameResult.find_by(id: params[:result_id], match_id: @match.id)
     authorize! :confirm, @result
-    @result.confirm_scores
+    @result.confirm_scores(current_user)
+    @result.save!
     redirect_back(fallback_location: edit_results_match_path(@match))
   end
 

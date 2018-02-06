@@ -11,11 +11,12 @@
 #  event_id       :integer
 #  points_home    :integer
 #  points_away    :integer
-#  gameday        :integer
+#  gameday_number :integer
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
-#  start_time     :datetime         default(NULL)
+#  gameday_id     :integer
+#  start_time     :datetime
 #
 
 class Match < ApplicationRecord
@@ -209,8 +210,9 @@ class Match < ApplicationRecord
 
   def users_in_same_team(users)
     teams = [team_home, team_away]
-    TeamUser.unscoped.where('user_id IN (?) AND team_id IN (?)', users, teams)
-        .group(:team_id).count.size == 1
+    counts = TeamUser.unscoped.where('user_id IN (?) AND team_id IN (?)', users, teams)
+        .group(:team_id).count
+    counts.size == 1 && counts[0] == users.size
   end
 
   def apply_elo

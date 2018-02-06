@@ -54,4 +54,16 @@ RSpec.describe "matches/edit_results", type: :view do
       expect(rendered).not_to have_xpath("//a[@href='#{confirm_game_result_match_path(match, match.game_results.first)}']")
     end
   end
+
+  context 'game result is confirmed' do
+    it 'should have one check mark' do
+      expect(rendered).to have_xpath("//i[@class='fa fa-camera-retro']", count: match.game_results.count)
+    end
+  end
+
+  context 'game result is confirmed' do
+    it 'should have two check marks' do
+      expect(rendered).to have_xpath("//i[@class='fa fa-camera-retro']", count: 2 * match.game_results.count)
+    end
+  end
 end

@@ -21,7 +21,15 @@
 #  selection_type       :integer          default("fcfs"), not null
 #  min_players_per_team :integer
 #  max_players_per_team :integer
+#  matchtype            :integer
+#  bestof_length        :integer          default(1)
+#  game_winrule         :integer
+#  points_for_win       :integer          default(3)
+#  points_for_draw      :integer          default(1)
+#  points_for_lose      :integer          default(0)
+#  has_place_3_match    :boolean          default(TRUE)
 #  image_data           :text
+#  maximum_elo_change   :integer
 #
 
 FactoryBot.define do

@@ -11,11 +11,12 @@
 #  event_id       :integer
 #  points_home    :integer
 #  points_away    :integer
-#  gameday        :integer
+#  gameday_number :integer
 #  team_home_type :string           default("Team")
 #  team_away_type :string           default("Team")
 #  index          :integer
-#  start_time     :datetime         default(NULL)
+#  gameday_id     :integer
+#  start_time     :datetime
 #
 
 require 'rails_helper'

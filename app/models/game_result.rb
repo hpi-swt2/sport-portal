@@ -27,6 +27,5 @@ class GameResult < ApplicationRecord
 
   def confirm_scores
     self.scores_proposed_by = nil
-    save
   end
 end

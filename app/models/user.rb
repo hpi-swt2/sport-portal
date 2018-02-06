@@ -2,24 +2,30 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  first_name             :string
-#  last_name              :string
-#  admin                  :boolean          default(FALSE)
-#  birthday               :date
-#  telephone_number       :string
-#  telegram_username      :string
-#  favourite_sports       :string
-#  provider               :string
-#  uid                    :string
-#  avatar_data            :text
+#  id                          :integer          not null, primary key
+#  email                       :string           default(""), not null
+#  encrypted_password          :string           default(""), not null
+#  reset_password_token        :string
+#  reset_password_sent_at      :datetime
+#  remember_created_at         :datetime
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  first_name                  :string
+#  last_name                   :string
+#  admin                       :boolean          default(FALSE)
+#  birthday                    :date
+#  telephone_number            :string
+#  telegram_username           :string
+#  favourite_sports            :string
+#  provider                    :string
+#  uid                         :string
+#  avatar_data                 :text
+#  confirmation_token          :string
+#  unconfirmed_email           :string
+#  confirmed_at                :datetime
+#  confirmation_sent_at        :datetime
+#  team_notifications_enabled  :boolean          default(TRUE)
+#  event_notifications_enabled :boolean          default(TRUE)
 #
 
 class User < ApplicationRecord
