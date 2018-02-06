@@ -7,11 +7,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    if get_shown_events_value == "on"
-      @events = Event.all
-    else
-      @events = Event.active
-    end
+    @events = Event.all
   end
 
   # GET /events/1
@@ -35,6 +31,8 @@ class EventsController < ApplicationController
   def create
     @event = event_type.new(event_params)
     @event.matchtype = :bestof
+    @event.min_players_per_team = 1
+    @event.max_players_per_team = 1
     set_associations
     if @event.save
       @event.editors << current_user
@@ -46,6 +44,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
+    @event.invalidate_schedule if event_params[:has_place_3_match].to_i.zero? == @event.has_place_3_match
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -58,7 +57,6 @@ class EventsController < ApplicationController
     @event.destroy
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
-
 
   # PUT /events/1/join
   def join
@@ -92,7 +90,11 @@ class EventsController < ApplicationController
     if @event.matches.empty?
       @event.generate_schedule
       @event.save
+    elsif not @event.is_up_to_date
+      @event.update_schedule
+      @event.save
     end
+
     @matches = @event.matches
     @schedule_type = @event.type.downcase!
   end
@@ -119,10 +121,6 @@ class EventsController < ApplicationController
       return Tournament if params[:type] == 'Tournament'
       return Rankinglist if params[:type] == 'Rankinglist'
       params[:type]
-    end
-
-    def get_shown_events_value
-      params[:showAll]
     end
 
     def map_event_on_event_types
@@ -163,6 +161,8 @@ class EventsController < ApplicationController
                                     :gameday_duration,
                                     :image,
                                     :remove_image,
+                                    :has_place_3_match,
+                                    :maximum_elo_change,
                                     user_ids: [])
     end
 end

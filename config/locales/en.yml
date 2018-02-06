@@ -57,15 +57,12 @@ en:
         one: "event"
         other: "events"
   view:
+    event:
+      new: "Create new event"
     user:
       edit_profile: "Edit Profile Properties"
       update_profile: "Update Profile"
       favourite_sports_placeholder: "Football, Basketball, Table football, ..."
-      notifications:
-        settings: "Notifications"
-        enable_team_notifications: "Enable team notifications"
-        enable_event_notifications: "Enable event notifications"
-        update_settings: "Update"
 
   unauthorized:
       manage:
@@ -129,16 +126,25 @@ en:
       infinite: "unlimited"
     overview:
       not_available_for_leagues: 'No overview available for leagues.'
+    schedule:
+      insert_results: "Insert result"
 
   teams:
       show:
-        invite_user_to_team: "+"
+        invite_user_to_team: "Invite player"
         number: "#"
       invite_user_to_team:
         title: "Invite new player"
         no_user_for_mail: 'No user matching the given email address.'
         user_already_in_team: 'User is already part of this team.'
         assignment_successful: 'User has been added successfully to this Team.'
+
+  users:
+    edit:
+      notifications:
+        subtitle: "Notifications"
+        enable_team_notifications: "Enable team notifications"
+        enable_event_notifications: "Enable event notifications"
 
   validations:
     not_only_numbers: "should not only contain numbers"

@@ -28,6 +28,8 @@
 #  points_for_draw      :integer          default(1)
 #  points_for_lose      :integer          default(0)
 #  image_data           :text
+#  has_place_3_match    :boolean
+#  maximum_elo_change   :integer
 #
 
 class Event < ApplicationRecord
@@ -65,6 +67,10 @@ class Event < ApplicationRecord
     players.each do |user|
       EventMailer.send_mail(user, self, :event_canceled).deliver_now
     end
+  end
+
+  def is_up_to_date
+    true
   end
 
   def duration
@@ -119,7 +125,7 @@ class Event < ApplicationRecord
   end
 
   def add_participant(user)
-    team = user.create_single_team
+    team = user.create_team_for_event
     add_team(team)
   end
 
@@ -149,11 +155,14 @@ class Event < ApplicationRecord
   end
 
   def can_leave?(user)
-    has_participant?(user)
+    has_participant?(user) && !deadline_has_passed?
   end
 
   def standing_of(team)
     I18n.t 'events.overview.unkown_standing'
+  end
+
+  def last_match_of(_)
   end
 
   # this is a method that simplifies manual testing, not intended for production use
@@ -176,8 +185,16 @@ class Event < ApplicationRecord
     self.class.human_game_mode game_mode
   end
 
+  def build_description_string
+    if self.type == 'Rankinglist'
+      "#{I18n.t('events.index.registration_until')}: #{self.deadline} <br> #{I18n.t('events.index.start_date')}: #{self.startdate}"
+    else
+      "#{I18n.t('events.index.max_players')}: #{self.max_teams}"
+    end
+  end
+
   def fitting_teams(user)
-    all_teams = user.owned_teams.multiplayer
+    all_teams = user.owned_teams.created_by_user
     fitting_teams = []
     all_teams.each do |team|
       if is_fitting?(team)
@@ -213,8 +230,10 @@ class Event < ApplicationRecord
 
   private
     def send_mails_when_adding_team(team)
-      team.members.each do |member|
-        TeamMailer.team_registered_to_event(member, team, self).deliver_now
+      if team.is_qualified_to_receive_notifications?
+        team.members.each do |member|
+          TeamMailer.team_registered_to_event(member, team, self).deliver_now
+        end
       end
     end
 end

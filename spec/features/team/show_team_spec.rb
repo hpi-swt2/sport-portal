@@ -33,12 +33,6 @@ describe 'Show team page', type: :feature do
       expect(page).to_not have_text User.human_attribute_name(:id)
     end
 
-    it 'should show # column for members' do
-      @team.members << @user
-      visit team_path @team
-      expect(page).to have_text I18n.t('teams.show.number')
-    end
-
     it 'should actually number teams consecutively' do
       @another_user = FactoryBot.create :user
       @yet_another_user = FactoryBot.create :user
@@ -58,7 +52,21 @@ describe 'Show team page', type: :feature do
       @team.members << @user
       visit team_path @team
       mailto_link_for_user = 'mailto:' + @user.email
-      expect(page).to have_link(I18n.t("helpers.links.email"), href: mailto_link_for_user)
+      expect(page).to have_link(href: mailto_link_for_user)
+    end
+  end
+
+  describe 'display team members only for logged in users' do
+
+    it 'should not display team member table for users who are not logged in ' do
+      visit team_path @team
+      expect(page).to_not have_css("#membersForm")
+    end
+
+    it 'should display team members table for users who are logged in' do
+      sign_in @user
+      visit team_path @team
+      expect(page).to have_css("#membersForm")
     end
   end
 end

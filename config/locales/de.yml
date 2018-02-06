@@ -73,7 +73,7 @@ de:
     index:
       lead: "Organisiere deine Liga!"
       lead-description: "Plane, erstelle und betreue mühelos sowohl Turniere als auch Ligen für deinen Sport. Du hast noch keine Erfahrung als Event-Organisator? Kein Problem! Baue dir jetzt mit wenigen Klicks problemlos deinen persönlichen Spielplan."
-      free-sign-up: "Kostenlos Anmelden"
+      sign-up-now: "Jetzt Anmelden"
       soccer: "Fußball"
       basketball: "Basketball"
       volleyball: "Volleyball"
@@ -109,7 +109,6 @@ de:
       dashboard: "Mein Dashboard"
       my_profile: "Mein Profil"
       edit_profile: "Profil bearbeiten"
-      notification_settings: "Benachrichtigungseinstellungen"
 
   dashboard:
     title: "Dashboard für %{name}"
@@ -172,12 +171,14 @@ de:
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
       event:
+        basic_information: "Basisinformation"
+        dates: "Termine"
         name: "Name"
         description: "Beschreibung"
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Teilnehmeranzahl"
+        max_teams: "Maximale Teilnehmerzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
@@ -191,8 +192,8 @@ de:
         max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
-          single: "Einzelteilnahme"
-          team: "Teamteilnahme"
+          single: "Einzel"
+          team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
         points_for_win: "Punkte für Gewinn"
@@ -202,17 +203,13 @@ de:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
-      tournament:
-        game_modes:
-          ko: "K.-o.-System"
-          ko_group: "K.-o.-System mit Gruppenphase"
-          double_elimination: "Double Elimination"
+        has_place_3_match: "Spiel um Platz 3"
+        maximum_elo_change: "Maximaler Änderungsfaktor"
       league:
         game_modes:
           round_robin: "Jeder gegen Jeden"
           two_halfs: "Hin- und Rückrunde"
           swiss: "Schweizer System"
-          danish: "Dänisches System"
       rankinglist:
         game_modes:
           elo: "ELO"
@@ -235,12 +232,6 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
-      notifications:
-            settings: "Benachrichtigungs-Einstellungen"
-            enable_team_notifications: "Team-Benachrichtigungen erhalten"
-            enable_event_notifications: "Event-Benachrichtigung erhalten"
-            update_settings: "Aktualisieren"
-
 
     match:
       game_results: "Ergebnis(se)"
@@ -279,6 +270,13 @@ de:
     no_valid_team: "Du besitzt leider kein gültiges Team für dieses Event. Um einem Event beitreten zu können, musst du ein gültiges Team besitzen. Mit dem Button unten kann ein neues Team erstellt werden."
 
   events:
+    index:
+      new: "Neues Event erstellen"
+      my_events: "Deine Events"
+      all_events: "Alle Events"
+      start_date: "Startdatum"
+      registration_until: "Anmeldung bis"
+      max_players: "Max. Spielerzahl"
     create_event: "Event erstellen"
     choose_event_format: "Eventart wählen"
     new_league: "Liga erstellen"
@@ -339,14 +337,11 @@ de:
       preliminaries: "Vorrunde %{round}"
       to: "bis"
       appointment: "Termin"
+      insert_results: "Ergebnisse eintragen"
     gamemode:
-      ko: "KO"
-      ko_group: "Gruppen-KO"
-      double_elimination: "Doppel-KO-System"
       round_robin: "Jeder gegen Jeden"
       two_halfs: "Hin- und Rückrunde"
       swiss: "Schweizer System"
-      danish: "Dänisches System"
       elo: "ELO"
       win_loss: "Gewinne-Niederlagen"
       true_skill: "True Skill"
@@ -359,6 +354,7 @@ de:
       in_place_3_match: "Im Spiel um Platz 3"
       in: "Im %{match_name}"
       not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
+      against: "gegen"
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
@@ -395,8 +391,10 @@ de:
       all_teams: "Alle Teams"
       create_team: "Ein Team erstellen"
     show:
-      invite_user_to_team: "+"
+      team_plays_kind_of_sports: 'Das Team spielt folgende Sportarten'
+      invite_user_to_team: "Spieler einladen"
       number: "#"
+      captain: "Kapitän"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
       no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
@@ -418,6 +416,10 @@ de:
       unhappy: "Unzufrieden"
       leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
       we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+      notifications:
+          subtitle: "Benachrichtigungen"
+          enable_team_notifications: "Team-Benachrichtigungen erhalten"
+          enable_event_notifications: "Event-Benachrichtigung erhalten"
     destroy:
       confirm: "Bestätigen"
 

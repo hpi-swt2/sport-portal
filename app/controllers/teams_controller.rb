@@ -5,12 +5,8 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
-    multi_teams = Team.multiplayer
-    if params[:filter] == "true"
-      @teams = @teams & multi_teams.includes(:team_members).where(team_users: { user_id: current_user })
-    else
-      @teams = @teams & multi_teams
-    end
+    teams_created_by_user = Team.created_by_user
+    @teams = @teams & teams_created_by_user
   end
 
   # GET /teams/1
