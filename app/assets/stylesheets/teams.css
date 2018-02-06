@@ -3,6 +3,10 @@
   They will automatically be included in application.css.
 */
 
+.modal-backdrop.fade.in {
+  opacity: 0;
+}
+
 label.required:after {
   content: "*";
   vertical-align: 0.5em;
