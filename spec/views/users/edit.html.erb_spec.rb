@@ -29,4 +29,17 @@ RSpec.describe 'users/edit', type: :view do
     expect(rendered).to have_xpath("//input[@value=\"#{@user.favourite_sports}\"]", count: 1)
     expect(rendered).to have_xpath("//input[@value=\"#{@user.contact_information}\"]", count: 1)
   end
+
+  it "renders notification subtitle" do
+    render
+    expect(rendered).to have_text(I18n.t('users.edit.notifications.subtitle'))
+  end
+  it "has team notifications checkbox" do
+    render
+    expect(rendered).to have_field('user_team_notifications_enabled')
+  end
+  it "has event notifications checkbox" do
+    render
+    expect(rendered).to have_field('user_event_notifications_enabled')
+  end
 end
