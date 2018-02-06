@@ -77,6 +77,10 @@ class UsersController < Devise::RegistrationsController
   # Views are located in `app/views/devise`
 
   protected
+    # Implemented to redirect to user profile after successful update
+    def user_root_path
+      user_path current_user
+    end
 
     # Override method of `Devise::RegistrationsController` to update without password
     def  update_resource(resource, params)
@@ -135,9 +139,7 @@ class UsersController < Devise::RegistrationsController
       redirect_to user_path(user), notice: I18n.t('devise.registrations.unlink_success')
     end
 
-    private
-
-      def error_detector(attribute)
-        if resource.errors.include?(attribute) then "input-field-error input-field" else "input-field" end
-      end
+    def error_detector(attribute)
+      if resource.errors.include?(attribute) then "input-field-error input-field" else "input-field" end
+    end
 end
