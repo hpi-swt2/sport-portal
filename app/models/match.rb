@@ -200,7 +200,7 @@ class Match < ApplicationRecord
   def all_players
     team_home = self.team_home
     team_away = self.team_away
-    players = (team_home.is_a?(Team) ? team_home.members : []) + (team_away.is_a?(Team) ? team_away.members : [])
+    (team_home.is_a?(Team) ? team_home.members : []) + (team_away.is_a?(Team) ? team_away.members : [])
   end
 
   def has_result?
@@ -208,8 +208,10 @@ class Match < ApplicationRecord
   end
 
   def users_in_same_team(user1, user2)
-    team_home.members.where('"team_users"."user_id" IN (?)', [user1, user2]).count == 2 &&
-        team_away.members.where('"team_users"."user_id" IN (?)', [user1, user2]).count == 2
+    users = [user1, user2]
+    teams = [team_home, team_away]
+    TeamUser.where('user_id IN (?) AND team_id IN (?)', users, teams)
+        .group(:team_id).to_a.size == 1
   end
 
   def apply_elo
