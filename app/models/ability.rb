@@ -73,8 +73,8 @@ class Ability
       end
     end
 
-    def play_matches
-      # TODO
+    def play_matches(event)
+      event.startdate <= Date.current
     end
 
     def can_join_event(user)
