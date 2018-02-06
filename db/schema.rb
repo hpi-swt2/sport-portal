@@ -31,13 +31,13 @@ ActiveRecord::Schema.define(version: 20180204095739) do
     t.integer "selection_type", default: 0, null: false
     t.integer "min_players_per_team"
     t.integer "max_players_per_team"
-    t.text "image_data"
     t.integer "matchtype"
     t.integer "bestof_length", default: 1
     t.integer "game_winrule"
     t.integer "points_for_win", default: 3
     t.integer "points_for_draw", default: 1
     t.integer "points_for_lose", default: 0
+    t.text "image_data"
     t.boolean "has_place_3_match", default: true
     t.integer "maximum_elo_change"
     t.index ["game_mode"], name: "index_events_on_game_mode"
