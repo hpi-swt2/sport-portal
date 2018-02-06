@@ -35,6 +35,11 @@ Given(/^a new user (.*) with password (.*)$/) do |username, password|
   build_user_named(username, password: password)
 end
 
+Given(/^a logged in admin$/) do
+  admin = create_user(admin: true)
+  sign_in admin
+end
+
 Given(/^the user is logged in$/) do
   sign_in single_user
 end
