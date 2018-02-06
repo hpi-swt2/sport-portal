@@ -109,8 +109,6 @@ de:
       dashboard: "Mein Dashboard"
       my_profile: "Mein Profil"
       edit_profile: "Profil bearbeiten"
-      notification_settings: "Benachrichtigungseinstellungen"
-      notifications: "Benachrichtigungen"
 
   dashboard:
     title: "Dashboard für %{name}"
@@ -206,11 +204,7 @@ de:
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
         has_place_3_match: "Spiel um Platz 3"
-      tournament:
-        game_modes:
-          ko: "K.-o.-System"
-          ko_group: "K.-o.-System mit Gruppenphase"
-          double_elimination: "Double Elimination"
+        maximum_elo_change: "Maximaler Änderungsfaktor"
       league:
         game_modes:
           round_robin: "Jeder gegen Jeden"
@@ -238,12 +232,6 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
-      notifications:
-            settings: "Benachrichtigungs-Einstellungen"
-            enable_team_notifications: "Team-Benachrichtigungen erhalten"
-            enable_event_notifications: "Event-Benachrichtigung erhalten"
-            update_settings: "Aktualisieren"
-
 
     match:
       game_results: "Ergebnis(se)"
@@ -349,10 +337,8 @@ de:
       preliminaries: "Vorrunde %{round}"
       to: "bis"
       appointment: "Termin"
+      insert_results: "Ergebnisse eintragen"
     gamemode:
-      ko: "KO"
-      ko_group: "Gruppen-KO"
-      double_elimination: "Doppel-KO-System"
       round_robin: "Jeder gegen Jeden"
       two_halfs: "Hin- und Rückrunde"
       swiss: "Schweizer System"
@@ -405,8 +391,10 @@ de:
       all_teams: "Alle Teams"
       create_team: "Ein Team erstellen"
     show:
-      invite_user_to_team: "+"
+      team_plays_kind_of_sports: 'Das Team spielt folgende Sportarten'
+      invite_user_to_team: "Spieler einladen"
       number: "#"
+      captain: "Kapitän"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
       no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
@@ -428,6 +416,10 @@ de:
       unhappy: "Unzufrieden"
       leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
       we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+      notifications:
+          subtitle: "Benachrichtigungen"
+          enable_team_notifications: "Team-Benachrichtigungen erhalten"
+          enable_event_notifications: "Event-Benachrichtigung erhalten"
     destroy:
       confirm: "Bestätigen"
 

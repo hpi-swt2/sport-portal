@@ -29,6 +29,11 @@ RSpec.describe 'events/schedule', type: :view do
       render
       expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
     end
+
+    it 'has insert results button for matches' do
+      render
+      expect(rendered).to have_selector(:link_or_button, t('events.schedule.insert_results'))
+    end
   end
 
   describe 'linktext for single player league' do

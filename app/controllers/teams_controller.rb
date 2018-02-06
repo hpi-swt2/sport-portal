@@ -5,8 +5,8 @@ class TeamsController < ApplicationController
 
   # GET /teams
   def index
-    multi_teams = Team.multiplayer
-    @teams = @teams & multi_teams
+    teams_created_by_user = Team.created_by_user
+    @teams = @teams & teams_created_by_user
   end
 
   # GET /teams/1

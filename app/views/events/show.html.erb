@@ -54,8 +54,10 @@
   <dt><strong><%= model_class.human_attribute_name(:discipline) %>:</strong></dt>
   <dd><%= @event.discipline %></dd>
 
-  <dt><strong><%= model_class.human_attribute_name((@event.type == 'Rankinglist') ? :metric : :game_mode) %>:</strong></dt>
-  <dd><%= @event.human_game_mode %></dd>
+  <% unless @event.is_a? Tournament %>
+    <dt><strong><%= model_class.human_attribute_name((@event.type == 'Rankinglist') ? :metric : :game_mode) %>:</strong></dt>
+    <dd><%= @event.human_game_mode %></dd>
+  <% end %>
 
   <dt><strong><%= model_class.human_attribute_name(:max_teams) %>:</strong></dt>
   <dd><%= @event.max_teams.present? ? @event.max_teams : t('events.max_teams.infinite') %></dd>
@@ -135,8 +137,8 @@
             class: 'btn btn-default' %>
 <% end %>
 
-<%# app/helpers/button_helper.rb %>
-<%= back_btn %>
+<%= back_btn events_path %>
+
 <% if can? :leave, @event %>
   <%= link_to t('.leave', default: t('helpers.links.leave')),
               leave_event_path(@event),
