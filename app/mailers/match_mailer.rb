@@ -6,10 +6,11 @@ class MatchMailer < ApplicationMailer
 
     team_home = match.team_home
     team_away = match.team_away
-    @opponent_team = (team_home.has_member? user) ? team_away : team_home
+    opponent_team = (team_home.has_member? user) ? team_away : team_home
+    @opponent_team = opponent_team
 
     subject = t("match_mailer.#{template}.subject",
-                team_name: @opponent_team.name,
+                team_name: opponent_team.name,
                 event_name: match.event.name)
 
     mail(to: user.email,
