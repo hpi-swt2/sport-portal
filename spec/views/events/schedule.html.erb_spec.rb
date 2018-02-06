@@ -30,9 +30,9 @@ RSpec.describe 'events/schedule', type: :view do
       expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
     end
 
-    it 'has insert results button for matches' do
+    it 'has show button for matches' do
       render
-      expect(rendered).to have_selector(:link_or_button, t('events.schedule.insert_results'))
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.show'))
     end
   end
 
