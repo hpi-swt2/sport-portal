@@ -79,7 +79,7 @@ de:
     start_time: "Wann? Am %{start_date} um %{start_time} Uhr"
     place: "Wo? %{place}"
     here: "Hier"
-    apply_changes_html: "%{match_link} kannst du die Änderungen vornehmen."
+    apply_changes_html: "%{match_link} kannst du Änderungen vornehmen."
     add_results_html: "%{match_link} kannst du die Ergebnisse eintragen."
     match_notification:
       subject: "Dein Spiel gegen %{team_name} im Event %{event_name} startet morgen."
