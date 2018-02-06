@@ -368,6 +368,10 @@ de:
       second: "Zweiter Platz"
       third: "Dritter Platz"
       fourth: "Vierter Platz"
+    max_teams:
+      infinite: "unbegrenzt"
+
+  leagues:
     ranking:
       title: "Tabelle"
       rank: "Rang"
@@ -380,8 +384,6 @@ de:
       goals_against: "Gegenpunkte"
       goals_difference: "Punktdifferenz"
       points: "Ligapunkte"
-    max_teams:
-      infinite: "unbegrenzt"
 
   matches:
     round_name:

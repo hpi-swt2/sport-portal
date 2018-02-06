@@ -15,5 +15,11 @@ describe 'Event Rankings', type: :feature do
       league = League.create! valid_league_attributes
       visit leagues_ranking_path(league)
     end
+
+    it 'should have a back button' do
+      league = League.create! valid_league_attributes
+      visit leagues_ranking_path(league)
+      expect(page).to have_selector(:link_or_button, I18n.t('helpers.links.back'))
+    end
   end
 end
