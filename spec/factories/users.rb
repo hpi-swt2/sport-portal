@@ -59,6 +59,7 @@ FactoryBot.define do
     end
   end
 
+
   factory :invalid_user, class: User, parent: :user do
     last_name nil
   end

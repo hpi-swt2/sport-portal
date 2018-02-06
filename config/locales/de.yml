@@ -234,6 +234,7 @@ de:
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
       contact_information_placeholder: "Facebook-Profil, Homepage, LinkedIn-Account, ..."
+
     match:
       game_results: "Ergebnis(se)"
       add_game_result: "Ergebnis hinzufügen"
