@@ -92,6 +92,21 @@
       </div>
     </div>
   <% end %>
+  <div class="form-group order-1">
+    <h3 class="form-group__title"><%=t('users.edit.notifications.subtitle')%></h3>
+  </div>
+  <div class="form-group order-1">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.check_box :team_notifications_enabled, class: 'filled-in' %>
+      <%= f.label :team_notifications_enabled, t('users.edit.notifications.enable_team_notifications') %> <br>
+    </div>
+  </div>
+  <div class="form-group order-1">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.check_box :event_notifications_enabled, class: 'filled-in' %>
+      <%= f.label :event_notifications_enabled, t('users.edit.notifications.enable_event_notifications') %> <br>
+    </div>
+  </div>
   <div class="form-group row">
     <label class="control-label col-lg-2">OpenID</label>
     <div class="col-lg-10">
