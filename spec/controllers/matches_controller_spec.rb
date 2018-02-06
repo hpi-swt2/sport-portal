@@ -204,6 +204,7 @@ RSpec.describe MatchesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested match" do
+      sign_in @admin
       match = Match.create! valid_attributes
       expect {
         delete :destroy, params: { id: match.to_param }
@@ -211,6 +212,7 @@ RSpec.describe MatchesController, type: :controller do
     end
 
     it "destroys the requested match, but the event still exists" do
+      sign_in @admin
       match = Match.create! valid_attributes
       expect {
         delete :destroy, params: { id: match.to_param }
@@ -218,9 +220,16 @@ RSpec.describe MatchesController, type: :controller do
     end
 
     it "redirects to the event schedule page" do
+      sign_in @admin
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
       expect(response).to redirect_to(event_schedule_url(match.event))
+    end
+
+    it "shouldn't let a normal user delete a match" do
+      match = Match.create! valid_attributes
+      delete :destroy, params: { id: match.to_param }
+      expect(response).not_to be_success
     end
   end
 
