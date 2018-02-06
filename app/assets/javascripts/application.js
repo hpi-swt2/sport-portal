@@ -24,7 +24,9 @@ $(document).ready(function() {
     var notification = $('div.alert');
     if (notification.length !== 0) {
         setTimeout(function() {
-            notification.remove();
+            notification.fadeOut(200, function() {
+                notification.remove();
+            });
         }, 5000);
     }
 });
