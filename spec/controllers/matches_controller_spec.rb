@@ -20,7 +20,7 @@ RSpec.describe MatchesController, type: :controller do
   let(:authorized_attributes) {
     FactoryBot.build(:match, team_home: @team).attributes
   }
-  
+
   let(:admin) { FactoryBot.create(:admin) }
 
 
