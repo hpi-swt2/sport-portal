@@ -207,8 +207,7 @@ class Match < ApplicationRecord
     has_scores? && has_points?
   end
 
-  def users_in_same_team(user1, user2)
-    users = [user1, user2]
+  def users_in_same_team(users)
     teams = [team_home, team_away]
     TeamUser.where('user_id IN (?) AND team_id IN (?)', users, teams)
         .group(:team_id).to_a.size == 1
