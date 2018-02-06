@@ -229,7 +229,9 @@ RSpec.describe UsersController, type: :controller do
         { birthday: valid_attributes[:birthday] + 1.year,
           telephone_number: "01766668734",
           telegram_username: valid_attributes[:telegram_username] + "_new",
-          favourite_sports: valid_attributes[:favourite_sports] + ", Riding" }
+          favourite_sports: valid_attributes[:favourite_sports] + ", Riding",
+          event_notifications_enabled: false,
+          team_notifications_enabled: false }
       }
 
       it "updates the requested user" do
@@ -243,6 +245,8 @@ RSpec.describe UsersController, type: :controller do
         expect(user.telephone_number).to eq(new_attributes[:telephone_number])
         expect(user.telegram_username).to eq(new_attributes[:telegram_username])
         expect(user.favourite_sports).to eq(new_attributes[:favourite_sports])
+        expect(user.event_notifications_enabled?).to eq(new_attributes[:event_notifications_enabled])
+        expect(user.team_notifications_enabled?).to eq(new_attributes[:team_notifications_enabled])
       end
     end
 
@@ -338,38 +342,6 @@ RSpec.describe UsersController, type: :controller do
       sign_in @user
       get :edit, params: { id: @user.to_param }
       expect(response).to be_success
-    end
-  end
-
-  describe 'GET #notifications' do
-    context 'given a logged in useer' do
-      it 'should show notifications settings page successfully' do
-        sign_in @user
-        get :notifications, params: { id: @user.to_param }
-        expect(response).to be_success
-      end
-    end
-    context 'given no logged in user' do
-      it 'should deny access' do
-        get :notifications, params: { id: @user.to_param }
-        expect(response).to be_unauthorized
-      end
-    end
-  end
-
-  describe 'PATCH #update_notifications' do
-    it 'should update notifications settings successfully' do
-      sign_in @user
-      patch :update_notifications, params: { id: @user.to_param, user: { event_notifications_enabled: false, team_notifications_enabled: false } }
-      @user.reload
-      expect(@user.event_notifications_enabled?).to eq(false)
-      expect(@user.team_notifications_enabled).to eq(false)
-    end
-
-    it 'redirect to notification settings' do
-      sign_in @user
-      patch :update_notifications, params: { id: @user.to_param, user: { event_notifications_enabled: false, team_notifications_enabled: false } }
-      response.should redirect_to :notifications_user
     end
   end
 end
