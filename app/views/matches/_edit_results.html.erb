@@ -1,4 +1,4 @@
-<%= form_for @match, url: update_results_match_url(@match), method: :patch, html: { :class => "form-horizontal match" } do |f| %>
+<%= form_for @match, url: update_results_match_path(@match), method: :patch, html: { :class => "form-horizontal match" } do |f| %>
 
   <%= render partial: "application/validation_errors", locals: {model: @match} %>
 

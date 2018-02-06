@@ -13,14 +13,14 @@ RSpec.describe "matches/edit_results", type: :view do
   it "renders a input form" do
     render
 
-    expect(rendered).to have_css("form[action='#{update_results_match_path(@match)}'][method='post']", count: 2)
+    expect(rendered).to have_css("form[action='#{update_results_match_path(@match)}']")
   end
 
   it "has score home and score away input fields" do
     render
 
-    expect(rendered).to have_xpath("//div[@class='result']//input[@type='text' and @value='#{@match.game_results.first.score_home}']")
-    expect(rendered).to have_xpath("//div[@class='result']//input[@type='text' and @value='#{@match.game_results.first.score_away}']")
+    expect(rendered).to have_xpath("//div[@class='result']//input[@type='number' and @value='#{@match.game_results.first.score_home}']")
+    expect(rendered).to have_xpath("//div[@class='result']//input[@type='number' and @value='#{@match.game_results.first.score_away}']")
   end
 
   it "has buttons to add and remove results" do
