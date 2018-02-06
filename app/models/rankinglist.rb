@@ -54,30 +54,8 @@ class Rankinglist < Event
   def self.template_events
     list = Array.new
 
-    rankinglist1 = Rankinglist.new
-    rankinglist1.assign_attributes(
-        name: I18n.t('events.templates.rankinglist1.name'),
-        description: '',
-        discipline: I18n.t('events.templates.rankinglist1.discipline'),
-        max_teams: 100,
-        initial_value: 20,
-        game_mode: Rankinglist.game_modes[:elo],
-        type: 'Rankinglist',
-        image: open('https://owncloud.hpi.de/index.php/s/hkq3TILn6b4zeXp/download'))
-    list << rankinglist1
-
-    rankinglist2 = Rankinglist.new
-    rankinglist2.assign_attributes(
-        name: I18n.t('events.templates.rankinglist2.name'),
-        description: '',
-        discipline: I18n.t('events.discipline.table_football'),
-        initial_value: 20,
-        game_mode: Rankinglist.game_modes[:elo],
-        type: 'Rankinglist',
-        image: open('https://owncloud.hpi.de/index.php/s/HPHEQZIDE6NjixX/download'))
-    list << rankinglist2
+    # no template events for rankinglists
 
     list
-
   end
 end
