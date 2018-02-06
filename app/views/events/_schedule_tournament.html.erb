@@ -59,7 +59,7 @@
       <td>
         <%= link_to t('.show', default: t('helpers.links.show')),
                     match_path(match), :class => 'btn btn-default btn-xs' %>
-        <% if current_user&.admin %>
+        <% if can? :delete, @match %>
           <%= link_to t('.edit', default: t('helpers.links.edit')),
                       edit_match_path(match), :class => 'btn btn-default btn-xs' %>
         <% end %>

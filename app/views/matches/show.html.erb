@@ -43,7 +43,7 @@
               class: 'btn btn-default',
               id: 'edit_results' %>
 <% end %>
-<% if (!@match.event.is_a? Rankinglist) && (current_user&.admin) %>
+<% if (can? :delete, @match) && (!@match.event.is_a? Rankinglist) %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               match_path(@match),
               :method => 'delete',
