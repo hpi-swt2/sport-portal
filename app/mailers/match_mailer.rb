@@ -3,11 +3,14 @@ class MatchMailer < ApplicationMailer
   def send_mail(user, match, template)
     @user = user
     @match = match
-    @opponent_team = (@match.team_home.has_member? @user) ? @match.team_away : @match.team_home
+
+    team_home = match.team_home
+    team_away = match.team_away
+    @opponent_team = (team_home.has_member? user) ? team_away : team_home
 
     subject = t("match_mailer.#{template}.subject",
                 team_name: @opponent_team.name,
-                event_name: @match.event.name)
+                event_name: match.event.name)
 
     mail(to: user.email,
          subject: subject) do |format|
