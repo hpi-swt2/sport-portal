@@ -76,8 +76,7 @@ class Ability
         can :manage, :all
       end
     end
-
-
+  
     def can_modify_match(user)
       can :modify, Match do |match|
         user.teams.where(id: match.teams).exists?
