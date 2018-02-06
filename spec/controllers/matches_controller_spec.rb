@@ -68,7 +68,6 @@ RSpec.describe MatchesController, type: :controller do
     end
 
     it "should allow admin to edit a match" do
-      sign_out @user
       sign_in @admin
       match = Match.create! authorized_attributes
       get :edit, params: { id: match.to_param }
@@ -92,7 +91,6 @@ RSpec.describe MatchesController, type: :controller do
     end
 
     it "should allow admin to edit the results of a match" do
-      sign_out @user
       sign_in @admin
       match = Match.create! valid_attributes
       get :edit_results, params: { id: match.to_param }
