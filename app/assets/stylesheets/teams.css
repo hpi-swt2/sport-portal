@@ -45,11 +45,13 @@ body > .background > .container {
 #teamProfileImage {
     width: 200px;
     height: 200px;
+    object-fit: cover;
 }
 
 #teamDescription {
     overflow: hidden;
     word-wrap: break-word;
+    font-size: 1.4rem;
 }
 
 h1, h2 {
