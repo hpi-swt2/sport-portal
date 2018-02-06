@@ -79,9 +79,8 @@ class Ability
 
 
     def can_modify_match(user)
-      user_teams = user.teams
       can :modify, Match do |match|
-        (user_teams.include? match.team_home) || (user_teams.include? match.team_away)
+        user.teams.where(id: match.teams).exists?
       end
     end
 
