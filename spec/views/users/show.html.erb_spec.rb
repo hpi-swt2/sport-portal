@@ -18,13 +18,13 @@ RSpec.describe 'devise/registrations/show', type: :view do
     contact_information = 'My homepage: foo-bar.com (check it out! :D)'
     @user.contact_information = contact_information
     render
-    expect(rendered).to have_content(I18n.t('activerecord.attributes.user.contact_information'), count: 1)
+    expect(rendered).to have_content(User.human_attribute_name(:contact_information), count: 1)
     expect(rendered).to have_content(contact_information, count: 1)
   end
 
   it 'does not show any contact information if none is available' do
     @user.contact_information = nil
     render
-    expect(rendered).to have_content(I18n.t('activerecord.attributes.user.contact_information'), count: 0)
+    expect(rendered).to_not have_content(User.human_attribute_name(:contact_information))
   end
 end
