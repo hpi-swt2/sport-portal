@@ -5,15 +5,18 @@ describe "index event page", type: :feature do
   shared_examples "a single player event" do
     context "which I participate in" do
       before(:each) do
-        sign_in(@user)
         @event = event
         @event.add_participant(@user)
         visit events_path
       end
+    end
 
-      it "should not have a join button" do
-        expect(page).not_to have_link(:join_event_button)
+    context "which I do not participate in" do
+      before(:each) do
+        @event = event
+        visit events_path
       end
+
     end
   end
 
@@ -29,9 +32,6 @@ describe "index event page", type: :feature do
 
     context "which I do not participate in" do
 
-      it "should not have a leave button" do
-        expect(page).not_to have_link(:leave_event_button)
-      end
     end
 
     context "which I participate in" do
@@ -40,13 +40,18 @@ describe "index event page", type: :feature do
         visit events_path
       end
 
-      it "should not have a join button" do
-        expect(page).not_to have_link(:join_event_button)
+
+      context "with a team I own" do
+        before(:each) do
+          @team.owners << @user
+          visit events_path
+        end
+
+
       end
 
+      context "with a team I don't own" do
 
-      it "should show that I am participating in some events" do
-        expect(page).to have_content I18n.t('events.index.my_events')
       end
     end
   end
@@ -58,12 +63,6 @@ describe "index event page", type: :feature do
     end
 
 
-
-    it "should not display a join button" do
-      sign_in @user
-      visit events_path
-      expect(page).not_to have_link(:join_event_button)
-    end
   end
 
   before(:each) do

@@ -1,7 +1,7 @@
 $( document ).on('turbolinks:load', function() {
-    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
-    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
-    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
+    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
+    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
 
     $("#event_duration").val("");
   
@@ -38,9 +38,11 @@ $( document ).on('turbolinks:load', function() {
 
     function calcDateDiff(startdatestr, enddatestr)
     {
-      var start = new Date(startdatestr);
-      var end = new Date(enddatestr);
-
+      var splittetStart = startdatestr.split(".");
+      var splittetEnd = enddatestr.split(".");
+      // Es muss 1 vom Monat abgezogen werden, da diese 0 indiziert sind
+      var start = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
+      var end = new Date(splittetEnd[2],splittetEnd[1]-1,splittetEnd[0]);
       return  Math.round((end-start)/(1000*60*60*24)) + 1;
     }
 
@@ -48,13 +50,20 @@ $( document ).on('turbolinks:load', function() {
 
        var start = $("#event_startdate").val();
        if(start != "") {
-           var startdate = new Date(start);
+           var splittetStart = start.split(".");
+           var startdate = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
            startdate.setDate(startdate.getDate() + parseInt(this.value - 1));
 
            var dd = startdate.getDate();
            var mm = startdate.getMonth() + 1;
            var y = startdate.getFullYear();
-           var formattedDate = y + '-' + mm + '-' + dd;
+           if(mm < 10){
+               mm = "0"+ mm;
+           }
+           if(dd < 10){
+               dd = "0" + dd;
+           }
+           var formattedDate = dd + '.' + mm + '.' + y;
            $("#event_enddate").val(formattedDate);
        }
     });
@@ -62,6 +71,7 @@ $( document ).on('turbolinks:load', function() {
     // Autofill of player count for an event
     showPlayerCount();
     $("#event_player_type").on("change", showPlayerCount);
+
 
     function showPlayerCount()
     {
@@ -75,11 +85,63 @@ $( document ).on('turbolinks:load', function() {
           $("#event_min_players_per_team").show();
           $("#event_max_players_per_team").show();
           break;
-        default: 
+        default:
           $("#event_min_players_per_team").hide();
           $("#event_max_players_per_team").hide();
           break;
       }
+    }
+
+    //rankinglist_game_mode -> rankinglist_initial_value
+    showInitialValue();
+    var initial_value_elo = "1000";
+    var initial_value_trueskill = "25";
+    var initial_value_win_loss = "0";
+    $("#rankinglist_game_mode").on("change", showInitialValue);
+    function showInitialValue()
+    {
+        switch($("#rankinglist_game_mode").val())
+        {
+            case "elo":
+                $("#rankinglist_initial_value").val(initial_value_elo);
+                $("#default_point_distribution").hide();
+                var default_elo_change = $("#rankinglist_maximum_elo_change");
+                if(default_elo_change.val() == "")
+                {
+                    default_elo_change.val(32);
+                }
+                $("#elo_point_distribution").show();
+                break;
+            case "true_skill":
+                $("#rankinglist_initial_value").val(initial_value_trueskill);
+                break;
+            case "win_loss":
+                $("#rankinglist_initial_value").val(initial_value_win_loss);
+                break;
+            default:
+                $("#rankinglist_initial_value").val("0");
+                $("#default_point_distribution").show();
+                $("#elo_point_distribution").hide();
+                break;
+        }
+    }
+
+    $("#rankinglist_initial_value").on("change", saveInitialValue);
+    function saveInitialValue()
+    {
+        switch($("#rankinglist_game_mode").val()) {
+            case "elo":
+                initial_value_elo = $("#rankinglist_initial_value").val();
+                break;
+            case "true_skill":
+                initial_value_trueskill = $("#rankinglist_initial_value").val();
+                break;
+            case "win_loss":
+                initial_value_win_loss = $("#rankinglist_initial_value").val();
+                break;
+            default:
+                break;
+        }
     }
 });
 

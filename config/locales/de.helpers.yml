@@ -40,7 +40,7 @@ de:
     submit:
       create: "Erstelle %{model}"
       submit: "Speichere %{model}"
-      update: "Aktualisiere %{model}"
+      update: "Speichern"
       delete: "Lösche %{model}"
     select:
       prompt: "Bitte wähle"
@@ -84,7 +84,7 @@ de:
       info: "wurde abgesagt."
       subject: "Dein Spiel wurde abgesagt"
     match_scheduled:
-      info: "findet am %{start_time} statt."
+      info: "wurde geplant."
       subject: "Dein Match wurde geplant"
     match_date_changed:
       info: "wurde auf %{start_time} verschoben."
@@ -104,6 +104,8 @@ de:
     user_added_to_team:
       added_to_team_info_html: 'du bist dem Team %{team_link} beigetreten.'
       subject: "Du bist dem Team %{team_name} beigetreten"
+      have_fun: "Viel Erfolg beim Sport!"
     team_registered_to_event:
       registered_to_event_info_html: 'dein Team %{team_link} nimmt jetzt an dem Event %{event_link} teil.'
       subject: "Dein Team %{team_name} nimmt jetzt an dem Event %{event_name} teil"
+      have_fun: "Viel Erfolg beim Spielen!"

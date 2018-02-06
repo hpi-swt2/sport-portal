@@ -31,6 +31,8 @@ class EventsController < ApplicationController
   def create
     @event = event_type.new(event_params)
     @event.matchtype = :bestof
+    @event.min_players_per_team = 1
+    @event.max_players_per_team = 1
     set_associations
     if @event.save
       @event.editors << current_user
@@ -42,6 +44,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
+    @event.invalidate_schedule if event_params[:has_place_3_match].to_i.zero? == @event.has_place_3_match
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -55,7 +58,6 @@ class EventsController < ApplicationController
     redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
-
   # PUT /events/1/join
   def join
     if @event.single?
@@ -63,6 +65,7 @@ class EventsController < ApplicationController
     else
       @event.add_team(Team.find(event_params[:teams]))
     end
+    
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
@@ -87,57 +90,50 @@ class EventsController < ApplicationController
     if @event.matches.empty?
       @event.generate_schedule
       @event.save
+    elsif not @event.is_up_to_date
+      @event.update_schedule
+      @event.save
     end
+
     @matches = @event.matches
     @schedule_type = @event.type.downcase!
   end
 
-  # GET /events/1/ranking
-  def ranking
-    @ranking_entries = @event.get_ranking
-  end
-
   def overview
+    if @event.type == 'League'
+      redirect_to @event, error: t('events.overview.not_available_for_leagues')
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-  def set_event
-    @event = Event.find(params[:id])
-  end
-
-  def set_associations
-    @event.owner = current_user
-  end
-
-  def set_associations
-    @event.owner = current_user
-    @event.player_type ||= Event.player_types[:single]
-    if @event.player_type == Event.player_types[:single] || @event.type == 'Rankinglist'
-      @event.min_players_per_team = 1
-      @event.max_players_per_team = 1
+    def set_event
+      @event = Event.find(params[:id])
     end
-  end
 
-  # Get the type of event that should be created
-  def event_type
-    return League if params[:type] == 'League'
-    return Tournament if params[:type] == 'Tournament'
-    return Rankinglist if params[:type] == 'Rankinglist'
-    params[:type]
-  end
-
-  def map_event_on_event_types
-    [:league, :tournament, :rankinglist].each do |value|
-      delete_mapping_parameter value
+    def set_associations
+      @event.owner = current_user
     end
-  end
 
-  def delete_mapping_parameter(event_class)
-    if params.has_key? event_class
-      params[:event] = params.delete event_class
+    # Get the type of event that should be created
+    def event_type
+      return League if params[:type] == 'League'
+      return Tournament if params[:type] == 'Tournament'
+      return Rankinglist if params[:type] == 'Rankinglist'
+      params[:type]
     end
-  end
+
+    def map_event_on_event_types
+      [:league, :tournament, :rankinglist].each do |value|
+        delete_mapping_parameter value
+      end
+    end
+
+    def delete_mapping_parameter(event_class)
+      if params.has_key? event_class
+        params[:event] = params.delete event_class
+      end
+    end
 
     # Only allow a trusted parameter "white list" through.
     def event_params
@@ -165,6 +161,8 @@ class EventsController < ApplicationController
                                     :gameday_duration,
                                     :image,
                                     :remove_image,
+                                    :has_place_3_match,
+                                    :maximum_elo_change,
                                     user_ids: [])
     end
 end

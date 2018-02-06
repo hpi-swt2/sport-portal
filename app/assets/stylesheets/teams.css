@@ -3,12 +3,209 @@
   They will automatically be included in application.css.
 */
 
+.modal-backdrop.fade.in {
+  opacity: 0;
+}
+
 label.required:after {
   content: "*";
   vertical-align: 0.5em;
   font-size: 0.75em;
   font-weight: normal;
 }
-select.filterSelect{
-  display: block;
+
+label.required {
+  margin-top: -0.5px;
+}
+
+select.filterSelect {
+    display: block;
+}
+/* Overwrite container from application.html.erb for background image only*/
+body > .background-layer > .container {
+    width: 100%;
+    max-width: 100% !important;
+    padding: 0 0;
+}
+
+#teamProfile {
+    background-size: cover;
+    background-position: bottom center;
+    width: 100%;
+    background-image: url(https://owncloud.hpi.de/index.php/s/fERWNGqZbm6ud1p/download);
+    background-repeat: no-repeat;
+    min-height: 50vh;
+    padding-bottom: 300px;
+}
+
+#teamProfileImage {
+    width: 200px;
+    height: 200px;
+}
+
+#teamDescription {
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+h1, h2 {
+    color: #1CA9E5;
+    font-weight: 500;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+.genericButton:focus {
+    opacity: 0.8;
+    color: black;
+}
+
+.genericButton, .genericButton:hover, .genericButton:focus {
+    outline: none !important;
+}
+
+.genericButton, a.genericButton:hover, a.genericButton:focus {
+    border-radius: 100px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+a.genericButton:hover {
+    opacity: 0.8;
+    color: black;
+}
+
+#membershipButton {
+    font-size: 24px;
+    border: 1px solid #FFFFFF;
+    background: transparent;
+}
+
+.blueActionButton {
+    background: #1CA9E5;
+}
+
+.whiteActionButton, .whiteActionButton:focus {
+    padding: 10px 25px;
+    border: 1px solid darkgrey;
+    background-color: transparent;
+    color: black;
+}
+
+.blueHover:hover {
+    color: #1CA9E5 !important;
+}
+
+button.blueActionButton, input[type=submit].blueActionButton {
+    width: 100%;
+}
+
+#kindOfSports {
+    background-color: #F3F9FF;
+    padding: 20px 0;
+    font-weight: 500;
+}
+
+#participantsSection {
+    margin-top: 50px;
+}
+
+.participant {
+    background-color: #F3F9FF;
+    border: 10px solid #FFFFFF;
+    border-radius: 5px;
+    height: 80px;
+}
+
+[type="checkbox"].filled-in + label:after {
+    border-radius: 25px;
+}
+
+[type="checkbox"].filled-in:not(:checked) + label:after {
+    border-width: 1px;
+}
+
+.participant img {
+    width: 35px;
+    height: 35px;
+}
+
+.divider {
+    height: 2px;
+    margin: 30px 0;
+}
+
+/* Smartphones */
+@media only screen and (max-width: 600px) {
+
+    .genericButton {
+        font-size: 20px;
+    }
+
+    .whiteActionButton {
+        font-size: 14px;
+    }
+
+    input[type="submit"].blueActionButton, a.blueActionButton, button.blueActionButton {
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    #teamProfile {
+        background: none;
+        padding-bottom: 0;
+        min-height: 0;
+    }
+
+    .white-text {
+        color: #1CA9E5 !important;
+    }
+
+    #membershipButton {
+        border-color: #1CA9E5;
+        color: #1CA9E5;
+        box-shadow: none;
+    }
+
+    .participant img {
+        width: 45px;
+        height: 45px;
+    }
+
+}
+
+/* Tablet */
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+    .myRow > .col {
+        margin-top: 20px;
+    }
+
+    .participant img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .avatarCol {
+        margin-right: -10px;
+    }
+}
+
+/* for background only, 1200px is width of all bg-images */
+@media only screen and (min-width: 601px) and (max-width: 1199px) {
+
+    #teamProfile {
+        padding-bottom: calc(190 / 875 * 100%);
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1400px) {
+    button.blueActionButton, input[type=submit].blueActionButton {
+        font-size: 12px;
+    }
 }

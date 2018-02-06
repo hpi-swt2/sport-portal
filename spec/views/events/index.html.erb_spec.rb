@@ -22,8 +22,6 @@ RSpec.describe "events/index", type: :view do
      render
    end
 
-
-
   it "doesn't render the new button when not signed in" do
     render
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.new'))
@@ -51,7 +49,7 @@ RSpec.describe "events/index", type: :view do
     expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
   end
 
-  it "renders rhe new button when signed in" do
+  it "renders the new button when signed in" do
     sign_in @user
     @events[1].owner = @user
     render

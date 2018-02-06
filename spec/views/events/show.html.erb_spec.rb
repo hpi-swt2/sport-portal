@@ -28,12 +28,6 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_content(@event.max_teams)
     end
 
-    it "renders a game mode" do
-      render
-      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
-    end
-
-
     #not signed in user
     it "doesn't render the new button when not signed in" do
       render
@@ -73,19 +67,9 @@ RSpec.describe "events/show", type: :view do
       render
       expect(rendered).to_not have_selector(:link_or_button, t('helpers.links.destroy'))
     end
-
-    it 'has a ranking button' do
-      render
-      expect(rendered).to have_content(t('events.show.to_ranking'))
-    end
   end
 
   shared_examples "a time-restricted multiplayer event" do
-    it "renders a game mode field" do
-      render
-      expect(rendered).to have_content(Event.human_attribute_name :game_mode)
-    end
-
     it "renders a start date" do
       render
       expect(rendered).to have_content(Event.human_attribute_name :startdate)
@@ -117,21 +101,35 @@ RSpec.describe "events/show", type: :view do
       @event.owner = @user
     end
 
+    it "renders a game mode" do
+      render
+      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
+    end
+
+    it "renders a game mode field" do
+      render
+      expect(rendered).to have_content(Event.human_attribute_name :game_mode)
+    end
 
     it "renders a schedule button" do
       render
       expect(rendered).to have_selector(:link_or_button, t('events.show.to_schedule'))
     end
 
-    it "renders an overview button" do
+    it "doesn't have an overview button" do
       render
-      expect(rendered).to have_selector(:link_or_button, t('events.show.to_overview'))
+      expect(rendered).not_to have_selector(:link_or_button, t('events.show.to_overview'))
     end
 
     it "renders the gameday duration" do
       render
       expect(rendered).to have_content Event.human_attribute_name :gameday_duration
       expect(rendered).to have_content @event.gameday_duration
+    end
+
+    it 'has a ranking button' do
+      render
+      expect(rendered).to have_content(t('events.show.to_ranking'))
     end
 
     include_examples "an event"
@@ -156,6 +154,11 @@ RSpec.describe "events/show", type: :view do
       expect(rendered).to have_selector(:link_or_button, t('events.show.to_overview'))
     end
 
+    it "doesn't have a ranking button" do
+      render
+      expect(rendered).to_not have_content(t('events.show.to_ranking'))
+    end
+
     include_examples "an event"
     include_examples "a time-restricted multiplayer event"
   end
@@ -165,6 +168,11 @@ RSpec.describe "events/show", type: :view do
       @event = assign(:event, FactoryBot.create(:rankinglist))
       @event.editors << @user
       @event.owner = @user
+    end
+
+    it "renders a game mode" do
+      render
+      expect(rendered).to have_content(@event.human_game_mode) #base class event does not have a game mode
     end
 
     it "renders a metric field" do
@@ -195,6 +203,11 @@ RSpec.describe "events/show", type: :view do
     it "doesn't render an overview button" do
       render
       expect(rendered).to_not have_selector(:link_or_button, t('events.show.to_overview'))
+    end
+
+    it "doesn't have a ranking button" do
+      render
+      expect(rendered).to_not have_content(t('events.show.to_ranking'))
     end
 
     include_examples "an event"

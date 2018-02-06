@@ -2,24 +2,26 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  first_name             :string
-#  last_name              :string
-#  provider               :string
-#  uid                    :string
-#  admin                  :boolean          default(FALSE)
-#  birthday               :date
-#  telephone_number       :string
-#  telegram_username      :string
-#  favourite_sports       :string
-#  avatar_data            :text
+#  id                          :integer          not null, primary key
+#  email                       :string           default(""), not null
+#  encrypted_password          :string           default(""), not null
+#  reset_password_token        :string
+#  reset_password_sent_at      :datetime
+#  remember_created_at         :datetime
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  first_name                  :string
+#  last_name                   :string
+#  admin                       :boolean          default(FALSE)
+#  birthday                    :date
+#  telephone_number            :string
+#  telegram_username           :string
+#  favourite_sports            :string
+#  provider                    :string
+#  uid                         :string
+#  avatar_data                 :text
+#  team_notifications_enabled  :boolean          default(TRUE)
+#  event_notifications_enabled :boolean          default(TRUE)
 #
 
 require 'rails_helper'
@@ -72,6 +74,12 @@ RSpec.describe User, type: :model do
     user1 = FactoryBot.create(:user)
     user2 = FactoryBot.build(:user)
     expect(user2).to be_valid
+  end
+
+  it 'has notifications enabled' do
+    user = FactoryBot.create(:user)
+    expect(user.has_event_notifications_enabled?).to be(true)
+    expect(user.has_team_notifications_enabled?).to be(true)
   end
 
   describe 'self#from_omniauth' do
@@ -210,6 +218,16 @@ RSpec.describe User, type: :model do
     event2.add_team(team)
     user.reload
     expect(user.all_events.count).to eq(2)
+  end
+
+  it "has event notifications enabled by default" do
+    user = FactoryBot.build(:user)
+    expect(user.event_notifications_enabled?).to eq(true)
+  end
+
+  it "has team notifications enabled by default" do
+    user = FactoryBot.build(:user)
+    expect(user.team_notifications_enabled?).to eq(true)
   end
 
   it 'should produce pretty to-fields for emails' do
