@@ -97,6 +97,7 @@ RSpec.describe EventsController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       event = Event.create! valid_event_attributes
+      event.startdate = Date.yesterday
       get :show, params: { id: event.to_param }, session: valid_session
       expect(response).to be_success
     end

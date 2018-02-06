@@ -56,6 +56,7 @@ class Ability
       can [:create, :read, :update, :destroy], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
+      can :play_matches, Event do |event| event.startdate <= Date.current end
       can :ranking, Event
       can [:schedule, :team_join], Event
       can_update_gameday(user)
@@ -71,10 +72,6 @@ class Ability
       if user.admin?
         can :manage, :all
       end
-    end
-
-    def play_matches(event)
-      event.startdate <= Date.current
     end
 
     def can_join_event(user)

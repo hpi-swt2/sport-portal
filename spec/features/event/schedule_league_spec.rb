@@ -6,7 +6,7 @@ describe "schedule page", type: :feature do
     @league = FactoryBot.create :league, :single_player
     @user = FactoryBot.create :user
     @another_user = FactoryBot.create :user
-
+    @league.startdate = Date.yesterday
     @league.add_participant(@user)
     @league.add_participant(@another_user)
   end
