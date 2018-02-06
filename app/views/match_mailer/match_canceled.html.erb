@@ -11,5 +11,5 @@
   <p><%= t('match_mailer.place', place: @match.place) %>) %></p>
 <% end %>
 <p><%= t('.have_fun') %></p>
-<p><%= t('match_mailer.apply_changes', match_link: link_to(t('match_mailer.here'), match_url(@match))) %></p>
+<p><%= t('match_mailer.apply_changes_html', match_link: link_to(t('match_mailer.here'), match_url(@match))) %></p>
 <p><%= t('mailer.closing', appname: t('appname')) %></p>
