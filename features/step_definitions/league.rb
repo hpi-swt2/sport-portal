@@ -58,5 +58,5 @@ And(/^user (.*) who is not organizer should not be able to do so$/) do |userName
   first(:css, "#gameday_starttime").set '10.05.2013'
   first(:css, "#gameday_endtime").set '15.05.2013'
 
-  expect(page).to_not have_selector(:link_or_button, t('events.schedule.edit_date'))
+  expect(page).to_not have_selector(:link_or_button, I18n.t('events.schedule.edit_date'))
 end
