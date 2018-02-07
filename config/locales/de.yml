@@ -222,6 +222,7 @@ de:
         birthday: "Geburtstag"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+        contact_information: "Kontaktinformationen"
         id: "ID"
         created_at: "Erstellt am"
     validations:
@@ -232,6 +233,7 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
+      contact_information_placeholder: "Facebook-Profil, Homepage, LinkedIn-Account, ..."
 
     match:
       game_results: "Ergebnis(se)"
