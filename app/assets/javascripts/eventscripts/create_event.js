@@ -23,11 +23,11 @@ $( document ).on('turbolinks:load', function() {
 
     $("#event_enddate").on("change", adaptDuration);
 
-    $("#event_gameday_duration").on("change",durationChanged);
+    $("#league_gameday_duration").on("change",durationChanged);
 
-    $("#event_game_mode").on("change",callChanged);
+    $("#league_game_mode").on("change",callChanged);
 
-    $("#event_max_teams").on("change",callChanged);
+    $("#league_max_teams").on("change",callChanged);
 
     function callChanged()
     {
@@ -36,7 +36,6 @@ $( document ).on('turbolinks:load', function() {
     }
     function durationChanged()
     {
-
         var start = $("#event_startdate").val();
         var end = $("#event_enddate").val();
         var system = $("#league_game_mode").val();
@@ -51,9 +50,8 @@ $( document ).on('turbolinks:load', function() {
         }
         changeDur();
     }
-    function adaptDuration() {
-
-
+    function adaptDuration()
+    {
         var start = $("#event_startdate").val();
         var end = $("#event_enddate").val();
         var system = $("#league_game_mode").val();
@@ -95,6 +93,9 @@ $( document ).on('turbolinks:load', function() {
         var dd = result.getDate();
         var mm = result.getMonth()+1;
         var y = result.getFullYear();
+        if(mm < 10){
+            mm = "0"+ mm;
+        }
         var formattedDate = y + '-' + mm + '-' + dd;
         return formattedDate;
     }
@@ -146,9 +147,6 @@ $( document ).on('turbolinks:load', function() {
            var y = startdate.getFullYear();
            if(mm < 10){
                mm = "0"+ mm;
-           }
-           if(dd < 10){
-               dd = "0" + dd;
            }
            var formattedDate = dd + '.' + mm + '.' + y;
            $("#event_enddate").val(formattedDate);

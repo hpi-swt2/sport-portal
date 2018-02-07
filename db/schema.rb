@@ -159,12 +159,12 @@ ActiveRecord::Schema.define(version: 20180204095739) do
     t.string "provider"
     t.string "uid"
     t.text "avatar_data"
+    t.boolean "team_notifications_enabled", default: true
+    t.boolean "event_notifications_enabled", default: true
     t.string "confirmation_token"
     t.string "unconfirmed_email"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.boolean "team_notifications_enabled", default: true
-    t.boolean "event_notifications_enabled", default: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
