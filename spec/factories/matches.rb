@@ -57,8 +57,4 @@ FactoryBot.define do
     scores_proposed_by nil
   end
 
-  trait :not_confirmed do
-    scores_proposed_by { FactoryBot.create(:user) }
-  end
-
 end

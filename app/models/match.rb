@@ -26,7 +26,7 @@ class Match < ApplicationRecord
   belongs_to :event
   has_many :game_results, dependent: :destroy
   belongs_to :gameday, optional: true
-  belongs_to :scores_proposed_by, class_name: 'User', optional: true
+  belongs_to :scores_proposed_by, class_name: 'Team', optional: true
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
@@ -210,12 +210,6 @@ class Match < ApplicationRecord
     has_scores? && has_points?
   end
 
-  def users_in_same_team?(users)
-    counts = TeamUser.unscoped.where('user_id IN (?) AND team_id IN (?)', users, self.teams)
-                 .group(:team_id).count
-    counts.size == 1
-  end
-
   def apply_elo
     home_participant = Participant.where("team_id = ? AND event_id = ?", team_home_id, event).first
     away_participant = Participant.where("team_id = ? AND event_id = ?", team_away_id, event).first
@@ -239,8 +233,12 @@ class Match < ApplicationRecord
     [team_home, team_away]
   end
 
+  def propose_scores(user)
+    self.scores_proposed_by = user.teams.where('team_id IN (?)', self.teams).first
+  end
+
   def can_confirm_scores?(user)
-    !(scores_confirmed? || users_in_same_team?([user, scores_proposed_by]))
+    !(scores_confirmed? || user.teams.where('team_id IN (?)', self.teams).first == self.scores_proposed_by)
   end
 
   def scores_confirmed?

@@ -53,7 +53,7 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1/update_results
   def update_results
-    @match.scores_proposed_by = current_user
+    @match.propose_scores(current_user)
     if @match.update_with_point_recalculation(match_results_params)
       event = @match.event
       if event.is_a? Rankinglist
@@ -68,7 +68,7 @@ class MatchesController < ApplicationController
   def add_game_result
     result = GameResult.new
     @match.game_results << result
-    @match.scores_proposed_by = current_user
+    @match.propose_scores(current_user)
     result.save!
     flash.notice = I18n.t("view.match.added_game_result_notice")
     render :edit_results

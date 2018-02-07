@@ -261,7 +261,7 @@ RSpec.describe MatchesController, type: :controller do
         result = match.game_results.first
         expect(result.score_home).to eq(new_attributes["0"]["score_home"])
         expect(result.score_away).to eq(new_attributes["0"]["score_away"])
-        expect(match.scores_proposed_by).to eq(@user)
+        expect(match.scores_proposed_by).to eq(@user.teams.where('team_id IN (?)', match.teams).first)
       end
 
       it "redirects to the show match page" do
@@ -288,7 +288,7 @@ RSpec.describe MatchesController, type: :controller do
   end
 
   describe "GET #confirm_scores" do
-    let(:match) { FactoryBot.create(:match, :with_results, :not_confirmed) }
+    let(:match) { FactoryBot.create(:match, :with_results) }
 
     context "user can confirm" do
       before(:each) do

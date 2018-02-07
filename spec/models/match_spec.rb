@@ -218,7 +218,7 @@ RSpec.describe Match, type: :model do
   end
 
   describe '#confirm_scores' do
-    let(:scores_proposed_by) { FactoryBot.create(:user) }
+    let(:scores_proposed_by) { FactoryBot.create(:team) }
     let(:match) { FactoryBot.create(:match, scores_proposed_by: scores_proposed_by) }
 
     subject { -> { match.confirm_scores } }
@@ -227,9 +227,8 @@ RSpec.describe Match, type: :model do
   end
 
   describe '#can_confirm_scores?' do
-    let(:scores_proposed_by) { FactoryBot.create(:user) }
     let(:confirmer) { FactoryBot.create(:user) }
-    let(:match) { FactoryBot.create(:match, :with_results, scores_proposed_by: scores_proposed_by) }
+    let(:match) { FactoryBot.create(:match, :with_results) }
 
     subject { match.can_confirm_scores?(confirmer) }
 
@@ -239,9 +238,10 @@ RSpec.describe Match, type: :model do
       it { is_expected.to be_falsey }
     end
 
-    context 'scores_proposed_by is in team home' do
+    context 'scores_proposed_by is team home' do
       before(:each) do
-        match.team_home.members << scores_proposed_by
+        match.scores_proposed_by = match.team_home
+        match.save!
       end
 
       context 'confirmer is in team home' do
@@ -261,9 +261,10 @@ RSpec.describe Match, type: :model do
       end
     end
 
-    context 'scores_proposed_by is in team away' do
+    context 'scores_proposed_by is team away' do
       before(:each) do
-        match.team_away.members << scores_proposed_by
+        match.scores_proposed_by = match.team_away
+        match.save!
       end
 
       context 'confirmer is in team home' do
