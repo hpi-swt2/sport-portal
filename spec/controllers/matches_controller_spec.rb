@@ -21,6 +21,9 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: @team).attributes
   }
 
+  let(:admin) { FactoryBot.create(:admin) }
+
+
   before(:each) do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
@@ -201,16 +204,33 @@ RSpec.describe MatchesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested match" do
+      sign_in @admin
       match = Match.create! valid_attributes
       expect {
         delete :destroy, params: { id: match.to_param }
       }.to change(Match, :count).by(-1)
     end
 
+    it "destroys the requested match, but the event still exists" do
+      sign_in @admin
+      match = Match.create! valid_attributes
+      expect {
+        delete :destroy, params: { id: match.to_param }
+      }.not_to change(Event, :count)
+    end
+
     it "redirects to the event schedule page" do
+      sign_in @admin
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
       expect(response).to redirect_to(event_schedule_url(match.event))
+    end
+
+    it "shouldn't let a normal user delete a match" do
+      match = Match.create! valid_attributes
+      expect {
+        delete :destroy, params: { id: match.to_param }
+      }.not_to change(Match, :count)
     end
   end
 
