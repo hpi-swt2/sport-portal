@@ -23,20 +23,12 @@ RSpec.describe MatchMailer, type: :mailer do
       expect(mail.body.encoded).to match(match1.event.name)
     end
 
-    it 'assigns match team home name' do
-      expect(mail.body.encoded).to match(match1.team_home.name)
-    end
-
-    it 'assigns match team away name' do
-      expect(mail.body.encoded).to match(match1.team_away.name)
-    end
-
     it 'assigns match\'s place' do
       expect(mail.body.encoded).to match(match1.place)
     end
 
     it 'assigns event\'s startdate' do
-      expect(mail.body.encoded).to match(I18n.localize(match1.start_time))
+      expect(mail.body.encoded).to match(I18n.localize(match1.start_time.to_date))
     end
   end
   describe 'match scheduled' do
@@ -59,14 +51,6 @@ RSpec.describe MatchMailer, type: :mailer do
 
     it 'assigns event\'s name' do
       expect(mail.body.encoded).to match(match1.event.name)
-    end
-
-    it 'assigns match team home name' do
-      expect(mail.body.encoded).to match(match1.team_home.name)
-    end
-
-    it 'assigns match team away name' do
-      expect(mail.body.encoded).to match(match1.team_away.name)
     end
   end
   describe 'match date changed' do
@@ -91,16 +75,8 @@ RSpec.describe MatchMailer, type: :mailer do
       expect(mail.body.encoded).to match(match1.event.name)
     end
 
-    it 'assigns match team home name' do
-      expect(mail.body.encoded).to match(match1.team_home.name)
-    end
-
-    it 'assigns match team away name' do
-      expect(mail.body.encoded).to match(match1.team_away.name)
-    end
-
     it 'assigns event\'s startdate' do
-      expect(mail.body.encoded).to match(I18n.localize(match1.start_time))
+      expect(mail.body.encoded).to match(I18n.localize(match1.start_time.to_date))
     end
   end
   describe 'match canceled' do
@@ -124,14 +100,6 @@ RSpec.describe MatchMailer, type: :mailer do
     it 'assigns event\'s name' do
       expect(mail.body.encoded).to match(match1.event.name)
     end
-
-    it 'assigns match team home name' do
-      expect(mail.body.encoded).to match(match1.team_home.name)
-    end
-
-    it 'assigns match team away name' do
-      expect(mail.body.encoded).to match(match1.team_away.name)
-    end
   end
 
   it 'should not send mails to users with disabled event notification settings' do
@@ -140,5 +108,34 @@ RSpec.describe MatchMailer, type: :mailer do
     user.event_notifications_enabled = false
     mail = MatchMailer.send_mail(user, match, :match_canceled)
     expect { mail.deliver_now }.to_not change { ActionMailer::Base.deliveries.length }
+  end
+
+  it 'should assign opponent team to team_away when user is member of team_home' do
+    user = FactoryBot.create(:user)
+    match = FactoryBot.create(:match)
+    match.team_home = user.create_team_for_event
+    mail = MatchMailer.send_mail(user, match, :match_canceled)
+    mail.deliver_now
+
+    expect(mail.body.encoded).to match(match.team_away.name)
+  end
+
+  it 'should assign opponent team to team_home when user is member of team_away' do
+    user = FactoryBot.create(:user)
+    match = FactoryBot.create(:match)
+    match.team_away = user.create_team_for_event
+    mail = MatchMailer.send_mail(user, match, :match_canceled)
+    mail.deliver_now
+
+    expect(mail.body.encoded).to match(match.team_home.name)
+  end
+
+  it 'should assign opponent team to team_home when user is no member of both participating teams' do
+    user = FactoryBot.create(:user)
+    match = FactoryBot.create(:match)
+    mail = MatchMailer.send_mail(user, match, :match_canceled)
+    mail.deliver_now
+
+    expect(mail.body.encoded).to match(match.team_home.name)
   end
 end
