@@ -215,4 +215,71 @@ RSpec.describe Match, type: :model do
       match.save
     }.to change { ActionMailer::Base.deliveries.length }.by(0)
   end
+
+  describe '#confirm_scores' do
+    let(:scores_proposed_by) { FactoryBot.create(:user) }
+    let(:match) { FactoryBot.create(:match, scores_proposed_by: scores_proposed_by) }
+
+    subject { -> { match.confirm_scores } }
+
+    it { is_expected.to change { match.scores_proposed_by }.from(scores_proposed_by).to(nil) }
+  end
+
+  describe '#can_confirm_scores?' do
+    let(:scores_proposed_by) { FactoryBot.create(:user) }
+    let(:confirmer) { FactoryBot.create(:user) }
+    let(:match) { FactoryBot.create(:match, :with_results, scores_proposed_by: scores_proposed_by) }
+
+    subject { match.can_confirm_scores?(confirmer) }
+
+    context 'is already confirmed' do
+      let(:match) { FactoryBot.create(:match, :with_results, scores_proposed_by: nil) }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context 'scores_proposed_by is in team home' do
+      before(:each) do
+        match.team_home.members << scores_proposed_by
+      end
+
+      context 'confirmer is in team home' do
+        before(:each) do
+          match.team_home.members << confirmer
+        end
+
+        it { is_expected.to be_falsey }
+      end
+
+      context 'confirmer is in team away' do
+        before(:each) do
+          match.team_away.members << confirmer
+        end
+
+        it { is_expected.to be_truthy }
+      end
+    end
+
+    context 'scores_proposed_by is in team away' do
+      before(:each) do
+        match.team_away.members << scores_proposed_by
+      end
+
+      context 'confirmer is in team home' do
+        before(:each) do
+          match.team_home.members << confirmer
+        end
+
+        it { is_expected.to be_truthy }
+      end
+
+      context 'confirmer is in team away' do
+        before(:each) do
+          match.team_away.members << confirmer
+        end
+
+        it { is_expected.to be_falsey }
+      end
+    end
+  end
 end

@@ -22,20 +22,6 @@
               <%= builder.number_field :score_away, in: -2e9..2e9, step: 1, class: 'form-control' %>
             </div>
           </div>
-          <% unless builder.object.new_record? %>
-            <div class="form-group">
-              <div class="col-xs-offset-1">
-              <% if can? :confirm, builder.object %>
-                  <%= link_to t("view.match.confirm_game_result"), confirm_game_result_match_path(id: @match.id, result_id: builder.object.id), class: 'btn btn-default' %>
-              <% end %>
-                <% if builder.object.is_confirmed? %>
-                  <i class="fa fa-check"></i><%= t('view.match.game_results.confirmed') %>
-                  <% else %>
-                  <%= t('view.match.game_results.confirmed') %>
-              <% end %>
-              </div>
-            </div>
-          <% end %>
           <div class="form-group">
             <a href="#" class="remove col-xs-offset-1 btn btn-default"><%= t("view.match.remove_game_result") %></a>
             <%= builder.hidden_field :id %>
@@ -63,7 +49,17 @@
             class: 'btn btn-default',
         id: 'no_script_add_game_result' %>
       </noscript>
+      <% if can? :confirm_scores, @match %>
+        <%= link_to t("view.match.confirm_game_result"), confirm_scores_match_path(id: @match.id), class: 'btn btn-default' %>
+      <% end %>
+      <% if @match.scores_confirmed? %>
+        <i class="fa fa-check"></i><%= t('view.match.confirmed') %>
+      <% else %>
+        <i class="fa fa-cross"></i><%= t('view.match.not_confirmed') %>
+      <% end %>
     </div>
+
+
   </div>
 
   <% if @match.event.is_a? Rankinglist %>

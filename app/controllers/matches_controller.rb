@@ -1,6 +1,6 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :confirm_game_result]
-  authorize_resource only: [:edit]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :confirm_scores]
+  authorize_resource only: [:edit, :confirm_scores]
 
   # GET /matches/1
   def show
@@ -53,6 +53,7 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1/update_results
   def update_results
+    @match.scores_proposed_by = current_user
     if @match.update_with_point_recalculation(match_results_params)
       event = @match.event
       if event.is_a? Rankinglist
@@ -65,8 +66,9 @@ class MatchesController < ApplicationController
   end
 
   def add_game_result
-    result = GameResult.new(scores_proposed_by: current_user)
+    result = GameResult.new
     @match.game_results << result
+    @match.scores_proposed_by = current_user
     result.save!
     flash.notice = I18n.t("view.match.added_game_result_notice")
     render :edit_results
@@ -86,11 +88,10 @@ class MatchesController < ApplicationController
     redirect_to event_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
 
-  def confirm_game_result
-    @result = GameResult.find_by(id: params[:result_id], match_id: @match.id)
-    authorize! :confirm, @result
-    @result.confirm_scores
-    @result.save!
+  def confirm_scores
+    authorize! :confirm_scores, @match
+    @match.confirm_scores
+    @match.save!
     redirect_back(fallback_location: edit_results_match_path(@match))
   end
 
@@ -116,8 +117,6 @@ class MatchesController < ApplicationController
     end
 
     def match_results_params
-      results = params.require(:match).permit(game_results_attributes: [:id, :_destroy, :score_home, :score_away])
-      results[:game_results_attributes].each { |_, value| value[:scores_proposed_by] = current_user }
-      results
+      params.require(:match).permit(game_results_attributes: [:id, :_destroy, :score_home, :score_away])
     end
 end

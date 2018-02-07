@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :teams
   resources :matches, except: [:index] do
     member do
-      get 'game_results/:result_id/confirm', to: 'matches#confirm_game_result', as: :confirm_game_result
+      get '/confirm_scores', to: 'matches#confirm_scores', as: :confirm_scores
       patch :update_points
       put :update_points
       get :add_game_result

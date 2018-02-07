@@ -37,6 +37,7 @@ Given /^all relevant routes$/ do
 end
 
 Then(/^there should be a back button on all relevant pages$/) do
+  puts page 
   @relevant_paths.each do |path|
     begin
       visit path

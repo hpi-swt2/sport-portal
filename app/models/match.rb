@@ -25,6 +25,7 @@ class Match < ApplicationRecord
   belongs_to :event
   has_many :game_results, dependent: :destroy
   belongs_to :gameday, optional: true
+  belongs_to :scores_proposed_by, class_name: 'User', optional: true
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
@@ -234,5 +235,17 @@ class Match < ApplicationRecord
 
   def teams
     [team_home, team_away]
+  end
+
+  def can_confirm_scores?(user)
+    !(scores_confirmed? || users_in_same_team([user, scores_proposed_by]))
+  end
+
+  def scores_confirmed?
+    scores_proposed_by.blank?
+  end
+
+  def confirm_scores
+    self.scores_proposed_by = nil
   end
 end

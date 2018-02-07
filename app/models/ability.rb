@@ -76,8 +76,7 @@ class Ability
         can :manage, :all
       end
 
-      # Game Results
-      can_confirm_game_result(user)
+      can_confirm_scores(user)
     end
 
     def can_modify_match(user)
@@ -172,9 +171,9 @@ class Ability
       not_exceeded
     end
 
-    def can_confirm_game_result(user)
-      can :confirm, GameResult do |game_result|
-        game_result.can_confirm_scores?(user)
+    def can_confirm_scores(user)
+      can :confirm_scores, Match do |match|
+        match.can_confirm_scores?(user)
       end
     end
 end

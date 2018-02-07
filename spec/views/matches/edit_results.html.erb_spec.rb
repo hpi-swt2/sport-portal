@@ -36,28 +36,28 @@ RSpec.describe "matches/edit_results", type: :view do
 
   context 'can confirm result' do
     before(:each) do
-      @ability.can :confirm, GameResult
+      @ability.can :confirm_scores, Match
     end
 
     it 'should have a confirm button' do
       render
-      expect(rendered).to have_xpath("//a[@href='#{confirm_game_result_match_path(match, match.game_results.first)}']")
+      expect(rendered).to have_xpath("//a[@href='#{confirm_scores_match_path(match)}']")
     end
   end
 
   context 'cannot confirm result' do
     before(:each) do
-      @ability.cannot :confirm, GameResult
+      @ability.cannot :confirm_scores, Match
     end
 
     it 'should not have a confirm button' do
-      expect(rendered).not_to have_xpath("//a[@href='#{confirm_game_result_match_path(match, match.game_results.first)}']")
+      expect(rendered).not_to have_xpath("//a[@href='#{confirm_scores_match_path(match)}']")
     end
   end
 
   context 'game result is not confirmed' do
     before(:each) do
-      allow_any_instance_of(GameResult).to receive(:is_confirmed?).and_return(false)
+      allow_any_instance_of(Match).to receive(:scores_confirmed?).and_return(false)
     end
 
     it 'should not have a confirmed check' do
@@ -68,12 +68,12 @@ RSpec.describe "matches/edit_results", type: :view do
 
   context 'game result is confirmed' do
     before(:each) do
-      allow_any_instance_of(GameResult).to receive(:is_confirmed?).and_return(true)
+      allow_any_instance_of(Match).to receive(:scores_confirmed?).and_return(true)
     end
 
     it 'should have a confirmed check' do
       render
-      expect(rendered).to have_xpath("//i[@class='fa fa-check']", count:  match.game_results.count)
+      expect(rendered).to have_xpath("//i[@class='fa fa-check']")
     end
   end
 end

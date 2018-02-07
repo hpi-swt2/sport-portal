@@ -65,9 +65,7 @@ ActiveRecord::Schema.define(version: 20180204095739) do
     t.integer "match_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "scores_proposed_by_id"
     t.index ["match_id"], name: "index_game_results_on_match_id"
-    t.index ["scores_proposed_by_id"], name: "index_game_results_on_scores_proposed_by_id"
   end
 
   create_table "gamedays", force: :cascade do |t|
@@ -102,9 +100,11 @@ ActiveRecord::Schema.define(version: 20180204095739) do
     t.string "team_away_type", default: "Team"
     t.integer "index"
     t.integer "gameday_id"
+    t.integer "scores_proposed_by_id"
     t.datetime "start_time"
     t.index ["event_id"], name: "index_matches_on_event_id"
     t.index ["gameday_id"], name: "index_matches_on_gameday_id"
+    t.index ["scores_proposed_by_id"], name: "index_matches_on_scores_proposed_by_id"
   end
 
   create_table "organizers", force: :cascade do |t|

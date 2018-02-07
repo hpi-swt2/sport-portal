@@ -261,7 +261,7 @@ RSpec.describe MatchesController, type: :controller do
         result = match.game_results.first
         expect(result.score_home).to eq(new_attributes["0"]["score_home"])
         expect(result.score_away).to eq(new_attributes["0"]["score_away"])
-        expect(result.scores_proposed_by).to eq(@user)
+        expect(match.scores_proposed_by).to eq(@user)
       end
 
       it "redirects to the show match page" do
@@ -287,41 +287,41 @@ RSpec.describe MatchesController, type: :controller do
     end
   end
 
-  describe "POST #confirm_game_result" do
-    let(:game_result) { FactoryBot.create(:game_result, :not_confirmed) }
+  describe "GET #confirm_scores" do
+    let(:match) { FactoryBot.create(:match, :with_results, :not_confirmed) }
 
     context "user can confirm" do
       before(:each) do
-        allow_any_instance_of(GameResult).to receive(:can_confirm_scores?).and_return(true)
+        allow_any_instance_of(Match).to receive(:can_confirm_scores?).and_return(true)
       end
-gi
-      it "should confirm the game result" do
+
+      it "should confirm the scores" do
         expect {
-          post :confirm_game_result, params: { id: game_result.match.id, result_id: game_result.id }
-          game_result.reload
-        }.to change { game_result.is_confirmed? }.from(false).to(true)
+          post :confirm_scores, params: { id: match.to_param }
+          match.reload
+        }.to change { match.scores_confirmed? }.from(false).to(true)
       end
 
       it "redirects to the edit results page" do
-        post :confirm_game_result, params: { id: game_result.match.id, result_id: game_result.id }
-        expect(response).to redirect_to edit_results_match_path(game_result.match)
+        post :confirm_scores, params: { id: match.to_param  }
+        expect(response).to redirect_to edit_results_match_path(match)
       end
     end
 
     context "user cannot confirm" do
       before(:each) do
-        allow_any_instance_of(GameResult).to receive(:can_confirm_scores?).and_return(false)
+        allow_any_instance_of(Match).to receive(:can_confirm_scores?).and_return(false)
       end
 
       it "should not confirm the game result" do
         expect {
-          post :confirm_game_result, params: { id: game_result.match.id, result_id: game_result.id }
-          game_result.reload
-        }.not_to change { game_result.is_confirmed? }
+          post :confirm_scores, params: { id: match.to_param }
+          match.reload
+        }.not_to change { match.scores_confirmed? }
       end
 
       it "redirects to the edit results page" do
-        post :confirm_game_result, params: { id: game_result.match.id, result_id: game_result.id }
+        post :confirm_scores, params: { id: match.to_param }
         expect(response).to be_forbidden
       end
     end
