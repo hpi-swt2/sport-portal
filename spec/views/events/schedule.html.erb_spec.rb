@@ -27,24 +27,28 @@ RSpec.describe 'events/schedule', type: :view do
       expect(rendered).to have_selector("input[value='31.12.2017']")
     end
 
-    it 'has edit button for gameday dates for signed in users' do
-      @user = FactoryBot.create :user
-      @league.organizers << Organizer.new(user: @user, event: @league)
-      sign_in @user
-      render
-      expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
-    end
+    describe 'authorization for edit date button' do
+      before(:each) do
+        @user = FactoryBot.create(:user)
+        sign_in @user
+      end
 
-    it 'does not have edit button for gameday dates for signed out users' do
-      render
-      expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
-    end
-
-    it 'does not have edit button for gameday dates for users wihtout rights' do
-      @user = FactoryBot.create :user
-      sign_in @user
-      render
-      expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
+      it 'has edit button for gameday dates for signed in users' do
+        @league.organizers << Organizer.new(user: @user, event: @league)
+        render
+        expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
+      end
+  
+      it 'does not have edit button for gameday dates for signed out users' do
+        sign_out @user
+        render
+        expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
+      end
+  
+      it 'does not have edit button for gameday dates for users wihtout rights' do
+        render
+        expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
+      end
     end
 
     it 'has show button for matches' do
