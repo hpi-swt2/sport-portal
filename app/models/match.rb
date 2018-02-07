@@ -33,7 +33,7 @@ class Match < ApplicationRecord
   after_destroy :send_mails_when_canceled
   after_update :send_mails_when_date_changed, if: :saved_change_to_start_time?
 
-  validates :start_time, presence: true, unless: -> { event.is_a? Rankinglist }
+  validates :start_time, presence: true, unless: -> { event.type == 'RankingList' }
 
   def send_mails_when_date_changed
     players = self.all_players
