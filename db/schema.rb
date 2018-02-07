@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20180204095739) do
     t.integer "points_for_win", default: 3
     t.integer "points_for_draw", default: 1
     t.integer "points_for_lose", default: 0
-    t.text "image_data"
     t.boolean "has_place_3_match", default: true
+    t.text "image_data"
     t.integer "maximum_elo_change"
     t.index ["game_mode"], name: "index_events_on_game_mode"
     t.index ["owner_id"], name: "index_events_on_owner_id"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20180204095739) do
     t.datetime "confirmation_sent_at"
     t.boolean "team_notifications_enabled", default: true
     t.boolean "event_notifications_enabled", default: true
+    t.string "contact_information"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
