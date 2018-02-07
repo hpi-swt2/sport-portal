@@ -87,7 +87,7 @@ class Ability
     end
 
     def can_update_gameday(user)
-      can :update, Gameday do |gameday|
+      can :update_gameday, Gameday, Gameday do |gameday|
         not (gameday.event.organizers & user.organizers).empty?
       end
     end
