@@ -2,13 +2,12 @@
 #
 # Table name: game_results
 #
-#  id                    :integer          not null, primary key
-#  score_home            :integer
-#  score_away            :integer
-#  match_id              :integer
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  scores_proposed_by_id :integer
+#  id         :integer          not null, primary key
+#  score_home :integer
+#  score_away :integer
+#  match_id   :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 class GameResult < ApplicationRecord
