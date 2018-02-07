@@ -4,9 +4,6 @@ FactoryBot.define do
     initial_value 1.3
     maximum_elo_change 32
     player_type Event.player_types[:single]
-    deadline nil
-    startdate nil
-    enddate Date.current + 2
   end
 
   trait :with_teams do
