@@ -33,6 +33,8 @@ class Match < ApplicationRecord
   after_destroy :send_mails_when_canceled
   after_update :send_mails_when_date_changed, if: :saved_change_to_start_time?
 
+  validates :start_time, presence: true, unless: -> { event.is_a? Rankinglist }
+
   def send_mails_when_date_changed
     players = self.all_players
     players.each do |user|
@@ -62,7 +64,7 @@ class Match < ApplicationRecord
   before_create :set_default_start_time
 
   def set_default_start_time
-    self.start_time = event.startdate.to_datetime if self.start_time.blank?
+    self.start_time = event.startdate&.to_datetime if self.start_time.blank?
   end
 
   @@has_winner_strategy = { "most_sets" => lambda { |match| match.wins_home != match.wins_away } }
