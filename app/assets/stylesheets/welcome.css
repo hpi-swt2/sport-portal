@@ -32,6 +32,7 @@ body>.background-layer>.container {
     min-height: calc(796 / 1200 * 100vw);
     padding-bottom: calc(160 / 796 * 100%);
     margin-bottom: calc(-160 / 796 * 100%);
+    padding-top: 8%;
     z-index: 5;
 }
 
@@ -183,10 +184,6 @@ ul.gameModeList > li {
 /* Desktop | Laptop */
 @media only screen and (min-width : 1300px) {
 
-    .section.darkblue-soccer {
-        padding-top: 13%;
-    }
-
     .sport-image {
         width: 85px;
         height: 85px;
@@ -199,14 +196,14 @@ ul.gameModeList > li {
     #register-row {
         margin-top: 50px;
     }
+
+    #lead-description {
+        font-size: 1.4rem;
+    }
 }
 
 /* Tablet */
 @media only screen and (min-width : 600px) and (max-width: 1300px) {
-
-    .section.darkblue-soccer {
-        padding-top: 8%;
-    }
 
     .sport-image {
         width: 50px;

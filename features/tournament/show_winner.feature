@@ -4,7 +4,9 @@ Feature: Show Tournament winners
   In order to let everyone know that my team is awesome
 
   Scenario: a small Tournament gets finished
+    Given a logged in admin
     Given a tournament t with 4 teams
+
     And the Spielplan page for t is visited
     And the results for match Halbfinale 1 (3 : 4) got inserted
     And the results for match Halbfinale 2 (7 : 6) got inserted
