@@ -8,30 +8,30 @@
       <noscript>
         <%= t("view.match.noscript.add_results_notice.edit_match") %>
       </noscript>
-      <%= f.nested_fields_for :game_results do |builder| %>
+      <%= f.nested_fields_for :game_results do |f| %>
         <div class="result">
           <div class="form-group">
-            <%= builder.label :score_home, t('view.match.game_result.points')+ ' ' + @match.team_home.name, class: 'control-label col-xs-2' %>
+            <%= f.label :score_home, t('view.match.game_result.points') + ' ' + @match.team_home.name, class: 'control-label col-xs-2' %>
             <div class="col-xs-2">
-              <%= builder.number_field :score_home, in: -2e9..2e9, step: 1, class: 'form-control', required: :true %>
+              <%= f.number_field :score_home, in: -2e9..2e9, step: 1, class: 'form-control', required: :true %>
             </div>
           </div>
           <div class="form-group">
-            <%= builder.label :score_away, t('view.match.game_result.points')+ ' ' + @match.team_away.name, class: 'control-label col-xs-2',required: :true %>
+            <%= f.label :score_away, t('view.match.game_result.points') + ' ' + @match.team_away.name, class: 'control-label col-xs-2',required: :true %>
             <div class="col-xs-2">
-              <%= builder.number_field :score_away, in: -2e9..2e9, step: 1, class: 'form-control' %>
+              <%= f.number_field :score_away, in: -2e9..2e9, step: 1, class: 'form-control' %>
             </div>
           </div>
           <div class="form-group">
             <a href="#" class="remove col-xs-offset-1 btn btn-default"><%= t("view.match.remove_game_result") %></a>
-            <%= builder.hidden_field :id %>
-            <%= builder.hidden_field :_destroy %>
+            <%= f.hidden_field :id %>
+            <%= f.hidden_field :_destroy %>
             <noscript>
-              <% if !builder.object.id.nil? %>
+              <% if !f.object.id.nil? %>
                 <br/>
                 <%= link_to(
                         t("view.match.noscript.button_prefix") + t("view.match.remove_game_result"),
-                        remove_game_result_match_path(id: @match.id, result_id: builder.object.id),
+                        remove_game_result_match_path(id: @match.id, result_id: f.object.id),
                         class: 'col-xs-offset-1 btn btn-default') %>
               <% end %>
             </noscript>
