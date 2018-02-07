@@ -30,13 +30,6 @@ RSpec.describe MatchesController, type: :controller do
     sign_in @user
   end
 
-  after(:each) do
-    @team.destroy
-    @user.destroy
-    @other_user.destroy
-    @admin.destroy
-  end
-
   describe "GET #show" do
     it "returns a success response" do
       match = Match.create! valid_attributes
@@ -301,7 +294,7 @@ RSpec.describe MatchesController, type: :controller do
       before(:each) do
         allow_any_instance_of(GameResult).to receive(:can_confirm_scores?).and_return(true)
       end
-
+gi
       it "should confirm the game result" do
         expect {
           post :confirm_game_result, params: { id: game_result.match.id, result_id: game_result.id }
