@@ -18,8 +18,8 @@
 <table class="table">
   <thead>
     <tr>
-      <th><%= @match.team_home.name %></th>
-      <th><%= @match.team_away.name %></th>
+      <th><%= @match.team_home.name if @match.team_home %></th>
+      <th><%= @match.team_away.name if @match.team_away%></th>
     </tr>
   </thead>
   <tbody>
