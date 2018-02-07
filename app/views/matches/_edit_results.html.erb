@@ -24,13 +24,15 @@
           </div>
           <% unless builder.object.new_record? %>
             <div class="form-group">
-              <div class="col-xs-2">
+              <div class="col-xs-offset-1">
               <% if can? :confirm, builder.object %>
                   <%= link_to t("view.match.confirm_game_result"), confirm_game_result_match_path(id: @match.id, result_id: builder.object.id), class: 'btn btn-default' %>
               <% end %>
-                <i class="fa fa-camera-retro"></i>
                 <% if builder.object.is_confirmed? %>
-                  <i class="fa fa-camera-retro"></i>
+                  <i class="fa fa-check"></i><%= t('view.match.game_results.confirmed') %>
+                  <% else %>
+                  <i class="fa fa-check"></i><%= t('view.match.game_results.confirmed') %>
+
               <% end %>
               </div>
             </div>

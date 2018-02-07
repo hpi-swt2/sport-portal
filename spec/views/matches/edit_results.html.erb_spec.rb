@@ -55,15 +55,25 @@ RSpec.describe "matches/edit_results", type: :view do
     end
   end
 
-  context 'game result is confirmed' do
-    it 'should have one check mark' do
-      expect(rendered).to have_xpath("//i[@class='fa fa-camera-retro']", count: match.game_results.count)
+  context 'game result is not confirmed' do
+    before(:each) do
+      allow_any_instance_of(GameResult).to receive(:is_confirmed?).and_return(false)
+    end
+
+    it 'should not have a confirmed check' do
+      render
+      expect(rendered).not_to have_xpath("//i[@class='fa fa-check']")
     end
   end
 
   context 'game result is confirmed' do
-    it 'should have two check marks' do
-      expect(rendered).to have_xpath("//i[@class='fa fa-camera-retro']", count: 2 * match.game_results.count)
+    before(:each) do
+      allow_any_instance_of(GameResult).to receive(:is_confirmed?).and_return(true)
+    end
+
+    it 'should have a confirmed check' do
+      render
+      expect(rendered).to have_xpath("//i[@class='fa fa-check']", count:  match.game_results.count)
     end
   end
 end
