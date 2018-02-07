@@ -8,7 +8,7 @@
            start_time: @match.start_time.to_s(:time)) %></p>
 <% end %>
 <% if @match.place %>
-  <p><%= t('match_mailer.place', place: @match.place) %>) %></p>
+  <p><%= t('match_mailer.place', place: @match.place) %></p>
 <% end %>
 <p><%= t('.have_fun') %></p>
 <p><%= t('match_mailer.add_results_html', match_link: link_to(t('match_mailer.here'), match_url(@match))) %></p>
