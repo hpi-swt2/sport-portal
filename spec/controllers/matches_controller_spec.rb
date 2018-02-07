@@ -288,7 +288,8 @@ RSpec.describe MatchesController, type: :controller do
   end
 
   describe "GET #confirm_scores" do
-    let(:match) { FactoryBot.create(:match, :with_results) }
+    let(:team) { FactoryBot.create(:team) }
+    let(:match) { FactoryBot.create(:match, :with_results, scores_proposed_by: team) }
 
     context "user can confirm" do
       before(:each) do
