@@ -228,4 +228,8 @@ class Match < ApplicationRecord
     end
     match_elo_result
   end
+
+  def teams
+    [team_home, team_away]
+  end
 end
