@@ -30,7 +30,8 @@ User.new(
   telegram_username: 'mldh',
   telephone_number: '0815421337',
   avatar: File.open("#{Rails.root}/db/seed_data/avatar1.png"),
-  favourite_sports: 'Userstory-Wett-Schreiben').save(validate: false)
+  favourite_sports: 'Userstory-Wett-Schreiben',
+  contact_information: 'Im Büro 312-3').save(validate: false)
 
 User.new(
   first_name: 'Sukram',
@@ -42,7 +43,8 @@ User.new(
   telegram_username: 'mb',
   telephone_number: '987654321',
   avatar: File.open("#{Rails.root}/db/seed_data/avatar2.gif"),
-  favourite_sports: 'Userstory-Wett-Lösen').save(validate: false)
+  favourite_sports: 'Userstory-Wett-Lösen',
+  contact_information: 'Facebook: sukram_dnarb').save(validate: false)
 
 User.new(
   first_name: 'Kire',
@@ -54,7 +56,8 @@ User.new(
   telegram_username: 'eb',
   telephone_number: '12345654321',
   avatar: File.open("#{Rails.root}/db/seed_data/avatar3.png"),
-  favourite_sports: 'Hardcore-Couching').save(validate: false)
+  favourite_sports: 'Hardcore-Couching',
+  contact_information: 'Twitter: @kireLdenerb').save(validate: false)
 
 sports = %w(Fußball Basketball Tennis)
 
@@ -71,7 +74,8 @@ sports = %w(Fußball Basketball Tennis)
     telegram_username: 'eb',
     telephone_number: '12345654321',
     avatar: File.open("#{Rails.root}/db/seed_data/avatar3.png"),
-    favourite_sports: sports[rand(sports.length), rand(sports.length - 1) + 1].join(', ')).save(validate: false)
+    favourite_sports: sports[rand(sports.length), rand(sports.length - 1) + 1].join(', '),
+    contact_information: 'My Homepage: example.com').save(validate: false)
 end
 
 # Some exmaple event entries
