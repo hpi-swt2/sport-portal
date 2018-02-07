@@ -5,6 +5,7 @@ Feature: Spielplan for tournament
 
   Background:
     Given a tournament t with 23 teams
+    Given a logged in admin
 
   Scenario: Spielplan should be linked from tournament overview page
     When the event page for t is visited
@@ -18,6 +19,7 @@ Feature: Spielplan for tournament
     And the texts Vorrunde 1, Achtelfinale, Viertelfinale, Halbfinale, Finale, Spiel um Platz 3 are there.
 
   Scenario: Spielplan should update winner teams continuously
+
     When the Spielplan page for t is visited
     And the results for match Vorrunde 1 1 (30 : 7) got inserted
     Then the home team of match Vorrunde 1 1 comes to the next round
