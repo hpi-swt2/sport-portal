@@ -35,6 +35,11 @@ Given(/^a new user (.*) with password (.*)$/) do |username, password|
   build_user_named(username, password: password)
 end
 
+Given(/^a logged in admin$/) do
+  admin = create_user(admin: true)
+  sign_in admin
+end
+
 Given(/^the user is logged in$/) do
   sign_in single_user
 end
@@ -184,7 +189,7 @@ end
 Then(/^(.*) should be able to enter start and end date for each gameday$/) do |user|
   first(:css, "#gameday_starttime").set '10.05.2013'
   first(:css, "#gameday_endtime").set '15.05.2013'
-  first( :button, I18n.t('events.schedule.edit_date')).click
+  first(:button, I18n.t('events.schedule.edit_date')).click
 end
 
 
@@ -232,4 +237,8 @@ Then(/^(.*) should be able to change the dates of the game days$/) do |userName|
   step "#{userName} should be able to enter start and end date for each gameday"
   step 'the change should be saved'
   sign_out
+end
+
+Then /^he should see his profile page$/ do
+  expect(page.current_url).to end_with(profile_user_path(single_user))
 end

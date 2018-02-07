@@ -69,8 +69,18 @@ class Ability
       can_assign_membership_by_email(user)
       can_send_emails_to_team_members(user)
 
+      # Match
+      can_modify_match(user)
+      cannot :destroy, Match
+
       if user.admin?
         can :manage, :all
+      end
+    end
+
+    def can_modify_match(user)
+      can :modify, Match do |match|
+        user.teams.where(id: match.teams).exists?
       end
     end
 

@@ -17,6 +17,29 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: nil, team_away: nil).attributes
   }
 
+  let(:authorized_attributes) {
+    FactoryBot.build(:match, team_home: @team).attributes
+  }
+
+  let(:admin) { FactoryBot.create(:admin) }
+
+
+  before(:each) do
+    @user = FactoryBot.create(:user)
+    @other_user = FactoryBot.create(:user)
+    @admin = FactoryBot.create(:admin)
+    @team = FactoryBot.create(:team)
+    @team.members << @user
+    sign_in @user
+  end
+
+  after(:each) do
+    @team.destroy
+    @user.destroy
+    @other_user.destroy
+    @admin.destroy
+  end
+
   describe "GET #show" do
     it "returns a success response" do
       match = Match.create! valid_attributes
@@ -33,9 +56,47 @@ RSpec.describe MatchesController, type: :controller do
   end
 
   describe "GET #edit" do
-    it "returns a success response" do
-      match = Match.create! valid_attributes
+    it "should allow team members to edit a match" do
+      match = Match.create! authorized_attributes
       get :edit, params: { id: match.to_param }
+      expect(response).to be_success
+    end
+
+    it "shouldn't allow other users to edit a match" do
+      sign_out @user
+      sign_in @other_user
+      match = Match.create! authorized_attributes
+      get :edit, params: { id: match.to_param }
+      expect(response).not_to be_success
+    end
+
+    it "should allow admin to edit a match" do
+      sign_in @admin
+      match = Match.create! authorized_attributes
+      get :edit, params: { id: match.to_param }
+      expect(response).to be_success
+    end
+  end
+
+  describe "GET #edit_results" do
+    it "should allow team members to edit the results of a match" do
+      match = Match.create! authorized_attributes
+      get :edit_results, params: { id: match.to_param }
+      expect(response).to be_success
+    end
+
+    it "shouldn't allow other users to edit the results of a match" do
+      sign_out @user
+      sign_in @other_user
+      match = Match.create! valid_attributes
+      get :edit_results, params: { id: match.to_param }
+      expect(response).not_to be_success
+    end
+
+    it "should allow admin to edit the results of a match" do
+      sign_in @admin
+      match = Match.create! valid_attributes
+      get :edit_results, params: { id: match.to_param }
       expect(response).to be_success
     end
   end
@@ -69,14 +130,14 @@ RSpec.describe MatchesController, type: :controller do
       }
 
       it "updates the requested match" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: new_attributes }
         match.reload
         expect(match.place).to eq(new_attributes["place"])
       end
 
       it "redirects to the match" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: valid_attributes }
         expect(response).to redirect_to(match)
       end
@@ -84,9 +145,19 @@ RSpec.describe MatchesController, type: :controller do
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: invalid_attributes }
         expect(response).to be_success
+      end
+    end
+
+    context "with unauthorized user" do
+      it "shouldn't allow unauthorized user to update" do
+        sign_out @user
+        sign_in @other_user
+        match = Match.create! valid_attributes
+        put :update, params: { id: match.to_param, match: valid_attributes }
+        expect(response).not_to be_success
       end
     end
   end
@@ -133,16 +204,33 @@ RSpec.describe MatchesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested match" do
+      sign_in @admin
       match = Match.create! valid_attributes
       expect {
         delete :destroy, params: { id: match.to_param }
       }.to change(Match, :count).by(-1)
     end
 
+    it "destroys the requested match, but the event still exists" do
+      sign_in @admin
+      match = Match.create! valid_attributes
+      expect {
+        delete :destroy, params: { id: match.to_param }
+      }.not_to change(Event, :count)
+    end
+
     it "redirects to the event schedule page" do
+      sign_in @admin
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
       expect(response).to redirect_to(event_schedule_url(match.event))
+    end
+
+    it "shouldn't let a normal user delete a match" do
+      match = Match.create! valid_attributes
+      expect {
+        delete :destroy, params: { id: match.to_param }
+      }.not_to change(Match, :count)
     end
   end
 
@@ -181,6 +269,8 @@ RSpec.describe MatchesController, type: :controller do
   end
 
   describe "PUT #update_results" do
+
+    let(:match) { Match.create! authorized_attributes }
     context "with valid params" do
       let(:new_attributes) {
         {
@@ -191,7 +281,6 @@ RSpec.describe MatchesController, type: :controller do
           }
         }
       }
-      let(:match) { FactoryBot.create(:match) }
 
       it "updates the requested match" do
         put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
@@ -216,7 +305,6 @@ RSpec.describe MatchesController, type: :controller do
             }
         }
       }
-      let(:match) { FactoryBot.create(:match) }
 
       it "redirects to the edit results page" do
         put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }

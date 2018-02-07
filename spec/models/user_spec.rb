@@ -17,6 +17,7 @@
 #  telephone_number            :string
 #  telegram_username           :string
 #  favourite_sports            :string
+#  contact_information         :string
 #  provider                    :string
 #  uid                         :string
 #  avatar_data                 :text
@@ -237,5 +238,14 @@ RSpec.describe User, type: :model do
     user.email = 'hans@example.org'
     email_with_name = user.email_with_name
     expect(email_with_name).to eq("'Hans Mueller' <hans@example.org>")
+  end
+
+  it 'can keep general contacting information' do
+    user = FactoryBot.create :user
+    contact_info = 'You can find me on TrueYou: @maxMustermann97'
+    user.contact_information = contact_info
+    user.save!
+    user.reload
+    expect(user.contact_information).to eq(contact_info)
   end
 end

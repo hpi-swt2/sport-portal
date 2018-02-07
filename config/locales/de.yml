@@ -109,8 +109,6 @@ de:
       dashboard: "Mein Dashboard"
       my_profile: "Mein Profil"
       edit_profile: "Profil bearbeiten"
-      notification_settings: "Benachrichtigungseinstellungen"
-      notifications: "Benachrichtigungen"
 
   dashboard:
     title: "Dashboard für %{name}"
@@ -127,8 +125,8 @@ de:
         one: "Spieler"
         other: "Spieler"
         errors:
-          future_birthday: "Der Geburtstag darf nicht in der Zukunft liegen"
-          telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
+          future_birthday: "darf nicht in der Zukunft liegen"
+          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen"
       image:
         one: "Bild"
         other: "Bilder"
@@ -224,6 +222,7 @@ de:
         birthday: "Geburtstag"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+        contact_information: "Kontaktinformationen"
         id: "ID"
         created_at: "Erstellt am"
     validations:
@@ -234,12 +233,7 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
-      notifications:
-            settings: "Benachrichtigungs-Einstellungen"
-            enable_team_notifications: "Team-Benachrichtigungen erhalten"
-            enable_event_notifications: "Event-Benachrichtigung erhalten"
-            update_settings: "Aktualisieren"
-
+      contact_information_placeholder: "Facebook-Profil, Homepage, LinkedIn-Account, ..."
 
     match:
       game_results: "Ergebnis(se)"
@@ -424,6 +418,10 @@ de:
       unhappy: "Unzufrieden"
       leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
       we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+      notifications:
+          subtitle: "Benachrichtigungen"
+          enable_team_notifications: "Team-Benachrichtigungen erhalten"
+          enable_event_notifications: "Event-Benachrichtigung erhalten"
     destroy:
       confirm: "Bestätigen"
 

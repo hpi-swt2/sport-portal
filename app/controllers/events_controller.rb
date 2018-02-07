@@ -65,7 +65,7 @@ class EventsController < ApplicationController
     else
       @event.add_team(Team.find(event_params[:teams]))
     end
-    
+
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
