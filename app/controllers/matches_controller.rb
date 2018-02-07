@@ -1,6 +1,6 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :confirm_scores]
-  authorize_resource only: [:edit, :confirm_scores]
+  authorize_resource only: [:edit, :destroy, :confirm_scores]
 
   # GET /matches/1
   def show
@@ -80,7 +80,6 @@ class MatchesController < ApplicationController
     flash.notice = I18n.t("view.match.removed_game_result_notice")
     render :edit_results
   end
-
 
   # DELETE /matches/1
   def destroy
