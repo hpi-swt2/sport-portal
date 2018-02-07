@@ -241,7 +241,7 @@ de:
       remove_game_result: "Ergebnis entfernen"
       added_game_result_notice: "Ergebnis hinzugefügt!"
       removed_game_result_notice: "Ergebnis entfernt!"
-      confirm_game_result: "Bestätigen"
+      confirm_game_result: "Ergebnisse bestätigen"
       confirmed: "Bestätigt"
       not_confirmed: "Nicht bestätigt"
       noscript:

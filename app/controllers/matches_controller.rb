@@ -89,7 +89,6 @@ class MatchesController < ApplicationController
   end
 
   def confirm_scores
-    authorize! :confirm_scores, @match
     @match.confirm_scores
     @match.save!
     redirect_back(fallback_location: edit_results_match_path(@match))

@@ -209,9 +209,10 @@ class Match < ApplicationRecord
     has_scores? && has_points?
   end
 
-  def users_in_same_team(users)
-    counts = TeamUser.unscoped.where('user_id IN (?) AND team_id IN (?)', users, self.teams).group(:team_id).count
-    counts.size == 1 && counts.values[0] == users.size
+  def users_in_same_team?(users)
+    counts = TeamUser.unscoped.where('user_id IN (?) AND team_id IN (?)', users, self.teams)
+                 .group(:team_id).count
+    counts.size == 1
   end
 
   def apply_elo
@@ -228,7 +229,7 @@ class Match < ApplicationRecord
     when away
       match_elo_result = 0.0
     else
-      match_elo_result = 0.5
+      match_elo_res
     end
     match_elo_result
   end
@@ -238,7 +239,7 @@ class Match < ApplicationRecord
   end
 
   def can_confirm_scores?(user)
-    !(scores_confirmed? || users_in_same_team([user, scores_proposed_by]))
+    !(scores_confirmed? || users_in_same_team?([user, scores_proposed_by]))
   end
 
   def scores_confirmed?
