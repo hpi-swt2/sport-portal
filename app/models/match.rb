@@ -229,7 +229,7 @@ class Match < ApplicationRecord
     when away
       match_elo_result = 0.0
     else
-      match_elo_res
+      match_elo_result = 0.5
     end
     match_elo_result
   end
