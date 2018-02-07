@@ -71,7 +71,7 @@ class Ability
 
       # Match
       can_modify_match(user)
-      cannot :delete, Match
+      cannot :destroy, Match
 
       if user.admin?
         can :manage, :all
