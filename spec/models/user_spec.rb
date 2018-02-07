@@ -80,7 +80,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'should not be valid with a future birthday' do
-      expect(FactoryBot.build(:user, birthday: Date.tomorrow))
+      expect(FactoryBot.build(:user, birthday: Date.tomorrow)).to_not be_valid
     end
   end
 
