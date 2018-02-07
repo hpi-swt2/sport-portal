@@ -13,7 +13,6 @@
   border-right: 1px solid #FFF;
 }
 
-
 .page-header {
   border-bottom: none;
   text-align: center;
@@ -26,4 +25,25 @@
 
 .container {
   max-width: 1200px !important;
+}
+
+.custom-notification {
+    border: 2px solid #D7D7D7;
+    color: black;
+    position: absolute;
+    top: 75px;
+    right: 20px;
+    border-radius: 5px;
+}
+
+@media screen and (min-width: 769px) {
+    .custom-notification {
+        width: 320px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .custom-notification {
+        left: 20px;
+    }
 }

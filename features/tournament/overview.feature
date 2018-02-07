@@ -3,6 +3,9 @@ Feature: Tournament Overview Page
   In order to see how far each team came / its status
   I want to have a page that shows the progress/history of the tournament
 
+  Background:
+    Given a logged in admin
+
   Scenario: Tournament overview page should have a table with appropriate column names
     Given a tournament t.
     When the tournament overview page for t is visited
