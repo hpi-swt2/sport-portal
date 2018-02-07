@@ -17,6 +17,7 @@
 #  telephone_number            :string
 #  telegram_username           :string
 #  favourite_sports            :string
+#  contact_information         :string
 #  provider                    :string
 #  uid                         :string
 #  avatar_data                 :text
@@ -39,6 +40,7 @@ FactoryBot.define do
     telephone_number '00491731117843'
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
     favourite_sports 'Football, Basketball, Tennis'
+    sequence(:contact_information) { |n| "Homepage: http://user#{n}.com" }
   end
 
   trait :with_avatar do
