@@ -216,7 +216,7 @@ RSpec.describe MatchesController, type: :controller do
       match = Match.create! valid_attributes
       expect {
         delete :destroy, params: { id: match.to_param }
-      }.to change(Event, :count).by(0)
+      }.not_to change(Event, :count)
     end
 
     it "redirects to the event schedule page" do
@@ -230,7 +230,7 @@ RSpec.describe MatchesController, type: :controller do
       match = Match.create! valid_attributes
       expect {
         delete :destroy, params: { id: match.to_param }
-      }.to change(Match, :count).by(0)
+      }.not_to change(Match, :count)
     end
   end
 

@@ -44,10 +44,10 @@ RSpec.describe 'events/schedule', type: :view do
   end
 
   describe 'authorization for delete button' do
-    before(:each) {
+    before(:each) do
       @user = FactoryBot.create(:user)
       sign_in @user
-    }
+    end
 
     it 'has no delete button for normal signed in user' do
       expect(rendered).not_to have_selector(:link_or_button, t('helpers.links.destroy'))
