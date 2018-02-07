@@ -27,7 +27,7 @@ RSpec.describe 'events/schedule', type: :view do
 
     it 'has edit button for gameday dates for signed in users' do
       @user = FactoryBot.create :user
-      @league.owner_id = @user.id
+      @league.organizers << Organizer.new(user: @user, event: @league)
       sign_in @user
       render
       expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
@@ -40,7 +40,7 @@ RSpec.describe 'events/schedule', type: :view do
 
     it 'does not have edit button for gameday dates for users wihtout rights' do
       @user = FactoryBot.create :user
-      @league.owner_id = @user.id
+      sign_in @user
       render
       expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
     end
