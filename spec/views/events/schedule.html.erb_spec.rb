@@ -38,13 +38,13 @@ RSpec.describe 'events/schedule', type: :view do
         render
         expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
       end
-  
+
       it 'does not have edit button for gameday dates for signed out users' do
         sign_out @user
         render
         expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
       end
-  
+
       it 'does not have edit button for gameday dates for users wihtout rights' do
         render
         expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
