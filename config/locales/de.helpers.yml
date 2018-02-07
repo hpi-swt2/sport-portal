@@ -92,15 +92,15 @@ de:
       info_txt: "dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde abgesagt."
       have_fun: "Viel Erfolg!"
     match_scheduled:
-      subject: "Dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde geplant"
-      info_html: "dein Spiel gegen %{opponent_team_link} im Event %{event_link} wurde geplant."
-      info_txt: "dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde geplant."
-      have_fun: "Viel Erfolg beim Spielen!"
+      subject: "Dein Spiel gegen %{opponent_team_name} im Event %{event_name} findet bald statt"
+      info_html: "dein Spiel gegen %{opponent_team_link} im Event %{event_link} findet bald statt."
+      info_txt: "dein Spiel gegen %{opponent_team_name} im Event %{event_name} findet bald statt."
+      have_fun: "Viel Erfolg beim Sport!"
     match_date_changed:
       subject: "Dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde verschoben"
       info_html: "dein Spiel gegen %{opponent_team_link} im Event %{event_link} wurde verschoben."
       info_txt: "dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde verschoben."
-      have_fun: "Viel Erfolg beim Spielen!"
+      have_fun: "Viel Erfolg beim Sport!"
   event_mailer:
     event: "das Event %{event}"
     event_canceled:
