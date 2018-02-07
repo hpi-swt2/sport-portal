@@ -228,8 +228,9 @@ RSpec.describe MatchesController, type: :controller do
 
     it "shouldn't let a normal user delete a match" do
       match = Match.create! valid_attributes
-      delete :destroy, params: { id: match.to_param }
-      expect(response).not_to be_success
+      expect {
+        delete :destroy, params: { id: match.to_param }
+      }.to change(Match, :count).by(0)
     end
   end
 

@@ -71,7 +71,7 @@
           <%= link_to t('.edit', default: t('helpers.links.edit')),
                       edit_match_path(match), :class => 'btn btn-default btn-xs' %>
         <% end %>
-        <% if can? :delete, @match %>
+        <% if can? :delete, match %>
           <%= link_to t('.destroy', default: t('helpers.links.destroy')),
                       match_path(match),
                       :method => :delete,

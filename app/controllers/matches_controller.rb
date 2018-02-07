@@ -79,7 +79,6 @@ class MatchesController < ApplicationController
     render :edit_results
   end
 
-
   # DELETE /matches/1
   def destroy
     @match.destroy
