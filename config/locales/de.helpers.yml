@@ -65,12 +65,6 @@ de:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
       destroyed: "%{resource_name} wurde erfolgreich entfernt."
-    label:
-      user:
-        birthday: "Geburtstag"
-        telephone_number: "Telefonnummer"
-        telegram_username: "Telegram Benutzername"
-        favourite_sports: "Lieblingssportarten"
   mailer:
     hello: "Hallo %{firstname},"
     have_fun: "Viel Erfolg beim Training!"
