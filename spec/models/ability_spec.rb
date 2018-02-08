@@ -259,7 +259,7 @@ RSpec.describe Ability, type: :model do
         context 'when the user is not an organizer' do
           let(:organizers) { Array.new }
           it 'should not allow to be changed' do
-            expect(ability).not_to be_able_to(:update, event.gamedays.first)
+            expect(ability).not_to be_able_to(:update_gameday, event.gamedays.first)
           end
         end
 
@@ -268,7 +268,7 @@ RSpec.describe Ability, type: :model do
           let(:user) { @user.organizers << organizers
                        @user }
           it 'should allow to be changed' do
-            expect(ability).to be_able_to(:update, event.gamedays.first)
+            expect(ability).to be_able_to(:update_gameday, event.gamedays.first)
           end
         end
       end
