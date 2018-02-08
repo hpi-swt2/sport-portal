@@ -96,7 +96,7 @@ $( document ).on('turbolinks:load', function() {
         if(mm < 10){
             mm = "0"+ mm;
         }
-        var formattedDate = y + '-' + mm + '-' + dd;
+        var formattedDate = dd + '.' + mm + '.' + y;
         return formattedDate;
     }
 
