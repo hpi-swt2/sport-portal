@@ -60,6 +60,7 @@ RSpec.describe 'events/schedule', type: :view do
     end
 
     it 'has a delete button for matches when you are an admin' do
+      @user.update(admin: true)
       render
       expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
     end

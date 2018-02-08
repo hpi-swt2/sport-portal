@@ -31,7 +31,7 @@
             </b>
             <%= day.text_field :endtime, value: gameday.endtime.strftime('%d.%m.%Y') %>
           </div>
-          <% if can? :edit, gameday %>
+          <% if can? :update_gameday, gameday %>
             <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
           <% end %>
         <%end%>
@@ -52,7 +52,6 @@
         <% end %>
       </td>
       <td>
-
           <%= match.points_home ? match.points_home : '-' %>
           :
           <%= match.points_away ? match.points_away : '-' %>
