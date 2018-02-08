@@ -17,10 +17,13 @@
 #  telephone_number            :string
 #  telegram_username           :string
 #  favourite_sports            :string
-#  contact_information         :string
 #  provider                    :string
 #  uid                         :string
 #  avatar_data                 :text
+#  confirmation_token          :string
+#  unconfirmed_email           :string
+#  confirmed_at                :datetime
+#  confirmation_sent_at        :datetime
 #  team_notifications_enabled  :boolean          default(TRUE)
 #  event_notifications_enabled :boolean          default(TRUE)
 #
