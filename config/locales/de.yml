@@ -112,7 +112,7 @@ de:
 
   dashboard:
     title: "Hallo %{name}!"
-    show_all: "Alle anzeigem"
+    show_all: "Alle anzeigen"
 
   activerecord:
     models:
