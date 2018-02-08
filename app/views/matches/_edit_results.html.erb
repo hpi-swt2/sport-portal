@@ -1,4 +1,4 @@
-<%= form_for @match, url: { action: 'update_results', method: 'patch' }, html: { :class => "form-horizontal match" } do |f| %>
+<%= form_for @match, url: update_results_match_path(@match), method: :patch, html: { :class => "form-horizontal match" } do |f| %>
 
   <%= render partial: "application/validation_errors", locals: {model: @match} %>
 
@@ -27,7 +27,7 @@
             <%= f.hidden_field :id %>
             <%= f.hidden_field :_destroy %>
             <noscript>
-              <% if !f.object.id.nil? %>
+              <% unless f.object.new_record? %>
                 <br/>
                 <%= link_to(
                         t("view.match.noscript.button_prefix") + t("view.match.remove_game_result"),
@@ -49,15 +49,25 @@
             class: 'btn btn-default',
         id: 'no_script_add_game_result' %>
       </noscript>
+      <% if can? :confirm_scores, @match %>
+        <%= link_to t("view.match.confirm_game_result"), confirm_scores_match_path(id: @match.id), class: 'btn btn-default' %>
+      <% end %>
+      <% if @match.scores_confirmed? %>
+        <i class="fa fa-check"></i><%= t('view.match.confirmed') %>
+      <% else %>
+        <i class="fa fa-times"></i><%= t('view.match.not_confirmed') %>
+      <% end %>
     </div>
+
+
   </div>
 
-  <% if !@match.event.is_a? Rankinglist %>
+  <% if @match.event.is_a? Rankinglist %>
     <div class="form-group">
       <div class="col-lg-offset-2 col-lg-10">
         <%= f.submit nil, :class => 'btn btn-primary' %>
         <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                    :back, :class => 'btn btn-default' %>
+                    event_path(@match.event), :class => 'btn btn-default' %>
       </div>
     </div>
   <% else %>
@@ -65,7 +75,7 @@
       <div class="col-lg-offset-2 col-lg-10">
         <%= f.submit nil, :class => 'btn btn-primary' %>
         <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                    event_path(@match.event), :class => 'btn btn-default' %>
+                    :back, :class => 'btn btn-default' %>
       </div>
     </div>
   <% end %>

@@ -48,8 +48,8 @@ en:
         one: "player"
         other: "players"
         errors:
-          future_birthday: "The birthday must not be a future date"
-          telephone_number_invalid: "Telephone number must consist of only numbers without spaces"
+          future_birthday: "must not be a future date"
+          telephone_number_invalid: "must consist of only numbers without spaces and can start with a +"
       image:
         one: "image"
         other: "images"

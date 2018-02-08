@@ -21,6 +21,9 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: @team).attributes
   }
 
+  let(:admin) { FactoryBot.create(:admin) }
+
+
   before(:each) do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
@@ -28,13 +31,6 @@ RSpec.describe MatchesController, type: :controller do
     @team = FactoryBot.create(:team)
     @team.members << @user
     sign_in @user
-  end
-
-  after(:each) do
-    @team.destroy
-    @user.destroy
-    @other_user.destroy
-    @admin.destroy
   end
 
   describe "GET #show" do
@@ -201,16 +197,33 @@ RSpec.describe MatchesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested match" do
+      sign_in @admin
       match = Match.create! valid_attributes
       expect {
         delete :destroy, params: { id: match.to_param }
       }.to change(Match, :count).by(-1)
     end
 
+    it "destroys the requested match, but the event still exists" do
+      sign_in @admin
+      match = Match.create! valid_attributes
+      expect {
+        delete :destroy, params: { id: match.to_param }
+      }.not_to change(Event, :count)
+    end
+
     it "redirects to the event schedule page" do
+      sign_in @admin
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
       expect(response).to redirect_to(event_schedule_url(match.event))
+    end
+
+    it "shouldn't let a normal user delete a match" do
+      match = Match.create! valid_attributes
+      expect {
+        delete :destroy, params: { id: match.to_param }
+      }.not_to change(Match, :count)
     end
   end
 
@@ -268,6 +281,7 @@ RSpec.describe MatchesController, type: :controller do
         result = match.game_results.first
         expect(result.score_home).to eq(new_attributes["0"]["score_home"])
         expect(result.score_away).to eq(new_attributes["0"]["score_away"])
+        expect(match.scores_proposed_by).to eq(@user.teams.where(id: match.teams).first)
       end
 
       it "redirects to the show match page" do
@@ -293,4 +307,44 @@ RSpec.describe MatchesController, type: :controller do
     end
   end
 
+  describe "GET #confirm_scores" do
+    let(:team) { FactoryBot.create(:team) }
+    let(:match) { FactoryBot.create(:match, :with_results, scores_proposed_by: team) }
+
+    context "user can confirm" do
+      before(:each) do
+        allow_any_instance_of(Match).to receive(:can_confirm_scores?).and_return(true)
+      end
+
+      it "should confirm the scores" do
+        expect {
+          post :confirm_scores, params: { id: match.to_param }
+          match.reload
+        }.to change { match.scores_confirmed? }.from(false).to(true)
+      end
+
+      it "redirects to the edit results page" do
+        post :confirm_scores, params: { id: match.to_param  }
+        expect(response).to redirect_to edit_results_match_path(match)
+      end
+    end
+
+    context "user cannot confirm" do
+      before(:each) do
+        allow_any_instance_of(Match).to receive(:can_confirm_scores?).and_return(false)
+      end
+
+      it "should not confirm the game result" do
+        expect {
+          post :confirm_scores, params: { id: match.to_param }
+          match.reload
+        }.not_to change { match.scores_confirmed? }
+      end
+
+      it "redirects to the edit results page" do
+        post :confirm_scores, params: { id: match.to_param }
+        expect(response).to be_forbidden
+      end
+    end
+  end
 end

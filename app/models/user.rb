@@ -20,6 +20,10 @@
 #  provider                    :string
 #  uid                         :string
 #  avatar_data                 :text
+#  confirmation_token          :string
+#  unconfirmed_email           :string
+#  confirmed_at                :datetime
+#  confirmation_sent_at        :datetime
 #  team_notifications_enabled  :boolean          default(TRUE)
 #  event_notifications_enabled :boolean          default(TRUE)
 #
@@ -40,9 +44,9 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates_each :birthday do |record, attribute, value|
-    record.errors.add(attribute, I18n.t('activerecord.models.user.errors.future_birthday')) if !value.nil? && value >= Time.now.to_date
+    record.errors.add(attribute, I18n.t('activerecord.models.user.errors.future_birthday')) if !value.nil? && Date.today < value
   end
-  validates_format_of :telephone_number, with: /\A\d*\z/, message: I18n.t('activerecord.models.user.errors.telephone_number_invalid'), allow_nil: true
+  validates_format_of :telephone_number, with: /\A\+?\d*\z/, message: I18n.t('activerecord.models.user.errors.telephone_number_invalid'), allow_nil: true
   validates :uid, uniqueness: { scope: :provider, allow_nil: true }
 
   def update_without_password(params, *options)

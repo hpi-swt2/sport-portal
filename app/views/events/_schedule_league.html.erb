@@ -31,7 +31,9 @@
             </b>
             <%= day.text_field :endtime, value: gameday.endtime.strftime('%d.%m.%Y') %>
           </div>
-          <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
+          <% if can? :update_gameday, gameday %>
+            <%= day.submit t('events.schedule.edit_date', default: t('helpers.links.edit')), class: 'btn btn-default btn-xs' %>
+          <% end %>
         <%end%>
       </div>
     </th>
@@ -65,8 +67,19 @@
         <% end %>
       </td>
       <td>
-        <%= link_to t('events.schedule.insert_results'),
+        <%= link_to t('.show', default: t('helpers.links.show')),
                     match_path(match), :class => 'btn btn-default btn-xs' %>
+        <% if can? :edit, match %>
+          <%= link_to t('.edit', default: t('helpers.links.edit')),
+                      edit_match_path(match), :class => 'btn btn-default btn-xs' %>
+        <% end %>
+        <% if can? :destroy, match %>
+          <%= link_to t('.destroy', default: t('helpers.links.destroy')),
+                      match_path(match),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', default: t('helpers.links.confirm')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        <% end %>
       </td>
     </tr>
   <% end %>

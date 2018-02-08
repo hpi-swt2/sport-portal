@@ -25,6 +25,13 @@
           end
         when "welcome"
           $background = $new_background
+        when "teams"
+          case action_name
+            when "show"
+              $background = $new_background
+            else
+              $background = $no_background
+          end
         else
           $background = $no_background
       end

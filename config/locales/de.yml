@@ -118,6 +118,8 @@ de:
       match:
         one: "Spiel"
         other: "Spiele"
+        errors:
+          score_proposer_confirmer_team: "Die Bestätigung von Ergebnissen muss durch einen Spieler des anderen Teams erfolgen."
       team:
         one: "Team"
         other: "Teams"
@@ -125,8 +127,8 @@ de:
         one: "Spieler"
         other: "Spieler"
         errors:
-          future_birthday: "Der Geburtstag darf nicht in der Zukunft liegen"
-          telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
+          future_birthday: "darf nicht in der Zukunft liegen"
+          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen und kann mit einem + beginnen"
       image:
         one: "Bild"
         other: "Bilder"
@@ -223,6 +225,7 @@ de:
         birthday: "Geburtstag"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+        contact_information: "Kontaktinformationen"
         id: "ID"
         created_at: "Erstellt am"
     validations:
@@ -233,6 +236,7 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
+      contact_information_placeholder: "Facebook-Profil, Homepage, LinkedIn-Account, ..."
 
     match:
       game_results: "Ergebnis(se)"
@@ -242,6 +246,9 @@ de:
       remove_game_result: "Ergebnis entfernen"
       added_game_result_notice: "Ergebnis hinzugefügt!"
       removed_game_result_notice: "Ergebnis entfernt!"
+      confirm_game_result: "Ergebnisse bestätigen"
+      confirmed: "Bestätigt"
+      not_confirmed: "Nicht bestätigt"
       noscript:
         add_results_notice:
           create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."

@@ -20,6 +20,10 @@
 #  provider                    :string
 #  uid                         :string
 #  avatar_data                 :text
+#  confirmation_token          :string
+#  unconfirmed_email           :string
+#  confirmed_at                :datetime
+#  confirmation_sent_at        :datetime
 #  team_notifications_enabled  :boolean          default(TRUE)
 #  event_notifications_enabled :boolean          default(TRUE)
 #
@@ -47,21 +51,41 @@ RSpec.describe User, type: :model do
     expect(user).not_to be_valid
   end
 
-  it "is valid with only first name, last name, email and password" do
+  it 'is valid with only first name, last name, email and password' do
     user = User.new(first_name: "User", last_name: "Name", email: "user@example.com", password: "password")
     expect(user).to be_valid
   end
 
-  it "correctly validates telephone number" do
-    expect(FactoryBot.build(:user, telephone_number: "+00491766563")).not_to be_valid
-    expect(FactoryBot.build(:user, telephone_number: "0049 177 499 372")).not_to be_valid
-    expect(FactoryBot.build(:user, telephone_number: "0173XX17352")).not_to be_valid
-    expect(FactoryBot.build(:user, telephone_number: "01731557326")).to be_valid
+  describe 'telephone number validation' do
+    it 'should be valid with a fully specified phone number' do
+      expect(FactoryBot.build(:user, telephone_number: "+00491766563")).to be_valid
+    end
+
+    it 'should be valid with a same country phone number' do
+      expect(FactoryBot.build(:user, telephone_number: "01731557326")).to be_valid
+    end
+
+    it 'should not be valid when the number contains spaces' do
+      expect(FactoryBot.build(:user, telephone_number: "0049 177 499 372")).not_to be_valid
+    end
+
+    it 'should not be valid when the number contains letters' do
+      expect(FactoryBot.build(:user, telephone_number: "0173XX17352")).not_to be_valid
+    end
   end
 
-  it "correctly validates birthday" do
-    expect(FactoryBot.build(:user, birthday: Date.new(1995, 8, 25))).to be_valid
-    expect(FactoryBot.build(:user, birthday: Time.now.to_date.tomorrow)).not_to be_valid
+  describe 'birthday validation' do
+    it 'should be valid with a past birthday' do
+      expect(FactoryBot.build(:user, birthday: Date.today - 20.years)).to be_valid
+    end
+
+    it 'should be valid with a birthday today' do
+      expect(FactoryBot.build(:user, birthday: Date.today)).to be_valid
+    end
+
+    it 'should not be valid with a future birthday' do
+      expect(FactoryBot.build(:user, birthday: Date.tomorrow)).to_not be_valid
+    end
   end
 
   it 'is not valid when the omniauth is not unique' do
@@ -171,7 +195,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  it "should have an attribute events" do
+  it 'should have an attribute events' do
     @relation = User.reflect_on_association(:events)
     expect(@relation.macro).to eq :has_and_belongs_to_many
   end
@@ -193,22 +217,22 @@ RSpec.describe User, type: :model do
     expect(user.errors[:avatar]).to include(I18n.t('users.avatar.errors.max_size'))
   end
 
-  it "has the admin attribute" do
+  it 'has the admin attribute' do
     user = FactoryBot.build(:user)
     expect(user).to have_attributes(admin: false)
   end
 
-  it "has the admin attribute set to true, if it is an admin" do
+  it 'has the admin attribute set to true, if it is an admin' do
     admin = FactoryBot.build(:admin)
     expect(admin.admin).to eq(true)
   end
 
-  it "has the admin attribute set to false, if it is not an admin" do
+  it 'has the admin attribute set to false, if it is not an admin' do
     user = FactoryBot.build(:user)
     expect(user.admin).to eq(false)
   end
 
-  it "has a method all_events that returns all events the user participates in" do
+  it 'has a method all_events that returns all events the user participates in' do
     user = FactoryBot.create(:user)
     team = FactoryBot.create(:team)
     event1 = FactoryBot.create(:event, :single_player)
@@ -220,12 +244,12 @@ RSpec.describe User, type: :model do
     expect(user.all_events.count).to eq(2)
   end
 
-  it "has event notifications enabled by default" do
+  it 'has event notifications enabled by default' do
     user = FactoryBot.build(:user)
     expect(user.event_notifications_enabled?).to eq(true)
   end
 
-  it "has team notifications enabled by default" do
+  it 'has team notifications enabled by default' do
     user = FactoryBot.build(:user)
     expect(user.team_notifications_enabled?).to eq(true)
   end
@@ -237,5 +261,14 @@ RSpec.describe User, type: :model do
     user.email = 'hans@example.org'
     email_with_name = user.email_with_name
     expect(email_with_name).to eq("'Hans Mueller' <hans@example.org>")
+  end
+
+  it 'can keep general contacting information' do
+    user = FactoryBot.create :user
+    contact_info = 'You can find me on TrueYou: @maxMustermann97'
+    user.contact_information = contact_info
+    user.save!
+    user.reload
+    expect(user.contact_information).to eq(contact_info)
   end
 end
