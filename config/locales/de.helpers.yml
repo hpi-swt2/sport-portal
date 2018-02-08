@@ -19,6 +19,7 @@ de:
       create: "Erstellen"
       edit: "Bearbeiten"
       show: "Anzeigen"
+      duel: "Match hinzufügen"
       save: "Speichern"
       email: "E-Mail senden"
       assign_ownership: "Als Captain hinzufügen"
@@ -39,28 +40,78 @@ de:
     submit:
       create: "Erstelle %{model}"
       submit: "Speichere %{model}"
-      update: "Aktualisiere %{model}"
+      update: "Speichern"
       delete: "Lösche %{model}"
     select:
       prompt: "Bitte wähle"
+      option_operator: "oder"
     teams:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
       private: "Privat"
       cant_destroy: "%{resource_name} kann nicht gelöscht werden, da es noch an Events teilnimmt."
+      filter: "Zeige"
+      show_all: "Alle Teams"
+      show_mine: "Nur meine Teams"
       multiple_actions:
         apply_action: "Wende folgende Aktion auf Ausgewählte an:"
         select_all: "Alle auswählen"
         deselect_all: "Alle abwählen"
         confirmation: "Aktion erfolgreich ausgeführt."
         failure_on: "Aktion erfolgreich ausgeführt, außer auf: %{user_names}"
+    fields:
+      mandatory: "Pflichtfeld"
     flash:
       created: "%{resource_name} wurde erfolgreich erstellt."
       updated: "%{resource_name} wurde erfolgreich aktualisiert."
       destroyed: "%{resource_name} wurde erfolgreich entfernt."
-    label:
-      user:
-        birthday: "Geburtstag"
-        telephone_number: "Telefonnummer"
-        telegram_username: "Telegram Benutzername"
-        favourite_sports: "Lieblingssportarten"
+  mailer:
+    hello: "Hallo %{firstname},"
+    have_fun: "Viel Erfolg beim Training!"
+    closing: "%{appname} Team"
+  match_mailer:
+    start_time: "Wann? Am %{start_date} um %{start_time} Uhr"
+    place: "Wo? %{place}"
+    here: "Hier"
+    apply_changes_html: "%{match_link} kannst du Änderungen vornehmen."
+    add_results_html: "%{match_link} kannst du die Ergebnisse eintragen."
+    match_notification:
+      subject: "Dein Spiel gegen %{opponent_team_name} im Event %{event_name} startet morgen"
+      info_html: "dein Spiel gegen %{opponent_team_link} im Event %{event_link} startet morgen."
+      info_txt: "dein Spiel gegen %{opponent_team_name} im Event %{event_name} startet morgen."
+      have_fun: "Viel Spaß!"
+    match_canceled:
+      subject: "Dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde abgesagt"
+      info_html: "dein Spiel gegen %{opponent_team_link} im Event %{event_link} wurde abgesagt."
+      info_txt: "dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde abgesagt."
+      have_fun: "Viel Erfolg!"
+    match_scheduled:
+      subject: "Dein Spiel gegen %{opponent_team_name} im Event %{event_name} findet bald statt"
+      info_html: "dein Spiel gegen %{opponent_team_link} im Event %{event_link} findet bald statt."
+      info_txt: "dein Spiel gegen %{opponent_team_name} im Event %{event_name} findet bald statt."
+      have_fun: "Viel Erfolg beim Sport!"
+    match_date_changed:
+      subject: "Dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde verschoben"
+      info_html: "dein Spiel gegen %{opponent_team_link} im Event %{event_link} wurde verschoben."
+      info_txt: "dein Spiel gegen %{opponent_team_name} im Event %{event_name} wurde verschoben."
+      have_fun: "Viel Erfolg beim Sport!"
+  event_mailer:
+    event: "das Event %{event}"
+    event_canceled:
+      info: "wurde abgesagt."
+      subject: "Dein Event wurde abgesagt"
+    event_started:
+      info: "hat gestartet."
+      subject: "Dein Event hat gestartet"
+    event_finished:
+      info: "ist abgeschlossen."
+      subject: "Dein Event ist abgeschlossen"
+  team_mailer:
+    user_added_to_team:
+      added_to_team_info_html: 'du bist dem Team %{team_link} beigetreten.'
+      subject: "Du bist dem Team %{team_name} beigetreten"
+      have_fun: "Viel Erfolg beim Sport!"
+    team_registered_to_event:
+      registered_to_event_info_html: 'dein Team %{team_link} nimmt jetzt an dem Event %{event_link} teil.'
+      subject: "Dein Team %{team_name} nimmt jetzt an dem Event %{event_name} teil"
+      have_fun: "Viel Erfolg beim Spielen!"

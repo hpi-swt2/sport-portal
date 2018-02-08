@@ -1,0 +1,74 @@
+<%= form_for @match, url: update_results_match_path(@match), method: :patch, html: { :class => "form-horizontal match" } do |f| %>
+
+  <%= render partial: "application/validation_errors", locals: {model: @match} %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= t("view.match.game_results") %></div>
+    <div class="panel-body results">
+      <noscript>
+        <%= t("view.match.noscript.add_results_notice.edit_match") %>
+      </noscript>
+      <%= f.nested_fields_for :game_results do |f| %>
+        <div class="result">
+          <div class="form-group">
+            <%= f.label :score_home, t('view.match.game_result.points') + ' ' + @match.team_home.name, class: 'control-label col-xs-2' %>
+            <div class="col-xs-2">
+              <%= f.number_field :score_home, in: -2e9..2e9, step: 1, class: 'form-control', required: :true %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label :score_away, t('view.match.game_result.points') + ' ' + @match.team_away.name, class: 'control-label col-xs-2',required: :true %>
+            <div class="col-xs-2">
+              <%= f.number_field :score_away, in: -2e9..2e9, step: 1, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="form-group">
+            <a href="#" class="remove col-xs-offset-1 btn btn-default"><%= t("view.match.remove_game_result") %></a>
+            <%= f.hidden_field :id %>
+            <%= f.hidden_field :_destroy %>
+            <noscript>
+              <% unless f.object.new_record? %>
+                <br/>
+                <%= link_to(
+                        t("view.match.noscript.button_prefix") + t("view.match.remove_game_result"),
+                        remove_game_result_match_path(id: @match.id, result_id: f.object.id),
+                        class: 'col-xs-offset-1 btn btn-default') %>
+              <% end %>
+            </noscript>
+          </div>
+        </div>
+        <br/>
+      <% end %>
+    </div>
+    <div class="panel-footer">
+      <a href="#" id="add_game_result" class="add btn btn-default"><%= t("view.match.add_game_result") %></a>
+      <noscript>
+        <br/>
+        <%= link_to t("view.match.noscript.button_prefix") + t("view.match.add_game_result"),
+            add_game_result_match_path(@match),
+            class: 'btn btn-default',
+        id: 'no_script_add_game_result' %>
+      </noscript>
+    </div>
+
+
+  </div>
+
+  <% if @match.event.is_a? Rankinglist %>
+    <div class="form-group">
+      <div class="col-lg-offset-2 col-lg-10">
+        <%= f.submit nil, :class => 'btn btn-primary' %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                    event_path(@match.event), :class => 'btn btn-default' %>
+      </div>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <div class="col-lg-offset-2 col-lg-10">
+        <%= f.submit nil, :class => 'btn btn-primary' %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                    :back, :class => 'btn btn-default' %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

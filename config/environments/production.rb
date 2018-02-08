@@ -10,9 +10,9 @@ Airbrake.configure do |config|
 end
 #ignore error catcher for 404 page not found
 Airbrake.add_filter do |notice|
-    if notice[:errors].any? { |error| error[:type] == 'ActiveRecord::RecordNotFound' || error[:type] =='ActionController::RoutingError' }
-        notice.ignore!
-    end
+  if notice[:errors].any? { |error| error[:type] == 'ActiveRecord::RecordNotFound' || error[:type] =='ActionController::RoutingError' }
+    notice.ignore!
+  end
 end
 
 # If the Errbit API key is not set, ignore all errors
@@ -56,6 +56,8 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
+  config.assets.prefix = '/dev-assets'
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
@@ -87,10 +89,11 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "sport_portal_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  config.action_mailer.default_url_options = { :host => ENV['HOST_URL'] }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -141,4 +144,9 @@ Rails.application.configure do
       user_name: ENV.fetch('SMTP_USERNAME'),
       password: ENV.fetch('SMTP_PASSWORD')
   }
+
+  ActionMailer::Base.default from: ENV.fetch('SENDER_EMAIL')
+
+  # Tell Action Mailer where URLs should point to
+  config.action_mailer.default_url_options = { :host => ENV['HOST_URL'] }
 end

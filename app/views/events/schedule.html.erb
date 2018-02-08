@@ -6,11 +6,15 @@
 <table class="matches-table table" id="matches-table">
   <thead>
     <tr>
+      <% if @schedule_type == 'tournament' %>
+        <th></th>
+      <% end %>
       <th><%= t '.place' %></th>
       <th><%= t '.home' %></th>
       <th><%= t '.away' %></th>
       <th><%= t '.score' %></th>
-      <th><%= t '.points' %></th>
+      <th><%= t '.event_points' %></th>
+      <th><%= t '.appointment' %></th>
       <th><%= t '.actions', default: t('helpers.actions') %></th>
     </tr>
   </thead>
@@ -18,3 +22,5 @@
     <%= render ('schedule_' + @schedule_type), back_path: events_path %>
   </tbody>
 </table>
+
+<%= back_btn event_path(@event) %>

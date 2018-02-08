@@ -17,6 +17,10 @@ RSpec.describe TeamsController, type: :controller do
     FactoryBot.build(:team, name: '').attributes
   }
 
+  let(:private_attributes) {
+    FactoryBot.attributes_for(:team, :private)
+  }
+
   before(:each) do
     @user = FactoryBot.create(:user)
     @other_user = FactoryBot.create(:user)
@@ -41,6 +45,29 @@ RSpec.describe TeamsController, type: :controller do
   it "should allow normal user to view page" do
     get :index, params: {}
     expect(response).to be_success
+  end
+
+  it "should show private teams to team_owner" do
+    team = Team.create! private_attributes
+    team.owners << @user
+    get :index, params: {}
+    teams = controller.instance_variable_get(:@teams)
+    expect(teams.first).to eq(team)
+  end
+
+  it "should not show private teams to not-logged in user" do
+    team = Team.create! private_attributes
+    sign_out @user
+    get :index, params: {}
+    teams = controller.instance_variable_get(:@teams)
+    expect(teams).to be_empty
+  end
+
+  it "should not show private teams to a user who is not part of the team" do
+    team = Team.create! private_attributes
+    get :index, params: {}
+    teams = controller.instance_variable_get(:@teams)
+    expect(teams).to be_empty
   end
 end
 
@@ -230,7 +257,7 @@ end
       team.owners << subject.current_user
       team.events << FactoryBot.create(:event)
       delete :destroy, params: { id: team.to_param }
-      expect(response).to redirect_to(team)
+      expect(response).to be_forbidden
     end
   end
 

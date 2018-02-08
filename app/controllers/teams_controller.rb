@@ -1,11 +1,13 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership, :perform_action_on_multiple_members, :assign_membership_by_email]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  load_and_authorize_resource :team, only: [:index, :show, :new, :edit, :create, :update, :destroy]
+  load_and_authorize_resource :team, only: [:index, :show, :new, :edit, :update, :destroy]
+  authorize_resource :team, only: [:create]
 
   # GET /teams
   def index
-    @teams = Team.multiplayer
+    teams_created_by_user = Team.created_by_user
+    @teams = @teams & teams_created_by_user
   end
 
   # GET /teams/1
@@ -47,15 +49,10 @@ class TeamsController < ApplicationController
   # DELETE /teams/1
   def destroy
     # Delete all team ownerships and team memberships associated with the team to destroy
-    team_resource = Team.model_name.human
-    if not @team.in_event?
-      team_id = @team.id
-      TeamUser.where(team_id: team_id).delete_all
-      @team.destroy
-      redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: team_resource).capitalize
-    else
-      redirect_to @team, alert: I18n.t('helpers.teams.cant_destroy', resource_name: team_resource).capitalize
-    end
+    team_id = @team.id
+    TeamUser.where(team_id: team_id).delete_all
+    @team.destroy
+    redirect_to teams_url, notice: I18n.t('helpers.flash.destroyed', resource_name: Team.model_name.human).capitalize
   end
 
   # Assigns team ownership to a specific team member
@@ -163,6 +160,6 @@ class TeamsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def team_params
-      params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members)
+      params.require(:team).permit(:name, :private, :description, :kind_of_sport, :owners, :members, :avatar, :remove_avatar)
     end
 end

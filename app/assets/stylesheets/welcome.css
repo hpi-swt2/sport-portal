@@ -1,4 +1,276 @@
 /*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+    All css for landing page.
+ */
+
+/* Overwrite container from application.html.erb for background image only*/
+body>.background-layer>.container {
+    margin-top: -64px;
+    width: 100%;
+    max-width: 100% !important;
+    padding: 0 0;
+}
+#placeholderForNavbar{
+    height: 64px;
+}
+
+.section {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    /* children have to set attributes as following:
+    min-height: calc(<image height>/<image width> * 100vw);
+    padding-bottom: calc(<height of edge> / <image height> * 100%);
+    margin-bottom: calc(- <height of edge> / <image height> * 100%);
+    z-index: number of sections - index of this section
+
+    The edge is the height of the lower triangle, which is cut out of the image.
+     */
+}
+
+.section.darkblue-soccer  {
+    background-image: url(https://owncloud.hpi.de/index.php/s/9COQa356VzqZGon/download);
+    min-height: calc(796 / 1200 * 100vw);
+    padding-bottom: calc(160 / 796 * 100%);
+    margin-bottom: calc(-160 / 796 * 100%);
+    padding-top: 8%;
+    z-index: 5;
+}
+
+.section.lightblue-soccer  {
+    background-image: url(https://owncloud.hpi.de/index.php/s/X1ROoJHfM0dbdya/download);
+    min-height: calc(888 / 1200 * 100vw);
+    padding-bottom: calc(84 / 888 * 100%);
+    margin-bottom: calc(-84 / 888 * 100%);
+    z-index: 4;
+    padding-top: calc(84 / 888 * 100% + 60px);
+}
+
+.section.orange-basketball  {
+    background-image: url(https://owncloud.hpi.de/index.php/s/rkCBUFNVV5Pw9kE/download);
+    min-height: calc(746 / 1200 * 100vw);
+    padding-bottom: calc(100 / 746 * 100%);
+    margin-bottom: calc(-100 / 746 * 100%);
+    z-index: 3;
+    padding-top: calc(100 / 746 * 100%);
+}
+
+.section.white-nothing  {
+    min-height: calc(800 / 1200 * 100vw);
+    z-index: 2;
+    padding-top: calc(150 / 800 * 100%);
+}
+
+.section.purple-skating  {
+    background-image: url(https://owncloud.hpi.de/index.php/s/BokofLs1yk3wJlL/download);
+    min-height: calc(756 / 1200 * 100vw);
+    padding-bottom: calc(104 / 756 * 100%);
+    margin-bottom: 0;
+    z-index: 1;
+    padding-top: calc(104 / 800 * 100%);
+}
+
+h1 {
+    margin: 0 0 0.68rem 0;
+}
+
+h1, h2, h3 {
+    font-weight: 500;
+}
+
+.genericButton {
+    border-radius: 100px;
+    font-size: 24px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    height: auto;
+}
+
+.registerButton {
+    background: #1CA9E5;
+}
+
+.registerButton:hover {
+    color: white;
+    background: #1CC3FF;
+}
+
+.createScheduleButton {
+    border: 1px solid #FFFFFF;
+    background: transparent;
+}
+
+.registerButton, .createScheduleButton {
+    padding: 20px 50px;
+}
+
+.createScheduleButton:hover {
+    background: #FFFFFF;
+}
+
+.card-button {
+    padding: 10px 20px !important;
+    margin-bottom: 50px;
+    background: #1CA9E5;
+    border: 0;
+    font-size: 1.2rem;
+}
+
+.card-button:hover {
+    color: white;
+    background: #1CC3FF;
+}
+
+.sport-player {
+    max-height: 40vw;
+}
+
+.sport-name {
+    text-transform: uppercase;
+    color: #FFFFFF;
+    line-height: 3rem;
+}
+
+.gameModeCollapsible {
+    margin: 15px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: none;
+}
+
+.gameModeCollapsible > li > .collapsible-header {
+    border: none;
+    background-color: #F3F9FF;
+    margin-top: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gameModeCollapsible > li > .collapsible-body {
+    border: none;
+    background-color: #F3F9FF;
+}
+
+#collapsibleToggleIcon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    background-color: #1CA9E5;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ul.gameModeList > li {
+    list-style-type: disc;
+    list-style-position: outside;
+    padding-left: 10px;
+    margin-left: 20px;
+}
+
+.rotated {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+/*============================
+    Device dependent css style
+  ============================*/
+
+/* Desktop | Laptop */
+@media only screen and (min-width : 1300px) {
+
+    .sport-image {
+        width: 85px;
+        height: 85px;
+    }
+
+    #sport-image-row {
+        margin-top: 70px;
+    }
+
+    #register-row {
+        margin-top: 50px;
+    }
+
+    #lead-description {
+        font-size: 1.4rem;
+    }
+}
+
+/* Tablet */
+@media only screen and (min-width : 600px) and (max-width: 1300px) {
+
+    .sport-image {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* for background only, 1200px is width of all bg-images
+   CAUTION: Magic numbers*/
+@media only screen and (max-width: 1199px) {
+
+    .section.darkblue-soccer {
+        padding-bottom: calc(450 / 796 * 100%);
+        margin-bottom: calc(-450 / 796 * 100%);
+    }
+
+    .section.lightblue-soccer {
+        padding-bottom: calc(230 / 888 * 100%);
+        margin-bottom: calc(-230 / 888 * 100%);
+        padding-top: calc(84 / 796 * 100% + 60px);
+    }
+
+    .section.orange-basketball  {
+        padding-bottom: calc(100 / 888 * 100%);
+        margin-bottom: calc(-100 / 888 * 100%);
+        padding-top: calc(100 / 796 * 100% + 60px);
+    }
+
+    .section.purple-skating  {
+        padding-bottom: calc(104 / 756 * 100% + 60px);
+        margin-bottom: calc(-104 / 756 * 100% + 60px);
+        padding-top: calc(104 / 756 * 100% + 60px);
+    }
+}
+
+/* Smartphones */
+@media only screen and (max-width: 600px) {
+
+    .section.darkblue-soccer {
+        padding-top: 4%;
+        margin-bottom: calc(-450 / 796 * 100% - 60px);
+    }
+
+    .section.lightblue-soccer {
+        margin-bottom: calc(-230 / 888 * 100% - 60px);
+        padding-top: calc(84 / 796 * 100% + 100px);
+    }
+
+    .section.orange-basketball  {
+        padding-bottom: calc(104 / 888 * 100% + 40px);
+        margin-bottom: calc(-104 / 888 * 100%);
+        padding-top: calc(104 / 796 * 100% + 80px);
+    }
+
+    .genericButton {
+        font-size: 20px;
+    }
+
+    .card-button {
+        font-size: 1rem;
+        width: 90%;
+        display: block;
+        margin: 2rem auto 0 auto;
+    }
+
+    .sport-image {
+        width: 30px;
+        height: 30px;
+    }
+}

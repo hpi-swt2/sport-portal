@@ -1,0 +1,5 @@
+<h1><%= t('mailer.hello', firstname: @user.first_name) %></h1>
+<p><%= t('.added_to_team_info_html',
+         team_link: link_to(@team.name, team_url(@team))) %></p>
+<p><%= t('.have_fun') %></p>
+<p><%= t('mailer.closing', appname: t('appname')) %></p>

@@ -53,6 +53,10 @@ RSpec.describe EventsController, type: :controller do
     FactoryBot.build(:league, name: nil).attributes
   }
 
+  let(:valid_rankinglist_attributes) {
+    FactoryBot.build(:rankinglist, owner: @user, max_teams: 20).attributes
+  }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # EventsController. Be sure to keep this updated too.
@@ -70,8 +74,8 @@ RSpec.describe EventsController, type: :controller do
   end
 
   after(:each) do
-    Match.delete_all
-    Event.delete_all
+    Match.destroy_all
+    Event.destroy_all
     @user.destroy
     @other_user.destroy
     @admin.destroy
@@ -138,20 +142,28 @@ RSpec.describe EventsController, type: :controller do
       get :edit, params: { id: event.to_param }
       expect(response).to_not be_success
     end
+
+    it "should allow admin to edit others created event" do
+      sign_out @user
+      sign_in @admin
+      event = Event.create! valid_event_attributes
+      get :edit, params: { id: event.to_param }
+      expect(response).to be_success
+    end
   end
 
   describe "POST #create" do
     context "with valid params" do
       let(:league_params) {
         {
-          event: valid_league_attributes,
-          type: League
+            event: valid_league_attributes,
+            type: League
         }
       }
       let(:tournament_params) {
         {
-          event: FactoryBot.build(:tournament, owner: @user).attributes,
-          type: Tournament
+            event: FactoryBot.build(:tournament, owner: @user).attributes,
+            type: Tournament
         }
       }
       it "creates a new Event" do
@@ -178,14 +190,14 @@ RSpec.describe EventsController, type: :controller do
     context "with invalid params" do
       let(:league_params) {
         {
-          event: invalid_league_attributes,
-          type: League
+            event: invalid_league_attributes,
+            type: League
         }
       }
       let(:tournament_params) {
         {
-          event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
-          type: Tournament
+            event: FactoryBot.build(:tournament, owner: @user, name: nil).attributes,
+            type: Tournament
         }
       }
       it "returns success when creating a league" do
@@ -204,9 +216,9 @@ RSpec.describe EventsController, type: :controller do
     context "with valid params" do
       let(:new_attributes) {
         {
-          deadline: Date.new(2017, 11, 20),
-          startdate: Date.new(2017, 11, 21),
-          enddate: Date.new(2017, 11, 22)
+            deadline: Date.new(2017, 11, 20),
+            startdate: Date.new(2017, 11, 21),
+            enddate: Date.new(2017, 11, 22)
         }
       }
 
@@ -344,30 +356,52 @@ RSpec.describe EventsController, type: :controller do
       expect(response).to redirect_to(events_url)
     end
   end
-  #this test is only for leagues
+
   describe "GET League#schedule" do
+    let(:league) { league = League.create! valid_league_attributes
+                   league }
+
     it "should generate schedule if not existing" do
-      event = League.create! valid_league_attributes
-      event.add_participant(@user)
-      event.add_participant(@other_user)
-      event.generate_schedule
-      get :schedule, params: { id: event.to_param }, session: valid_session
-      expect(event.matches).not_to be_empty
+      league.add_participant(@user)
+      league.add_participant(@other_user)
+      league.generate_schedule
+      get :schedule, params: { id: league.to_param }, session: valid_session
+      expect(league.all_matches).not_to be_empty
+    end
+
+    it "should update schedule if it is not up-to-date" do
+      league.game_mode = League.game_modes[:swiss]
+      league.teams = FactoryBot.create_list(:team, 4)
+      league.generate_schedule
+      league.save
+      last_gameday = league.gamedays.last
+      last_gameday.update(starttime: Date.current - 2.days, endtime: Date.current - 1.day)
+
+      get :schedule, params: { id: league.to_param }, session: valid_session
+      league.reload
+      expect(league.is_up_to_date).to be true
     end
 
     it "returns a success response" do
-      event = League.create! valid_league_attributes
-      get :schedule, params: { id: event.to_param }, session: valid_session
+      get :schedule, params: { id: league.to_param }, session: valid_session
       expect(response).to be_success
     end
   end
 
   describe "GET #overview" do
-    it "returns a success response" do
-      tournament = Tournament.create! valid_tournament_attributes
-      get :overview, params: { id: tournament.to_param }, session: valid_session
-      expect(response).to be_success
+    context 'given a tournament' do
+      it "it should return a success response" do
+        tournament = Tournament.create! valid_tournament_attributes
+        get :overview, params: { id: tournament.to_param }, session: valid_session
+        expect(response).to be_success
+      end
+    end
+    context 'given a league' do
+      it "should forward to league page" do
+        league = League.create! valid_league_attributes
+        get :overview, params: { id: league.to_param }, session: valid_session
+        expect(response).to redirect_to league
+      end
     end
   end
-
 end

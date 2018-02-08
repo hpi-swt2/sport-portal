@@ -4,26 +4,69 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:gameday) %>:</strong></dt>
-  <dd><%= @match.gameday %></dd>
+  <% unless @match.gameday.nil? %>
+    <dt><strong><%= "#{t('.timeframe')}:"%></strong></dt>
+    <dd><%= @match.gameday.starttime.strftime("%d.%m.%y") %>
+        <%= " #{t('.to')} "%>
+        <%= @match.gameday.endtime.strftime("%d.%m.%y") %>
+    </dd>
+  <% end %>
+  <dt><strong><%= model_class.human_attribute_name(:gameday_number) %>:</strong></dt>
+  <dd><%= @match.gameday_number %></dd>
   <dt><strong><%= model_class.human_attribute_name(:place) %>:</strong></dt>
   <dd><%= @match.place %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team_home_id) %>:</strong></dt>
-  <dd><%= participant_link @match.team_home %></dd>
+  <dd><%= link_to_participant @match.team_home %></dd>
   <dt><strong><%= model_class.human_attribute_name(:team_away_id) %>:</strong></dt>
-  <dd><%= participant_link @match.team_away %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:score_home) %>:</strong></dt>
-  <dd><%= @match.score_home %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:score_away) %>:</strong></dt>
-  <dd><%= @match.score_away %></dd>
+  <dd><%= link_to_participant @match.team_away %></dd>
+  <dt><strong><%= t('view.match.scores_confirmed_question') %></strong></dt>
+  <dd>
+    <% if @match.scores_confirmed? %>
+      <i class="fa fa-check"></i> <%= t('view.match.scores_confirmed') %>
+    <% else %>
+      <i class="fa fa-times"></i> <%= t('view.match.scores_not_confirmed') %>
+    <% end %>
+  </dd>
 </dl>
 
-<%# app/helpers/button_helper.rb %>
-<%= back_btn %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_match_path(@match), :class => 'btn btn-default' %>
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+<h2><%= t("activerecord.models.game_result", count: @match.game_results.size) %></h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= @match.team_home.name if @match.team_home %></th>
+      <th><%= @match.team_away.name if @match.team_away%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @match.game_results.each do |result| %>
+      <tr>
+        <td><%= result.score_home %></td>
+        <td><%= result.score_away %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= back_btn event_schedule_path(@match.event_id) %>
+
+<% if (can? :edit, @match) && (!@match.event.is_a? Rankinglist) %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_match_path(@match), :class => 'btn btn-default' %>
+<% end %>
+<% if (can? :edit, @match) %>
+  <%= link_to t('view.match.edit_results'),
+              edit_results_match_path(@match),
+              class: 'btn btn-default',
+              id: 'edit_results' %>
+<% end %>
+<% if can? :confirm_scores, @match %>
+  <%= link_to t("view.match.confirm_game_result"), confirm_scores_match_path(id: @match.id), class: 'btn btn-default' %>
+<% end %>
+<% if (can? :destroy, @match) && (!@match.event.is_a? Rankinglist) %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               match_path(@match),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
               :class => 'btn btn-danger' %>
+<% end %>
+
+

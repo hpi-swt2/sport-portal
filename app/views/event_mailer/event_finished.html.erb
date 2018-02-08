@@ -1,0 +1,6 @@
+<h1><%= t('mailer.hello', firstname: @user.first_name) %></h1>
+<p>
+  <%= t('event_mailer.event', event: @event.name) %>
+  <%= t('.info') %>
+</p>
+<%= link_to @event.name, @event %>

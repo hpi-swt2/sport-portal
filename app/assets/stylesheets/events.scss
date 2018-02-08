@@ -1,0 +1,19 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+form.event {
+    display:flex;
+    flex-direction:column;
+}
+
+#event_advanced,#rankinglist_advanced {
+  width:100%;
+}
+
+@for $i from 1 through 7 {
+    .order-#{$i} {
+        order: $i;
+    }
+}

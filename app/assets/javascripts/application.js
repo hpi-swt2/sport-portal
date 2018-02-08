@@ -14,5 +14,19 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
+//= require materialize
 //= require turbolinks
+//= require bootstrap/bootstrap-tooltip
 //= require_tree .
+//= require jquery.nested-fields
+
+$(document).ready(function() {
+    var notification = $('div.alert');
+    if (notification.length !== 0) {
+        setTimeout(function() {
+            notification.fadeOut(200, function() {
+                notification.remove();
+            });
+        }, 5000);
+    }
+});

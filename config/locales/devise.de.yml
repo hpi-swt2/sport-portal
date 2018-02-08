@@ -22,6 +22,7 @@ de:
     mailer:
       confirmation_instructions:
         subject: "Anleitung zur Bestätigung Deines Accounts"
+        action: "Mein Konto bestätigen"
       reset_password_instructions:
         subject: "Anleitung um Dein Passwort zurückzusetzen"
         greeting: "Hallo %{name}!"
@@ -76,6 +77,7 @@ de:
       unlink_success: "Die Verbindung wurde erfolgreich aufgehoben."
       no_link: "Dein Account ist mit keinem Dienst verbunden."
       no_account_question: "Du hast noch keinen Account?"
+      have_account_question: "Du hast schon einen Account?"
       my_account: "Mein Account"
     sessions:
       signed_in: "Erfolgreich angemeldet."

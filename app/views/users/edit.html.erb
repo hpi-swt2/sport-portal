@@ -1,35 +1,75 @@
-<%- model_class = User -%>
+<%= render partial: "application/validation_errors", locals: {model: @user} %>
 
-<%= render partial: 'application/validation_errors', locals: {model: resource} %>
-
+<%= stylesheet_link_tag 'users' %>
 <div class="page-header">
-  <h1><%= t 'helpers.titles.edit', model: model_class.model_name.human.titleize %></h1>
+  <h1><%= t 'view.user.edit_profile' %></h1>
 </div>
 
-<%= form_for(resource, as: resource_name, url: user_path(@user), html: { class: 'form-horizontal user', method: :put }) do |f| %>
-  <div class="form-group">
+<%= form_for(@user, url: user_path(@user), html: { class: 'form-horizontal user', method: :put }) do |f| %>
+  <div class="form-group row">
     <%= f.label :first_name, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :first_name, autofocus: true, class: 'form-control' %>
       <%= f.error_span(:first_name) %>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group row">
     <%= f.label :last_name, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :last_name, class: 'form-control' %>
       <%= f.error_span(:last_name) %>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group row">
     <%= f.label :email, class: 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.email_field :email, class: 'form-control' %>
       <%= f.error_span(:email) %>
     </div>
   </div>
+  <div class="form-group row">
+    <%= f.label :avatar, t('activerecord.models.image.one'), class: 'control-label col-lg-2'%>
+    <div class="col-lg-10">
+      <%= image_tag @user.avatar_url || image_path('missing_avatar.png'), id: 'preview', style: 'max-width:100px; max-height:100px'%>
+      <%= f.file_field :avatar, class: 'form-control-file' %>
+      <% if current_user.avatar %>
+        <%= f.check_box :remove_avatar %>
+        <%= f.label :remove_avatar, t('helpers.submit.delete', model: t('activerecord.models.image.one'))+ "  " %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= f.label :birthday, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.date_field :birthday, min: Date.today - 200.years, max: Date.today, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= f.label :telephone_number, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.telephone_field :telephone_number, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= f.label :telegram_username, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :telegram_username, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= f.label :favourite_sports, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :favourite_sports, class: 'form-control', placeholder: t('view.user.favourite_sports_placeholder') %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= f.label :contact_information, class: 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :contact_information, class: 'form-control', placeholder: t('view.user.contact_information_placeholder') %>
+    </div>
+  </div>
   <% unless @user.has_omniauth? %>
-    <div class="form-group">
+    <div class="form-group row">
       <%= f.label :password, class: 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
@@ -37,7 +77,7 @@
         <p class="help-block"><i><%= t('.leave_blank_if_you_don_t_want_to_change_it') %></i></p>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group row">
       <%= f.label :password_confirmation, class: 'control-label col-lg-2' %>
       <div class="col-lg-10">
         <%= f.password_field :password_confirmation, class: 'form-control'  %>
@@ -45,16 +85,35 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group row">
       <%= f.label :current_password, class: 'control-label col-lg-2' %>
       <div class="col-lg-10">
-        <%= f.password_field :current_password, class: 'form-control' %>
+        <% if @user.errors.include? :current_password %>
+          <%= f.password_field :current_password, class: 'form-control', data: { show: true } %>
+        <% else %>
+          <%= f.password_field :current_password, class: 'form-control' %>
+        <% end %>
         <%= f.error_span(:current_password) %>
         <p class="help-block"><i><%= t('.we_need_your_current_password_to_confirm_your_changes') %></i></p>
       </div>
     </div>
   <% end %>
-  <div class="form-group">
+  <div class="form-group order-1">
+    <h3 class="form-group__title"><%=t('users.edit.notifications.subtitle')%></h3>
+  </div>
+  <div class="form-group order-1">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.check_box :team_notifications_enabled, class: 'filled-in' %>
+      <%= f.label :team_notifications_enabled, t('users.edit.notifications.enable_team_notifications') %> <br>
+    </div>
+  </div>
+  <div class="form-group order-1">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.check_box :event_notifications_enabled, class: 'filled-in' %>
+      <%= f.label :event_notifications_enabled, t('users.edit.notifications.enable_event_notifications') %> <br>
+    </div>
+  </div>
+  <div class="form-group row">
     <label class="control-label col-lg-2">OpenID</label>
     <div class="col-lg-10">
       <% if @user.has_omniauth? %>
@@ -72,12 +131,16 @@
       <% end %>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group row" id="save-cancel-section">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, class: 'btn btn-primary' %>
+      <%= f.submit nil, class: 'btn btn-save-edit-user' %>
       <%= link_to t('.cancel', default: t('helpers.links.cancel')),
-                user_path(@user), class: 'btn btn-default' %>
-      <%= t('.unhappy') %>? <%= link_to t('.cancel_this_account'), user_path(@user), data: { confirm: t('.are_you_sure', default: t('helpers.links.confirm')) }, method: :delete, current_password: f.submit %>.
+                user_path(@user), class: 'btn btn-cancel-edit-user' %>
+    </div>
+  </div>
+  <div class="form-group row" id="delete-account-section">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= t('.unhappy') %>? <%= link_to t('.cancel_this_account'), user_path(@user), method: :delete %>.
     </div>
   </div>
 <% end %>

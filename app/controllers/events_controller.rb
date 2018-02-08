@@ -1,15 +1,13 @@
 class EventsController < ApplicationController
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join, :overview]
+  authorize_resource :event
+
+
   helper EventsHelper
-  load_and_authorize_resource
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :team_join]
 
   # GET /events
   def index
-    if get_shown_events_value == "on"
-      @events = Event.all
-    else
-      @events = Event.active
-    end
+    @events = Event.all
   end
 
   # GET /events/1
@@ -33,7 +31,6 @@ class EventsController < ApplicationController
   def create
     @event = event_type.new(event_params)
     set_associations
-
     if @event.save
       @event.editors << current_user
       redirect_to @event, notice: 'Event was successfully created.'
@@ -44,6 +41,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1
   def update
+    @event.invalidate_schedule if event_params[:has_place_3_match].to_i.zero? == @event.has_place_3_match
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -64,6 +62,7 @@ class EventsController < ApplicationController
     else
       @event.add_team(Team.find(event_params[:teams]))
     end
+
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
@@ -88,12 +87,19 @@ class EventsController < ApplicationController
     if @event.matches.empty?
       @event.generate_schedule
       @event.save
+    elsif not @event.is_up_to_date
+      @event.update_schedule
+      @event.save
     end
+
     @matches = @event.matches
     @schedule_type = @event.type.downcase!
   end
 
   def overview
+    if @event.type == 'League'
+      redirect_to @event, error: t('events.overview.not_available_for_leagues')
+    end
   end
 
   private
@@ -103,8 +109,11 @@ class EventsController < ApplicationController
     end
 
     def set_associations
+      @event.matchtype ||= :bestof
+      @event.game_winrule ||= :most_sets
+      @event.min_players_per_team ||= 1
+      @event.max_players_per_team ||= 1
       @event.owner = current_user
-      @event.player_type ||= Event.player_types[:single]
     end
 
     # Get the type of event that should be created
@@ -113,10 +122,6 @@ class EventsController < ApplicationController
       return Tournament if params[:type] == 'Tournament'
       return Rankinglist if params[:type] == 'Rankinglist'
       params[:type]
-    end
-
-    def get_shown_events_value
-      params[:showAll]
     end
 
     def map_event_on_event_types
@@ -145,8 +150,20 @@ class EventsController < ApplicationController
                                     :startdate,
                                     :teams,
                                     :enddate,
+                                    :matchtype,
+                                    :bestof_length,
+                                    :game_winrule,
+                                    :points_for_win,
+                                    :points_for_draw,
+                                    :points_for_lose,
                                     :initial_value,
+                                    :min_players_per_team,
+                                    :max_players_per_team,
                                     :gameday_duration,
+                                    :image,
+                                    :remove_image,
+                                    :has_place_3_match,
+                                    :maximum_elo_change,
                                     user_ids: [])
     end
 end

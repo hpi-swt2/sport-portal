@@ -34,27 +34,77 @@ en:
       delete: "Delete %{model}"
       create: "Create %{model}"
       submit: "Save %{model}"
-      update: "Update %{model}"
+      update: "Save"
     select:
       prompt: "Please select"
+      option_operator: "or"
     teams:
       kind_of_sport: "Kind of sport"
       description: "Description"
       private: "Private"
       cant_destroy: "%{resource_name} can't be deleted, because it still participates in events."
+      filter: Show
+      show_all: All teams
+      show_mine: Only my teams
       multiple_actions:
         apply_action: "Apply action to selected:"
         select_all: "Select all"
         deselect_all: "Deselect all"
         confirmation: "Action successful"
         failure_on: "Action successful. %{user_names} could not be changed."
+    fields:
+      mandatory: "Mandatory field"
     flash:
       created: "%{resource_name} was successfully created."
       updated: "%{resource_name} was successfully updated."
       destroyed: "%{resource_name} was successfully destroyed."
-    label:
-      user:
-        birthday: "Birthday"
-        telephone_number: "Telephone Number"
-        telegram_username: "Telegram Username"
-        favourite_sports: "Favourite Sports"
+  mailer:
+    hello: "Hey %{firstname},"
+    have_fun: "Good luck with your training!"
+    closing: "%{appname} Team"
+  match_mailer:
+    start_time: "When? On %{start_date} at %{start_time}"
+    place: "Where? %{place}"
+    here: "Here"
+    apply_changes: "%{match_link} you can apply changes."
+    add_results: "%{match_link} you can add results."
+    match_notification:
+      subject: "Your match against %{opponent_team_name} as part of %{event_name} starts tomorrow"
+      info_html: "your match against %{opponent_team_link} as part of %{event_link} starts tomorrow."
+      info_txt: "your match against %{opponent_team_name} as part of %{event_name} starts tomorrow."
+      have_fun: "Have fun!"
+    match_canceled:
+      subject: "Your match against %{opponent_team_name} as part of %{event_name} was canceled"
+      info_html: "your match against %{opponent_team_link} as part of %{event_link} was canceled."
+      info_txt: "your match against %{opponent_team_name} as part of %{event_name} was canceled."
+      have_fun: "Have fun!"
+    match_scheduled:
+      subject: "Your match against %{opponent_team_name} as part of %{event_name} has been scheduled"
+      info_html: "your match against %{opponent_team_link} as part of %{event_link} has been scheduled."
+      info_txt: "your match against %{opponent_team_name} as part of %{event_name} has been scheduled."
+      have_fun: "Have fun at the match!"
+    match_date_changed:
+      subject: "Your match against %{opponent_team_name} as part of %{event_name} has changed"
+      info_html: "your match against %{opponent_team_link} as part of %{event_link} has changed."
+      info_txt: "your match against %{opponent_team_name} as part of %{event_name} has changed."
+      have_fun: "Have fun at the match!"
+  event_mailer:
+    event: "the event %{event}"
+    event_canceled:
+      info: "has been canceled."
+      subject: "Your event has been canceled"
+    event_started:
+      info: "has started."
+      subject: "Your event has started"
+    event_finished:
+      info: "has finished."
+      subject: "Your event has finished"
+  team_mailer:
+    user_added_to_team:
+      added_to_team_info_html: 'you joined the team %{team_link}.'
+      subject: "You joined the team %{team_name}"
+      have_fun: "Have fun!"
+    team_registered_to_event:
+      registered_to_event_info_html: 'your team %{team_link} now participates in the event %{event_link}.'
+      subject: "Your team %{team_name} now participates in the event %{event_name}"
+      have_fun: "Have fun!"

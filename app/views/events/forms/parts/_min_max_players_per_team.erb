@@ -1,0 +1,13 @@
+<div class="form-group order-2" id="event_min_players_per_team">
+  <%= form.label :min_players_per_team, class: 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= form.number_field :min_players_per_team, class: 'form-control', min: 1, value: @event.min_players_per_team %>
+  </div>
+</div>
+
+<div class="form-group order-2" id="event_max_players_per_team">
+  <%= form.label :max_players_per_team, class: 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= form.number_field :max_players_per_team, class: 'form-control', min: 1, value: @event.max_players_per_team %>
+  </div>
+</div>

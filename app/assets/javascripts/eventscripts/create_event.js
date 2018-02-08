@@ -1,7 +1,7 @@
 $( document ).on('turbolinks:load', function() {
-    $('#event_deadline').datepicker({ autoclose: true});
-    $('#event_startdate').datepicker({ autoclose: true});
-    $('#event_enddate').datepicker({ autoclose: true});
+    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
+    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
+    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
 
     $("#event_duration").val("");
   
@@ -12,7 +12,7 @@ $( document ).on('turbolinks:load', function() {
        }
     });
 
-    $("#event_startdate").on("change", changeDur);
+    $("#event_startdate").on("change", callChanged);
 
 
     $("#event_enddate").datepicker({
@@ -21,12 +21,63 @@ $( document ).on('turbolinks:load', function() {
         }
     });
 
-    $("#event_enddate").on("change", changeDur);
+    $("#event_enddate").on("change", adaptDuration);
 
+    $("#league_gameday_duration").on("change",durationChanged);
+
+    $("#league_game_mode").on("change",callChanged);
+
+    $("#league_max_teams").on("change",callChanged);
+
+    function callChanged()
+    {
+        adaptDuration();
+        durationChanged();
+    }
+    function durationChanged()
+    {
+        var start = $("#event_startdate").val();
+        var end = $("#event_enddate").val();
+        var system = $("#league_game_mode").val();
+        var gameday_dur =$("#league_gameday_duration").val();
+        var participants = $("#league_max_teams").val();
+        if(start != "" && gameday_dur != "" && system != "" && gameday_dur != undefined && system != undefined)
+        {
+            rounds = calcRounds(system,participants);
+            var number_of_days = rounds * parseInt(gameday_dur);
+            $("#event_enddate").val(addDays(start,number_of_days));
+
+        }
+        changeDur();
+    }
+    function adaptDuration()
+    {
+        var start = $("#event_startdate").val();
+        var end = $("#event_enddate").val();
+        var system = $("#league_game_mode").val();
+        var gameday_dur =$("#league_gameday_duration").val();
+        var participants = $("#league_max_teams").val();
+        if(start != "" && end != "" && system != "" && gameday_dur != undefined && system != undefined)
+        {
+            rounds = calcRounds(system,participants);
+            var diff = calcDateDiff(start,end);
+            var gameday_duration = Math.floor(diff/rounds);
+            if(diff <= 0)
+            {
+                $("#league_gameday_duration").val(1);
+            }
+            else {
+                $("#league_gameday_duration").val(gameday_duration);
+            }
+
+        }
+        changeDur();
+    }
     function changeDur()
     {
         var start = $("#event_startdate").val();
         var end = $("#event_enddate").val();
+
         if(start != "" && end != "") {
             diff = calcDateDiff(start,end);
             if (diff <= 0){
@@ -36,27 +87,148 @@ $( document ).on('turbolinks:load', function() {
         }
     }
 
+    function addDays(date, days) {
+        date = date.split(".");
+        var result = new Date(date[2], date[1]-1, date[0]);
+        result.setDate(result.getDate() + parseInt(days));
+        var dd = result.getDate();
+        var mm = result.getMonth()+1;
+        var y = result.getFullYear();
+        if(dd < 10){
+            dd = "0"+ dd;
+        }
+        if(mm < 10){
+            mm = "0"+ mm;
+        }
+        var formattedDate = dd + '.' + mm + '.' + y;
+        return formattedDate;
+    }
+
     function calcDateDiff(startdatestr, enddatestr)
     {
-      var start = new Date(startdatestr);
-      var end = new Date(enddatestr);
-
+      var splittetStart = startdatestr.split(".");
+      var splittetEnd = enddatestr.split(".");
+      // Es muss 1 vom Monat abgezogen werden, da diese 0 indiziert sind
+      var start = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
+      var end = new Date(splittetEnd[2],splittetEnd[1]-1,splittetEnd[0]);
       return  Math.round((end-start)/(1000*60*60*24)) + 1;
+    }
+
+    function calcRounds(system,participants)
+    {
+        var num_part = parseInt(participants);
+        var sys = system;
+        var num_rounds;
+        if(sys == "round_robin" || sys == "two_halfs")
+        {
+            if(num_part % 2 == 0)
+            {
+                num_rounds = num_part - 1;
+            }
+            else
+            {
+                num_rounds = num_part;
+            }
+        }
+        else if (sys == "swiss")
+        {
+            num_rounds = (0.2 * num_part) + (1.4 * num_part);
+        }
+
+        return Math.ceil(num_rounds);
     }
 
     $("#event_duration").on("change", function(){
 
        var start = $("#event_startdate").val();
        if(start != "") {
-           var startdate = new Date(start);
+           var splittetStart = start.split(".");
+           var startdate = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
            startdate.setDate(startdate.getDate() + parseInt(this.value - 1));
 
            var dd = startdate.getDate();
            var mm = startdate.getMonth() + 1;
            var y = startdate.getFullYear();
-           var formattedDate = y + '-' + mm + '-' + dd;
+           if(mm < 10){
+               mm = "0"+ mm;
+           }
+           var formattedDate = dd + '.' + mm + '.' + y;
            $("#event_enddate").val(formattedDate);
        }
     });
+
+    // Autofill of player count for an event
+    showPlayerCount();
+    $("#event_player_type").on("change", showPlayerCount);
+
+
+    function showPlayerCount()
+    {
+      switch($("#event_player_type").val())
+      {
+        case "single":
+          $("#event_min_players_per_team").hide();
+          $("#event_max_players_per_team").hide();
+          break;
+        case "team":
+          $("#event_min_players_per_team").show();
+          $("#event_max_players_per_team").show();
+          break;
+        default:
+          $("#event_min_players_per_team").hide();
+          $("#event_max_players_per_team").hide();
+          break;
+      }
+    }
+
+    //rankinglist_game_mode -> rankinglist_initial_value
+    var initial_value_elo = $("#rankinglist_initial_value").val()=="" || $("#rankinglist_game_mode").val() != "elo" ? "1000" : $("#rankinglist_initial_value").val();
+    var initial_value_trueskill = $("#rankinglist_initial_value").val()=="" || $("#rankinglist_game_mode").val() != "true_skill" ? "25" : $("#rankinglist_initial_value").val();
+    var initial_value_win_loss = $("#rankinglist_initial_value").val()=="" || $("#rankinglist_game_mode").val() != "win_loss" ? "0" : $("#rankinglist_initial_value").val();;
+    showInitialValue();
+    $("#rankinglist_game_mode").on("change", showInitialValue);
+    function showInitialValue()
+    {
+        switch($("#rankinglist_game_mode").val())
+        {
+            case "elo":
+                $("#rankinglist_initial_value").val(initial_value_elo);
+                var default_elo_change = $("#rankinglist_maximum_elo_change");
+                if(default_elo_change.val()=="")
+                {
+                    default_elo_change.val(32);
+                }
+                $("#rankinglist_advanced").show();
+                break;
+            case "true_skill":
+                $("#rankinglist_initial_value").val(initial_value_trueskill);
+                break;
+            case "win_loss":
+                $("#rankinglist_initial_value").val(initial_value_win_loss);
+                break;
+            default:
+                $("#rankinglist_initial_value").val("0");
+                $("#rankinglist_advanced").hide();
+                break;
+        }
+    }
+
+    $("#rankinglist_initial_value").on("change", saveInitialValue);
+    function saveInitialValue()
+    {
+        switch($("#rankinglist_game_mode").val()) {
+            case "elo":
+                initial_value_elo = $("#rankinglist_initial_value").val();
+                break;
+            case "true_skill":
+                initial_value_trueskill = $("#rankinglist_initial_value").val();
+                break;
+            case "win_loss":
+                initial_value_win_loss = $("#rankinglist_initial_value").val();
+                break;
+            default:
+                break;
+        }
+    }
 });
 
