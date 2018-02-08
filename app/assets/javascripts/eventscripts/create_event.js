@@ -182,10 +182,10 @@ $( document ).on('turbolinks:load', function() {
     }
 
     //rankinglist_game_mode -> rankinglist_initial_value
+    var initial_value_elo = $("#rankinglist_initial_value").val()=="" || $("#rankinglist_game_mode").val() != "elo" ? "1000" : $("#rankinglist_initial_value").val();
+    var initial_value_trueskill = $("#rankinglist_initial_value").val()=="" || $("#rankinglist_game_mode").val() != "true_skill" ? "25" : $("#rankinglist_initial_value").val();
+    var initial_value_win_loss = $("#rankinglist_initial_value").val()=="" || $("#rankinglist_game_mode").val() != "win_loss" ? "0" : $("#rankinglist_initial_value").val();;
     showInitialValue();
-    var initial_value_elo = "1000";
-    var initial_value_trueskill = "25";
-    var initial_value_win_loss = "0";
     $("#rankinglist_game_mode").on("change", showInitialValue);
     function showInitialValue()
     {

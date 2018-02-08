@@ -34,6 +34,7 @@
 
 class Rankinglist < Event
   validates :deadline, :startdate, :enddate, presence: false
+  validates :initial_value, presence: true
 
   enum game_mode: [:elo]
 
