@@ -189,7 +189,7 @@ end
 Then(/^(.*) should be able to enter start and end date for each gameday$/) do |user|
   first(:css, "#gameday_starttime").set '10.05.2013'
   first(:css, "#gameday_endtime").set '15.05.2013'
-  first( :button, I18n.t('events.schedule.edit_date')).click
+  first(:button, I18n.t('events.schedule.edit_date')).click
 end
 
 
