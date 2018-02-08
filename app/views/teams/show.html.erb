@@ -7,14 +7,14 @@
         $('.check_all').each(function (index) {
             $( this ).on("click", function() {
                 var cbxs = $('input[type="checkbox"]');
-                cbxs.prop("checked", true);
+                cbxs.prop("checked", true).change(); // Trigger "change" event to show/hide multi-member action buttons
             });
             $( this ).toggle(isCheckBoxExisting);
         });
         $('.uncheck_all').each(function (index) {
             $( this ).on("click", function() {
                 var cbxs = $('input[type="checkbox"]');
-                cbxs.prop("checked", false);
+                cbxs.prop("checked", false).change(); // Trigger "change" event to show/hide multi-member action buttons
             });
             $( this ).toggle(isCheckBoxExisting);
         });
@@ -28,6 +28,22 @@
                     window.location.href = 'mailto:' + email_adresses.join();
                 }
             });
+        });
+
+        // Make sure that the buttons for actions on multiple team members are visible when JavaScript is deactivated
+        // by hiding them not via CSS but via JavaScript
+        $('.only-show-when-participants-selected').hide();
+
+        $('.participant :checkbox').change(function(event){
+            if ($(this).is(':checked')) {
+                $('.only-show-when-participants-selected').fadeIn();
+            } else if ($('.participant :checked').length === 0) {
+                $('.only-show-when-participants-selected').hide();
+            }
+        });
+
+        $('#invite_user_by_email_modal').modal({
+            complete: function() { $(".modal-body #email").val(""); } // Clear email field when modal closes (see #490)
         });
     });
 </script>
@@ -83,6 +99,7 @@
       </div>
     </section>
   <% end %>
+  <% if user_signed_in? %>
   <section id="participantsSection">
     <div class="row">
       <div class="col s12 center">
@@ -93,126 +110,125 @@
       <div class="col s12">
         <% if can? :assign_membership_by_email, @team %>
             <%= link_to t('teams.show.invite_user_to_team'),
-                        '#',
-                        data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
-                        class: 'btn btn-primary genericButton blueActionButton' %>
+                        '',
+                        type: 'button',
+                        data: { 'target': 'invite_user_by_email_modal' },
+                        class: 'btn genericButton blueActionButton modal-trigger' %>
         <% end %>
       </div>
     </div>
-    <% if user_signed_in? %>
-      <%= form_tag perform_action_on_multiple_members_team_path(@team), id: 'membersForm' do %>
-          <% @team.members.each_with_index do | member, iMember | %>
-              <% if (iMember % 2) == 0 %>
-                  <div class="row">
-              <% end %>
-              <div class="col s12 m6 participant">
-                <div class="row valign-wrapper" style="height: 100%;">
-                  <div class="col s2 xl1 valign-wrapper" style="padding-top: 10px;">
-                    <% if @team.members.include? current_user %>
-                        <%= check_box_tag "members[]", member.id, false, class: 'filled-in', id: 'memberCheck' + member.id.to_s %>
-                        <%= label_tag 'memberCheck' + member.id.to_s do %><% end %>
-                    <% end %>
+    <%= form_tag perform_action_on_multiple_members_team_path(@team), id: 'membersForm' do %>
+        <% @team.members.each_with_index do | member, iMember | %>
+            <% if (iMember % 2) == 0 %>
+                <div class="row">
+            <% end %>
+            <div class="col s12 m6 participant">
+              <div class="row valign-wrapper" style="height: 100%;">
+                <div class="col s2 xl1 valign-wrapper" style="padding-top: 10px;">
+                  <% if @team.members.include? current_user %>
+                      <%= check_box_tag "members[]", member.id, false, class: 'filled-in', id: 'memberCheck' + member.id.to_s %>
+                      <%= label_tag 'memberCheck' + member.id.to_s do %><% end %>
+                  <% end %>
+                </div>
+                <div class="col s2 xl1 avatarCol">
+                  <%= image_tag member.avatar_url || image_path('https://owncloud.hpi.de/index.php/s/rd14acG6qOlAHHJ/download'), class: 'circle' %>
+                </div>
+                <div class="col s6 xl8 truncate" style="font-size: 120%;">
+                  <div class="row" style="margin-bottom: 0;">
+                    <div class="col s12">
+                      <%= link_to member.first_name + ' ' + member.last_name, user_path(member)%>
+                    </div>
                   </div>
-                  <div class="col s2 xl1 avatarCol">
-                    <%= image_tag member.avatar_url || image_path('https://owncloud.hpi.de/index.php/s/rd14acG6qOlAHHJ/download'), class: 'circle' %>
-                  </div>
-                  <div class="col s6 xl8 truncate" style="font-size: 120%;">
-                    <div class="row" style="margin-bottom: 0;">
-                      <div class="col s12">
-                        <%= link_to member.first_name + ' ' + member.last_name, user_path(member)%>
+                  <% if @team.owners.include? member %>
+                    <div class="row red-text" style="margin-bottom: 0;">
+                      <div class="col s12" style="font-size: 80%;">
+                        <%= t('teams.show.captain') %>
                       </div>
                     </div>
-                    <% if @team.owners.include? member %>
-                      <div class="row red-text" style="margin-bottom: 0;">
-                        <div class="col s12" style="font-size: 80%;">
-                          <%= t('teams.show.captain') %>
-                        </div>
-                      </div>
-                    <% end %>
-                  </div>
-                  <div class="col s2">
-                    <% if @team.members.include? current_user %>
-                        <% if can? :send_emails_to_team_members, @team %>
-                            <%= mail_to member.email do %>
-                                <img src="https://owncloud.hpi.de/index.php/s/OEnLDLBOBktpqzT/download">
-                            <% end %>
-                        <% end %>
-                    <% end %>
-                  </div>
+                  <% end %>
+                </div>
+                <div class="col s2">
+                  <% if @team.members.include? current_user %>
+                      <% if can? :send_emails_to_team_members, @team %>
+                          <%= mail_to member.email do %>
+                              <img src="https://owncloud.hpi.de/index.php/s/OEnLDLBOBktpqzT/download">
+                          <% end %>
+                      <% end %>
+                  <% end %>
                 </div>
               </div>
-              <% if (iMember % 2) == 1 || iMember == @team.members.length - 1 %>
-                  </div>
-              <% end %>
-          <% end %>
-          <div class="row">
-            <div class="col s6 m12">
-              <button type="button" class="btn btn-xs btn-default btw genericButton whiteActionButton check_all" style="margin-right: 20px;">
-                <%=t('.select_all', :default => t("helpers.teams.multiple_actions.select_all"))%>
-              </button>
-              <button type="button" class="btn btn-xs btn-default btw genericButton whiteActionButton hide-on-small-only uncheck_all">
-                <%=t('.deselect_all', :default => t("helpers.teams.multiple_actions.deselect_all"))%>
-              </button>
             </div>
-            <div class="col s6 hide-on-med-and-up center">
-              <button type="button" class="btn btn-xs btn-default btw genericButton whiteActionButton uncheck_all right">
-                <%=t('.deselect_all', :default => t("helpers.teams.multiple_actions.deselect_all"))%>
-              </button>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 50px;">
-            <div class="col s12" style="font-size: 80%;">
-              <%= t('.apply_action', :default => t("helpers.teams.multiple_actions.apply_action")) %>
-            </div>
-          </div>
-          <div class="row hide-on-small-only">
-            <% if can? :send_emails_to_team_members, @team %>
-                <div class="col m6 xl3">
-                  <%= button_tag t('.email', :default => t("helpers.links.email")),
-                                 :type => 'button',
-                                 :class => 'btn genericButton blueActionButton send_email_to_multiple_members' %>
+            <% if (iMember % 2) == 1 || iMember == @team.members.length - 1 %>
                 </div>
             <% end %>
-            <% if (@team.owners.include? current_user) %>
-                <div class="col m6 xl3">
-                  <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
-                </div>
-                <div class="myRow">
-                  <div class="col m6 xl3">
-                    <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
-                  </div>
-                  <div class="col m6 xl3">
-                    <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
-                  </div>
-                </div>
-            <% end %>
+        <% end %>
+        <div class="row">
+          <div class="col s6 m12">
+            <button type="button" class="btn btn-xs btn-default btw genericButton whiteActionButton check_all" style="margin-right: 20px;">
+              <%=t('.select_all', :default => t("helpers.teams.multiple_actions.select_all"))%>
+            </button>
+            <button type="button" class="btn btn-xs btn-default btw genericButton whiteActionButton hide-on-small-only uncheck_all">
+              <%=t('.deselect_all', :default => t("helpers.teams.multiple_actions.deselect_all"))%>
+            </button>
           </div>
+          <div class="col s6 hide-on-med-and-up center">
+            <button type="button" class="btn btn-xs btn-default btw genericButton whiteActionButton uncheck_all right">
+              <%=t('.deselect_all', :default => t("helpers.teams.multiple_actions.deselect_all"))%>
+            </button>
+          </div>
+        </div>
+        <div class="row only-show-when-participants-selected" style="margin-top: 50px;">
+          <div class="col s12" style="font-size: 80%;">
+            <%= t('.apply_action', :default => t("helpers.teams.multiple_actions.apply_action")) %>
+          </div>
+        </div>
+        <div class="row hide-on-small-only only-show-when-participants-selected">
           <% if can? :send_emails_to_team_members, @team %>
-              <div class="row hide-on-med-and-up">
-                <div class="col s12 center">
-                  <%= button_tag t('.email', :default => t("helpers.links.email")),
-                                 :type => 'button',
-                                 :class => 'btn genericButton blueActionButton send_email_to_multiple_members' %>
-                </div>
+              <div class="col m6 xl3">
+                <%= button_tag t('.email', :default => t("helpers.links.email")),
+                               :type => 'button',
+                               :class => 'btn genericButton blueActionButton send_email_to_multiple_members' %>
               </div>
           <% end %>
           <% if (@team.owners.include? current_user) %>
-            <div class="row hide-on-med-and-up">
-              <div class="col s12 center">
+              <div class="col m6 xl3">
                 <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
               </div>
-            </div>
-            <div class="row hide-on-med-and-up">
-              <div class="col s12 center">
-                <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
-              </div>
-            </div>
-              <div class="row hide-on-med-and-up">
-                <div class="col s12 center">
-                  <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-xs btn-default genericButton blueActionButton" %>              </div>
+              <div class="myRow">
+                <div class="col m6 xl3">
+                  <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
+                </div>
+                <div class="col m6 xl3">
+                  <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
+                </div>
               </div>
           <% end %>
-      <% end %>
+        </div>
+        <% if can? :send_emails_to_team_members, @team %>
+            <div class="row hide-on-med-and-up only-show-when-participants-selected">
+              <div class="col s12 center">
+                <%= button_tag t('.email', :default => t("helpers.links.email")),
+                               :type => 'button',
+                               :class => 'btn genericButton blueActionButton send_email_to_multiple_members' %>
+              </div>
+            </div>
+        <% end %>
+        <% if (@team.owners.include? current_user) %>
+          <div class="row hide-on-med-and-up only-show-when-participants-selected">
+            <div class="col s12 center">
+              <%= submit_tag t('.assign_ownership', :default => t("helpers.links.assign_ownership")), name: "assign_ownership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
+            </div>
+          </div>
+          <div class="row hide-on-med-and-up only-show-when-participants-selected">
+            <div class="col s12 center">
+              <%= submit_tag t('.delete_ownership', :default => t("helpers.links.delete_ownership")), name: "delete_ownership", class: "btn btn-xs btn-default genericButton blueActionButton" %>
+            </div>
+          </div>
+            <div class="row hide-on-med-and-up only-show-when-participants-selected">
+              <div class="col s12 center">
+                <%= submit_tag t('.delete_membership', :default => t("helpers.links.delete_membership")), name: "delete_membership", class: "btn btn-xs btn-default genericButton blueActionButton" %>              </div>
+            </div>
+        <% end %>
     <% end %>
     <% if can? :assign_membership_by_email, @team %>
         <%= render :partial => 'invite_user_by_email_modal' %>
@@ -223,6 +239,7 @@
       <div class="divider"></div>
     </div>
   </div>
+  <% end %>
   <section>
     <div class="row">
       <div class="col m12 hide-on-small-only">

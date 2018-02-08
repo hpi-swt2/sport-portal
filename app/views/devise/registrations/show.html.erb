@@ -33,6 +33,12 @@
     <% end %>
   </div>
   <div class="row">
+    <% if @user.contact_information.present? %>
+        <p class="description-tag"><%= model_class.human_attribute_name(:contact_information) %></p>
+        <p class="description-text"><%= @user.contact_information %></p>
+    <% end %>
+  </div>
+  <div class="row">
     <% if can? :edit, @user %>
         <%= link_to t('.edit', :default => t('navbar.drop-down.edit_profile')),
                     edit_user_path(@user), :class => 'btn btn-save-edit-user btn-centered' %>

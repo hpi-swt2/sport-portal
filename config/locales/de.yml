@@ -109,8 +109,6 @@ de:
       dashboard: "Mein Dashboard"
       my_profile: "Mein Profil"
       edit_profile: "Profil bearbeiten"
-      notification_settings: "Benachrichtigungseinstellungen"
-      notifications: "Benachrichtigungen"
 
   dashboard:
     title: "Dashboard für %{name}"
@@ -120,6 +118,8 @@ de:
       match:
         one: "Spiel"
         other: "Spiele"
+        errors:
+          score_proposer_confirmer_team: "Die Bestätigung von Ergebnissen muss durch einen Spieler des anderen Teams erfolgen."
       team:
         one: "Team"
         other: "Teams"
@@ -127,8 +127,8 @@ de:
         one: "Spieler"
         other: "Spieler"
         errors:
-          future_birthday: "Der Geburtstag darf nicht in der Zukunft liegen"
-          telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
+          future_birthday: "darf nicht in der Zukunft liegen"
+          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen und kann mit einem + beginnen"
       image:
         one: "Bild"
         other: "Bilder"
@@ -154,6 +154,7 @@ de:
         id: "ID"
         date: "Datum"
         place: "Ort"
+        gameday: "Spieltag"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
@@ -199,9 +200,9 @@ de:
           team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
-        points_for_win: "Punkte für Gewinn"
-        points_for_draw: "Punkte für Unentschieden"
-        points_for_lose: "Punkte für Niederlage"
+        points_for_win: "Eventpunkte für Gewinn"
+        points_for_draw: "Eventpunkte für Unentschieden"
+        points_for_lose: "Eventpunkte für Niederlage"
         selection_types:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
@@ -225,6 +226,7 @@ de:
         birthday: "Geburtstag"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+        contact_information: "Kontaktinformationen"
         id: "ID"
         created_at: "Erstellt am"
     validations:
@@ -235,19 +237,19 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
-      notifications:
-            settings: "Benachrichtigungs-Einstellungen"
-            enable_team_notifications: "Team-Benachrichtigungen erhalten"
-            enable_event_notifications: "Event-Benachrichtigung erhalten"
-            update_settings: "Aktualisieren"
-
+      contact_information_placeholder: "Facebook-Profil, Homepage, LinkedIn-Account, ..."
 
     match:
       game_results: "Ergebnis(se)"
+      game_result:
+        points: "Punkte"
       add_game_result: "Ergebnis hinzufügen"
       remove_game_result: "Ergebnis entfernen"
       added_game_result_notice: "Ergebnis hinzugefügt!"
       removed_game_result_notice: "Ergebnis entfernt!"
+      confirm_game_result: "Ergebnisse bestätigen"
+      confirmed: "Bestätigt"
+      not_confirmed: "Nicht bestätigt"
       noscript:
         add_results_notice:
           create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
@@ -337,6 +339,7 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      event_points: "Eventpunkte"
       first_half: "Hinrunde"
       second_half: "Rückrunde"
       finale: "Finale"
@@ -429,6 +432,10 @@ de:
       unhappy: "Unzufrieden"
       leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
       we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+      notifications:
+          subtitle: "Benachrichtigungen"
+          enable_team_notifications: "Team-Benachrichtigungen erhalten"
+          enable_event_notifications: "Event-Benachrichtigung erhalten"
     destroy:
       confirm: "Bestätigen"
 

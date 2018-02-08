@@ -4,8 +4,7 @@ Feature: Tournament optional place 3 match
   I want to make the place 3 match optional
 
   Scenario: Create match without place 3 match
-    Given a user
-    And the user is logged in
+    Given a logged in admin
     When he visits the create event path
     And he clicks 'New tournament'
     And he fills in valid tournament data
@@ -18,8 +17,7 @@ Feature: Tournament optional place 3 match
     Then the text Spiel um Platz 3 is not there
 
   Scenario: Create match with place 3 match
-    Given a user
-    And the user is logged in
+    Given a logged in admin
     When he visits the create event path
     And he clicks 'New tournament'
     And he fills in valid tournament data

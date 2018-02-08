@@ -20,6 +20,10 @@
 #  provider                    :string
 #  uid                         :string
 #  avatar_data                 :text
+#  confirmation_token          :string
+#  unconfirmed_email           :string
+#  confirmed_at                :datetime
+#  confirmation_sent_at        :datetime
 #  team_notifications_enabled  :boolean          default(TRUE)
 #  event_notifications_enabled :boolean          default(TRUE)
 #
@@ -35,6 +39,7 @@ FactoryBot.define do
     telephone_number '00491731117843'
     sequence(:telegram_username) { |n| "telegram_user#{n}" }
     favourite_sports 'Football, Basketball, Tennis'
+    sequence(:contact_information) { |n| "Homepage: http://user#{n}.com" }
   end
 
   trait :with_avatar do

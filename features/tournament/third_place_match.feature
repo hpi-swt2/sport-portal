@@ -9,6 +9,9 @@ Feature: Spielplan progression for tournament
    / \
   1   2
 
+  Background:
+    Given a logged in admin
+
   Scenario: Spielplan updates according to the inserted results
     Given a tournament t with 4 teams
     And the Spielplan page for t is visited

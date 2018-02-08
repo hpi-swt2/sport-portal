@@ -4,6 +4,8 @@ RSpec.describe 'events/schedule', type: :view do
 
   describe 'page layout' do
     before :each do
+      @admin = FactoryBot.create(:admin)
+      sign_in @admin
       @league = FactoryBot.create(:league, :with_teams,
                                   deadline: Date.parse('23.12.2017'),
                                   startdate: Date.parse('24.12.2017'),
@@ -28,14 +30,49 @@ RSpec.describe 'events/schedule', type: :view do
       expect(rendered).to have_selector("input[value='31.12.2017']")
     end
 
-    it 'has edit button for gameday dates' do
-      render
-      expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
+    describe 'authorization for edit date button' do
+      before(:each) do
+        @user = FactoryBot.create(:user)
+        sign_in @user
+      end
+
+      it 'has edit button for gameday dates for signed-in users who are organizers of the league' do
+        @league.organizers << Organizer.new(user: @user, event: @league)
+        render
+        expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
+      end
+
+      it 'does not have edit button for gameday dates for signed-out users' do
+        sign_out @user
+        render
+        expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
+      end
+
+      it 'does not have edit button for gameday dates for signed-in users without the required rights' do
+        render
+        expect(rendered).not_to have_selector(:link_or_button, t('events.schedule.edit_date'))
+      end
     end
 
-    it 'has insert results button for matches' do
+    it 'has show button for matches' do
       render
-      expect(rendered).to have_selector(:link_or_button, t('events.schedule.insert_results'))
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.show'))
+    end
+
+    it 'has a delete button for matches when you are an admin' do
+      render
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
+    end
+  end
+
+  describe 'authorization for delete button' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+      sign_in @user
+    end
+
+    it 'has no delete button for normal signed in user' do
+      expect(rendered).not_to have_selector(:link_or_button, t('helpers.links.destroy'))
     end
   end
 
