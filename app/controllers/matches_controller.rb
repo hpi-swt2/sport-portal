@@ -90,7 +90,7 @@ class MatchesController < ApplicationController
   def confirm_scores
     @match.confirm_scores
     @match.save!
-    redirect_back(fallback_location: edit_results_match_path(@match))
+    redirect_back(fallback_location: edit_match_path(@match))
   end
 
   private

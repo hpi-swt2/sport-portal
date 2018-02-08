@@ -248,8 +248,9 @@ de:
       added_game_result_notice: "Ergebnis hinzugefügt!"
       removed_game_result_notice: "Ergebnis entfernt!"
       confirm_game_result: "Ergebnisse bestätigen"
-      confirmed: "Bestätigt"
-      not_confirmed: "Nicht bestätigt"
+      scores_confirmed_question: "Ergebnisse bestätigt?"
+      scores_confirmed: "Bestätigt"
+      scores_not_confirmed: "Nicht bestätigt"
       noscript:
         add_results_notice:
           create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
