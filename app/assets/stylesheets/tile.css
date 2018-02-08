@@ -21,16 +21,6 @@
 }
 
 
-@media screen and (max-width : 799px) and (min-width: 481px) {
-    .tile-description {
-        width: 300px;
-    }
-
-    .tile-title {
-        width: 300px;
-    }
-}
-
 @media screen and (max-width : 480px){
     .tile-wrapper {
         display: grid;
