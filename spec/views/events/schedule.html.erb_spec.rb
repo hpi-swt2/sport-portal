@@ -15,6 +15,9 @@ RSpec.describe 'events/schedule', type: :view do
       assign(:event, @league)
       assign(:schedule_type, 'league')
       assign(:matches, @league.matches)
+      @user = FactoryBot.create(:user)
+      sign_in @user
+      @league.organizers << Organizer.new(user: @user)
     end
 
     it 'renders without errors' do
@@ -57,6 +60,7 @@ RSpec.describe 'events/schedule', type: :view do
     end
 
     it 'has a delete button for matches when you are an admin' do
+      @user.update(admin: true)
       render
       expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
     end

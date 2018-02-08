@@ -4,7 +4,14 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:gameday) %>:</strong></dt>
+  <% unless @match.gameday.nil? %>
+    <dt><strong><%= "#{t('.timeframe')}:"%></strong></dt>
+    <dd><%= @match.gameday.starttime.strftime("%d.%m.%y") %>
+        <%= " #{t('.to')} "%>
+        <%= @match.gameday.endtime.strftime("%d.%m.%y") %>
+    </dd>
+  <% end %>
+  <dt><strong><%= model_class.human_attribute_name(:gameday_number) %>:</strong></dt>
   <dd><%= @match.gameday_number %></dd>
   <dt><strong><%= model_class.human_attribute_name(:place) %>:</strong></dt>
   <dd><%= @match.place %></dd>

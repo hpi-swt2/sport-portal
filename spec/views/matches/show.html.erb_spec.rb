@@ -10,6 +10,17 @@ RSpec.describe "matches/show", type: :view do
     @match = match
   end
 
+  it "renders the gameday of the match" do
+    render
+    expect(rendered).to have_content(@match.gameday_number)
+  end
+
+  it "render the dates for the according gameday" do
+    render
+    expect(rendered).to have_content(@match.gameday.starttime.strftime("%d.%m.%y"))
+    expect(rendered).to have_content(@match.gameday.endtime.strftime("%d.%m.%y"))
+  end
+
   it "renders attributes for simple match" do
     render
 

@@ -36,4 +36,11 @@ RSpec.describe Gameday, type: :model do
     relation = Gameday.reflect_on_association(:matches)
     expect(relation.macro).to eq :has_many
   end
+
+  it 'should not be valid if starttime is after endtime' do
+    gameday.starttime = Date.current + 3.days
+    gameday.endtime = Date.current
+    gameday.save
+    expect(gameday).not_to be_valid
+  end
 end

@@ -65,9 +65,9 @@ describe 'League model', type: :model do
     let(:league) { FactoryBot.build(:league, startdate: Date.parse('24.12.2017'), gameday_duration: 7) }
 
     it 'calculates gameday dates correctly' do
-      expect(league.startdate_for_gameday 1).to eq Date.parse('24.12.2017')
-      expect(league.startdate_for_gameday 2).to eq Date.parse('31.12.2017')
-      expect(league.enddate_for_gameday 1).to eq Date.parse('30.12.2017')
+      expect(league.startdate_for_gameday 0).to eq Date.parse('24.12.2017')
+      expect(league.startdate_for_gameday 1).to eq Date.parse('31.12.2017')
+      expect(league.enddate_for_gameday 0).to eq Date.parse('30.12.2017')
     end
   end
   describe 'Generating league schedule' do
