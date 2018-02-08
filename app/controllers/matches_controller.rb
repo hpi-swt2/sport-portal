@@ -1,6 +1,6 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result]
-  authorize_resource only: [:edit, :destroy]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result, :confirm_scores]
+  authorize_resource only: [:edit, :destroy, :confirm_scores]
 
   # GET /matches/1
   def show
@@ -53,6 +53,7 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1/update_results
   def update_results
+    @match.propose_scores(current_user)
     if @match.update_with_point_recalculation(match_results_params)
       event = @match.event
       if event.is_a? Rankinglist
@@ -67,6 +68,7 @@ class MatchesController < ApplicationController
   def add_game_result
     result = GameResult.new
     @match.game_results << result
+    @match.propose_scores(current_user)
     result.save!
     flash.notice = I18n.t("view.match.added_game_result_notice")
     render :edit_results
@@ -85,7 +87,14 @@ class MatchesController < ApplicationController
     redirect_to event_schedule_path(@match.event), notice: I18n.t('helpers.flash.destroyed', resource_name: Match.model_name.human).capitalize
   end
 
+  def confirm_scores
+    @match.confirm_scores
+    @match.save!
+    redirect_back(fallback_location: edit_match_path(@match))
+  end
+
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_match
       @match = Match.find(params[:id])

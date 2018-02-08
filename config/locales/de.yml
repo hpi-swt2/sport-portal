@@ -111,13 +111,16 @@ de:
       edit_profile: "Profil bearbeiten"
 
   dashboard:
-    title: "Dashboard für %{name}"
+    title: "Hallo %{name}!"
+    show_all: "Alle anzeigen"
 
   activerecord:
     models:
       match:
         one: "Spiel"
         other: "Spiele"
+        errors:
+          score_proposer_confirmer_team: "Die Bestätigung von Ergebnissen muss durch einen Spieler des anderen Teams erfolgen."
       team:
         one: "Team"
         other: "Teams"
@@ -126,7 +129,7 @@ de:
         other: "Spieler"
         errors:
           future_birthday: "darf nicht in der Zukunft liegen"
-          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen"
+          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen und kann mit einem + beginnen"
       image:
         one: "Bild"
         other: "Bilder"
@@ -152,10 +155,12 @@ de:
         id: "ID"
         date: "Datum"
         place: "Ort"
+        gameday: "Spieltag"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
         team_away_id: "Auswärts-Team"
+        gameday_number: "Spieltag"
       game_result:
         score_home: "Heim-Ergebnis"
         score_away: "Auswärts-Ergebnis"
@@ -196,9 +201,9 @@ de:
           team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
-        points_for_win: "Punkte für Gewinn"
-        points_for_draw: "Punkte für Unentschieden"
-        points_for_lose: "Punkte für Niederlage"
+        points_for_win: "Eventpunkte für Gewinn"
+        points_for_draw: "Eventpunkte für Unentschieden"
+        points_for_lose: "Eventpunkte für Niederlage"
         selection_types:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
@@ -237,10 +242,16 @@ de:
 
     match:
       game_results: "Ergebnis(se)"
+      game_result:
+        points: "Punkte"
       add_game_result: "Ergebnis hinzufügen"
       remove_game_result: "Ergebnis entfernen"
       added_game_result_notice: "Ergebnis hinzugefügt!"
       removed_game_result_notice: "Ergebnis entfernt!"
+      confirm_game_result: "Ergebnisse bestätigen"
+      scores_confirmed_question: "Ergebnisse bestätigt?"
+      scores_confirmed: "Bestätigt"
+      scores_not_confirmed: "Nicht bestätigt"
       noscript:
         add_results_notice:
           create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
@@ -249,6 +260,7 @@ de:
       edit_results: "Ergebnisse bearbeiten"
       error:
         update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
+
 
     event:
       point_distribution: "Punkteverteilung"
@@ -329,6 +341,7 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      event_points: "Eventpunkte"
       first_half: "Hinrunde"
       second_half: "Rückrunde"
       finale: "Finale"
@@ -386,6 +399,9 @@ de:
       other: "Vorrunde %{round} - Spiel %{gameid}"
     winner_of_match: "Gewinner %{match}"
     loser_of_match: "Verlierer %{match}"
+    show:
+      timeframe: "Zeitraum"
+      to: "bis"
 
   teams:
     index:

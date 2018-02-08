@@ -2,15 +2,15 @@
 #
 # Table name: teams
 #
-#  id            :integer          not null, primary key
-#  name          :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  description   :text
-#  kind_of_sport :string
-#  private       :boolean
-#  avatar_data   :text
-#  single        :boolean          default(FALSE)
+#  id               :integer          not null, primary key
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  description      :text
+#  kind_of_sport    :string
+#  private          :boolean
+#  avatar_data      :text
+#  created_by_event :boolean          default(FALSE)
 #
 
 require 'rails_helper'
@@ -19,6 +19,23 @@ RSpec.describe Team, type: :model do
   it "is valid when produced by a factory" do
     team = FactoryBot.build :team
     expect(team).to be_valid
+  end
+
+  context 'created_by_event' do
+    before(:each) do
+      @user = FactoryBot.create :user
+      @team = @user.create_team_for_event
+    end
+
+    it 'has the same name as the user behind it' do
+      expect(@team.name).to eq(@user.name)
+    end
+
+    it 'updates its name when the user changes his name' do
+      @user.first_name = 'My crazy'
+      @user.last_name = 'new name'
+      expect(@team.name).to eq(@user.name)
+    end
   end
 
   it "should have and belong to team owners" do

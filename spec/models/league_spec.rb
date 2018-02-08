@@ -27,7 +27,9 @@
 #  points_for_win       :integer          default(3)
 #  points_for_draw      :integer          default(1)
 #  points_for_lose      :integer          default(0)
+#  has_place_3_match    :boolean          default(TRUE)
 #  image_data           :text
+#  maximum_elo_change   :integer
 #
 
 require 'rails_helper'
@@ -63,9 +65,9 @@ describe 'League model', type: :model do
     let(:league) { FactoryBot.build(:league, startdate: Date.parse('24.12.2017'), gameday_duration: 7) }
 
     it 'calculates gameday dates correctly' do
-      expect(league.startdate_for_gameday 1).to eq Date.parse('24.12.2017')
-      expect(league.startdate_for_gameday 2).to eq Date.parse('31.12.2017')
-      expect(league.enddate_for_gameday 1).to eq Date.parse('30.12.2017')
+      expect(league.startdate_for_gameday 0).to eq Date.parse('24.12.2017')
+      expect(league.startdate_for_gameday 1).to eq Date.parse('31.12.2017')
+      expect(league.enddate_for_gameday 0).to eq Date.parse('30.12.2017')
     end
   end
   describe 'Generating league schedule' do

@@ -2,15 +2,15 @@
 #
 # Table name: teams
 #
-#  id            :integer          not null, primary key
-#  name          :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  description   :text
-#  kind_of_sport :string
-#  private       :boolean
-#  avatar_data   :text
-#  single        :boolean          default(FALSE)
+#  id               :integer          not null, primary key
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  description      :text
+#  kind_of_sport    :string
+#  private          :boolean
+#  avatar_data      :text
+#  created_by_event :boolean          default(FALSE)
 #
 
 class Team < ApplicationRecord
@@ -38,6 +38,14 @@ class Team < ApplicationRecord
 
   def matches
     home_matches.or away_matches
+  end
+
+  def name
+    if self.created_by_event? && self.owners.size > 0
+      self.owners[0].name
+    else
+      super
+    end
   end
 
   def has_multiple_owners?

@@ -12,7 +12,7 @@ $( document ).on('turbolinks:load', function() {
        }
     });
 
-    $("#event_startdate").on("change", changeDur);
+    $("#event_startdate").on("change", callChanged);
 
 
     $("#event_enddate").datepicker({
@@ -21,12 +21,63 @@ $( document ).on('turbolinks:load', function() {
         }
     });
 
-    $("#event_enddate").on("change", changeDur);
+    $("#event_enddate").on("change", adaptDuration);
 
+    $("#league_gameday_duration").on("change",durationChanged);
+
+    $("#league_game_mode").on("change",callChanged);
+
+    $("#league_max_teams").on("change",callChanged);
+
+    function callChanged()
+    {
+        adaptDuration();
+        durationChanged();
+    }
+    function durationChanged()
+    {
+        var start = $("#event_startdate").val();
+        var end = $("#event_enddate").val();
+        var system = $("#league_game_mode").val();
+        var gameday_dur =$("#league_gameday_duration").val();
+        var participants = $("#league_max_teams").val();
+        if(start != "" && gameday_dur != "" && system != "" && gameday_dur != undefined && system != undefined)
+        {
+            rounds = calcRounds(system,participants);
+            var number_of_days = rounds * parseInt(gameday_dur);
+            $("#event_enddate").val(addDays(start,number_of_days));
+
+        }
+        changeDur();
+    }
+    function adaptDuration()
+    {
+        var start = $("#event_startdate").val();
+        var end = $("#event_enddate").val();
+        var system = $("#league_game_mode").val();
+        var gameday_dur =$("#league_gameday_duration").val();
+        var participants = $("#league_max_teams").val();
+        if(start != "" && end != "" && system != "" && gameday_dur != undefined && system != undefined)
+        {
+            rounds = calcRounds(system,participants);
+            var diff = calcDateDiff(start,end);
+            var gameday_duration = Math.floor(diff/rounds);
+            if(diff <= 0)
+            {
+                $("#league_gameday_duration").val(1);
+            }
+            else {
+                $("#league_gameday_duration").val(gameday_duration);
+            }
+
+        }
+        changeDur();
+    }
     function changeDur()
     {
         var start = $("#event_startdate").val();
         var end = $("#event_enddate").val();
+
         if(start != "" && end != "") {
             diff = calcDateDiff(start,end);
             if (diff <= 0){
@@ -34,6 +85,23 @@ $( document ).on('turbolinks:load', function() {
             }
             $("#event_duration").val(diff);
         }
+    }
+
+    function addDays(date, days) {
+        date = date.split(".");
+        var result = new Date(date[2], date[1]-1, date[0]);
+        result.setDate(result.getDate() + parseInt(days));
+        var dd = result.getDate();
+        var mm = result.getMonth()+1;
+        var y = result.getFullYear();
+        if(dd < 10){
+            dd = "0"+ dd;
+        }
+        if(mm < 10){
+            mm = "0"+ mm;
+        }
+        var formattedDate = dd + '.' + mm + '.' + y;
+        return formattedDate;
     }
 
     function calcDateDiff(startdatestr, enddatestr)
@@ -44,6 +112,30 @@ $( document ).on('turbolinks:load', function() {
       var start = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
       var end = new Date(splittetEnd[2],splittetEnd[1]-1,splittetEnd[0]);
       return  Math.round((end-start)/(1000*60*60*24)) + 1;
+    }
+
+    function calcRounds(system,participants)
+    {
+        var num_part = parseInt(participants);
+        var sys = system;
+        var num_rounds;
+        if(sys == "round_robin" || sys == "two_halfs")
+        {
+            if(num_part % 2 == 0)
+            {
+                num_rounds = num_part - 1;
+            }
+            else
+            {
+                num_rounds = num_part;
+            }
+        }
+        else if (sys == "swiss")
+        {
+            num_rounds = (0.2 * num_part) + (1.4 * num_part);
+        }
+
+        return Math.ceil(num_rounds);
     }
 
     $("#event_duration").on("change", function(){
@@ -59,9 +151,6 @@ $( document ).on('turbolinks:load', function() {
            var y = startdate.getFullYear();
            if(mm < 10){
                mm = "0"+ mm;
-           }
-           if(dd < 10){
-               dd = "0" + dd;
            }
            var formattedDate = dd + '.' + mm + '.' + y;
            $("#event_enddate").val(formattedDate);

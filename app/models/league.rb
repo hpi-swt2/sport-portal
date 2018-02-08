@@ -27,7 +27,9 @@
 #  points_for_win       :integer          default(3)
 #  points_for_draw      :integer          default(1)
 #  points_for_lose      :integer          default(0)
+#  has_place_3_match    :boolean          default(TRUE)
 #  image_data           :text
+#  maximum_elo_change   :integer
 #
 
 class League < Event
@@ -66,11 +68,15 @@ class League < Event
   end
 
   def startdate_for_gameday(gameday_number)
-    ((gameday_number - 1) * gameday_duration).days.since startdate
+    ((gameday_number) * gameday_duration).days.since startdate
   end
 
   def enddate_for_gameday(gameday_number)
-    startdate_for_gameday(gameday_number.next) - 1.day
+    if gameday_duration == 0
+      startdate_for_gameday gameday_number
+    else
+      startdate_for_gameday(gameday_number.next) - 1.day
+    end
   end
 
   def all_matches
