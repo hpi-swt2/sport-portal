@@ -8,7 +8,7 @@
   <div class="col-lg-10">
     <%= form.select(:game_mode, League.game_modes.map { |k, _| [League.human_game_mode(k), k] },
                             { selected: @event.game_mode, include_blank: t('events.new.select_game_mode') },
-                            { class: 'form-control'}) %>
+                            { class: 'form-control' }) %>
   </div>
 </div>
 
