@@ -18,8 +18,8 @@
 <table class="table">
   <thead>
     <tr>
-      <th><%= GameResult.human_attribute_name(:score_home) %></th>
-      <th><%= GameResult.human_attribute_name(:score_away) %></th>
+      <th><%= @match.team_home.name if @match.team_home %></th>
+      <th><%= @match.team_away.name if @match.team_away%></th>
     </tr>
   </thead>
   <tbody>
