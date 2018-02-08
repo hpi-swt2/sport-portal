@@ -63,19 +63,31 @@ en:
     have_fun: "Good luck with your training!"
     closing: "%{appname} Team"
   match_mailer:
-    next_game: "your match (%{team_home} vs. %{team_away}) in the event %{name}"
+    start_time: "When? On %{start_date} at %{start_time}"
+    place: "Where? %{place}"
+    here: "Here"
+    apply_changes: "%{match_link} you can apply changes."
+    add_results: "%{match_link} you can add results."
     match_notification:
-      info: "begins tomorrow at %{start_time}. You will meet at this place: %{place}"
-      subject: "Your game begins tomorrow"
+      subject: "Your match against %{opponent_team_name} as part of %{event_name} starts tomorrow"
+      info_html: "your match against %{opponent_team_link} as part of %{event_link} starts tomorrow."
+      info_txt: "your match against %{opponent_team_name} as part of %{event_name} starts tomorrow."
+      have_fun: "Have fun!"
     match_canceled:
-      info: "has been canceled."
-      subject: "Your match has been canceled"
+      subject: "Your match against %{opponent_team_name} as part of %{event_name} was canceled"
+      info_html: "your match against %{opponent_team_link} as part of %{event_link} was canceled."
+      info_txt: "your match against %{opponent_team_name} as part of %{event_name} was canceled."
+      have_fun: "Have fun!"
     match_scheduled:
-      info: "has been scheduled."
-      subject: "Your match has been scheduled"
+      subject: "Your match against %{opponent_team_name} as part of %{event_name} has been scheduled"
+      info_html: "your match against %{opponent_team_link} as part of %{event_link} has been scheduled."
+      info_txt: "your match against %{opponent_team_name} as part of %{event_name} has been scheduled."
+      have_fun: "Have fun at the match!"
     match_date_changed:
-      info: "is rescheduled for %{start_time}."
-      subject: "The date for your match has changed"
+      subject: "Your match against %{opponent_team_name} as part of %{event_name} has changed"
+      info_html: "your match against %{opponent_team_link} as part of %{event_link} has changed."
+      info_txt: "your match against %{opponent_team_name} as part of %{event_name} has changed."
+      have_fun: "Have fun at the match!"
   event_mailer:
     event: "the event %{event}"
     event_canceled:
