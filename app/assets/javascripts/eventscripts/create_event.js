@@ -193,13 +193,12 @@ $( document ).on('turbolinks:load', function() {
         {
             case "elo":
                 $("#rankinglist_initial_value").val(initial_value_elo);
-                $("#default_point_distribution").hide();
                 var default_elo_change = $("#rankinglist_maximum_elo_change");
-                if(default_elo_change.val() == "")
+                if(default_elo_change.val()=="")
                 {
                     default_elo_change.val(32);
                 }
-                $("#elo_point_distribution").show();
+                $("#rankinglist_advanced").show();
                 break;
             case "true_skill":
                 $("#rankinglist_initial_value").val(initial_value_trueskill);
@@ -209,8 +208,7 @@ $( document ).on('turbolinks:load', function() {
                 break;
             default:
                 $("#rankinglist_initial_value").val("0");
-                $("#default_point_distribution").show();
-                $("#elo_point_distribution").hide();
+                $("#rankinglist_advanced").hide();
                 break;
         }
     }

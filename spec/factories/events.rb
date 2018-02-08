@@ -27,7 +27,9 @@
 #  points_for_win       :integer          default(3)
 #  points_for_draw      :integer          default(1)
 #  points_for_lose      :integer          default(0)
+#  has_place_3_match    :boolean          default(TRUE)
 #  image_data           :text
+#  maximum_elo_change   :integer
 #
 
 FactoryBot.define do
