@@ -41,6 +41,10 @@
                 $('.only-show-when-participants-selected').hide();
             }
         });
+
+        $('#invite_user_by_email_modal').modal({
+            complete: function() { $(".modal-body #email").val(""); } // Clear email field when modal closes (see #490)
+        });
     });
 </script>
 
@@ -106,9 +110,10 @@
       <div class="col s12">
         <% if can? :assign_membership_by_email, @team %>
             <%= link_to t('teams.show.invite_user_to_team'),
-                        '#',
-                        data: {'toggle': 'modal', 'target': '#invite_user_by_email_modal'},
-                        class: 'btn btn-primary genericButton blueActionButton' %>
+                        '',
+                        type: 'button',
+                        data: { 'target': 'invite_user_by_email_modal' },
+                        class: 'btn genericButton blueActionButton modal-trigger' %>
         <% end %>
       </div>
     </div>
