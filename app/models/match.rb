@@ -234,11 +234,11 @@ class Match < ApplicationRecord
   end
 
   def propose_scores(user)
-    self.scores_proposed_by = user.teams.where('team_id IN (?)', self.teams).first
+    self.scores_proposed_by = user.teams.where(id: self.teams).first
   end
 
   def can_confirm_scores?(user)
-    !(scores_confirmed? || user.teams.where('team_id IN (?)', self.teams).first == self.scores_proposed_by)
+    !(scores_confirmed? || user.teams.where(id: self.teams).first == self.scores_proposed_by)
   end
 
   def scores_confirmed?
