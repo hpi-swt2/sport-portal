@@ -76,6 +76,8 @@ class Ability
       if user.admin?
         can :manage, :all
       end
+
+      can_confirm_scores(user)
     end
 
     def can_modify_match(user)
@@ -168,5 +170,11 @@ class Ability
         not_exceeded = event.max_players_per_team >= team.members.count + update_count
       end
       not_exceeded
+    end
+
+    def can_confirm_scores(user)
+      can :confirm_scores, Match do |match|
+        match.can_confirm_scores?(user)
+      end
     end
 end
