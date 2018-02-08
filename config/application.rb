@@ -25,5 +25,8 @@ module SportPortal
     Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf .otf)
 
     config.time_zone = 'Berlin'
+
+    #set new error page rout
+    config.exceptions_app = self.routes
   end
 end

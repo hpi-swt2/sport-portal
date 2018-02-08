@@ -1,6 +1,9 @@
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 Rails.application.routes.draw do
 
+  get 'errors/not_found'
+  match '/404', :to => 'errors#not_found', :via => :all
+
   resources :events, except: [:create] do
     member do
       put :join
@@ -13,6 +16,8 @@ Rails.application.routes.draw do
   resources :tournaments, controller: 'events', only: [:show, :new, :create, :update], type: Tournament
   resources :rankinglists, controller: 'events', only: [:show, :new, :create, :update], type: Rankinglist
 
+  resources :gamedays, only: [:update]
+
   root 'welcome#index'
   resources :teams
   resources :matches, except: [:index] do
@@ -21,13 +26,18 @@ Rails.application.routes.draw do
       put :update_points
       patch :update_appointment
       put :update_appointment
+      get :add_game_result
+      get 'remove_game_result/:result_id', to: 'matches#remove_game_result', as: :remove_game_result
+      get :edit_results
+      patch :update_results
+      put :update_results
     end
   end
 
   #get '/events/:id/team_join', to: 'events#team_join', as: 'team_join'
   get '/events/:id/overview', to: 'events#overview', as: 'event_overview'
   get '/events/:id/schedule', to: 'events#schedule', as: 'event_schedule'
-  get '/events/:id/ranking', to: 'events#ranking', as: 'event_ranking'
+  get '/leagues/:id/ranking', to: 'leagues#ranking', as: 'leagues_ranking'
 
   # Use custom user controller instead of the one provided by devise
   devise_for :users, path_prefix: 'my', controllers: {
@@ -38,14 +48,17 @@ Rails.application.routes.draw do
   # Sets the devise scope to be used in the controller.
   # http://www.rubydoc.info/github/plataformatec/devise/ActionDispatch%2FRouting%2FMapper%3Adevise_scope
   devise_scope :user do
+    get '/users/:id/profile', to: 'users#show', as: 'user'
+    get '/users/:id', to: redirect('/users/%{id}/profile')
 
     resources :users, except: [:new, :create] do
       member do
+        put 'profile', to: 'users#update'
         get 'dashboard'
-        get 'notifications'
         get 'link'
         get 'unlink'
         post 'delete', to: 'users#confirm_destroy'
+        delete 'profile', to: 'users#destroy'
       end
     end
 

@@ -2,6 +2,7 @@
 <%= stylesheet_link_tag 'welcome' %>
 
 <div class="section darkblue-soccer">
+  <div id="placeholderForNavbar"></div>
   <div class="container">
     <div class="row">
       <div class="col s12">
@@ -10,13 +11,13 @@
     </div>
     <div class="row">
       <div class="col s10 offset-s1">
-        <p class="white-text center"><%= t('welcome.index.lead-description') %></p>
+        <p class="white-text center" id="lead-description"><%= t('welcome.index.lead-description') %></p>
       </div>
     </div>
     <div id="register-row" class="row">
       <div class="col s12 center">
         <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn registerButton genericButton'%>
+            <%= link_to t('welcome.index.sign-up-now'), new_user_session_path , class: 'btn registerButton genericButton'%>
         <% else %>
             <%= link_to t('navbar.drop-down.dashboard'), dashboard_user_path(current_user), class: 'btn registerButton genericButton' %>
         <% end %>
@@ -154,7 +155,7 @@
           <div class="collapsible-body">
             <ul class="gameModeList"><%= t('welcome.index.section3-card1-description_html') %></ul>
             <% if not user_signed_in? %>
-                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+                <%= link_to t('welcome.index.sign-up-now'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
             <% else %>
                 <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
             <% end %>
@@ -168,7 +169,7 @@
           <div class="collapsible-body">
             <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
             <% if not user_signed_in? %>
-                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+                <%= link_to t('welcome.index.sign-up-now'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
             <% else %>
                 <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
             <% end %>
@@ -182,7 +183,7 @@
           <div class="collapsible-body">
             <ul class="gameModeList"><%= t('welcome.index.section3-card3-description_html') %></ul>
             <% if not user_signed_in? %>
-                <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
+                <%= link_to t('welcome.index.sign-up-now'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
             <% else %>
                 <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
             <% end %>
@@ -190,48 +191,8 @@
         </li>
       </ul>
     </div>
-    <div class="row hide-on-small-only content-is-cards">
-      <div class="info-card col m4">
-        <h3><%= t('welcome.index.section3-card1-header') %></h3>
-        <div class="row">
-          <ul class="gameModeList"><%= t('welcome.index.section3-card1-description_html') %></ul>
-        </div>
-      </div>
-      <div class="info-card col m4">
-        <h3><%= t('welcome.index.section3-card2-header') %></h3>
-        <div class="row">
-          <ul class="gameModeList"><%= t('welcome.index.section3-card2-description_html') %></ul>
-        </div>
-      </div>
-      <div class="info-card col m4">
-        <h3><%= t('welcome.index.section3-card3-header') %></h3>
-        <div class="row">
-          <ul class="gameModeList"><%= t('welcome.index.section3-card3-description_html') %></ul>
-        </div>
-      </div>
-    </div>
-    <div class="row hide-on-small-only" style="display: flex;">
-      <div class="col m4 center card-button-col">
-        <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
-        <% else %>
-            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
-        <% end %>
-      </div>
-      <div class="col m4 center card-button-col">
-        <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
-        <% else %>
-            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
-        <% end %>
-      </div>
-      <div class="col m4 center card-button-col">
-        <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton card-button truncate'%>
-        <% else %>
-            <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn registerButton genericButton card-button truncate' %>
-        <% end %>
-      </div>
+    <div class="row hide-on-small-only">
+      <%= render partial: 'events/event_cards' %>
     </div>
   </div>
 </div>
@@ -253,7 +214,7 @@
     <div class="row">
       <div class="col s12 center">
         <% if not user_signed_in? %>
-            <%= link_to t('welcome.index.free-sign-up'), new_user_session_path , class: 'btn createScheduleButton genericButton'%>
+            <%= link_to t('welcome.index.sign-up-now'), new_user_session_path , class: 'btn createScheduleButton genericButton'%>
         <% else %>
             <%= link_to t('welcome.index.create-schedule'), new_event_path(), class: 'btn createScheduleButton genericButton' %>
         <% end %>

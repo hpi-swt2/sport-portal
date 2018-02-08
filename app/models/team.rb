@@ -2,14 +2,15 @@
 #
 # Table name: teams
 #
-#  id            :integer          not null, primary key
-#  name          :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  description   :text
-#  kind_of_sport :string
-#  private       :boolean
-#  avatar_data   :text
+#  id               :integer          not null, primary key
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  description      :text
+#  kind_of_sport    :string
+#  private          :boolean
+#  avatar_data      :text
+#  created_by_event :boolean          default(FALSE)
 #
 
 class Team < ApplicationRecord
@@ -18,9 +19,12 @@ class Team < ApplicationRecord
 
   validates :private, inclusion:  [true, false]
 
-  scope :multiplayer, -> { where single: false }
+  scope :created_by_user, -> { where created_by_event: false }
+  scope :created_by_event, -> { where created_by_event: true }
 
-  has_and_belongs_to_many :events
+  has_many :participants
+  has_many :events, through: :participants
+
 
   has_many :team_members, source: :team_user, class_name: "TeamUser"
   has_many :team_owners, -> { where is_owner: true }, source: :team_user, class_name: "TeamUser"
@@ -30,21 +34,26 @@ class Team < ApplicationRecord
   has_many :home_matches, as: :team_home, class_name: 'Match'
   has_many :away_matches, as: :team_away, class_name: 'Match'
 
-  include AvatarUploader::Attachment.new(:avatar)
+  include ImageUploader::Attachment.new(:avatar)
 
   def matches
     home_matches.or away_matches
   end
 
-  # validates :owners, presence: true
-  # validates :members, presence: true
-
   def has_multiple_owners?
     owners.length > 1
   end
 
-  def in_event?
+  def associated_with_event?
     events.exists?
+  end
+
+  def has_member?(user)
+    members.include?(user)
+  end
+
+  def is_qualified_to_receive_notifications?
+    not self.created_by_event?
   end
 
   # these methods allow teams to be treated like match results. see MatchResult model

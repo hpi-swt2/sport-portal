@@ -19,6 +19,7 @@ de:
       create: "Erstellen"
       edit: "Bearbeiten"
       show: "Anzeigen"
+      duel: "Match hinzufügen"
       save: "Speichern"
       email: "E-Mail senden"
       assign_ownership: "Als Captain hinzufügen"
@@ -39,10 +40,11 @@ de:
     submit:
       create: "Erstelle %{model}"
       submit: "Speichere %{model}"
-      update: "Aktualisiere %{model}"
+      update: "Speichern"
       delete: "Lösche %{model}"
     select:
       prompt: "Bitte wähle"
+      option_operator: "oder"
     teams:
       kind_of_sport: "Sportart"
       description: "Beschreibung"
@@ -69,3 +71,41 @@ de:
         telephone_number: "Telefonnummer"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+  mailer:
+    hello: "Hallo %{firstname},"
+    have_fun: "Viel Erfolg beim Training!"
+    closing: "%{appname} Team"
+  match_mailer:
+    next_game: "dein Spiel (%{team_home} vs. %{team_away}) im Event %{name}"
+    match_notification:
+      info: "startet morgen um %{start_time}. Ihr trefft euch am folgenden Ort: %{place}"
+      subject: "Dein Spiel startet morgen"
+    match_canceled:
+      info: "wurde abgesagt."
+      subject: "Dein Spiel wurde abgesagt"
+    match_scheduled:
+      info: "wurde geplant."
+      subject: "Dein Match wurde geplant"
+    match_date_changed:
+      info: "wurde auf %{start_time} verschoben."
+      subject: "Dein Match wurde verschoben"
+  event_mailer:
+    event: "das Event %{event}"
+    event_canceled:
+      info: "wurde abgesagt."
+      subject: "Dein Event wurde abgesagt"
+    event_started:
+      info: "hat gestartet."
+      subject: "Dein Event hat gestartet"
+    event_finished:
+      info: "ist abgeschlossen."
+      subject: "Dein Event ist abgeschlossen"
+  team_mailer:
+    user_added_to_team:
+      added_to_team_info_html: 'du bist dem Team %{team_link} beigetreten.'
+      subject: "Du bist dem Team %{team_name} beigetreten"
+      have_fun: "Viel Erfolg beim Sport!"
+    team_registered_to_event:
+      registered_to_event_info_html: 'dein Team %{team_link} nimmt jetzt an dem Event %{event_link} teil.'
+      subject: "Dein Team %{team_name} nimmt jetzt an dem Event %{event_name} teil"
+      have_fun: "Viel Erfolg beim Spielen!"

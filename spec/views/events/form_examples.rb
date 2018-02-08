@@ -20,8 +20,15 @@ shared_examples 'an event form' do |for_class: Event, path: :new, with: []|
 
     expect(rendered).to have_field(Event.human_attribute_name :name)
     expect(rendered).to have_field(Event.human_attribute_name :description)
-    expect(rendered).to have_field(Event.human_attribute_name :game_mode)
     expect(rendered).to have_field(Event.human_attribute_name :discipline)
+  end
+
+  if with.include? :game_mode
+    it 'has input for gamemode' do
+      render
+
+      expect(rendered).to have_field(Event.human_attribute_name :game_mode)
+    end
   end
 
   if with.include? :dates
@@ -31,6 +38,24 @@ shared_examples 'an event form' do |for_class: Event, path: :new, with: []|
       expect(rendered).to have_field(Event.human_attribute_name :deadline)
       expect(rendered).to have_field(Event.human_attribute_name :startdate)
       expect(rendered).to have_field(Event.human_attribute_name :enddate)
+    end
+  end
+
+  if with.include? :player_type
+    it 'has input for player_type' do
+      render
+
+      expect(rendered).to have_field(Event.human_attribute_name :player_type)
+    end
+
+    it 'has default input for player_type field' do
+      render
+
+      if path == :edit
+        expect(rendered).to have_field(Event.human_attribute_name :player_type, with: t(Event.human_player_type(@event.player_type)))
+      elsif path == :new
+        expect(rendered).to have_field(Event.human_attribute_name :player_type, with: t('events.new.select_player_type'))
+      end
     end
   end
 

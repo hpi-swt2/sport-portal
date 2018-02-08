@@ -2,28 +2,45 @@
 #
 # Table name: events
 #
-#  id               :integer          not null, primary key
-#  name             :string
-#  description      :text
-#  discipline       :string
-#  player_type      :integer          not null
-#  max_teams        :integer
-#  game_mode        :integer          not null
-#  type             :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  startdate        :date
-#  enddate          :date
-#  deadline         :date
-#  gameday_duration :integer
-#  owner_id         :integer
+#  id                   :integer          not null, primary key
+#  name                 :string
+#  description          :text
+#  discipline           :string
+#  player_type          :integer          not null
+#  max_teams            :integer
+#  game_mode            :integer          not null
+#  type                 :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  startdate            :date
+#  enddate              :date
+#  deadline             :date
+#  gameday_duration     :integer
+#  owner_id             :integer
+#  initial_value        :float
+#  selection_type       :integer          default("fcfs"), not null
+#  min_players_per_team :integer
+#  max_players_per_team :integer
+#  matchtype            :integer
+#  bestof_length        :integer          default(1)
+#  game_winrule         :integer
+#  points_for_win       :integer          default(3)
+#  points_for_draw      :integer          default(1)
+#  points_for_lose      :integer          default(0)
+#  has_place_3_match    :boolean          default(TRUE)
+#  image_data           :text
+#  maximum_elo_change   :integer
 #
 
 class Tournament < Event
   validates :deadline, :startdate, :enddate, :selection_type, presence: true
   validate :end_after_start, :start_after_deadline
 
-  enum game_mode: [:ko, :ko_group, :double_elimination]
+  before_validation :set_game_mode
+
+  def set_game_mode
+    self.game_mode = 0
+  end
 
   def standing_of(team)
     final_match = finale
@@ -35,12 +52,16 @@ class Tournament < Event
     final_match.last_match_of(team).standing_string_of team
   end
 
+  def last_match_of(team)
+    finale.last_match_of(team) || place_3_match.last_match_of(team)
+  end
+
   def finale
-    matches.find_by(gameday: finale_gameday)
+    matches.find_by(gameday_number: finale_gameday)
   end
 
   def place_3_match
-    matches.find_by(gameday: finale_gameday + 1)
+    matches.find_by(gameday_number: finale_gameday + 1)
   end
 
   def generate_schedule
@@ -48,7 +69,7 @@ class Tournament < Event
     return if team_count < 2
     create_matches filled_teams, finale_gameday, 0
     normalize_first_layer_match_indices
-    create_place_3_match if team_count >= 4
+    create_place_3_match if team_count >= 4 && has_place_3_match
   end
 
   def finale_gameday
@@ -129,7 +150,7 @@ class Tournament < Event
     end
 
     def create_match(team_home, team_away, depth, index)
-      match = Match.new team_home: team_home, team_away: team_away, gameday: depth, index: index + 1, event: self
+      match = Match.new team_home: team_home, team_away: team_away, gameday_number: depth, index: index + 1, event: self, start_time: Time.now
       matches << match
       match.save!
       match
@@ -137,7 +158,7 @@ class Tournament < Event
 
     def normalize_first_layer_match_indices
       matches.each do |match|
-        if match.gameday == 0
+        if match.gameday_number == 0
           match.adjust_index_by first_gameday_offset
         end
       end
@@ -151,7 +172,7 @@ class Tournament < Event
 
     def create_place_3_match
       loser_home, loser_away = place_3_match_participants
-      match = Match.new team_home: loser_home, team_away: loser_away, gameday: finale_gameday + 1, index: 1, event: self
+      match = Match.new team_home: loser_home, team_away: loser_away, gameday_number: finale_gameday + 1, index: 1, event: self, start_time: Time.now
       matches << match
       match.save!
     end

@@ -1,5 +1,5 @@
 Given(/^a tournament (.*) with (\d+) (teams|users)$/) do |tournamentName, numTeams, teams_or_users|
-  create_tournament_named tournamentName, max_teams: numTeams, player_type: (teams_or_users != 'teams' ? :team : :single)
+  create_tournament_named tournamentName, max_teams: numTeams, has_place_3_match: true, player_type: (teams_or_users != 'teams' ? :team : :single)
   tournament = tournament_named tournamentName
   for each in 1..numTeams do
     if teams_or_users == 'teams'
@@ -41,10 +41,17 @@ When(/^the Spielplan page for (.*) is visited$/) do |tournamentName|
   visit event_schedule_path(tournament_named tournamentName)
 end
 
-And(/^the texts? (.+) (?:are|is) there\.$/) do |texts_raw|
+Then(/^the texts? (.+) (?:are|is) there\.?$/) do |texts_raw|
   texts = texts_raw.split ', '
   texts.each do |text|
     expect(page).to have_text(text)
+  end
+end
+
+And(/^the texts? (.+) (?:are|is) not there\.?$/) do |texts_raw|
+  texts = texts_raw.split ', '
+  texts.each do |text|
+    expect(page).not_to have_text(text)
   end
 end
 
@@ -71,11 +78,15 @@ def find_team_of_match(match_gameday, match_num, home_or_away)
   }[home_or_away.to_sym]
 end
 
-Then(/^the results for match (.+) (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_gameday, match_num, points_home, points_away|
+Then(/^the results for match (.+) (\d+) \((\d+) : (\d+)\) got inserted$/) do |match_gameday, match_num, score_home, score_away|
   match = find_match_on_page match_gameday, match_num
-  fill_in "match_#{match.id}_match_points_home", with: points_home
-  fill_in "match_#{match.id}_match_points_away", with: points_away
-  click_on "save_points_#{match.id}"
+  visit edit_results_match_path match
+  find("a[href='#{add_game_result_match_path(id: match.id)}']").click
+
+  fill_in "match_game_results_attributes_0_score_home", with: score_home
+  fill_in "match_game_results_attributes_0_score_away", with: score_away
+  find('input[name="commit"]').click
+  visit event_schedule_path(match.event)
 end
 
 Then(/^the (home|away) team of match (.+) (\d+) comes to the next round$/) do |home_or_away, match_gameday, match_num|
@@ -97,10 +108,6 @@ Then(/^the standing of the (home|away) team of match (.+) (\d+) is '(.+)'$/) do 
   expect(page).to have_text("#{team.name} #{standing}")
 end
 
-Given(/^a tournament with gamemode (.*)$/) do |mode|
-  create_tournament game_mode: mode
-end
-
 def placing_to_display_string(placing)
   I18n.t "events.placing.#{placing}"
 end
@@ -110,4 +117,62 @@ Then(/^the (first|second) place of the tournament is the (home|away) team of (.+
   team = find_team_of_match match_gameday, match_num, home_or_away
   visit event_path single_tournament
   expect(page).to have_text("#{placing_to_display_string placing} #{team.name}")
+end
+
+Then(/^the standing of the (home|away) team of match (\w+) (\d+) links to (\w+) (\d+)$/) do |home_or_away, match_gameday, match_num, target_match_gameday, target_match_num|
+  visit event_schedule_path single_tournament
+  match = find_match_on_page target_match_gameday, target_match_num
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  visit event_overview_path single_tournament
+  within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
+    expect(page).to have_link(href: match_path(match))
+  end
+end
+
+Then(/^the opponent of the (home|away) team of match (\w+) (\d+) links to the (home|away) team of match (\w+) (\d+)$/) do |home_or_away, match_gameday, match_num, home_or_away_opponent, target_match_gameday, target_match_num|
+  visit event_schedule_path single_tournament
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  opponent = find_team_of_match target_match_gameday, target_match_num, home_or_away_opponent
+  visit event_overview_path single_tournament
+  within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
+    expect(page).to have_text("#{I18n.t('events.overview.against')} #{opponent.name}")
+    expect(page).to have_link(href: team_path(opponent))
+  end
+end
+
+And(/^the (home|away) team of match (\w+) (\d+) links to no opponent$/) do |home_or_away, match_gameday, match_num|
+  visit event_schedule_path single_tournament
+  team = find_team_of_match match_gameday, match_num, home_or_away
+  visit event_overview_path single_tournament
+  within(:xpath, "//table/tbody/tr[contains(./td/a, '#{team.name}')]") do
+    expect(page).to_not have_text(I18n.t('events.overview.against'))
+  end
+end
+
+When(/^the schedule page is visited$/) do
+  visit event_schedule_path(single_tournament)
+end
+
+Given(/^(\d+) teams join the tournament$/) do |num_teams|
+  for each in 1..num_teams do
+    single_tournament.add_team create_team
+  end
+end
+
+When(/^he fills in valid tournament data$/) do
+  fill_in :tournament_name, with: 'Dummy'
+  fill_in :tournament_discipline, with: 'DummySport'
+  fill_in :tournament_max_teams, with: 8
+  select I18n.t('activerecord.attributes.event.player_types.team'), from: :event_player_type
+  fill_in :event_deadline, with: Date.today + 1.day
+  fill_in :event_startdate, with: Date.today + 2.day
+  fill_in :event_enddate, with: Date.today + 3.day
+end
+
+When(/^he creates the tournament$/) do
+  expect {
+    click_on I18n.t('helpers.submit.create', model: Tournament.model_name.human)
+  }.to change { Tournament.count }.by(1)
+
+  add_tournament Tournament.last
 end

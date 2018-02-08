@@ -1,5 +1,6 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: [:show, :edit, :update, :update_points, :update_appointment, :destroy]
+  before_action :set_match, only: [:show, :edit, :update, :update_points, :update_appointment, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result]
+  authorize_resource only: [:edit]
 
   # GET /matches/1
   def show
@@ -7,7 +8,9 @@ class MatchesController < ApplicationController
 
   # GET /matches/new
   def new
-    @match = Match.new
+    @match = Match.new(new_match_params)
+    @match.save
+    render :show
   end
 
   # GET /matches/1/edit
@@ -17,8 +20,7 @@ class MatchesController < ApplicationController
   # POST /matches
   def create
     @match = Match.new(match_params)
-
-    if @match.save
+    if @match.save_with_point_calculation
       redirect_to @match, notice: I18n.t('helpers.flash.created', resource_name: Match.model_name.human).capitalize
     else
       render :new
@@ -53,6 +55,40 @@ class MatchesController < ApplicationController
     end
   end
 
+  # GET /matches/1/edit_results
+  def edit_results
+    authorize! :edit, @match
+  end
+
+  # PATCH/PUT /matches/1/update_results
+  def update_results
+    if @match.update_with_point_recalculation(match_results_params)
+      event = @match.event
+      if event.is_a? Rankinglist
+        event.update_rankings(@match)
+      end
+      redirect_to @match, notice: I18n.t('helpers.flash.updated', resource_name: Match.model_name.human).capitalize
+    else
+      render :edit_results
+    end
+  end
+
+  def add_game_result
+    result = GameResult.new
+    @match.game_results << result
+    result.save!
+    flash.notice = I18n.t("view.match.added_game_result_notice")
+    render :edit_results
+  end
+
+  def remove_game_result
+    result = GameResult.find(params[:result_id])
+    result.destroy
+    flash.notice = I18n.t("view.match.removed_game_result_notice")
+    render :edit_results
+  end
+
+
   # DELETE /matches/1
   def destroy
     @match.destroy
@@ -65,9 +101,13 @@ class MatchesController < ApplicationController
       @match = Match.find(params[:id])
     end
 
+    def new_match_params
+      params.permit(:team_home_id, :team_away_id, :event_id)
+    end
+
     # Only allow a trusted parameter "white list" through.
     def match_params
-      params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id, :start_time)
+      params.require(:match).permit(:place, :team_home_id, :team_away_id, :score_home, :score_away, :event_id, :start_time, game_results_attributes: [:id, :_destroy, :score_home, :score_away])
         .merge(team_home_type: 'Team', team_away_type: 'Team')
     end
 
@@ -77,5 +117,9 @@ class MatchesController < ApplicationController
 
     def match_appointment_params
       params.require(:match).permit(:start_time_time, :start_time_date, :place)
+    end
+
+    def match_results_params
+      params.require(:match).permit(game_results_attributes: [:id, :_destroy, :score_home, :score_away])
     end
 end

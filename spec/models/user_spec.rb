@@ -2,24 +2,30 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  first_name             :string
-#  last_name              :string
-#  provider               :string
-#  uid                    :string
-#  admin                  :boolean          default(FALSE)
-#  birthday               :date
-#  telephone_number       :string
-#  telegram_username      :string
-#  favourite_sports       :string
-#  avatar_data            :text
+#  id                          :integer          not null, primary key
+#  email                       :string           default(""), not null
+#  encrypted_password          :string           default(""), not null
+#  reset_password_token        :string
+#  reset_password_sent_at      :datetime
+#  remember_created_at         :datetime
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  first_name                  :string
+#  last_name                   :string
+#  admin                       :boolean          default(FALSE)
+#  birthday                    :date
+#  telephone_number            :string
+#  telegram_username           :string
+#  favourite_sports            :string
+#  provider                    :string
+#  uid                         :string
+#  avatar_data                 :text
+#  confirmation_token          :string
+#  unconfirmed_email           :string
+#  confirmed_at                :datetime
+#  confirmation_sent_at        :datetime
+#  team_notifications_enabled  :boolean          default(TRUE)
+#  event_notifications_enabled :boolean          default(TRUE)
 #
 
 require 'rails_helper'
@@ -72,6 +78,12 @@ RSpec.describe User, type: :model do
     user1 = FactoryBot.create(:user)
     user2 = FactoryBot.build(:user)
     expect(user2).to be_valid
+  end
+
+  it 'has notifications enabled' do
+    user = FactoryBot.create(:user)
+    expect(user.has_event_notifications_enabled?).to be(true)
+    expect(user.has_team_notifications_enabled?).to be(true)
   end
 
   describe 'self#from_omniauth' do
@@ -198,5 +210,36 @@ RSpec.describe User, type: :model do
   it "has the admin attribute set to false, if it is not an admin" do
     user = FactoryBot.build(:user)
     expect(user.admin).to eq(false)
+  end
+
+  it "has a method all_events that returns all events the user participates in" do
+    user = FactoryBot.create(:user)
+    team = FactoryBot.create(:team)
+    event1 = FactoryBot.create(:event, :single_player)
+    event1.add_participant(user)
+    event2 = FactoryBot.create(:event, :team_player)
+    team.members << user
+    event2.add_team(team)
+    user.reload
+    expect(user.all_events.count).to eq(2)
+  end
+
+  it "has event notifications enabled by default" do
+    user = FactoryBot.build(:user)
+    expect(user.event_notifications_enabled?).to eq(true)
+  end
+
+  it "has team notifications enabled by default" do
+    user = FactoryBot.build(:user)
+    expect(user.team_notifications_enabled?).to eq(true)
+  end
+
+  it 'should produce pretty to-fields for emails' do
+    user = FactoryBot.create :user
+    user.first_name = 'Hans'
+    user.last_name = 'Mueller'
+    user.email = 'hans@example.org'
+    email_with_name = user.email_with_name
+    expect(email_with_name).to eq("'Hans Mueller' <hans@example.org>")
   end
 end

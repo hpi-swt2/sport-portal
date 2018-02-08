@@ -4,9 +4,13 @@
 
 /* Overwrite container from application.html.erb for background image only*/
 body>.background-layer>.container {
+    margin-top: -64px;
     width: 100%;
     max-width: 100% !important;
     padding: 0 0;
+}
+#placeholderForNavbar{
+    height: 64px;
 }
 
 .section {
@@ -28,6 +32,7 @@ body>.background-layer>.container {
     min-height: calc(796 / 1200 * 100vw);
     padding-bottom: calc(160 / 796 * 100%);
     margin-bottom: calc(-160 / 796 * 100%);
+    padding-top: 8%;
     z-index: 5;
 }
 
@@ -103,7 +108,6 @@ h1, h2, h3 {
 }
 
 .card-button {
-    width: 70%;
     padding: 10px 20px !important;
     margin-bottom: 50px;
     background: #1CA9E5;
@@ -126,12 +130,6 @@ h1, h2, h3 {
     line-height: 3rem;
 }
 
-.content-is-cards {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0px;
-}
-
 .gameModeCollapsible {
     margin: 15px;
     -webkit-box-shadow: none;
@@ -140,7 +138,7 @@ h1, h2, h3 {
     border: none;
 }
 
-.gameModeCollapsible>li>.collapsible-header {
+.gameModeCollapsible > li > .collapsible-header {
     border: none;
     background-color: #F3F9FF;
     margin-top: 15px;
@@ -148,7 +146,7 @@ h1, h2, h3 {
     align-items: center;
 }
 
-.gameModeCollapsible>li>.collapsible-body {
+.gameModeCollapsible > li > .collapsible-body {
     border: none;
     background-color: #F3F9FF;
 }
@@ -164,26 +162,11 @@ h1, h2, h3 {
     justify-content: center;
 }
 
-.info-card {
-    background-color: #F3F9FF;
-    margin: 0 10px;
-    padding: 20px 20px 50px 20px !important;
-    border-radius: 5px;
-    overflow: hidden;
-    word-wrap: break-word;
-}
-
-.card-button-col {
-    background-color: #F3F9FF;
-    margin: 0 10px;
-    padding: 0 !important;
-}
-
-ul.gameModeList>li {
+ul.gameModeList > li {
     list-style-type: disc;
-    list-style-position: inside;
-    margin-left: 15px;
+    list-style-position: outside;
     padding-left: 10px;
+    margin-left: 20px;
 }
 
 .rotated {
@@ -201,10 +184,6 @@ ul.gameModeList>li {
 /* Desktop | Laptop */
 @media only screen and (min-width : 1300px) {
 
-    .section.darkblue-soccer {
-        padding-top: 13%;
-    }
-
     .sport-image {
         width: 85px;
         height: 85px;
@@ -217,19 +196,14 @@ ul.gameModeList>li {
     #register-row {
         margin-top: 50px;
     }
+
+    #lead-description {
+        font-size: 1.4rem;
+    }
 }
 
 /* Tablet */
 @media only screen and (min-width : 600px) and (max-width: 1300px) {
-
-    .section.darkblue-soccer {
-        padding-top: 8%;
-    }
-
-    .card-button {
-        font-size: 1rem;
-        width: 90%;
-    }
 
     .sport-image {
         width: 50px;

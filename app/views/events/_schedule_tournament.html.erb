@@ -1,6 +1,6 @@
 <% level = 0 %>
 <% while true %>
-  <% this_level_matches = @matches.select { |match| match.gameday == level } %>
+  <% this_level_matches = @matches.select { |match| match.gameday_number == level } %>
   <% if this_level_matches.length == 0 %>
     <% break %>
   <% end %>
@@ -33,13 +33,16 @@
       <td><%= match.place %></td>
       <td><%= link_to_participant match.team_home %></td>
       <td><%= link_to_participant match.team_away %></td>
-      <td>
-        <%= match.score_home ? match.score_home : '-' %>
-        :
-        <%= match.score_away ? match.score_away : '-' %>
+      <td class="text-center">
+        <% match.game_results.each do |result| %>
+          <%= result.score_home ? result.score_home : '-' %>
+          :
+          <%= result.score_away ? result.score_away : '-' %>
+          <br/>
+        <% end %>
       </td>
       <td>
-        <%= form_for match, url: update_points_match_path(match), html: {method: "put"}, namespace: "match_#{match.id}" do |f| %>
+        <%= form_for match, url: update_points_match_path(match), html: { method: "put" }, namespace: "match_#{match.id}" do |f| %>
           <%= f.number_field :points_home, class: 'input-sm', style: 'width: 50px' %>
           :
           <%= f.number_field :points_away, class: 'input-sm', style: 'width: 50px' %>
@@ -47,8 +50,10 @@
         <% end %>
       </td>
       <td>
-        <%= date = (match.start_time_date+match.gameday-1).to_s(:day_and_month) %>
-        <%= time = (match.start_time_time).to_s(:hours_and_minutes) %>
+        <% unless match.start_time.nil? %>
+          <%= date = (match.start_time_date+match.gameday_number-1).to_s(:day_and_month) %>
+          <%= time = (match.start_time_time).to_s(:hours_and_minutes) %>
+        <% end %>
         <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-time-<%= match.id %>">
           <%= t 'events.schedule.propose_new_appointment' %>
         </button>
@@ -101,10 +106,8 @@
         </div>
       </td>
       <td>
-        <%= link_to t('.show', default: t('helpers.links.show')),
+        <%= link_to t('events.schedule.insert_results'),
                     match_path(match), :class => 'btn btn-default btn-xs' %>
-        <%= link_to t('.edit', default: t('helpers.links.edit')),
-                    edit_match_path(match), :class => 'btn btn-default btn-xs' %>
       </td>
     </tr>
   <% end %>

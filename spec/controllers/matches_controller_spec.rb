@@ -17,6 +17,26 @@ RSpec.describe MatchesController, type: :controller do
     FactoryBot.build(:match, team_home: nil, team_away: nil).attributes
   }
 
+  let(:authorized_attributes) {
+    FactoryBot.build(:match, team_home: @team).attributes
+  }
+
+  before(:each) do
+    @user = FactoryBot.create(:user)
+    @other_user = FactoryBot.create(:user)
+    @admin = FactoryBot.create(:admin)
+    @team = FactoryBot.create(:team)
+    @team.members << @user
+    sign_in @user
+  end
+
+  after(:each) do
+    @team.destroy
+    @user.destroy
+    @other_user.destroy
+    @admin.destroy
+  end
+
   describe "GET #show" do
     it "returns a success response" do
       match = Match.create! valid_attributes
@@ -33,9 +53,47 @@ RSpec.describe MatchesController, type: :controller do
   end
 
   describe "GET #edit" do
-    it "returns a success response" do
-      match = Match.create! valid_attributes
+    it "should allow team members to edit a match" do
+      match = Match.create! authorized_attributes
       get :edit, params: { id: match.to_param }
+      expect(response).to be_success
+    end
+
+    it "shouldn't allow other users to edit a match" do
+      sign_out @user
+      sign_in @other_user
+      match = Match.create! authorized_attributes
+      get :edit, params: { id: match.to_param }
+      expect(response).not_to be_success
+    end
+
+    it "should allow admin to edit a match" do
+      sign_in @admin
+      match = Match.create! authorized_attributes
+      get :edit, params: { id: match.to_param }
+      expect(response).to be_success
+    end
+  end
+
+  describe "GET #edit_results" do
+    it "should allow team members to edit the results of a match" do
+      match = Match.create! authorized_attributes
+      get :edit_results, params: { id: match.to_param }
+      expect(response).to be_success
+    end
+
+    it "shouldn't allow other users to edit the results of a match" do
+      sign_out @user
+      sign_in @other_user
+      match = Match.create! valid_attributes
+      get :edit_results, params: { id: match.to_param }
+      expect(response).not_to be_success
+    end
+
+    it "should allow admin to edit the results of a match" do
+      sign_in @admin
+      match = Match.create! valid_attributes
+      get :edit_results, params: { id: match.to_param }
       expect(response).to be_success
     end
   end
@@ -69,14 +127,14 @@ RSpec.describe MatchesController, type: :controller do
       }
 
       it "updates the requested match" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: new_attributes }
         match.reload
         expect(match.place).to eq(new_attributes["place"])
       end
 
       it "redirects to the match" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: valid_attributes }
         expect(response).to redirect_to(match)
       end
@@ -84,9 +142,19 @@ RSpec.describe MatchesController, type: :controller do
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        match = Match.create! valid_attributes
+        match = Match.create! authorized_attributes
         put :update, params: { id: match.to_param, match: invalid_attributes }
         expect(response).to be_success
+      end
+    end
+
+    context "with unauthorized user" do
+      it "shouldn't allow unauthorized user to update" do
+        sign_out @user
+        sign_in @other_user
+        match = Match.create! valid_attributes
+        put :update, params: { id: match.to_param, match: valid_attributes }
+        expect(response).not_to be_success
       end
     end
   end
@@ -143,6 +211,85 @@ RSpec.describe MatchesController, type: :controller do
       match = Match.create! valid_attributes
       delete :destroy, params: { id: match.to_param }
       expect(response).to redirect_to(event_schedule_url(match.event))
+    end
+  end
+
+  describe "GET #add_game_result" do
+    context "with a valid match" do
+      let(:match) { FactoryBot.create(:match) }
+
+      it "adds a game result to the match" do
+        expect {
+          get :add_game_result, params: { id: match.id }
+        }.to change(Match, :count).by(1)
+      end
+
+      it "returns a success response" do
+        get :add_game_result, params: { id: match.id }
+        expect(response).to be_success
+      end
+    end
+  end
+
+  describe "GET #remove_game_result" do
+    context "with valid params" do
+      let(:match) { FactoryBot.create(:match, :with_results, result_count: 1) }
+
+      it "deletes the game result" do
+        get :remove_game_result, params: { id: match.id, result_id: match.game_results.first.id }
+        match.reload
+        expect(match.game_results).to be_empty
+      end
+
+      it "returns a success response" do
+        get :remove_game_result, params: { id: match.id, result_id: match.game_results.first.id }
+        expect(response).to be_success
+      end
+    end
+  end
+
+  describe "PUT #update_results" do
+
+    let(:match) { Match.create! authorized_attributes }
+    context "with valid params" do
+      let(:new_attributes) {
+        {
+          "0" => {
+            "score_home" => 11,
+            "score_away" => 33,
+            "id" => ""
+          }
+        }
+      }
+
+      it "updates the requested match" do
+        put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
+        match.reload
+        result = match.game_results.first
+        expect(result.score_home).to eq(new_attributes["0"]["score_home"])
+        expect(result.score_away).to eq(new_attributes["0"]["score_away"])
+      end
+
+      it "redirects to the show match page" do
+        put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
+        expect(response).to redirect_to(match_path(match))
+      end
+    end
+    context "with invalid params" do
+      let(:new_attributes) {
+        {
+            "0" => {
+                "score_home" => 'asdf',
+                "score_away" => 'dddd',
+                "id" => ""
+            }
+        }
+      }
+
+      it "redirects to the edit results page" do
+        put :update_results, params: { id: match.to_param, match: { game_results_attributes: new_attributes } }
+        expect(response).to render_template :edit_results
+      end
     end
   end
 

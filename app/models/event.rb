@@ -2,39 +2,76 @@
 #
 # Table name: events
 #
-#  id               :integer          not null, primary key
-#  name             :string
-#  description      :text
-#  discipline       :string
-#  player_type      :integer          not null
-#  max_teams        :integer
-#  game_mode        :integer          not null
-#  type             :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  startdate        :date
-#  enddate          :date
-#  deadline         :date
-#  gameday_duration :integer
-#  owner_id         :integer
-#  initial_value    :float
+#  id                   :integer          not null, primary key
+#  name                 :string
+#  description          :text
+#  discipline           :string
+#  player_type          :integer          not null
+#  max_teams            :integer
+#  game_mode            :integer          not null
+#  type                 :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  startdate            :date
+#  enddate              :date
+#  deadline             :date
+#  gameday_duration     :integer
+#  owner_id             :integer
+#  initial_value        :float
+#  selection_type       :integer          default("fcfs"), not null
+#  min_players_per_team :integer
+#  max_players_per_team :integer
+#  matchtype            :integer
+#  bestof_length        :integer          default(1)
+#  game_winrule         :integer
+#  points_for_win       :integer          default(3)
+#  points_for_draw      :integer          default(1)
+#  points_for_lose      :integer          default(0)
+#  has_place_3_match    :boolean          default(TRUE)
+#  image_data           :text
+#  maximum_elo_change   :integer
 #
 
 class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  has_many :matches, -> { order gameday: :asc, index: :asc }, dependent: :delete_all
-  has_and_belongs_to_many :teams
+  has_many :matches, -> { order gameday_number: :asc, index: :asc }, dependent: :destroy
+  has_many :participants
+  has_many :teams, through: :participants
   has_many :organizers
   has_many :editors, through: :organizers, source: 'user'
+  has_many :gamedays, dependent: :delete_all
+
+  include ImageUploader::Attachment.new(:image)
+  before_destroy :send_mails_when_canceled
 
   scope :active, -> { where('deadline >= ? OR type = ?', Date.current, "Rankinglist") }
 
-  enum selection_type: [:fcfs, :fcfs_queue, :selection]
-  validates :name, :discipline, :game_mode, :player_type,  presence: true
+  validates :name, :discipline, :game_mode, :player_type, :matchtype, :game_winrule, presence: true
+  validates :max_teams, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 1000, allow_nil: true }
+  validates :max_players_per_team, numericality: { greater_than_or_equal_to: :min_players_per_team }
+  validates :points_for_win,
+            :points_for_draw,
+            :points_for_lose,
+            :bestof_length,
+            numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  validates :max_teams, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  enum matchtype: [:bestof]
+  enum game_winrule: [:most_sets]
+  # fcfs_queue and selection should be added in the future
+  enum selection_type: [:fcfs]
 
   enum player_type: [:single, :team]
+
+  def send_mails_when_canceled
+    players = self.teams.map(&:members).flatten(1)
+    players.each do |user|
+      EventMailer.send_mail(user, self, :event_canceled).deliver_now
+    end
+  end
+
+  def is_up_to_date
+    true
+  end
 
   def duration
     return if enddate.blank? || startdate.blank?
@@ -57,7 +94,14 @@ class Event < ApplicationRecord
 
   def add_team(team)
     teams << team
+    set_initial_value(team)
     invalidate_schedule
+    send_mails_when_adding_team(team)
+  end
+
+  def set_initial_value(team)
+    participant = participants.where("team_id = ?", team.id)
+    participant.first.update(rating: initial_value)
   end
 
   def remove_team(team)
@@ -66,6 +110,10 @@ class Event < ApplicationRecord
       team.destroy
     end
     invalidate_schedule
+  end
+
+  def team_of(user)
+    teams.detect { |team| team.has_member?(user) }
   end
 
   def generate_schedule
@@ -77,7 +125,7 @@ class Event < ApplicationRecord
   end
 
   def add_participant(user)
-    team = user.create_single_team
+    team = user.create_team_for_event
     add_team(team)
   end
 
@@ -107,11 +155,14 @@ class Event < ApplicationRecord
   end
 
   def can_leave?(user)
-    has_participant?(user)
+    has_participant?(user) && !deadline_has_passed?
   end
 
   def standing_of(team)
     I18n.t 'events.overview.unkown_standing'
+  end
+
+  def last_match_of(_)
   end
 
   # this is a method that simplifies manual testing, not intended for production use
@@ -134,6 +185,34 @@ class Event < ApplicationRecord
     self.class.human_game_mode game_mode
   end
 
+  def build_description_string
+    if self.type == 'Rankinglist'
+      "#{I18n.t('events.index.registration_until')}: #{self.deadline} <br> #{I18n.t('events.index.start_date')}: #{self.startdate}"
+    else
+      "#{I18n.t('events.index.max_players')}: #{self.max_teams}"
+    end
+  end
+
+  def fitting_teams(user)
+    all_teams = user.owned_teams.created_by_user
+    fitting_teams = []
+    all_teams.each do |team|
+      if is_fitting?(team)
+        fitting_teams << team
+      end
+    end
+    fitting_teams
+  end
+
+  def is_fitting?(team)
+    team_member_count = team.members.count
+    min_players_per_team <= team_member_count && max_players_per_team >= team_member_count
+  end
+
+  def get_ranking
+    Ranking.new(teams, matches).get_ranking
+  end
+
   class << self
     def human_selection_type(type)
       I18n.t("activerecord.attributes.event.selection_types.#{type}")
@@ -148,4 +227,13 @@ class Event < ApplicationRecord
       I18n.t("activerecord.attributes.#{name.downcase}.game_modes.#{mode}")
     end
   end
+
+  private
+    def send_mails_when_adding_team(team)
+      if team.is_qualified_to_receive_notifications?
+        team.members.each do |member|
+          TeamMailer.team_registered_to_event(member, team, self).deliver_now
+        end
+      end
+    end
 end
