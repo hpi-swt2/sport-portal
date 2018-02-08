@@ -4,7 +4,7 @@
 </div>
 
 <% if user_signed_in? and current_user.teams_created_by_user.present? %>
-  <h4><%= t('teams.index.my_teams')%> <a><%= t('dashboard.show_all')%></a></h4>
+  <h4><%= t('teams.index.my_teams')%> <a href=<%= teams_path %>><%= t('dashboard.show_all')%></a></h4>
 
   <div class="tile-wrapper">
     <% current_user.teams_created_by_user.each do |team| %>
