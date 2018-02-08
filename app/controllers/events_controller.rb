@@ -30,9 +30,6 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = event_type.new(event_params)
-    @event.matchtype = :bestof
-    @event.min_players_per_team = 1
-    @event.max_players_per_team = 1
     set_associations
     if @event.save
       @event.editors << current_user
@@ -65,7 +62,7 @@ class EventsController < ApplicationController
     else
       @event.add_team(Team.find(event_params[:teams]))
     end
-    
+
     flash[:success] = t('success.join_event', event: @event.name)
     redirect_back fallback_location: events_url
   end
@@ -112,6 +109,10 @@ class EventsController < ApplicationController
     end
 
     def set_associations
+      @event.matchtype ||= :bestof
+      @event.game_winrule ||= :most_sets
+      @event.min_players_per_team ||= 1
+      @event.max_players_per_team ||= 1
       @event.owner = current_user
     end
 

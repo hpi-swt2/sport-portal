@@ -22,10 +22,14 @@ select.filterSelect {
     display: block;
 }
 /* Overwrite container from application.html.erb for background image only*/
-body > .background-layer > .container {
+body > .background > .container {
     width: 100%;
     max-width: 100% !important;
     padding: 0 0;
+}
+
+.background > nav {
+    background-color: #0f3157 !important;
 }
 
 #teamProfile {
@@ -41,11 +45,13 @@ body > .background-layer > .container {
 #teamProfileImage {
     width: 200px;
     height: 200px;
+    object-fit: cover;
 }
 
 #teamDescription {
     overflow: hidden;
     word-wrap: break-word;
+    font-size: 1.4rem;
 }
 
 h1, h2 {

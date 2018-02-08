@@ -1,6 +1,18 @@
 <%= t('mailer.hello', firstname: @user.first_name) %>
 
-<%= t('match_mailer.next_game', name: @match.event.name, team_home: @match.team_home.name, team_away: @match.team_away.name) %>
-<%= t('.info') %>
+<%= t('.info_txt',
+      opponent_team_name: @opponent_team.name,
+      event_name: @match.event.name) %>
 
-<%= event_overview_url(@match.event) %>
+<% if @match.start_time %>
+<%= t('match_mailer.start_time',
+      start_date: I18n.localize(@match.start_time.to_date),
+      start_time: @match.start_time.to_s(:time)) %>
+<% end %>
+<% if @match.place %>
+<%= t('match_mailer.place', place: @match.place) %>
+<% end %>
+
+<%= t('.have_fun') %>
+
+<%= t('mailer.closing', appname: t('appname')) %>
