@@ -184,6 +184,48 @@ class Tournament < Event
       [loser_home, loser_away]
     end
 
+    def self.template_events
+      list = Array.new
+
+      tournament1 = Tournament.new
+      tournament1.assign_attributes(
+          name: I18n.t('events.templates.tournament1.name'),
+          description: I18n.t('events.templates.tournament1.description'),
+          discipline: I18n.t('events.templates.tournament1.discipline'),
+          player_type: Event.player_types[:team],
+          max_teams: 8,
+          type: 'Tournament',
+          startdate: Date.today + (7 * 2),
+          enddate: Date.today + (7 * 6),
+          deadline: Date.today + (7 * 1),
+          gameday_duration: 1,
+          selection_type: Event.selection_types[:fcfs],
+          min_players_per_team: 6,
+          max_players_per_team: 12,
+          image: open('https://owncloud.hpi.de/index.php/s/ped4LMBi3vKldWu/download'))
+      list << tournament1
+
+      tournament2 = Tournament.new
+      tournament2.assign_attributes(
+          name: I18n.t('events.templates.tournament2.name'),
+          description: '',
+          discipline: I18n.t('events.discipline.table_tennis'),
+          player_type: Event.player_types[:single],
+          max_teams: 16,
+          type: 'Tournament',
+          startdate: Date.today + (7 * 2),
+          enddate: Date.today + (7 * 6),
+          deadline: Date.today + (7 * 1),
+          gameday_duration: 1,
+          selection_type: Event.selection_types[:fcfs],
+          min_players_per_team: 1,
+          max_players_per_team: 1,
+          image: open('https://owncloud.hpi.de/index.php/s/eA7FWt6AMrC1otJ/download'))
+      list << tournament2
+
+      list
+    end
+
     class << self
       def split_teams_array(team_array)
         half_team_count = team_array.length / 2

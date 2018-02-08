@@ -292,6 +292,7 @@ de:
       registration_until: "Anmeldung bis"
       max_players: "Max. Spielerzahl"
     create_event: "Event erstellen"
+    event_templates: "Event Vorlagen"
     choose_event_format: "Eventart wählen"
     new_league: "Liga erstellen"
     new_tournament: "Turnier erstellen"
@@ -389,6 +390,25 @@ de:
       points: "Ligapunkte"
     max_teams:
       infinite: "unbegrenzt"
+    templates:
+      league1:
+        name: "Tischkickerliga"
+        description: "In dieser mitreißenden Tischkickerliga tritts du gegen deine Freunde und Kollegen an und der beste Spieler wird in epischen Duellen ermittelt. Trete jetzt bei, um Teil dieses unvergesslichen Erlebnisses zu sein!"
+      league2:
+        name: "Fußballliga"
+      tournament1:
+        name: "Volleyball Turnier"
+        description: "Sonne, Sand und jede Menge Spaß, das diesjährige Volleyball Turnier lässt keine Wünsche offen. Meldet euch jetzt an!"
+        discipline: "Beachvolleyball"
+      tournament2:
+        name: "Tischtennistturnier"
+      rankinglist1:
+        name: "Schachrangliste"
+        discipline: "Schach"
+      rankinglist2:
+        name: "Tischkickerrangliste"
+
+
 
   matches:
     round_name:

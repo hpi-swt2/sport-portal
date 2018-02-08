@@ -17,8 +17,13 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     if event_type
-      @event = event_type.new
+      if params.has_key?('event')
+        @event = event_type.new(event_params)
+      else
+        @event = event_type.new
+      end
     else
+      @template_events = Event.template_events
       render :create_from_type
     end
   end
@@ -160,7 +165,9 @@ class EventsController < ApplicationController
                                     :min_players_per_team,
                                     :max_players_per_team,
                                     :gameday_duration,
+                                    :selection_type,
                                     :image,
+                                    :image_data,
                                     :remove_image,
                                     :has_place_3_match,
                                     :maximum_elo_change,

@@ -53,4 +53,12 @@ class Rankinglist < Event
     self.min_players_per_team = 1
     self.max_players_per_team = 1
   end
+
+  def self.template_events
+    list = Array.new
+
+    # no template events for rankinglists
+
+    list
+  end
 end

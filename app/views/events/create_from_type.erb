@@ -3,4 +3,26 @@
   <p style="color: #01A8E8"><%= t('welcome.index.lead-description') %></p>
 </div>
 
+
 <%= render partial: 'events/event_cards' %>
+
+<div class="page-header">
+  <h3><%= t 'events.event_templates' %></h3>
+</div>
+
+<div class="tile-wrapper">
+  <% @template_events.each do |event| %>
+    <% attributes = {event: event.attributes} %>
+    <% case event.type
+         when 'League' %><% new_path = new_league_path(attributes) %>
+      <% when 'Rankinglist' %><% new_path = new_rankinglist_path(attributes) %>
+      <% when 'Tournament' %><% new_path = new_tournament_path(attributes) %>
+    <% end %>
+    <%= render partial: 'application/tile_template',
+               locals: {title: event.name, image_url: event.image_url || 'https://owncloud.hpi.de/index.php/s/Mjdi0UvHNgfzCTo/download',
+                        description: event.build_description_string, destination_path: new_path,
+                        description_class: 'event-details mobile-event-details'} %>
+
+  <% end %>
+</div>
+</table>
