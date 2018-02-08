@@ -1,7 +1,8 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy, :assign_ownership, :delete_membership, :delete_ownership, :perform_action_on_multiple_members, :assign_membership_by_email]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  load_and_authorize_resource :team, only: [:index, :show, :new, :edit, :create, :update, :destroy]
+  load_and_authorize_resource :team, only: [:index, :show, :new, :edit, :update, :destroy]
+  authorize_resource :team, only: [:create]
 
   # GET /teams
   def index
