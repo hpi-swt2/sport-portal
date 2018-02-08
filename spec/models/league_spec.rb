@@ -211,7 +211,7 @@ describe 'League model', type: :model do
           league
         }
 
-        describe "Round 1" do
+        describe 'Round 1' do
           let(:gameday) {
             gameday = FactoryBot.build(:gameday)
             teams = league.teams
@@ -312,7 +312,51 @@ describe 'League model', type: :model do
     end
   end
 
-  describe "#add_participant" do
+  describe 'workflow' do
+    let(:league) {FactoryBot.build(:league, workflow_state: state)}
+    context 'active' do
+      let(:state) {'active'}
+      describe 'abilities' do
+        it 'should be able to generate a schedule' do
+          expect(league.can_generate_schedule?).to eq true
+        end
+
+        it 'should be able to be archived' do
+          expect(league.can_archive?).to eq true
+        end
+
+        it 'should be able to add participants' do
+          expect(league.can_add_participant?).to eq true
+        end
+
+        it 'should not be able to be reactivated' do
+          expect(league.can_reactivate?).to eq false
+        end
+      end
+    end
+    context 'archived' do
+      let(:state) {'archived'}
+      describe 'abilities' do
+        it 'should not be able to generate a schedule' do
+          expect(league.can_generate_schedule?).to eq false
+        end
+
+        it 'should not be able to be archived' do
+          expect(league.can_archive?).to eq false
+        end
+
+        it 'should not be able to add participants' do
+          expect(league.can_add_participant?).to eq false
+        end
+
+        it 'should be able to be reactivated' do
+          expect(league.can_reactivate?).to eq true
+        end
+      end
+    end
+  end
+
+  describe '#add_participant' do
     context 'single player event' do
       let(:league) { FactoryBot.create(:league, :single_player) }
       let(:user) { FactoryBot.create(:user) }

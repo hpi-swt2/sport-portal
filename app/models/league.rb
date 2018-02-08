@@ -36,7 +36,18 @@ class League < Event
   validate :end_after_start, :start_after_deadline
 
   enum game_mode: [:round_robin, :two_halfs, :swiss]
+  include Workflow
+  workflow do
+    state :active do
+      event :generate_schedule, transitions_to: :active
+      event :add_participant, transitions_to: :active
+      event :archive, transitions_to: :archived
+    end
+    state :archived do
+      event :reactivate, transitions_to: :active
+    end
 
+  end
   def generate_schedule
     if self.round_robin?
       calculate_round_robin

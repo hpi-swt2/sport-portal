@@ -78,6 +78,14 @@ class Event < ApplicationRecord
     enddate - startdate + 1
   end
 
+  def can_reactivate?
+    false
+  end
+
+  def can_archive?
+    false
+  end
+
   def end_after_start
     return if enddate.blank? || startdate.blank?
     errors.add(:enddate, I18n.t('activerecord.validations.must_be_after', other: Event.human_attribute_name(:startdate))) if enddate < startdate

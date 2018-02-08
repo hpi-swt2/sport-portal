@@ -53,7 +53,7 @@ class Ability
       cannot :create, User
 
       # Event
-      can [:create, :read, :update, :destroy], Event, owner_id: user_id
+      can [:create, :read, :update, :destroy, :archive, :reactivate], Event, owner_id: user_id
       can_join_event(user)
       can_leave_event(user)
       can :ranking, Event

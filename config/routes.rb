@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   resources :events, except: [:create] do
     member do
+      put :archive
+      put :reactivate
       put :join
       put :leave
       get :team_join

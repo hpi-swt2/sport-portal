@@ -72,7 +72,11 @@ gem 'bootstrap-datepicker-rails'
 
 # Gem to easily split DateTimes
 # https://github.com/shekibobo/time_splitter
-gem "time_splitter"
+gem 'time_splitter'
+
+# Easily configurable statemachines
+# https://github.com/geekq/workflow
+gem 'workflow'
 
 # Package Select2 dropdown replacement featuring autocomplete
 # https://github.com/argerim/select2-rails

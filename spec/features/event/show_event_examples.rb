@@ -38,6 +38,10 @@ shared_examples 'a show event page' do |with: [], without: []|
     end
   end
 
+  if with.include? :archive_button
+    it { is_expected.to have_link (:archive_event_button)}
+  end
+
   if without.include? :join_button
     it { is_expected.not_to have_link(:join_event_button) }
   end

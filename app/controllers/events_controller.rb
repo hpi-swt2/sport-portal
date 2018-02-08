@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join, :overview]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :join, :leave, :schedule, :ranking, :team_join, :overview, :archive, :reactivate]
   authorize_resource :event
 
 
@@ -85,8 +85,19 @@ class EventsController < ApplicationController
     redirect_back fallback_location: events_url
   end
 
+  def archive
+    @event.archive!
+    redirect_back fallback_location: events_url
+  end
+
+  def reactivate
+    @event.reactivate!
+    redirect_back fallback_location: events_url
+  end
+
   # GET /events/1/schedule
   def schedule
+    redirect_to events_url, notice: 'This event has been archived' if event.archived?
     if @event.matches.empty?
       @event.generate_schedule
       @event.save
