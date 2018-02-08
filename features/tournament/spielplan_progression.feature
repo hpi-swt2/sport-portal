@@ -13,6 +13,7 @@ Feature: Spielplan progression for tournament
   1   2 3   4
 
   Background:
+    Given a logged in admin
     Given a tournament t with 8 teams
     And the Spielplan page for t is visited
 

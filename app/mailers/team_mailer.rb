@@ -21,5 +21,4 @@ class TeamMailer < ApplicationMailer
                     event_name: @event.name)
     prevent_delivery_to_team_unsubscribed_users(user)
   end
-
 end
