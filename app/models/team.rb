@@ -40,6 +40,14 @@ class Team < ApplicationRecord
     home_matches.or away_matches
   end
 
+  def name
+    if self.created_by_event? && self.owners.size > 0
+      self.owners[0].name
+    else
+      super
+    end
+  end
+
   def has_multiple_owners?
     owners.length > 1
   end
