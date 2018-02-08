@@ -111,7 +111,8 @@ de:
       edit_profile: "Profil bearbeiten"
 
   dashboard:
-    title: "Dashboard für %{name}"
+    title: "Hallo %{name}!"
+    show_all: "Alle anzeigen"
 
   activerecord:
     models:
