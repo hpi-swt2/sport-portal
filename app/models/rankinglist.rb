@@ -27,15 +27,24 @@
 #  points_for_win       :integer          default(3)
 #  points_for_draw      :integer          default(1)
 #  points_for_lose      :integer          default(0)
+#  has_place_3_match    :boolean          default(TRUE)
 #  image_data           :text
+#  maximum_elo_change   :integer
 #
 
 class Rankinglist < Event
   validates :deadline, :startdate, :enddate, presence: false
 
-  enum game_mode: [:elo, :win_loss, :true_skill]
+  enum game_mode: [:elo]
 
   def update_rankings(match)
+    if (elo?)
+      match.apply_elo
+    end
+  end
+
+  def can_leave?(user)
+    has_participant? user
   end
 
   before_validation do

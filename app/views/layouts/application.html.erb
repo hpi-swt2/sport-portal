@@ -10,7 +10,7 @@
   <% if (action_name === "new" && controller_name == "sessions" or controller_name === "users" && action_name == "new" or controller_name === "users" && action_name == "create") %>
       <%= stylesheet_link_tag 'navbar', media: 'all', 'data-turbolinks-track' => 'reload' %>
   <% end %>
-  <% if (action_name == "index" && controller_name == "teams" or controller_name == "events") %>
+  <% if (action_name == "index" && (controller_name == "teams" or controller_name == "events") or action_name == "dashboard") %>
       <%= stylesheet_link_tag 'tile', media: 'all', 'data-turbolinks-track' => 'reload' %>
   <% end %>
 
@@ -26,7 +26,7 @@
     <%# flash messages in bootstrap style, helper from twitter-bootstrap-rails gem %>
     <%# https://github.com/seyhunak/twitter-bootstrap-rails#flash-helper %>
     <%= if controller_name != "sessions" and action_name != "new" then
-          bootstrap_flash
+          bootstrap_flash class: 'custom-notification'
         end %>
 
     <%# Render content of views %>

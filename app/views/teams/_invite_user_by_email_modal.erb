@@ -1,22 +1,21 @@
-<div class="modal fade" id="invite_user_by_email_modal" tabindex="-1" role="dialog" aria-labelledby="<%= t('teams.invite_user_to_team.title') %>" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="<%= t('helpers.links.close') %>"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><%= t('teams.invite_user_to_team.title') %></h4>
-      </div>
-      <%= form_tag assign_membership_by_email_team_path(@team), :method => :post %>
-        <div class="modal-body">
-          <div class="form-group">
-            <%= label_tag 'email', User.human_attribute_name(:email), class: 'control-label' %>
-            <%= email_field_tag 'email', nil, class: 'form-control' %>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <%= button_tag t("helpers.links.cancel"), type: 'button',
-                         data: { dismiss: 'modal' }, class: 'btn btn-default' %>
-          <%= submit_tag t('helpers.links.send'), class: 'btn btn-primary' %>
-        </div>
+<div class="modal modal-fixed-footer fade" id="invite_user_by_email_modal" tabindex="-1" role="dialog" aria-labelledby="<%= t('teams.invite_user_to_team.title') %>" aria-hidden="true">
+  <%= form_tag assign_membership_by_email_team_path(@team), :method => :post do -%>
+    <div class="modal-header">
+      <button type="button" class="close modal-close" data-dismiss="modal" aria-label="<%= t('helpers.links.close') %>">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h3 class="modal-title"><%= t('teams.invite_user_to_team.title') %></h3>
     </div>
-  </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <%= label_tag 'email', User.human_attribute_name(:email), class: 'control-label' %>
+        <%= email_field_tag 'email', nil, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <%= button_tag t("helpers.links.cancel"), type: 'button',
+                     data: { dismiss: 'modal' }, class: 'btn btn-default modal-close' %>
+      <%= submit_tag t('helpers.links.send'), class: 'btn btn-primary' %>
+    </div>
+  <% end -%>
 </div>

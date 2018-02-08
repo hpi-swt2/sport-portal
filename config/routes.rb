@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :teams
   resources :matches, except: [:index] do
     member do
+      get '/confirm_scores', to: 'matches#confirm_scores', as: :confirm_scores
       patch :update_points
       put :update_points
       get :add_game_result
@@ -53,7 +54,6 @@ Rails.application.routes.draw do
       member do
         put 'profile', to: 'users#update'
         get 'dashboard'
-        get 'notifications'
         get 'link'
         get 'unlink'
         post 'delete', to: 'users#confirm_destroy'

@@ -67,10 +67,6 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
-  # GET /users/1/notifications
-  def notifications
-  end
-
   # GET /users/1/dashboard
   # View: app/views/devise/registrations/dashboard.html.erb
   def dashboard
@@ -81,6 +77,10 @@ class UsersController < Devise::RegistrationsController
   # Views are located in `app/views/devise`
 
   protected
+    # Implemented to redirect to user profile after successful update
+    def user_root_path
+      user_path current_user
+    end
 
     # Override method of `Devise::RegistrationsController` to update without password
     def  update_resource(resource, params)
@@ -103,11 +103,11 @@ class UsersController < Devise::RegistrationsController
     # Overridden methods of `Devise::RegistrationsController` to permit additional model params
     def sign_up_params
       generate_random_password if get_omniauth_data
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, :team_notifications_enabled, :event_notifications_enabled, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :image, :remove_image, :password_confirmation, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, :contact_information, :team_notifications_enabled, :event_notifications_enabled, event_ids: [])
     end
 
     def account_update_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, :team_notifications_enabled, :event_notifications_enabled, event_ids: [])
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, :avatar, :remove_avatar, :birthday, :telephone_number, :telegram_username, :favourite_sports, :contact_information, :team_notifications_enabled, :event_notifications_enabled, event_ids: [])
     end
 
     def admin_update_params
@@ -139,9 +139,7 @@ class UsersController < Devise::RegistrationsController
       redirect_to user_path(user), notice: I18n.t('devise.registrations.unlink_success')
     end
 
-    private
-
-      def error_detector(attribute)
-        if resource.errors.include?(attribute) then "input-field-error input-field" else "input-field" end
-      end
+    def error_detector(attribute)
+      if resource.errors.include?(attribute) then "input-field-error input-field" else "input-field" end
+    end
 end

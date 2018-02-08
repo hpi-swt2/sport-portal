@@ -73,7 +73,7 @@ de:
     index:
       lead: "Organisiere deine Liga!"
       lead-description: "Plane, erstelle und betreue mühelos sowohl Turniere als auch Ligen für deinen Sport. Du hast noch keine Erfahrung als Event-Organisator? Kein Problem! Baue dir jetzt mit wenigen Klicks problemlos deinen persönlichen Spielplan."
-      free-sign-up: "Kostenlos Anmelden"
+      sign-up-now: "Jetzt Anmelden"
       soccer: "Fußball"
       basketball: "Basketball"
       volleyball: "Volleyball"
@@ -109,16 +109,18 @@ de:
       dashboard: "Mein Dashboard"
       my_profile: "Mein Profil"
       edit_profile: "Profil bearbeiten"
-      notification_settings: "Benachrichtigungseinstellungen"
 
   dashboard:
-    title: "Dashboard für %{name}"
+    title: "Hallo %{name}!"
+    show_all: "Alle anzeigen"
 
   activerecord:
     models:
       match:
         one: "Spiel"
         other: "Spiele"
+        errors:
+          score_proposer_confirmer_team: "Die Bestätigung von Ergebnissen muss durch einen Spieler des anderen Teams erfolgen."
       team:
         one: "Team"
         other: "Teams"
@@ -126,8 +128,8 @@ de:
         one: "Spieler"
         other: "Spieler"
         errors:
-          future_birthday: "Der Geburtstag darf nicht in der Zukunft liegen"
-          telephone_number_invalid: "Die Telefonnummer darf nur aus Zahlen, ohne Leerzeichen bestehen"
+          future_birthday: "darf nicht in der Zukunft liegen"
+          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen und kann mit einem + beginnen"
       image:
         one: "Bild"
         other: "Bilder"
@@ -153,10 +155,12 @@ de:
         id: "ID"
         date: "Datum"
         place: "Ort"
+        gameday: "Spieltag"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
         team_away_id: "Auswärts-Team"
+        gameday_number: "Spieltag"
       game_result:
         score_home: "Heim-Ergebnis"
         score_away: "Auswärts-Ergebnis"
@@ -179,7 +183,7 @@ de:
         event_type: "Eventtyp"
         game_mode: "Spielsystem"
         player_type: "Teilnahmeform"
-        max_teams: "Teilnehmeranzahl"
+        max_teams: "Maximale Teilnehmerzahl"
         discipline: "Sportart"
         deadline: "Anmeldefrist"
         startdate: "Beginn"
@@ -193,28 +197,24 @@ de:
         max_players_per_team: "Max. Anzahl Spieler pro Team"
         gameday_duration: "Spieltagdauer"
         player_types:
-          single: "Einzelteilnahme"
-          team: "Teamteilnahme"
+          single: "Einzel"
+          team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
-        points_for_win: "Punkte für Gewinn"
-        points_for_draw: "Punkte für Unentschieden"
-        points_for_lose: "Punkte für Niederlage"
+        points_for_win: "Eventpunkte für Gewinn"
+        points_for_draw: "Eventpunkte für Unentschieden"
+        points_for_lose: "Eventpunkte für Niederlage"
         selection_types:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
           selection: "Teilnehmer auswählen"
-      tournament:
-        game_modes:
-          ko: "K.-o.-System"
-          ko_group: "K.-o.-System mit Gruppenphase"
-          double_elimination: "Double Elimination"
+        has_place_3_match: "Spiel um Platz 3"
+        maximum_elo_change: "Maximaler Änderungsfaktor"
       league:
         game_modes:
           round_robin: "Jeder gegen Jeden"
           two_halfs: "Hin- und Rückrunde"
           swiss: "Schweizer System"
-          danish: "Dänisches System"
       rankinglist:
         game_modes:
           elo: "ELO"
@@ -227,6 +227,7 @@ de:
         birthday: "Geburtstag"
         telegram_username: "Telegram Benutzername"
         favourite_sports: "Lieblingssportarten"
+        contact_information: "Kontaktinformationen"
         id: "ID"
         created_at: "Erstellt am"
     validations:
@@ -237,19 +238,20 @@ de:
       edit_profile: "Profilinformationen bearbeiten"
       update_profile: "Profil aktualisieren"
       favourite_sports_placeholder: "Fußball, Basketball, Tischkicker, ..."
-      notifications:
-            settings: "Benachrichtigungs-Einstellungen"
-            enable_team_notifications: "Team-Benachrichtigungen erhalten"
-            enable_event_notifications: "Event-Benachrichtigung erhalten"
-            update_settings: "Aktualisieren"
-
+      contact_information_placeholder: "Facebook-Profil, Homepage, LinkedIn-Account, ..."
 
     match:
       game_results: "Ergebnis(se)"
+      game_result:
+        points: "Punkte"
       add_game_result: "Ergebnis hinzufügen"
       remove_game_result: "Ergebnis entfernen"
       added_game_result_notice: "Ergebnis hinzugefügt!"
       removed_game_result_notice: "Ergebnis entfernt!"
+      confirm_game_result: "Ergebnisse bestätigen"
+      scores_confirmed_question: "Ergebnisse bestätigt?"
+      scores_confirmed: "Bestätigt"
+      scores_not_confirmed: "Nicht bestätigt"
       noscript:
         add_results_notice:
           create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
@@ -258,6 +260,7 @@ de:
       edit_results: "Ergebnisse bearbeiten"
       error:
         update_game_results: "Aktualisieren der Ergebnisse ist fehlgeschlagen!"
+
 
     event:
       point_distribution: "Punkteverteilung"
@@ -338,6 +341,7 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      event_points: "Eventpunkte"
       first_half: "Hinrunde"
       second_half: "Rückrunde"
       finale: "Finale"
@@ -348,14 +352,11 @@ de:
       preliminaries: "Vorrunde %{round}"
       to: "bis"
       appointment: "Termin"
+      insert_results: "Ergebnisse eintragen"
     gamemode:
-      ko: "KO"
-      ko_group: "Gruppen-KO"
-      double_elimination: "Doppel-KO-System"
       round_robin: "Jeder gegen Jeden"
       two_halfs: "Hin- und Rückrunde"
       swiss: "Schweizer System"
-      danish: "Dänisches System"
       elo: "ELO"
       win_loss: "Gewinne-Niederlagen"
       true_skill: "True Skill"
@@ -368,6 +369,7 @@ de:
       in_place_3_match: "Im Spiel um Platz 3"
       in: "Im %{match_name}"
       not_available_for_leagues: 'Keine Übersicht verfügbar für Ligen.'
+      against: "gegen"
     placing:
       first: "Erster Platz"
       second: "Zweiter Platz"
@@ -397,6 +399,9 @@ de:
       other: "Vorrunde %{round} - Spiel %{gameid}"
     winner_of_match: "Gewinner %{match}"
     loser_of_match: "Verlierer %{match}"
+    show:
+      timeframe: "Zeitraum"
+      to: "bis"
 
   teams:
     index:
@@ -404,8 +409,10 @@ de:
       all_teams: "Alle Teams"
       create_team: "Ein Team erstellen"
     show:
-      invite_user_to_team: "+"
+      team_plays_kind_of_sports: 'Das Team spielt folgende Sportarten'
+      invite_user_to_team: "Spieler einladen"
       number: "#"
+      captain: "Kapitän"
     invite_user_to_team:
       title: "Neuen Spieler einladen"
       no_user_for_mail: 'Wir konnten keinen Nutzer mit der angegebenen E-Mail-Adresse finden.'
@@ -427,6 +434,10 @@ de:
       unhappy: "Unzufrieden"
       leave_blank_if_you_don_t_want_to_change_it: "Lass es leer, wenn du es nicht ändern möchtest"
       we_need_your_current_password_to_confirm_your_changes: "Wir benötigen dein aktuelles Passwort, um deine Änderungen zu bestätigen"
+      notifications:
+          subtitle: "Benachrichtigungen"
+          enable_team_notifications: "Team-Benachrichtigungen erhalten"
+          enable_event_notifications: "Event-Benachrichtigung erhalten"
     destroy:
       confirm: "Bestätigen"
 

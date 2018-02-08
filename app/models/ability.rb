@@ -69,8 +69,20 @@ class Ability
       can_assign_membership_by_email(user)
       can_send_emails_to_team_members(user)
 
+      # Match
+      can_modify_match(user)
+      cannot :destroy, Match
+
       if user.admin?
         can :manage, :all
+      end
+
+      can_confirm_scores(user)
+    end
+
+    def can_modify_match(user)
+      can :modify, Match do |match|
+        user.teams.where(id: match.teams).exists?
       end
     end
 
@@ -87,7 +99,7 @@ class Ability
     end
 
     def can_update_gameday(user)
-      can :update, Gameday do |gameday|
+      can :update_gameday, Gameday, Gameday do |gameday|
         not (gameday.event.organizers & user.organizers).empty?
       end
     end
@@ -158,5 +170,11 @@ class Ability
         not_exceeded = event.max_players_per_team >= team.members.count + update_count
       end
       not_exceeded
+    end
+
+    def can_confirm_scores(user)
+      can :confirm_scores, Match do |match|
+        match.can_confirm_scores?(user)
+      end
     end
 end

@@ -11,10 +11,10 @@
                 :class => 'btn btn-primary create-button' %>
 <% end %>
 
-<% if user_signed_in? and current_user.teams.present? %>
+<% if user_signed_in? and current_user.teams_created_by_user.present? %>
     <h4><%= t('teams.index.my_teams')%></h4>
     <div class="tile-wrapper">
-      <% current_user.teams.each do |team| %>
+      <% current_user.teams_created_by_user.each do |team| %>
           <%= render partial: 'application/tile_template', locals: {title: team.name, image_url: team.avatar_url || 'https://owncloud.hpi.de/index.php/s/Rtv2QMBLOKmGqiA/download', description: team.kind_of_sport,
           destination_path: team_path(team), description_class: ''} %>
       <% end %>
@@ -28,4 +28,3 @@
       description_class: ''} %>
   <% end %>
 </div>
-

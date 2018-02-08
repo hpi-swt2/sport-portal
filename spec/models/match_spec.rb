@@ -2,21 +2,22 @@
 #
 # Table name: matches
 #
-#  id             :integer          not null, primary key
-#  place          :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  team_home_id   :integer
-#  team_away_id   :integer
-#  event_id       :integer
-#  points_home    :integer
-#  points_away    :integer
-#  gameday_number :integer
-#  team_home_type :string           default("Team")
-#  team_away_type :string           default("Team")
-#  index          :integer
-#  gameday_id     :integer
-#  start_time     :datetime         default(NULL)
+#  id                    :integer          not null, primary key
+#  place                 :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  team_home_id          :integer
+#  team_away_id          :integer
+#  event_id              :integer
+#  points_home           :integer
+#  points_away           :integer
+#  gameday_number        :integer
+#  team_home_type        :string           default("Team")
+#  team_away_type        :string           default("Team")
+#  index                 :integer
+#  gameday_id            :integer
+#  scores_proposed_by_id :integer
+#  start_time            :datetime
 #
 
 require 'rails_helper'
@@ -102,7 +103,7 @@ RSpec.describe Match, type: :model do
       it "should give both 1 points for a draw" do
         result = match.game_results.first
         result.score_home = 1
-        result_score_away = 1
+        result.score_away = 1
         result.save!
         match.reload
 
@@ -113,6 +114,55 @@ RSpec.describe Match, type: :model do
     end
   end
 
+
+  describe '#opponent_of' do
+    before :each do
+      @other_team = FactoryBot.create(:team)
+    end
+
+    describe 'given a match with explicit participants' do
+      before :each do
+        @match = FactoryBot.create(:match)
+      end
+
+      it 'should return the opponent of a participant' do
+        expect(@match.opponent_of(@match.team_home)).to eq(@match.team_away)
+        expect(@match.opponent_of(@match.team_away)).to eq(@match.team_home)
+      end
+
+      it 'should return nil given an unrelated team' do
+        expect(@match.opponent_of(@other_team)).to be_nil
+      end
+    end
+
+    describe 'given a match with implicit participants' do
+      before :each do
+        @match_result_a =  FactoryBot.create(:match_result)
+        @match_result_b =  FactoryBot.create(:match_result)
+        @match = FactoryBot.create(:match, team_home: @match_result_a, team_away: @match_result_b)
+      end
+
+      it 'should return nil given any team' do
+        expect(@match.opponent_of(@match_result_a.match.team_home)).to be_nil
+        expect(@match.opponent_of(@match_result_a.match.team_away)).to be_nil
+        expect(@match.opponent_of(@match_result_b.match.team_home)).to be_nil
+        expect(@match.opponent_of(@match_result_b.match.team_away)).to be_nil
+        expect(@match.opponent_of(@other_team)).to be_nil
+      end
+
+      describe 'given scores have been entered' do
+        before :each do
+          @game_result_a = FactoryBot.create(:game_result, score_home: 3, score_away: 1, match: @match_result_a.match)
+          @game_result_b = FactoryBot.create(:game_result, score_home: 3, score_away: 1, match: @match_result_b.match)
+        end
+
+        it 'should return the opponent of a participant' do
+          expect(@match.opponent_of(@match_result_a.advancing_participant)).to eq(@match_result_b.advancing_participant)
+          expect(@match.opponent_of(@match_result_b.advancing_participant)).to eq(@match_result_a.advancing_participant)
+        end
+      end
+    end
+  end
 
   it "using #update_with_point_recalculation recalculates points if winner changed and points are already known" do
     match = FactoryBot.create(:match)
@@ -138,9 +188,9 @@ RSpec.describe Match, type: :model do
   end
 
   it 'send notification emails to all members of teams when scheduled' do
-    match = FactoryBot.create(:match)
-    email_count = match.team_home.members.count + match.team_away.members.count
-    expect { FactoryBot.create(:match) }.to change { ActionMailer::Base.deliveries.length }.by(email_count * 2)
+    email_count = 2
+    ActionMailer::Base.deliveries.clear
+    expect { FactoryBot.create(:match) }.to change { ActionMailer::Base.deliveries.length }.by(email_count * 4)
   end
 
   it 'send notification emails to all members of teams when canceled' do
@@ -165,5 +215,73 @@ RSpec.describe Match, type: :model do
       match.place = "Here"
       match.save
     }.to change { ActionMailer::Base.deliveries.length }.by(0)
+  end
+
+  describe '#confirm_scores' do
+    let(:scores_proposed_by) { FactoryBot.create(:team) }
+    let(:match) { FactoryBot.create(:match, scores_proposed_by: scores_proposed_by) }
+
+    subject { -> { match.confirm_scores } }
+
+    it { is_expected.to change { match.scores_proposed_by }.from(scores_proposed_by).to(nil) }
+  end
+
+  describe '#can_confirm_scores?' do
+    let(:confirmer) { FactoryBot.create(:user) }
+    let(:match) { FactoryBot.create(:match, :with_results) }
+
+    subject { match.can_confirm_scores?(confirmer) }
+
+    context 'is already confirmed' do
+      let(:match) { FactoryBot.create(:match, :with_results, scores_proposed_by: nil) }
+
+      it { is_expected.to be_falsey }
+    end
+
+    context 'scores_proposed_by is team home' do
+      before(:each) do
+        match.scores_proposed_by = match.team_home
+        match.save!
+      end
+
+      context 'confirmer is in team home' do
+        before(:each) do
+          match.team_home.members << confirmer
+        end
+
+        it { is_expected.to be_falsey }
+      end
+
+      context 'confirmer is in team away' do
+        before(:each) do
+          match.team_away.members << confirmer
+        end
+
+        it { is_expected.to be_truthy }
+      end
+    end
+
+    context 'scores_proposed_by is team away' do
+      before(:each) do
+        match.scores_proposed_by = match.team_away
+        match.save!
+      end
+
+      context 'confirmer is in team home' do
+        before(:each) do
+          match.team_home.members << confirmer
+        end
+
+        it { is_expected.to be_truthy }
+      end
+
+      context 'confirmer is in team away' do
+        before(:each) do
+          match.team_away.members << confirmer
+        end
+
+        it { is_expected.to be_falsey }
+      end
+    end
   end
 end
