@@ -88,11 +88,15 @@ $( document ).on('turbolinks:load', function() {
     }
 
     function addDays(date, days) {
-        var result = new Date(date);
+        date = date.split(".");
+        var result = new Date(date[2], date[1]-1, date[0]);
         result.setDate(result.getDate() + parseInt(days));
         var dd = result.getDate();
         var mm = result.getMonth()+1;
         var y = result.getFullYear();
+        if(dd < 10){
+            dd = "0"+ dd;
+        }
         if(mm < 10){
             mm = "0"+ mm;
         }
