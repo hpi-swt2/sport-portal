@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe GamedaysController, type: :controller do
 
   let(:user) { user = FactoryBot.create(:user)
-  sign_in user
-  user }
+               sign_in user
+               user }
   let(:gameday) { FactoryBot.create(:gameday) }
   describe '#update' do
     let(:new_dates) { { starttime: '05.05.2012',
@@ -13,8 +13,8 @@ RSpec.describe GamedaysController, type: :controller do
 
     context 'when user is an organizer' do
       let(:gameday) { gameday = FactoryBot.create(:gameday)
-      gameday.event.organizers << Organizer.new(user: user, event: gameday.event)
-      gameday
+                      gameday.event.organizers << Organizer.new(user: user, event: gameday.event)
+                      gameday
       }
 
       it 'changes the date of a gameday if requested' do

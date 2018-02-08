@@ -17,6 +17,7 @@
 #  telephone_number            :string
 #  telegram_username           :string
 #  favourite_sports            :string
+#  contact_information         :string
 #  provider                    :string
 #  uid                         :string
 #  avatar_data                 :text

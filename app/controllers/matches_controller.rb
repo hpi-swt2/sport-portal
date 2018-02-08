@@ -1,5 +1,6 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: [:show, :edit, :update, :update_points, :edit_results, :update_results, :destroy, :add_game_result, :remove_game_result]
+  authorize_resource only: [:edit, :destroy]
 
   # GET /matches/1
   def show
@@ -19,7 +20,6 @@ class MatchesController < ApplicationController
   # POST /matches
   def create
     @match = Match.new(match_params)
-
     if @match.save_with_point_calculation
       redirect_to @match, notice: I18n.t('helpers.flash.created', resource_name: Match.model_name.human).capitalize
     else
@@ -48,6 +48,7 @@ class MatchesController < ApplicationController
 
   # GET /matches/1/edit_results
   def edit_results
+    authorize! :edit, @match
   end
 
   # PATCH/PUT /matches/1/update_results
@@ -77,7 +78,6 @@ class MatchesController < ApplicationController
     flash.notice = I18n.t("view.match.removed_game_result_notice")
     render :edit_results
   end
-
 
   # DELETE /matches/1
   def destroy
