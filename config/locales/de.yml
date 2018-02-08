@@ -118,6 +118,8 @@ de:
       match:
         one: "Spiel"
         other: "Spiele"
+        errors:
+          score_proposer_confirmer_team: "Die Bestätigung von Ergebnissen muss durch einen Spieler des anderen Teams erfolgen."
       team:
         one: "Team"
         other: "Teams"
@@ -126,7 +128,7 @@ de:
         other: "Spieler"
         errors:
           future_birthday: "darf nicht in der Zukunft liegen"
-          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen"
+          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen und kann mit einem + beginnen"
       image:
         one: "Bild"
         other: "Bilder"
@@ -241,6 +243,9 @@ de:
       remove_game_result: "Ergebnis entfernen"
       added_game_result_notice: "Ergebnis hinzugefügt!"
       removed_game_result_notice: "Ergebnis entfernt!"
+      confirm_game_result: "Ergebnisse bestätigen"
+      confirmed: "Bestätigt"
+      not_confirmed: "Nicht bestätigt"
       noscript:
         add_results_notice:
           create_match: "Javascript ist deaktiviert. Um Ergebnisse hinzuzufügen schließe die Matcherstellung ab und besuche die Match-bearbeiten Seite."
