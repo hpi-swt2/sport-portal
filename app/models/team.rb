@@ -2,15 +2,15 @@
 #
 # Table name: teams
 #
-#  id            :integer          not null, primary key
-#  name          :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  description   :text
-#  kind_of_sport :string
-#  private       :boolean
-#  avatar_data   :text
-#  single        :boolean          default(FALSE)
+#  id               :integer          not null, primary key
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  description      :text
+#  kind_of_sport    :string
+#  private          :boolean
+#  avatar_data      :text
+#  created_by_event :boolean          default(FALSE)
 #
 
 class Team < ApplicationRecord
@@ -19,7 +19,8 @@ class Team < ApplicationRecord
 
   validates :private, inclusion:  [true, false]
 
-  scope :multiplayer, -> { where single: false }
+  scope :created_by_user, -> { where created_by_event: false }
+  scope :created_by_event, -> { where created_by_event: true }
 
   has_many :participants
   has_many :events, through: :participants
@@ -49,6 +50,10 @@ class Team < ApplicationRecord
 
   def has_member?(user)
     members.include?(user)
+  end
+
+  def is_qualified_to_receive_notifications?
+    not self.created_by_event?
   end
 
   # these methods allow teams to be treated like match results. see MatchResult model

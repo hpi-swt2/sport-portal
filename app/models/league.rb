@@ -27,7 +27,9 @@
 #  points_for_win       :integer          default(3)
 #  points_for_draw      :integer          default(1)
 #  points_for_lose      :integer          default(0)
+#  has_place_3_match    :boolean          default(TRUE)
 #  image_data           :text
+#  maximum_elo_change   :integer
 #
 
 class League < Event
@@ -38,11 +40,31 @@ class League < Event
   enum game_mode: [:round_robin, :two_halfs, :swiss]
 
   def generate_schedule
-    if game_mode == League.game_modes.key(0)
+    if self.round_robin?
       calculate_round_robin
-    elsif game_mode == League.game_modes.key(1)
+    elsif self.two_halfs?
       calculate_two_halfs
+    elsif self.swiss?
+      calculate_swiss_system_start
     end
+  end
+
+  def is_up_to_date
+    return true unless self.swiss?
+    return true if triangular(teams.length) == all_matches.length
+
+    gamedays.last.endtime > DateTime.current
+  end
+
+  def update_schedule
+    if self.swiss?
+      calculate_swiss_system_new_gameday
+    end
+  end
+
+  def have_already_played(team1, team2)
+    pairings = matches.map { |match| Set[match.team_home, match.team_away] }
+    pairings.include? Set[team1, team2]
   end
 
   def startdate_for_gameday(gameday_number)
@@ -63,6 +85,10 @@ class League < Event
   end
 
   private
+
+    def triangular(n)
+      n * (n - 1) / 2
+    end
 
     def calculate_round_robin
       pairings_per_day = round_robin_pairings teams.to_a
@@ -107,6 +133,42 @@ class League < Event
 
       # remove all matches that include a nil object
       games.map { |game| game.select { |match| !match[1].nil? } }
+    end
+
+    def penalty(ranked_teams, matches)
+      return Float::INFINITY if matches.flatten.uniq.length != matches.flatten.length
+      matches.inject(0) { |sum, match| sum + penalty_for_match(ranked_teams, match) }
+    end
+
+    def penalty_for_match(ranked_teams, match)
+      return Float::INFINITY if have_already_played(match[0], match[1])
+      (ranked_teams.index(match[0]) - ranked_teams.index(match[1])).abs
+    end
+
+    def calculate_swiss_system_new_gameday
+      add_gameday
+      gameday_number = gamedays.length - 1
+      ranking = get_ranking
+      ranked_teams = ranking.map(&:team)
+
+      all_matches = ranked_teams.to_a.combination(2).to_a.combination((ranked_teams.length / 2).floor)
+      best_matches = all_matches.min_by do |matches|
+        penalty(ranked_teams, matches)
+      end
+      best_matches.each do |match|
+        add_match(match[0], match[1], gameday_number)
+      end
+    end
+
+    # create a random first gameday for the swiss system
+    def calculate_swiss_system_start
+      add_gameday
+      shuffled_teams = teams.to_a.shuffle
+      middle_index = (teams.length / 2).floor
+      shuffled_teams.first(middle_index).each_with_index do |team, index|
+        team_away = shuffled_teams[middle_index + index]
+        add_match(team, team_away, 0)
+      end
     end
 
     def add_match(team_home, team_away, gameday_number)

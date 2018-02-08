@@ -2,15 +2,15 @@
 #
 # Table name: teams
 #
-#  id            :integer          not null, primary key
-#  name          :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  description   :text
-#  kind_of_sport :string
-#  private       :boolean
-#  avatar_data   :text
-#  single        :boolean          default(FALSE)
+#  id               :integer          not null, primary key
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  description      :text
+#  kind_of_sport    :string
+#  private          :boolean
+#  avatar_data      :text
+#  created_by_event :boolean          default(FALSE)
 #
 
 require 'rails_helper'
@@ -102,6 +102,13 @@ RSpec.describe Team, type: :model do
     expect { team.members << user }.to change { ActionMailer::Base.deliveries.length }.by(1)
   end
 
+  it 'should not notify newly added team members when team is created by event' do
+    team = FactoryBot.create :team, :created_by_event
+
+    user = FactoryBot.create :user
+    expect { team.members << user }.to change { ActionMailer::Base.deliveries.length }.by(0)
+  end
+
   it 'should notify its members when it participates in an event' do
     team = FactoryBot.create :team
     user1 = FactoryBot.create :user
@@ -111,5 +118,12 @@ RSpec.describe Team, type: :model do
 
     event = FactoryBot.create :event
     expect { event.add_team team }.to change { ActionMailer::Base.deliveries.length }.by(team_members_count)
+  end
+
+  it 'should not notify its members when it participates in an event and team is created by event' do
+    team = FactoryBot.create :team, :created_by_event
+
+    event = FactoryBot.create :event
+    expect { event.add_team team }.to change { ActionMailer::Base.deliveries.length }.by(0)
   end
 end
