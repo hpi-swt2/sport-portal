@@ -325,7 +325,7 @@ RSpec.describe MatchesController, type: :controller do
 
       it "redirects to the edit results page" do
         post :confirm_scores, params: { id: match.to_param  }
-        expect(response).to redirect_to edit_results_match_path(match)
+        expect(response).to redirect_to edit_match_path(match)
       end
     end
 

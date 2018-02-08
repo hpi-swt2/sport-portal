@@ -49,14 +49,6 @@
             class: 'btn btn-default',
         id: 'no_script_add_game_result' %>
       </noscript>
-      <% if can? :confirm_scores, @match %>
-        <%= link_to t("view.match.confirm_game_result"), confirm_scores_match_path(id: @match.id), class: 'btn btn-default' %>
-      <% end %>
-      <% if @match.scores_confirmed? %>
-        <i class="fa fa-check"></i><%= t('view.match.confirmed') %>
-      <% else %>
-        <i class="fa fa-times"></i><%= t('view.match.not_confirmed') %>
-      <% end %>
     </div>
 
 
