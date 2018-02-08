@@ -1,0 +1,46 @@
+<div class="form-group">
+  <%= form.label :bestof_length, for: :matchtype, class: 'control-label col-lg-2', data: {toggle: "tooltip", placement: "right" }, title: t('events.winrule_tooltip') %>
+  <div id="matchtype" class="col-lg-10">
+    <%= t('events.best_of') %>
+    <%= form.select(:bestof_length, (1..8).map { |n| ["#{n}", n] },
+                 { selected: form.object.bestof_length },
+                 { class: 'form-control'}) %>
+  </div>
+</div>
+
+<div class="form-group">
+  <%= form.label :game_winrule, for: :game_winrule, :class => 'control-label col-lg-2'  %>
+  <div class="col-lg-10">
+    <%= form.select(:game_winrule, Event.game_winrules.map {|k, v| [k.humanize, k]},
+                 { selected: form.object.game_winrule },
+                 { class: 'form-control' }) %>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= t('view.event.point_distribution') %>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <%= form.label :points_for_win, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= form.number_field :points_for_win, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> form.object.points_for_win %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :points_for_draw, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= form.number_field :points_for_draw, in: 0..2e9, step: 1, :class => 'form-control' ,:style=> 'width:60px', :value=> form.object.points_for_draw %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :points_for_lose, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= form.number_field :points_for_lose, in: 0..2e9, step: 1, :class => 'form-control',:style=> 'width:60px', :value=> form.object.points_for_lose %>
+      </div>
+    </div>
+  </div>
+</div>
