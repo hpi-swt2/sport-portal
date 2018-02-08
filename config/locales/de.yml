@@ -128,7 +128,7 @@ de:
         other: "Spieler"
         errors:
           future_birthday: "darf nicht in der Zukunft liegen"
-          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen"
+          telephone_number_invalid: "darf nur aus Zahlen, ohne Leerzeichen bestehen und kann mit einem + beginnen"
       image:
         one: "Bild"
         other: "Bilder"

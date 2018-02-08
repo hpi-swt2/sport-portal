@@ -49,7 +49,7 @@ en:
         other: "players"
         errors:
           future_birthday: "must not be a future date"
-          telephone_number_invalid: "must consist of only numbers without spaces"
+          telephone_number_invalid: "must consist of only numbers without spaces and can start with a +"
       image:
         one: "image"
         other: "images"
