@@ -5,7 +5,7 @@
     }
 }
 
-@media screen and (max-width : 899px) and (min-width: 400px){
+@media screen and (max-width : 899px) and (min-width: 400px) {
     .tile-wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr
@@ -14,10 +14,12 @@
     .tile-description {
         width: 300px;
     }
+
     .tile-title {
         width: 300px;
     }
 }
+
 
 @media screen and (max-width : 480px){
     .tile-wrapper {
