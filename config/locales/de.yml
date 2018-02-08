@@ -154,6 +154,7 @@ de:
         id: "ID"
         date: "Datum"
         place: "Ort"
+        gameday: "Spieltag"
         created_at: "Erstellt am"
         updated_at: "Aktualisiert am"
         team_home_id: "Heim-Team"
@@ -198,9 +199,9 @@ de:
           team: "Team"
         bestof_length: "Spielart"
         game_winrule: "Gewinnregel"
-        points_for_win: "Punkte für Gewinn"
-        points_for_draw: "Punkte für Unentschieden"
-        points_for_lose: "Punkte für Niederlage"
+        points_for_win: "Eventpunkte für Gewinn"
+        points_for_draw: "Eventpunkte für Unentschieden"
+        points_for_lose: "Eventpunkte für Niederlage"
         selection_types:
           fcfs: "First Come First Serve"
           fcfs_queue: "Warteschlange"
@@ -239,6 +240,8 @@ de:
 
     match:
       game_results: "Ergebnis(se)"
+      game_result:
+        points: "Punkte"
       add_game_result: "Ergebnis hinzufügen"
       remove_game_result: "Ergebnis entfernen"
       added_game_result_notice: "Ergebnis hinzugefügt!"
@@ -334,6 +337,7 @@ de:
       away: "Team 2"
       score: "Ergebnis"
       points: "Punkte"
+      event_points: "Eventpunkte"
       first_half: "Hinrunde"
       second_half: "Rückrunde"
       finale: "Finale"
