@@ -2,21 +2,22 @@
 #
 # Table name: matches
 #
-#  id             :integer          not null, primary key
-#  place          :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  team_home_id   :integer
-#  team_away_id   :integer
-#  event_id       :integer
-#  points_home    :integer
-#  points_away    :integer
-#  gameday_number :integer
-#  team_home_type :string           default("Team")
-#  team_away_type :string           default("Team")
-#  index          :integer
-#  gameday_id     :integer
-#  start_time     :datetime         default(NULL)
+#  id                    :integer          not null, primary key
+#  place                 :string
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  team_home_id          :integer
+#  team_away_id          :integer
+#  event_id              :integer
+#  points_home           :integer
+#  points_away           :integer
+#  gameday_number        :integer
+#  team_home_type        :string           default("Team")
+#  team_away_type        :string           default("Team")
+#  index                 :integer
+#  gameday_id            :integer
+#  scores_proposed_by_id :integer
+#  start_time            :datetime
 #
 
 class Match < ApplicationRecord
@@ -25,6 +26,7 @@ class Match < ApplicationRecord
   belongs_to :event
   has_many :game_results, dependent: :destroy
   belongs_to :gameday, optional: true
+  belongs_to :scores_proposed_by, class_name: 'Team', optional: true
 
   accepts_nested_attributes_for :game_results, allow_destroy: true
   has_many :match_results, dependent: :destroy
@@ -201,7 +203,7 @@ class Match < ApplicationRecord
   def all_players
     team_home = self.team_home
     team_away = self.team_away
-    players = (team_home.is_a?(Team) ? team_home.members : []) + (team_away.is_a?(Team) ? team_away.members : [])
+    (team_home.is_a?(Team) ? team_home.members : []) + (team_away.is_a?(Team) ? team_away.members : [])
   end
 
   def has_result?
@@ -229,5 +231,21 @@ class Match < ApplicationRecord
 
   def teams
     [team_home, team_away]
+  end
+
+  def propose_scores(user)
+    self.scores_proposed_by = user.teams.where(id: self.teams).first
+  end
+
+  def can_confirm_scores?(user)
+    !(scores_confirmed? || user.teams.where(id: self.teams).first == self.scores_proposed_by)
+  end
+
+  def scores_confirmed?
+    scores_proposed_by.blank?
+  end
+
+  def confirm_scores
+    self.scores_proposed_by = nil
   end
 end

@@ -20,10 +20,5 @@ $(document).ready(function(){
     if(getUrlParameter('filter') == "true"){
         $('.filterSelect').val($(".filterSelect option:eq(1)").val())
     }
-
-    // clear modal used for inviting new members to a team after closing it
-    $(".modal").on("hidden.bs.modal", function(){
-        $(".modal-body #email").val("");
-    });
 });
 
