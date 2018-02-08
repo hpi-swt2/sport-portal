@@ -87,7 +87,7 @@ class User < ApplicationRecord
   has_many :owned_teams, through: :team_owners, source: :team
 
   def create_team_for_event
-    team = Team.new name: "#{name}-team", private: true, created_by_event: true
+    team = Teamcreate(Hash[name: "#{name}-team", private: true, created_by_event: true])
     team.owners << self
     team
   end
