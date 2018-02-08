@@ -4,6 +4,8 @@ RSpec.describe 'events/schedule', type: :view do
 
   describe 'page layout' do
     before :each do
+      @admin = FactoryBot.create(:admin)
+      sign_in @admin
       @league = FactoryBot.create(:league, :with_teams,
                                   deadline: Date.parse('23.12.2017'),
                                   startdate: Date.parse('24.12.2017'),
@@ -28,6 +30,27 @@ RSpec.describe 'events/schedule', type: :view do
     it 'has edit button for gameday dates' do
       render
       expect(rendered).to have_selector(:link_or_button, t('events.schedule.edit_date'))
+    end
+
+    it 'has show button for matches' do
+      render
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.show'))
+    end
+
+    it 'has a delete button for matches when you are an admin' do
+      render
+      expect(rendered).to have_selector(:link_or_button, t('helpers.links.destroy'))
+    end
+  end
+
+  describe 'authorization for delete button' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+      sign_in @user
+    end
+
+    it 'has no delete button for normal signed in user' do
+      expect(rendered).not_to have_selector(:link_or_button, t('helpers.links.destroy'))
     end
   end
 

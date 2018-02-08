@@ -34,7 +34,11 @@ class Tournament < Event
   validates :deadline, :startdate, :enddate, :selection_type, presence: true
   validate :end_after_start, :start_after_deadline
 
-  enum game_mode: [:ko, :ko_group, :double_elimination]
+  before_validation :set_game_mode
+
+  def set_game_mode
+    self.game_mode = 0
+  end
 
   def standing_of(team)
     final_match = finale
@@ -188,7 +192,6 @@ class Tournament < Event
           discipline: I18n.t('events.templates.tournament1.discipline'),
           player_type: Event.player_types[:team],
           max_teams: 8,
-          game_mode: Tournament.game_modes[:ko],
           type: 'Tournament',
           startdate: Date.today + (7 * 2),
           enddate: Date.today + (7 * 6),
@@ -207,7 +210,6 @@ class Tournament < Event
           discipline: I18n.t('events.discipline.table_tennis'),
           player_type: Event.player_types[:single],
           max_teams: 16,
-          game_mode: Tournament.game_modes[:ko],
           type: 'Tournament',
           startdate: Date.today + (7 * 2),
           enddate: Date.today + (7 * 6),

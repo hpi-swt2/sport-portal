@@ -1,7 +1,7 @@
 $( document ).on('turbolinks:load', function() {
-    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
-    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
-    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true});
+    $('#event_deadline').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
+    $('#event_startdate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
+    $('#event_enddate').datepicker({autoclose: true, startDate: new Date(), todayHighlight: true, language: 'de'});
 
     $("#event_duration").val("");
   
@@ -38,9 +38,11 @@ $( document ).on('turbolinks:load', function() {
 
     function calcDateDiff(startdatestr, enddatestr)
     {
-      var start = new Date(startdatestr);
-      var end = new Date(enddatestr);
-
+      var splittetStart = startdatestr.split(".");
+      var splittetEnd = enddatestr.split(".");
+      // Es muss 1 vom Monat abgezogen werden, da diese 0 indiziert sind
+      var start = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
+      var end = new Date(splittetEnd[2],splittetEnd[1]-1,splittetEnd[0]);
       return  Math.round((end-start)/(1000*60*60*24)) + 1;
     }
 
@@ -48,13 +50,20 @@ $( document ).on('turbolinks:load', function() {
 
        var start = $("#event_startdate").val();
        if(start != "") {
-           var startdate = new Date(start);
+           var splittetStart = start.split(".");
+           var startdate = new Date(splittetStart[2],splittetStart[1]-1, splittetStart[0]);
            startdate.setDate(startdate.getDate() + parseInt(this.value - 1));
 
            var dd = startdate.getDate();
            var mm = startdate.getMonth() + 1;
            var y = startdate.getFullYear();
-           var formattedDate = y + '-' + mm + '-' + dd;
+           if(mm < 10){
+               mm = "0"+ mm;
+           }
+           if(dd < 10){
+               dd = "0" + dd;
+           }
+           var formattedDate = dd + '.' + mm + '.' + y;
            $("#event_enddate").val(formattedDate);
        }
     });
@@ -62,6 +71,7 @@ $( document ).on('turbolinks:load', function() {
     // Autofill of player count for an event
     showPlayerCount();
     $("#event_player_type").on("change", showPlayerCount);
+
 
     function showPlayerCount()
     {
@@ -90,11 +100,16 @@ $( document ).on('turbolinks:load', function() {
     $("#rankinglist_game_mode").on("change", showInitialValue);
     function showInitialValue()
     {
-        console.log(initial_value_win_loss + initial_value_trueskill + initial_value_elo);
         switch($("#rankinglist_game_mode").val())
         {
             case "elo":
                 $("#rankinglist_initial_value").val(initial_value_elo);
+                var default_elo_change = $("#rankinglist_maximum_elo_change");
+                if(default_elo_change.val()=="")
+                {
+                    default_elo_change.val(32);
+                }
+                $("#rankinglist_advanced").show();
                 break;
             case "true_skill":
                 $("#rankinglist_initial_value").val(initial_value_trueskill);
@@ -104,6 +119,7 @@ $( document ).on('turbolinks:load', function() {
                 break;
             default:
                 $("#rankinglist_initial_value").val("0");
+                $("#rankinglist_advanced").hide();
                 break;
         }
     }

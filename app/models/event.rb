@@ -28,6 +28,8 @@
 #  points_for_draw      :integer          default(1)
 #  points_for_lose      :integer          default(0)
 #  image_data           :text
+#  has_place_3_match    :boolean
+#  maximum_elo_change   :integer
 #
 require 'open-uri'
 
@@ -66,6 +68,10 @@ class Event < ApplicationRecord
     players.each do |user|
       EventMailer.send_mail(user, self, :event_canceled).deliver_now
     end
+  end
+
+  def is_up_to_date
+    true
   end
 
   def duration
@@ -120,7 +126,7 @@ class Event < ApplicationRecord
   end
 
   def add_participant(user)
-    team = user.create_single_team
+    team = user.create_team_for_event
     add_team(team)
   end
 
@@ -189,7 +195,7 @@ class Event < ApplicationRecord
   end
 
   def fitting_teams(user)
-    all_teams = user.owned_teams.multiplayer
+    all_teams = user.owned_teams.created_by_user
     fitting_teams = []
     all_teams.each do |team|
       if is_fitting?(team)
@@ -235,8 +241,10 @@ class Event < ApplicationRecord
 
   private
     def send_mails_when_adding_team(team)
-      team.members.each do |member|
-        TeamMailer.team_registered_to_event(member, team, self).deliver_now
+      if team.is_qualified_to_receive_notifications?
+        team.members.each do |member|
+          TeamMailer.team_registered_to_event(member, team, self).deliver_now
+        end
       end
     end
 end
